@@ -38,9 +38,6 @@ public class CreditBureauVerificationPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//img[@alt='Edit Record']")
 	private MCWebElement manualApprovalLink;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='OK']")
-	private MCWebElement OKButtonClick;
-
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview")
 	private MCWebElement searchTable;
 
@@ -52,7 +49,7 @@ public class CreditBureauVerificationPage extends AbstractBasePage {
 		SimulatorUtilities.wait(4000);
 		clickWhenClickable(manualApprovalLink);
 		switchToIframe(CREDIT_BUREAU_VERIFICATION_FRAME);
-		clickWhenClickable(OKButtonClick);
+		clickOkButton();
 	}
 
 	@Override

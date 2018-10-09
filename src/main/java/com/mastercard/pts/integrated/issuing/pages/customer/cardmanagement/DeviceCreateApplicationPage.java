@@ -292,6 +292,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());		
 			device.setBatchNumber(batchNumberTxt.getText());
 			logger.info(" *********** Batch number *********** : {}",device.getBatchNumber());		
+		}
 		clickNextButton();
 	}
 

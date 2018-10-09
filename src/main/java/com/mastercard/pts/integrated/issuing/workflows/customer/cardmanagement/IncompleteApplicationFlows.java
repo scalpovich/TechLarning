@@ -1,8 +1,8 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.IncompleteApplicationPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
@@ -10,7 +10,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
  * @author e084017
  *
  */
-@Workflow
+@Component
 public class IncompleteApplicationFlows {
 	@Autowired
 	Navigator navigator;

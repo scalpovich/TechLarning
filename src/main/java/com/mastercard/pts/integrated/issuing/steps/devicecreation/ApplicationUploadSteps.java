@@ -190,8 +190,6 @@ public class ApplicationUploadSteps {
 		batchProcessFlows.processDeviceProductionBatchNewDeviceSupplementary(batch);
 	}
 	
-	
-
 	@Then("$type processes pinProduction batch using new Application")
 	@When("$type processes pinProduction batch using new Application")
 	public void whenProcessesPinproductionBatchForNewApplication(String type) {

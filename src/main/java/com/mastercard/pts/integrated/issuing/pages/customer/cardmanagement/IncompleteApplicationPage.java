@@ -38,27 +38,23 @@ public class IncompleteApplicationPage extends AbstractCardManagementPage {
 	
 	// ------------- Card Management > Institution Parameter Setup > Institution
 	// Currency [ISSAP0R]
+	
 	private static final String INCOMPLETE_FRAME = "Edit Application";
-	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
-	private MCWebElement addEmbossingPriorityPass;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cobrandNumber:input:inputTextField")
-	private MCWebElement partnerMSNumberAdded;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "planDesc:input:inputTextField")
-	private MCWebElement descriptionTxt;
+	private MCWebElement txtPartnerMSNumberAdded;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
-	private MCWebElement save;
+	private MCWebElement saveBtn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='applicationNumber']")
-	private MCWebElement applicationNumberTxt;
+	private MCWebElement txtApplicationNumber;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='fromDate']/../..")
-	private MCWebElement fromDatePicker;
+	private MCWebElement dtPkrFrom;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='toDate']/../..")
-	private MCWebElement toDatePicker;
+	private MCWebElement dtPkrTo;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[1]/td[8]/span//img")
 	private MCWebElement editImg;
@@ -67,28 +63,28 @@ public class IncompleteApplicationPage extends AbstractCardManagementPage {
 	private MCWebElement verifyBtn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='formNumber']")
-	private MCWebElement formNumberTxt;
+	private MCWebElement txtFormNumber;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='batchNum']//span[@class='labeltextf']")
-	private MCWebElement batchNumberTxt;
+	private MCWebElement txtBatchNumber;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[1]/td[1]/span//span")
-	private MCWebElement applicationNumberFileUploadTxt;
+	private MCWebElement txtApplicationNumberFileUpload;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Verify']")
 	private MCWebElement verifyLink;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='firstName']")
-	private MCWebElement firstNameTxt;
+	private MCWebElement txtFirstName;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='lastName']")
-	private MCWebElement lastNameTxt;
+	private MCWebElement txtLastName;
 
 	public void incompleteApplication() {
 		Device device = context.get(CreditConstants.APPLICATION);
-		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
-		WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
-		WebElementUtils.pickDate(toDatePicker, LocalDate.now());
+		WebElementUtils.enterText(txtApplicationNumber, device.getApplicationNumber());
+		WebElementUtils.pickDate(dtPkrFrom, LocalDate.now().minusDays(1));
+		WebElementUtils.pickDate(dtPkrTo, LocalDate.now());
 		clickSearchButton();
 	}
 
@@ -100,14 +96,14 @@ public class IncompleteApplicationPage extends AbstractCardManagementPage {
 		SimulatorUtilities.wait(5000);
 
 		runWithinPopup("Edit Application", () -> {
-			if (isElementPresent(partnerMSNumberAdded)) {
+			if (isElementPresent(txtPartnerMSNumberAdded)) {
 				String randomPartnerMSNumber=CustomUtils.randomNumbers(5);
-				enterValueinTextBox(partnerMSNumberAdded, randomPartnerMSNumber);
+				enterValueinTextBox(txtPartnerMSNumberAdded, randomPartnerMSNumber);
 				device.setPartnerMembershipNumber(randomPartnerMSNumber);
 				logger.info(device.getPartnerMembershipNumber());
 				context.put(ContextConstants.DEVICE, device);
 			}
-			clickWhenClickable(save);
+			clickWhenClickable(saveBtn);
 		});
 
 		verifyOperationStatus();
@@ -120,18 +116,18 @@ public class IncompleteApplicationPage extends AbstractCardManagementPage {
 		List<String> allApplicationNumbers = new LinkedList<>();
 		for (Map.Entry<String, Object> entry : mapFileUpload.entrySet()) {
 			HelpDeskGeneral helpDeskGeneral = (HelpDeskGeneral) entry.getValue();
-			WebElementUtils.enterText(formNumberTxt, helpDeskGeneral.getFormNumber());
-			WebElementUtils.enterText(firstNameTxt, helpDeskGeneral.getFirstName());
-			WebElementUtils.enterText(lastNameTxt, helpDeskGeneral.getLastName());
-			WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
-			WebElementUtils.pickDate(toDatePicker, LocalDate.now());
+			WebElementUtils.enterText(txtFormNumber, helpDeskGeneral.getFormNumber());
+			WebElementUtils.enterText(txtFirstName, helpDeskGeneral.getFirstName());
+			WebElementUtils.enterText(txtLastName, helpDeskGeneral.getLastName());
+			WebElementUtils.pickDate(dtPkrFrom, LocalDate.now().minusDays(1));
+			WebElementUtils.pickDate(dtPkrTo, LocalDate.now());
 			clickSearchButton();
 			waitForPageToLoad(driver());
-			allApplicationNumbers.add(applicationNumberFileUploadTxt.getText());
+			allApplicationNumbers.add(txtApplicationNumberFileUpload.getText());
 			clickWhenClickable(editImg);
 			switchToIframe(INCOMPLETE_FRAME);
 			SimulatorUtilities.wait(8000);
-			allBatchNumbers.add(batchNumberTxt.getText());
+			allBatchNumbers.add(txtBatchNumber.getText());
 			clickWhenClickablewithWicket(verifyBtn);
 			SimulatorUtilities.wait(10000);
 			clickWhenClickable(verifyLink);

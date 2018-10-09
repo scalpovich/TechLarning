@@ -61,7 +61,7 @@ public class BatchTraceHistoryPage extends AbstractBasePage {
 		logger.info("Searching for jobId: {}", jobId);
 		WebElementUtils.enterText(searchJobIdTxt, jobId);
 		clickSearchButton();
-		for (int k = 0; k < 11; k++) {
+		for (int i = 0; i< 11; i++) {
 			if (!waitForRow())
 				clickSearchButton();
 			else {

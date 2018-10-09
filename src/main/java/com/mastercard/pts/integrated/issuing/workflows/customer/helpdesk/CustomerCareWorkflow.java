@@ -3,8 +3,8 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskCustomer;
@@ -21,7 +21,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
  * @author e084017
  *
  */
-@Workflow
+@Component
 public class CustomerCareWorkflow extends AbstractBasePage {
 
 	final Logger logger = LoggerFactory.getLogger(CustomerCareWorkflow.class);
@@ -33,13 +33,11 @@ public class CustomerCareWorkflow extends AbstractBasePage {
 	private Navigator navigator;
 	
 	@Autowired
+	TestContext context;
+	
 	CustomerCarePage customerPage;
 	
-	@Autowired
 	SearchPanelHelpdeskPage searchpanelhelpdesk;
-	
-	@Autowired
-	TestContext context;
 	
 	private String activePartnerMSNumber;
 	

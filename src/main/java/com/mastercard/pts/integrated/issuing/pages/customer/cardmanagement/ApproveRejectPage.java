@@ -27,53 +27,47 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 	
 	@Autowired
 	TestContext context;
-	
-	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
-	private MCWebElement addEmbossingPriorityPass;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "planDesc:input:inputTextField")
-	private MCWebElement descriptionTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='applicationNumber']")
-	private MCWebElement applicationNumberTxt;
-	
+	private MCWebElement txtApplicationNumber;
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='fromDate']/../..")
-	private MCWebElement fromDatePicker;
-	
+	private MCWebElement dtPkrFrom;
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='toDate']/../..")
-	private MCWebElement toDatePicker;
-	
+	private MCWebElement dtPkrTo;
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[1]/td[8]/span//img")
 	private MCWebElement editImg;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='formNumber']")
+	private MCWebElement txtFormNumber;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='firstName']")
+	private MCWebElement txtFirstName;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='lastName']")
+	private MCWebElement txtLastName;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[@name='approve']")
-	private MCWebElement approveBtn;
+	private MCWebElement btnApprove;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[@name='pushback']")
-	private MCWebElement pushbackBtn;
-	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='formNumber']")
-	private MCWebElement formNumberTxt;
+	private MCWebElement btnPushback;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Approve/Reject']")
 	private MCWebElement approveRejectLink;
-	
-    @PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='firstName']")
-	private MCWebElement firstNameTxt;
-	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='lastName']")
-	private MCWebElement lastNameTxt;
     
 	private static final String APPROVE_REJECT_FRAME="Edit Application";
 	
 	public void enterApplicationNumber(){
 		Device device=context.get(CreditConstants.APPLICATION);
-		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());	
+		WebElementUtils.enterText(txtApplicationNumber, device.getApplicationNumber());	
 	}	
 	
 	public void selectFromAndToDate() {
-		WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
-		WebElementUtils.pickDate(toDatePicker, LocalDate.now());
+		WebElementUtils.pickDate(dtPkrFrom, LocalDate.now().minusDays(1));
+		WebElementUtils.pickDate(dtPkrTo, LocalDate.now());
 		clickSearchButton();
 	}
 	
@@ -91,7 +85,7 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 		SimulatorUtilities.wait(15000);
 		
 		runWithinPopup("Edit Application", () -> {
-			clickWhenClickable(approveBtn);			
+			clickWhenClickable(btnApprove);			
 		});		
 		
 		verifyOperationStatus();
@@ -105,7 +99,7 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 		SimulatorUtilities.wait(5000);
 
 		runWithinPopup("Edit Application", () -> {
-			clickWhenClickable(pushbackBtn);
+			clickWhenClickable(btnPushback);
 		});
 		verifyOperationStatus();
 		return getCodeFromInfoMessage("Application Number");
@@ -113,24 +107,24 @@ public class ApproveRejectPage extends AbstractCardManagementPage {
 	
 	public void enterFormNumber() {
 		String formNumber = context.get(CreditConstants.FORM_NUMBER);
-		WebElementUtils.enterText(formNumberTxt, formNumber);
+		WebElementUtils.enterText(txtFormNumber, formNumber);
 	}
 	
 	public void approveApplicationFileUpload() {
 		Map<String, Object>mapFileUpload=context.get(CreditConstants.FILEUPLOAD_IN_BULK);
 		for (Map.Entry<String, Object> entry : mapFileUpload.entrySet()) {
 			HelpDeskGeneral helpDeskGeneral=(HelpDeskGeneral) entry.getValue();
-			WebElementUtils.enterText(formNumberTxt,helpDeskGeneral.getFormNumber());
-			WebElementUtils.enterText(firstNameTxt, helpDeskGeneral.getFirstName());
-			WebElementUtils.enterText(lastNameTxt, helpDeskGeneral.getLastName());
-			WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
-			WebElementUtils.pickDate(toDatePicker, LocalDate.now());
+			WebElementUtils.enterText(txtFormNumber,helpDeskGeneral.getFormNumber());
+			WebElementUtils.enterText(txtFirstName, helpDeskGeneral.getFirstName());
+			WebElementUtils.enterText(txtLastName, helpDeskGeneral.getLastName());
+			WebElementUtils.pickDate(dtPkrFrom, LocalDate.now().minusDays(1));
+			WebElementUtils.pickDate(dtPkrTo, LocalDate.now());
 			clickSearchButton();
 			waitForPageToLoad(driver());
 			clickWhenClickable(editImg);
 			switchToIframe(APPROVE_REJECT_FRAME);
 			SimulatorUtilities.wait(8000);
-			clickWhenClickablewithWicket(approveBtn);
+			clickWhenClickablewithWicket(btnApprove);
 			SimulatorUtilities.wait(10000);
 			clickWhenClickable(approveRejectLink);
 		}

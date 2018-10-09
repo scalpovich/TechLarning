@@ -32,9 +32,6 @@ public class ReferPage extends AbstractCardManagementPage {
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addEmbossingPriorityPass;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "planDesc:input:inputTextField")
-	private MCWebElement descriptionTxt;
-
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement save;
 

@@ -286,20 +286,5 @@ public class BatchProcessSteps {
 		File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(partialFileName, tempDirectory.toString(), ConstantData.VISA_BASEII_LINUX_DIRECTORY,"proc");
 		Assert.assertTrue("Transaction Data Does not match ",batchProcessWorkflow.validateVisaOutGoingFile(batchFile));
 	}
-	
-	@When("user checks for the client photo/flat file batch trace for $batchType batch")
-	@Then("user checks for the client photo/flat file batch trace for $batchType batch")
-	public void checkBatchTraceForClientPhotoFlatFile(@Named("batchType") String batchType) {		
-				
-		
-		batchProcessWorkflow.verifyBatchTraceAvailability(context.get(ContextConstants.JOB_ID));	
-		
-	}
-	
-	@When("process batch for $batchType type and Batch name $batchName")
-	@Then("process batch for $batchType type and Batch name $batchName")
-	public void submitJobforProcessing(String batchType, String batchName) {
-		processBatchesFlows.processDownloadBatches(batchType, batchName);
-	}
 
 }

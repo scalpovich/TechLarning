@@ -55,21 +55,4 @@ public class BatchJobHistorySteps {
 		batchjobhistoryflows.CheckBatchJobHistory(batchjobhistory);
 	}
 	
-	@When("check status in batch job history for $batchType batch and $batch")
-	@Then("check status in batch job history for $batchType batch and $batch")
-	public void checkBatchStatusForClientPhotoFlatFile(@Named("batchType") String batchType, @Named("batch") String batch) {		
-		if (batchType.equalsIgnoreCase("download")) {
-			batchjobhistory.setBatchType("DOWNLOAD [D]");
-		}else if (batchType.equalsIgnoreCase("upload")) {
-			batchjobhistory.setBatchType("UPLOAD [U]");
-		}		
-		
-		batchjobhistory.setJobIdBatchJobHistory(context.get(ContextConstants.JOB_ID));
-		if(batch.equalsIgnoreCase("CLIENT_PHOTO_DOWNLOAD")){
-			batchjobhistory.setBatch("Client Photo/Flat File Download Batch [CLIENT_PHOTO_DOWNLOAD]");
-		} else if(batch.equalsIgnoreCase("CARDHOLDER_DUMP")) {
-			batchjobhistory.setBatch("Cardholder Dump [CARDHOLDER_DUMP]");
-		}
-		Assert.assertTrue( "Batch job status is not diplayed success",batchjobhistoryflows.verifyBatchJobHistoryStatusDisplayed(batchjobhistory) );
-	}
 }

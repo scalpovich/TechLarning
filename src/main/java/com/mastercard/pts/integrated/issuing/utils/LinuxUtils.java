@@ -67,43 +67,6 @@ public abstract class LinuxUtils {
 	{
 		return getFileFromLinuxBox(connectiondetails, lookUpFor);
 	}
-	
-	public static boolean getPhotoReferenceNumberinDumpFile(File filePath,
-			String applicationNumber) {
-		MiscUtils
-				.reportToConsole("*********   starting getPhotoReferenceNumber in Dump File *******  ");
-		boolean flg = false;
-		String strLine;
-		try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-
-			while ((strLine = br.readLine()) != null) {
-				strLine = strLine.trim().replaceAll("\\s+", " ");
-				MiscUtils.reportToConsole("*********   File Data *******  "
-						+ strLine);
-				String[] data = strLine.trim().split(",");
-				// MiscUtils.reportToConsole("********* Data *******  " + data);
-				int i = 0;
-				for (i = 0; i < data.length; i++) {
-					MiscUtils.reportToConsole(data[i]);
-					if (data[i].equals(applicationNumber))
-
-					{
-						flg = true;
-						break;
-					}
-
-				}
-				if (flg)
-					break;
-			}
-		} catch (Exception e) {
-			MiscUtils.reportToConsole("getphotoReferenceNumber Exception :  "
-					+ e.toString());
-			logger.info(ConstantData.EXCEPTION + " {} " + e.getMessage());
-			throw MiscUtils.propagate(e);
-		}
-		return flg;
-	}
 
 	private static String getFileFromLinuxBox (RemoteConnectionDetails connectiondetails, String lookUpFor) throws Exception
 	{
@@ -283,33 +246,6 @@ public abstract class LinuxUtils {
 		}
 		return cardData;
 	}
-	
-	public static String getPhotoReferenceNumber(File filePath) {
-		MiscUtils.reportToConsole("*********   starting getPhotoReferenceNumber *******  ");
-		int lnNumber = 1;
-		String photoReferenceNumber = "";
-		try (BufferedReader br = new BufferedReader(new FileReader(filePath)))
-		{
-			String strLine;
-			while ((strLine = br.readLine()) != null)
-			{
-				if (lnNumber == 2)
-				{
-					strLine = strLine.trim().replaceAll("\\s+"," ");
-					MiscUtils.reportToConsole("*********   File Data *******  " + strLine);
-					String[] data = strLine.trim().split(" ");
-					photoReferenceNumber = data[data.length-1];
-					break;
-				}
-				lnNumber++;
-			}
-		} catch (Exception e) {
-			MiscUtils.reportToConsole("getphotoReferenceNumber Exception :  " + e.toString());
-			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
-			throw MiscUtils.propagate(e);
-		}
-		return photoReferenceNumber;
-	}
 
 	public static Session connectSession(String user, String host, String pwd,
 			int port) throws JSchException, IOException {
@@ -424,29 +360,6 @@ public abstract class LinuxUtils {
 		fileOutputStream.close();
 		// channel1.close();
 
-	}
-	
-	
-
-	public static boolean isPhotoReferenceNumberPresentFlatFile(File filePath,
-			String applicationNumber) {
-		MiscUtils.reportToConsole("*********   starting Flat file check*******  ");
-		boolean isPhotoReferenceNumberFound = false;
-		try (BufferedReader br = new BufferedReader(new FileReader(filePath)))
-		{
-			String strLine;
-			while ((strLine = br.readLine()) != null)
-			{
-				MiscUtils.reportToConsole("*********   File Data *******  " + strLine);
-				isPhotoReferenceNumberFound = strLine.contains(applicationNumber);
-			}
-		} catch (Exception e) {
-			MiscUtils.reportToConsole("getphotoReferenceNumber Exception :  " + e.toString());
-			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
-			throw MiscUtils.propagate(e);
-		}
-		MiscUtils.reportToConsole("*********   ending Flat file check*******  ");		
-		return isPhotoReferenceNumberFound;
 	}
 
 	public static String getJPEGPhotoFileName(File batchFile) {

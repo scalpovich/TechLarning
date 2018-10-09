@@ -370,7 +370,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		return batchStatus;
 
 	}
-
+	
 	public String processSystemInternalProcessingBatchWithoutDateCheck(ProcessBatches batch) {
 		logger.info("Process System Internal Processing Batch: {}", batch.getBatchName());
 		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, "SYSTEM INTERNAL PROCESSING [B]");
@@ -696,26 +696,4 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	
 	}
 	
-	public void processDownloadBatch(String batchType, String batchName) {
-		selectByVisibleText(batchTypeDdwn, "DOWNLOAD [D]");
-		if (batchName.equalsIgnoreCase("CLIENT_PHOTO_BATCH"))
-			selectByVisibleText(batchNameDdwn,
-					"Client Photo/Flat File Download Batch [CLIENT_PHOTO_DOWNLOAD]");
-		else {
-			if (batchName.equalsIgnoreCase("CARDHOLDER_DUMP"))
-				selectByVisibleText(batchNameDdwn,
-						"Cardholder Dump [CARDHOLDER_DUMP]");
-		}
-		SimulatorUtilities.wait(2000);
-		selectByVisibleText(productTypeDDwn, "Credit [C]");
-		selectByVisibleText(extractTypeDrpDwn, "FULL [F]");
-		WebElementUtils.pickDate(fromDateAuth, LocalDate.now());
-		WebElementUtils.pickDate(toDateAuth, LocalDate.now());
-		WebElementUtils.enterText(cardHolderKycFromDateHHTxtBx, "00");
-		WebElementUtils.enterText(cardHolderKycFromDateMMTxtBx, "00");
-		WebElementUtils.enterText(cardHolderKycToDateHHTxtBx, "23");
-		WebElementUtils.enterText(cardHolderKycToDateMMTxtBx, "00");
-		clickSubmitBtn();
-		context.put(ContextConstants.JOB_ID, jobIDNumber.getText());
-		SimulatorUtilities.wait(3000);
-	}}
+}

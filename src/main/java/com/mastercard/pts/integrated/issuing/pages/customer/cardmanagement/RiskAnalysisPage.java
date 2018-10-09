@@ -39,7 +39,7 @@ public class RiskAnalysisPage extends AbstractBasePage {
 	TestContext context;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
-	private MCWebElement processSelected;
+	private MCWebElement saveBtn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Process All']")
 	private MCWebElement processAllBtn;
@@ -48,7 +48,7 @@ public class RiskAnalysisPage extends AbstractBasePage {
 	private MCWebElement riskAnalysisBtn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']/td[1]")
-	private MCWebElements allBatchNumberTxt;
+	private MCWebElements txtAllBatchNumber;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Risk Analysis']")
 	private MCWebElement riskAnalysisLink;
@@ -71,8 +71,8 @@ public class RiskAnalysisPage extends AbstractBasePage {
 
 	public List<String> allBatchNumberRetrieval() {
 		List<String> batchnumbers = new ArrayList<>();
-		for (int i = 0; i < allBatchNumberTxt.getElements().size(); i++) {
-			batchnumbers.add(allBatchNumberTxt.getElements().get(i).getText());
+		for (int i = 0; i < txtAllBatchNumber.getElements().size(); i++) {
+			batchnumbers.add(txtAllBatchNumber.getElements().get(i).getText());
 		}
 		return batchnumbers;
 	}
@@ -93,7 +93,7 @@ public class RiskAnalysisPage extends AbstractBasePage {
 		checkWhetherRecordPersists();
 		String checkBox = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd'][" + identifyBatchNumberToProcess() + 1 + "]/td[8]/span/input";
 		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(checkBox)));
-		processSelected.click();
+		saveBtn.click();
 		verifyOperationStatus();
 	}
 

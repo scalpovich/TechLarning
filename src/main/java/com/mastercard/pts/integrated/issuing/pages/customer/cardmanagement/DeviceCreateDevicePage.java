@@ -166,14 +166,6 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Existing Client Code')]")
 	private MCWebElement existingClientLabel;
-	
-	@PageElement(findBy = FindBy.ID, valueToFind = "card_type_photo")
-	private MCWebElement photoFileInput;
-
-	@PageElement(findBy = FindBy.ID, valueToFind = "uploadPhoto")
-	private MCWebElement uploadPhotoBtn;
-
-	private static final String PHOTO_FILE_PATH = "src/main/resources/InstitutionLogo/CreditLogo.png";
 
 	public String getWalletsFromPage(){
 		return getTextFromPage(createdWalletList);
@@ -340,7 +332,6 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
 		SimulatorUtilities.wait(1000);
 		String programCodeDDwnBy = "view:programCode:input:dropdowncomponent";
-
 		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)) {
 			enterText(existingDeviceNumberTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));
 			SimulatorUtilities.wait(8000);
@@ -354,17 +345,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			selectByVisibleText(customerTypeDDwn, device.getCustomerType());
 			SimulatorUtilities.wait(10000);
 			waitForWicket(driver());
-
-			try {
-				selectByVisibleText(programCodeDDwn, device.getProgramCode());
-				SimulatorUtilities.wait(2000);			
-			} catch (StaleElementReferenceException e) {
-				MCWebElement element = getMCWebElementFromWebElement(
-						FindBy.NAME, programCodeDDwnBy);
-				selectByVisibleText(element, device.getProgramCode());
-			}
-
-			SimulatorUtilities.wait(2000);			
+			selectByVisibleText(programCodeDDwn, device.getProgramCode());		
 		}
 		SimulatorUtilities.wait(10000);
 		clickNextButton();
@@ -465,14 +446,6 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			WebElementUtils.enterText(creditLimitTxt,String.valueOf(Integer.parseInt(program.getCreditLimit())+1));
 		}
 
-		if(device.getPhotoIndicator().equals("Photo [1]")) {
-			String filePath = new File(PHOTO_FILE_PATH).getAbsolutePath();
-			logger.info("upload file path : {}",filePath);
-			photoFileInput.sendKeys(filePath);
-			SimulatorUtilities.wait(5000);
-			clickWhenClickable(uploadPhotoBtn);
-			SimulatorUtilities.wait(5000);
-		}
 		clickNextButton();		
 	}
 }

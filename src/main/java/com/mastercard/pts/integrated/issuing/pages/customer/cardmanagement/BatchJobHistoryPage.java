@@ -1,18 +1,12 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collection;
 
 import junit.framework.Assert;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -20,8 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.google.common.base.Strings;
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BatchJobHistory;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -152,37 +144,6 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 		}
 
 	}
-	
-	public void verifyBatchjobStatusDisplayed(BatchJobHistory batchjobhist) {
-		try {
-			WebElement SelectJobNoRecords = getFinder().getWebDriver()
-					.findElement(By.xpath("//td[contains(.,'No Records Found')]"));
-			if (SelectJobNoRecords.isDisplayed()) {
-				logger.info("No Records displayed or batch processed succesfully");
-			}
-		} catch (Exception e) {
-			WebElement SelectJob = getFinder().getWebDriver()
-					.findElement(By.xpath("//td[contains(.,'" + batchjobhist.getJobIdBatchJobHistory() + "')]"));
-			clickWhenClickable(SelectJob);
-			waitForResponse();
-		}
-
-	}
-	
-	public void waitForResponse() {
-		String statuslabelTxt;
-		Integer i = 0;
-		switchToViewBatchDetailsFrame();
-		do {
-			statuslabelTxt = statusTxt.getText();
-			CustomUtils.ThreadDotSleep(2000);
-		} while (Strings.isNullOrEmpty(statuslabelTxt) && i++ < 100);
-
-		logger.info("Status  -", statuslabelTxt);
-		Assert.assertTrue(!Strings.isNullOrEmpty(statuslabelTxt));
-		clickWhenClickable(closeBtn);
-		switchToDefaultFrame();
-	}
 
 	public void waitForSucces() {
 		String statusString = "SUCCESS [2]";
@@ -198,25 +159,6 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 		Assert.assertEquals(statusString, statuslabelTxt);
 		clickWhenClickable(closeBtn);
 		switchToDefaultFrame();
-	}
-	
-	public boolean checkBatchStatus(BatchJobHistory batchjobhistory) {
-        
-        selectByVisibleText(batchTypeDDwn, batchjobhistory.getBatchType());
-        SimulatorUtilities.wait(1000);
-        WebElementUtils.pickDate(fromJobStartDttmDPkr, LocalDate.now());
-        WebElementUtils.pickDate(toJobStartDttmDPkr, LocalDate.now());
-        enterValueinTextBox(jobIdTxt, batchjobhistory.getJobIdBatchJobHistory());
-        selectByVisibleText(batchDDwn,batchjobhistory.getBatch());
-        clickSearchButton();
-        waitForBatchStatus(status);
-
-       context.put("CSVno",csvFileName.getText());
-        if(status.getText().equals("SUCCESS [2]")){
-               return true;
-        } else {
-               return false;
-        }
 	}
 
 	@Override

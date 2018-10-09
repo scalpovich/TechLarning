@@ -1,13 +1,13 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.RiskAnalysisPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
-@Workflow
+@Component
 public class RiskAnalysisBatchFlow {
 
 	@Autowired
