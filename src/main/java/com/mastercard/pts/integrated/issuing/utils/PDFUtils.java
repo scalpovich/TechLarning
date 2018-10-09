@@ -182,7 +182,7 @@ public class PDFUtils {
             // split by RegEx
              row = pdfFileInText.split(genericReports.getReportRegEx());
              for(String text : row){
-             	map.put(i++, text);
+             	map.put((i++).toString(), text);
              }
 			}
 			pd.close();

@@ -37,6 +37,8 @@ public class ReportVerificationWorkflow {
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
 	public static final int BILL_AMOUNT_INDEX_VALUE = 3;
+	
+	boolean assertStatus = false;
 
     public void verifyGenericReport(GenericReport report) {
 		page = (ReportVerificationPage)getInstance(report.getReportName());
@@ -62,13 +64,16 @@ public class ReportVerificationWorkflow {
 				assertTrue(field+" did not match with Authoraization Report content", v.contains(fieldValue));
 				logger.info("{field} is present in the report",fieldValue);
 			});
-			}
-			else{
-				assertTrue("Device Number is not present in the Report"+report.getDeviceNumber(),false);
+			toggle();
 			}
 		});
+		assertTrue("Device Number is not present in the Report"+report.getDeviceNumber(),assertStatus);
 		}
 	}
+    
+    private void toggle(){
+    	assertStatus = true;
+    }
     
     public void verifyStatement(GenericReport report) {		
 		Map<Object, String> reportContent = getReportContent(report);
