@@ -56,6 +56,7 @@ public class ConstantData {
 	public static final String AUTHORIZATION_REPORT_FILE_KEY = "Auto";
 	public static final String AUTHORIZATION_CODE = "authCode";
 	public static final String TRANSACTION_AMOUNT = "transactionAmount";
+	public static final String TRANSACTION_AMOUNT_BD = "transactionAmountbd";
 	public static final String INTERNATIONAL_ALLOW_DISALLOW = "International Use Allow/Disallow [400]";
 	public static final String ECCOMERCE_ALLOW_DISALLOW= "E-commerce Activation/Deactivation [304]";
 
@@ -63,6 +64,8 @@ public class ConstantData {
 
 	public static final String API_NAME = "API_NAME";
 	public static final String MSR_CARD = "magnetic stripe card";
+	public static final String NFC_MSR_CARD = "mag stripe";
+	public static final String MSR_NFC_PURCHASE = "MSR_NFC_PURCHASE";
 	public static final String DEBIT_DEVICE = "Debitdevice";
 	public static final String PREPAID_DEVICE = "Prepaiddevice";
 	
@@ -72,9 +75,11 @@ public class ConstantData {
 	public static final String END_RANGE_DIGITS = "9999999999";
 	public static final String RRN_NUMBER = "rrnumber";
 	
+	public static final String THREE_D_SECURE_NO_CVV2 = "3D_SECURE_NO_CVV2";
 	public static final String THREE_D_SECURE_TRANSACTION = "3D_SECURE_CAVV";
 	public static final String DATA_ELEMENT_CAVV = "048.TLV.43";
 	
+	public static final String DEVICE_RANGE_DATA = "DeviceRangeData";
 	public static final String INSTITUTION_KEY = "institution";
 	public static final String PRODUCT_IDENTITY = "productIdentity";
 	public static final String INSTITUTION_CODE_KEY = "code";
@@ -103,7 +108,24 @@ public class ConstantData {
 	
 	public static final String ZERO_ZERO = "00";
 	public static final String NINE_NINE = "99";
+	
 
+	public static final String CLIENT_LIMIT = "Client";
+	public static final String AVAIL_CLIENT_LIMIT = "Avail Client";
+	
+	
+	public static final String ACCOUNT_LIMIT = "Account";
+	public static final String AVAIL_ACCOUNT_LIMIT = "Avail Account";
+	
+	public static final String CARD_LIMIT = "Card";
+	public static final String AVAIL_CARD_LIMIT = "Avail Card";	
+	
+	public static final String TEMPORARY_LIMIT = "Temporary [T]";
+	public static final String PERMANENT_LIMIT = "Permanent [P]";	
+	
+	public static final String CREDIT_LIMIT_CHANGE_REQUEST = "226 - Credit limit Change Request";
+	public static final String CREDIT_LIMIT_CHANGE_COMMERCIAL_CARDS = 	"227 - Credit limit Change Commercial Cards";	
+	
 	private ConstantData() {
 	}
 	/*

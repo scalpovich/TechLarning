@@ -2,9 +2,11 @@ package com.mastercard.pts.integrated.issuing.pages.customer.administration;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -43,6 +45,7 @@ public class AssignProgramPage extends AbstractBasePage {
 				"Add SR Visibility at Program Level",
 				() -> {
 					WebElementUtils.selectDDByVisibleText(programDDwn, program.getProgramCodeDevice());
+					SimulatorUtilities.wait(10000);
 					WebElementUtils .selectAllOptionsInListBox(availableServiceCodeLstBx);
 					addServiceCodeBtn.click();
 					clickSaveButton();

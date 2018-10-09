@@ -74,12 +74,10 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:billingCycleCode:input:dropdowncomponent")
 	private MCWebElement billingCycleCodeDDwn;
-
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "whiteListedMcgCode:input:dropdowncomponent")
 	private MCWebElement editWhiteListedMCGDdwn;
-	
-	
-	
+
 	private int reservedAmount = 0; // MiscUtils.randomNumber(5);
 
 	public void inputWalletPlanCode(String walletPlanCodeString) {
@@ -99,7 +97,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	}
 
 	public void selectProgramType(String programType) {
-		WebElementUtils.selectDropDownByVisibleText(programTypeDDwn, programType);
+		selectByVisibleText(programTypeDDwn, programType);
 	}
 
 	public void selectUsage(String usage) {
@@ -172,14 +170,10 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			SimulatorUtilities.wait(2000);
 			selectProductType(productType);
 			waitForPageToLoad(driver());
-			if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
-				selectByVisibleText(programTypeDDwn, walletPlan.getProgramType());
-			} else {
-				SimulatorUtilities.wait(2000);
-				selectProgramType(walletPlan.getProgramType());
-				waitForPageToLoad(driver());
-				SimulatorUtilities.wait(2000);
-			}
+			SimulatorUtilities.wait(2000);
+			selectProgramType(walletPlan.getProgramType());
+			waitForPageToLoad(driver());
+			SimulatorUtilities.wait(2000);
 			selectCurrency(walletPlan.getCurrency());
 			waitForPageToLoad(driver());
 			SimulatorUtilities.wait(2000);
@@ -250,7 +244,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	public void setReservedAmount(int reservedAmount){
 		this.reservedAmount=reservedAmount; 
 	}
-
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(walletPlanCodeSearchTxt));
@@ -269,5 +263,4 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			clickSaveButton();
 		});
 	}
-
 }

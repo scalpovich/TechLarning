@@ -1,13 +1,11 @@
-!-- author: e076168
 Narrative:
 As a user
 I want to login into customer portal 
-In order to crate supplementary debit card
+In order to create supplementary debit card
 
 
 Meta:
 @StoryName debit_card
-@DebitRegression
 
 Scenario: To verify functionality of debit supplementary Limited Validity Virtual Card [8] card boarding
 Given setting json values in excel for Debit

@@ -154,7 +154,6 @@ public class TransactionSteps {
 		// operation of MAS/MDFS ... Storing transaction name in context to use it at runtime
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		Transaction transactionData = generateMasTestDataForTransaction(transaction);
-
 		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData, sameCard);
 	}
 
@@ -278,6 +277,9 @@ public class TransactionSteps {
 			transactionData.setCardDataElementsDynamic("035.05", "000" + device.getIcvvData());
 		} else if (transactionWorkflow.isContains(transaction, "MSR") || transactionWorkflow.isContains(transaction, "FALLBACK") ) {
 			transactionData.setCardDataElementsDynamic("035.05", "000" + device.getCvvData());
+		}
+		if(transaction.contains(ConstantData.MSR_NFC_PURCHASE)){
+			transactionData.setCardDataElementsDynamic("035.05", "*************");
 		}
 	}
 
@@ -502,6 +504,7 @@ public class TransactionSteps {
 
 	@When("$tool test results are verified for $transaction")
 	@Then("$tool test results are verified for $transaction")
+	@Given("$tool test results are verified for $transaction")
 	public void thenVisaTestResultsAreReported(String tool, String transaction) {
 		String testResults = null;
 		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseToSelect(transaction);

@@ -4,10 +4,11 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.steps.AbstractBaseSteps;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.CloseBatchFlows;
 
 @Component
-public class CloseBatchSteps {
+public class CloseBatchSteps extends AbstractBaseSteps {
 	@Autowired
 	CloseBatchFlows closeBatchFlows;
 
@@ -19,7 +20,7 @@ public class CloseBatchSteps {
 
 	@When("user processes close batch for new Application for FileUpload")
 	public void closeFirstBatchExecutionForNewApplication(){
-		closeBatchFlows.closeFirstBatchExecution();
+		closeBatchFlows.closeBatchExecutionForFileUpload();
 	}
 
 }

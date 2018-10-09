@@ -1,4 +1,6 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Proc
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
 @Component
 public class ProcessBatchesFlows {
@@ -32,12 +35,17 @@ public class ProcessBatchesFlows {
 			ProcessBatches processBatchesDomainPage, String FileName) {
 		return processBatchesPage.verifyFileProcessUpload(processBatchesDomainPage, FileName);
 	}
+	public boolean verifyProcessUploadBatch(
+			ProcessBatches processBatchesDomainPage, String FileName) {
+		return processBatchesPage.processBatchUpload(processBatchesDomainPage, FileName);
+	}
 	public boolean verifyErrorMessageFlows(String errorType) {
 		return processBatchesPage.verifyErrorMessage(errorType);
 	}
 
 	public String processUploadBatches(String batchName, String fileName) {
 		processBatchesPage = navigator.navigateToPage(ProcessBatchesPage.class);
+		SimulatorUtilities.wait(5000);
 		processBatchesPage.processUploadBatch(batchName);
 		processBatchesPage.checkAndSumbitFile(fileName);
 		return processBatchesPage.retrieveJobID(fileName);
