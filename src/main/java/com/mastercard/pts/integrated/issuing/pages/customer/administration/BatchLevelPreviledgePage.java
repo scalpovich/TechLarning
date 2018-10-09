@@ -3,7 +3,6 @@ package com.mastercard.pts.integrated.issuing.pages.customer.administration;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.server.handler.GetScreenOrientation;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Strings;
@@ -26,10 +25,10 @@ public class BatchLevelPreviledgePage extends BatchLevelPriviledge {
 	public String optionLocator = "//span[.='%s']/../../..//input";
 	public String accessCheckBox = "//div[@id='tab%i']//label[.='Access']/preceding-sibling::input";
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[text()='Entity Type']//following-sibling::td[@class='field'][1]/select")
 	private MCWebElement entityType;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:1:componentPanel:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[text()='Entity ID']//following-sibling::td[@class='field'][1]/select")
 	private MCWebElement entityID;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Search']")
@@ -62,9 +61,6 @@ public class BatchLevelPreviledgePage extends BatchLevelPriviledge {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Client Photo/Flat File Download Batch')]/following::input")
 	private MCWebElement clientPhotoDownloadChkBox;
 	
-	
-	
-
 	public WebElement BatchTypeAccessWithName(String OptionName) {
 		return getFinder().getWebDriver().findElement(
 				By.xpath(optionLocator.replace("%s", OptionName)));

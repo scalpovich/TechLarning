@@ -66,13 +66,6 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 	private MCWebElement searchBtn;
 
 	public String calelement = "//td[7]";
-
-	@PageElement (findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr/td[6]")
-	private MCWebElement status;
-
-
-	@PageElement(findBy = FindBy.X_PATH, valueToFind="//table[@class='dataview']/tbody/tr/td[8]")
-	private MCWebElement csvFileName;
 	
 	@Autowired
 	private TestContext context;

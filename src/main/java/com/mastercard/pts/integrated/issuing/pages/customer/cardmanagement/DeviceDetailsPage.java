@@ -1,9 +1,7 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -65,7 +63,7 @@ public class DeviceDetailsPage extends AbstractCardManagementPage {
 		return statusText;
 	}
 	
-	public void retrievDeviceApplicationNumber() {
+	public void retriveDeviceApplicationNumber() {
 		Device device = context.get(ContextConstants.DEVICE);
 		enterText(deviceNumber, device.getDeviceNumber());
 		clickSearchButton();

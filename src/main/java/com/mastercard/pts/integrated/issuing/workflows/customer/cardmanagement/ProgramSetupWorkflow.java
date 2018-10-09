@@ -79,7 +79,7 @@ public class ProgramSetupWorkflow {
 		page.createTransactionLimitPlan(transactionLimitPlan);
 	}
 	//Transaction Limit Plan ends
-	
+	 
 	//Device configuration
 	public void createDeviceJoiningAndMemberShipFeePlan(DeviceJoiningAndMemberShipFeePlan deviceJoiningAndMemberShipFeePlan) {
 		DeviceJoiningAndMembershipFeePlanPage page = navigator.navigateToPage(DeviceJoiningAndMembershipFeePlanPage.class);
