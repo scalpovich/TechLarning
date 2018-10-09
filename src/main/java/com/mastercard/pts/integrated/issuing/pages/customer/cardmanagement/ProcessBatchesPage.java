@@ -63,7 +63,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	private MCWebElement submitBtn;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Rejected')]")
-	private MCWebElement rejectedTxt;
+	private MCWebElement rejectBtn;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers']//td[3]/span")
 	private MCWebElement rejectDueToMandatory;
@@ -190,7 +190,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	
 	private String reasonToReject = "";
 	
-	Boolean isProcess = false;
+	private Boolean isProcess = false;
 	
 	private String failStatus = "FAILED [3]";
 	
@@ -616,7 +616,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			else if(batchStatus.equals(failStatus)){
 				isProcess = true;
 				SimulatorUtilities.wait(5000);
-				ClickButton(rejectedTxt);
+				ClickButton(rejectBtn);
 				SimulatorUtilities.wait(5000);
 				runWithinPopup("Rejected Record Details", () -> {
 					reasonToReject = getTextFromPage(rejectDueToMandatory);

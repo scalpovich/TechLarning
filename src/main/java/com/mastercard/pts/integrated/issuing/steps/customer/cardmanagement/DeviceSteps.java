@@ -4,6 +4,7 @@ import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.junit.Assert;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,7 +28,7 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.P
 @Component
 public class DeviceSteps {
 
-	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(DeviceSteps.class);
+	private static final Logger logger = LoggerFactory.getLogger(DeviceSteps.class);
 	
 	@Autowired
 	private TestContext context;

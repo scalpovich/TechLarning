@@ -17,7 +17,6 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PinGenerationBatch;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -81,31 +80,31 @@ public class PinGenerationBatchPage extends AbstractBasePage {
 		}
 	
 	public void processPinGenerationBatchNewDeviceSupplementary(PinGenerationBatch batch) {
-		//Device device = context.get(ContextConstants.DEVICE);
-		String batchNumber=context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
+		// Device device = context.get(ContextConstants.DEVICE);
+		String batchNumber = context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
 		WebElementUtils.enterText(batchNumberTxt, batchNumber);
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		waitAndSearchForRecordToExistForSupplementary();
 		verifyOperationStatus();
 	}
-		
-		public void processPinProductionBatchNewDevice(PinGenerationBatch batch) {
-		Device device=context.get(ContextConstants.DEVICE);
+
+	public void processPinProductionBatchNewDevice(PinGenerationBatch batch) {
+		Device device = context.get(ContextConstants.DEVICE);
 		WebElementUtils.enterText(batchNumberTxt, device.getBatchNumber());
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		waitAndSearchForRecordToExist();
 		clickWhenClickable(processAllBtn);
 		verifyOperationStatus();
-}
-		
-		public void processPinProductionBatchNewDeviceCredit(PinGenerationBatch batch) {
-			String batchNumber=context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
-			WebElementUtils.enterText(batchNumberTxt, batchNumber);
-			waitAndSearchForRecordToExist();
-			clickWhenClickable(processAllBtn);
-			verifyOperationStatus();
 	}
-		
+
+	public void processPinProductionBatchNewDeviceCredit(PinGenerationBatch batch) {
+		String batchNumber = context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
+		WebElementUtils.enterText(batchNumberTxt, batchNumber);
+		waitAndSearchForRecordToExist();
+		clickWhenClickable(processAllBtn);
+		verifyOperationStatus();
+	}
+
 	public void processPinProductionBatchForAllForFileUpload(PinGenerationBatch batch) {
 		List<String> batchNumbers = context.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
 		waitForLoaderToDisappear();

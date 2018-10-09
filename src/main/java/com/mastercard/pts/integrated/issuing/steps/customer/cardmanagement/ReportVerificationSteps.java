@@ -1,7 +1,5 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
-
-
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.slf4j.Logger;
