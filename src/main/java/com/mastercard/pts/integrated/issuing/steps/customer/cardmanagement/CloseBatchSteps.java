@@ -20,7 +20,7 @@ public class CloseBatchSteps extends AbstractBaseSteps {
 
 	@When("user processes close batch for new Application for FileUpload")
 	public void closeFirstBatchExecutionForNewApplication(){
-		closeBatchFlows.closeFirstBatchExecution();
+		closeBatchFlows.closeBatchExecutionForFileUpload();
 	}
 
 }
