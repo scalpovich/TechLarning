@@ -124,8 +124,8 @@ public class ConstantData {
 	public static final String PERMANENT_LIMIT = "Permanent [P]";	
 	
 	public static final String CREDIT_LIMIT_CHANGE_REQUEST = "226 - Credit limit Change Request";
-	public static final String CREDIT_LIMIT_CHANGE_COMMERCIAL_CARDS = 	"227 - Credit limit Change Commercial Cards";
-
+	public static final String CREDIT_LIMIT_CHANGE_COMMERCIAL_CARDS = 	"227 - Credit limit Change Commercial Cards";	
+	
 	private ConstantData() {
 	}
 
