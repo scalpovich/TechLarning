@@ -13,8 +13,11 @@ public class BatchLevelPrivilegesWorkflow extends AbstractBaseFlows {
 
 	@Autowired
 	private Navigator navigator;
+	
 
 	Portal portal = new Portal();
+	
+	private static final String ENTITY_ID = "Truptii Gaikwad [Truptii]";
 
 	public void selectEntityTypeAsUser(String userName) {
 		batch.selectEntityType();
@@ -27,7 +30,7 @@ public class BatchLevelPrivilegesWorkflow extends AbstractBaseFlows {
 		navigator.navigateToPage(BatchLevelPreviledgePage.class);
 		batch.selectEntityType("User [U]");
 		portal.getUserName();
-		batch.selectEntityID("Truptii Gaikwad [Truptii]");
+		batch.selectEntityID(ENTITY_ID);
 		batch.clickSearchBtn();
 		batch.clickBatchDownloadTab();
 		batch.verifyClientPhotoBatchPresent();
@@ -37,7 +40,7 @@ public class BatchLevelPrivilegesWorkflow extends AbstractBaseFlows {
 		navigator.navigateToPage(BatchLevelPreviledgePage.class);
 		batch.selectEntityType("User [U]");
 		portal.getUserName();
-		batch.selectEntityID("Truptii Gaikwad [Truptii]");
+		batch.selectEntityID(ENTITY_ID);
 		batch.clickSearchBtn();
 		batch.supplyAccessToClientPhotoBatch();
 	}
