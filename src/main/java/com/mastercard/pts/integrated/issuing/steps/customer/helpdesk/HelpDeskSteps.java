@@ -896,10 +896,11 @@ public class HelpDeskSteps {
 			context.put(ConstantData.BILLED_INTEREST, transactionAmount);
 			logger.info("BILLED_INTEREST" + context.get(ConstantData.BILLED_INTEREST));
 		} else if (device.getCategory().equalsIgnoreCase("Unpaid1")) {
+			logger.info("Unpaid1->" + context.get(ContextConstants.MINIMUM_PAYMENT_DUE));
 			transactionAmount = context.get(ContextConstants.MINIMUM_PAYMENT_DUE);
-			logger.info("Unpaid1->" + transactionAmount);
 		} else if (device.getCategory().equalsIgnoreCase("Unpaid2")) {
 			transactionAmount = context.get(ContextConstants.MINIMUM_PAYMENT_DUE);
+			logger.info("Unpaid2->" + context.get(ContextConstants.MINIMUM_PAYMENT_DUE));
 		}
 
 		assertThat(category + " " + amount + BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device),
