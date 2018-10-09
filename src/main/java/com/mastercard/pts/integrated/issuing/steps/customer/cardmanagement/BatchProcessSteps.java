@@ -1,14 +1,12 @@
 
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
-import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Locale;
@@ -30,7 +28,6 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceGenerationBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequest;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ClientDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
@@ -41,8 +38,6 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreP
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
-import com.mastercard.pts.integrated.issuing.pages.collect.administration.AdministrationHomePage;
-import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
@@ -244,15 +239,6 @@ public class BatchProcessSteps {
 	public void whenDownloadBatchIsExecutedForPrepaid(String batchType, String type){
 		ProcessBatches batch =  ProcessBatches.createWithProvider(provider);
 		batch.setBatchName("Statement Download [STATEMENT_DOWNLOAD]");
-		batch.setProductType(ProductType.fromShortName(type));
-		batchProcessWorkflow.processDownloadBatch(batch);
-	}
-	
-	@When("cardholder dump download batch is processed for $type")
-	public void whenDownloadBatchIsProcessedForCredit(String batchType, String type){
-		ProcessBatches batch =  ProcessBatches.createWithProvider(provider);
-		batch.setBatchName("Cardholder Dump [CARDHOLDER_DUMP]");
-		batch.setExtractType("FULL [F]");
 		batch.setProductType(ProductType.fromShortName(type));
 		batchProcessWorkflow.processDownloadBatch(batch);
 	}

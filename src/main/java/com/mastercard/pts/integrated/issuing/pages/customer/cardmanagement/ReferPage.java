@@ -29,50 +29,48 @@ public class ReferPage extends AbstractCardManagementPage {
 	// Currency [ISSAP0F]
 
 	private static final String REFER_FRAME = "Edit Application";
-	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
-	private MCWebElement addEmbossingPriorityPass;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement save;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='applicationNumber']")
-	private MCWebElement applicationNumberTxt;
+	private MCWebElement txtApplicationNumber;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='fromDate']/../..")
-	private MCWebElement fromDatePicker;
+	private MCWebElement dtPkrFrom;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='toDate']/../..")
-	private MCWebElement toDatePicker;
+	private MCWebElement dtPkrTo;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[1]/td[8]/span//img")
 	private MCWebElement editImg;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[@name='approve']")
-	private MCWebElement referBtn;
+	private MCWebElement btnRefer;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='formNumber']")
-	private MCWebElement formNumberTxt;
+	private MCWebElement txtFormNumber;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='batchNum']//span[@class='labeltextf']")
-	private MCWebElement batchNumberTxt;
+	private MCWebElement txtBatchNumber;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[1]/td[1]/span//span")
-	private MCWebElement applicationNumberFileUploadTxt;
+	private MCWebElement txtApplicationNumberFileUpload;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Refer']")
 	private MCWebElement referLink;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='firstName']")
-	private MCWebElement firstNameTxt;
+	private MCWebElement txtFirstName;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='lastName']")
-	private MCWebElement lastNameTxt;
+	private MCWebElement txtLastName;
 
 	public void referapplication() {
 		Device device = context.get(CreditConstants.APPLICATION);
-		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
-		WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
-		WebElementUtils.pickDate(toDatePicker, LocalDate.now());
+		WebElementUtils.enterText(txtApplicationNumber, device.getApplicationNumber());
+		WebElementUtils.pickDate(dtPkrFrom, LocalDate.now().minusDays(1));
+		WebElementUtils.pickDate(dtPkrTo, LocalDate.now());
 		clickSearchButton();
 	}
 
@@ -83,7 +81,7 @@ public class ReferPage extends AbstractCardManagementPage {
 		SimulatorUtilities.wait(5000);
 
 		runWithinPopup("Edit Application", () -> {
-			clickWhenClickable(referBtn);
+			clickWhenClickable(btnRefer);
 		});
 
 		verifyOperationStatus();
@@ -96,19 +94,19 @@ public class ReferPage extends AbstractCardManagementPage {
 		List<String> allApplicationNumbers = new LinkedList<>();
 		for (Map.Entry<String, Object> entry : mapFileUpload.entrySet()) {
 			HelpDeskGeneral helpDeskGeneral = (HelpDeskGeneral) entry.getValue();
-			WebElementUtils.enterText(formNumberTxt, helpDeskGeneral.getFormNumber());
-			WebElementUtils.enterText(firstNameTxt, helpDeskGeneral.getFirstName());
-			WebElementUtils.enterText(lastNameTxt, helpDeskGeneral.getLastName());
-			WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
-			WebElementUtils.pickDate(toDatePicker, LocalDate.now());
+			WebElementUtils.enterText(txtFormNumber, helpDeskGeneral.getFormNumber());
+			WebElementUtils.enterText(txtFirstName, helpDeskGeneral.getFirstName());
+			WebElementUtils.enterText(txtLastName, helpDeskGeneral.getLastName());
+			WebElementUtils.pickDate(dtPkrFrom, LocalDate.now().minusDays(1));
+			WebElementUtils.pickDate(dtPkrTo, LocalDate.now());
 			clickSearchButton();
 			waitForPageToLoad(driver());
-			allApplicationNumbers.add(applicationNumberFileUploadTxt.getText());
+			allApplicationNumbers.add(txtApplicationNumberFileUpload.getText());
 			clickWhenClickable(editImg);
 			switchToIframe(REFER_FRAME);
 			SimulatorUtilities.wait(8000);
-			allBatchNumbers.add(batchNumberTxt.getText());
-			clickWhenClickablewithWicket(referBtn);
+			allBatchNumbers.add(txtBatchNumber.getText());
+			clickWhenClickablewithWicket(btnRefer);
 			SimulatorUtilities.wait(10000);
 			clickWhenClickable(referLink);
 		}
