@@ -188,13 +188,13 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	
 	private static final int NUMBER_OF_ATTEMPTS_TO_CHECK_SUCCESS_STATE=100;
 	
-	private String reasonToReject = "";
+	private final String reasonToReject = "";
 	
-	private Boolean isProcess = false;
+	private final Boolean isProcess = false;
 	
-	private String failStatus = "FAILED [3]";
+	private final String failStatus = "FAILED [3]";
 	
-	private String successStatus = "SUCCESS [2]";
+	private final String successStatus = "SUCCESS [2]";
 
 	public void selectBatchType(String option) {
 		selectByVisibleText(batchTypeDDwn, option);
