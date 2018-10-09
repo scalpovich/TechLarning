@@ -116,6 +116,8 @@ public class ContextConstants {
 	
 	public static final String CREDIT_LIMIT_AFTER_SR = "CREDIT_LIMIT_AFTER_SR";
 	
+	public static final String REJECTED_FILE_UPLOAD = "REJECTED_FILE_UPLOAD";
+	
 	public static final String JOB_ID = "JOB_ID";
 	
 	public static final String CLIENT_PHOTO_BATCH_PROCESS_TIME = "CLIENT_PHOTO_BATCH_PROCESS_TIME";

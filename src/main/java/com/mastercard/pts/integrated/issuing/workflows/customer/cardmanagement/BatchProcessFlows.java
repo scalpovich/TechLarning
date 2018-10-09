@@ -135,6 +135,11 @@ public class BatchProcessFlows extends MenuFlows {
 		page.processPreProductionBatchNewApplicationForFileUpload(batch);
 	}
 	
+	public void processPreProductionBatchNewApplicationFileUploadForPrepaid(PreProductionBatch batch) {
+		PreProductionBatchPage page = navigator.navigateToPage(PreProductionBatchPage.class);
+		page.processPreProductionBatchNewApplicationForFileUploadForPrepaid(batch);
+	}
+	
 	public void processDeviceProductionBatch(DeviceProductionBatch batch) {
 		deviceProductionPage = navigator.navigateToPage(DeviceProductionPage.class);
 		deviceProductionPage.processDeviceProductionBatch(batch);
@@ -153,6 +158,11 @@ public class BatchProcessFlows extends MenuFlows {
 	public void processDeviceProductionBatchAllForFileUpload(DeviceProductionBatch batch) {
 		deviceProductionPage = navigator.navigateToPage(DeviceProductionPage.class);
 		deviceProductionPage.processDeviceProductionBatchForAllForFileUpload(batch);
+	}
+	
+	public void processDeviceProductionBatchAllForFileUploadForPrepaid(DeviceProductionBatch batch) {
+		deviceProductionPage = navigator.navigateToPage(DeviceProductionPage.class);
+		deviceProductionPage.processDeviceProductionBatchForAllForFileUploadForPrepaid(batch);
 	}
 	
 	public void processPinProductionBatchAllForFileUpload(PinGenerationBatch batch) {
