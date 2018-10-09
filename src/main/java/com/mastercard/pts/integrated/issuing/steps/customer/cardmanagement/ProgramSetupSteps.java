@@ -791,12 +791,17 @@ public class ProgramSetupSteps {
 		if (Objects.nonNull(deviceJoiningAndMemberShipFeePlan)) {
 			devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
 			devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
-			devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
 		} else {
 			devicePlan.setBaseDeviceJoiningMemberShipPlan(data.getDeviceJoiningAndMemberShipFeePlan());
 			devicePlan.setBaseDeviceEventBasedPlan(data.getDeviceEventBasedFeePlan());
+		}
+		
+		if (Objects.nonNull(transactionLimitPlan)) {
+			devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		}else{
 			devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());
 		}
+
 		if (Objects.nonNull(transactionPlan)) {
 			devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 			devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
@@ -842,8 +847,7 @@ public class ProgramSetupSteps {
 	
 	// refactored and created a new method that could be used in Device Plan to read test data from device context and/or testdata
 	private void settingDevicePlanTestData(String productType, String deviceType) {
-		// virtual cards are pinless so even if this statement is called by
-		// mistake, we are setting Pin to false
+		// virtual cards are pinless so even if this statement is called by mistake, we are setting Pin to false
 		if (deviceType.toLowerCase().contains("virtual")) {
 			setPinRequiredToFalse();
 		}
@@ -854,13 +858,18 @@ public class ProgramSetupSteps {
 		if (Objects.nonNull(deviceJoiningAndMemberShipFeePlan)) {
 			devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
 			devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
-			devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
 		} else {
 			devicePlan.setBaseDeviceJoiningMemberShipPlan(data.getDeviceJoiningAndMemberShipFeePlan());
 			devicePlan.setBaseDeviceEventBasedPlan(data.getDeviceEventBasedFeePlan());
-			devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());
 			setPinRequiredToDefaultState();
 		}
+
+		if (Objects.nonNull(transactionLimitPlan)) {
+			devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+		}else{
+			devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());
+		}
+
 		if (Objects.nonNull(transactionPlan)) {
 			devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 			devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
@@ -869,9 +878,7 @@ public class ProgramSetupSteps {
 			devicePlan.setBeforeKYC(data.getTransactionPlan());
 		}
 
-		// setting a flag through setter to figure out if the card is pinless
-		// card or not. This is used in TransactionSteps to set ExpiryDate in
-		// case of PinLess Card
+		// setting a flag through setter to figure out if the card is pinless card or not. This is used in TransactionSteps to set ExpiryDate in case of PinLess Card
 		if ("false".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
 			devicePlan.setIsPinLess("YES");
 	}
@@ -1619,7 +1626,23 @@ public class ProgramSetupSteps {
 	public void andUserEditsProgramToUpdateCountryWhiteBlackList(String editItem) {
 		program.setCountryWhiteListAndBlackListPlan(provider);
 		programSetupWorkflow.editsProgram(program,editItem);
-
 	}
+
+	@When("user creates transaction limit plan for prodcut $productType and limit type $limitType")
+	public void createTranactionLimitPlan(String type, String limitType){
+		transactionLimitPlan = TransactionLimitPlan.createWithProvider(dataProvider);
+		transactionLimitPlan.setIframeproductType(ProductType.fromShortName(type));
+		TransactionLimitPlanDetails details = TransactionLimitPlanDetails.createWithProvider(provider);
+		transactionLimitPlan.getTransactionLimitPlanDetails().add(details);
+		programSetupWorkflow.createTransactionLimitPlan(transactionLimitPlan,limitType);	
+	}
+
+	@When("user uses existing transaction limit plan for limit type $limitType")
+	public void userAlreadyCreatedTransactionLimitPlan(String limitType){
+		transactionLimitPlan = TransactionLimitPlan.createWithProvider(dataProvider);
+		transactionLimitPlan.setTransactionLimitPlanCode(provider.getString(limitType));
+	}
+
+
 
 }
