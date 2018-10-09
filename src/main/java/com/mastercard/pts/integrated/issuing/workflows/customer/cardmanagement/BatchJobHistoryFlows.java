@@ -19,5 +19,4 @@ public class BatchJobHistoryFlows extends MenuFlows {
 		batchjobhistorypage.searchBatchJob(batchjobhist);
 		batchjobhistorypage.clickBatchjob(batchjobhist);
 	}
-
 }
