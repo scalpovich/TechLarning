@@ -571,6 +571,7 @@ public class TransactionSteps {
 	 * @param amount : Decimal representation for amount
 	 * */
 	@When("user updates transaction amount to $amount")
+	@Given("user updates transaction amount to $amount")
 	public void userSetTransactionAmount(Double amount){
 		int i = new Double(amount * 100).intValue(); 
 		Device device = context.get(ContextConstants.DEVICE);
