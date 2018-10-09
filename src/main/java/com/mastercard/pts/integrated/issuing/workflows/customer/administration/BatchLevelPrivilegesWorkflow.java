@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.administration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.configuration.AppEnvironment;
 import com.mastercard.pts.integrated.issuing.configuration.Portal;
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.BatchLevelPreviledgePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
@@ -17,8 +18,9 @@ public class BatchLevelPrivilegesWorkflow extends AbstractBaseFlows {
 
 	Portal portal = new Portal();
 	
-	private static final String ENTITY_ID = "Truptii Gaikwad [Truptii]";
-
+	@Autowired
+	private AppEnvironment environment;
+	
 	public void selectEntityTypeAsUser(String userName) {
 		batch.selectEntityType();
 		batch.selectEntityID(userName);
@@ -28,9 +30,9 @@ public class BatchLevelPrivilegesWorkflow extends AbstractBaseFlows {
 
 	public void verifyPhotoFileDownloadBatchPresent() {
 		navigator.navigateToPage(BatchLevelPreviledgePage.class);
+		Portal loginPortal = environment.getPortalByType(Portal.TYPE_CUSTOMER);
 		batch.selectEntityType("User [U]");
-		portal.getUserName();
-		batch.selectEntityID(ENTITY_ID);
+		batch.selectEntityID(loginPortal.getUserName());
 		batch.clickSearchBtn();
 		batch.clickBatchDownloadTab();
 		batch.verifyClientPhotoBatchPresent();
@@ -39,8 +41,8 @@ public class BatchLevelPrivilegesWorkflow extends AbstractBaseFlows {
 	public void provideAccessToDownloadPhotoFileDownloadBatch() {
 		navigator.navigateToPage(BatchLevelPreviledgePage.class);
 		batch.selectEntityType("User [U]");
-		portal.getUserName();
-		batch.selectEntityID(ENTITY_ID);
+		Portal loginPortal = environment.getPortalByType(Portal.TYPE_CUSTOMER);
+		batch.selectEntityID(loginPortal.getUserName());
 		batch.clickSearchBtn();
 		batch.supplyAccessToClientPhotoBatch();
 	}
