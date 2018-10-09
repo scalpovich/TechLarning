@@ -88,9 +88,9 @@ public class ApplicationUploadSteps {
 	@When("user creates $application_upload_file batch file with duplicate data and upload it on server for $customerType for $cardType")
 	public void createFileForApplicationUploadWithDuplicateData(@Named("application_upload_file") String batchName, @Named("customerType") String customerType, @Named("cardType") String cardType) throws Exception {
 		String fileName = "";
-		if (cardType.equalsIgnoreCase("prepaid")) {
+		if (ProductType.PREPAID.toUpperCase().contains(cardType.toUpperCase())) {
 			fileName = fileCreation.createApplicationUploadFileWithDuplicateData(Institution.createWithProvider(provider).getCode(), customerType, cardType);
-		} else if (cardType.equalsIgnoreCase("credit")) {
+		} else if (ProductType.CREDIT.toUpperCase().contains(cardType.toUpperCase())) {
 			fileName = fileCreation.createApplicationUploadFileWithDuplicateData(Institution.createWithProvider(provider).getCodeCredit(), customerType, cardType);
 		} else if (cardType.contains("Static"))
 		{
