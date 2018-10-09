@@ -26,7 +26,7 @@ And embossing file batch was generated in correct format
 
 Scenario:3 Perform EMV-RetailGeneralPurposeCard Purchase 1st transaction
 Given connection to MAS is established
-When perform an ECOMM_PURCHASE MAS transaction
+When perform an ECOMM_PURCHASE_DE MAS transaction
 Then MAS test results are verified
 Then MAS simulator is closed
 And user is logged in institution
