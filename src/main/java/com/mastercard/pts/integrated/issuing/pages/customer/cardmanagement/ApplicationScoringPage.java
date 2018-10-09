@@ -29,24 +29,24 @@ public class ApplicationScoringPage extends AbstractBasePage {
 	TestContext context;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Process All']")
-	private MCWebElement BtnProcessAll;
+	private MCWebElement btnProcessAll;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Application Scoring']")
-	private MCWebElement BtnApplicationScoring;
+	private MCWebElement btnApplicationScoring;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview")
 	private MCWebElement searchTable;
 
 	public void processAllApplicationScoring() {
 		if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER))) {
-			clickWhenClickable(BtnApplicationScoring);
+			clickWhenClickable(btnApplicationScoring);
 			processAllApplicationScoring();
 		}
 		SimulatorUtilities.wait(4000);
 	}
 	
 	public void clickProcessALL() {
-		clickWhenClickable(BtnProcessAll);
+		clickWhenClickable(btnProcessAll);
 	}
 
 	@Override
