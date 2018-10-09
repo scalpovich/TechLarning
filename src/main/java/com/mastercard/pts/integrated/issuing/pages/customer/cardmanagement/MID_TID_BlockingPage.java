@@ -199,7 +199,7 @@ public class MID_TID_BlockingPage extends AbstractBasePage {
 		case "5":
 		case "6":
 		case "7":
-		case "9	":
+		case "9":
 			logger.info("Merchant Id {}",details.getMerchantID());
 			for (int i = 1; i <=rowCount; i++) {
 				String merchantID = getCellTextByColumnName(i, MERCHANT_ID);
