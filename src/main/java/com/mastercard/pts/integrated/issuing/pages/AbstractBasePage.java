@@ -461,11 +461,14 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void deleteAllRecord() {
-		int rowCount = driver().findElements(By.xpath("//*[@class='dataview']/tbody[1]/tr[@class='even' or @class = 'odd']")).size();
+		int rowCount = driver().findElements(By.xpath("//*[@class='dataview']/tbody[1]//tr")).size();
+		
 		for (int i = 0; i < rowCount; i++) {
 			WebElementUtils.visibilityOf(firstRowDeleteLink);
+			logger.info(String.valueOf(rowCount));
 			waitForWicket();
 			clickWhenClickableDoNotWaitForWicket(firstRowDeleteLink);
+			SimulatorUtilities.wait(1000);
 			acceptPopup();
 		}
 
