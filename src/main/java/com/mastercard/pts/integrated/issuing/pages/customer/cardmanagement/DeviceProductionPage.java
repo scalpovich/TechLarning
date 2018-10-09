@@ -259,8 +259,8 @@ public class DeviceProductionPage extends AbstractBasePage {
 	}
 	
 	public List<String> deviceNumbers() {
-		List<WebElement> allDeviceNumbers = new ArrayList<>();
-		List<String> allDeviceNumberfText = new ArrayList<>();
+		List<WebElement> allDeviceNumbers = new ArrayList<WebElement>();
+		List<String> allDeviceNumberfText = new ArrayList<String>();
 		String deviceNumberToFetch=String.format("//table[@class='dataview']//tr[@class='even' or 'odd']/td['%s']/span",deviceNumberHeaderIndexFetch());
 		allDeviceNumbers = Elements(deviceNumberToFetch);
 
