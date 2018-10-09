@@ -213,11 +213,9 @@ public class PreProductionBatchPage extends AbstractBasePage {
         List<String>batchNumbers=context.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
 		waitForLoaderToDisappear();
 		selectDropDownByText(productTypeDDwn, batch.getProductType());
-		SimulatorUtilities.wait(5000);
 		enterText(batchNumberTxt, batchNumbers.get(0));
-		SimulatorUtilities.wait(3000);
 		ClickButton(searchBtn);
-		SimulatorUtilities.wait(3000);
+		waitForRow();
 		ClickCheckBox(preProductionBatchRecordChkBx, true);
 		SimulatorUtilities.wait(3000);
 		ClickButton(processSelectedBtn);

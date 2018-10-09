@@ -188,9 +188,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	
 	private static final int NUMBER_OF_ATTEMPTS_TO_CHECK_SUCCESS_STATE=100;
 	
-	private final String reasonToReject = "";
+	private String reasonToReject = "";
 	
-	private final Boolean isProcess = false;
+	private Boolean isProcess = false;
 	
 	private final String failStatus = "FAILED [3]";
 	
@@ -600,7 +600,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	public boolean processBatchUpload(ProcessBatches processBatchesDomain, String fileName){
 		FileCreation.filenameStatic = fileName;
 		String statusXpath = String.format("//span[contains(text(),'%s')]", FileCreation.filenameStatic) + "//parent::td//following-sibling::td/a";
-		SimulatorUtilities.wait(20000);
+		SimulatorUtilities.wait(10000);
 		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(statusXpath)));
 		SimulatorUtilities.wait(5000);//this delay is for table to load data 
 		runWithinPopup("View Batch Details", () -> {
