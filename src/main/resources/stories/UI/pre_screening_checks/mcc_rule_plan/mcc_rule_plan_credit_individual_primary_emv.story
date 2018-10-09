@@ -42,7 +42,8 @@ When credit device is created using new device screen for Individual and Primary
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pingeneration batch using new Device for Supplementary
-And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
+!-- And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
+And device has "normal" status
 Then user sign out from customer portal
 
 Scenario: Pin Generation 
