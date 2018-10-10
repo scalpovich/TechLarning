@@ -116,7 +116,7 @@ public abstract class LinuxUtils {
 			session.setConfig(config);
 			if(!session.isConnected())
 				session.connect();
-			String cmd = "find /mptshome/STAGE2/integrated/elt_bo/data/AUTOMATION_1/ -name \"*" + lookUpFor + "*\" |  sort -nr | head -1";
+			String cmd = "find /home/dc-user/integrated/elt_bo/data -name \"*" + lookUpFor + "*\"";
 			logger.info("command for getFileFromLinuxBox {} --> ", cmd);
 			Channel channel=session.openChannel("exec");
 			((ChannelExec)channel).setCommand(cmd);
