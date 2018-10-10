@@ -1187,8 +1187,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 
 	public void checkAndCompareBalancePostPayment(Payment payment) {
-		Map<String, String> mapA = context.get("balanceBeforePayment");
-		Map<String, String> mapB = context.get("balanceAfterPayment");
+		Map<String, String> mapA = context.get(ContextConstants.BALANCE_BEFORE_PAYMENT);
+		Map<String, String> mapB = context.get(ContextConstants.BALANCE_AFTER_PAYMENT);
 		if (mapA != null && mapB != null && mapA.size() == mapB.size()) {
 			for (Map.Entry m : mapA.entrySet()) {
 				String keyFromFirstMap = (String) m.getKey();

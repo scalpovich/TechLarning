@@ -904,7 +904,7 @@ public class HelpDeskSteps {
 	@When("check card balance details through helpdesk")
 	public void checkCardBalance(){
 		Device device = context.get(ContextConstants.DEVICE);
-		context.put("balanceBeforePayment", helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device));
+		context.put(ContextConstants.BALANCE_BEFORE_PAYMENT, helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device));
 		
 	}
 	
@@ -912,7 +912,7 @@ public class HelpDeskSteps {
 	public void reCheckCardBalancePostPayment(){
 		Device device = context.get(ContextConstants.DEVICE);	
 		helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device);
-		context.put("balanceAfterPayment", helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device));	
+		context.put(ContextConstants.BALANCE_AFTER_PAYMENT, helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device));	
 	}
 	@Then("user check successful payments")
 	public void checkSuccessfulPayments(){		

@@ -307,7 +307,7 @@ public class TransactionSteps {
 		transactionData.setCardDataElementsDynamic("045.02", device.getDeviceNumber());
 		transactionData.setCardDataElementsDynamic("045.06", device.getExpirationDate());
 		transactionData.setCardDataElementsDynamic("035.04", device.getServiceCode());
-		if (atcCounterFlag==true)
+		if (atcCounterFlag)
 		{
 			transactionData.setCardDataElementsDynamic("055.9F36", device.getUpdatedATCValue());
 		}
