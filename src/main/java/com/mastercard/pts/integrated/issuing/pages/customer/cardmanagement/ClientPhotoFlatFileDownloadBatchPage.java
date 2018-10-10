@@ -33,7 +33,7 @@ public class ClientPhotoFlatFileDownloadBatchPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind =  "input[fld_fqn='batchDate']" )
 	private MCWebElement batchDate;
-
+	
 	public boolean isBatchDatePresent(){
 		return isElementPresent(batchDate);
 	}
@@ -42,7 +42,7 @@ public class ClientPhotoFlatFileDownloadBatchPage extends AbstractBasePage {
 		logger.info("Client Photo/Flat file download Batch");
 		verifySearchButton("Search");
 	}
-	
+
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(txtBatchNumber));

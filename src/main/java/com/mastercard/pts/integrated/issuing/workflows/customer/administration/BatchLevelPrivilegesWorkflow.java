@@ -69,5 +69,4 @@ public class BatchLevelPrivilegesWorkflow extends AbstractBaseFlows {
 		selectEntityTypeAsRole();
 		batch.supplyAccessToSystemInternalBatches();
 	}
-	
 }
