@@ -24,12 +24,17 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class ApprovalScorePage extends AbstractBasePage {
 	@Autowired
 	private TestContext context;
+	
 	@Autowired
 	CreditCardPlan creditCardPlans;
-    private static final String ADD_APPROVER_SCORE_FRAME="Add Approval Score";
+    
+	private static final String ADD_APPROVER_SCORE_FRAME="Add Approval Score";
+    
     private static final String APPROVE_START_RANGE_VALUE="100";
+    
     private static final String APPROVE_END_RANGE_VALUE="2000";
-	private static final Logger logger = LoggerFactory.getLogger(ApprovalScorePage.class);
+	
+    private static final Logger logger = LoggerFactory.getLogger(ApprovalScorePage.class);
     
 	@PageElement(findBy = FindBy.NAME, valueToFind = "prodCode:input:dropdowncomponent")
 	private MCWebElement programDDwn;
@@ -60,7 +65,6 @@ public class ApprovalScorePage extends AbstractBasePage {
 	}
 	
 	public void addApproverScorePlan() {
-
 		clickAddNewButton();
 		switchToIframe(ADD_APPROVER_SCORE_FRAME);
 	}

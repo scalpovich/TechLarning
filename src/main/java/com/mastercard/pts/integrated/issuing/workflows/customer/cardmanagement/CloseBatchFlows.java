@@ -37,6 +37,7 @@ public class CloseBatchFlows extends AbstractBaseFlows {
 		closeBatchPage=navigator.navigateToPage(CloseBatchPage.class);
 		closeBatchPage.processAllBatch();
 	}
+    
 	public void closeAllBatchExecution(){
 		closeBatchPage=navigator.navigateToPage(CloseBatchPage.class);
 		closeBatchPage.processAllBatch();

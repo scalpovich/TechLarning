@@ -78,6 +78,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr")
 	private MCWebElements rowSize;
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class='headers']//a/span")
 	private MCWebElements deviceNumberHeaderTxt;
 
@@ -228,7 +229,8 @@ public class DeviceProductionPage extends AbstractBasePage {
 		WebElementUtils.enterText(batchNumberTxt,batchNumber);
 		waitAndSearchForRecordToExist();
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-		waitForRecordAndAssignDevice();		verifyOperationStatus();
+		waitForRecordAndAssignDevice();
+		verifyOperationStatus();
 	}
 
 	public void processDeviceProductionBatchNewDevice(DeviceProductionBatch batch) {

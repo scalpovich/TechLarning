@@ -70,6 +70,8 @@ public class UserManagementSteps {
 	
 	public static final String USERNAME = "USERNAME";
 
+	
+	
 	@Autowired
 	private AppEnvironment environment;
 

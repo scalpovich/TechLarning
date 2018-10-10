@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
+import org.jbehave.core.annotations.When;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,7 @@ public class ReportVerificationSteps {
 		reportVerificationWorkflow.verifyGenericReport(report);		
 	}
 	
+	@When("verify application in application reject report")
 	@Then("verify application in application reject report")
 	public void verifyApplicationInApplicationRejectReport() {
 		GenericReport report = GenericReport.createWithProvider(provider);

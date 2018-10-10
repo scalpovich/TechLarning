@@ -177,12 +177,11 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
   	@PageElement(findBy = FindBy.NAME, valueToFind = "view:applicationBatch.openedBatches:input:dropdowncomponent")  													  
 	private MCWebElement openBatchDDwn;
   	
-  	 @PageElement(findBy = FindBy.NAME, valueToFind = "view:existingDeviceNumber:input:inputTextField")
+  	@PageElement(findBy = FindBy.NAME, valueToFind = "view:existingDeviceNumber:input:inputTextField")
  	private MCWebElement existingDeviceNumberTxt;
  	 	
  	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Existing Client Code')]")
  	private MCWebElement existingClientLabel;
- 	
   	
 	public void selectAppliedForProduct(String product) {
 		WebElementUtils.selectDropDownByVisibleText(appliedForProdutDDwn, product);
@@ -381,7 +380,6 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 
 	private void fillAddOnProfileAndClickNext(Device device) {
 		ClientDetails client = device.getClientDetails();
-
 		WebElementUtils.selectDropDownByVisibleText(addOnTitleOpt, client.getTitle());
 		WebElementUtils.enterText(addOnFirstNameTxt, client.getFirstName());
 		WebElementUtils.enterText(addOnLastNameTxt, client.getLastName());
