@@ -45,7 +45,7 @@ public class AssignProgramPage extends AbstractBasePage {
 				"Add SR Visibility at Program Level",
 				() -> {
 					WebElementUtils.selectDDByVisibleText(programDDwn, program.getProgramCodeDevice());
-					SimulatorUtilities.wait(10000);
+					//SimulatorUtilities.wait(10000);
 					WebElementUtils .selectAllOptionsInListBox(availableServiceCodeLstBx);
 					addServiceCodeBtn.click();
 					clickSaveButton();
