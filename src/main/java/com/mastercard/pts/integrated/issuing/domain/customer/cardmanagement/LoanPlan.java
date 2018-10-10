@@ -1,11 +1,13 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.springframework.stereotype.Component;
+
+import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 @Component
-public class LoanPlan {
+public class LoanPlan implements HasCodeAndDescription {
 	
 	private static final String LOAN_PLAN_CODE = "LOAN_PLAN_CODE";
 	private static final String LOAN_PLAN_DESCRIPTION = "LOAN_PLAN_DESCRIPTION";
@@ -269,6 +271,18 @@ public class LoanPlan {
 		loanPlan.setLoanType(keyValueProvider.getString(LOAN_TYPE));
 		loanPlan.setWalletCode(keyValueProvider.getString(WALLET_CODE));
 		return loanPlan;
+	}
+
+	@Override
+	public String getCode() {
+		// TODO Auto-generated method stub
+		return loanPlanCode;
+	}
+
+	@Override
+	public String getDescription() {
+		// TODO Auto-generated method stub
+		return loanDescription;
 	}
 	
 }

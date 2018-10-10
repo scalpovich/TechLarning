@@ -1288,4 +1288,13 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 		return creditLimit;
 	}
+	
+	public void retailTransactionToLoan(HelpdeskGeneral helpdeskGeneral){
+		runWithinPopup(ConstantData.RETAIL_TO_LOAN, ()->{
+
+		});			
+
+		clickEndCall();
+	
+	}
 }

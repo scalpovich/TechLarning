@@ -116,6 +116,8 @@ public class ContextConstants {
 	
 	public static final String CREDIT_LIMIT_AFTER_SR = "CREDIT_LIMIT_AFTER_SR";
 	
+	public static final String LOAN_PLAN = "LOAN_PLAN";
+	
 	private ContextConstants() {
 	}
 

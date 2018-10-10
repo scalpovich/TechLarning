@@ -887,4 +887,13 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.clickCustomerCareEditLink();				
 		context.put(ContextConstants.CREDIT_LIMIT_AFTER_SR, helpdeskWorkflow.activateCreditLimitChangeRequest(helpdeskGeneral));
 	}
+	
+	@Then("user raises $retailToLoan request for $customerType")
+	@Given("user raises $retailToLoan request for $customerType")
+	@When("user raises $retailToLoan request for $customerType")
+	public void userRaisesRetailToLoanThroughHelpdesk(String retailToLoan,String customerType) {
+		helpdeskGeneral = HelpdeskGeneral.createWithProviderWithCreditCardLimits(provider);
+		helpdeskWorkflow.clickCustomerCareEditLink();				
+		helpdeskWorkflow.raiseRetailToLoanRequest(helpdeskGeneral);
+	}
 }

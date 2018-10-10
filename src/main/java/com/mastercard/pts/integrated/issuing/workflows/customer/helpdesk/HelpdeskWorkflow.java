@@ -225,4 +225,8 @@ public class HelpdeskWorkflow {
 	public HashMap<String,BigDecimal> activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
 		return helpDeskPage.activateCreditLimitChangeRequest(helpdeskGeneral);
 	}
+	
+	public void raiseRetailToLoanRequest(HelpdeskGeneral helpdeskGeneral){
+		 helpDeskPage.retailTransactionToLoan(helpdeskGeneral);
+	}
 }

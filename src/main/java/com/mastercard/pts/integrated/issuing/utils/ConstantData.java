@@ -126,6 +126,8 @@ public class ConstantData {
 	public static final String CREDIT_LIMIT_CHANGE_REQUEST = "226 - Credit limit Change Request";
 	public static final String CREDIT_LIMIT_CHANGE_COMMERCIAL_CARDS = 	"227 - Credit limit Change Commercial Cards";	
 	
+	public static final String RETAIL_TO_LOAN = 	"215 - Retail Transaction to Loan";	
+	
 	private ConstantData() {
 	}
 

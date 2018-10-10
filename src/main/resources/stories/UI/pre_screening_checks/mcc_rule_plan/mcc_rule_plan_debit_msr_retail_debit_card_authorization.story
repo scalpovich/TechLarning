@@ -14,7 +14,6 @@ Meta:
 Scenario: Setup - debit msr retail debit card
 Given user is logged in institution
 When device range for program with device plan for "debit" "magnetic stripe" card
-And user assigns service code to program
 Then user sign out from customer portal
 
 Scenario: Device production - debit msr retail debit card

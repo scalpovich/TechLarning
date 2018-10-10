@@ -242,7 +242,7 @@ public class LoanPlanPage extends AbstractBasePage {
 			enterLoanPlanCode(loanPlan.getLoanPlanCode());
 			enterLoanPlanDescription(loanPlan.getLoanPlanDescription());
 			selectLoanType(loanPlan.getLoanType());
-			selectDefaultLoanType();
+			//selectDefaultLoanType();
 			selectProgramWalletPromotion(loanPlan.getProgramWalletPromotion());
 			WebElementUtils.scrollDown(driver(), 0, 250);
 			if(loanPlan.getProgramWalletPromotion().contains(Constants.PROGRAM)){
