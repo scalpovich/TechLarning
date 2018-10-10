@@ -4,9 +4,7 @@ As a user
 I want to perform Transaction on corporate prepaid card to assert Reversal Transaction.
 
 Meta:
-@Pre-ScreeningCheck
 @StoryName p_emv_corp_travel				 
-@PreScreening
 
 Scenario:1 Set up prepaid emv corporate travel card
 Given setting json values in excel for Prepaid
