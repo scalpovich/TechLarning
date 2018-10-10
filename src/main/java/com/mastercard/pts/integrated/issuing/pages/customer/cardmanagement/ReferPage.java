@@ -73,7 +73,7 @@ public class ReferPage extends AbstractCardManagementPage {
 		waitForPageToLoad(driver());
 		clickWhenClickable(editImg);
 		switchToIframe(REFER_FRAME);
-		clickWhenClickable(referBtn);
+		clickWhenClickable(btnRefer);
 		SimulatorUtilities.wait(5000);
 		verifyOperationStatus();
 		SimulatorUtilities.wait(5000);
@@ -100,7 +100,7 @@ public class ReferPage extends AbstractCardManagementPage {
 	
 	public void referButtonClick() {
 		switchToIframe(REFER_FRAME);
-		clickWhenClickable(referBtn);
+		clickWhenClickable(btnRefer);
 		verifyOperationStatus();
 	}
 	
