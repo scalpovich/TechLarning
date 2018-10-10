@@ -35,7 +35,7 @@ public class MID_TID_BlockingStep {
 	public void userCreatesMIDTIDBlockingForCombination(String type){
 		midtidBlocking = MID_TID_Blocking.createWithProvider(provider);
 		mid_tid_blockingflow.addMID_TID_Blocking(type, midtidBlocking);
-		context.put(ContextConstants.MID_TID_BLOCKING, mid_tid_blockingflow);
+		context.put(ContextConstants.MID_TID_BLOCKING, midtidBlocking);
 		
 	}
 
