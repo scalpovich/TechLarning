@@ -475,7 +475,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	public String getCellTextByColumnName(int rowNumber, String columnName) {
-		String xpath = String.format("//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]", rowNumber, columnName);
+		String xpath = String.format("//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]/span", rowNumber, columnName);
 		WebElement element = driver().findElement(By.xpath(xpath));
 		waitForElementVisible(element);
 		return element.getText().trim();
@@ -1877,6 +1877,29 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 
 	}
+	
+	public void clickOncheckBoxIfBatchAvailableinTable(MCWebElement tableHandle, String text) {
+		WebElement table = asWebElement(tableHandle);
+		List<WebElement> rowstable = table.findElements(By.tagName("tr"));
+		int rowscount = rowstable.size();
+		outerloop:
+		for (int row = 1; row < rowscount; row++) {
+			List<WebElement> columnsrow = rowstable.get(row).findElements(By.tagName("td"));
+			int columnscount = columnsrow.size();
+			for (int col = 0; col < columnscount; col++) {
+				if (columnsrow.get(col).getText().equals(text)) {
+					WebElement checkBox = columnsrow.get(columnscount - 1).findElement(By.cssSelector("input[type=checkbox]"));
+					if (checkBox.isEnabled() && !checkBox.isSelected()) {
+						checkBox.click();
+					}
+
+				}
+				break outerloop;
+
+			}
+		}
+	}
+	
 	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
