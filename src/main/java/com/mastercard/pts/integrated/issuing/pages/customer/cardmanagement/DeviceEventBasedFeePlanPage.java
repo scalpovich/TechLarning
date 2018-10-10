@@ -19,6 +19,7 @@ import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.DatePicker;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -32,6 +33,9 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class DeviceEventBasedFeePlanPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory
 			.getLogger(DeviceEventBasedFeePlanPage.class);
+
+
+	private static final int FIRST_ITEM = 1;
 
 	
 	@Autowired
@@ -124,6 +128,9 @@ public class DeviceEventBasedFeePlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
 	private MCWebElement CancelBtn;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "customerTypeDeviceFees:input:dropdowncomponent")
+	private MCWebElement customerTypeDeviceFeesDdwn;
+	
 	public String Calelement = "//td[4]";
 
 	public void verifyUiOperationStatus() {
@@ -134,6 +141,10 @@ public class DeviceEventBasedFeePlanPage extends AbstractBasePage {
 	public void ClickAddDeviceEventBasedFeePlan() {
 		clickWhenClickable(addDeviceEventBasedFeePlanBtn);
 		switchToAddDeviceEventBasedFeeFrame();
+	}
+	
+	public void selectCustomerTypeDeviceFeesByIndex(int index) {
+		WebElementUtils.selectDropDownByIndex(customerTypeDeviceFeesDdwn, index);
 	}
 
 	public void switchToAddDeviceEventBasedFeeFrame() {
@@ -324,6 +335,9 @@ public class DeviceEventBasedFeePlanPage extends AbstractBasePage {
 					WebElementUtils.pickDate(effectiveDateDPkr,
 							details.getEffectiveDate());
 					WebElementUtils.pickDate(endDateDPkr, details.getEndDate());
+					if (MiscUtils.getEnvironment().equalsIgnoreCase(Constants.ENV_DEMO)) {
+						selectCustomerTypeDeviceFeesByIndex(FIRST_ITEM);
+					}
 					waitForWicket();
 					WebElementUtils.scrollDown(driver(), 0, 250);
 					clickSaveButton();

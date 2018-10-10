@@ -14,19 +14,20 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_PROGRAM_SETUP,
-		CardManagementNav.L2_DEVICE_CONFIGURATION,
-		CardManagementNav.L3_DEVICE_JOINING_AND_MEMBERSHIP_FEE_PLAN })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_PROGRAM_SETUP,
+		CardManagementNav.L2_DEVICE_CONFIGURATION, CardManagementNav.L3_DEVICE_JOINING_AND_MEMBERSHIP_FEE_PLAN })
 public class DeviceJoiningAndMembershipFeePlanPage extends AbstractBasePage {
-	private static final Logger logger = LoggerFactory
-			.getLogger(DeviceJoiningAndMembershipFeePlanPage.class);
+	private static final Logger logger = LoggerFactory.getLogger(DeviceJoiningAndMembershipFeePlanPage.class);
+
+	private static final int FIRST_ITEM = 1;
 
 	// main screen locators
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[@id='deviceMaintFeePlanCode']/input")
@@ -91,6 +92,9 @@ public class DeviceJoiningAndMembershipFeePlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Record Added Successfully')]")
 	private MCWebElement successMessage;
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "customerTypeDeviceFees:input:dropdowncomponent")
+	private MCWebElement customerTypeDeviceFeesDdwn;
+
 	public void verifyUiOperationStatus() {
 		logger.info("Device Joining and Membership Fee Plan");
 		verifySearchButton("Search");
@@ -99,8 +103,7 @@ public class DeviceJoiningAndMembershipFeePlanPage extends AbstractBasePage {
 	// Methods
 	@Override
 	protected List<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils
-				.visibilityOf(deviceJoiningMembershipFeePlanCodeTxt));
+		return Arrays.asList(WebElementUtils.visibilityOf(deviceJoiningMembershipFeePlanCodeTxt));
 	}
 
 	// Methods for Main Screen
@@ -109,8 +112,7 @@ public class DeviceJoiningAndMembershipFeePlanPage extends AbstractBasePage {
 	}
 
 	public void enterDeviceJoiningMembershipFeePlanCode(String deviceCode) {
-		WebElementUtils.enterText(deviceJoiningMembershipFeePlanCodeTxt,
-				deviceCode);
+		WebElementUtils.enterText(deviceJoiningMembershipFeePlanCodeTxt, deviceCode);
 	}
 
 	public void enterDescription(String descriptionData) {
@@ -118,8 +120,11 @@ public class DeviceJoiningAndMembershipFeePlanPage extends AbstractBasePage {
 	}
 
 	public void selectProductType(String productType) {
-		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn,
-				productType);
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, productType);
+	}
+
+	public void selectCustomerTypeDeviceFeesByIndex(int index) {
+		WebElementUtils.selectDropDownByIndex(customerTypeDeviceFeesDdwn, index);
 	}
 
 	public String getDeviceInformationFromTable() {
@@ -132,8 +137,7 @@ public class DeviceJoiningAndMembershipFeePlanPage extends AbstractBasePage {
 
 	// Methods for Dialog Screen
 	public void enterIframeDeviceJoiningMembershipFeePlanCode(String deviceCode) {
-		WebElementUtils.enterText(iframedeviceJoiningMembershipFeePlanCodeTxt,
-				deviceCode);
+		WebElementUtils.enterText(iframedeviceJoiningMembershipFeePlanCodeTxt, deviceCode);
 	}
 
 	public void enterIframeDescription(String descriptionData) {
@@ -141,8 +145,7 @@ public class DeviceJoiningAndMembershipFeePlanPage extends AbstractBasePage {
 	}
 
 	public void selectIframeProductType(String productType) {
-		WebElementUtils.selectDropDownByVisibleText(iframeproductTypeDDwn,
-				productType);
+		WebElementUtils.selectDropDownByVisibleText(iframeproductTypeDDwn, productType);
 	}
 
 	public void clickIframeDialogCloseX() {
@@ -174,8 +177,7 @@ public class DeviceJoiningAndMembershipFeePlanPage extends AbstractBasePage {
 		return successMessage.getText().equalsIgnoreCase(ConstantData.SUCCESS_MESSAGE);
 	}
 
-	public void createDeviceJoiningOrMembershipFeePlan(
-			DeviceJoiningAndMemberShipFeePlan devicePlanDataObject) {
+	public void createDeviceJoiningOrMembershipFeePlan(DeviceJoiningAndMemberShipFeePlan devicePlanDataObject) {
 		logger.info("Create Device Joining Or Membership Fee Plan: {}", devicePlanDataObject.getDeviceCode());
 		clickAddNewButton();
 
@@ -197,14 +199,16 @@ public class DeviceJoiningAndMembershipFeePlanPage extends AbstractBasePage {
 	private void addDetails(DeviceJoiningAndMemberShipFeePlanDetails details) {
 		clickAddNewButton();
 
-		runWithinPopup(
-				"Add Device Joining And Membership Fee Plan Details", () -> {
-					WebElementUtils.pickDate(effectiveDateDPkr, details.getEffectiveDate());
-					WebElementUtils.pickDate(endDateDPkr, details.getEndDate());
-					selectIframeFeeType(details.getFeeType());
-					selectIframePostIssuanceFeeOn(details.getPostIssuanceFeeOn());
-					clickSaveButton();
-				});
+		runWithinPopup("Add Device Joining And Membership Fee Plan Details", () -> {
+			WebElementUtils.pickDate(effectiveDateDPkr, details.getEffectiveDate());
+			WebElementUtils.pickDate(endDateDPkr, details.getEndDate());
+			selectIframeFeeType(details.getFeeType());
+			if (MiscUtils.getEnvironment().equalsIgnoreCase(Constants.ENV_DEMO)) {
+				selectCustomerTypeDeviceFeesByIndex(FIRST_ITEM);
+			}
+			selectIframePostIssuanceFeeOn(details.getPostIssuanceFeeOn());
+			clickSaveButton();
+		});
 
 		verifyRecordMarkedForUpdationStatusWarning();
 	}
