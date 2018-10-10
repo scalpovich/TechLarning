@@ -4,9 +4,7 @@ As a user
 I want to perform Transaction on corporate debit card to assert Reversal of Transaction on International Transaction.
 
 Meta:
-@Pre-ScreeningCheck
 @StoryName d_emv_corp_travel				 
-@PreScreening
 
 Scenario:1 Set up debit emv corporate travel card
 Given setting json values in excel for Debit

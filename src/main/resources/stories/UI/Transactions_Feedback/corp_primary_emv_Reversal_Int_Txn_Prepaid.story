@@ -4,9 +4,7 @@ As a user
 I want to perform Transaction on corporate credit card to assert Reversal Transaction.
 
 Meta:
-@Pre-ScreeningCheck
-@StoryName p_emv_corp_travel				 
-@PreScreening
+@StoryName p_emv_corp_travel
 
 Scenario:1 Set up prepaid emv corporate travel card
 Given setting json values in excel for Prepaid
@@ -22,6 +20,7 @@ And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
 And device has "normal" status
+And user activates device through helpdesk
 And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device

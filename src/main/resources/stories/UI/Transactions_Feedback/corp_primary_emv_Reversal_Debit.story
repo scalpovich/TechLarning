@@ -5,9 +5,7 @@ I want to assert Reversal of Transaction.
 
 
 Meta:
-@Pre-ScreeningCheck
 @StoryName d_emv_corp_travel				 
-@PreScreening
 
 Scenario:1 Set up debit emv corporate tsravel card
 Given setting json values in excel for Debit

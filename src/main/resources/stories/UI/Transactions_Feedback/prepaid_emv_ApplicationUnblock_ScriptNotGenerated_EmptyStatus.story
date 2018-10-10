@@ -22,6 +22,7 @@ And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
 And device has "normal" status
+And user activates device through helpdesk
 And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
@@ -51,4 +52,4 @@ And user sign out from customer portal
 And MAS simulator is closed
 
 Scenario:6 Verify DB has value in Application Unblock Column
-Given Verify APPLICATION_UNBLOCK_ICC has column value as null
+Then Verify APPLICATION_UNBLOCK_ICC has column value as null

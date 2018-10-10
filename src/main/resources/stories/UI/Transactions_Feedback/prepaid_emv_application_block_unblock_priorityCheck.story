@@ -22,6 +22,7 @@ And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
 And device has "normal" status
+And user activates device through helpdesk
 And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
@@ -89,7 +90,7 @@ And user sign out from customer portal
 
 Scenario:12 Verify DB has value in Application Unblock Column
 Given Verify APPLICATION_BLOCK_ICC has column value as null
-And Verify APPLICATION_UNBLOCK_ICC has column value as not null
+Then Verify APPLICATION_UNBLOCK_ICC has column value as not null
 
 Scenario:13 Transaction of EMV_PURCHASE_ISSUER_SCRIPTING_RES for Application block
 When perform an EMV_PURCHASE_ISSUER_SCRIPTING_RES MAS transaction on the same card
@@ -100,4 +101,4 @@ And MAS simulator is closed
 
 Scenario:14 Verify DB has value in Application Unblock Column
 Given Verify APPLICATION_BLOCK_ICC has column value as null
-And Verify APPLICATION_UNBLOCK_ICC has column value as null
+Then Verify APPLICATION_UNBLOCK_ICC has column value as null

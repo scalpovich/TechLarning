@@ -51,4 +51,4 @@ And user sign out from customer portal
 And MAS simulator is closed
 
 Scenario:6 Verify DB has value in Application Unblock Column
-Given Verify APPLICATION_UNBLOCK_ICC has column value as null
+Then Verify APPLICATION_UNBLOCK_ICC has column value as null
