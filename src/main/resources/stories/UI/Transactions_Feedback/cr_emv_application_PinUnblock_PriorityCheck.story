@@ -24,7 +24,7 @@ And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pinProduction batch using new Device for Supplementary
 And device has "normal" status
 And user sets invalid pin
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario:2 To Verify that the user can stoplist credit device from stoplist screen
 Given user is logged in institution
@@ -36,7 +36,7 @@ Then user sign out from customer portal
 Scenario:3 Withdraw the device from stoplist
 Given user is logged in institution
 When user withdraws a card from withdraw device screen
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario:4 Perform EMV_PURCHASE Authorization transaction with invalid pin
 Given connection to MAS is established
@@ -44,7 +44,7 @@ When perform an EMV_PURCHASE MAS transaction
 And user is logged in institution
 And search Purchase authorization and verify 117-Incorrect PIN status
 And assert Decline response with 46051 AuthDecline Code and Incorrect Pin. as description
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario:5 Perform EMV_PURCHASE Authorization transaction for pin retry limit check
 When perform an EMV_PURCHASE MAS transaction on the same card
@@ -53,7 +53,7 @@ And search Purchase authorization and verify 106-Allowable Pin tries exceeded st
 And assert Decline response with 46053 AuthDecline Code and Pin retry limit exceeded. as description
 And device has "normal" status
 And user creates service request for Pin Retry Counter [109] service
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario:6 Pin Generation
 Given connection to FINSim is established

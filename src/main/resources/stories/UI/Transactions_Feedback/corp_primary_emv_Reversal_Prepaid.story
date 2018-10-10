@@ -47,5 +47,5 @@ Scenario:4 When user perform Reveral of Purchase Transaction
 Given user is logged in institution
 When user generate Reversal for Transaction
 Then search Purchase Reversal authorization and verify 000-Successful status
-And user verify available balance afer reversal
+And user verify available balance after reversal
 And MAS simulator is closed

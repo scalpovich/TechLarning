@@ -18,7 +18,7 @@ And User fills Business Mandatory Fields Screen for debit product
 And User fills Device Range section for debit product
 And user assigns service code to program
 And user creates new device of debit type for new client
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario:2 Pin Generation
 Given connection to FINSim is established
@@ -42,5 +42,5 @@ Scenario:4 When user perform Reveral of Purchase Transaction
 Given user is logged in institution
 When user generate Reversal for Transaction
 Then search Purchase Reversal authorization and verify 000-Successful status
-And user verify available balance afer reversal
+And user verify available balance after reversal
 And MAS simulator is closed

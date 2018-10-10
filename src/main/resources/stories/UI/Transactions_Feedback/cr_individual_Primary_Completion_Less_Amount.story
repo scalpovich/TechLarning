@@ -26,7 +26,7 @@ And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pinProduction batch using new Device for Supplementary
 And device has "normal" status
 And user notes down available Card limit for card
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario:2 Pin Generation
 Given connection to FINSim is established

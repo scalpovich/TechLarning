@@ -23,21 +23,21 @@ And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pinProduction batch using new Device for Supplementary
 And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario:2 To Verify that the user can stoplist credit device from stoplist screen
 Given user is logged in institution
 When user stoplists a card from stoplist device screen
 And user edits deviceplan and enables stoplist flag
 And device has "lost" status
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario:4 Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
-And FINSim simulator is closed
+Then FINSim simulator is closed
 
 Scenario:5 Transaction EMV_PURCHASE Application Unblock
 Given connection to MAS is established

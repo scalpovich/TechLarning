@@ -43,7 +43,7 @@ Scenario:4 When User Chnage device status to Refer of Lost Status
 Given user is logged in institution
 When User Change Device Status to Refer [2]
 And user stoplists a card from stoplist device screen
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario:5 Perform EMV_PURCHASE Authorization transaction
 When perform an EMV_PURCHASE MAS transaction on the same card
@@ -51,4 +51,4 @@ Then MAS test results are verified
 And user is logged in institution
 And search Refer authorization and verify 000-Successful status
 And user sign out from customer portal
-And MAS simulator is closed
+Then MAS simulator is closed

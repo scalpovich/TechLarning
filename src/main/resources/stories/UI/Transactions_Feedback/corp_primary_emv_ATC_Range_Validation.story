@@ -25,14 +25,14 @@ And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pingeneration batch using new Device for Supplementary
 And device has "normal" status
 And user notes down available Card limit for card
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario:1.2 Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
-And FINSim simulator is closed
+Then FINSim simulator is closed
 
 Scenario:1.3 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
@@ -41,7 +41,7 @@ And MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
-And MAS simulator is closed
+Then MAS simulator is closed
 
 
 Scenario:1.4 Update ATC Range Counter to required value
@@ -66,7 +66,7 @@ And MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
-And MAS simulator is closed
+Then MAS simulator is closed
 
 Scenario:1.8 Update ATC Range Counter to required value
 Given user update ATC update value as true and value as 0000
