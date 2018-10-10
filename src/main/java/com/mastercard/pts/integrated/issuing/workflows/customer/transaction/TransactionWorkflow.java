@@ -110,7 +110,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private static final String RESULT_IDENTIFIER = "Refresh";
 	private static final String VISA_FAILURE_MESSAGE = "Visa Incomming Message for transaction did not come :: {}";
 	private static final String SIMULATOR_LICENSE_TYPE_17 = "17";
-	private static final String STAGE_KEYS="00998 - Example ETEC1 - 0213";
+	public static String STAGE_KEYS="00998 - Example ETEC1 - 0213";
 	private static final String SIMULATOR_LICENSE_TYPE_18 = "18";
 	private static final String REVERSAL="Reversal";
 	private static final String STIP="STIP";

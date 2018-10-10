@@ -557,12 +557,7 @@ public class UiVerificationCardManagementWorkflow {
 		LoanTypePage page = navigator.navigateToPage(LoanTypePage.class);
 		page.verifyUiOperationStatus();
 	}
-
-	public void verifyLocalChequePage() {
-		LocalChequePage page = navigator.navigateToPage(LocalChequePage.class);
-		page.verifyUiOperationStatus();
-	}
-
+	
 	public void verifyManualAlertsPage() {
 		ManualAlertsPage page = navigator.navigateToPage(ManualAlertsPage.class);
 		page.verifyUiOperationStatus();
@@ -652,17 +647,7 @@ public class UiVerificationCardManagementWorkflow {
 		OtherTransactionsPage page = navigator.navigateToPage(OtherTransactionsPage.class);
 		page.verifyUiOperationStatus();
 	}
-
-	public void verifyOutstationChequeCollectionPage() {
-		OutstationChequeCollectionPage page = navigator.navigateToPage(OutstationChequeCollectionPage.class);
-		page.verifyUiOperationStatus();
-	}
-
-	public void verifyOutstationChequeProcessingPage() {
-		OutstationChequeProcessingPage page = navigator.navigateToPage(OutstationChequeProcessingPage.class);
-		page.verifyUiOperationStatus();
-	}
-
+	
 	public void verifyOverridePage() {
 		OverridePage page = navigator.navigateToPage(OverridePage.class);
 		page.verifyUiOperationStatus();
