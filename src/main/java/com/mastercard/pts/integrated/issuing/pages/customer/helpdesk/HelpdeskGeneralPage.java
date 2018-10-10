@@ -1202,8 +1202,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			clickCloseButton();
 		});
 		
-		SimulatorUtilities.wait(500);
-		clickEndCall();		
+		SimulatorUtilities.wait(2000);
+		clickEndCall();
+		SimulatorUtilities.wait(2000);
 		return lst.get(0);
 	}
 }
