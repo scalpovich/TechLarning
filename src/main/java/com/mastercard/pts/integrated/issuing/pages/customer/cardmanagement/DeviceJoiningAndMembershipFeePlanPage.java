@@ -27,8 +27,6 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class DeviceJoiningAndMembershipFeePlanPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory.getLogger(DeviceJoiningAndMembershipFeePlanPage.class);
 
-	private static final int FIRST_ITEM = 1;
-
 	// main screen locators
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[@id='deviceMaintFeePlanCode']/input")
 	private MCWebElement deviceJoiningMembershipFeePlanCodeTxt;
@@ -123,8 +121,8 @@ public class DeviceJoiningAndMembershipFeePlanPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, productType);
 	}
 
-	public void selectCustomerTypeDeviceFeesByIndex(int index) {
-		WebElementUtils.selectDropDownByIndex(customerTypeDeviceFeesDdwn, index);
+	public void selectCustomerTypeDeviceFees(String value) {
+		selectByVisibleText(customerTypeDeviceFeesDdwn, value);
 	}
 
 	public String getDeviceInformationFromTable() {
@@ -204,7 +202,7 @@ public class DeviceJoiningAndMembershipFeePlanPage extends AbstractBasePage {
 			WebElementUtils.pickDate(endDateDPkr, details.getEndDate());
 			selectIframeFeeType(details.getFeeType());
 			if (MiscUtils.getEnvironment().equalsIgnoreCase(Constants.ENV_DEMO)) {
-				selectCustomerTypeDeviceFeesByIndex(FIRST_ITEM);
+				selectCustomerTypeDeviceFees(Constants.BOTH);
 			}
 			selectIframePostIssuanceFeeOn(details.getPostIssuanceFeeOn());
 			clickSaveButton();

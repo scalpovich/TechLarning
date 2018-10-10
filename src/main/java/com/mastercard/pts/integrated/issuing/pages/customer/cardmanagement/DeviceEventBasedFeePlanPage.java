@@ -35,9 +35,6 @@ public class DeviceEventBasedFeePlanPage extends AbstractBasePage {
 			.getLogger(DeviceEventBasedFeePlanPage.class);
 
 
-	private static final int FIRST_ITEM = 1;
-
-	
 	@Autowired
 	DatePicker date;
 	// main screen locators
@@ -143,8 +140,8 @@ public class DeviceEventBasedFeePlanPage extends AbstractBasePage {
 		switchToAddDeviceEventBasedFeeFrame();
 	}
 	
-	public void selectCustomerTypeDeviceFeesByIndex(int index) {
-		WebElementUtils.selectDropDownByIndex(customerTypeDeviceFeesDdwn, index);
+	public void selectCustomerTypeDeviceFees(String value) {
+		selectByVisibleText(customerTypeDeviceFeesDdwn, value);
 	}
 
 	public void switchToAddDeviceEventBasedFeeFrame() {
@@ -336,7 +333,7 @@ public class DeviceEventBasedFeePlanPage extends AbstractBasePage {
 							details.getEffectiveDate());
 					WebElementUtils.pickDate(endDateDPkr, details.getEndDate());
 					if (MiscUtils.getEnvironment().equalsIgnoreCase(Constants.ENV_DEMO)) {
-						selectCustomerTypeDeviceFeesByIndex(FIRST_ITEM);
+						selectCustomerTypeDeviceFees(Constants.BOTH);
 					}
 					waitForWicket();
 					WebElementUtils.scrollDown(driver(), 0, 250);
