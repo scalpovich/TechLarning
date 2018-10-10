@@ -25,4 +25,30 @@ public class WorkFlowRuleFlows {
 		return workFlowRulePage.successMessageDisplay();
 		
 	}
+	
+	public boolean userAddsNewWorkFlowRuleForApplicationScore(String fieldName1,String fieldName2)
+	{
+		workFlowRulePage=navigator.navigateToPage(WorkflowRulePage.class);
+		workFlowRulePage.selectFieldName(fieldName1);
+		workFlowRulePage.selectOperator1();
+		workFlowRulePage.selectOperator1Value1(fieldName2);
+		workFlowRulePage.clickAppendButton();
+		workFlowRulePage.clickRiskCheckBox(true);
+		workFlowRulePage.clickCreditBureauCheckBox(true);
+		workFlowRulePage.saveButtonClick();
+		return workFlowRulePage.successMessageDisplay();
+		
+	}
+	public boolean userAddsNewWorkFlowRuleForApplicationScoreAndRisk(String fieldName1,String fieldName2)
+	{
+		workFlowRulePage=navigator.navigateToPage(WorkflowRulePage.class);
+		workFlowRulePage.selectFieldName(fieldName1);
+		workFlowRulePage.selectOperator1();
+		workFlowRulePage.selectOperator1Value1(fieldName2);
+		workFlowRulePage.clickAppendButton();
+		workFlowRulePage.clickCreditBureauCheckBox(true);
+		workFlowRulePage.saveButtonClick();
+		return workFlowRulePage.successMessageDisplay();
+		
+	}
 }

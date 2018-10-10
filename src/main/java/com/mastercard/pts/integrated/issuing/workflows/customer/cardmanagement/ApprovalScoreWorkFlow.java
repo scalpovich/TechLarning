@@ -25,6 +25,32 @@ public class ApprovalScoreWorkFlow {
 		approvalScorePage.saveButtonClick();
 		return approvalScorePage.successMessageDisplay();
 	}
+	public boolean userAddsNewApprovalScoreForAutoReject()
+	{
+		approvalScorePage = navigator.navigateToPage(ApprovalScorePage.class);
+		approvalScorePage.addApproverScorePlan();
+		approvalScorePage.addMandatoryLabelsAndFields();
+		approvalScorePage.selectProgram();
+		approvalScorePage.selectAction(2);
+		approvalScorePage.enterStartRangeValue();
+		approvalScorePage.enterEndRangeValue();
+		approvalScorePage.settingMandatoryValuesWithLabels();
+		approvalScorePage.saveButtonClick();
+		return approvalScorePage.successMessageDisplay();
+	}
+	public boolean userAddsNewApprovalScoreForAutoRefer()
+	{
+		approvalScorePage = navigator.navigateToPage(ApprovalScorePage.class);
+		approvalScorePage.addApproverScorePlan();
+		approvalScorePage.addMandatoryLabelsAndFields();
+		approvalScorePage.selectProgram();
+		approvalScorePage.selectAction(3);
+		approvalScorePage.enterStartRangeValue();
+		approvalScorePage.enterEndRangeValue();
+		approvalScorePage.settingMandatoryValuesWithLabels();
+		approvalScorePage.saveButtonClick();
+		return approvalScorePage.successMessageDisplay();
+	}
 	public void userVerifiesAndEditsNewApprovalScore()
 	{
 	approvalScorePage.verifyUiOperationStatus();
