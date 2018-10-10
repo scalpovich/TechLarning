@@ -3,10 +3,12 @@ package com.mastercard.pts.integrated.issuing.steps;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceDetailsFlows;
 
 @Component
 public class BatchSteps {
@@ -30,6 +33,8 @@ public class BatchSteps {
 	private static final String DEFAULT_TRAILER = "TR\\d{8}";
 
 	private static final String DEFAULT_HEADER = "[\\w ]{32}\\d{6}";
+	
+	private static final int PHOTO_REFERENCE_NUMBER_POSITION = 29;
 	
 	private static final Logger logger = LoggerFactory.getLogger(BatchSteps.class);
 
@@ -39,6 +44,8 @@ public class BatchSteps {
 	@Autowired
 	private Path tempDirectory;
 
+	@Autowired
+	DeviceDetailsFlows flow; 
 	@Autowired
 	private LinuxBox linuxBox;
 
@@ -83,6 +90,85 @@ public class BatchSteps {
 			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
 			throw MiscUtils.propagate(e);
 		}
+	}
+	
+	@When("photo reference number present at given position in embossing file")
+	@Then("photo reference number present at given position in embossing file")
+	public void  photoReferenceNumberPresentAtGivenPosition() {
+		
+		flow.findAndPutDeviceApplicationNumberInContext();
+		Device device = context.get(ContextConstants.DEVICE);
+		MiscUtils.reportToConsole("******** Embossing File Start ***** " );
+		DevicePlan tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
+		String deviceApplicationNumber = device.getApplicationNumber();
+		String photoReferenceNumber = "";
+		try {
+			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "DEVICE");		
+			photoReferenceNumber = LinuxUtils.getPhotoReferenceNumber(batchFile);
+			MiscUtils.reportToConsole("Device Application number :  " + device.getApplicationNumber() );
+			MiscUtils.reportToConsole("Photo Reference number :  " + photoReferenceNumber );
+			MiscUtils.reportToConsole("Device Application number :  " + device.getApplicationNumber() );			
+			MiscUtils.reportToConsole("******** Embossing File Completed ***** " );
+
+		} catch (Exception e) {
+			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
+			throw MiscUtils.propagate(e);
+		}
+		Assert.assertTrue(photoReferenceNumber.equals(deviceApplicationNumber));		
+	}
+	
+	@When("photo flat file generated with photo reference number")
+	@Then("photo flat file generated with photo reference number")
+	public void thenflatFileGeneratedWithPhotoReferenceNumber() {
+		
+		flow.findAndPutDeviceApplicationNumberInContext();
+		Device device = context.get(ContextConstants.DEVICE);
+		MiscUtils.reportToConsole("******** Photo Flat File Start ***** " );
+		String deviceApplicationNumber = device.getApplicationNumber();
+		
+		String timestamp = context.get(ContextConstants.CLIENT_PHOTO_BATCH_PROCESS_TIME);
+		timestamp = timestamp.substring(0,timestamp.length()-1);
+		String partialFileName = "Account_PhotoNonPhoto_"+timestamp;
+		
+		boolean isPhotoReferencePresentInFlatFile=false;
+		try {
+			MiscUtils.reportToConsole("Flat file path name :  " + partialFileName);
+			
+			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(partialFileName, tempDirectory.toString(), "CLIENT_PHOTO_BATCH");		
+			isPhotoReferencePresentInFlatFile = LinuxUtils.isPhotoReferenceNumberPresentFlatFile(batchFile,deviceApplicationNumber);
+			MiscUtils.reportToConsole("Device Application number :  " + deviceApplicationNumber );
+			MiscUtils.reportToConsole("******** Photo Flat File Completed ***** " );
+
+		} catch (Exception e) {
+			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
+			throw MiscUtils.propagate(e);
+		}
+		Assert.assertTrue(isPhotoReferencePresentInFlatFile);
+	}
+	
+	@When("photo image file generated in JPEG format")
+	@Then("photo image file generated in JPEG format")
+	public void thenPhotoFileGeneratedInJPEGFormat() {
+		flow.findAndPutDeviceApplicationNumberInContext();
+		String timestamp = context.get(ContextConstants.CLIENT_PHOTO_BATCH_PROCESS_TIME);
+		Device device = context.get(ContextConstants.DEVICE);
+		String deviceApplicationNumber = device.getApplicationNumber();
+		
+		String partialFileName = "Account_PhotoNonPhoto_"+timestamp;
+		
+		String photoFileName=deviceApplicationNumber+".jpeg";
+		File photoJpegFile = null;
+		try {
+			MiscUtils.reportToConsole("Flat file path name :  " + partialFileName);
+			MiscUtils.reportToConsole("Photo file name :  " + photoFileName );		
+			photoJpegFile = linuxBox.downloadFileThroughSCPByPartialFileName(photoFileName, tempDirectory.toString(), "CLIENT_PHOTO_BATCH");		
+			MiscUtils.reportToConsole("******** Photo Flat File Completed ***** " );
+
+		} catch (Exception e) {
+			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
+			throw MiscUtils.propagate(e);
+		}
+		Assert.assertNotNull(photoJpegFile);
 	}
 	
 	@When("user sets invalid cvv/ccv2/icvv to device")
@@ -137,6 +223,21 @@ public class BatchSteps {
 			throw MiscUtils.propagate(e);
 		}
 	}
+	
+	@When("to verify photo reference number is present in card holder dump file")
+	@Then("to verify photo reference number is present in card holder dump file")
+	public void  cardHolderDumpFileWasGeneratedSuccessfullyForPhotoCard() {
+		MiscUtils.reportToConsole("******** Embossing File Start ***** " );
+		flow.findAndPutDeviceApplicationNumberInContext();
+		try {
+			String CSVno = context.get("CSVno");
+			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(CSVno, tempDirectory.toString(), "CARDHOLDER_DUMP");
+			Device device = context.get(ContextConstants.DEVICE);
+			boolean flg= LinuxUtils.getPhotoReferenceNumberinDumpFile(batchFile,device.getApplicationNumber());
+			Assert.assertTrue("Photo Reference Number is present in Card Holder Dump File",flg);
+		}
+		catch(Exception e) {}
+	} 
 	
 	@SuppressWarnings("unused")
 	private String getHeaderPattern() {

@@ -13,12 +13,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
-import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -41,73 +40,82 @@ public class CloseBatchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview-div")
 	private MCWebElement batchNoColumn;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[2]/div[4]/div[2]/div[2]/form[1]/div[2]/div[4]/table/tbody/tr/td[10]/span/input")
+	private MCWebElement closeBatchRecord;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
-	private MCWebElement processSelectedBtn;
+	private MCWebElement processSelected;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']/td[1]/span")
+	private MCWebElement btnProcessSelected;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']/td[1]")
-	public MCWebElements allBatchNumberTxt;
+	public MCWebElements txtAllBatchNumber;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[1]/td[1]/td[10]/span/input")
-	public MCWebElement firstBatchNumberTxt;
-	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
-	private MCWebElements allRowsTxt;
+	public MCWebElement txtFirstBatchNumber;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Yes']")
-	private MCWebElement yesBtn;
+	private MCWebElement btnYes;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//h3[text()= 'Confirmation Message']/ancestor::div//iframe")
-	private MCWebElement confirmMsgBtn;
+	private MCWebElement btnConfirmMsg;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Process All']")
-	private MCWebElement processAllBtn;
+	private MCWebElement btnProcessAll;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview")
 	private MCWebElement searchTable;
 
-
+	public void closebatch() {
+		waitForLoaderToDisappear();
+		closeBatchRecord.click();
+		CustomUtils.ThreadDotSleep(1000);
+		processSelected.click();
+		CustomUtils.ThreadDotSleep(1000);
+	}
+	
 	public List<String> allBatchNumberRetrieval() {
 		List<String> batchNumbers = new ArrayList<>();
-		for (int i = 0; i < allBatchNumberTxt.getElements().size(); i++) {
-			batchNumbers.add(allBatchNumberTxt.getElements().get(i).getText());
-		}
+		txtAllBatchNumber.getElements().stream().forEach((element) -> {
+			batchNumbers.add(element.getText());
+		});
 		return batchNumbers;
 	}
 	
-	public int identifyBatchNumberToProcess() {
-		Device device = context.get(ContextConstants.DEVICE);
-		int i;
-		for (i = 0; i < allBatchNumberRetrieval().size(); i++) {
-			if (allBatchNumberRetrieval().get(i).equals(device.getBatchNumber())) {
-				logger.info("batchNumber: {}", allBatchNumberRetrieval().get(i));
+	public int identifyBatchNumberToProcess()
+	{
+		String batchNumber=context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
+		int index;
+		for(index=0;index<allBatchNumberRetrieval().size();index++){
+			if(allBatchNumberRetrieval().get(index).equals(batchNumber)){
+				logger.info("Batch Number: {}",allBatchNumberRetrieval().get(index));
 				break;
 			}
 		}
-		return i;
+		return index;
 	}
 	
 	public void processAppropriateBatchForApplication() {
 		String checkBox = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd'][" + identifyBatchNumberToProcess() + 1 + "]/td[10]/span/input";
 		clickWhenClickable(driver().findElement(By.xpath(checkBox)));
-		clickWhenClickable(processSelectedBtn);
+		clickWhenClickable(btnProcessSelected);
 		verifyOperationStatus();
-
 	}
 	
 	public void processFirstBatch() {
-		clickWhenClickable(firstBatchNumberTxt);
-		clickWhenClickable(processSelectedBtn);
+		clickWhenClickable(txtFirstBatchNumber);
+		clickWhenClickable(btnProcessSelected);
 		verifyOperationStatus();
 	}
 	
 	public void processAllBatch() {
-		//clickWhenClickable(processAllBtn);
 		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
 		clickProcessSelectedButton();
 		try {
-			if (confirmMsgBtn.isEnabled() && confirmMsgBtn.isVisible()) {
+			if (btnConfirmMsg.isEnabled() && btnConfirmMsg.isVisible()) {
 				switchToIframe("Confirmation Message");
-				clickWhenClickable(yesBtn);
+				clickWhenClickable(btnYes);
 				verifyOperationStatus();
 			} else {
 				verifyOperationStatus();
@@ -134,11 +142,11 @@ public class CloseBatchPage extends AbstractBasePage {
 	public void processAppropriateBatchForApplicationForFileUpload() {
 		String checkBox = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd'][" + identifyBatchNumberToProcessForFileUpload() + 1 + "]/td[10]/span/input";
 		clickWhenClickable(driver().findElement(By.xpath(checkBox)));
-		clickWhenClickable(processSelectedBtn);
+		clickWhenClickable(btnProcessSelected);
 		try {
-			if (asWebElement(confirmMsgBtn).isDisplayed()) {
+			if (asWebElement(btnConfirmMsg).isDisplayed()) {
 				switchToIframe("Confirmation Message");
-				clickWhenClickable(yesBtn);
+				clickWhenClickable(btnYes);
 				verifyOperationStatus();
 			} else {
 				verifyOperationStatus();

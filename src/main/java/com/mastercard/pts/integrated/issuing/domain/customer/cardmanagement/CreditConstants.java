@@ -73,6 +73,14 @@ public class CreditConstants {
 	
 	public static final String ALL_BATCH_NUMBERS_PREPRODUCTION="ALL_BATCH_NUMBERS_PREPRODUCTION";
 	
+	public static final String JOB_ID="JOB_ID";
+
+	public static final String PARTNER_MEMBERSHIP_NUMBER = "PARTNER_MEMBERSHIP_NUMBER";
+	
+	public static final String CREDIT_LIMIT_GREATER_THAN_MAXIMUM = "CREDIT_LIMIT_GREATER_THAN_MAXIMUM";
+
+	public static final String EXISTING_BATCH="EXISTING_BATCH";
+
 	private CreditConstants() {
 	}
 	

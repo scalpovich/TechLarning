@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceGenerationBatchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
-
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
 @Component
 public class DeviceGenerationBatchFlows {
@@ -20,6 +20,9 @@ public class DeviceGenerationBatchFlows {
 	
 	public void deviceGenerationBatchExecution(){
 		deviceGenerationBatchPage = navigator.navigateToPage(DeviceGenerationBatchPage.class);		
+		deviceGenerationBatchPage.allBatchNumberRetrieval();
+		SimulatorUtilities.wait(5000);
+		deviceGenerationBatchPage.identifyBatchNumberToProcess();
 		deviceGenerationBatchPage.processAppropriateBatchForApplication();
 	}	
 	
@@ -32,7 +35,7 @@ public class DeviceGenerationBatchFlows {
 		deviceGenerationBatchPage=navigator.navigateToPage(DeviceGenerationBatchPage.class);
 		deviceGenerationBatchPage.processAllBatch();
 	}
-     
+
 	public void deviceGenerationAllBatchExecution() {
 		deviceGenerationBatchPage = navigator.navigateToPage(DeviceGenerationBatchPage.class);
 		deviceGenerationBatchPage.processAllBatch();

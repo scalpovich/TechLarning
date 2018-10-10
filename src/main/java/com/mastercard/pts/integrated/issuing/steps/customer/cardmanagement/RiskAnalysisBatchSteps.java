@@ -8,12 +8,17 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.R
 
 @Component
 public class RiskAnalysisBatchSteps {
-	
+
 	@Autowired
 	RiskAnalysisBatchFlow riskAnalysisBatchFlow;
 
 	@When("user processesAll riskAnalysis batch for new Application")
 	public void riskAnalysisBatchExecution() {
 		riskAnalysisBatchFlow.processAllRiskAnalysisBatch();
+	}
+	
+	@When("user processes riskAnalysis batch for new Application")
+	public void closeBatchExecutionForNewApplication() {
+		riskAnalysisBatchFlow.processRiskAnalysisBatch();
 	}
 }

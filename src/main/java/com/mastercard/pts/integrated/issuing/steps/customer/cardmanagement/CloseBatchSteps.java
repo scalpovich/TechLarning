@@ -20,7 +20,7 @@ public void closeBatchExecutionForNewApplication(){
 
 @When("user processes close batch for new Application for FileUpload")
 public void closeFirstBatchExecutionForNewApplication(){
-	closeBatchFlows.closeFirstBatchExecution();;
+	closeBatchFlows.closeBatchExecutionForFileUpload();
 }
 
 @When("user processesAll close batch for new Application")
