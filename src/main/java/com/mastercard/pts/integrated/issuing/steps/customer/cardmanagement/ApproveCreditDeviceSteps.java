@@ -25,4 +25,11 @@ public class ApproveCreditDeviceSteps {
 	public void verifyCreditDeviceAfterApplicaionCreationFileUpload() {
 		approveRejectApplicationFlows.approveRejectCreditApplication_FileUpload();
 	}
+	
+	@Given("user pushback the credit application device")
+	@Then("user pushback the credit application device")
+	@When("user pushback the credit application device")
+	public void pushbackCreditDeviceAfterApplicaionCreation(){
+		approveRejectApplicationFlows.pushbackCreditApplication();
+	}
 }

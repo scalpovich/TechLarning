@@ -37,7 +37,7 @@ public class AuthorizationSearchSteps {
 	@Then("search $type authorization and verify $state status")
 	public void thenUserSearchDeviceNumerWithTodaysDate(String type, String state) {
 		Device device = context.get(ContextConstants.DEVICE);
-		authorizationSearchWorkflow.verifyAuthTransactionSearch(type, state,device.getDeviceNumber());
+		authorizationSearchWorkflow.verifyAuthTransactionSearch(type, state,device);
 	}
 
 	@When("assert $response response with $code AuthDecline Code and $description as description")
@@ -55,9 +55,10 @@ public class AuthorizationSearchSteps {
 	@Then("verify transaction currency as $tcurrency and billing currency as $bcurrency on auth search")
 	public void verifyBillingCurrency(String tcurrency, String bcurrency) {
 		Device device = context.get(ContextConstants.DEVICE);
-		authorizationSearchWorkflow.verifyTransactionAndBillingCurrency(tcurrency, bcurrency, device.getDeviceNumber());
+		authorizationSearchWorkflow.verifyTransactionAndBillingCurrency(tcurrency, bcurrency, device);
 	}
-
+    
+	@When("verify fixed transaction fee applied on purchase transaction")
 	@Then("verify fixed transaction fee applied on purchase transaction")
 	public void veriyFixedTransactionFeeonPurchaseTransaction() {
 		Device device = context.get(ContextConstants.DEVICE);
@@ -118,8 +119,9 @@ public class AuthorizationSearchSteps {
 		assertThat(authorizationSearchWorkflow.checkMarkupFee(device.getDeviceNumber()), Matchers.hasItems(markUpFees, markUpFeesTax));
 	}
 
+	@When("verify markup rate fee applied on transaction")
 	@Then("verify markup rate fee applied on transaction")
-	public void veriyMarkupRateFeeOnTransaction() {
+		public void veriyMarkupRateFeeOnTransaction() {
 		Device device = context.get(ContextConstants.DEVICE);
 		TransactionFeePlan txnFeePlan = TransactionFeePlan.getMarkUpFees(provider);
 		Double billingAmount = Double.parseDouble(authorizationSearchWorkflow.checkMarkupFee(device.getDeviceNumber()).get(0));
@@ -141,6 +143,7 @@ public class AuthorizationSearchSteps {
 	}
 	
 	@When("user verifies available balance after transaction")
+	@Then("user verifies available balance after transaction")
 	public void validateAvailableBalanceAfterTransaction(){
 		BigDecimal availableBalanceBeforeTransaction =context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT);
 		AvailableBalance availBal = authorizationSearchWorkflow.getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(availableBalanceBeforeTransaction);

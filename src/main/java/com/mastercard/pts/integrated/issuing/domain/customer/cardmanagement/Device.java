@@ -69,6 +69,7 @@ public class Device {
 	private String existingDeviceNumber;
 	private String photoIndicator;
 	private String batchNumber;
+	private String partnerMembershipNumber;
 	private String sequenceNumber;
 	private String cvvData;
 	private String expirationYear;
@@ -104,6 +105,8 @@ public class Device {
   	private String walletCurrency;
  	private String category;
   	private String amountType;
+  	private static double deviceAmountUsage = 0.00;
+  	private static double deviceVelocity = 0;
   	
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
@@ -561,6 +564,14 @@ public class Device {
 		this.batchNumber = batchNumber;
 	}
 
+	public String getPartnerMembershipNumber() {
+		return partnerMembershipNumber;
+	}
+
+	public void setPartnerMembershipNumber(String partnerMembershipNumber) {
+		this.partnerMembershipNumber = partnerMembershipNumber;
+	}
+
 	public String getSequenceNumber() {
 		return sequenceNumber;
 	}
@@ -673,5 +684,21 @@ public class Device {
 
 	public void setAmountType(String amountType) {
 		this.amountType = amountType;
+	}
+	
+	public double getDeviceAmountUsage() {
+		return deviceAmountUsage;
+	}
+
+	public void setDeviceAmountUsage(double deviceAmountUsage) {
+		Device.deviceAmountUsage = Device.deviceAmountUsage + deviceAmountUsage;
+	}
+
+	public double getDeviceVelocity() {
+		return deviceVelocity;
+	}
+
+	public void setDeviceVelocity() {
+		++deviceVelocity;
 	}
 }
