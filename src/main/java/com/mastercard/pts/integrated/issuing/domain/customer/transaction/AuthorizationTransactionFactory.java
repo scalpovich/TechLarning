@@ -67,48 +67,6 @@ public class AuthorizationTransactionFactory {
 			throw MiscUtils.propagate(e);
 		}
 	}
-
-	public String createCsvCardProfileForUpdatedATCRange(Transaction transaction) {
-		MiscUtils.reportToConsole(" *******  start createCsvCardProfile *******");
-		LinkedListMultimap<String, String> elements = LinkedListMultimap.create();
-		add(elements, "(path)", CARD_PROFILE_NAME);
-		add(elements, "(description)", transaction.getTestCaseToSelect());
-
-		add(elements, "002", transaction.getCardNumber());
-		add(elements, "014", transaction.getExpirationYear());
-		// add(elements, "023", transaction.getCardSequenceNumber()); // not
-		// needed for now
-
-		Map<String, String> cardDataElements = transaction.getCardDataElements();
-		if (cardDataElements.get(ATC_DE) == "1") {
-			cardDataElements.put(ATC_DE, "7");
-			transaction.setCardDataElements(cardDataElements);
-			transaction.getCardDataElements().entrySet().stream().forEach(e -> add(elements, e.getKey(), e.getValue()));
-		} else if (cardDataElements.get(ATC_DE) == "7") {
-			cardDataElements.put(ATC_DE, "5");
-			transaction.setCardDataElements(cardDataElements);
-			transaction.getCardDataElements().entrySet().stream().forEach(e -> add(elements, e.getKey(), e.getValue()));
-		} else if (cardDataElements.get(ATC_DE) == "5") {
-			cardDataElements.put(ATC_DE, "1");
-			transaction.setCardDataElements(cardDataElements);
-			transaction.getCardDataElements().entrySet().stream().forEach(e -> add(elements, e.getKey(), e.getValue()));
-		}
-		String header = elements.keySet().stream().collect(joining(","));
-		String values = elements.keySet().stream().map(name -> elements.get(name).get(0)).collect(joining(","));
-
-		List<String> lines = Arrays.asList(header, values);
-
-		String filename = String.format("Card_Profile_%s_%s.csv", transaction.getTestCaseToSelect(), DateUtils.getDateTimeDDMMYYYYHHMMSS());
-		try {
-			String fullPath = Files.write(tempDir.resolve(filename), lines).toString();
-			logger.info("Generate card profile {}", fullPath);
-			return fullPath;
-		} catch (IOException e) {
-			// NO SONAR. We are propagating exception to another class where it
-			// is thrown
-			throw MiscUtils.propagate(e);
-		}
-	}
 	public String createCsvTesCase(Transaction transaction) {
 		MiscUtils.reportToConsole(" *******  start createCsvTesCase *******");
 		LinkedListMultimap<String, String> elements = createTestCaseDataElements(transaction);
