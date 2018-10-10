@@ -32,7 +32,7 @@ public class ReconciliationSteps {
 	public void verifyReportForTransactionsWithProgramBalanceSummaryIsDownloaded() {
 		Assert.assertTrue(reconciliationWorkFlow.verifyReportGenerationRecon());
 	}
-	
+
 	@When("pre-clearing and Pre-EOD batches are run")
 	public void whenPreclearingAndPreEODBatchesAreRun() {
 
