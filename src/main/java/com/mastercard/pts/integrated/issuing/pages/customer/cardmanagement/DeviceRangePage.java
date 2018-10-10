@@ -425,14 +425,13 @@ public class DeviceRangePage extends AbstractBasePage {
 		verifyOperationStatus();
 		if (Objects.nonNull(ConstantData.DEVICE_RANGE_DATA)) {
 			context.put(ConstantData.DEVICE_RANGE_DATA, deviceRange);
-		}
+	}
 	}
 
 	private void fillAddDevicePage(DeviceRange deviceRange) {
 		selectProductType(deviceRange.getProductType());
-		SimulatorUtilities.wait(3000);
+		SimulatorUtilities.wait(5000);
 		selectProgram(deviceRange.getProgram());
-		SimulatorUtilities.wait(3000);
 		selectDevicePlanCode(deviceRange.getDevicePlanCode());
 		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);		
 		logger.info("ProductType : {}", devicePlan.getProductType());

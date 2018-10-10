@@ -58,8 +58,8 @@ public class TransactionSteps {
 	private static final String DEVICE_PRODUCTION = "device production";
 	private static final String PIN_PRODUCTION = "pin production";
 	private static final String IPMINCOMING = "ipm incoming";
-	private static final String ATC = "ATC" ;
 	private static Boolean sameCard = false;
+	private static final String ATC = "ATC" ;
 	public boolean atcCounterFlag = false;
 
 	@Autowired
@@ -76,12 +76,12 @@ public class TransactionSteps {
 
 	@Autowired
 	private AuthorizationTransactionFactory transactionFactory;
-	
-	@Autowired
-	private DeviceUsageWorkflow deviceUsageWorkflow;
 
 	@Autowired
 	private TransactionProvider transactionProvider;
+	
+	@Autowired
+	private DeviceUsageWorkflow deviceUsageWorkflow;
 
 	@Autowired
 	private ClearingTestCaseProvider clearingTestCaseProvider;
@@ -102,7 +102,6 @@ public class TransactionSteps {
 	private static String FAIL_MESSAGE = FAILED + " -  Result : ";
 	
 	private static String INVALID_KEYS = "(default) - M/Chip Key Set from the related BIN range will be used";
-	
 
 	public String getTransactionAmount() {
 		return transactionAmount;
@@ -131,7 +130,7 @@ public class TransactionSteps {
 
 	@When("perform an $transaction MAS transaction on the same card")
 	@Aliases(values={"a sample simulator \"$transaction\" is executed on the same card",
-    "user performs an \"$transaction\" MAS transaction on the same card"})
+	"user performs an \"$transaction\" MAS transaction on the same card"})
 	@Given("perform an $transaction MAS transaction on the same card")
 	public void givenTransactionIsExecutedOnTheSameCard(String transaction) {
 		String temp = transaction;
@@ -256,7 +255,6 @@ public class TransactionSteps {
 			transactionData.setCardHolderBillingCurrency(transactionWorkflow.getCurrencyToBeUsed(transactionData.getDeKeyValuePair().get("061.13")));
 		}
 		// creating & import card profile to temp location ex:C:\Users\e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413
-		
 		transactionData.setCardProfile(transactionFactory.createCsvCardProfile(transactionData));
 		// creating & import testcase/transaction file to temp location ex: * C:\Users\e071200\AppData\Local\Temp\20171013_IssuingTests_7323176887769829413
 		transactionData.setTestCase(transactionFactory.createCsvTesCase(transactionData));
@@ -433,10 +431,10 @@ public class TransactionSteps {
 		Transaction transactionData = Transaction.generateFinSimPinTestData(device, finSimConfig, provider);
 		String pinNumber = transactionWorkflow.getPinNumber(transactionData);
 		logger.info("FINSim PIN Number generated : {} ", pinNumber);
-      	Assert.assertTrue("INVALID PIN", !pinNumber.isEmpty());
+		Assert.assertTrue("INVALID PIN", !pinNumber.isEmpty());
 		device.setPinNumberForTransaction(pinNumber);
 	}
-	
+
 	@When("PIN is created for Pin Change First Transaction")
 	@Then("PIN is created for Pin Change First Transaction")
 	public void thenPINIsCreatedForPinChangeFirstTransaction() {
@@ -544,6 +542,7 @@ public class TransactionSteps {
 
 	@When("$tool test results are verified for $transaction")
 	@Then("$tool test results are verified for $transaction")
+	@Given("$tool test results are verified for $transaction")
 	public void thenVisaTestResultsAreReported(String tool, String transaction) {
 		String testResults = null;
 		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseToSelect(transaction);
@@ -597,7 +596,7 @@ public class TransactionSteps {
 			transactionWorkflow.setFolderPermisson(provider.getString(IPM_INCOMING));
 		transactionWorkflow.closeWinSCP();
 	}
-	
+
 	@Then("user sets invalid pin")
 	@When("user sets invalid pin")
 	public void userSetInvalidPin(){
@@ -605,7 +604,20 @@ public class TransactionSteps {
 		device.setPinNumberForTransaction(ConstantData.INVALID_PIN);
 		context.put(ContextConstants.DEVICE, device);
 	}
-	
+
+	/***
+	 * This method is implemented to change transaction amount for transaction
+	 * @param amount : Decimal representation for amount
+	 * */
+	@When("user updates transaction amount to $amount")
+	@Given("user updates transaction amount to $amount")
+	public void userSetTransactionAmount(Double amount){
+		int i = new Double(amount * 100).intValue(); 
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setTransactionAmount(Integer.toString(i));
+		context.put(ContextConstants.DEVICE, device);
+	}
+
 	@When("perform an $transaction MAS transaction with amount $amount")
 	public void givenGenerateTestDataForOptimizedTransactionWithDifferentAmountIsExecuted(String transaction, String amount) {
 		// Storing transaction name in context to use it at runtime
@@ -615,4 +627,5 @@ public class TransactionSteps {
 		performOperationOnSamecard(true);
 		givenOptimizedTransactionIsExecuted(transaction);
 	}
+
 }

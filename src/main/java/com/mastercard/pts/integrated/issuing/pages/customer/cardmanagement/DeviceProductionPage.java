@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.openqa.selenium.By;
@@ -39,6 +40,9 @@ public class DeviceProductionPage extends AbstractBasePage {
 	// ------------- Card Management > Institution Parameter Setup > Institution
 	// Currency [ISSS05]
 
+	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=batchNumber]")
+	private MCWebElement txtBatchNumber;
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Product Type')]//following-sibling::td[2]//select")
 	private MCWebElement productTypeDDwn;
 
@@ -69,9 +73,12 @@ public class DeviceProductionPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers' and @class!='navigation'][1]/td[2]/span")
 	private MCWebElement deviceNumberFetch;
 
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class='headers']//a/span")
+	private MCWebElements txtDeviceNumberHeader;
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr")
 	private MCWebElements rowSize;
-
+	
 	public void deviceproduction(String prodType, String batchNum, String DeviceNumber) {
 		menuSubMenuPage.getDeviceProduction().click();
 		selectDropDownByText(productTypeDDwn, prodType);
@@ -97,7 +104,10 @@ public class DeviceProductionPage extends AbstractBasePage {
 	public void processDeviceProductionBatch(DeviceProductionBatch batch) {
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
+		waitAndSearchForRecordToAppear();
+		deviceNumbers();
 		waitAndSearchForRecordToExist();
+		clickWhenClickable(processAllBtn);
 		verifyOperationStatus();
 
 	}
@@ -121,6 +131,16 @@ public class DeviceProductionPage extends AbstractBasePage {
 		verifyOperationStatus();
 	}
 
+	public void processDeviceProductionBatchForAllForFileUploadForPrepaid(DeviceProductionBatch batch) {
+		String batchNumber = context.get(CreditConstants.BATCH_NUMBER_FILEUPLOAD);
+		waitForLoaderToDisappear();
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+		WebElementUtils.enterText(batchNumberTxt,batchNumber);
+		waitAndSearchForRecordToAppear();
+		clickWhenClickable(processAllBtn);
+		verifyOperationStatus();
+	}
+	
 	public void selectProduct(BulkDeviceRequestbatch bulkdeviceGenBatch) {
 		selectByVisibleText(productTypeDDwn, bulkdeviceGenBatch.getProduct());
 	}
@@ -203,32 +223,57 @@ public class DeviceProductionPage extends AbstractBasePage {
 	public void processDeviceProductionBatchNewApplication(DeviceProductionBatch batch) {
 		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
 		WebElementUtils.enterText(batchNumberTxt,batchNumber);
+		waitAndSearchForRecordToExist();
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		waitForRecordAndAssignDevice();
 		verifyOperationStatus();
 	}
 
 	public void processDeviceProductionBatchNewDevice(DeviceProductionBatch batch) {
 		Device device = context.get(ContextConstants.DEVICE);
-		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+        WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		WebElementUtils.enterText(batchNumberTxt, device.getBatchNumber());
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
 	}
 	
 	public void processDeviceProductionBatchNewDeviceSupplementary(DeviceProductionBatch batch) {		
-		String batchNumber = context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
+		String batchNumber=context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
 		selectByVisibleText(productTypeDDwn, batch.getProductType());
-		WebElementUtils.enterText(batchNumberTxt, batchNumber);		
+		WebElementUtils.enterText(batchNumberTxt, batchNumber);
 		waitAndSearchForRecordToExistForSupplementary();
 		verifyOperationStatus();
 	}
-	
+   
 	protected void waitForRecordAndAssignDevice() {
 		waitAndSearchForRecordToAppear();
 		context.put(CreditConstants.EXISTING_DEVICE_NUMBER, deviceNumberFetch.getText());
 		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
 		selectFirstRecord();
 		clickProcessSelectedButton();		
+	}
+
+	public int deviceNumberHeaderIndexFetch() {
+		int index = 0;
+		for (int i = 0; i < txtDeviceNumberHeader.getElements().size(); i++) {
+			if (txtDeviceNumberHeader.getElements().get(i).getText().equals("Device Number")) {
+				index = i;
+			}
+		}
+		return index + 1;
+	}
+	
+	public List<String> deviceNumbers() {
+		List<WebElement> allDeviceNumbers = new ArrayList<WebElement>();
+		List<String> allDeviceNumberfText = new ArrayList<String>();
+		String deviceNumberToFetch=String.format("//table[@class='dataview']//tr[@class='even' or 'odd']/td['%s']/span",deviceNumberHeaderIndexFetch());
+		allDeviceNumbers = Elements(deviceNumberToFetch);
+
+		for (int i = 0; i < allDeviceNumbers.size(); i++) {
+			allDeviceNumberfText.add(allDeviceNumbers.get(i).getText());
+		}
+		context.put(ContextConstants.ALL_DEVICE_NUMBERS, allDeviceNumberfText);
+		return allDeviceNumberfText;
 	}
 
 	@Override

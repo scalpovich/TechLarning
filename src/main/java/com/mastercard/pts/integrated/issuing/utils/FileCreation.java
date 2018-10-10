@@ -610,6 +610,101 @@ public class FileCreation {
 
 		return fileName;
 	}
+	
+	public String createApplicationUploadFileWithDuplicateData(String INSTITUTION_CODE, String customerType, String cardType) throws Exception {
+		DeviceRange deviceRange = context.get(ContextConstants.DEVICE_RANGE);
+		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+		Program program = context.get(ContextConstants.PROGRAM);
+		String branch = deviceRange.getBranch();
+		String branchCode = "";
+		if (branch.contains("[")) {
+			branchCode = branch.substring(branch.indexOf("[") + 1, branch.length() - 1);
+		} else {
+			branchCode = branch;
+		}
+		int totalRecords = 0;
+		String fileName = "";
+		String remoteDir = "";
+		String deviceType = "";
+		if (cardType.equalsIgnoreCase("prepaid")) {
+			remoteDir = Institution.createWithProvider(provider).getPrepaidLinuxUploadPath();
+		}
+
+		else if (cardType.equalsIgnoreCase("credit")) {
+			remoteDir = Institution.createWithProvider(provider).getCreditLinuxUploadPath();
+		}
+		File folder = new File(System.getProperty("user.dir"));
+		File[] listOfFiles = folder.listFiles();
+		logger.info("Length Of all Files:{}", listOfFiles.length);
+
+			if (cardType.equalsIgnoreCase("prepaid")) {
+				fileName = "APPPR" + INSTITUTION_CODE + DateUtils.getDateTimeDDMMYYHHMMSS() + MiscUtils.generateRandomNumberAsString(6) + ".DAT";
+			} else if (cardType.equalsIgnoreCase("credit")) {
+				fileName = "APPCR" + INSTITUTION_CODE + DateUtils.getDateTimeDDMMYYHHMMSS() + MiscUtils.generateRandomNumberAsString(6) + ".DAT";
+			}
+			HashMap<String, HashMap<String, String>> applicationUploadMap = new HashMap<>();
+			File file = new File(fileName);
+			if (cardType.equalsIgnoreCase("prepaid")) {
+				applicationUploadMap = dataReader.dataProviderFileUpload("AllUploadTestData", "Prepaid Card File");
+			} else if (cardType.equalsIgnoreCase("credit")) {
+				applicationUploadMap = dataReader.dataProviderFileUpload("AllUploadTestData", "Credit Card File");
+			}
+
+			try (PrintWriter writer = new PrintWriter(file)) {
+				writer.println("HD|" + INSTITUTION_CODE + "|" + DateUtils.getDateTimeDDMMYYYYHHMMSS() + "|" + "2.0");
+				String name = CustomUtils.randomString(9).toUpperCase();
+				String lastName = CustomUtils.randomString(11).toUpperCase();
+				helpDeskGeneral.setFirstName(name);
+				helpDeskGeneral.setLastName(lastName);
+
+				for (int i = 0; i < applicationUploadMap.size(); i++) {
+					if (true == dataReader.iterateUploadDataFromExcelMap("Test Record " + (i + 1))) {
+
+						if (DeviceType.MAGNETIC_STRIPE_CARD.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
+							deviceType = "1";
+						} else if (DeviceType.EMV_CARD.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
+							deviceType = "2";
+						} else if (DeviceType.PHYSICAL_NFC_DEVICE_MAG_STRIPE_PAYPASS.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
+							deviceType = "3";
+						} else if (DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
+							deviceType = "4";
+						} else if (DeviceType.PHYSICAL_NFC_DEVICE_PAYPASS.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
+							deviceType = "5";
+						} else if (DeviceType.STATIC_VIRTUAL_CARD.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
+							deviceType = "7";
+						} else if (DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
+							deviceType = "8";
+						}
+						if (customerType.equals(CustomerType.INDIVIDUAL)) {
+							writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", INSTITUTION_CODE).replace("%F%", "FORM").replace("%t%", "0").replace("%P%", program.getProgramCode()).replace("%q%", deviceType).replace("%D%", devicePlan.getDevicePlanCode()).replace("%b%", branchCode).replace("%Z%", "").replace("%N%", "Luke").replace("%I%", "Marsh").replace("%K%", "9999911220").replace("%X%",  "LukeMarsh@master.com"));
+						} else if (customerType.equals(CustomerType.CORPORATE) && cardType.equalsIgnoreCase(ProductType.Prepaid)) {
+							writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", INSTITUTION_CODE).replace("%F%", "FORM").replace("%t%", "1").replace("%P%", program.getProgramCode()).replace("%q%", deviceType).replace("%D%", devicePlan.getDevicePlanCode()).replace("%b%", branchCode).replace("%Z%", Institution.createWithProvider(provider).getCorporateClientCodePrepaid()).replace("%N%", "Luke").replace("%I%", "Marsh").replace("%K%", "9999911220").replace("%X%", "LukeMarsh@master.com" ));
+						} else if (customerType.equals(CustomerType.CORPORATE) && cardType.equalsIgnoreCase(ProductType.Credit)) {
+							writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", INSTITUTION_CODE).replace("%F%", "FORM").replace("%t%", "1").replace("%q%", deviceType).replace("%P%", program.getProgramCode()).replace("%D%", devicePlan.getDevicePlanCode()).replace("%b%", branchCode).replace("%Z%", Institution.createWithProvider(provider).getCorporateClientCodeCredit()).replace("%N%", "Luke").replace("%I%", "Marsh").replace("%K%", "9999911220").replace("%X%",  "LukeMarsh@master.com" ));
+						} else if (customerType.equals(CustomerType.BANKSTAFF)) {
+							writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", INSTITUTION_CODE).replace("%F%", "FORM").replace("%t%", "2").replace("%P%", program.getProgramCode()).replace("%q%", deviceType).replace("%D%", devicePlan.getDevicePlanCode()).replace("%b%", branchCode).replace("%Z%", "").replace("%N%", "Luke").replace("%I%", "Marsh").replace("%K%", "9999911220").replace("%X%", "LukeMarsh@master.com"));
+						}
+
+						totalRecords++;
+
+					}
+
+				}
+				writer.print("FT|" + createRecordNumber(9, totalRecords));
+			} catch (IOException e) {
+				logger.error("Fail to create page object: {}", e);
+				throw Throwables.propagate(e);
+			}
+			logger.info(file.getPath());
+
+			if (cardType.equalsIgnoreCase("credit")) {
+				readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(fileName, cardType);
+				context.put(CreditConstants.FILEUPLOAD_IN_BULK, readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(fileName, cardType));
+			}
+			linuxBox.upload(file.getPath(), remoteDir);
+
+		return fileName;
+	}
 
 	public String retrieveFieldUploadFile(String FieldName) {
 		return filename;

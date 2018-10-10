@@ -125,7 +125,16 @@ public class ConstantData {
 	public static final String PERMANENT_LIMIT = "Permanent [P]";	
 	
 	public static final String CREDIT_LIMIT_CHANGE_REQUEST = "226 - Credit limit Change Request";
-	public static final String CREDIT_LIMIT_CHANGE_COMMERCIAL_CARDS = 	"227 - Credit limit Change Commercial Cards";	
+	public static final String CREDIT_LIMIT_CHANGE_COMMERCIAL_CARDS = 	"227 - Credit limit Change Commercial Cards";
+	
+	public static final String DAILY = "Daily";
+	public static final String PERIODIC = "Periodic";
+	public static final String YEARLY = "Yearly";
+	public static final String PERIODICITY = "Month [9]";
+	public static final String PERIODICITY_MONTH = "12";
+	public static final String TX_SUCESSFUL_MESSAGE = "000-Successful";
+	public static final String PRE_AUTH = "Pre-Auth Completion";
+	public static final String LIMIT_VALIDATION_PARAMETER = "Daily Velocity Utilized;Daily Amount Utilized;Periodic Velocity Utilized;Periodic Amount Utilized;Yearly Velocity Utilized;Yearly Amount Utilized";
 	
 	private ConstantData() {
 	}
