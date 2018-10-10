@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ClientPhotoFlatFileDownloadBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PinGenerationBatch;
@@ -165,6 +166,12 @@ public class ApplicationUploadSteps {
 		batchProcessFlows.processDeviceProductionBatchNewDevice(batch);
 	}
 	
+	@Then("Date should be displayed as editable on screen")
+	@When("Date should be displayed as editable on screen")
+	public void thenDateShouldBeDisplayedOnOnScreen() {
+		boolean result = batchProcessFlows.verifyClientPhotoFlatFileDownloadBatchScreen();
+		Assert.assertTrue("Client photo/flat file download batch screen is not displayed properly", result);
+	}
 	
 	@Then("$type processes deviceproduction batch using new Device for Supplementary")
 	@When("$type processes deviceproduction batch using new Device for Supplementary")
@@ -173,7 +180,7 @@ public class ApplicationUploadSteps {
 		batch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processDeviceProductionBatchNewDeviceSupplementary(batch);
 	}
-
+	
 	@Then("$type processes pinProduction batch using new Application")
 	@When("$type processes pinProduction batch using new Application")
 	public void whenProcessesPinproductionBatchForNewApplication(String type) {

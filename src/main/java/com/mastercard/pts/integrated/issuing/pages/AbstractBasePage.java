@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.xerces.dom3.as.ASElementDeclaration;
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -1238,7 +1239,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		waitForPageToLoad(driver());
 		} catch (StaleElementReferenceException e) {
 			doSelectByVisibleText(ele, optionName);
-		}
+	}
 		waitForPageToLoad(driver());
 	}
 
@@ -1856,7 +1857,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public String getInstitutionDate(){	
 		logger.info("Institution date : {}",getTextFromPage(institutionDateTxt));
 		return getTextFromPage(institutionDateTxt);
-	}	
+	}
 	
 	protected void waitForContentToLoad(MCWebElement element){
 		waitForWicket();
