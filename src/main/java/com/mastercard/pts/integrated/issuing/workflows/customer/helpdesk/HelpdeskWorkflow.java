@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanPlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
@@ -226,7 +228,7 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.activateCreditLimitChangeRequest(helpdeskGeneral);
 	}
 	
-	public void raiseRetailToLoanRequest(HelpdeskGeneral helpdeskGeneral){
-		 helpDeskPage.retailTransactionToLoan(helpdeskGeneral);
+	public void raiseRetailToLoanRequest(HelpdeskGeneral helpdeskGeneral,LoanPlan loanPlan,TransactionSearchDetails transactionDetails){
+		 helpDeskPage.retailTransactionToLoan(helpdeskGeneral,loanPlan,transactionDetails);
 	}
 }

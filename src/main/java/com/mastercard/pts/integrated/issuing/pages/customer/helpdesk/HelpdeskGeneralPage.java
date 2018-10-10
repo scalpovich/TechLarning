@@ -28,6 +28,8 @@ import com.google.common.base.CharMatcher;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanPlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -297,6 +299,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Type :']/../following-sibling::td[1]/select")
 	private MCWebElement selectLimitTypeDdwn;
 
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Plan :']/../following-sibling::td[1]//span/select")
+	private MCWebElement selectLoanPlanDdwn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Book Loan']")
+	private MCWebElement bookLoanBtn;
+	
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
 		logger.info(WALLET_NUMBER, CharMatcher.DIGIT.retainFrom(walletNumber.getText()));
@@ -447,6 +455,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	public void selectLimitType(String type) {
 		WebElementUtils.selectDropDownByVisibleText(selectLimitTypeDdwn, type);
+	}
+	
+	public void selectLoanPlan(String type) {
+		WebElementUtils.selectDropDownByVisibleText(selectLoanPlanDdwn, type);
 	}
 	
 	public void clickCurrentStatusAndLimitsTab(){
@@ -1289,12 +1301,18 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return creditLimit;
 	}
 	
-	public void retailTransactionToLoan(HelpdeskGeneral helpdeskGeneral){
+	public void retailTransactionToLoan(HelpdeskGeneral helpdeskGeneral,LoanPlan loanPlan,TransactionSearchDetails transactionDetails){
+		selectServiceCode(helpdeskGeneral.getServiceCode());
 		runWithinPopup(ConstantData.RETAIL_TO_LOAN, ()->{
-
+			selectLoanPlan(loanPlan.buildDescriptionAndCode());
+			ClickButton(bookLoanBtn);
+			Element("//td//span[text()='" + transactionDetails.getARN() + "']/../../following-sibling::td[7]").click();
+			
 		});			
 
 		clickEndCall();
-	
+
 	}
+	
+	
 }

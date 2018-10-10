@@ -32,6 +32,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.AuthorizationTransactionFactory;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ClearingTestCase;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ReversalTransaction;
@@ -443,6 +444,15 @@ public class TransactionSteps {
 		assertEquals(transactionWorkflow.searchTransactionWithArnAndGetStatus(rt.getArn(), ts), "Reversal [R]");
 	}
 
+	@Then("search transaction with device number on transaction search screen")
+	public void thenSearchWithDeviceInTransactionScreenAndVerify() {
+		TransactionSearch ts = TransactionSearch.getProviderData(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		TransactionSearchDetails transactionSearch = transactionWorkflow.searchTransactionWithDeviceAndGetDetails(device, ts);
+		Assert.assertTrue("Successfully transaction search",transactionSearch.getDeviceNumber().equalsIgnoreCase(device.getDeviceNumber()));
+		context.put(ContextConstants.TRANSACTION_SEARCH_DETAILS, transactionSearch);
+	}
+	
 	@Then("search with device in transaction screen and status for wallet to wallet transfer transaction")
 	public void thenSearchWithDeviceInTransactionScreenCheckReversalStatusAndStatusShouldBeReversal() {
 		ReversalTransaction rt = ReversalTransaction.getProviderData(provider);

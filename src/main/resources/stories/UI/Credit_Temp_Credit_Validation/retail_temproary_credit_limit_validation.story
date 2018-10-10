@@ -25,8 +25,8 @@ And credit processes pingeneration batch using new Device for Supplementary
 And device has "normal" status
 And user raises Temporary [T] credit limit change request for Individual
 And device has "normal" status
-And user verifies available Temporary [T] limit
-Then user sign out from customer portal
+Then user verifies available Temporary [T] limit
+And user sign out from customer portal
 
 Scenario:1.3 Pin Generation 
 Given connection to FINSim is established

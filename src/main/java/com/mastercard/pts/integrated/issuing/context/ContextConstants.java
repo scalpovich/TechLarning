@@ -122,6 +122,10 @@ public class ContextConstants {
 	
 	public static final String CLIENT_PHOTO_BATCH_PROCESS_TIME = "CLIENT_PHOTO_BATCH_PROCESS_TIME";
 	
+	public static final String LOAN_PLAN = "LOAN_PLAN";
+	
+	public static final String TRANSACTION_SEARCH_DETAILS = "TRANSACTION_SEARCH_DETAILS";
+	
 	private ContextConstants() {
 	}
 

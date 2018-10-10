@@ -30,7 +30,9 @@ import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCas
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.distribution.Dispatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ReversalTransaction;
@@ -595,7 +597,7 @@ public class HelpDeskSteps {
 		if(type.equalsIgnoreCase(ConstantData.TEMPORARY_LIMIT) || type.equalsIgnoreCase(ConstantData.PERMANENT_LIMIT))
 		{	for (Entry<String, BigDecimal> expectedlimit : creditLimitExpected.entrySet()) 	
 				assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT,creditLimit.get(expectedlimit.getKey()),equalTo(expectedlimit.getValue()));
-	}
+		}
 		else
 		{
 			assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, creditLimit.get(ConstantData.AVAIL_ACCOUNT_LIMIT), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
@@ -897,4 +899,15 @@ public class HelpDeskSteps {
 		helpdeskGeneral.setProductType(ProductType.PREPAID);
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.getWalletBalance(device), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
 	}
+	
+	@Then("user raises $serviceCode request for $customerType")
+	public void userRaisesRetailToLoanChangeRequestThroughHelpdesk(String serviceCode,String customerType) {
+		helpdeskGeneral = HelpdeskGeneral.createWithProviderWithCreditCardLimits(provider);
+		helpdeskWorkflow.clickCustomerCareEditLink();		
+		helpdeskGeneral.setServiceCode(serviceCode);
+		LoanPlan loanPlan = context.get(ContextConstants.LOAN_PLAN);	
+		TransactionSearchDetails transactionDetails = context.get(ContextConstants.TRANSACTION_SEARCH_DETAILS);
+		helpdeskWorkflow.raiseRetailToLoanRequest(helpdeskGeneral,loanPlan);
+	}
+
 }

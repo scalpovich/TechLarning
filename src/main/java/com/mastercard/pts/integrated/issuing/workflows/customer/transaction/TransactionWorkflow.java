@@ -18,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -51,6 +52,7 @@ import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalan
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ReversalTransaction;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.Transaction;
 import com.mastercard.pts.integrated.issuing.pages.ValidationException;
@@ -1469,6 +1471,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		return page.searchTransactionWithDeviceAndGetStatus(device, ts);
 	}
 
+	public TransactionSearchDetails searchTransactionWithDeviceAndGetDetails(Device device, TransactionSearch ts) {
+		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
+		return page.searchTransactionWithDeviceAndGetDetails(device, ts);
+	}
+	
 	public String getDecimalisationTableValue(String text) {
 		return text.toUpperCase().replace("A", "0").replace("B", "1").replace("C", "2").replace("D", "3").replace("E", "4").replace("F", "5").replace("G", "6").replace("H", "7").replace("I", "8")
 				.replace("J", "9");

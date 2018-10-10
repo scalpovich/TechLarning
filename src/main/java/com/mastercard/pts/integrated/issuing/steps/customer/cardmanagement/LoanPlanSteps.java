@@ -55,6 +55,6 @@ public class LoanPlanSteps extends AbstractBaseSteps {
 		}
 		loanPlanFlows.addLoanPlan(loanPlan);
 		loanPlan.setLoanPlanCode(loanPlan.buildDescriptionAndCode());
-		//context.put(ContextConstants.LOAN_PLAN, loanPlan);		
+		context.put(ContextConstants.LOAN_PLAN, loanPlan);		
 	}
 }

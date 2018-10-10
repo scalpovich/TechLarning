@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -167,6 +171,38 @@ public class TransactionSearchPage extends AbstractBasePage {
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(searchARNTxt));
+	}
+
+	public TransactionSearchDetails searchTransactionWithDeviceAndGetDetails(Device device, TransactionSearch ts) {
+		TransactionSearchDetails transactionDetails= new TransactionSearchDetails();		int i;
+		logger.info("Select product {}", device.getProductType());
+		WebElementUtils.selectDropDownByVisibleText(productTypeSelect, device.getProductType());
+		logger.info("Search transaction for device {}", device.getDeviceNumber());
+		WebElementUtils.enterText(searchDeviceTxt, device.getDeviceNumber());
+		WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
+		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
+		waitForWicket();
+		WebElementUtils.elementToBeClickable(tranDateDDwn);
+		WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, "Transaction Date [T]");
+		clickSearchButton();
+		waitForWicket();
+		for (i = 1; i < 4; i++) {
+			if ("2".equals(getCellTextByColumnName(i, "Sequence Number")))
+				break;
+		}
+		
+		transactionDetails.setARN(getCellTextByColumnName(i, "ARN"));		
+		transactionDetails.setSequenceNumber(getCellTextByColumnName(i, "Sequence Number"));		
+		transactionDetails.setDeviceNumber(getCellTextByColumnName(i, "Device Number"));
+		transactionDetails.setTransaction(getCellTextByColumnName(i, "Transaction"));
+		transactionDetails.setTransactionDate(getCellTextByColumnName(i, "Transaction Date"));
+		transactionDetails.setProcessingDate(getCellTextByColumnName(i, "Processing Date"));
+		transactionDetails.setDescription(getCellTextByColumnName(i, "Description"));
+		transactionDetails.setBillingAmount(getCellTextByColumnName(i, "Billing Amount"));
+		transactionDetails.setBillingCurrency(getCellTextByColumnName(i, "Billing Currency"));
+		transactionDetails.setDR_CR(getCellTextByColumnName(i, "DR / CR"));
+		transactionDetails.setReversal(getCellTextByColumnName(i, "Reversal"));		
+		return transactionDetails;			
 	}
 
 }
