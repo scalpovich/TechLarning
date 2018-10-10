@@ -83,9 +83,6 @@ public class TransactionSteps {
 
 	@Autowired
 	private VisaTestCaseNameKeyValuePair visaTestCaseNameKeyValuePair;
-	
-	@Autowired
-	private MID_TID_Blocking midtidBlocking;
 
 	private String authFilePath;
 
@@ -130,7 +127,7 @@ public class TransactionSteps {
 
 	@When("perform an $transaction MAS transaction on the same card")
 	@Aliases(values={"a sample simulator \"$transaction\" is executed on the same card",
-    "user performs an \"$transaction\" MAS transaction on the same card"})
+	"user performs an \"$transaction\" MAS transaction on the same card"})
 	@Given("perform an $transaction MAS transaction on the same card")
 	public void givenTransactionIsExecutedOnTheSameCard(String transaction) {
 		String temp = transaction;
@@ -246,9 +243,9 @@ public class TransactionSteps {
 			transactionData.setDeKeyValuePairDynamic("004", "000000000000");
 		}
 
-		if (midTidFlag==true)
-		{
-		    setDEElementsForMIDTID(transactionData);
+		if (midTidFlag==true){
+			MID_TID_Blocking midtidBlocking = context.get(ContextConstants.MID_TID_BLOCKING);
+			transactionData = transactionWorkflow.setDEElementsForMIDTID(transactionData,midtidBlocking,midTidCombination);
 		}
 		// changed ECOMMERCE to ECOM
 		if (transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE") || transactionWorkflow.isContains(transaction, "ASI_") || transactionWorkflow.isContains(transaction, "MMSR")
@@ -405,10 +402,10 @@ public class TransactionSteps {
 		Transaction transactionData = Transaction.generateFinSimPinTestData(device, finSimConfig, provider);
 		String pinNumber = transactionWorkflow.getPinNumber(transactionData);
 		logger.info("FINSim PIN Number generated : {} ", pinNumber);
-      	Assert.assertTrue("INVALID PIN", !pinNumber.isEmpty());
+		Assert.assertTrue("INVALID PIN", !pinNumber.isEmpty());
 		device.setPinNumberForTransaction(pinNumber);
 	}
-	
+
 	@When("PIN is created for Pin Change First Transaction")
 	@Then("PIN is created for Pin Change First Transaction")
 	public void thenPINIsCreatedForPinChangeFirstTransaction() {
@@ -569,7 +566,7 @@ public class TransactionSteps {
 			transactionWorkflow.setFolderPermisson(provider.getString(IPM_INCOMING));
 		transactionWorkflow.closeWinSCP();
 	}
-	
+
 	@Then("user sets invalid pin")
 	@When("user sets invalid pin")
 	public void userSetInvalidPin(){
@@ -584,61 +581,4 @@ public class TransactionSteps {
 		this.midTidFlag = midTidFlag;
 		this.midTidCombination = midTidCombination;
 	}
-	
-	@When("user creates MID TID Blocking for combination $type")
-	public void userCreatesMIDTIDBlockingForCombination(String type){
-        midtidBlocking = MID_TID_Blocking.createWithProvider(provider);
-        System.out.println(midtidBlocking.getMcc());
-		transactionWorkflow.addMID_TID_Blocking(type, midtidBlocking);
-	}
-	
-	@When("user deletes MID TID Blocking for Combination $type")
-	public void userDeleteMIDTIDBlockingForCombination(String type){
-		transactionWorkflow.deleteMID_TID_Blocking(type, midtidBlocking);
-	}
-
- private void setDEElementsForMIDTID (Transaction transactionData)
- {
-	 switch(midTidCombination){
-		case "1" :
-			transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
-			transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
-			break;
-		case "2" :
-			transactionData.setDeKeyValuePairDynamic("019", midtidBlocking.getAcquiringCountryCode());
-			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
-			transactionData.setDeKeyValuePairDynamic("022.01", ConstantData.POS_TERMIAL_VALUE);
-			break;
-		case "3" :
-			transactionData.setDeKeyValuePairDynamic("022.01", ConstantData.POS_TERMIAL_VALUE);
-			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
-			break;
-		case "4": case "6" : 
-			transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
-			transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
-			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
-			break;
-		case "5" :
-			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
-			break;
-		case "7" :
-			transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
-			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
-			break;
-		case "9" :
-			transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
-			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
-			break;
-		case "10" :
-			transactionData.setDeKeyValuePairDynamic("019", midtidBlocking.getAcquiringCountryCode());
-			transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
-			transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
-			break;
-		case "11" : 
-			transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
-			transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
-			break;
-		}
- }
-	
 }

@@ -100,6 +100,8 @@ public class ContextConstants {
 	
 	public static final String INST_PROPERTY = "institution";
 	
+	public static final String MID_TID_BLOCKING = "MID_TID_BLOCKING";
+	
 	private ContextConstants() {
 	}
 
