@@ -711,7 +711,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickSearchButton();
 		clickFirstRowEditLink();
 		clickWalletDetailsTab();
-		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
+		//SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
 		BigDecimal balanceAmount = new BigDecimal(getFirstRecordCellTextByColumnNameInEmbeddedTab(CURRENT_AVAILABLE_BALANCE));
 		clickEndCall();
 		return balanceAmount;
