@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -267,7 +268,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		logger.info("Application Number: {}",device.getApplicationNumber());
 		
 		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)
-				&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)) {
+				/*&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)*/) {
 			context.put(ContextConstants.DEVICE_SUPPLEMENTARY_ADDON_EXISTING,device);
 		} else {
 			context.put(ContextConstants.DEVICE, device);
@@ -279,13 +280,19 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 	}
 
 	private void fillBatchDetails(Device device) {		
-		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
-		clickWhenClickable(generateDeviceBatchBtn);
-		waitForWicket();
-		SimulatorUtilities.wait(10000);
-		context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());		
-		device.setBatchNumber(batchNumberTxt.getText());
-		logger.info(" *********** Batch number *********** : {}",device.getBatchNumber());		
+		if(Objects.nonNull(context.get(CreditConstants.EXISTING_BATCH))){
+			WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn,"Open [O]");			
+			selectByVisibleText(openBatchDDwn, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
+			device.setBatchNumber(context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
+		}else{
+			WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
+			clickWhenClickable(generateDeviceBatchBtn);
+			waitForWicket();
+			SimulatorUtilities.wait(30000);
+			context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());		
+			device.setBatchNumber(batchNumberTxt.getText());
+			logger.info(" *********** Batch number *********** : {}",device.getBatchNumber());		
+		}
 		clickNextButton();
 	}
 

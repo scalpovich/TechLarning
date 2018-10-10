@@ -6,9 +6,12 @@ import static org.junit.Assert.assertThat;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BatchJobHistory;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequestbatch;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
@@ -29,6 +32,9 @@ public class BatchJobHistorySteps {
 
 	@Autowired
 	BatchJobHistoryFlows batchjobhistoryflows;
+	
+	@Autowired
+	TestContext context;
 
 	@Then("Statement download batch is available on Batch Job History Page")
 	public void statementDownloadBatchIsAvailableOnBatchJobHistoryPage() {
@@ -48,4 +54,5 @@ public class BatchJobHistorySteps {
 		}
 		batchjobhistoryflows.CheckBatchJobHistory(batchjobhistory);
 	}
+	
 }
