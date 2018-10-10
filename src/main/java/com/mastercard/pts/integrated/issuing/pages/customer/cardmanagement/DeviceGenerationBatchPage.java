@@ -66,11 +66,11 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	private MCWebElement searchTable;
 
 	public List<String> allBatchNumberRetrieval() {
-		List<String> batchnumbers = new ArrayList<>();
-		for (int i = 0; i < allBatchNumberTxt.getElements().size(); i++) {
-			batchnumbers.add(allBatchNumberTxt.getElements().get(i).getText());
-		}
-		return batchnumbers;
+		List<String>batchNumbers = new ArrayList<>();
+		allBatchNumberTxt.getElements().stream().forEach((element)->{
+			batchNumbers.add(element.getText());
+		});
+		return batchNumbers;	
 	}	
 	
 	public int identifyBatchNumberToProcess() {
@@ -78,7 +78,7 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 		int index = 0;
 		for (int i = 0; i < allBatchNumberRetrieval().size(); i++) {
 			if (allBatchNumberRetrieval().get(i).equals(device.getBatchNumber())) {
-				logger.info("batchNumber: {}", allBatchNumberRetrieval().get(i));
+				logger.info("Batch Number: {}",allBatchNumberRetrieval().get(i));
 				index = i;
 			}
 		}
@@ -105,16 +105,25 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 		verifyOperationStatus();
 	}
 
+	public void processAllClick() {
+		SimulatorUtilities.wait(8000);
+		if (!waitForRow()) {
+			clickWhenClickable(deviceGenerationLink);
+		}
+		clickWhenClickable(processAll);
+	}
+	
 	public void processAllBatch() {
 		deviceGenerationBatch();
 		clickWhenClickable(processAllBtn);
 	}
-
+	
 	private void deviceGenerationBatch() {
 		if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER))) {
 			clickWhenClickable(deviceGenerationLink);
 			deviceGenerationBatch();
 		}
+		clickWhenClickable(processAll);
 	}
 	
 	public int identifyBatchNumberToProcessForFileUpload() {
