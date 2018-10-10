@@ -24,6 +24,7 @@ When user creates new device of Debit type for new client
 And a new device was created
 And processes pre-production batch for Debit
 And processes device production batch for Debit
+And processes pin generation batch for debit
 And device has "normal" status
 And user activates device through helpdesk
 And user has wallet number information for Debit device
