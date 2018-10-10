@@ -60,7 +60,7 @@ public class ReferPage extends AbstractCardManagementPage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='lastName']")
 	private MCWebElement txtLastName;
 
-	public void referapplication() {
+	public void referApplication() {
 		Device device = context.get(CreditConstants.APPLICATION);
 		WebElementUtils.enterText(txtApplicationNumber, device.getApplicationNumber());
 		WebElementUtils.pickDate(dtPkrFrom, LocalDate.now().minusDays(1));
@@ -82,7 +82,7 @@ public class ReferPage extends AbstractCardManagementPage {
 	}
 
 	public String editAndReferApplication() {
-		referapplication();
+		referApplication();
 		waitForPageToLoad(driver());
 		clickWhenClickable(editImg);
 		SimulatorUtilities.wait(5000);
