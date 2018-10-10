@@ -1,5 +1,8 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -10,7 +13,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.google.common.base.Strings;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ClientPhotoFlatFileDownloadBatch;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -31,8 +38,20 @@ public class ClientPhotoFlatFileDownloadBatchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='batchNumber']")
 	private MCWebElement txtBatchNumber;
 	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='cardNumber']")
+	private MCWebElement deviceNumberTxt;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='batchNumber']")
+	private MCWebElement batchNumberTxt;
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind =  "input[fld_fqn='batchDate']" )
 	private MCWebElement batchDate;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Product Type')]//following-sibling::td[2]//select")
+	private MCWebElement productTypeDDwn;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Action Code')]//following-sibling::td[2]//select")
+	private MCWebElement actionCodeDDwn;
 	
 	public boolean isBatchDatePresent(){
 		return isElementPresent(batchDate);
@@ -42,7 +61,7 @@ public class ClientPhotoFlatFileDownloadBatchPage extends AbstractBasePage {
 		logger.info("Client Photo/Flat file download Batch");
 		verifySearchButton("Search");
 	}
-
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(txtBatchNumber));

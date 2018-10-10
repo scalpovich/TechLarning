@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.administration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.configuration.AppEnvironment;
 import com.mastercard.pts.integrated.issuing.configuration.Portal;
 import com.mastercard.pts.integrated.issuing.pages.customer.administration.BatchLevelPreviledgePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
@@ -13,6 +14,9 @@ public class BatchLevelPrivilegesWorkflow extends AbstractBaseFlows {
 
 	@Autowired
 	private Navigator navigator;
+	
+	@Autowired
+	private AppEnvironment environment;
 
 	Portal portal = new Portal();
 
@@ -69,4 +73,5 @@ public class BatchLevelPrivilegesWorkflow extends AbstractBaseFlows {
 		selectEntityTypeAsRole();
 		batch.supplyAccessToSystemInternalBatches();
 	}
+	
 }

@@ -196,19 +196,12 @@ public class BatchProcessFlows extends MenuFlows {
 	
 	public void processPinProductionBatchNewDeviceCredit(PinGenerationBatch batch) {
 		PinGenerationBatchPage page = navigator.navigateToPage(PinGenerationBatchPage.class);
-		page.processPinProductionBatchNewDeviceCredit(batch);;
+		page.processPinProductionBatchNewDeviceCredit(batch);
 	}
 
 	public void processPinProductionBatchNewApplication(PinGenerationBatch batch) {
 		PinGenerationBatchPage page = navigator.navigateToPage(PinGenerationBatchPage.class);
 		page.processPinProductionBatchNewApplication(batch);
-	}
-
-	public boolean processClientPhotoFlatFileDownloadBatchNewDevice(
-			ClientPhotoFlatFileDownloadBatch batch) {
-		ClientPhotoFlatFileDownloadBatchPage page = navigator.navigateToPage(ClientPhotoFlatFileDownloadBatchPage.class);
-		return page.processClientPhotoFlatFileDownloadBatch(batch);
-		
 	}
 
 	public boolean verifyClientPhotoFlatFileDownloadBatchScreen() {
