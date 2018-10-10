@@ -592,9 +592,9 @@ public class TransactionSteps {
 		transactionWorkflow.addMID_TID_Blocking(type, midtidBlocking);
 	}
 	
-	@When("user deletes MID TID Blocking combination")
-	public void userCreatesMIDTIDBlockingForCombination(){
-		transactionWorkflow.deleteMID_TID_Blocking();
+	@When("user deletes MID TID Blocking for Combination $type")
+	public void userDeleteMIDTIDBlockingForCombination(String type){
+		transactionWorkflow.deleteMID_TID_Blocking(type, midtidBlocking);
 	}
 
  private void setDEElementsForMIDTID (Transaction transactionData)
@@ -607,10 +607,10 @@ public class TransactionSteps {
 		case "2" :
 			transactionData.setDeKeyValuePairDynamic("019", midtidBlocking.getAcquiringCountryCode());
 			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
-			transactionData.setDeKeyValuePairDynamic("022.01", midtidBlocking.getPosEntryMode());
+			transactionData.setDeKeyValuePairDynamic("022.01", ConstantData.POS_TERMIAL_VALUE);
 			break;
 		case "3" :
-			transactionData.setDeKeyValuePairDynamic("022.01", midtidBlocking.getPosEntryMode());
+			transactionData.setDeKeyValuePairDynamic("022.01", ConstantData.POS_TERMIAL_VALUE);
 			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
 			break;
 		case "4": case "6" : 

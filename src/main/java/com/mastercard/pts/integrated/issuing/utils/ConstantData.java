@@ -37,6 +37,7 @@ public class ConstantData {
 	public static final String POSTAL_CODE = "411006";
 	public static final String ARN_NUMBER = "ARN_NUMBER";
 	public static final String PROCESSING_INSTITUTION = "BNK [000000]";
+	public static final String POS_TERMIAL_VALUE = "05";
 
 	public static final String EXCEPTION = "Exception occurred :: {}";
 
