@@ -166,15 +166,6 @@ public class ApplicationUploadSteps {
 		batchProcessFlows.processDeviceProductionBatchNewDevice(batch);
 	}
 	
-	@Then("$type processes Client photo/flat file download batch using new Device")
-	@When("$type processes Client photo/flat file download batch using new Device")
-	public void whenProcessesClientPhotoFlatFileDownloadBatchForDevice(String type) {
-		ClientPhotoFlatFileDownloadBatch batch = new ClientPhotoFlatFileDownloadBatch();
-		batch.setProductType(ProductType.fromShortName(type));
-		boolean result = batchProcessFlows.processClientPhotoFlatFileDownloadBatchNewDevice(batch);
-		Assert.assertTrue("batch job id not displayed for Client photo/flat file download batch", result);
-	}
-	
 	@Then("Date should be displayed as editable on screen")
 	@When("Date should be displayed as editable on screen")
 	public void thenDateShouldBeDisplayedOnOnScreen() {
