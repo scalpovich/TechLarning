@@ -517,7 +517,7 @@ public class ProgramPage extends AbstractBasePage {
 		selectDevicePlanPlan1DDwn(program.getDevicePlanPlan1());
 		
 		if(Objects.nonNull(program.getApplicationType()) || Objects.nonNull(program.getSubApplicationType())){
-			if(program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||program.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) && program.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)){
+			if(program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||program.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) /*&& program.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)*/){
 			      selectDevicePlanPlan2DDwn(program.getDevicePlanPlan2());
 			}
 		}		

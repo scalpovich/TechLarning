@@ -300,6 +300,7 @@ public class CardManagementNav {
 	public static final String L3_DEVICE_PRODUCTION_BATCH = "DEVPRD01";
 	public static final String L3_PIN_GENERATION_BATCH = "PINPRD01";
 	public static final String L3_RESEND_PIN_REQUEST = "RPINPROD";
+	public static final String L3_CLIENT_PHOTO_FLAT_FILE_DOWNLOAD_BATCH = "FTODWN01";
 
 	public static final String L1_SEARCH = "ISE000";
 	public static final String L2_SEARCH_APPLICATION = "ISEAP0";

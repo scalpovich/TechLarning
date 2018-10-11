@@ -61,7 +61,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "buttonPanel:submitButton")
 	private MCWebElement submitBtn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Rejected')]")
 	private MCWebElement rejectBtn;
 	
@@ -162,7 +162,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='jobId']//span[@class='labeltextf']")
 	private MCWebElement processBatchjobIDTxt;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "*//td[@width='150px']/span[@class='labeltextf']")
 	private MCWebElement processBatchjobIDPathTxt;
 
@@ -178,6 +178,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanel:inputPanel:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement binDDwn;
 	
+	@PageElement( findBy = FindBy.X_PATH, valueToFind="//span[@id='jobId'] ")
+	private MCWebElement jobIDNumber;
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.yui-skin-sam")
 	private MCWebElement bussinessDateTxt;
 
@@ -187,7 +190,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	public final String SYSTEM_INTERNAL_PROCESSING = "SYSTEM INTERNAL PROCESSING [B]";
 	
 	private static final int NUMBER_OF_ATTEMPTS_TO_CHECK_SUCCESS_STATE=100;
-	
+
 	private String reasonToReject = "";
 	
 	private Boolean isProcess = false;
@@ -367,7 +370,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		return batchStatus;
 
 	}
-
+	
 	public String processSystemInternalProcessingBatchWithoutDateCheck(ProcessBatches batch) {
 		logger.info("Process System Internal Processing Batch: {}", batch.getBatchName());
 		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, "SYSTEM INTERNAL PROCESSING [B]");
@@ -692,4 +695,5 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 	
 	}
+	
 }
