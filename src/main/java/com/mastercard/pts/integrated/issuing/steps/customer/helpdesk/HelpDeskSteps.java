@@ -907,7 +907,7 @@ public class HelpDeskSteps {
 		helpdeskGeneral.setServiceCode(serviceCode);
 		LoanPlan loanPlan = context.get(ContextConstants.LOAN_PLAN);	
 		TransactionSearchDetails transactionDetails = context.get(ContextConstants.TRANSACTION_SEARCH_DETAILS);
-		helpdeskWorkflow.raiseRetailToLoanRequest(helpdeskGeneral,loanPlan);
+		helpdeskWorkflow.raiseRetailToLoanRequest(helpdeskGeneral,loanPlan,transactionDetails);
 	}
 
 }
