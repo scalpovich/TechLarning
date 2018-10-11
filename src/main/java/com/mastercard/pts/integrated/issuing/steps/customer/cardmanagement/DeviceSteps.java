@@ -4,6 +4,8 @@ import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.junit.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +28,8 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.P
 @Component
 public class DeviceSteps {
 
+	private static final Logger logger = LoggerFactory.getLogger(DeviceSteps.class);
+	
 	@Autowired
 	private TestContext context;
 
@@ -40,6 +44,8 @@ public class DeviceSteps {
 
 	@Autowired
 	Program program;
+
+	private static final String CREDIT_LIMIT_GREATER_THEN_MAXIMUM_EXP = "Entered Credit Limit is greater than Primary Card Credit Limit.";
 
 	private static final String CORPORATE_CLIENT_CODE_DEVICE2 = "CORPORATE_CLIENT_CODE_DEVICE2";
 
@@ -168,6 +174,33 @@ public class DeviceSteps {
 		context.put(ContextConstants.DEVICE, device);
 	}
 	
+	@Given("$type device is created with increased limit using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
+	@When("$type device is created with increased limit using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
+	@Then("$type device is created with increased limit using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
+	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceForGivenCustomerUsingNewDeviceWithLimit(String type,String customerType,String applicationType,String subApplicationType,String deviceType) {
+		Device device = Device.createWithProviderForOtherDetails(provider);
+		device.setAppliedForProduct(ProductType.fromShortName(type));
+		device.setCustomerType(customerType);
+		device.setApplicationType(applicationType);
+		device.setSubApplicationType(subApplicationType);
+		device.setDeviceType1(deviceType);
+
+		Program program = context.get(ContextConstants.PROGRAM);
+		device.setProgramCode(program.buildDescriptionAndCode());
+		logger.info(program.getCreditLimit());
+		program.setCreditLimit(String.valueOf(Integer.parseInt(program.getCreditLimit())+25));
+		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) && !(device.getSubApplicationType().contains(SubApplicationType.NEW_CLIENT))){
+			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY);
+			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
+		} else {
+			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
+		}
+		deviceWorkflow.createDevice(device);
+		context.put(ContextConstants.DEVICE, device);
+		Assert.assertEquals("Still Credit Limit is Greater then Maximum", CREDIT_LIMIT_GREATER_THEN_MAXIMUM_EXP, context.get(CreditConstants.CREDIT_LIMIT_GREATER_THAN_MAXIMUM));
+	}
+	
 	@When("$type device is created using new Application screen for $customerType and \"$applicationType\" and $subApplicationType and $deviceType")
 	@Given("$type device is created using new Application screen for $customerType and \"$applicationType\" and $subApplicationType and $deviceType")
 	@Then("$type device is created using new Application screen for $customerType and \"$applicationType\" and $subApplicationType and $deviceType")
@@ -181,13 +214,10 @@ public class DeviceSteps {
 		Program program = context.get(ContextConstants.PROGRAM);
 		device.setProgramCode(program.buildDescriptionAndCode());
 		sdnUncheckProgram(program.getProgramCode());		
-		
-		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)
-				|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)
-				&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)){
+		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE) || device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)) {
 			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY);
 			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
-		}else{
+		} else {
 			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
 		}		
@@ -195,7 +225,32 @@ public class DeviceSteps {
  		Assert.assertTrue("Application is not created successfully",deviceWorkflow.createDeviceUsingApplication(device));
 		context.put(CreditConstants.APPLICATION, device);
 	}
-		
+	
+	@When("$type device is created with $existing batch using new Application screen for $customerType and $applicationType and $subApplicationType and $deviceType")
+	@Given("$type device is created with $existing batch using new Application screen for $customerType and $applicationType and $subApplicationType and $deviceType")
+	@Then("$type device is created with $existing batch using new Application screen for $customerType and $applicationType and $subApplicationType and $deviceType")
+	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceForGivenCustomerUsingNewApplicationWithSameBatch(String type,String existingBatch,String customerType,String applicationType,String subApplicationType,String deviceType) {
+		Device device = Device.createWithProviderForOtherDetails(provider);
+		device.setAppliedForProduct(ProductType.fromShortName(type));
+		device.setCustomerType(customerType);
+		device.setApplicationType(applicationType);
+		device.setSubApplicationType(subApplicationType);
+		device.setDeviceType1(deviceType);
+		Program program = context.get(ContextConstants.PROGRAM);
+		device.setProgramCode(program.buildDescriptionAndCode());
+		sdnUncheckProgram(program.getProgramCode());		
+		context.put(CreditConstants.EXISTING_BATCH,existingBatch);
+		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE) || device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)) {
+			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY);
+			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
+		} else {
+			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
+		}	
+
+ 		Assert.assertTrue("Application is not created successfully",deviceWorkflow.createDeviceUsingApplication(device));
+		context.put(CreditConstants.APPLICATION, device);
+	}
 	
 	@Given("$type device is created using new device screen")
 	@When("$type device is created using new device screen")
