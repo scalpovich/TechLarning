@@ -1887,8 +1887,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 			List<WebElement> columnsrow = rowstable.get(row).findElements(By.tagName("td"));
 			int columnscount = columnsrow.size();
 			for (int col = 0; col < columnscount; col++) {
-				if (columnsrow.get(col).getText().equals(text)) {
+				if (columnsrow.get(col).getText().trim().equals(text.trim())) {
+					logger.info("Matched");
 					WebElement checkBox = columnsrow.get(columnscount - 1).findElement(By.cssSelector("input[type=checkbox]"));
+					logger.info("CheckBox Value:-{}",checkBox);
 					if (checkBox.isEnabled() && !checkBox.isSelected()) {
 						checkBox.click();
 					}
