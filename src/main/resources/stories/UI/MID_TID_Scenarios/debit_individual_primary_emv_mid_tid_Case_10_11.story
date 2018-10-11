@@ -3,6 +3,7 @@ In order to test MID TID blocking rule
 As a issuer
 I want to perform Transaction
 
+Meta:
 @StoryName d_emv_corp
 
 Scenario: 1.0 Set up program for debit EMV corporate debit card
