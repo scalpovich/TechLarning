@@ -50,10 +50,10 @@ When perform an INT_EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
 And assert Decline response with 42005 AuthDecline Code and Exceeds Amount Limit International as description
-Then verify the MCG limit utilization in Device Usage Screen for domestic transaction after failed transaction
+Then verify the MCG limit utilization in Device Usage Screen for international transaction after failed transaction
 And user sign out from customer portal
 
-Scenario: Perform EMV-RetailGeneralPurposeCard Purchase 3rd transaction
+Scenario:5 Perform EMV-RetailGeneralPurposeCard Purchase 3rd transaction
 Given set the transaction amount to 10 in program currency
 When perform an INT_EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution
@@ -61,12 +61,12 @@ And search Purchase authorization and verify 000-Successful status
 Then verify the MCG daily transaction and velocity in Device Usage Screen for international transactions
 And user sign out from customer portal
 
-Scenario:5 Perform EMV-RetailGeneralPurposeCard Purchase 4th transaction
+Scenario:6 Perform EMV-RetailGeneralPurposeCard Purchase 4th transaction
 Given set the transaction amount to 10 in program currency
 When perform an INT_EMV_PURCHASE MAS transaction on the same card
 Then MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify 123-Frequency Exceeded status
-And assert Decline response with 40005 AuthDecline Code and Frequency Exceeded International as description
-Then verify the MCG daily transaction and velocity in Device Usage Screen for international transactions
+And assert Decline response with 42008 AuthDecline Code and Frequency Exceeded International as description
+Then verify the MCG limit utilization in Device Usage Screen for international transaction after failed transaction
 And user sign out from customer portal
