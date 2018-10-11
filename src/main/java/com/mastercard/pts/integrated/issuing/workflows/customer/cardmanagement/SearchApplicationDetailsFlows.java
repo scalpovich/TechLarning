@@ -41,4 +41,14 @@ public class SearchApplicationDetailsFlows {
 		searchPage.searchApplicationNumberForFileUpload();
 		
 	}
+	
+	public boolean verifyApplicationIsRejected(){
+		searchPage = navigator.navigateToPage(SearchApplicationDetailsPage.class);
+		return searchPage.verifyApplicationApplicationStatusIsReject();
+	}
+	
+	public boolean verifyApplicationIsRefered(){
+		searchPage = navigator.navigateToPage(SearchApplicationDetailsPage.class);
+		return searchPage.verifyApplicationApplicationStatusIsRefer();
+	}
 }

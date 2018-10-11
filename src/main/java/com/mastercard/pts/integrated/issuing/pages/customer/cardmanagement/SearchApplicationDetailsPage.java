@@ -75,6 +75,13 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='toDate']/../..")
 	private MCWebElement toDate;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class='dataview-div']/table//tbody/tr[1]/td/span[text()='Reject [R]']")
+	private MCWebElement txtRejectStatus;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class='dataview-div']/table//tbody/tr[1]/td/span[text()='Manual [M]']")
+	private MCWebElement txtReferStatus;
+	
+	
 	public int retryCounter =0;
 	
 	public void enterFirstName(SearchApplicationDetails search){
@@ -150,5 +157,25 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 		waitAndSearchForApplicationBatchNumberToAppear();
 		batchNumbersForPreProduction.add(batchNumberTxt.getText());
 		context.put(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION, batchNumbersForPreProduction);
+	}
+	
+	public boolean verifyApplicationApplicationStatusIsReject(){
+		Device device=context.get(CreditConstants.APPLICATION);
+		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
+		WebElementUtils.pickDate(fromDate, LocalDate.now().minusDays(1));
+		WebElementUtils.pickDate(toDate, LocalDate.now());		
+		clickSearchButton();
+		waitAndSearchForRecordToAppear();
+		return isElementPresent(txtRejectStatus);
+	}
+	
+	public boolean verifyApplicationApplicationStatusIsRefer(){
+		Device device=context.get(CreditConstants.APPLICATION);
+		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
+		WebElementUtils.pickDate(fromDate, LocalDate.now().minusDays(1));
+		WebElementUtils.pickDate(toDate, LocalDate.now());		
+		clickSearchButton();
+		waitAndSearchForRecordToAppear();
+		return isElementPresent(txtReferStatus);
 	}
 }
