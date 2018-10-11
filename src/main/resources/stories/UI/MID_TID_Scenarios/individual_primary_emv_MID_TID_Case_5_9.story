@@ -1,7 +1,7 @@
 Narrative:
-In order to a create a Credit Device under customer portal cardmanagement tab
-As a user
-I want to perform Transaction on Retails credit card.
+In order to test MID TID blocking rule
+As a issuer
+I want to perform Transaction
 
 Meta:
 @StoryName credit_emv_retail
