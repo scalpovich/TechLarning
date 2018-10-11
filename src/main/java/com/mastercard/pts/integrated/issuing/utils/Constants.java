@@ -469,5 +469,6 @@ public class Constants {
 	public static final String CARD_PACK_TEMPLATE = "Card Pack ID Template";
 	
 	public static final String PROGRAM = "Program";
+	public static final String APP_REJECT_REPORT = "Application Reject Report";
 
 }
