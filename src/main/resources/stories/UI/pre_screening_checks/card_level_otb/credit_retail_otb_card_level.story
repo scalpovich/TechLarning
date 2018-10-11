@@ -6,10 +6,10 @@ so that account level credit card limit should be validated
 Meta:
 @StoryName credit_emv_retail_acount_card_limit
 
-Scenario:To Verify that the user can validate credit transaction limit for retail card
+Scenario:1.1 To Verify that the user can validate credit transaction limit for retail card
 Given setting json values in excel for Credit
-Given user is logged in institution
-When for Magnetic Stripe Card User fills Device Plan for credit product for Mastercard
+When user is logged in institution
+And for Magnetic Stripe Card User fills Device Plan for credit product for Mastercard
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
 And User fills MCC Rules for credit product
@@ -24,18 +24,18 @@ And device has "normal" status
 And user raises Permanent [P] credit limit change request for Individual
 Then user sign out from customer portal
 
-Scenario: Pin Generation 
+Scenario:1.2 Pin Generation 
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Perform MSR_PURCHASE Authorization transaction
+Scenario:1.3 Perform MSR_PURCHASE Authorization transaction to validate otb at card level limit
 Given connection to MAS is established
 When perform an MSR_PURCHASE MAS transaction
-When MAS simulator is closed
-Then user is logged in institution
-And search Purchase authorization and verify 116-Insufficient Fund status
+And MAS simulator is closed
+And user is logged in institution
+Then search Purchase authorization and verify 116-Insufficient Fund status
 And assert Decline response with 90004 AuthDecline Code and Card level - insufficient otbl defined at card level. as description
 And user sign out from customer portal
