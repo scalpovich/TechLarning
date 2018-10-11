@@ -520,8 +520,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected boolean waitForRow() {
 		try {
 			waitForWicket();
-			Thread.sleep(30000); // Pre-production batch and device production
-									// batch takes little longer hence the wait
+			Thread.sleep(30000); // Pre-production batch and device production batch takes little longer hence the wait
 			return driver().findElement(By.cssSelector(FIRST_ROW_SELECT)).isDisplayed();
 		} catch (NoSuchElementException | InterruptedException e) {
 			logger.debug("Result not found", e);
@@ -533,9 +532,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		try {
 			WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
 			logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
-
 			return successMessageLbl.getText();
-
 		} catch (NoSuchElementException e) {
 			logger.info("No Status is updated");
 			logger.debug("Error", e);
@@ -1771,6 +1768,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		Device device  = context.get(CreditConstants.APPLICATION);
 		device.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
 	}
+	
 	public int getDeviceNumberIndex()
 	{  
 		int index=0;
@@ -1855,8 +1853,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		driver().switchTo().frame(Elements(element).get(index));
 	}
 	
-	public String getInstitutionDate()
-	{	
+	public String getInstitutionDate(){	
 		logger.info("Institution date : {}",getTextFromPage(institutionDateTxt));
 		return getTextFromPage(institutionDateTxt);
 	}
