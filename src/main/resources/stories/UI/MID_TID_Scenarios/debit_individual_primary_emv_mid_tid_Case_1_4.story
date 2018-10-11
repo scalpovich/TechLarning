@@ -37,13 +37,6 @@ Given user is logged in institution
 When user creates MID TID Blocking for combination 1
 Then user sign out from customer portal
 
-Scenario: 1.3 Pin Generation
-Given connection to FINSim is established
-When Pin Offset file batch was generated successfully
-Then embossing file batch was generated in correct format
-And PIN is retrieved successfully with data from Pin Offset File
-And FINSim simulator is closed
-
 Scenario: 1.4 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When User set MID_TID flag true and MID_TID Combination 1
@@ -55,7 +48,7 @@ And user sign out from customer portal
 
 Scenario: 1.5 Verify Decline Code on Helpdesk Page
 Given user is logged in institution
-Then verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Credit
+Then verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Debit
 And user sign out from customer portal
 
 Scenario: 1.6 Delete First Combination of MID_TID Blocking rule
@@ -85,7 +78,7 @@ And user sign out from customer portal
 
 Scenario: 2.0 Verify Decline Code on Helpdesk Page
 Given user is logged in institution
-Then verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Credit
+Then verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Debit
 And user sign out from customer portal
 
 Scenario: 2.1 Delete Second Combination of MID_TID Blocking rule
@@ -115,7 +108,7 @@ And user sign out from customer portal
 
 Scenario: 2.5 Verify Decline Code on Helpdesk Page
 Given user is logged in institution
-Then verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Credit
+Then verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Debit
 And user sign out from customer portal
 
 Scenario: 2.6 Delete Third Combination of MID_TID Blocking rule
@@ -145,7 +138,7 @@ And user sign out from customer portal
 
 Scenario: 3.0 Verify Decline Code on Helpdesk Page
 Given user is logged in institution
-Then verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Credit
+Then verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Debit
 And user sign out from customer portal
 
 Scenario: 3.1 Delete Fourth Combination of MID_TID Blocking rule

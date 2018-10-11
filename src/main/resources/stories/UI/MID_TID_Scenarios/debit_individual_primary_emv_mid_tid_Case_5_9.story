@@ -48,7 +48,7 @@ And user sign out from customer portal
 
 Scenario: 1.4 Verify Decline Code on Helpdesk Page
 Given user is logged in institution
-Then verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Credit
+Then verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Debit
 And user sign out from customer portal
 
 Scenario: 1.5 Delete Fifth Combination of MID_TID Blocking rule
@@ -78,7 +78,7 @@ And user sign out from customer portal
 
 Scenario: 1.9 Verify Decline Code on Helpdesk Page
 Given user is logged in institution
-Then verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Credit
+Then verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Debit
 And user sign out from customer portal
 
 Scenario: 2.0 Delete Seventh Combination of MID_TID Blocking rule
@@ -108,7 +108,7 @@ And user sign out from customer portal
 
 Scenario: 2.4 Verify Decline Code on Helpdesk Page
 Given user is logged in institution
-Then verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Credit
+Then verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Debit
 And user sign out from customer portal
 
 Scenario: 2.5 Delete Eight Combination of MID_TID Blocking rule
@@ -138,7 +138,7 @@ And user sign out from customer portal
 
 Scenario: 2.9 Verify Decline Code on Helpdesk Page
 Given user is logged in institution
-Then verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Credit
+Then verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Debit
 And user sign out from customer portal
 
 Scenario: 3.0 Delete Ninth Combination of MID_TID Blocking rule
