@@ -110,6 +110,8 @@ public class ConstantData {
 	
 	public static final String TOTAL_FEE_OF_BILLING = "0.00";
 	public static final String BILLED_INTEREST = "0.00";
+	public static final String UNPAID1_AMOUNT = "0.00";
+	public static final String UNPAID2_AMOUNT = "0.00";
 	private ConstantData() {
 	}
 

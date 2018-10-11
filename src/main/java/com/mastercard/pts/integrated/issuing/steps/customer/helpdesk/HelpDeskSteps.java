@@ -579,7 +579,6 @@ public class HelpDeskSteps {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE);
 		HashMap<String, String> helpdeskValues = helpdeskWorkflow.noteDownRequiredValues(device.getDeviceNumber());
-		helpdeskValues.put(ContextConstants.ACCOUNT_NUMBER,device.getAccountNumber());	
 		helpdeskValues.put(ContextConstants.CREDIT_CARD_NUMBER_HEADER_IN_STATEMENT, device.getClientDetails().getFirstName().toUpperCase()+" "+device.getClientDetails().getMiddleName1().toUpperCase()+" "+device.getClientDetails().getLastName().toUpperCase());
 		context.put(ContextConstants.HELPDESK_VALUES,helpdeskValues); 		
 	}
@@ -893,14 +892,15 @@ public class HelpDeskSteps {
 			bd = bd.setScale(2, RoundingMode.HALF_UP);
 			transactionAmount = String.format("%.2f", bd.doubleValue());
 			logger.info("Billed interest on unpaid1->" + transactionAmount);
-			context.put(ConstantData.BILLED_INTEREST, transactionAmount);
+			context.put(ConstantData.BILLED_INTEREST, String.format("%.2f", bd.doubleValue()));
 			logger.info("BILLED_INTEREST" + context.get(ConstantData.BILLED_INTEREST));
 		} else if (device.getCategory().equalsIgnoreCase("Unpaid1")) {
 			logger.info("Unpaid1->" + context.get(ContextConstants.MINIMUM_PAYMENT_DUE));
+			context.put(ConstantData.UNPAID1_AMOUNT, context.get(ContextConstants.MINIMUM_PAYMENT_DUE));
 			transactionAmount = context.get(ContextConstants.MINIMUM_PAYMENT_DUE);
 		} else if (device.getCategory().equalsIgnoreCase("Unpaid2")) {
 			transactionAmount = context.get(ContextConstants.MINIMUM_PAYMENT_DUE);
-			logger.info("Unpaid2->" + context.get(ContextConstants.MINIMUM_PAYMENT_DUE));
+			context.put(ConstantData.UNPAID2_AMOUNT, context.get(ContextConstants.MINIMUM_PAYMENT_DUE));
 		}
 
 		assertThat(category + " " + amount + BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device),

@@ -465,6 +465,9 @@ public class DevicePlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind="presentmentTimeLimit:input:inputTextField")	
 	private MCWebElement txtPresentmentTimeLimit;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnFeeWaiverPlanCode:input:dropdowncomponent")
+	private MCWebElement iframeTransactionFeeWaiverPlanDdwn;
+	
 	public void AddDevicePlan() {
 		clickWhenClickable(AddDevicePlanBtn);
 		switchToAddDevicePlanFrame();
@@ -953,7 +956,12 @@ public class DevicePlanPage extends AbstractBasePage {
 		if (iframeTransactionLimitPlanDdwn.isEnabled())
 			WebElementUtils.selectDropDownByVisibleText(iframeTransactionLimitPlanDdwn, transactionLimitPlan);
 	}
-
+	
+	public void selectIframeTransactionFeeWaiverPlanDdwn(String transactionFeeWaiverPlan) {
+		if (iframeTransactionFeeWaiverPlanDdwn.isEnabled())
+			WebElementUtils.selectDropDownByVisibleText(iframeTransactionFeeWaiverPlanDdwn, transactionFeeWaiverPlan);
+	}
+	
 	public void selectIframeAfterKYCDdwn(String kycType) {
 		WebElementUtils.selectDropDownByVisibleText(iframeAfterKYCDdwn, kycType);
 	}
@@ -1188,6 +1196,9 @@ public class DevicePlanPage extends AbstractBasePage {
 		selectIframeBaseDeviceJoiningMemberShipPlanDdwn(devicePlan.getBaseDeviceJoiningMemberShipPlan());
 		selectIframeTransactionFeePlan(devicePlan.getTransactionFeePlan());
 		selectIframeTransactionLimitPlanDdwn(devicePlan.getTransactionLimitPlan());
+		if(devicePlan.getTransactionFeeWaiverPlan() != null){
+			selectIframeTransactionFeeWaiverPlanDdwn(devicePlan.getTransactionFeeWaiverPlan());
+		}
 		clickIframeNextButton();		
 	}
 

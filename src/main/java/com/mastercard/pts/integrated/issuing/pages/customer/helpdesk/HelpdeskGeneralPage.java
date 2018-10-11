@@ -300,6 +300,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
   
     @PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody a img")
 	private MCWebElement editDeviceLink;
+    
+    @PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Wallet Number')]/../following-sibling::td/span/span")
+	private MCWebElement txtWalletNumber;
 
     @Autowired
 	TestContext context;
@@ -1167,6 +1170,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	public HashMap<String, String> noteDownRequiredValues(String deviceNumber) {
 		HashMap<String, String> helpDeskValues = new HashMap<>();		
+		helpDeskValues.put(ContextConstants.ACCOUNT_NUMBER,txtWalletNumber.getText());
 		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);		
 		clickWhenClickable(currentStatusAndLimitTab);
 		helpDeskValues.put(ContextConstants.CREDIT_LIMIT, accountCreditLimitLabel.getText());
@@ -1342,6 +1346,20 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				set.setValue(String.format("%.2f", Double.valueOf(set.getValue()) - Double.valueOf(set.getValue())));
 			}
 			afterPaymentBilled.replace("BilledPayment", String.format("%.2f", sum));
+			compareMaps(afterPaymentBilled, afterBillingBilled);
+			compareMaps(afterPaymentUnbilled, afterBillingUnbilled);
+			compareMaps(afterPaymentOutstanding, afterBillingOutstanding);
+		}
+		if (payment.equalsIgnoreCase("after MAD payment")) {
+			Map<String, String> afterBillingBilled = context.get("afterbillingBilled");
+			Map<String, String> afterBillingUnbilled = context.get("afterbillingUnbilled");
+			Map<String, String> afterBillingOutstanding = context.get("afterbillingOutstanding");
+			beforePaymentUnbilled.replace("UnbilledPayment", String.format("%.2f", Double.valueOf(context.get(ContextConstants.MINIMUM_PAYMENT_DUE))));
+			logger.info("UnbilledPayment after MAD->"+beforePaymentUnbilled.get("UnbilledPayment"));
+			double rem=Double.valueOf(context.get(ContextConstants.TOTAL_PAYMENT_DUE))-Double.valueOf(context.get(ContextConstants.MINIMUM_PAYMENT_DUE));
+			beforePaymentOutstanding.replace("OutstandingPurchase", String.format("%.2f",Double.valueOf(rem)));
+			logger.info("OutstandingPurchase after MAD->"+beforePaymentOutstanding.get("OutstandingPurchase"));
+			context.put(ContextConstants.TOTAL_PAYMENT_DUE,String.format("%.2f",Double.valueOf(rem)));
 			compareMaps(afterPaymentBilled, afterBillingBilled);
 			compareMaps(afterPaymentUnbilled, afterBillingUnbilled);
 			compareMaps(afterPaymentOutstanding, afterBillingOutstanding);

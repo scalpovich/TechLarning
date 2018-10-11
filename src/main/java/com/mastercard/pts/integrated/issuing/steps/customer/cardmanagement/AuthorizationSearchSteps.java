@@ -38,6 +38,7 @@ public class AuthorizationSearchSteps {
 	private KeyValueProvider provider;
 	
 	private static final String INCORRECT_BALANCE_AFTER_REVERSAL= "Incorrect Balance After Reversal";
+	private static final String DEFAULT_VALUE= "0.00";
 	
 	@When("search $type authorization and verify $state status")
 	@Then("search $type authorization and verify $state status")
@@ -171,5 +172,19 @@ public class AuthorizationSearchSteps {
 	@When("user verifies reconciliation status $status in auth search")
 	public void userVerifyReconciliationStatus(String status){
 		authorizationSearchWorkflow.verifyReconciliationStatus(status);
+	}
+	
+	@Then("verify fixed transaction fee $isOrNot waived off")
+	public void veriyFixedTransactionFeeIsWaivedOff(String isOrNot) {
+		Device device = context.get(ContextConstants.DEVICE);
+		if (isOrNot.equalsIgnoreCase("is not")) {
+			TransactionFeePlan txnFeePlan = TransactionFeePlan.getAllTransactionFee(provider);
+			context.put("TransactionFeePlan", txnFeePlan);
+			assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()),
+					Matchers.hasItems(txnFeePlan.getfixedTxnFees(), txnFeePlan.getFixedRateFee(), txnFeePlan.getBillingAmount()));
+		}
+		assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()),
+				Matchers.hasItems(DEFAULT_VALUE,DEFAULT_VALUE,DEFAULT_VALUE));
+		
 	}
 }

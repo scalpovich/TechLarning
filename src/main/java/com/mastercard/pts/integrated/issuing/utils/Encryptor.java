@@ -1,6 +1,13 @@
 package com.mastercard.pts.integrated.issuing.utils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
 
@@ -13,8 +20,13 @@ public class Encryptor {
 	private Encryptor() {
 	}
 
-	public static void main(String[] args) {
-		Arrays.stream(args).map(Encryptor::encrypt).forEach(logger::info);
+	public static void main(String[] args){
+		
+		LocalDate localDate = LocalDate.now();
+		logger.info("localDate date :"+localDate);
+		LocalDate convertedDate = LocalDate.parse("10 Jul 2022 14:16:43", DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
+		logger.info("Coverted Institution date :"+convertedDate);
+		logger.info("Diffrence Days :"+ChronoUnit.DAYS.between(localDate, convertedDate));
 	}
 
 	private static String encrypt(String text) {

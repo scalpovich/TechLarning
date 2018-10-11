@@ -60,9 +60,11 @@ public class CashPaymentSteps {
 			logger.info("BILLING PAYMENT :-" + amount);
 			cash.setAmount(amount);
 		} else if (payment.equalsIgnoreCase("MAD")) {
-			HashMap<String, String> helpdeskValues = context.get(ContextConstants.HELPDESK_VALUES);
-			logger.info("MINIMUM_PAYMENT_DUE" + helpdeskValues.get(ContextConstants.MINIMUM_PAYMENT_DUE));
-			cash.setAmount(helpdeskValues.get(ContextConstants.MINIMUM_PAYMENT_DUE));
+			logger.info("MINIMUM_PAYMENT_DUE" + context.get(ContextConstants.MINIMUM_PAYMENT_DUE));
+			cash.setAmount(context.get(ContextConstants.MINIMUM_PAYMENT_DUE));
+		} else if (payment.equalsIgnoreCase("remaining")) {
+			logger.info("Remaining Bill Payment" + context.get(ContextConstants.TOTAL_PAYMENT_DUE));
+			cash.setAmount(context.get(ContextConstants.TOTAL_PAYMENT_DUE));
 		}
 		creditPaymentFlow.makeCashPayment(cash);
 		context.put(ContextConstants.PAYMENT, cash);

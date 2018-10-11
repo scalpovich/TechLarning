@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeeWaiverPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -132,18 +132,50 @@ public class TransactionFeeWaiverPlanPage extends AbstractBasePage {
 		runWithinPopup("Add Transaction Fee Waiver Plan Details", () -> {
 			WebElementUtils.pickDate(effectiveDateTxt, plan.getEffectiveDate());
 			WebElementUtils.pickDate(endDateTxt, plan.getEndDate());
-			WebElementUtils.selectDropDownByVisibleText(feeTypeDDwn,plan.getFeeType());
+			WebElementUtils.selectDropDownByVisibleText(feeTypeDDwn,selectFeeType(plan.getFeeType()));
 			WebElementUtils.selectDropDownByVisibleText(transactionTypeDDwn,plan.getTransactionType());
 			WebElementUtils.selectDropDownByVisibleText(transactionSourceDDwn,plan.getTransactionSource());
-			WebElementUtils.selectDropDownByVisibleText(transactionOriginDDwn,plan.getTransactionOrigin());
-			WebElementUtils.selectDropDownByVisibleText(waiverFrequencyDDwn,plan.getWaiverFrequency());
-			WebElementUtils.enterText(applicableForCyclesTxt,plan.getApplicableForCycles());
-			WebElementUtils.enterText(transactionsWaivedPerCycleTxt,plan.getTransactionsWaivedPerCycle());
+			WebElementUtils.selectDropDownByVisibleText(transactionOriginDDwn,selectTransactionOrigin(plan.getTransactionOrigin()));
+			WebElementUtils.selectDropDownByVisibleText(waiverFrequencyDDwn,selectWaiverFrequency(plan.getWaiverFrequency()));
+			if (!(plan.getWaiverFrequency().contains("Permanent"))) {
+				WebElementUtils.enterText(applicableForCyclesTxt, plan.getApplicableForCycles());
+				WebElementUtils.enterText(transactionsWaivedPerCycleTxt, plan.getTransactionsWaivedPerCycle());
+			}
 			ClickCheckBox(clubTransactionOfAddOnCardsChk, true);
 			clickSaveButton();
 			verifyNoErrors();
 		});
 		verifyOperationStatus();	
+	}
+
+	private String selectTransactionOrigin(String transactionOrigin) {
+		if (transactionOrigin.contains("Both")) {
+			return "Both [~]";
+		} else if (transactionOrigin.contains("Domestic")) {
+			return "Domestic [DOM]";
+		} else {
+			return "International [INT]";
+		}
+	}
+
+	private String selectWaiverFrequency(String waiverFrequency) {
+		if (waiverFrequency.contains("Daily")) {
+			return "Daily [D]";
+		} else if (waiverFrequency.contains("Monthly")) {
+			return "Monthly [M]";
+		} else if (waiverFrequency.contains("Quarterly")) {
+			return "Quarterly [Q]";
+		} else {
+			return "Permanent [P]";
+		}
+	}
+
+	private String selectFeeType(String feeType) {
+		if (feeType.contains("General")) {
+			return "General [G]";
+		} else {
+			return "Boarding Offer [B]";
+		}
 	}
 
 	public void addTransactionFeeWaiverPlanDetails(TransactionFeeWaiverPlan plan, String trasactionType, String transactionSource){
@@ -168,12 +200,21 @@ public class TransactionFeeWaiverPlanPage extends AbstractBasePage {
 
 	public void setupTransactionTypeForSources(TransactionFeeWaiverPlan plan) {
 		addTransactionFeeWaiverPlanMasterDetails(plan);
-	}  
+	}
+
+	public void addTransactionFeeWaiverplanInExistingPlan(TransactionFeeWaiverPlan plan, DevicePlan device) {
+		WebElementUtils.enterText(waiverPlanCodeTxt, device.getTransactionFeeWaiverPlan().substring(12, 15));
+		clickSearchButton();
+		SimulatorUtilities.wait(500);
+		editFirstRecord();
+		runWithinPopup("Edit Transaction Fee Waiver Plan Master", () -> {
+			addTransactionFeeWaiverPlanDetails(plan);
+			clickSaveButton();
+		});
+
+	}
+
 }
-
-
-
-
 
 
 
