@@ -3,32 +3,34 @@ In order to test MID TID blocking rule
 As a issuer
 I want to perform Transaction
 
-Meta:
-@StoryName prepaid_emv_retail_Limits
+@StoryName d_emv_corp
 
-Scenario: 1.0 Set up prepaid emv corporate travel card
-Given setting json values in excel for Prepaid
+Scenario: 1.0 Set up program for debit EMV corporate debit card
+Given setting json values in excel for Debit
 When user is logged in institution
-And User fills Device Plan for "Prepaid" "emv" card
-And User fills Wallet Plan for prepaid product
-And User fills Program section for prepaid product
-And User fills Business Mandatory Fields Screen for prepaid product
-And User fills Device Range section for prepaid product
+And User fills Device Plan for "Debit" "emv" card without pin
+And User fills Wallet Plan for debit product
+And User fills Program section for debit product
+And User fills Business Mandatory Fields Screen for debit product
+And User fills Device Range section for debit product
 And user assigns service code to program
-Then user creates new device of prepaid type for new client
+And user creates new device of debit type for new client
+And device has "normal" status
+And user has wallet number information for debit device
+And user performs adjustment transaction
+Then user has current wallet balance amount information for debit device
+And user sign out from customer portal
 
-Scenario: 1.1 prepaid emv corporate travel card device production
+Scenario: 1.1 debit EMV corporate debit card device production
 Given user is logged in institution
 When a new device was created
-And processes pre-production batch for prepaid
-And processes device production batch for prepaid
-And processes pin generation batch for prepaid
-And user has wallet number information for prepaid device
-And user performs adjustment transaction
-And user has current wallet balance amount information for prepaid device
+And processes pre-production batch for debit
+And processes device production batch for debit
 And device has "normal" status
-And user activates device through helpdesk
-Then user sign out from customer portal
+Then user activates device through helpdesk
+And user sign out from customer portal
+And embossing file batch was generated in correct format
+
 
 Scenario: 1.2 Create MID_TID Blocking Rule
 Given user is logged in institution
