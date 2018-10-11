@@ -17,11 +17,27 @@ public class ApprovalScoreSteps {
 	public void userAddsAApprovalScore()
 	{
 		Boolean approvalScore=approvalScoreWorkFlow.userAddsNewApprovalScore();
-		Assert.assertTrue("ApprovalScore is added successfully", approvalScore);
-		}
+		Assert.assertTrue("ApprovalScore is not added", approvalScore);
+	}
    @When("user verifies edit and verify Approval Score") 
     public void userVerifiesAndEditsApprovalScore()
     {
     	approvalScoreWorkFlow.userVerifiesAndEditsNewApprovalScore();
     }
+   
+   @When("User adds Approval Score on program for auto reject")
+   @Then("User adds Approval Score on program for auto reject")
+	public void userAddsAApprovalScoreForAutoReject()
+	{
+		Boolean approvalScore=approvalScoreWorkFlow.userAddsNewApprovalScoreForAutoReject();
+		Assert.assertTrue("ApprovalScore is not added for auto reject", approvalScore);
+	}
+   
+   @When("User adds Approval Score on program for auto refer")
+   @Then("User adds Approval Score on program for auto refer")
+	public void userAddsAApprovalScoreForAutoRefer()
+	{
+		Boolean approvalScore=approvalScoreWorkFlow.userAddsNewApprovalScoreForAutoRefer();
+		Assert.assertTrue("ApprovalScore is not added for auto refer", approvalScore);
+	}
 }
