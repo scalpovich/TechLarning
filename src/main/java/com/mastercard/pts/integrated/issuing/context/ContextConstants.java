@@ -70,6 +70,8 @@ public class ContextConstants {
 
 	public static final String PROMOTION_PLAN = "PROMOTION_PLAN";
 
+	public static final String PROMOTION_PLAN_CODE = "PROMOTION_PLAN_CODE";
+
 	private ContextConstants() {
 	}
 

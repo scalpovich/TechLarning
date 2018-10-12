@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.loyalty;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoyaltyPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.LoyaltyPromotionMapping;
 import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.PromotionPlan;
 import com.mastercard.pts.integrated.issuing.pages.customer.loyalty.EventBasedLoyaltyPointsPage;
@@ -43,6 +44,11 @@ public class UiVerificationLoyaltyWorkflow {
 		page.verifyUiOperationStatus();
 	}
 
+	public void EditLoyaltyPlanPage(LoyaltyPlan loyaltyplan) {
+		LoyaltyPlanPage page = navigator.navigateToPage(LoyaltyPlanPage.class);
+		page.editLoyaltyPlan(loyaltyplan);
+	}
+
 	public void verifyLoyaltyPlanPromotionMappingPage(LoyaltyPromotionMapping loyaltyPromotionMapping) {
 		LoyaltyPlanPromotionMappingPage page = navigator.navigateToPage(LoyaltyPlanPromotionMappingPage.class);
 		page.verifyUiOperationStatus(loyaltyPromotionMapping);
@@ -66,6 +72,16 @@ public class UiVerificationLoyaltyWorkflow {
 	public void verifyPromotionPlanwithMCG(PromotionPlan plan) {
 		PromotionPlanPage page = navigator.navigateToPage(PromotionPlanPage.class);
 		page.verifyUiOperationStatuswithMCG(plan);
+	}
+
+	public void addPromotionPlanwithCumulative(PromotionPlan plan) {
+		PromotionPlanPage page = navigator.navigateToPage(PromotionPlanPage.class);
+		page.addPromotionPlanwithCumulativeTxn(plan);
+	}
+
+	public void editPromotionPlanDate(PromotionPlan plan) {
+		PromotionPlanPage page = navigator.navigateToPage(PromotionPlanPage.class);
+		page.editpromotionPlanStartDate(plan);
 	}
 
 	public void verifyRedemptionPage() {

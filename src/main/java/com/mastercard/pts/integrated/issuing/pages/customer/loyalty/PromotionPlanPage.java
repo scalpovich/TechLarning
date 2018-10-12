@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.loyalty;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -13,6 +14,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.PromotionPl
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -70,8 +72,20 @@ public class PromotionPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=lypTxnAmt]")
 	private MCWebElement floorTxnAmtTxt;
 
+	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=lypCumTxnamt]")
+	private MCWebElement thresholdAmtTxt;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=lypCumNotxns]")
+	private MCWebElement NoOfTrnxsTxt;
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@fld_fqn='lypCalculationMethod']/input[@value='P']")
 	private MCWebElement calculationMethodPerTXn;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@fld_fqn='lypCalculationMethod']/input[@value='C']")
+	private MCWebElement calculationMethodCumulativeTXn;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = ".//*[@alt='Edit Record']")
+	private MCWebElement editBtn;
 
 	public void verifyUiOperationStatus(PromotionPlan plan) {
 		logger.info("Promotion Plan");
@@ -139,6 +153,40 @@ public class PromotionPlanPage extends AbstractBasePage {
 		WebElementUtils.enterText(floorTxnAmtTxt, plan.getFloortransactionAmount());
 		WebElementUtils.selectDropDownByVisibleText(mcgRuleDdwn, plan.getMcgCode());
 		clickSaveButton();
+	}
+
+	public void addPromotionPlanwithCumulativeTxn(PromotionPlan plan) {
+		clickAddNewButton();
+		runWithinPopup(ADD_PROMOTION_PLAN, () -> {
+			WebElementUtils.enterText(lypPromotionCodeTxt, plan.getPromotionPlanCode());
+			WebElementUtils.enterText(lypDescriptionTxt, plan.getPromotionDescription());
+			WebElementUtils.selectDropDownByVisibleText(currencyDDwn, plan.getPromotionCurrency());
+			WebElementUtils.enterText(lypAmtSpentTxt, plan.getPromotionamountSpent());
+			waitForElementVisible(startDateDPkr);
+			WebElementUtils.pickDate(startDateDPkr, futureDate);
+			waitForElementVisible(endDateDPkr);
+			WebElementUtils.pickDate(endDateDPkr, futureEndDate);
+			WebElementUtils.enterText(lypPtsEarnedTxt, plan.getPromotionpointsEarned());
+			WebElementUtils.enterText(lypPriorrunsTxt, NUMBER);
+			WebElementUtils.enterText(lypCumTxnamtTxt, NUMBER);
+			WebElementUtils.enterText(lypCumNotxnsTxt, NUMBER);
+			clickWhenClickable(calculationMethodCumulativeTXn);
+			WebElementUtils.enterText(thresholdAmtTxt, plan.getThresholdAmount());
+			WebElementUtils.enterText(NoOfTrnxsTxt, plan.getNumberOfTransactions());
+			clickSaveButton();
+		});
+	}
+
+	public void editpromotionPlanStartDate(PromotionPlan plan) {
+		WebElementUtils.enterText(lypPromotionCodeTxt, plan.getPromotionPlanCode());
+		clickSearchButton();
+		SimulatorUtilities.wait(5000);
+		editBtn.click();
+		runWithinPopup("Edit Promotion Plan", () -> {
+			waitForElementVisible(startDateDPkr);
+			WebElementUtils.pickDate(startDateDPkr, LocalDate.now());
+			clickSaveButton();
+		});
 	}
 
 	@Override

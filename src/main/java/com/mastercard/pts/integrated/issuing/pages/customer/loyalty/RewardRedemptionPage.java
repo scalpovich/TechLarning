@@ -84,6 +84,13 @@ public class RewardRedemptionPage extends AbstractBasePage {
 		Assert.assertEquals(getCellTextByColumnName(1, "Available for Redemption"), "0");
 	}
 
+	public void verifyLoyaltyPointsRedeemedforCumulative(KeyValueProvider provider, RewardsRedemption rewards) {
+		Assert.assertEquals(getCellTextByColumnName(1, "Total Loyalty Points Earned"),
+				provider.getString("MAX_AMT_EACH_PERIOD"));
+		Assert.assertEquals(getCellTextByColumnName(1, "Redeemed"), rewards.getpointsToRedeem());
+		Assert.assertEquals(getCellTextByColumnName(1, "Available for Redemption"), "0");
+	}
+
 	public void verifyUiOperationStatus() {
 		logger.info("Reward Redemption");
 		verifySearchButton("Search");

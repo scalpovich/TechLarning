@@ -95,7 +95,7 @@
    "transactionPlan":"AUTOMATION [T8278L]",
    "creditPlan":"TA4413NYAX [102]",
    "billingCycle":"AUTOMATION [131]",
-   "transactionFeePlan": "Automation FIX fee plan. [AUTOFEEP1]",
+   "transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
    "walletPlan":"AUTOMATION [TA1160XDAT]",
    "loyaltyPlan" : "Automation Test [AUTO]"
    }

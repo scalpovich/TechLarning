@@ -43,4 +43,21 @@ public class PromotionPlanSteps {
 		context.put(ContextConstants.PROMOTION_PLAN, promotionPlan);
 		uiVerificationLoyaltyWorkflow.verifyPromotionPlanwithMCG(promotionPlan);
 	}
+
+	@When("user adds promotion Plan with Cumulative Transactions")
+	public void addPromotionPlanwithCumulativeTxn() {
+		promotionPlan = PromotionPlan.createWithProvider(Provider);
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+		promotionPlan.setPromotionloyaltyPlan(data.getLoyaltyPlan());
+		context.put(ContextConstants.PROMOTION_PLAN, promotionPlan);
+		context.put(ContextConstants.PROMOTION_PLAN_CODE, promotionPlan.getPromotionPlanCode());
+		uiVerificationLoyaltyWorkflow.addPromotionPlanwithCumulative(promotionPlan);
+	}
+
+	@When("user edits the start date for promotion plan")
+	public void editPromotionPlanstartDate() {
+		promotionPlan = PromotionPlan.createWithProvider(Provider);
+		promotionPlan.setPromotionPlanCode(context.get(ContextConstants.PROMOTION_PLAN_CODE));
+		uiVerificationLoyaltyWorkflow.editPromotionPlanDate(promotionPlan);
+	}
 }

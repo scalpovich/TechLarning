@@ -213,6 +213,7 @@ public class WebElementUtils {
 		asWebElement(datePicker).findElement(By.cssSelector("img")).click();
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
+		monthYear = fluentWait(() -> asWebElement(datePicker).findElement(By.cssSelector("a.calnav")));
 		YearMonth currentYearMonth = YearMonth.parse(monthYear.getText(), formatter);
 
 		if (date.getYear() != currentYearMonth.getYear() || date.getMonthValue() != currentYearMonth.getMonthValue()) {

@@ -645,7 +645,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		BigDecimal balanceAmount = new BigDecimal(
 				getFirstRecordCellTextByColumnNameInEmbeddedTab(CURRENT_AVAILABLE_BALANCE));
 		clickEndCall();
+		SimulatorUtilities.wait(600000);
 		return balanceAmount;
+
 	}
 
 	public void searchByClientID(String clientID, String cardType) {
@@ -711,9 +713,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 
 	public String getWalletBalanceInformationAfterLoyaltyRedemption(Device device) {
-		logger.info("Get Wallet Balance Information for Device: {}", device.getDeviceNumber());
+		// logger.info("Get Wallet Balance Information for Device: {}",
+		// device.getDeviceNumber());
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, "Prepaid [P]");
-		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
+		WebElementUtils.enterText(deviceNumberSearchTxt, "5383164041897018");
 		clickSearchButton();
 		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
 		editDeviceLink.click();

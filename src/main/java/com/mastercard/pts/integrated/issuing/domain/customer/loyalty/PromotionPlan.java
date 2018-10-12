@@ -22,6 +22,16 @@ public class PromotionPlan implements HasCodeAndDescription {
 	private String floortransactionAmount;
 	private String mccCode;
 	private String mcgCode;
+	private String thresholdAmount;
+	private String numberOfTransactions;
+
+	public String getNumberOfTransactions() {
+		return numberOfTransactions;
+	}
+
+	public void setNumberOfTransactions(String numberOfTransactions) {
+		this.numberOfTransactions = numberOfTransactions;
+	}
 
 	public String getMcgCode() {
 		return mcgCode;
@@ -29,6 +39,14 @@ public class PromotionPlan implements HasCodeAndDescription {
 
 	public void setMcgCode(String mcgCode) {
 		this.mcgCode = mcgCode;
+	}
+
+	public String getThresholdAmount() {
+		return thresholdAmount;
+	}
+
+	public void setThresholdAmount(String thresholdAmount) {
+		this.thresholdAmount = thresholdAmount;
 	}
 
 	private String promotionloyaltyPlan;
@@ -144,6 +162,8 @@ public class PromotionPlan implements HasCodeAndDescription {
 		plan.setPromotionamountSpent(provider.getString("PROMOTION_AMOUNT_SPENT"));
 		plan.setPromotionpointsEarned(provider.getString("PROMOTION_POINTS_EARNED"));
 		plan.setFloortransactionAmount(provider.getString("FLOOR_TRANSACTION_AMOUNT"));
+		plan.setThresholdAmount(provider.getString("THRESHOLD_AMOUNT"));
+		plan.setNumberOfTransactions(provider.getString("NO._OF_TRANSACTIONS"));
 		plan.setMccCode(provider.getString("MCC_CODE_INVALID"));
 		plan.setMcgCode(provider.getString("MCG_CODE"));
 		return plan;

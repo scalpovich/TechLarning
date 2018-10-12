@@ -45,6 +45,24 @@ public class RewardsRedemptionSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		rewardsRedemption = RewardsRedemption.createWithProvider(provider);
 		// rewardsRedemption.setDeviceNumber(device);
+		rewardflows.verifyRewardsRedemptionScreen(device, rewardsRedemption, provider);
+	}
+
+	@When("user verifies cumulative transaction points for rewards and redemption screen")
+	@Then("user verifies cumulative transaction points for rewards and redemption screen")
+	public void thenUserVerifiesRewardsAndRedemptionScreenCumulativeTxn() {
+		Device device = context.get(ContextConstants.DEVICE);
+		rewardsRedemption = RewardsRedemption.createWithProvider(provider);
+		rewardsRedemption.setpointsToRedeem(provider.getString("MAX_AMT_EACH_PERIOD"));
+		rewardflows.verifyRewardsRedemptionScreenForCumulativeTxn(device, rewardsRedemption, provider);
+	}
+
+	@When("user verifies loyalty points not available for redemption")
+	@Then("user verifies loyalty points not available for redemption")
+	public void thenUserVerifiesLytPtsNotAvailable() {
+		Device device = context.get(ContextConstants.DEVICE);
+		rewardsRedemption = RewardsRedemption.createWithProvider(provider);
+		// rewardsRedemption.setDeviceNumber(device);
 		rewardflows.verifyRewardsPointsNotAvb(device, rewardsRedemption);
 	}
 
@@ -58,7 +76,7 @@ public class RewardsRedemptionSteps {
 		currentBalanceAmount = helpdeskWorkflow.getWalletBalanceAfterLoyaltyRedemption(device);
 		context.put(ContextConstants.AVAILABLE_BALANCE_AFTER_LOYALTY_REDEMPTION, currentBalanceAmount);
 		Double balanceAfterLoyalty = Double.parseDouble(context.get("AVAILABLE_BALANCE_OR_CREDIT_LIMIT"))
-				+ Double.parseDouble(provider.getString("POINTS_TO_REDEEM"));
+				+ Double.parseDouble(rewardsRedemption.getpointsToRedeem());
 		Assert.assertEquals(balanceAfterLoyalty, currentBalanceAmount);
 	}
 

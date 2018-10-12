@@ -24,6 +24,15 @@ public class RewardsRedemptionFlows {
 		rewards.verifyLoyaltyPointsRedeemed(provider);
 	}
 
+	public void verifyRewardsRedemptionScreenForCumulativeTxn(Device device, RewardsRedemption rewardsRedemption,
+			KeyValueProvider provider) {
+		RewardRedemptionPage rewards = navigator.navigateToPage(RewardRedemptionPage.class);
+		rewards.searchForRewardsRedemption(device);
+		rewards.selectLoyaltyPlan(rewardsRedemption);
+		rewards.redeemScreen(rewardsRedemption);
+		rewards.verifyLoyaltyPointsRedeemedforCumulative(provider, rewardsRedemption);
+	}
+
 	public void verifyRewardsPointsNotAvb(Device device, RewardsRedemption rewardsRedemption) {
 		RewardRedemptionPage rewards = navigator.navigateToPage(RewardRedemptionPage.class);
 		rewards.searchForRewardsRedemption(device);

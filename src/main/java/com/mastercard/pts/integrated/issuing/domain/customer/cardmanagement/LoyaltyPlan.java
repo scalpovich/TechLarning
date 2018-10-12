@@ -16,6 +16,16 @@ public class LoyaltyPlan implements HasCodeAndDescription {
 
 	private String loyaltyTransactionPlan;
 
+	private String maxloyaltypoints;
+
+	public String getMaxloyaltypoints() {
+		return maxloyaltypoints;
+	}
+
+	public void setMaxloyaltypoints(String maxloyaltypoints) {
+		this.maxloyaltypoints = maxloyaltypoints;
+	}
+
 	public String getLoyaltyTransactionPlan() {
 		return loyaltyTransactionPlan;
 	}
