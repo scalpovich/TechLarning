@@ -75,7 +75,7 @@ public class AuthorizationSearchWorkflow {
 
 		AuthorizationSearchPage authSearchPage = navigator.navigateToPage(AuthorizationSearchPage.class);
 		authSearchPage.inputDeviceNumber(deviceNumber);
-		authSearchPage.inputFromDate(LocalDate.now().minusDays(1));
+		authSearchPage.inputFromDate(LocalDate.now().minusDays(1),1);
 		authSearchPage.inputToDate(LocalDate.now());
 		// using waitAndSearchForRecordToAppear instead of
 		// page.clickSearchButton(); it iterates for sometime before failing
@@ -112,7 +112,7 @@ public class AuthorizationSearchWorkflow {
 	{
 		GenerateReversalPage page = navigator.navigateToPage(GenerateReversalPage.class);
 		authorizationSearchPage.inputDeviceNumber(deviceNumber);
-		authorizationSearchPage.inputFromDate(LocalDate.now().minusDays(1));
+		authorizationSearchPage.inputFromDate(LocalDate.now().minusDays(1),1);
 		authorizationSearchPage.inputToDate(LocalDate.now());
 		authorizationSearchPage.waitAndSearchForRecordToAppear();
 		helpDeskWorkFlow.clickCustomerCareEditLink();
@@ -204,9 +204,8 @@ public class AuthorizationSearchWorkflow {
 		
 	}
 
-	public void verifyReconciliationStatus(String status) {
-		authorizationSearchPage.viewDeviceDetails();
-		boolean condition=authorizationSearchPage.verifyReconciliationStatus().equalsIgnoreCase(status);
+	public void verifyReconciliationStatus(String status, Device device) {
+		boolean condition=authorizationSearchPage.verifyReconciliationStatus(device.getDeviceNumber()).equalsIgnoreCase(status);
 		assertTrue("Reconciliation Status Doesnot match with Authoraization Report content", condition);
 	}
 

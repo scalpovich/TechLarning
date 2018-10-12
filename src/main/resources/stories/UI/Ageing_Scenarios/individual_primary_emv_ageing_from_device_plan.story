@@ -63,7 +63,6 @@ And user sign out from customer portal
 Scenario:1.5 Run Ageing Batch and verify reconciliation status
 Given user is logged in institution
 When "Ageing" batch for credit is successful
-And search Purchase authorization and verify 000-Successful status
 And user verifies reconciliation status Aged in auth search
 When user verifies available balance after transaction
 And device has "normal" status

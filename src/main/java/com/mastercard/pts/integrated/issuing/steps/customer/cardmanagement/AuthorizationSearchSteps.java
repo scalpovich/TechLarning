@@ -171,7 +171,8 @@ public class AuthorizationSearchSteps {
 	
 	@When("user verifies reconciliation status $status in auth search")
 	public void userVerifyReconciliationStatus(String status){
-		authorizationSearchWorkflow.verifyReconciliationStatus(status);
+		Device device = context.get(ContextConstants.DEVICE);
+		authorizationSearchWorkflow.verifyReconciliationStatus(status,device);
 	}
 	
 	@Then("verify fixed transaction fee $isOrNot waived off")
@@ -181,10 +182,11 @@ public class AuthorizationSearchSteps {
 			TransactionFeePlan txnFeePlan = TransactionFeePlan.getAllTransactionFee(provider);
 			context.put("TransactionFeePlan", txnFeePlan);
 			assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()),
-					Matchers.hasItems(txnFeePlan.getfixedTxnFees(), txnFeePlan.getFixedRateFee(), txnFeePlan.getBillingAmount()));
+					Matchers.hasItems(txnFeePlan.getfixedTxnFees(), txnFeePlan.getFixedRateFee(),
+							txnFeePlan.getBillingAmount()));
+		} else {
+			assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()),
+					Matchers.hasItems(DEFAULT_VALUE, DEFAULT_VALUE, DEFAULT_VALUE));
 		}
-		assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()),
-				Matchers.hasItems(DEFAULT_VALUE,DEFAULT_VALUE,DEFAULT_VALUE));
-		
 	}
 }

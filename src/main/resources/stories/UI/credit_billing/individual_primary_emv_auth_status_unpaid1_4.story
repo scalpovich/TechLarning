@@ -31,13 +31,6 @@ And device has "normal" status
 And user notes down available Card limit for card
 Then user sign out from customer portal
 
-Scenario: 1.2.1 Pin Generation
-Given connection to FINSim is established
-When Pin Offset file batch was generated successfully
-And embossing file batch was generated in correct format
-And PIN is retrieved successfully with data from Pin Offset File
-And FINSim simulator is closed
-
 Scenario:1.3 Perform Authorization transaction
 When user is logged in institution
 And user raises an authorization request
@@ -112,13 +105,12 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:2.0 Perform EMV_PURCHASE Authorization transaction
-Given connection to MAS is established
-When perform an EMV_PURCHASE MAS transaction
-And MAS test results are verified
+Scenario:2.0 Perform Authorization transaction
 When user is logged in institution
+And user raises an authorization request
+Then status of request is "approved"
 And search Purchase authorization and verify 000-Successful status
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario: 2.1 Login & Logout to wait for date to be updated for next billing cycle
 Meta:
@@ -153,11 +145,11 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:2.4 Perform EMV_PURCHASE Authorization transaction
-When perform an EMV_PURCHASE MAS transaction
+Scenario:2.4 Perform Authorization transaction
 When user is logged in institution
+And user raises an authorization request
 And search Purchase authorization and verify 100-Do Not Honour status
-And assert Decline response with 20004 AuthDecline Code and Invalid wallet. as description
+And assert Decline response with 20010 AuthDecline Code and Invalid wallet Status. as description
 And user sign out from customer portal
 
 Scenario: 2.5 Login & Logout to wait for date to be updated for next billing cycle
@@ -193,11 +185,11 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:2.8 Perform EMV_PURCHASE Authorization transaction
-When perform an EMV_PURCHASE MAS transaction
+Scenario:2.8 Perform Authorization transaction
 When user is logged in institution
+And user raises an authorization request
 And search Purchase authorization and verify 100-Do Not Honour status
-And assert Decline response with 20004 AuthDecline Code and Invalid wallet. as description
+And assert Decline response with 20010 AuthDecline Code and Invalid wallet Status. as description
 And user sign out from customer portal
 
 
@@ -234,10 +226,9 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:3.2 Perform EMV_PURCHASE Authorization transaction
-When perform an EMV_PURCHASE MAS transaction
-And MAS is simulator is closed
+Scenario:3.2 Perform Authorization transaction
 When user is logged in institution
+And user raises an authorization request
 And search Purchase authorization and verify 100-Do Not Honour status
-And assert Decline response with 20004 AuthDecline Code and Invalid wallet. as description
+And assert Decline response with 20010 AuthDecline Code and Invalid wallet Status. as description
 And user sign out from customer portal

@@ -113,8 +113,8 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 		WebElementUtils.enterText(cardNumber, deviceNumber);
 	}
 
-	public void inputFromDate(LocalDate date) {
-		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(1);
+	public void inputFromDate(LocalDate date,int day) {
+		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(day);
 		WebElementUtils.pickDate(fromDate, date);
 	}
 
@@ -129,7 +129,7 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 
 	public void authCheckTransactionFee(String deviceNumber) {
 		inputDeviceNumber(deviceNumber);
-		inputFromDate(LocalDate.now().minusDays(1));
+		inputFromDate(LocalDate.now().minusDays(1),1);
 		inputToDate(LocalDate.now());
 		waitAndSearchForRecordToAppear();
 		viewDeviceDetails();
@@ -137,7 +137,7 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 
 	public void authCheckMarkUpFee(String deviceNumber) {
 		inputDeviceNumber(deviceNumber);
-		inputFromDate(LocalDate.now().minusDays(1));
+		inputFromDate(LocalDate.now().minusDays(1),1);
 		inputToDate(LocalDate.now());
 		waitAndSearchForRecordToAppear();
 		viewDeviceDetails();
@@ -177,7 +177,7 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	public List<String> verifyState(String deviceNumber) {
 		List<String> fieldsForAssertion = new ArrayList<>();
 		inputDeviceNumber(deviceNumber);
-		inputFromDate(LocalDate.now().minusDays(1));
+		inputFromDate(LocalDate.now().minusDays(1),1);
 		inputToDate(LocalDate.now());
 		clickSearchButton();
 		viewFirstRecord();
@@ -192,7 +192,7 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	
 	public BigDecimal viewAvailableBalanceAfterReversalTransaction(String deviceNumber) {
 		inputDeviceNumber(deviceNumber);
-		inputFromDate(LocalDate.now().minusDays(1));
+		inputFromDate(LocalDate.now().minusDays(1),1);
 		inputToDate(LocalDate.now());
 		clickSearchButton();
 		viewFirstRecord();
@@ -222,7 +222,12 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 		return availBal;
 	}
 
-	public String verifyReconciliationStatus() {
+	public String verifyReconciliationStatus(String deviceNumber) {
+		inputDeviceNumber(deviceNumber);
+		inputFromDate(LocalDate.now().minusDays(1),3);
+		inputToDate(LocalDate.now());
+		waitAndSearchForRecordToAppear();
+		viewDeviceDetails();
 		runWithinPopup("View Authorization", () -> {
 			reconcilationStatus=txtReconcilationStatus.getText();
 			clickCloseButton();
