@@ -172,4 +172,10 @@ public class ProgramSteps {
 			programflows.checkAdaptiveAuthenticationDisabled(program.getProgramCode());
 		}
 	}
+	@Then("user edits the program to enable card credit limit")
+	@When("user edits the program to enable card credit limit")
+	public void editProgramToEnableCardCreditLimit() {
+		Program program = context.get(ContextConstants.PROGRAM);
+		programflows.editProgramToEnableCardLimit(program.getProgramCode());
+	}
 }
