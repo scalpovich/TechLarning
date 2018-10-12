@@ -305,6 +305,13 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Decline Reason')]/../following-sibling::td/span/span")
 	private MCWebElement labelDeclineReason;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(text(),'Authorization Date From')]/..//span")
+	private MCWebElement txtAuthorizationDateFrom;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(text(),'Authorization Date From')]/..//td[7]//span")
+	private MCWebElement txtAuthorizationDateTo;
+	
 
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
@@ -1299,6 +1306,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	
+	
 
 public String getDeclineCodeForTransaction(Device device, String rrnNumber){
 		List<String> lst = new ArrayList<String>();
@@ -1311,8 +1319,8 @@ public String getDeclineCodeForTransaction(Device device, String rrnNumber){
 		clickWhenClickable(btnAuthorization);
 		
 		runWithinPopup(AUTHORIZATION, () -> {
-			WebElementUtils.pickDate(effectiveDateTxt, LocalDate.now());
-			WebElementUtils.pickDate(endDateTxt, LocalDate.now());
+			WebElementUtils.pickDate(txtAuthorizationDateFrom, LocalDate.now());
+			WebElementUtils.pickDate(txtAuthorizationDateTo, LocalDate.now());
 			clickSearchButton();
 			SimulatorUtilities.wait(3000);
 			Element("//span[contains(text(),'"+rrnNumber+"')]/..").click();
