@@ -27,6 +27,7 @@ And processes pre-production batch for debit
 And processes device production batch for debit
 And device has "NOT ACTIVATED CARD" status
 Then user activates device through helpdesk
+And device has "normal" status
 And user sign out from customer portal
 And embossing file batch was generated in correct format
 
