@@ -24,5 +24,10 @@ public class IncompleteApplicationFlows {
 		IncompleteApplicationPage incompleteApplicationPage = navigator.navigateToPage(IncompleteApplicationPage.class);
 		incompleteApplicationPage.incompleteApplicationFileUpload();
 	}
+	
+	public String incompleteCreditApplicationWithExistingData() {
+		IncompleteApplicationPage incompleteApplicationPage = navigator.navigateToPage(IncompleteApplicationPage.class);
+		return incompleteApplicationPage.incompleteApplicationWithExistingData();
+	}
 
 }

@@ -29,5 +29,12 @@ public class IncompleteApplicationCreditDeviceSteps {
 	public void incompleteApplicationCreditDeviceAfterApplicaionCreationFileUpload() {
 		incompleteApplicationFlows.incompleteCreditApplicationFileUpload();
 	}
+	
+	@Given("user checks in Incomplete Application and adds duplicate data for the credit application device")
+	@Then("user checks in Incomplete Application and adds duplicate data for the credit application device")
+	@When("user checks in Incomplete Application and adds duplicate data for the credit application device")
+	public void incompleteApplicationAddsDuplicateDataCreditDeviceAfterApplicaionCreation() {
+		incompleteApplicationFlows.incompleteCreditApplicationWithExistingData();
+	}
 
 }

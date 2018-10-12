@@ -57,8 +57,8 @@ public class ClientDetails {
 		ClientDetails client = new ClientDetails();
 		client.setTitle("Mr. [1]");
 		client.setBirthDate(LocalDate.now().minusYears(RandomUtils.nextLong(20, 50)));
-		client.setDedupeFirstName("John");
-		client.setDedupeLastName("Ted");
+		client.setDedupeFirstName("Des");
+		client.setDedupeLastName("Pasito");
 		client.setDedupeBithDate(LocalDate.now().minusYears(29));
 		client.setNationality("INDIA [356]");
 		client.setMaritialStatus("Married [1]");

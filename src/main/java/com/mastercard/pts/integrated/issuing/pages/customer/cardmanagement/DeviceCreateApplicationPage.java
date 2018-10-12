@@ -422,7 +422,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		
 		ClientDetails client = device.getClientDetails();
 		WebElementUtils.selectDropDownByVisibleText(titleDDwn, client.getTitle());
-		if (device.getDedupe().equals("dedupe")) {			
+		if (device.getDedupe()!=null && device.getDedupe().equals("dedupe")) {			
 			WebElementUtils.enterText(firstNameTxt, client.getDedupeFirstName());
 			WebElementUtils.enterText(lastNameTxt, client.getDedupeLastName());
 			WebElementUtils.pickDate(birthDateDPkr, client.getDedupeBithDate());

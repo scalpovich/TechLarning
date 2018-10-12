@@ -17,6 +17,7 @@ import com.mastercard.pts.integrated.issuing.pages.collect.administration.Admini
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ApplicationPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReportVerificationPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.PDFUtils;
 
 @Workflow
@@ -37,10 +38,8 @@ public class ReportVerificationWorkflow {
 
 	public static final int BILL_AMOUNT_INDEX_VALUE = 3;
 	
-	Boolean verificationStatus = false;
+	Boolean verificationStatus;
 	
-	private String txtReportName = "Application Reject Report";
-
     public void verifyGenericReport(GenericReport report) {
 		page = (ReportVerificationPage)getInstance(report.getReportName());
 		Map<Object, String> reportContent = getGenericReport(report);
@@ -74,7 +73,7 @@ public class ReportVerificationWorkflow {
 	}
     
 	public void verifyReportGenerationAppRejectReport(GenericReport reports) {
-		reports.setReportName(txtReportName);
+		reports.setReportName(Constants.APP_REJECT_REPORT);
 		deleteExistingReportsFromSystem(reports.getReportName());
 		ApplicationPage page = navigator.navigateToPage(ApplicationPage.class);
 		String reportUrl = page.generateApplicationRejectReport(reports.getReportName());

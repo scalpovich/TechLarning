@@ -79,6 +79,12 @@ public class IncompleteApplicationPage extends AbstractCardManagementPage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='lastName']")
 	private MCWebElement txtLastName;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[text()='Profile']")
+	private MCWebElement tabProfile;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=birthDate]")
+	private MCWebElement txtBirthDate;
 
 	public void incompleteApplication() {
 		Device device = context.get(CreditConstants.APPLICATION);
@@ -94,7 +100,6 @@ public class IncompleteApplicationPage extends AbstractCardManagementPage {
 		waitForPageToLoad(driver());
 		clickWhenClickable(editImg);
 		SimulatorUtilities.wait(5000);
-
 		runWithinPopup("Edit Application", () -> {
 			if (isElementPresent(txtPartnerMSNumberAdded)) {
 				String randomPartnerMSNumber=CustomUtils.randomNumbers(5);
@@ -105,7 +110,22 @@ public class IncompleteApplicationPage extends AbstractCardManagementPage {
 			}
 			clickWhenClickable(saveBtn);
 		});
-
+		verifyOperationStatus();
+		return getCodeFromInfoMessage("Application Number");
+	}
+	
+	public String incompleteApplicationWithExistingData() {
+		incompleteApplication();
+		waitForPageToLoad(driver());
+		clickWhenClickable(editImg);
+		SimulatorUtilities.wait(5000);
+		runWithinPopup("Edit Application", () -> {
+			clickWhenClickable(tabProfile);
+			enterValueinTextBox(txtFirstName, "ALVAREZ");
+			enterValueinTextBox(txtLastName, "LONDONO");
+			enterValueinTextBox(txtBirthDate, "22/04/1962");
+			clickWhenClickable(saveBtn);
+		});
 		verifyOperationStatus();
 		return getCodeFromInfoMessage("Application Number");
 	}
