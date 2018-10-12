@@ -44,6 +44,7 @@ public class RiskAnalysisPage extends AbstractBasePage {
 	
 	public void clickProcessALL() {
 		//clickWhenClickable(processAllBtn);
+		waitForPageToLoad(driver());
 		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
 		clickProcessSelectedButton();
 	}
