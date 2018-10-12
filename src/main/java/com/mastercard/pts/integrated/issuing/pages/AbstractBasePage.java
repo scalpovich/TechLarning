@@ -1893,10 +1893,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 					logger.info("CheckBox Value:-{}",checkBox);
 					if (checkBox.isEnabled() && !checkBox.isSelected()) {
 						checkBox.click();
+						break outerloop;
 					}
 
 				}
-				break outerloop;
 
 			}
 		}
