@@ -51,6 +51,19 @@ public class ApprovalScoreWorkFlow {
 		approvalScorePage.saveButtonClick();
 		return approvalScorePage.successMessageDisplay();
 	}
+	public boolean userAddsNewApprovalScoreWithLessEndRange()
+	{
+		approvalScorePage = navigator.navigateToPage(ApprovalScorePage.class);
+		approvalScorePage.addApproverScorePlan();
+		approvalScorePage.addMandatoryLabelsAndFields();
+		approvalScorePage.selectProgram();
+		approvalScorePage.selectAction(1);
+		approvalScorePage.enterStartRangeValue();
+		approvalScorePage.enterReducedEndRangeValue();
+		approvalScorePage.settingMandatoryValuesWithLabels();
+		approvalScorePage.saveButtonClick();
+		return approvalScorePage.successMessageDisplay();
+	}
 	public void userVerifiesAndEditsNewApprovalScore()
 	{
 	approvalScorePage.verifyUiOperationStatus();

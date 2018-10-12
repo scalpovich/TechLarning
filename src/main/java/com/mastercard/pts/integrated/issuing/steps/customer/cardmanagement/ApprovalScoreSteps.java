@@ -40,4 +40,12 @@ public class ApprovalScoreSteps {
 		Boolean approvalScore=approvalScoreWorkFlow.userAddsNewApprovalScoreForAutoRefer();
 		Assert.assertTrue("ApprovalScore is not added for auto refer", approvalScore);
 	}
+   
+   @When("User adds Approval Score on program with less end range")
+   @Then("User adds Approval Score on program with less end range")
+	public void userAddsAApprovalScoreForOutsideRange()
+	{
+		Boolean approvalScore=approvalScoreWorkFlow.userAddsNewApprovalScoreWithLessEndRange();
+		Assert.assertTrue("ApprovalScore is not added", approvalScore);
+	}
 }
