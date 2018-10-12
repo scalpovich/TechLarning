@@ -243,7 +243,7 @@ public class TransactionSteps {
 			transactionData.setDeKeyValuePairDynamic("004", "000000000000");
 		}
 
-		if (midTidFlag==true){
+		if (midTidFlag){
 			MID_TID_Blocking midtidBlocking = context.get(ContextConstants.MID_TID_BLOCKING);
 			transactionData = transactionWorkflow.setDEElementsForMIDTID(transactionData,midtidBlocking,midTidCombination);
 		}
