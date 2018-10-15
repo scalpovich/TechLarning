@@ -45,6 +45,8 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 
 	private String successMessage = null;
 	
+	public static boolean manualAuth =false;
+	
 	public String addAuthorizationRequest(AuthorizationRequest request){
 		logger.info("Authorization Request: {}", request.getDeviceNumber());
 		clickAddNewButton();
@@ -57,10 +59,15 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 			WebElementUtils.enterText(transactionAmountTxt, request.getTransactionAmount());
 			WebElementUtils.enterText(memoTxt, request.getMemo());
 			clickSaveButton();
-			successMessage = getSuccessMessage();
-			logger.info("Success Meesage: " + successMessage);
-			clickOkButton();
-			});
+			if (manualAuth == true) {
+				clickOkButton();
+			} else {
+				successMessage = getMessageFromFeedbackPanel();
+				logger.info("Success Meesage: " + successMessage);
+				clickOkButton();
+			}
+
+		});
 		
 		return successMessage;
 	}

@@ -5,7 +5,7 @@ I want to age the trx and verify the status in transaction details
 
 Meta:
 @CreditRegression
-@StoryName credit_emv_retail_billing
+@StoryName credit_emv_retail_ageing
 @Individual
 @Primary	 
 
