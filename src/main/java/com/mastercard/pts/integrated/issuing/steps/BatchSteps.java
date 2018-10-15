@@ -135,7 +135,7 @@ public class BatchSteps {
 				logger.info("Pin Offset :  {}", values[0]);
 			}
 			scanner.close();
-			context.put("PIN_OFFSET_FILE", batchFile.toString());
+			context.put(ContextConstants.PIN_OFFSET_FILE, batchFile.toString());
 			
 			// renaming file name as sometimes the embosing file name is also same
 			MiscUtils.renamePinFile(batchFile.toString());
@@ -155,7 +155,7 @@ public class BatchSteps {
 	public void updatePinOffsetFileWithPinAcknowledgement(String acknowledgementType) throws IOException 
 	{
 	
-		String batchFile = context.get("PIN_OFFSET_FILE") + "_PinFile";
+		String batchFile = context.get(ContextConstants.PIN_OFFSET_FILE) + "_PinFile";
 		String ackIndicator = "";
 		if(acknowledgementType.equalsIgnoreCase("positive"))
 			ackIndicator = "Y";
@@ -179,8 +179,9 @@ public class BatchSteps {
 		String wholeDataToAppend = "\t" + ackIndicator + StringUtils.rightPad(DateUtils.getDateddMMyyyy(), 208, "0");
 		String batchFile = tempDirectory.toString()+ "\\" +fileCreation.getNewPinOffsetFile(tempDirectory.toString());
 		
-		context.put("PIN_OFFSET_FILE", batchFile);
+		context.put(ContextConstants.PIN_OFFSET_FILE, batchFile);
 		MiscUtils.renamePinFile(batchFile.toString());
+		
 		fileCreation.appendContentsToFile(batchFile+"_PinFile", wholeDataToAppend);
 	}
 	
@@ -188,11 +189,11 @@ public class BatchSteps {
 	@Then("User deletes existing pin offset files")
 	public void deleteExistingPinOffsetFiles()
 	{
-		MiscUtils.deleteExistingFile(context.get("PIN_OFFSET_FILE"));
-		logger.info("Deleted File : {}" , context.get("PIN_OFFSET_FILE").toString()); 
+		MiscUtils.deleteExistingFile(context.get(ContextConstants.PIN_OFFSET_FILE));
+		logger.info("Deleted File : {}" , context.get(ContextConstants.PIN_OFFSET_FILE).toString()); 
 		
-		MiscUtils.deleteExistingFile(context.get("PIN_OFFSET_FILE")+"_PinFile");	
-		logger.info("Deleted File:{}" , (context.get("PIN_OFFSET_FILE")+"_PinFile").toString()); 
+		MiscUtils.deleteExistingFile(context.get(ContextConstants.PIN_OFFSET_FILE)+"_PinFile");	
+		logger.info("Deleted File:{}" , (context.get(ContextConstants.PIN_OFFSET_FILE)+"_PinFile").toString()); 
 	}
 	
 	@SuppressWarnings("unused")

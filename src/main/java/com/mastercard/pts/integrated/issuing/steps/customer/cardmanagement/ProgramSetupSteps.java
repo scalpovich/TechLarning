@@ -1932,7 +1932,7 @@ public void fillsProgramSection(String type, String programType) {
 		CarrierAcknowledgement carrierAcknowledgement = CarrierAcknowledgement.createWithProvider(provider);
 		carrierAcknowledgement.setProductType(ProductType.fromShortName(type));
 		carrierAcknowledgement.setFileType(fileType);
-		carrierAcknowledgement.setFileName(context.get("DAT_FILE_NAME"));
+		carrierAcknowledgement.setFileName(context.get(ContextConstants.DAT_FILE_NAME));
 		carrierAcknowledgementWorkflow.processCarrierAcknowledgementBatch(carrierAcknowledgement);
 	}
 

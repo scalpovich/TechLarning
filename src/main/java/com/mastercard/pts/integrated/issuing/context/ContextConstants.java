@@ -116,6 +116,10 @@ public class ContextConstants {
 	
 	public static final String CREDIT_LIMIT_AFTER_SR = "CREDIT_LIMIT_AFTER_SR";
 	
+	public static final String PIN_OFFSET_FILE = "PIN_OFFSET_FILE";
+	
+	public static final String DAT_FILE_NAME = "DAT_FILE_NAME";
+	
 	private ContextConstants() {
 	}
 

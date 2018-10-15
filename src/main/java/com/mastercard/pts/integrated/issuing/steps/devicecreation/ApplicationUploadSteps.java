@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
@@ -247,7 +248,7 @@ public class ApplicationUploadSteps {
 	public void thenUserCreatesUploadPinFileAcknowledgementBatch(String batchName) {
 		ProcessBatches batch=new ProcessBatches();
 		//ProcessBatches batch = ProcessBatches.getBatchData()
-		String batchFile = context.get("PIN_OFFSET_FILE");
+		String batchFile = context.get(ContextConstants.PIN_OFFSET_FILE);
 		batch.setBatchFileName((new File(batchFile)).getName());
 		batch.setJoBID(processBatchesFlows.processUploadBatches(batchName, batch.getFileName()));
 		SimulatorUtilities.wait(5000);

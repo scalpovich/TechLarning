@@ -181,7 +181,7 @@ public class LoadFromFileUploadSteps {
 	@Then("User uploads the updated PinOffset file to Server")
 	public void thenUserUploadsTheUpdatedPinOffsetFileToServer() {
 		ProcessBatches batch=new ProcessBatches();
-		String batchFile = context.get("PIN_OFFSET_FILE");
+		String batchFile = context.get(ContextConstants.PIN_OFFSET_FILE);
 		pinOffsetFileName = new File(batchFile);
 		loadFromFileUploadWorkflow.loadIncomingPinOffset(pinOffsetFileName);
 		batch.setBatchFileName(pinOffsetFileName.getName());

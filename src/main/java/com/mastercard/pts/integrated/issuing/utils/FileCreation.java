@@ -157,7 +157,7 @@ public class FileCreation {
 		BufferedWriter writer = null;
 		BufferedReader reader = null;
 		String line = null;
-		filenameStatic = context.get("PIN_OFFSET_FILE");
+		filenameStatic = context.get(ContextConstants.PIN_OFFSET_FILE);
 
 		try {
 			File oldfile = new File(filename);

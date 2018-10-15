@@ -491,7 +491,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			logger.info("Retrieving batch status");
 			waitForBatchStatus();
 			batchStatus = batchStatusTxt.getText();
-			context.put("DAT_FILE_NAME", processFileNameTxt.getText());
+			context.put(ContextConstants.DAT_FILE_NAME, processFileNameTxt.getText());
 			clickCloseButton();
 		});
 	}
