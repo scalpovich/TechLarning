@@ -13,7 +13,7 @@ Given setting json values in excel for Debit
 When user is logged in institution
 And for Magnetic Stripe Card [1] User fills Device Plan for debit product for Visa
 And User fills Wallet Plan for debit product and program Retail Debit Card [11]
-And User Primary Device fills New Program Retail Credit Card section for debit product for Visa
+And User Primary Device fills New Program Retail Debit Card [11] section for debit product for Visa
 And for Primary Device and New Client user fills Device Range section for debit product
 And debit device is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card [1]
 Then user sign out from customer portal
