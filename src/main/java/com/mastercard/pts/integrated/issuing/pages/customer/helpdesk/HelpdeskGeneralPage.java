@@ -68,7 +68,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final String PRIORITY_REQUEST = "Priority Request:";
 
 	private static String ERROR_MESSAGE = "This field is required.";
-	
+
 	public final String AUTHORIZATION = "Authorizations";
 	public final String VIEW_AUTHORIZATION = "View Authorizations";
 
@@ -115,7 +115,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='udf4:input:inputTextField']")
 	private MCWebElement timeInHourTxt;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Save']")
 	private MCWebElement saveBtn;
 
@@ -232,86 +232,86 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Current Status and Limits']")
 	private MCWebElement currentStatusAndLimitTab;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@name='udf23:radioComponent' and @value='0']")
 	private MCWebElement eccomDeactivate;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@name='udf23:radioComponent' and @value='1']")
 	private MCWebElement eccomActivate;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Card :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement availCardCreditLimitLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Card :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement cardCreditLimitLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Account :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement availAccountCreditLimitLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Account :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement accountCreditLimitLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Client :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement clientCreditLimitLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Client :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement availClientCreditLimitLabel;	
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='PDD :']/../../following-sibling::td[1]/span/span/span")
 	private MCWebElement paymentDueDateLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='MAD :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement minimumAmountDueLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='TAD :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement totalAmountDueLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Closing Balance :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement closingBalanceLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Interest :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement interestLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement loanLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Interest :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement loanInterestLabel;
-  
-    @PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody a img")
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody a img")
 	private MCWebElement editDeviceLink;
-	
+
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
-	
+
 	private final String RESET_PIN_RETRY_COUNTER= "109 - Reset Pin Retry Counter";
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Balance Details']")
 	private MCWebElement balanceDetailsTab;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//th[text()='New Credit Limit']/../following-sibling::tr[1]/td[4]/input")
 	private MCWebElement creditClientLimitTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//th[text()='New Credit Limit']/../following-sibling::tr[2]/td[4]/input")
 	private MCWebElement creditAccountLimitTxt;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='newCreditLimit']")
 	private MCWebElement newCreditLimitTxt;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Type :']/../following-sibling::td[1]/select")
 	private MCWebElement selectLimitTypeDdwn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Authorization']")
 	private MCWebElement btnAuthorization;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Decline Reason')]/../following-sibling::td/span/span")
 	private MCWebElement labelDeclineReason;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(text(),'Authorization Date From')]/..//span")
 	private MCWebElement txtAuthorizationDateFrom;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(text(),'Authorization Date From')]/..//td[7]//span")
 	private MCWebElement txtAuthorizationDateTo;
-	
+
 
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
@@ -464,11 +464,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public void selectLimitType(String type) {
 		WebElementUtils.selectDropDownByVisibleText(selectLimitTypeDdwn, type);
 	}
-	
+
 	public void clickCurrentStatusAndLimitsTab(){
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(currentStatusAndLimitTab)).click();
 	}
-	
+
 	public void setActiveDeviceNumberByCardPackId(HelpdeskGeneral helpdeskGeneral, String registeredType) {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, helpdeskGeneral.getProductType());
 		WebElementUtils.enterText(cardPackIdTxt, helpdeskGeneral.getCardPackId());
@@ -511,7 +511,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			clickSearchButton();
 			firstRow = getFirstColumnValueFromTable();
 			clickCloseButton();
-			
+
 		});
 		clickEndCall();
 		return firstRow.isEmpty();
@@ -585,9 +585,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			WebElement activationType = driver().findElement(
 					By.xpath("//select[@name='udf2:input:dropdowncomponent']"));
 			WebElementUtils.retryUntilNoErrors(() -> new Select(operation)
-					.selectByValue("1"));
+			.selectByValue("1"));
 			WebElementUtils.retryUntilNoErrors(() -> new Select(activationType)
-					.selectByVisibleText(ConstantData.GENERIC_DESCRIPTION));
+			.selectByVisibleText(ConstantData.GENERIC_DESCRIPTION));
 			WebElementUtils.enterText(timeInHourTxt, "1");
 		} else {
 			SimulatorUtilities.wait(1000);
@@ -603,7 +603,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			WebElementUtils.enterText(timeInHourTxt, "1");
 		}
 	}
-	
+
 	public void setupInternationalAllowDisallowCheck(String status) {
 		selectServiceCode(ConstantData.INTERNATIONAL_ALLOW_DISALLOW);
 		clickGoButton();
@@ -619,7 +619,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(5000);
 		clickEndCall();
 	}
-	
+
 	public void setupEccomerceDisallowCheck(String status) {
 		selectServiceCode(ConstantData.ECCOMERCE_ALLOW_DISALLOW);
 		clickGoButton();
@@ -635,19 +635,19 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(5000);
 		clickEndCall();
 	}
-	
+
 	public void allowTransactionForOneHour(String status) {
 		if (status.equalsIgnoreCase(ConstantData.INTERNATIONAL_ALLOW_DISALLOW))
 		{
-		selectServiceCode(ConstantData.INTERNATIONAL_ALLOW_DISALLOW);
-		clickGoButton();
-		runWithinPopup("400 - International Use Allow/Disallow", () -> {
-			chooseOperationActivate(status);
-			enterNotes(ConstantData.GENERIC_DESCRIPTION);
-			clickSaveButton();
-			verifyOperationStatus();
-			clickOKButtonPopup();			
-		});
+			selectServiceCode(ConstantData.INTERNATIONAL_ALLOW_DISALLOW);
+			clickGoButton();
+			runWithinPopup("400 - International Use Allow/Disallow", () -> {
+				chooseOperationActivate(status);
+				enterNotes(ConstantData.GENERIC_DESCRIPTION);
+				clickSaveButton();
+				verifyOperationStatus();
+				clickOKButtonPopup();			
+			});
 		}
 		else
 		{
@@ -661,12 +661,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				clickOKButtonPopup();			
 			});
 		}
-	
+
 		//There is a delay in page rendering
 		SimulatorUtilities.wait(5000);
 		clickEndCall();
 	}
-	
+
 	public boolean verifyCurrencySetupDoneCorrectly(HelpdeskGeneral helpdeskGeneral, Device device) {
 		logger.info("verify added currecy for device number: {}", device.getDeviceNumber());
 		int count = 0;
@@ -1164,7 +1164,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 		return creditLimit;
 	}
-	
+
 	public HashMap<String,BigDecimal> noteDownCreditLimit(String type) {
 		HashMap<String,BigDecimal> creditLimit=new HashMap<>();
 		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
@@ -1172,7 +1172,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		logger.info("Credit limit noted down : {} ", creditLimit);		
 		creditLimit.put(ConstantData.CLIENT_LIMIT,new BigDecimal(clientCreditLimitLabel.getText()));
 		creditLimit.put(ConstantData.AVAIL_CLIENT_LIMIT,new BigDecimal(availClientCreditLimitLabel.getText()));
-		
+
 		creditLimit.put(ConstantData.ACCOUNT_LIMIT,new BigDecimal(accountCreditLimitLabel.getText()));
 		creditLimit.put(ConstantData.AVAIL_ACCOUNT_LIMIT,new BigDecimal(availAccountCreditLimitLabel.getText()));
 
@@ -1181,7 +1181,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();		
 		return creditLimit;
 	}
-	
+
 	public void resetPinRetryCounter(HelpdeskGeneral helpdeskGeneral) {
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
@@ -1194,7 +1194,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(3000);
 		clickEndCall();
 	}
-	
+
 	public HashMap<String, String> noteDownRequiredValues(String deviceNumber) {
 		HashMap<String, String> helpDeskValues = new HashMap<>();		
 		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);		
@@ -1213,7 +1213,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 		return helpDeskValues;
 	}
-	
+
 	public String verifyBillingDetails(Device device){
 		List<String> lst = new ArrayList<String>();
 		SimulatorUtilities.wait(5000);
@@ -1238,7 +1238,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		}
 		return 0;
 	}
-	
+
 	public HashMap<String,BigDecimal> activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
 		logger.info("credit limit change request: {}",helpdeskGeneral.getCardPackId());
 		selectServiceCode(helpdeskGeneral.getServiceCode());
@@ -1248,11 +1248,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			return creditLimitChangeRequestIndividual(helpdeskGeneral,crediLimit);
 		else if(ProductType.CORPORATE.contains(helpdeskGeneral.getCustomerType()))
 			return creditLimitChangeRequestCorporate(helpdeskGeneral,crediLimit);
-		
+
 		return new HashMap<String,BigDecimal>();
 	}
-	
-	
+
+
 	public HashMap<String,BigDecimal> creditLimitChangeRequestCorporate(HelpdeskGeneral helpdeskGeneral,HashMap<String,BigDecimal> creditLimit){
 		runWithinPopup(ConstantData.CREDIT_LIMIT_CHANGE_COMMERCIAL_CARDS, ()->{
 			selectLimitType(helpdeskGeneral.getLimitType());
@@ -1269,14 +1269,14 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 		return creditLimit;
 	}
-	
+
 	public HashMap<String,BigDecimal> creditLimitChangeRequestIndividual(HelpdeskGeneral helpdeskGeneral,HashMap<String,BigDecimal> creditLimit){
 		runWithinPopup(ConstantData.CREDIT_LIMIT_CHANGE_REQUEST, ()->{
 			selectLimitType(helpdeskGeneral.getLimitType());			
 			enterClientCreditLimit(new BigDecimal(helpdeskGeneral.getClientCreditLimit()).stripTrailingZeros().toPlainString());
 			enterAccountCreditLimit(new BigDecimal(helpdeskGeneral.getAccountCreditLimit()).stripTrailingZeros().toPlainString());			
 			enterNewCreditLimit(new BigDecimal(helpdeskGeneral.getNewCreditLimit()).stripTrailingZeros().toPlainString());	
-			
+
 			if(helpdeskGeneral.getLimitType().equalsIgnoreCase(ConstantData.TEMPORARY_LIMIT))
 			{
 				WebElementUtils.pickDate(effectiveDateTxt, LocalDate.now());
@@ -1304,11 +1304,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 		return creditLimit;
 	}
-	
-	
-	
 
-public String getDeclineCodeForTransaction(Device device, String rrnNumber){
+	public String getDeclineCodeForTransaction(Device device, String rrnNumber){
 		List<String> lst = new ArrayList<String>();
 		logger.info("Fetching information for : {}", device.getDeviceNumber());
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
@@ -1317,7 +1314,7 @@ public String getDeclineCodeForTransaction(Device device, String rrnNumber){
 		SimulatorUtilities.wait(5000);
 		clickWhenClickable(editDeviceLink);
 		clickWhenClickable(btnAuthorization);
-		
+
 		runWithinPopup(AUTHORIZATION, () -> {
 			WebElementUtils.pickDate(txtAuthorizationDateFrom, LocalDate.now());
 			WebElementUtils.pickDate(txtAuthorizationDateTo, LocalDate.now());
@@ -1334,11 +1331,11 @@ public String getDeclineCodeForTransaction(Device device, String rrnNumber){
 		runWithinPopup(AUTHORIZATION, () -> {
 			clickCloseButton();
 		});
-		
+
 		SimulatorUtilities.wait(2000);
 		clickEndCall();
 		SimulatorUtilities.wait(2000);
 		return lst.get(0);
 	}
-	
+
 }

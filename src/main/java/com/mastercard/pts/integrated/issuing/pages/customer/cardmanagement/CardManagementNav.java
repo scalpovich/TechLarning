@@ -259,7 +259,6 @@ public class CardManagementNav {
 	public static final String L3_WITHDRAW_BIN = "ISAS07";
 	public static final String L3_WITHDRAW_COUNTRY = "ISAS08";
 	
-
 	public static final String L2_LOAN = "ISAL00";
 	public static final String L3_LOAN_APPROVAL_RETAIL_TRANSACTION_TO_LOAN = "RTLS001";
 	public static final String L3_LOAN_PRE_CLOSURE = "LOPC001";

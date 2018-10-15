@@ -3,10 +3,13 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.transaction;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.awt.AWTException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
@@ -247,9 +250,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			throw MiscUtils.propagate(e);
 		}
 	}
-
+	
 	private void captureSaveScreenShot(String methodName) {
-		//SimulatorUtilities.takeScreenShot(winiumDriver, methodName + "_" + new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
+		SimulatorUtilities.takeScreenShot(winiumDriver, methodName + "_" + new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 	}
 
 	public void performOptimizedMasTransaction(String transaction, Transaction transactionData, Boolean sameCard) {
