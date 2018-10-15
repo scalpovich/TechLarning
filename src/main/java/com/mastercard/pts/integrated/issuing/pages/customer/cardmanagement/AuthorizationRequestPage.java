@@ -54,19 +54,14 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 			WebElementUtils.enterText(deviceNumberTxt, request.getDeviceNumber());
 			WebElementUtils.selectDropDownByVisibleText(transactionCurrencyDDwn, request.getTransactionCurrency());
 			WebElementUtils.enterText(transactionAmountTxt, request.getTransactionAmount());
-			logger.info("MCC->{}",request.getMcc());
+			logger.info("MCC->{}", request.getMcc());
 			WebElementUtils.selectDropDownByVisibleText(mccDDwn, request.getMcc());
 			WebElementUtils.enterText(transactionAmountTxt, request.getTransactionAmount());
 			WebElementUtils.enterText(memoTxt, request.getMemo());
 			clickSaveButton();
-			if (manualAuth == true) {
-				clickOkButton();
-			} else {
-				successMessage = getMessageFromFeedbackPanel();
-				logger.info("Success Meesage: " + successMessage);
-				clickOkButton();
-			}
-
+			successMessage = getMessageFromFeedbackPanel();
+			logger.info("Success Meesage: " + successMessage);
+			clickOkButton();
 		});
 		
 		return successMessage;
