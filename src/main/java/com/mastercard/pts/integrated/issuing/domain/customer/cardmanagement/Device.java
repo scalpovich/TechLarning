@@ -69,6 +69,7 @@ public class Device {
 	private String existingDeviceNumber;
 	private String photoIndicator;
 	private String batchNumber;
+	private String partnerMembershipNumber;
 	private String sequenceNumber;
 	private String cvvData;
 	private String expirationYear;
@@ -105,6 +106,8 @@ public class Device {
  	private String category;
   	private String amountType;
   	private String exchangeRate;
+  	private static double deviceAmountUsage = 0.00;
+  	private static double deviceVelocity = 0;
   	
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
@@ -130,7 +133,7 @@ public class Device {
 		device.setConfirmNewTransPassword(provider.getString(CHP_NEW_PASSWORD));	
 		device.setProductType(provider.getString(PRODUCT_TYPE));
 		device.setTransactionDateType(provider.getString(DATE_TYPE));
-      	device.setLegalID(RandomStringUtils.randomAlphanumeric(9));	
+      	device.setLegalID(RandomStringUtils.randomAlphabetic(1) + RandomStringUtils.randomAlphanumeric(7));	
 		device.setProgramCode(provider.getString(PROGRAM_CODE));
 		device.setDevicePlan1(provider.getString(DEVICE_PLAN));     
 		device.setTransactionPassword(provider.getString(TRANSACTION_PASSWORD));		
@@ -562,6 +565,14 @@ public class Device {
 		this.batchNumber = batchNumber;
 	}
 
+	public String getPartnerMembershipNumber() {
+		return partnerMembershipNumber;
+	}
+
+	public void setPartnerMembershipNumber(String partnerMembershipNumber) {
+		this.partnerMembershipNumber = partnerMembershipNumber;
+	}
+
 	public String getSequenceNumber() {
 		return sequenceNumber;
 	}
@@ -683,5 +694,20 @@ public class Device {
 	public void setExchangeRate(String exchangeRate) {
 		this.exchangeRate = exchangeRate;
 	}
+	
+	public double getDeviceAmountUsage() {
+		return deviceAmountUsage;
+	}
 
+	public void setDeviceAmountUsage(double deviceAmountUsage) {
+		Device.deviceAmountUsage = Device.deviceAmountUsage + deviceAmountUsage;
+	}
+
+	public double getDeviceVelocity() {
+		return deviceVelocity;
+	}
+
+	public void setDeviceVelocity() {
+		++deviceVelocity;
+	}
 }

@@ -4,10 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.CloseBatchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
-
 
 @Component
 public class CloseBatchFlows extends AbstractBaseFlows {
@@ -21,6 +22,9 @@ public class CloseBatchFlows extends AbstractBaseFlows {
 	
 	public void closeBatchExecution(){
 		closeBatchPage = navigator.navigateToPage(CloseBatchPage.class);
+		closeBatchPage.allBatchNumberRetrieval();
+		SimulatorUtilities.wait(5000);
+		closeBatchPage.identifyBatchNumberToProcess();
 		closeBatchPage.processAppropriateBatchForApplication();
 	}
 	

@@ -123,7 +123,7 @@ public class TransactionSteps {
 
 	@When("perform an $transaction MAS transaction on the same card")
 	@Aliases(values={"a sample simulator \"$transaction\" is executed on the same card",
-    "user performs an \"$transaction\" MAS transaction on the same card"})
+	"user performs an \"$transaction\" MAS transaction on the same card"})
 	@Given("perform an $transaction MAS transaction on the same card")
 	public void givenTransactionIsExecutedOnTheSameCard(String transaction) {
 		String temp = transaction;
@@ -394,10 +394,10 @@ public class TransactionSteps {
 		Transaction transactionData = Transaction.generateFinSimPinTestData(device, finSimConfig, provider);
 		String pinNumber = transactionWorkflow.getPinNumber(transactionData);
 		logger.info("FINSim PIN Number generated : {} ", pinNumber);
-      	Assert.assertTrue("INVALID PIN", !pinNumber.isEmpty());
+		Assert.assertTrue("INVALID PIN", !pinNumber.isEmpty());
 		device.setPinNumberForTransaction(pinNumber);
 	}
-	
+
 	@When("PIN is created for Pin Change First Transaction")
 	@Then("PIN is created for Pin Change First Transaction")
 	public void thenPINIsCreatedForPinChangeFirstTransaction() {
@@ -505,6 +505,7 @@ public class TransactionSteps {
 
 	@When("$tool test results are verified for $transaction")
 	@Then("$tool test results are verified for $transaction")
+	@Given("$tool test results are verified for $transaction")
 	public void thenVisaTestResultsAreReported(String tool, String transaction) {
 		String testResults = null;
 		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseToSelect(transaction);
@@ -558,7 +559,7 @@ public class TransactionSteps {
 			transactionWorkflow.setFolderPermisson(provider.getString(IPM_INCOMING));
 		transactionWorkflow.closeWinSCP();
 	}
-	
+
 	@Then("user sets invalid pin")
 	@When("user sets invalid pin")
 	public void userSetInvalidPin(){
@@ -575,6 +576,19 @@ public class TransactionSteps {
 		else{
 			Double moderatedAmount = (Double.parseDouble(amount))/(Double.parseDouble(device.getExchangeRate()));
 			device.setTransactionAmount(Long.toString(new Double(Math.round(moderatedAmount*100.0)).longValue()));}
+		context.put(ContextConstants.DEVICE, device);
+    }
+
+	/***
+	 * This method is implemented to change transaction amount for transaction
+	 * @param amount : Decimal representation for amount
+	 * */
+	@When("user updates transaction amount to $amount")
+	@Given("user updates transaction amount to $amount")
+	public void userSetTransactionAmount(Double amount){
+		int i = new Double(amount * 100).intValue(); 
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setTransactionAmount(Integer.toString(i));
 		context.put(ContextConstants.DEVICE, device);
 	}
 }

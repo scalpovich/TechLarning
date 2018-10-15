@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceUsage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceUsagePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
@@ -93,10 +94,20 @@ public class DeviceUsageWorkflow extends MenuFlows {
 
 		}
 	}
-	
 
 	public List<String> getApplicationTransactionCounterDeviceUsage(String cardNumber) {
 		DeviceUsagePage deviceUsage = navigator.navigateToPage(DeviceUsagePage.class);
 		return deviceUsage.getApplicationTransactionCounter(cardNumber);		
 	}
+	
+	public List<Map<String, Double>> getDeviceUsageDetails(Device device){
+		DeviceUsagePage page = navigator.navigateToPage(DeviceUsagePage.class);
+		List<Map<String, Double>> lst = page.getDeviceUsageDetails(device);
+		String[] transactionAttributes = ConstantData.LIMIT_VALIDATION_PARAMETER.split(";");
+		for(String str : transactionAttributes){
+			logger.info("Device Total Usage {} {}" 		,str, lst.get(0).get(str) );
+			logger.info("Device Transaction Usage {} {}",str, lst.get(1).get(str));
+		}
+		return lst;
+	} 
 }
