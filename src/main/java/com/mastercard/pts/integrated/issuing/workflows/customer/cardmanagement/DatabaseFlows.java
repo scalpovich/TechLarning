@@ -22,7 +22,7 @@ public class DatabaseFlows {
 	String columnValue;
 	
 	private static final String COLUMN_STATUS_NULL = "NULL";
-	private static final String COLUMN_STATUS_NON_NULL = "NONNULL";
+	private static final String COLUMN_STATUS_NON_NULL = "NON_NULL";
 	
 	@Autowired
 	private DBUtility dbUtil;	

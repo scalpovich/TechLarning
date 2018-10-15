@@ -46,6 +46,6 @@ Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction with amount 800000
 And user is logged in institution
 And search Purchase authorization and verify 116-Insufficient Fund status
-Then assert Decline response with 20005 AuthDecline Code and Account level - insufficient otbl. as description
+Then assert Decline response with 90002 AuthDecline Code and Account level - insufficient otbl. as description
 And user sign out from customer portal
 And MAS simulator is closed

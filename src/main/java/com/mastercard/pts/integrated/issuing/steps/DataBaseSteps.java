@@ -22,8 +22,8 @@ public class DatabaseSteps {
 	private TestContext context;
 
 	
-	@Given("Verify $type has column value as $type")
-	@Then("Verify $type has column value as $type")
+	@Given("Verify $columnname has column value as $type")
+	@Then("Verify $columnname has column value as $type")
 	public void executeQueryToGetApplicationBlockStatus(String columnName, String expectedColumnValue ) {
 
 		Device device = context.get(ContextConstants.DEVICE);

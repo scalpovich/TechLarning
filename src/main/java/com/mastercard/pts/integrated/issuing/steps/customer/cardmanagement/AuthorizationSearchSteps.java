@@ -171,9 +171,9 @@ public class AuthorizationSearchSteps {
 		BigDecimal difference=billingAmount.subtract(new BigDecimal(device.getTransactionAmount().substring(0, device.getTransactionAmount().length()-2)));
 		assertThat("Verify Available Balance", availableBalanceBeforeTransaction.add(difference), equalTo(availBal.getAvailableBal()));
 	}	
-	@Given("user verifes available balance after reversal")
-	@When("user verifes available balance after reversal")
-	@Then("user verifes available balance after reversal")
+	@Given("user verifies available balance after reversal")
+	@When("user verifies available balance after reversal")
+	@Then("user verifies available balance after reversal")
 	public void userVerifyAvailableBalanceAfterReversal() {
 		Device device = context.get(ContextConstants.DEVICE);
 		assertThat(INCORRECT_BALANCE_AFTER_REVERSAL, authorizationSearchWorkflow.noteDownAvailableBalanceAfterReversal(device.getDeviceNumber()),
