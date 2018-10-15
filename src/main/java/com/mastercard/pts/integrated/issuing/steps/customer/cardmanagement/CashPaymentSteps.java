@@ -24,7 +24,7 @@ public class CashPaymentSteps {
 	@Autowired
 	private CreditCardPaymentWorkFlows creditPaymentFlow;
 	
-	Payment cash;	
+	private Payment cash;	
 	
 	@When("user initiates cash payment")
 	@Then("user initiates cash payment")

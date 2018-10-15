@@ -22,20 +22,11 @@ public class DatabaseSteps {
 	private TestContext context;
 
 	
-	@Given("Verify $type has column value as null")
-	@Then("Verify $type has column value as null")
-	public void executeQueryToGetApplicationBlockStatus(String columnName) {
+	@Given("Verify $type has column value as $type")
+	@Then("Verify $type has column value as $type")
+	public void executeQueryToGetApplicationBlockStatus(String columnName, String expectedColumnValue ) {
 
 		Device device = context.get(ContextConstants.DEVICE);
-		dbFlow.executeQueryToGetStatusAsNull(device, columnName);
+		dbFlow.assertColumnStatus(device, columnName, expectedColumnValue);
 	}
-
-	@Given("Verify $type has column value as not null")
-	@Then("Verify $type has column value as not null")
-	public void executeQueryToGetApplicationBlockStatusAsNotNulll(String columnName) {
-
-		Device device = context.get(ContextConstants.DEVICE);
-		dbFlow.executeQueryToGetStatusNotNull(device, columnName);
-	}
-
 }

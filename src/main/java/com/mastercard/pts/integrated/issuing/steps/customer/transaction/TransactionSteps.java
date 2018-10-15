@@ -167,7 +167,7 @@ public class TransactionSteps {
 	
 	@When("user performs an optimized $transaction MAS transaction for ATC Range")
 	@Given("user performs an optimized $transaction MAS transaction for ATC Range")
-	public void givenOptimizedTransactionIsExecutedForUpdatedATCRannge(String transaction, String ATCRange) {
+	public void givenOptimizedTransactionIsExecutedForUpdatedATCRange(String transaction, String ATCRange) {
 		transactionWorkflow.browserMinimize(); // minimize browser
 		// operation of MAS/MDFS ... Storing transaction name in context to use it at runtime
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
@@ -189,8 +189,8 @@ public class TransactionSteps {
 		generateMasTestDataForTransaction(transaction);
 	}
 	
-	@Given("user update ATC update value as $type and value as $type")
-	@Then("user update ATC update value as $type and value as $type")
+	@Given("user updates ATC value as $type and value as $type")
+	@Then("user updates ATC value as $type and value as $type")
 	public void userUpdateATCValueAsRequired(String flag, String atcvalue)
 	{
 		atcCounterFlag=true;

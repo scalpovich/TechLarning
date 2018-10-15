@@ -1,6 +1,8 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -32,7 +34,7 @@ public class CashPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#remittanceDate")
 	private MCWebElement remittanceDate;
 	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:1:componentPanel:input:inputTextField")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table/tbody//tr//td[@id='remittanceSequence']//input")
 	private MCWebElement remittanceSeq;	
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#valueDate")
@@ -133,5 +135,4 @@ public class CashPage extends AbstractBasePage {
 		logger.info("Cash");
 		verifyUiOperationNoEdit("Add Cash");
 	}
-
 }

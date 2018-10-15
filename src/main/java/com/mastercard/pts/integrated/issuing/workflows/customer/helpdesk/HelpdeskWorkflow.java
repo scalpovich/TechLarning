@@ -228,7 +228,7 @@ public class HelpdeskWorkflow {
 	}
 	
 	public Map<String,String> fetchCardBalanceAndCloseHelpdesk(Device device) {
-		Map<String, String> balanceMapBeforePayments;	
+		Map<String, String> balanceMapBeforePayments;
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);	
 		balanceMapBeforePayments = helpDeskPage.checkCreditBalances(device);
 		helpDeskPage.clickEndCall();

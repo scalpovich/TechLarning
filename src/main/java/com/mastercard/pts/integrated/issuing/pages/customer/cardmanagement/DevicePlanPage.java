@@ -1320,9 +1320,9 @@ public class DevicePlanPage extends AbstractBasePage {
 					devicePlan.getEmvPlanPinUnblockPriority());
 			
 			if (devicePlan.getEmvIssuerScriptingNegative().equalsIgnoreCase(STATUS_NO)) {
-				WebElementUtils.selectDropDownByVisibleText(pinChangePriorityDdwn, devicePlan.getEmvPlanPinChangePriority());
-				WebElementUtils.selectDropDownByVisibleText(putDataPriorityDdwn, devicePlan.getEmvPlanPutDataPriority());
-				WebElementUtils.selectDropDownByVisibleText(pinUnblockPriorityDdwn, devicePlan.getEmvPlanPinUnblockPriority());
+				selectByVisibleText(pinChangePriorityDdwn, devicePlan.getEmvPlanPinChangePriority());
+				selectByVisibleText(putDataPriorityDdwn, devicePlan.getEmvPlanPutDataPriority());
+				selectByVisibleText(pinUnblockPriorityDdwn, devicePlan.getEmvPlanPinUnblockPriority());
 			}
 		}
 

@@ -300,6 +300,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	private static final String DeviceNumber="Device Number";
 	
+	private static final String Refund_Message="//span[contains(text(),'Refund')]";
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers']/td[5]/span")
 	private MCWebElement deviceProductionHeaderBatchTxt;
 	
@@ -522,14 +524,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 		WebElement responseMessage = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".SuccessMessageTxt")));
 		logger.info(RESPONSE_MESSAGE, responseMessage.getText());
 	}
-	
+
 	public boolean verifyRefundMessage() {
-		WebElement refundMessage = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(),'Refund')]")));
+		WebElement refundMessage = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(Refund_Message)));
 		String refundStatus = refundMessage.getText();
-		if (refundStatus.contains(REFUND_SUCCESS)) {
-			return true;
-		}
-		return false;
+		return refundStatus.equalsIgnoreCase(REFUND_SUCCESS) ? true : false;
+
 	}
 
 	protected void verifyOperationStatus() {

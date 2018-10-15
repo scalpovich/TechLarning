@@ -53,8 +53,8 @@ And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario:6 Verify DB has value in Application Unblock Column
-Given Verify APPLICATION_BLOCK_ICC has column value as null
-Then Verify APPLICATION_UNBLOCK_ICC has column value as null
+Given Verify APPLICATION_BLOCK_ICC has column value as Null
+Then Verify APPLICATION_UNBLOCK_ICC has column value as Not Null
 
 Scenario:7 To Verify that the user can stoplist credit device from stoplist screen
 Given user is logged in institution
@@ -76,8 +76,8 @@ And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario:10 Verify DB has value in Application Unblock Column
-Given Verify APPLICATION_BLOCK_ICC has column value as not null
-Then Verify APPLICATION_UNBLOCK_ICC has column value as null
+Given Verify APPLICATION_BLOCK_ICC has column value as Not Null
+Then Verify APPLICATION_UNBLOCK_ICC has column value as Null
 
 Scenario:11 Transaction of EMV_PURCHASE_ISSUER_SCRIPTING_RES for Application block
 When perform an EMV_PURCHASE_ISSUER_SCRIPTING_RES MAS transaction on the same card
@@ -86,8 +86,8 @@ Then verify Pending [2] status of Last Executed Script Status in Device Details 
 And user sign out from customer portal
 
 Scenario:12 Verify DB has value in Application Unblock Column
-Given Verify APPLICATION_BLOCK_ICC has column value as null
-Then Verify APPLICATION_UNBLOCK_ICC has column value as not null
+Given Verify APPLICATION_BLOCK_ICC has column value as Null
+Then Verify APPLICATION_UNBLOCK_ICC has column value as Not Null
 
 Scenario:13 Transaction of EMV_PURCHASE_ISSUER_SCRIPTING_RES for Application block
 When perform an EMV_PURCHASE_ISSUER_SCRIPTING_RES MAS transaction on the same card
@@ -97,5 +97,5 @@ And user sign out from customer portal
 And MAS simulator is closed
 
 Scenario:14 Verify DB has value in Application Unblock Column
-Given Verify APPLICATION_BLOCK_ICC has column value as null
-Then Verify APPLICATION_UNBLOCK_ICC has column value as null
+Given Verify APPLICATION_BLOCK_ICC has column value as Null
+Then Verify APPLICATION_UNBLOCK_ICC has column value as Not Null

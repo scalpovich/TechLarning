@@ -63,6 +63,7 @@ public class DBUtility {
 				} else {
 					recordColumnValue = rs.getString(columnName);
 					logger.info("value returned from database ", recordColumnValue);
+					break;
 
 				}
 			}

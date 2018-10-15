@@ -21,7 +21,9 @@ public class DatabaseFlows {
 	private static final Logger logger = LoggerFactory.getLogger(DatabaseFlows.class);
 	String columnValue;
 	
-	public String COLOUMN_ISSUER_SCRIPTIG="APPLICATION_BLOCK_ICC";
+	private static final String COLUMN_STATUS_NULL = "NULL";
+	private static final String COLUMN_STATUS_NON_NULL = "NONNULL";
+	
 	@Autowired
 	private DBUtility dbUtil;	
 	
@@ -34,22 +36,24 @@ public class DatabaseFlows {
 		String queryString = "update system_codes set short_name='-" + DateUtils.getNextMonthFirstDayDifference(date) + "'  WHERE TYPE_ID = 'SYS_PARAM' AND code = 'BACK_DAY' AND bank_code = '"+ getInstitutionCode() +"'";
 		dbUtil.executeUpdate(queryString);
 	}
-	
-	public void executeQueryToGetStatusAsNull(Device device, String columnName) {
+
+	public void assertColumnStatus(Device device, String columnName, String expectedColumnValue) {
 		String queryString = "Select " + columnName + " from CARD_SCRIPT_QUEUE where device_number = '" + device.getDeviceNumber() + "'";
 		columnValue = dbUtil.getSingleRecordColumnValueFromDB(queryString, columnName);
-		logger.info("Applicaton Block Value is : " + columnValue);
-		if (columnValue == null) {
-			assertTrue("Application Block/Unblock Value is" + columnValue, true);
+		logger.info("Applicaton Block Value is :- {}" + columnValue);
+		if (expectedColumnValue.equalsIgnoreCase(COLUMN_STATUS_NULL)) {
+			if (columnValue == null) {
+				assertTrue("Application Block/Unblock Value is" + columnValue, true);
+			} else {
+				assertTrue("Application Block/Unblock Value is" + columnValue, false);
+			}
 		}
-	}
-	
-	public void executeQueryToGetStatusNotNull(Device device, String columnName) {
-		String queryString = "Select " + columnName + " from CARD_SCRIPT_QUEUE where device_number = '" + device.getDeviceNumber() + "'";
-		columnValue = dbUtil.getSingleRecordColumnValueFromDB(queryString, columnName);
-		logger.info("Applicaton Block Value is : " + columnValue);
-		if (columnValue != null) {
-			assertTrue("Application Block/Unblock Value is" + columnValue, true);
+		if (expectedColumnValue.equalsIgnoreCase(COLUMN_STATUS_NON_NULL)) {
+			if (columnValue != null) {
+				assertTrue("Application Block/Unblock Value is" + columnValue, true);
+			} else {
+				assertTrue("Application Block/Unblock Value is" + columnValue, false);
+			}
 		}
 
 	}

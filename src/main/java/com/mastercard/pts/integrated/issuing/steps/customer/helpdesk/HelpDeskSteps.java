@@ -914,7 +914,7 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device);
 		context.put(ContextConstants.BALANCE_AFTER_PAYMENT, helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device));	
 	}
-	@Then("user check successful payments")
+	@Then("user checks successful payments")
 	public void checkSuccessfulPayments(){		
 		Payment payment = context.get(ContextConstants.PAYMENT);
 		helpdeskWorkflow.compareBalancesAfterPayment(payment);

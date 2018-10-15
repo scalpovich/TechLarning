@@ -37,7 +37,7 @@ public class DeviceStatusPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "statusCode:input:dropdowncomponent")
 	private MCWebElement StatusCode;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "(//table[@class='dataview']//tr[5]//span//a)[2]")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr//span[contains(text(),'LOST')]/ancestor::td/following-sibling::td[3]//a")
 	private MCWebElement responseCodeLink;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "responseCode:input:dropdowncomponent")
