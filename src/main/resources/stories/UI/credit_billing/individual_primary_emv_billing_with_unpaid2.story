@@ -216,9 +216,6 @@ Meta:
 Given user is logged in institution
 When user check balance details through helpdesk before payment
 And user makes MAD bill payment through cash
-And user sign out from customer portal
-Given user is logged in institution
-When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
 When user check balance details through helpdesk after payment
 Then user compare balance details after MAD payment
@@ -242,9 +239,6 @@ Meta:
 Given user is logged in institution
 When user check balance details through helpdesk before payment
 And user makes remaining bill payment through cash
-And user sign out from customer portal
-Given user is logged in institution
-When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
 When user verify Delinquency value for Status category is NORMAL
 And user sign out from customer portal
