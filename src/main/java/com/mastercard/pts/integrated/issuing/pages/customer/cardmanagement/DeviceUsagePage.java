@@ -93,12 +93,12 @@ public class DeviceUsagePage extends AbstractBasePage {
 	public static final String MCG_CODE = "MCG Code";
 	public static final String DAILY_AMOUNT_DOMESTIC_UTILIZED = "Daily Amount Domestic Utilized";
 	public static final String DAILY_VELOCLITY_DOMESTIC_UTILIZED = "Daily Velocity Domestic Utilized";
-	public static final String DAILY_AMOUNT_INTERNATIONAL_UTILIZED = "Daily Amount Intenational Utilized";
-	public static final String DAILY_VELOCLITY_INTERNATIONAL_UTILIZED = "Daily Velocity Intenational Utilized";
-	public static final String PERIOD_AMOUNT_INTERNATIONAL_UTILIZED = "Period Amount Intenational Utilized";
+	public static final String DAILY_AMOUNT_INTERNATIONAL_UTILIZED = "Daily Amount International Utilized";
+	public static final String DAILY_VELOCLITY_INTERNATIONAL_UTILIZED = "Daily Velocity International Utilized";
+	public static final String PERIOD_AMOUNT_INTERNATIONAL_UTILIZED = "Period Amount International Utilized";
 	public static final String PERIOD_AMOUNT_DOMESTIC_UTILIZED = "Period Amount Domestic Utilized";
 	public static final String PERIOD_VELOCLITY_DOMESTIC_UTILIZED = "Period Velocity Domestic Utilized";
-	public static final String PERIOD_VELOCITY_INTERNATIONAL_UTILIZED = "Period Velocity Intenational Utilized";
+	public static final String PERIOD_VELOCITY_INTERNATIONAL_UTILIZED = "Period Velocity International Utilized";
 
 
 	public void verifyUiOperationStatus() {
@@ -164,12 +164,12 @@ public class DeviceUsagePage extends AbstractBasePage {
 		deviceUsage.setRecordedMCG(getCellTextByColumnName(rowNumber, MCG_CODE));
 		deviceUsage.setDailyAmountDomesticUtilized(getCellTextByColumnName(rowNumber, DAILY_AMOUNT_DOMESTIC_UTILIZED));
 		deviceUsage.setDailyVelocityDomesticUtilized(getCellTextByColumnName(rowNumber, DAILY_VELOCLITY_DOMESTIC_UTILIZED));
-		deviceUsage.setDailyAmountIntenationalUtilized( getCellTextByColumnName(rowNumber, DAILY_AMOUNT_INTERNATIONAL_UTILIZED));
-		deviceUsage.setDailyVelocityIntenationalUtilized(getCellTextByColumnName(rowNumber, DAILY_VELOCLITY_INTERNATIONAL_UTILIZED));
+		deviceUsage.setDailyAmountInternationalUtilized(getCellTextByColumnName(rowNumber, DAILY_AMOUNT_INTERNATIONAL_UTILIZED));
+		deviceUsage.setDailyVelocityInternationalUtilized(getCellTextByColumnName(rowNumber, DAILY_VELOCLITY_INTERNATIONAL_UTILIZED));
         deviceUsage.setPeriodAmountDomesticUtilized(getCellTextByColumnName(rowNumber,PERIOD_AMOUNT_DOMESTIC_UTILIZED));
         deviceUsage.setPeriodVelocityDomesticUtilized(getCellTextByColumnName(rowNumber,PERIOD_VELOCLITY_DOMESTIC_UTILIZED));
-        deviceUsage.setPeriodAmountIntenationalUtilized(getCellTextByColumnName(rowNumber,PERIOD_AMOUNT_INTERNATIONAL_UTILIZED));
-        deviceUsage.setPeriodVelocityIntenationalUtilized(getCellTextByColumnName(rowNumber,PERIOD_VELOCITY_INTERNATIONAL_UTILIZED));
+        deviceUsage.setPeriodAmountInternationalUtilized(getCellTextByColumnName(rowNumber,PERIOD_AMOUNT_INTERNATIONAL_UTILIZED));
+        deviceUsage.setPeriodVelocityInternationalUtilized(getCellTextByColumnName(rowNumber,PERIOD_VELOCITY_INTERNATIONAL_UTILIZED));
 		clickCloseButton();
         switchToDefaultFrame();
         switchToIframe(FRAME_VIEW_DEVICE_USAGE);

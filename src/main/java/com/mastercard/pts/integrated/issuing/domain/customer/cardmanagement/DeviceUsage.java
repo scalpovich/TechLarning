@@ -39,12 +39,12 @@ public class DeviceUsage {
 	
 	private String periodAmountDomesticUtilized;
 	private String periodVelocityDomesticUtilized;
-	private String periodAmountIntenationalUtilized;
-	private String periodVelocityIntenationalUtilized;
+	private String periodAmountInternationalUtilized;
+	private String periodVelocityInternationalUtilized;
 	private String dailyAmountDomesticUtilized;
 	private String dailyVelocityDomesticUtilized;
-	private String dailyVelocityIntenationalUtilized;
-	private String dailyAmountIntenationalUtilized;
+	private String dailyVelocityInternationalUtilized;
+	private String dailyAmountInternationalUtilized;
 	private String recordedMCG;
 
 	public String getPreviousVelocityValue() {
@@ -214,22 +214,22 @@ public class DeviceUsage {
 		this.periodVelocityDomesticUtilized = periodVelocityDomesticUtilized;
 	}
 
-	public String getPeriodAmountIntenationalUtilized() {
-		return periodAmountIntenationalUtilized;
+	public String getPeriodAmountInternationalUtilized() {
+		return periodAmountInternationalUtilized;
 	}
 
-	public void setPeriodAmountIntenationalUtilized(
-			String periodAmountIntenationalUtilized) {
-		this.periodAmountIntenationalUtilized = periodAmountIntenationalUtilized;
+	public void setPeriodAmountInternationalUtilized(
+			String periodAmountInternationalUtilized) {
+		this.periodAmountInternationalUtilized = periodAmountInternationalUtilized;
 	}
 
-	public String getPeriodVelocityIntenationalUtilized() {
-		return periodVelocityIntenationalUtilized;
+	public String getPeriodVelocityInternationalUtilized() {
+		return periodVelocityInternationalUtilized;
 	}
 
-	public void setPeriodVelocityIntenationalUtilized(
-			String periodVelocityIntenationalUtilized) {
-		this.periodVelocityIntenationalUtilized = periodVelocityIntenationalUtilized;
+	public void setPeriodVelocityInternationalUtilized(
+			String periodVelocityInternationalUtilized) {
+		this.periodVelocityInternationalUtilized = periodVelocityInternationalUtilized;
 	}
 
 	public String getDailyAmountDomesticUtilized() {
@@ -249,22 +249,22 @@ public class DeviceUsage {
 		this.dailyVelocityDomesticUtilized = dailyVelocityDomesticUtilized;
 	}
 
-	public String getDailyVelocityIntenationalUtilized() {
-		return dailyVelocityIntenationalUtilized;
+	public String getDailyVelocityInternationalUtilized() {
+		return dailyVelocityInternationalUtilized;
 	}
 
-	public void setDailyVelocityIntenationalUtilized(
-			String dailyVelocityIntenationalUtilized) {
-		this.dailyVelocityIntenationalUtilized = dailyVelocityIntenationalUtilized;
+	public void setDailyVelocityInternationalUtilized(
+			String dailyVelocityInternationalUtilized) {
+		this.dailyVelocityInternationalUtilized = dailyVelocityInternationalUtilized;
 	}
 
-	public String getDailyAmountIntenationalUtilized() {
-		return dailyAmountIntenationalUtilized;
+	public String getDailyAmountInternationalUtilized() {
+		return dailyAmountInternationalUtilized;
 	}
 
-	public void setDailyAmountIntenationalUtilized(
-			String dailyAmountIntenationalUtilized) {
-		this.dailyAmountIntenationalUtilized = dailyAmountIntenationalUtilized;
+	public void setDailyAmountInternationalUtilized(
+			String dailyAmountInternationalUtilized) {
+		this.dailyAmountInternationalUtilized = dailyAmountInternationalUtilized;
 	}
 	
 	public String getRecordedMCG() {
