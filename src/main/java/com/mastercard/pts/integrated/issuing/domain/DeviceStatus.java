@@ -8,6 +8,8 @@ public class DeviceStatus {
 	public static final String READY_FOR_SALE = "READY FOR SALE [16]";
 	public static final String LOST = "LOST [5]";
 	public static final String EXPIRED = "EXPIRED [12]";
+  	public static final String NOT_ACTIVATED_CARD = "NOT ACTIVATED CARD [11]";
+	
 	private DeviceStatus() {}
 	
 	public static String fromShortName(String name) {

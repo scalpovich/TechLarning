@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+import java.util.Map;
 import java.util.Objects;
 
 import org.jbehave.core.annotations.Composite;
@@ -95,6 +96,8 @@ public class ProgramSetupSteps {
 	private TransactionPlan transactionPlan;
 
 	private static final String TRANSACTION_FEE_PLAN = "TRANSACTION_FEE_PLAN";
+	
+	private static final String CREDIT_PLAN_FROM_CSV ="CREDIT_PLAN_FROM_CSV";
 
 	private TransactionLimitPlan transactionLimitPlan;
 
@@ -1021,18 +1024,25 @@ public class ProgramSetupSteps {
 	@When("User fills Wallet Plan for $type product and program $programtype")
 	public void userFillsWalletPlan(String type, String programtype) {
 		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
-		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+		Map<String, Object> csvData = context.get(TestContext.KEY_STORY_DATA);
 		walletPlan.setProductType(ProductType.fromShortName(type));
 		walletPlan.setProgramType(programtype);
 		context.put(ContextConstants.WALLET, walletPlan);
 		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			if (Objects.nonNull(context.get(CreditConstants.CREDIT_PLAN))) {
-			walletPlan.setCreditPlan(context.get(CreditConstants.CREDIT_PLAN));
-			walletPlan.setBillingCyleCode(context.get(CreditConstants.BILLING_CYCLE));
+				walletPlan.setCreditPlan(context.get(CreditConstants.CREDIT_PLAN));
+				walletPlan.setBillingCyleCode(context.get(CreditConstants.BILLING_CYCLE));
 			} else {
-				context.put(ConstantData.JSON_DATA_DRIVEN_EXECUTION, true);
-				walletPlan.setCreditPlan(data.getCreditPlan());
-				walletPlan.setBillingCyleCode(data.getBillingCycle());
+				if (csvData.containsKey(CREDIT_PLAN_FROM_CSV)) {
+					context.put(ConstantData.JSON_DATA_DRIVEN_EXECUTION, true);
+					walletPlan.setCreditPlan(csvData.get(CREDIT_PLAN_FROM_CSV).toString());
+					walletPlan.setBillingCyleCode(data.getBillingCycle());
+				} else {
+					context.put(ConstantData.JSON_DATA_DRIVEN_EXECUTION, true);
+					walletPlan.setCreditPlan(data.getCreditPlan());
+					walletPlan.setBillingCyleCode(data.getBillingCycle());
+				}
 			}
 		}
 		programSetupWorkflow.createWalletPlan(walletPlan);
