@@ -45,7 +45,7 @@ Then MAS simulator is closed
 
 
 Scenario:1.4 Update ATC Range Counter to required value
-Given user update ATC update value as true and value as 0007
+Given user updates ATC value as true and value as 0007
 
 Scenario:1.5 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
@@ -57,7 +57,7 @@ And user sign out from customer portal
 And MAS simulator is closed
 
 Scenario:1.6 Update ATC Range Counter to required value
-Given user update ATC update value as true and value as 0005
+Given user updates ATC value as true and value as 0005
 
 Scenario:1.7 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
@@ -69,7 +69,7 @@ And user sign out from customer portal
 Then MAS simulator is closed
 
 Scenario:1.8 Update ATC Range Counter to required value
-Given user update ATC update value as true and value as 0000
+Given user updates ATC value as true and value as 0000
 
 Scenario:1.9 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established

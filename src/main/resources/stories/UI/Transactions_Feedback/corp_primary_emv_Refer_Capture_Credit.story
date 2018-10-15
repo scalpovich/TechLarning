@@ -7,7 +7,7 @@ Meta:
 @CreditRegression
 @CreditWithPin
 @StoryName credit_emv_retail				 
-Scenario:1 creation of mastercard_corporate_primary_EMV Card credit device
+Scenario:1.1 creation of mastercard_corporate_primary_EMV Card credit device
 Meta:
 @TestId TC548377
 Given setting json values in excel for Credit
@@ -25,13 +25,13 @@ Then device has "normal" status
 And embossing file batch was generated in correct format
 And user sign out from customer portal
 
-Scenario:2 When User Change device status to Capture of Lost Status
+Scenario:1.2 When User Change device status to Capture of Lost Status
 Given user is logged in institution
-When User Change Device Status to Capture [3]
+When User Changes Device Status to Capture [3]
 And user stoplists a card from stoplist device screen
 And user sign out from customer portal
 
-Scenario:3 Perform EMV_PURCHASE Authorization transaction
+Scenario:1.3 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
@@ -39,13 +39,13 @@ And user is logged in institution
 And search Capture authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario:4 When User Chnage device status to Refer of Lost Status
+Scenario:1.4 When User Chnage device status to Refer of Lost Status
 Given user is logged in institution
-When User Change Device Status to Refer [2]
+When User Changes Device Status to Refer [2]
 And user stoplists a card from stoplist device screen
 Then user sign out from customer portal
 
-Scenario:5 Perform EMV_PURCHASE Authorization transaction
+Scenario:1.5 Perform EMV_PURCHASE Authorization transaction
 When perform an EMV_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
 And user is logged in institution

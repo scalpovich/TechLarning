@@ -8,7 +8,7 @@ Meta:
 @CreditWithPin
 @StoryName credit_emv_retail
 
-Scenario:1 creation of mastercard_corporate_primary_EMV Card credit device
+Scenario:1.1 creation of mastercard_corporate_primary_EMV Card credit device
 Meta:
 @TestId TC548377
 Given setting json values in excel for Credit
@@ -27,14 +27,14 @@ And device has "normal" status
 And user notes down available Card limit for card
 Then user sign out from customer portal
 
-Scenario:2 Pin Generation
+Scenario:1.2 Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario:3 Perform EMV_PURCHASE Authorization transaction
+Scenario:1.3 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction with wrong keys
 And MAS test results are verified

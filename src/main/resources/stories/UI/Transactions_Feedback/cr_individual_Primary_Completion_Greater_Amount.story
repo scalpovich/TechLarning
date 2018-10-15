@@ -7,7 +7,7 @@ Meta:
 @CreditRegression
 @CreditWithPin
 @StoryName credit_emv_retail 
-Scenario:1 creation of mastercard_retail_primary_emv Card credit device
+Scenario:1.1 creation of mastercard_retail_primary_emv Card credit device
 
 Given setting json values in excel for Credit
 When user is logged in institution
@@ -25,14 +25,14 @@ And device has "normal" status
 And user notes down available Card limit for card
 Then user sign out from customer portal
 
-Scenario:2 Pin Generation
+Scenario:1.2 Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 Then embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 And FINSim simulator is closed
 
-Scenario:3 Transaction - EMV_PREAUTH and EMV_COMPLETION Authorization transaction
+Scenario:1.3 Transaction - EMV_PREAUTH and EMV_COMPLETION Authorization transaction
 Given connection to MAS is established
 When perform an EMV_PREAUTH MAS transaction
 Then MAS test results are verified

@@ -14,7 +14,7 @@ When device range for program with device plan for "debit" "emv" card
 Then user sign out from customer portal
 Given user is logged in institution
 When user creates new device of debit type for new client
-Then device has "normal" status
+And device has "normal" status
 And user has wallet number information for debit device
 And user performs adjustment transaction
 And user has current wallet balance amount information for debit device

@@ -7,7 +7,7 @@ Meta:
 @CreditRegression
 @CreditWithPin
 @StoryName credit_emv_retail				 
-Scenario:1 creation of mastercard_corporate_primary_EMV Card credit device
+Scenario:1.1 creation of mastercard_corporate_primary_EMV Card credit device
 Meta:
 @TestId TC548377
 Given setting json values in excel for Credit
@@ -26,14 +26,14 @@ And device has "normal" status
 And user notes down available Card limit for card
 Then user sign out from customer portal
 
-Scenario:2 Pin Generation
+Scenario:1.2 Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 Then embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 And FINSim simulator is closed
 
-Scenario:3 Perform EMV_PURCHASE Authorization transaction
+Scenario:1.3 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an INT_EMV_PURCHASE MAS transaction
 Then MAS test results are verified
@@ -44,9 +44,9 @@ And verify markup fee applied on transaction
 And user verifies available balance after transaction
 And user sign out from customer portal
 
-Scenario:4 When user perform Reveral of Purchase Transaction
+Scenario:1.4 When user perform Reveral of Purchase Transaction
 Given user is logged in institution
-When user generate Reversal for Transaction
+When user generates Reversal for Transaction
 Then search Purchase Reversal authorization and verify 000-Successful status
-And user verify available balance after reversal
+And user verifes available balance after reversal
 And MAS simulator is closed
