@@ -19,7 +19,7 @@ Then credit device is created using new device screen for Individual and Primary
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pingeneration batch using new Device for Supplementary
-Then device has "normal" status
+And device has "normal" status
 And user sign out from customer portal
 
 Scenario: 1.1 Create MID_TID Blocking Rule

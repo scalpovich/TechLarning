@@ -136,6 +136,13 @@ public class ConstantData {
 	public static final String PRE_AUTH = "Pre-Auth Completion";
 	public static final String LIMIT_VALIDATION_PARAMETER = "Daily Velocity Utilized;Daily Amount Utilized;Periodic Velocity Utilized;Periodic Amount Utilized;Yearly Velocity Utilized;Yearly Amount Utilized";
 	
+	public static final String DE_041 = "041";
+	public static final String DE_032 = "032";
+	public static final String DE_019 = "019";
+	public static final String DE_042 = "042";
+	public static final String DE_022_01 = "022.01";
+	
+	
 	private ConstantData() {
 	}
 

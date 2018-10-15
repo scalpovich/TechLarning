@@ -92,7 +92,7 @@ public class TransactionSteps {
 
 	private boolean midTidFlag=false;
 
-	private String midTidCombination;
+	private String midTidCombination="";
 
 	private static String PASS_MESSAGE = "Transaction is succcessful!  - Expected Result : ";
 

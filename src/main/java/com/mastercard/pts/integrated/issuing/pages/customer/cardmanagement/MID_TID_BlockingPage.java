@@ -23,84 +23,84 @@ public class MID_TID_BlockingPage extends AbstractBasePage {
 
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "networkCode:input:dropdowncomponent")
-	private MCWebElement DDwnNetwork;
+	private MCWebElement networkDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "productType:input:dropdowncomponent")
-	private MCWebElement DDwnProductType;
+	private MCWebElement productTypeDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "terminalId:input:inputTextField")
-	private MCWebElement txtbxTerminalID;
+	private MCWebElement txtTerminalID;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "merchantId:input:inputTextField")
-	private MCWebElement txtbxMerchantID;
+	private MCWebElement txtMerchantID;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "mcc:input:inputTextField")
-	private MCWebElement txtbxMCC;
+	private MCWebElement txtMCC;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "acquiringCountryCode:input:inputTextField")
-	private MCWebElement txtbxAcquiringCountryCode;
+	private MCWebElement txtAcquiringCountryCode;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "acquirerId:input:inputTextField")
-	private MCWebElement txtbxAcquirerID;
+	private MCWebElement txtAcquirerID;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "transactionCurrency:input:inputTextField")
-	private MCWebElement txtbxTransactionCurrency;
+	private MCWebElement txtTransactionCurrency;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cardholderPresenceIndicator:input:dropdowncomponent")
-	private MCWebElement DDwnCardholderPresenceIndicator;
+	private MCWebElement cardholderPresenceIndicatorDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cardPresenceIndicator:input:dropdowncomponent")
-	private MCWebElement DDwnCardPresenceIndicator;
+	private MCWebElement cardPresenceIndicatorDDwn;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "pOSEntryMode:input:dropdowncomponent")
-	private MCWebElement DDwnPOSEntryMode;
+	private MCWebElement POSEntryModeDDwn;
 
 	public static final String TERMINAL_ID = "Terminal Id";
 	public static final String MERCHANT_ID = "Merchant Id";
 	private static final String ROW_COUNT = "//*[@class='dataview']/tbody[1]//tr";
 
 	private void selectNetwork(String network){
-		WebElementUtils.selectDDByVisibleText(DDwnNetwork, network);
+		WebElementUtils.selectDDByVisibleText(networkDDwn, network);
 	}
 
 	private void selectProduct(String productType){
-		WebElementUtils.selectDDByVisibleText(DDwnProductType, productType);
+		WebElementUtils.selectDDByVisibleText(productTypeDDwn, productType);
 	}
 
 	private void enterTerminalID(String terminalID){
-		WebElementUtils.enterText(txtbxTerminalID, terminalID);
+		WebElementUtils.enterText(txtTerminalID, terminalID);
 	}
 
 	private void enterMerchantID(String merchantID){
-		WebElementUtils.enterText(txtbxMerchantID, merchantID);
+		WebElementUtils.enterText(txtMerchantID, merchantID);
 	}
 
 	private void enterMCC(String MCC){
-		WebElementUtils.enterText(txtbxMCC, MCC);
+		WebElementUtils.enterText(txtMCC, MCC);
 	}
 
 	private void enterAcquiringCountryCode(String acquiringCountryCode){
-		WebElementUtils.enterText(txtbxAcquiringCountryCode, acquiringCountryCode);
+		WebElementUtils.enterText(txtAcquiringCountryCode, acquiringCountryCode);
 	}
 
 	private void enterAcquirerID(String acquirerID){
-		WebElementUtils.enterText(txtbxAcquirerID, acquirerID);
+		WebElementUtils.enterText(txtAcquirerID, acquirerID);
 	}
 
 	private void enterTransactionCurrency(String transactionCurrency){
-		WebElementUtils.enterText(txtbxTransactionCurrency, transactionCurrency);
+		WebElementUtils.enterText(txtTransactionCurrency, transactionCurrency);
 	}
 
 	private void selectCardholderPresenceIndicator(String cardholderPresenceIndicator){
-		WebElementUtils.selectDDByVisibleText(DDwnCardholderPresenceIndicator, cardholderPresenceIndicator);
+		WebElementUtils.selectDDByVisibleText(cardholderPresenceIndicatorDDwn, cardholderPresenceIndicator);
 	}
 
 	private void selectPOSEntryMode(String POSEntryMode){
-		WebElementUtils.selectDDByVisibleText(DDwnPOSEntryMode, POSEntryMode);
+		WebElementUtils.selectDDByVisibleText(POSEntryModeDDwn, POSEntryMode);
 	}
 
 	private void selectCardPresenceIndicator(String cardPresenceIndicator){
-		WebElementUtils.selectDDByVisibleText(DDwnCardPresenceIndicator, cardPresenceIndicator);
+		WebElementUtils.selectDDByVisibleText(cardPresenceIndicatorDDwn, cardPresenceIndicator);
 	}
 
 

@@ -2127,42 +2127,42 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	{
 		switch(midTidCombination){
 		case "1" :
-			transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
-			transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_041, midtidBlocking.getTerminalID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_032, midtidBlocking.getAcquirerID());
 			break;
 		case "2" :
-			transactionData.setDeKeyValuePairDynamic("019", midtidBlocking.getAcquiringCountryCode());
-			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
-			transactionData.setDeKeyValuePairDynamic("022.01", ConstantData.POS_TERMIAL_VALUE);
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_019, midtidBlocking.getAcquiringCountryCode());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_022_01, ConstantData.POS_TERMIAL_VALUE);
 			break;
 		case "3" :
-			transactionData.setDeKeyValuePairDynamic("022.01", ConstantData.POS_TERMIAL_VALUE);
-			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_022_01, ConstantData.POS_TERMIAL_VALUE);
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
 			break;
 		case "4": case "6" : 
-			transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
-			transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
-			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_032, midtidBlocking.getAcquirerID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_041, midtidBlocking.getTerminalID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
 			break;
 		case "5" :
-			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
 			break;
 		case "7" :
-			transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
-			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_041, midtidBlocking.getTerminalID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
 			break;
 		case "9" :
-			transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
-			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_032, midtidBlocking.getAcquirerID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
 			break;
 		case "10" :
-			transactionData.setDeKeyValuePairDynamic("019", midtidBlocking.getAcquiringCountryCode());
-			transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
-			transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_019, midtidBlocking.getAcquiringCountryCode());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_032, midtidBlocking.getAcquirerID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_041, midtidBlocking.getTerminalID());
 			break;
 		case "11" : 
-			transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
-			transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_032, midtidBlocking.getAcquirerID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_041, midtidBlocking.getTerminalID());
 			break;
 		default:
 			logger.info("Invalid Combination Provided {}", midTidCombination);
