@@ -99,7 +99,7 @@ public class AuthorizationSearchWorkflow {
 			condition = actualCodeAction.contains(type) && actualDescription.contains(state);
 
 		// Device Usage Code
-		String billingAmountValue = authSearchPage.getCellTextByColumnName(1, "Billing Amount");
+		 billingAmountValue = authSearchPage.getCellTextByColumnName(1, "Billing Amount");
 		if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && !ConstantData.PRE_AUTH.equalsIgnoreCase(type)){
 			device.setDeviceVelocity();
 			device.setDeviceAmountUsage(Double.parseDouble(billingAmountValue));
