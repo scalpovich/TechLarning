@@ -197,11 +197,11 @@ public class MCGLimitPlanPage extends AbstractBasePage {
 		selectByVisibleText(mcgCodeDdwn,plan.getMcgCode());
 	}
 	
-	public void enterFromMomthOnBook(MCGLimitPlan plan){
+	public void enterFromMonthOnBook(MCGLimitPlan plan){
 		enterValueinTextBox(fromMonthOnBookTxt, plan.getFromMonthOnBook());
 	}
 	
-	public void enterToMomthOnBook(MCGLimitPlan plan){
+	public void enterToMonthOnBook(MCGLimitPlan plan){
 		enterValueinTextBox(toMonthOnBookTxt, plan.getToMonthOnBook());
 	}
 	
@@ -327,8 +327,8 @@ public class MCGLimitPlanPage extends AbstractBasePage {
 			selectEffectiveDate(plan);
 			selectEndDate(plan);
 			selectMcgCode(plan);
-			enterFromMomthOnBook(plan);
-			enterToMomthOnBook(plan);
+			enterFromMonthOnBook(plan);
+			enterToMonthOnBook(plan);
 			enterDailyAmount(plan);
 			selectDailyResponse(plan);
 			enterDailyVelocity(plan);
