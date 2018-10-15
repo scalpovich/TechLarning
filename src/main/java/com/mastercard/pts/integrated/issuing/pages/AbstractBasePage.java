@@ -85,7 +85,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private static final String WALLET_NUMBER = "Wallet number: {}";
 	
 	public static final String ERROR_MESSAGE = "Error: {}";
-	
+
 	public static final String RESPONSE_MESSAGE	 = "Response message: {}";
 
 	public static final String CONTACT_INFORMATION_EXPECTED = "Contact Information";
@@ -459,8 +459,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		waitForWicket();
 		clickWhenClickableDoNotWaitForWicket(firstRowDeleteLink);
 	}
-
-	
 
 	/**
 	 * Returns trimmed cell text by row number and column name

@@ -11,11 +11,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.URL;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -117,7 +114,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private static final String STIP="STIP";
 	private static final int MAX_RETRY = 30;
 	private static final String CVV2_PREFIX_VALUE = "11";
-	
+
 	@Autowired
 	private WebDriverProvider webProvider;
 
@@ -668,7 +665,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(1000);
 		winiumClickOperation(CLOSE);
 	}
-	
+
 	private void updateBillingCurrencyCode() throws AWTException {
 		Actions action = new Actions(winiumDriver);
 		activateMcps();
@@ -1234,9 +1231,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation("OK");
 		wait(1000);
 		captureSaveScreenShot(methodName);
-		
+
 	}
-	
+
 	public void selectCVC3KeySet(String transaction) {
 		if (transaction.equalsIgnoreCase(ConstantData.MSR_NFC_PURCHASE)) {
 			activateMas(transaction);
@@ -1245,8 +1242,8 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			wait(1000);
 			performClickOperation("Edit Node");
 			wait(4000);
-			
-			
+
+
 			executeAutoITExe("ActivateEditCardProfile.exe");
 			String methodName = new Object() {
 			}.getClass().getEnclosingMethod().getName();
@@ -1268,7 +1265,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			keySetDdwn.findElement(By.name("Drop Down Button")).click();
 			wait(2000);
 			keySetDdwn.findElements(By.name("00123 - CVC3 Test Key Example 1"))
-					.get(0).click();
+			.get(0).click();
 			wait(2000);
 			captureSaveScreenShot(methodName);
 			winiumClickOperation("OK");
@@ -1925,7 +1922,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(5000);
 		waitForReturnButtonToGetEnable();
 		captureSaveScreenShot(methodName);
-//		executeAutoITExe("visaTestExecution.exe");
+		//		executeAutoITExe("visaTestExecution.exe");
 		captureSaveScreenShot(methodName);
 	}
 
@@ -1961,7 +1958,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		browserMaximize();
 		return results;
 	}
-	
+
 	private void deleteOldLogs() {
 		executeAutoITExe("vtsDeleteOlderLogViewerLogs.exe");
 		executeAutoITExe("vtsCloseLogViewer.exe");
@@ -2117,54 +2114,56 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		MID_TID_BlockingPage page = navigator.navigateToPage(MID_TID_BlockingPage.class);
 		page.addBlockingMID_TID(combination, details);
 	}
-	
+
 	public void deleteMID_TID_Blocking(String combination, MID_TID_Blocking details) {
 		MID_TID_BlockingPage page = navigator.navigateToPage(MID_TID_BlockingPage.class);
-		 page.deleteRecord(combination,details);
+		page.deleteRecord(combination,details);
 	}
-	
+
 	public Transaction setDEElementsForMIDTID (Transaction transactionData, MID_TID_Blocking midtidBlocking, String midTidCombination)
-	 {
-		 switch(midTidCombination){
-			case "1" :
-				transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
-				transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
-				break;
-			case "2" :
-				transactionData.setDeKeyValuePairDynamic("019", midtidBlocking.getAcquiringCountryCode());
-				transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
-				transactionData.setDeKeyValuePairDynamic("022.01", ConstantData.POS_TERMIAL_VALUE);
-				break;
-			case "3" :
-				transactionData.setDeKeyValuePairDynamic("022.01", ConstantData.POS_TERMIAL_VALUE);
-				transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
-				break;
-			case "4": case "6" : 
-				transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
-				transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
-				transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
-				break;
-			case "5" :
-				transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
-				break;
-			case "7" :
-				transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
-				transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
-				break;
-			case "9" :
-				transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
-				transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
-				break;
-			case "10" :
-				transactionData.setDeKeyValuePairDynamic("019", midtidBlocking.getAcquiringCountryCode());
-				transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
-				transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
-				break;
-			case "11" : 
-				transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
-				transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
-				break;
-			}
-		 return transactionData;
-	 }
+	{
+		switch(midTidCombination){
+		case "1" :
+			transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
+			transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
+			break;
+		case "2" :
+			transactionData.setDeKeyValuePairDynamic("019", midtidBlocking.getAcquiringCountryCode());
+			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
+			transactionData.setDeKeyValuePairDynamic("022.01", ConstantData.POS_TERMIAL_VALUE);
+			break;
+		case "3" :
+			transactionData.setDeKeyValuePairDynamic("022.01", ConstantData.POS_TERMIAL_VALUE);
+			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
+			break;
+		case "4": case "6" : 
+			transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
+			transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
+			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
+			break;
+		case "5" :
+			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
+			break;
+		case "7" :
+			transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
+			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
+			break;
+		case "9" :
+			transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
+			transactionData.setDeKeyValuePairDynamic("042", midtidBlocking.getMerchantID());
+			break;
+		case "10" :
+			transactionData.setDeKeyValuePairDynamic("019", midtidBlocking.getAcquiringCountryCode());
+			transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
+			transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
+			break;
+		case "11" : 
+			transactionData.setDeKeyValuePairDynamic("032", midtidBlocking.getAcquirerID());
+			transactionData.setDeKeyValuePairDynamic("041", midtidBlocking.getTerminalID());
+			break;
+		default:
+			logger.info("Invalid Combination Provided {}", midTidCombination);
+		}
+		return transactionData;
+	}
 }
