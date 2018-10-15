@@ -276,11 +276,6 @@ public class ProgramSetupWorkflow {
 		page.editsProgramForPlans(program,editItem);
 	}
 	
-	public void addMID_TID_Blocking(String combination, MID_TID_Blocking details){
-		MID_TID_BlockingPage page = navigator.navigateToPage(MID_TID_BlockingPage.class);
-		page.addBlockingMID_TID(combination,details);
-	}
-	
 	public void createTransactionLimitPlan(TransactionLimitPlan transactionLimitPlan, String limitType) {
 		TransactionLimitPlanPage page = navigator.navigateToPage(TransactionLimitPlanPage.class);
 		page.createTransactionLimitPlan(transactionLimitPlan,limitType);

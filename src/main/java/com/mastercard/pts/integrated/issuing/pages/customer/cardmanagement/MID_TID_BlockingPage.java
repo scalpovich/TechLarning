@@ -1,6 +1,5 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
-import org.openqa.selenium.By;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -10,14 +9,14 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
-import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
+import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
 		CardManagementNav.L1_ACTIVITY, CardManagementNav.L2_MID_TID_BLOCKING,
-		})
+})
 public class MID_TID_BlockingPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(MID_TID_BlockingPage.class);
@@ -55,6 +54,10 @@ public class MID_TID_BlockingPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "pOSEntryMode:input:dropdowncomponent")
 	private MCWebElement DDwnPOSEntryMode;
+
+	public static final String TERMINAL_ID = "Terminal Id";
+	public static final String MERCHANT_ID = "Merchant Id";
+	private static final String ROW_COUNT = "//*[@class='dataview']/tbody[1]//tr";
 
 	private void selectNetwork(String network){
 		WebElementUtils.selectDDByVisibleText(DDwnNetwork, network);
@@ -156,6 +159,8 @@ public class MID_TID_BlockingPage extends AbstractBasePage {
 			enterAcquirerID(details.getAcquirerID());
 			enterTerminalID(details.getTerminalID());
 			break;
+		default:
+			logger.info("Invalid Case Provided {}", caseNumber);
 		}
 	}
 
@@ -171,14 +176,14 @@ public class MID_TID_BlockingPage extends AbstractBasePage {
 				});
 		verifyOperationStatus();
 	}
-	
+
 	public void deleteRecord(String combination, MID_TID_Blocking details){
 		deleteRecordAsPerCase(combination,details);
 	}
-	
+
 	protected void deleteRecordAsPerCase(String caseNumber, MID_TID_Blocking details) {
-		int rowCount = Elements("//*[@class='dataview']/tbody[1]//tr").size();
-		
+		int rowCount = Elements(ROW_COUNT).size();
+
 		switch (caseNumber) {
 		case "1":
 		case "10":
@@ -218,10 +223,10 @@ public class MID_TID_BlockingPage extends AbstractBasePage {
 					break;
 				}
 			}
-		break;
-		
+			break;
+
 		default:
-		logger.info("Invalid Case Provided {}", caseNumber);
+			logger.info("Invalid Case Provided {}", caseNumber);
 
 		}
 	}

@@ -47,7 +47,6 @@ import com.mastercard.pts.integrated.issuing.domain.CreditCardPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MID_TID_Blocking;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomMCWebElement;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -86,10 +85,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private static final String WALLET_NUMBER = "Wallet number: {}";
 	
 	public static final String ERROR_MESSAGE = "Error: {}";
-	
-	public static final String TERMINAL_ID = "Terminal Id";
-	
-	public static final String MERCHANT_ID = "Merchant Id";
 	
 	public static final String RESPONSE_MESSAGE	 = "Response message: {}";
 
