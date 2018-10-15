@@ -192,7 +192,7 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 			for(String str : amountType){
 				String value = Element("//span[contains(text(),'"+str+"')]/../span[2]/span").getText();
 				logger.info("value of " + str + " = "+  value);
-				sum = sum.add(new BigDecimal(value),  new MathContext(5));
+				sum = sum.add(new BigDecimal(value),  new MathContext(6));
 			}
 			availBal.setSum(sum);
 			availBal.setAvailableBal(new BigDecimal(getTextFromPage(availableBalanceTxt)));			

@@ -204,7 +204,7 @@ public abstract class LinuxUtils {
 	
 	public static void downloadFileViaScp(RemoteConnectionDetails connectiondetails, String remoteDir,
 			String localsource) throws InterruptedException  {
-
+		
 		Scp scp = new Scp();
 		String serverSSH = connectiondetails.getHostName();
 		String userSSH = connectiondetails.getUserName(); 
@@ -360,5 +360,24 @@ public abstract class LinuxUtils {
 		fileOutputStream.close();
 		// channel1.close();
 
+	}
+
+	public static String getJPEGPhotoFileName(File batchFile) {
+		String photoFileName = "";
+		MiscUtils.reportToConsole("*********   getting  image file name*******  ");
+		try (BufferedReader br = new BufferedReader(new FileReader(batchFile)))
+		{
+			String strLine;
+			if ((strLine = br.readLine()) != null){
+				String[] fileData = strLine.split(",");
+				photoFileName = fileData[0]+".jpeg";
+			}
+			
+		} catch (Exception e) {
+			MiscUtils.reportToConsole("getphotoReferenceNumber Exception :  " + e.toString());
+			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
+			throw MiscUtils.propagate(e);
+		}
+		return photoFileName;
 	}
 }

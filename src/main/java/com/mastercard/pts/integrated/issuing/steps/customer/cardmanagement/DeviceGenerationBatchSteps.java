@@ -12,12 +12,17 @@ public class DeviceGenerationBatchSteps {
 	DeviceGenerationBatchFlows deviceGenerationBatchFlows;
 
 	@When("user processes deviceGeneration batch for new Application")
-	public void closeBatchExecutionForNewApplication(){
+	public void closeBatchExecutionForNewApplication() {
 		deviceGenerationBatchFlows.deviceGenerationBatchExecution();
 	}
-	
+
 	@When("user processes deviceGeneration batch for new Application for FileUpload")
-	public void closeFirstBatchExecutionForNewApplication(){
+	public void closeFirstBatchExecutionForNewApplication() {
 		deviceGenerationBatchFlows.deviceGenerationBatchExecutionForFileUpload();
-	}	
+	}
+
+	@When("user processesAll deviceGeneration batch for new Application")
+	public void closetBatchExecutionForNewApplication() {
+		deviceGenerationBatchFlows.deviceGenerationAllBatchExecution();
+	}
 }

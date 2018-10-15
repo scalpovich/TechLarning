@@ -1,9 +1,7 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -36,6 +34,12 @@ public class DeviceDetailsPage extends AbstractCardManagementPage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//ul/li/a[contains(text(),'EMV-Scripting Details')]")
 	private MCWebElement emvScriptingDetailsTab;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//ul/li/a[contains(text(),'Client & Wallet Information')]")
+	private MCWebElement clientAndWalletInfoTab;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/tbody/tr/td[8]")
+	private MCWebElement applicationNumberTxt;
 
 	@PageElement(findBy = FindBy.ID, valueToFind = "lastExecutedScriptStatus")
 	private MCWebElement lastExecutedScriptStatus;
@@ -57,6 +61,19 @@ public class DeviceDetailsPage extends AbstractCardManagementPage {
 			clickCloseButton();
 		});
 		return statusText;
+	}
+	
+	public void retriveDeviceApplicationNumber() {
+		Device device = context.get(ContextConstants.DEVICE);
+		enterText(deviceNumber, device.getDeviceNumber());
+		clickSearchButton();
+		viewFirstRecord();
+		runWithinPopup("View Device Details", () -> {
+			clickWhenClickable(clientAndWalletInfoTab);
+			device.setApplicationNumber(applicationNumberTxt.getText());
+			clickCloseButton();
+		});
+		logger.info("device application number :{}",device.getApplicationNumber());
 	}
 
 	@Override

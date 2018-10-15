@@ -1,5 +1,4 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,6 +49,5 @@ public class ProcessBatchesFlows {
 		processBatchesPage.checkAndSumbitFile(fileName);
 		return processBatchesPage.retrieveJobID(fileName);
 	}
-
-
+	
 }

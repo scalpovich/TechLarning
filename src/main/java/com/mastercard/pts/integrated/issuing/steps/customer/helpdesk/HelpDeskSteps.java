@@ -22,7 +22,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.yecht.Data.Str;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
@@ -585,6 +584,7 @@ public class HelpDeskSteps {
 	
 	@Given("user verifies available $type limit for card after transaction")
 	@When("user verifies available $type limit for card after transaction")
+	@Then("user verifies available $type limit for card after transaction")
 	@Alias("user verifies available $type limit")
 	public void whenUserVerifyLimitThroughHelpDesk(String type) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
@@ -595,12 +595,12 @@ public class HelpDeskSteps {
 		if(type.equalsIgnoreCase(ConstantData.TEMPORARY_LIMIT) || type.equalsIgnoreCase(ConstantData.PERMANENT_LIMIT))
 		{	for (Entry<String, BigDecimal> expectedlimit : creditLimitExpected.entrySet()) 	
 				assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT,creditLimit.get(expectedlimit.getKey()),equalTo(expectedlimit.getValue()));
-		}
+	}
 		else
 		{
 			assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, creditLimit.get(ConstantData.AVAIL_ACCOUNT_LIMIT), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
 		}
-		
+
 		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT,creditLimit.get(ConstantData.AVAIL_ACCOUNT_LIMIT));
 	}
 
@@ -888,5 +888,13 @@ public class HelpDeskSteps {
 		helpdeskGeneral.setCustomerType(customerType);
 		helpdeskWorkflow.clickCustomerCareEditLink();				
 		context.put(ContextConstants.CREDIT_LIMIT_AFTER_SR, helpdeskWorkflow.activateCreditLimitChangeRequest(helpdeskGeneral));
+}
+	
+	@Then("user validates available balance for prepaid product on helpdesk")
+	public void whenUserVerifyPrepaidBalanceThroughHelpDesk() {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskGeneral.setProductType(ProductType.PREPAID);
+		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.getWalletBalance(device), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
 	}
 }
