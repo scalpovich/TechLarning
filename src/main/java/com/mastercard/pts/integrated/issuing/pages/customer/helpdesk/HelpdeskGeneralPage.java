@@ -1176,11 +1176,13 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		helpDeskValues.put(ContextConstants.CREDIT_LIMIT, accountCreditLimitLabel.getText());
 		helpDeskValues.put(ContextConstants.AVAILABLE_CREDIT_LIMIT, availAccountCreditLimitLabel.getText());
 		helpDeskValues.put(ContextConstants.PAYMENT_DUE_DATE, paymentDueDateLabel.getText());
-		helpDeskValues.put(ContextConstants.MINIMUM_PAYMENT_DUE, minimumAmountDueLabel.getText());		
+		helpDeskValues.put(ContextConstants.MINIMUM_PAYMENT_DUE, minimumAmountDueLabel.getText());	
+		context.put(ContextConstants.MINIMUM_PAYMENT_DUE, minimumAmountDueLabel.getText());
 		helpDeskValues.put(ContextConstants.CLOSING_BALANCE, closingBalanceLabel.getText());	
 		WebElementUtils.elementToBeClickable(balanceDetailsTab);	
 		clickWhenClickable(balanceDetailsTab);
 		helpDeskValues.put(ContextConstants.TOTAL_PAYMENT_DUE, totalAmountDueLabel.getText());		
+		context.put(ContextConstants.TOTAL_PAYMENT_DUE, totalAmountDueLabel.getText());
 		helpDeskValues.put(ContextConstants.INTEREST, interestLabel.getText());	
 		helpDeskValues.put(ContextConstants.LOAN, loanLabel.getText());	
 		helpDeskValues.put(ContextConstants.LOAN_INTEREST, loanInterestLabel.getText());	
