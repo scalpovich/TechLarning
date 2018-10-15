@@ -624,7 +624,7 @@ public class TransactionSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		device.setTransactionAmount(amount);
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
-		performOperationOnSamecard(true);
+		performOperationOnSamecard(false);
 		givenOptimizedTransactionIsExecuted(transaction);
 	}
 
