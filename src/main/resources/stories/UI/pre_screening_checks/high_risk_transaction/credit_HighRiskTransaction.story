@@ -42,15 +42,15 @@ And user sign out from customer portal
 
 Scenario:4 validate the High Risk MCC Report
 Given user is logged in institution
-Then validate the authCode in RAMP-REP05 report
+Then validate the MCC in RAMP-REP05 report
 And user sign out from customer portal
 
 Scenario:5 validate the High Risk Country Report
 Given user is logged in institution
-Then validate the authCode in RAMP-REP04 report
+Then validate the Country in RAMP-REP04 report
 And user sign out from customer portal
 
 Scenario:6 validate the High Risk Merchant Location Report
 Given user is logged in institution
-Then validate the authCode in RAMP-REP06 report
+Then validate the Merchant in RAMP-REP06 report
 And user sign out from customer portal

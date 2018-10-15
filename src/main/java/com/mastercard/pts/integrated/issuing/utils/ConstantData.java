@@ -44,6 +44,7 @@ public class ConstantData {
 	public static final String MESSAGE_CONSTANT = "Simulator path being set :  ";
 	public static final String IS_PIN_REQUIRED = "TRUE";
 	public static final String TRANSACTION_NAME = "transaction";
+	public static final String TRANSACTION_DATA = "transaction_data";
 	public static final String DATAELEMENT_037 = "data037";
 
 	public static final String VISA_OUT_GOING_FILE_NAME = "filename";

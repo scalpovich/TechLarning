@@ -154,6 +154,7 @@ public class TransactionSteps {
 		// operation of MAS/MDFS ... Storing transaction name in context to use it at runtime
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		Transaction transactionData = generateMasTestDataForTransaction(transaction);
+		context.put(ConstantData.TRANSACTION_DATA, transactionData);
 		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData, sameCard);
 	}
 
