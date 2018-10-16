@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+import java.util.Map;
+
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.GenericReport;
+import com.mastercard.pts.integrated.issuing.domain.customer.transaction.Transaction;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ReportVerificationWorkflow;
@@ -42,10 +45,11 @@ public class ReportVerificationSteps {
 			logger.info("No Report Type is present here!!");
 		}
 		report.setDeviceNumber(device.getDeviceNumber());
-		for(String field : reportFields.split(",")){
-			report.setFieldToValidate(field, context.get(ConstantData.fromShortName(field)));
-			logger.info("value of {} is {}",field,context.get(ConstantData.fromShortName(field)));
-		}
+		Transaction transactionData = context.get(ConstantData.TRANSACTION_DATA);
+		Map<String,String> data = transactionData.getCardDataElements();
+			report.setFieldToValidate("MCC","5999" );
+			report.setFieldToValidate("Country",data.get("049"));
+			report.setFieldToValidate("Merchant",data.get("042"));
 		reportVerificationWorkflow.verifyGenericReport(report);		
 	}
 
