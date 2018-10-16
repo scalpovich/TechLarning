@@ -7,7 +7,7 @@ So that invalid device is not authorized
 Meta:
 @StoryName credit_emv_corp_limit
 @visa_msr_retail_cancelled_ecom
-@ttt
+
 Scenario:1 Device onboarding (part A)
 Given setting json values in excel for Credit
 When user is logged in institution
