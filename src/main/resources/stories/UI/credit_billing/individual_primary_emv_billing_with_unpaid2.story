@@ -42,7 +42,7 @@ And device has "normal" status
 When user verifies available Card limit for card after transaction
 Then user sign out from customer portal
 
-Scenario:1.4 Run Pre-clearing and EOD-Credit
+Scenario:1.4 Run Pre-clearing and EOD-Credit for clearing TXN
 Given user is logged in institution
 When user wait for seven minutes to perform certain activity
 And user sign out from customer portal
@@ -52,7 +52,7 @@ When user processes EOD-Credit system internal batch for Credit
 And user verify Unbilled amount for Purchase category
 And user sign out from customer portal
 
-Scenario:1.5 Bump next month and Login & Logout to wait for date to be updated for next billing cycle
+Scenario:1.5 Bump next month and Login & Logout to wait for date to be updated for 1st billing cycle
 Meta:
 @TestId 
 Given update institution date to first of next month
@@ -63,7 +63,7 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:1.6 Process Batches for billing and validated values on helpdesk and statement 
+Scenario:1.6 Process Batches for billing and validated values on helpdesk and 1st statement 
 Meta:
 @TestId 
 Given user is logged in institution
@@ -71,10 +71,9 @@ When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
 And user verify Unbilled amount for Purchase category
 And user processes Billing Process - Credit system internal batch for Credit
+And user run Statement Extract system internal batch
 And device has "normal" status
 And user notes down required values from helpdesk for credit
-And user run Statement Extract system internal batch
-And user verify Billed amount for Purchase category
 And verify statement file is successfully downloaded
 Then validate the statement with parameters:
 |parameters|
@@ -87,9 +86,10 @@ Then validate the statement with parameters:
 |Credit Limit|
 |Available Credit Limit|
 |Closing Balance|
+And user verify Billed amount for Purchase category
 And user sign out from customer portal
 
-Scenario:1.6.1 Bump 21st of month to charge late payment fee
+Scenario:1.6.1 Bump 21st of month to charge late payment fee for 2nd Billing cycle
 Meta:
 @TestId 
 Given update institution date to 21 days
@@ -105,7 +105,7 @@ And user processes EOD-Credit system internal batch for Credit
 And user verify Unbilled amount for Fee category
 And user sign out from customer portal
 
-Scenario:1.7 Bump next month and Login & Logout to wait for date to be updated for next billing cycle
+Scenario:1.7 Bump next month and Login & Logout to wait for date to be updated for 2nd billing cycle
 Meta:
 @TestId 
 Given update institution date to first of next month
@@ -116,20 +116,20 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:1.8 Process Batches for billing to next cycle and validated values on helpdesk and statement 
+Scenario:1.8 Process Batches for billing to next cycle and validated values on helpdesk and 2nd statement 
 Meta:
 @TestId 
 Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
 And user processes Billing Process - Credit system internal batch for Credit
+When user verify Delinquency value for Status category is 1ST UNPAID
 And user verify Billed amount for Fee category
 And user verify Billed amount for Interest category
 And user verify Amount amount for Unpaid1 category
-When user verify Delinquency value for Status category is 1ST UNPAID
+And user run Statement Extract system internal batch
 And device has "normal" status
 And user notes down required values from helpdesk for credit
-And user run Statement Extract system internal batch
 And verify statement file is successfully downloaded
 Then validate the statement with parameters:
 |parameters|
@@ -144,7 +144,7 @@ Then validate the statement with parameters:
 |Closing Balance|
 And user sign out from customer portal
 
-Scenario:1.8.1 Bump 21st of month to charge late payment fee
+Scenario:1.9 Bump 21st of month to charge late payment fee for 3rd Billing cycle
 Meta:
 @TestId 
 Given update institution date to 21 days
@@ -160,32 +160,20 @@ And user processes EOD-Credit system internal batch for Credit
 And user verify Unbilled amount for Fee category
 And user sign out from customer portal
 
-Scenario:1.9 Bump next day to make bill payment
-Meta:
-@PaymentCash
-Given update institution date to next days
-When user is logged in institution
-When user sign out from customer portal
-And user is logged in institution
-And user sign out from customer portal
-And user is logged in institution
-And user sign out from customer portal
-
-Scenario:2.0 Process Batches for billing to next cycle and validated values on helpdesk and statement 
+Scenario:2.0 Process Batches for billing to next cycle and validated values on helpdesk and 3rd statement 
 Meta:
 @TestId 
 Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
-And user verify Unbilled amount for Purchase category
 And user processes Billing Process - Credit system internal batch for Credit
-And user verify Billed amount for Interest category
-And user verify Amount amount for Unpaid2 category
 When user verify Delinquency value for Status category is 2ND UNPAID
 And device has "normal" status
 And user notes down required values from helpdesk for credit
 And user run Statement Extract system internal batch
 And verify statement file is successfully downloaded
+And user verify Billed amount for Interest category
+And user verify Amount amount for Unpaid2 category
 Then validate the statement with parameters:
 |parameters|
 |Credit Card Number|
@@ -199,7 +187,7 @@ Then validate the statement with parameters:
 |Closing Balance|
 And user sign out from customer portal
 
-Scenario:2.1 Verify User is able to make Payment of credit card through cash mode after billing cycle
+Scenario:2.1 Bump next day to make MAD payment
 Meta:
 @PaymentCash
 When update institution date to next days
@@ -210,7 +198,7 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:2.2 Verify User is able to make Payment of credit card through cash mode after billing cycle
+Scenario:2.2 Verify User is able to make MAD Payment of credit card through cash mode after billing cycle
 Meta:
 @PaymentCash
 Given user is logged in institution
@@ -222,7 +210,7 @@ Then user compare balance details after MAD payment
 When user verify Delinquency value for Status category is 1ST UNPAID
 And user sign out from customer portal
 
-Scenario:2.3 Verify User is able to make Payment of credit card through cash mode after billing cycle
+Scenario:2.3 Bump next day to make remaining payment
 Meta:
 @PaymentCash
 When update institution date to next days
@@ -233,7 +221,7 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:2.4 Verify User is able to make Payment of credit card through cash mode after billing cycle
+Scenario:2.4 Verify User is able to remaining make Payment of credit card through cash mode after billing cycle
 Meta:
 @PaymentCash
 Given user is logged in institution
@@ -243,7 +231,7 @@ When user processes EOD-Credit system internal batch for Credit
 When user verify Delinquency value for Status category is NORMAL
 And user sign out from customer portal
 
-Scenario:2.5 Login & Logout to wait for date to be updated foe next billing
+Scenario:2.5 Bump next month ,Login & Logout to wait for date to be updated for next billing
 Meta:
 @TestId 
 When update institution date to first of next month
