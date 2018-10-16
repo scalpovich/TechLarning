@@ -43,8 +43,6 @@ public class ClientDetails {
 		this.dedupeLastName = dedupeLastName;
 	}
 
-
-	
 	public LocalDate getDedupeBithDate() {
 		return dedupeBithDate;
 	}

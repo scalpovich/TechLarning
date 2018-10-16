@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -422,7 +423,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		
 		ClientDetails client = device.getClientDetails();
 		WebElementUtils.selectDropDownByVisibleText(titleDDwn, client.getTitle());
-		if (device.getDedupe()!=null && device.getDedupe().equals("dedupe")) {			
+		if (Objects.nonNull(device.getDedupe())){	
 			WebElementUtils.enterText(firstNameTxt, client.getDedupeFirstName());
 			WebElementUtils.enterText(lastNameTxt, client.getDedupeLastName());
 			WebElementUtils.pickDate(birthDateDPkr, client.getDedupeBithDate());

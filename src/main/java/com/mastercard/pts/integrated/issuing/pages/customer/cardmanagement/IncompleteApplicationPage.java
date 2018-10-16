@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ClientDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
@@ -85,6 +86,9 @@ public class IncompleteApplicationPage extends AbstractCardManagementPage {
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=birthDate]")
 	private MCWebElement txtBirthDate;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='birthDate']")
+	private MCWebElement birthDateDPkr;
 
 	public void incompleteApplication() {
 		Device device = context.get(CreditConstants.APPLICATION);
@@ -115,15 +119,17 @@ public class IncompleteApplicationPage extends AbstractCardManagementPage {
 	}
 	
 	public String incompleteApplicationWithExistingData() {
+		Device device = Device.createWithProviderForOtherDetails(provider);
+		ClientDetails client = device.getClientDetails();
 		incompleteApplication();
 		waitForPageToLoad(driver());
 		clickWhenClickable(editImg);
 		SimulatorUtilities.wait(5000);
 		runWithinPopup("Edit Application", () -> {
 			clickWhenClickable(tabProfile);
-			enterValueinTextBox(txtFirstName, "ALVAREZ");
-			enterValueinTextBox(txtLastName, "LONDONO");
-			enterValueinTextBox(txtBirthDate, "22/04/1962");
+			WebElementUtils.enterText(txtFirstName, client.getDedupeFirstName());
+			WebElementUtils.enterText(txtLastName, client.getDedupeLastName());
+			WebElementUtils.pickDate(birthDateDPkr, client.getDedupeBithDate());
 			clickWhenClickable(saveBtn);
 		});
 		verifyOperationStatus();
