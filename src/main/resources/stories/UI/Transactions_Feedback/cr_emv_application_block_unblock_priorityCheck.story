@@ -86,7 +86,7 @@ Then verify Pending [2] status of Last Executed Script Status in Device Details 
 And user sign out from customer portal
 
 Scenario:12 Verify DB has value in Application Unblock Column
-Given Verify APPLICATION_BLOCK_ICC has column value as Null
+Given Verify APPLICATION_BLOCK_ICC has column value as Not Null
 Then Verify APPLICATION_UNBLOCK_ICC has column value as Not Null
 
 Scenario:13 Transaction of EMV_PURCHASE_ISSUER_SCRIPTING_RES for Application block

@@ -54,7 +54,7 @@ And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario:1.6 Verify DB has value in Application Unblock Column
-Given Verify APPLICATION_BLOCK_ICC has column value as NULL
+Given Verify APPLICATION_BLOCK_ICC has column value as NON_NULL
 And Verify APPLICATION_UNBLOCK_ICC has column value as NULL
 
 Scenario:1.7 To Verify that the user can stoplist credit device from stoplist screen
@@ -77,8 +77,8 @@ And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario:2.0 Verify DB has value in Application Unblock Column
-Given Verify APPLICATION_BLOCK_ICC has column value as Non Null
-And Verify APPLICATION_UNBLOCK_ICC has column value as NULL
+Given Verify APPLICATION_BLOCK_ICC has column value as NULL
+And Verify APPLICATION_UNBLOCK_ICC has column value as NON_NULL
 
 Scenario:2.1 Transaction of EMV_PURCHASE_ISSUER_SCRIPTING_RES for Application block
 When perform an EMV_PURCHASE_ISSUER_SCRIPTING_RES MAS transaction on the same card
@@ -87,8 +87,8 @@ Then verify Pending [2] status of Last Executed Script Status in Device Details 
 And user sign out from customer portal
 
 Scenario:2.2 Verify DB has value in Application Unblock Column
-Given Verify APPLICATION_BLOCK_ICC has column value as NULL
-Then Verify APPLICATION_UNBLOCK_ICC has column value as Not null
+!-- Given Verify APPLICATION_BLOCK_ICC has column value as NULL
+!--Then Verify APPLICATION_UNBLOCK_ICC has column value as Not null
 
 Scenario:2.3 Transaction of EMV_PURCHASE_ISSUER_SCRIPTING_RES for Application block
 When perform an EMV_PURCHASE_ISSUER_SCRIPTING_RES MAS transaction on the same card
