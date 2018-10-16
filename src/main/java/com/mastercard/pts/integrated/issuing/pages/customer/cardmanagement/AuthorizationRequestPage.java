@@ -13,6 +13,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Auth
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -45,8 +46,6 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 
 	private String successMessage = null;
 	
-	public static boolean manualAuth =false;
-	
 	public String addAuthorizationRequest(AuthorizationRequest request){
 		logger.info("Authorization Request: {}", request.getDeviceNumber());
 		clickAddNewButton();
@@ -54,11 +53,11 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 			WebElementUtils.enterText(deviceNumberTxt, request.getDeviceNumber());
 			WebElementUtils.selectDropDownByVisibleText(transactionCurrencyDDwn, request.getTransactionCurrency());
 			WebElementUtils.enterText(transactionAmountTxt, request.getTransactionAmount());
-			logger.info("MCC->{}", request.getMcc());
 			WebElementUtils.selectDropDownByVisibleText(mccDDwn, request.getMcc());
 			WebElementUtils.enterText(transactionAmountTxt, request.getTransactionAmount());
 			WebElementUtils.enterText(memoTxt, request.getMemo());
 			clickSaveButton();
+			SimulatorUtilities.wait(40000);
 			successMessage = getMessageFromFeedbackPanel();
 			logger.info("Success Meesage: " + successMessage);
 			clickOkButton();
