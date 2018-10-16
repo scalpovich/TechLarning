@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -276,5 +277,18 @@ public class DeviceUsagePage extends AbstractBasePage {
 		}
 		return deviceTransactionDetails;
 
+	}
+	
+	@Override
+	public String getCellTextByColumnName(int rowNumber, String columnName) {
+		String xpath = String.format("//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]", rowNumber, columnName);
+		try{
+		WebElement element = driver().findElement(By.xpath(xpath));
+		waitForElementVisible(element);
+		return element.getText().trim();}
+		catch(WebDriverException e){
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

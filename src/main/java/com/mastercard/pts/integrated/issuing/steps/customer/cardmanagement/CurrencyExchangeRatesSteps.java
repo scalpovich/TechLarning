@@ -287,8 +287,8 @@ public class CurrencyExchangeRatesSteps {
 				currencyExchangeRateDomainPage.getUploadPathCER());
 	}
 	
-	@Then("fetch currency exchange rate from $Source currency to program currency")
-	@When("fetch currency exchange rate from $Source currency to program currency")
+	@Then("fetches currency exchange rate from $Source currency to program currency")
+	@When("fetches currency exchange rate from $Source currency to program currency")
 	public void fetchSourcetoDestinationCurrency(String currency) {
 		try{
 		Device device =context.get(ContextConstants.DEVICE);

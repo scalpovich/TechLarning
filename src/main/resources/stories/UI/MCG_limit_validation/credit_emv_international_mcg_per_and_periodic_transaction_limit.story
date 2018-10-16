@@ -21,7 +21,7 @@ And credit device is created using new device screen for Individual and Primary 
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device
 And User search for new device on search screen for credit and validates the status as NORMAL
-And fetch currency exchange rate from USD currency to program currency
+And fetches currency exchange rate from USD currency to program currency
 Then user sign out from customer portal
 And embossing file batch was generated in correct format
 

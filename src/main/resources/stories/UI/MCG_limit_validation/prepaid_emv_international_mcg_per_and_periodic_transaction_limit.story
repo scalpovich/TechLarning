@@ -27,7 +27,7 @@ And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And device has "NOT ACTIVATED CARD" status
 And user activates device through helpdesk
-And fetch currency exchange rate from USD currency to program currency
+And fetches currency exchange rate from USD currency to program currency
 And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
