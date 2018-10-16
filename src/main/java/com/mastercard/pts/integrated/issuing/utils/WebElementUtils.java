@@ -212,7 +212,7 @@ public class WebElementUtils {
 		} catch (StaleElementReferenceException ex) {
 			monthYear = fluentWait(() -> asWebElement(datePicker).findElement(By.cssSelector("a.calnav")));
 			currentYearMonth = YearMonth.parse(monthYear.getText(), formatter);
-		}
+		} 
 		if (date.getYear() != currentYearMonth.getYear() || date.getMonthValue() != currentYearMonth.getMonthValue()) {
 			monthYear.click();
 
