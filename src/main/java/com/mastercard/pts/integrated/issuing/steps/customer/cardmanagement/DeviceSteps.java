@@ -19,11 +19,13 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.UpdateDeviceDetailsPage;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramFlows;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.UpdatedDeviceDetailsFlows;
 
 @Component
 public class DeviceSteps {
@@ -44,6 +46,9 @@ public class DeviceSteps {
 
 	@Autowired
 	Program program;
+	
+	@Autowired
+	private UpdatedDeviceDetailsFlows updateDeviceWorkflow;
 
 	private static final String CREDIT_LIMIT_GREATER_THEN_MAXIMUM_EXP = "Entered Credit Limit is greater than Primary Card Credit Limit.";
 
@@ -385,6 +390,16 @@ public class DeviceSteps {
 		DevicePlan deviceplan = context.get(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY);
 		Device device = context.get(ContextConstants.DEVICE_SUPPLEMENTARY_ADDON_EXISTING);
 		context.put(ContextConstants.DEVICE_PLAN, deviceplan);
+		context.put(ContextConstants.DEVICE, device);
+	}
+	
+	@When("user attach device promotional plan $promotionPlan")
+	public void userAttachDevicePromotionalPlan(String promotionPlan){
+		Device device = context.get(ContextConstants.DEVICE);
+		/*Device device = new Device();
+		device.setDeviceNumber("5383166913621814");*/
+		device.setDevicePromotionPlan(provider.getString(promotionPlan));
+		updateDeviceWorkflow.updateDevicePlanForDevice(device);
 		context.put(ContextConstants.DEVICE, device);
 	}
 }

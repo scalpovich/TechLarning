@@ -107,6 +107,7 @@ public class Device {
   	private String amountType;
   	private static double deviceAmountUsage = 0.00;
   	private static double deviceVelocity = 0;
+  	private String devicePromotionPlan;
   	
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
@@ -700,5 +701,13 @@ public class Device {
 
 	public void setDeviceVelocity() {
 		++deviceVelocity;
+	}
+	
+	public String getDevicePromotionPlan() {
+		return devicePromotionPlan;
+	}
+
+	public void setDevicePromotionPlan(String devicePromotionPlan) {
+		this.devicePromotionPlan = devicePromotionPlan;
 	}
 }
