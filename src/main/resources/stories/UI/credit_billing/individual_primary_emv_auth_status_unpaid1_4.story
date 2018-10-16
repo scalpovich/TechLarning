@@ -92,6 +92,8 @@ And user processes EOD-Credit system internal batch for Credit
 And user processes Billing Process - Credit system internal batch for Credit
 When user verify Delinquency value for Status category is 1ST UNPAID
 And user verify Authorization Flag value for Status category is Approve [0]
+And device has "normal" status
+And user notes down required values from helpdesk for credit
 And user sign out from customer portal
 
 Scenario: 1.9 Login & Logout to wait for date to be updated for next billing cycle
@@ -132,6 +134,8 @@ And user processes EOD-Credit system internal batch for Credit
 And user processes Billing Process - Credit system internal batch for Credit
 When user verify Delinquency value for Status category is 2ND UNPAID
 And user verify Authorization Flag value for Status category is Decline [1]
+And device has "normal" status
+And user notes down required values from helpdesk for credit
 And user sign out from customer portal
 
 Scenario: 2.3 Login & Logout to wait for date to be updated for next billing cycle
@@ -172,6 +176,8 @@ And user processes EOD-Credit system internal batch for Credit
 And user processes Billing Process - Credit system internal batch for Credit
 When user verify Delinquency value for Status category is 3RD UNPAID
 And user verify Authorization Flag value for Status category is Refer [2]
+And device has "normal" status
+And user notes down required values from helpdesk for credit
 And user sign out from customer portal
 
 Scenario: 2.7 Login & Logout to wait for date to be updated for next billing cycle
@@ -213,6 +219,8 @@ And user processes EOD-Credit system internal batch for Credit
 And user processes Billing Process - Credit system internal batch for Credit
 When user verify Delinquency value for Status category is 4TH UNPAID
 And user verify Authorization Flag value for Status category is Capture [3]
+And device has "normal" status
+And user notes down required values from helpdesk for credit
 And user sign out from customer portal
 
 Scenario: 3.1 Login & Logout to wait for date to be updated for next billing cycle
