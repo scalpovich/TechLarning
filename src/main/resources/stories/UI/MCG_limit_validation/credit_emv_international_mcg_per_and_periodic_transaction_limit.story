@@ -6,7 +6,7 @@ I want to authorize transactions for EMV Credit card
 Meta:
 @MCGLimitPlan
 @Author Nitin Kumar
-@StoryName mcg_credit_emv_retail
+@StoryName mcg_periodic_credit_emv_retail
 
 Scenario:1 Set up Credit emv retail with MCG Limit Plan
 Given setting json values in excel for Credit

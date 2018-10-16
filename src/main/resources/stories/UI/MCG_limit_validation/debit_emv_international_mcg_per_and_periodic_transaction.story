@@ -6,7 +6,7 @@ I want to authorize transactions for EMV Debit card
 Meta:
 @MCGLimitPlan
 @Author Nitin Kumar
-@StoryName mcg_debit_emv_general_purpose
+@StoryName mcg_periodic_debit_emv_general_purpose
 
 Scenario:1 Set up prepaid emv retail general purpose card with MCG Limit Plan
 Given setting json values in excel for Debit

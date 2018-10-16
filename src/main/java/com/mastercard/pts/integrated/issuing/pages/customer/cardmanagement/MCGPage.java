@@ -25,8 +25,11 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class MCGPage extends AbstractBasePage {
 	final Logger logger = LoggerFactory.getLogger(MCGPage.class);
 
-	@PageElement(findBy = FindBy.CSS, valueToFind = "input[name='searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField']")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[name='mcgHeadPanel:mcgCode:input:inputTextField']")
 	private MCWebElement mcgCodeTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[name='searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField']")
+	private MCWebElement mcgCodeSearchTxt;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[name='searchDiv:rows:1:componentList:1:componentPanel:input:inputTextField']")
 	private MCWebElement descriptionTxt;
@@ -124,6 +127,6 @@ public class MCGPage extends AbstractBasePage {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.elementToBeClickable(mcgCodeTxt));
+		return Arrays.asList(WebElementUtils.elementToBeClickable(mcgCodeSearchTxt));
 	}
 }

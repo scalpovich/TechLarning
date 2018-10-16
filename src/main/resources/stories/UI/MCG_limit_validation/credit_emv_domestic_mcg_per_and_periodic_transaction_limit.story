@@ -6,7 +6,7 @@ I want to authorize transactions for EMV Credit card
 Meta:
 @MCGLimitPlan
 @Author Nitin Kumar
-@StoryName mcg_credit_emv_retail
+@StoryName mcg_periodic_credit_emv_retail
 
 Scenario:1 Set up Credit emv retail with MCG Limit Plan
 Given setting json values in excel for Credit
@@ -30,7 +30,7 @@ And set the transaction amount to 110 in program currency
 When perform an EMV_PURCHASE MAS transaction
 And user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
-And assert Decline response with 40002 AuthDecline Code and Exceeds Amount Limit Per Trans Domestic as description
+And assert Decline response with 40005 AuthDecline Code and Exceeds Amount Limit Per Trans Domestic as description
 Then verify the MCG limit utilization in Device Usage Screen for domestic transaction after failed transaction
 And user sign out from customer portal
 
