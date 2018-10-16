@@ -21,7 +21,6 @@ Then user creates new device of prepaid type for new client
 Scenario: 1.1 prepaid emv corporate travel card device production
 Given user is logged in institution
 When a new device was created
-And user attach device promotional plan PREPAID_PROMOTIONAL_PLAN
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
