@@ -133,7 +133,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private MCWebElement addNewBtn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Save']")
-	private MCWebElement saveBtn;
+	private MCWebElement saveBtn;	
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Yes']")
+	private MCWebElement yesBtn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Add Details']")
 	private MCWebElement addDetailsBtn;
@@ -358,6 +361,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public void clickSaveButton() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		clickWhenClickable(saveBtn);
+	}
+	
+	public void clickYesButton() {
+		clickWhenClickable(yesBtn);
 	}
 
 	public void clickSubmitButton() {

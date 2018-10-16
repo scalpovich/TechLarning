@@ -47,6 +47,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.Proce
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
@@ -123,6 +124,19 @@ public class HelpDeskSteps {
 	public void thenUserSelectTheServiceCode(String serviceCode) {
 		helpDeskGetterSetter.setServiceCode(ServiceCode.fromShortName(serviceCode));
 		helpdeskFlows.selectServiceCode(helpDeskGetterSetter);
+	}
+	
+	@Then("user raises service request to $serviceCode")
+	public void selectServiceCodeForSearchedDevice(String serviceCode) {
+		helpdeskGeneral.setServiceCode(serviceCode);
+		helpdeskGeneral.setNotes(Constants.GENERIC_DESCRIPTION);
+		
+		if (ServiceCode.BLOCK_DEVICE.contains(serviceCode)) {
+			helpdeskWorkflow.blockDevice(helpdeskGeneral);
+		} else if (ServiceCode.DEVICE_CLOSURE.contains(serviceCode)) {
+			helpdeskWorkflow.cancelDevice(helpdeskGeneral);
+		}
+		
 	}
 
 	/**

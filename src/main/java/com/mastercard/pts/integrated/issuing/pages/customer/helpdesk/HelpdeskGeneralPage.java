@@ -70,6 +70,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final String LOGGED_BY = "Logged By:";
 	private static final String CLOSURE_PERIOD = "Estimated Closure Period(Days:HH:MM):";
 	private static final String PRIORITY_REQUEST = "Priority Request:";
+	
+	private static final String BLOCK_DEVICE_TITLE = "111 - Block Device";
+	private static final String DEVICE_CLOSURE_TITLE = "402 - Device Closure";
 
 	private static String ERROR_MESSAGE = "This field is required.";
 
@@ -369,7 +372,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 
 	public void selectServiceCode(String serviceCode) {
-		WebElementUtils.selectDropDownByVisibleText(serviceCodeDdwn, serviceCode);
+		selectByVisibleText(serviceCodeDdwn, serviceCode);
 	}
 
 	public void storeSaleDate() {
@@ -1371,5 +1374,32 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickCurrentStatusAndLimitsTab();
 		clickEndCall();
 		return creditLimit;
+	}
+
+	public void blockDevice(HelpdeskGeneral helpdeskGeneral) {
+		selectServiceCode(helpdeskGeneral.getServiceCode());
+		clickGoButton();
+		runWithinPopup(BLOCK_DEVICE_TITLE, () -> {
+			enterNotes(helpdeskGeneral.getNotes());
+			clickSaveButton();
+			verifyOperationStatus();
+			clickOKButtonPopup();
+		});
+		SimulatorUtilities.wait(3000);
+		clickEndCall();
+	}
+	
+	public void cancelDevice(HelpdeskGeneral helpdeskGeneral) {
+		selectServiceCode(helpdeskGeneral.getServiceCode());
+		clickGoButton();
+		runWithinPopup(DEVICE_CLOSURE_TITLE, () -> {
+			enterNotes(helpdeskGeneral.getNotes());
+			clickSaveButton();
+			runWithinPopup("Confirmation Message", this::clickYesButton);
+			verifyOperationStatus();
+			clickOKButtonPopup();
+		});
+		SimulatorUtilities.wait(3000);
+		clickEndCall();
 	}
 }

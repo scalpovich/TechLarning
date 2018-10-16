@@ -61,6 +61,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.Rever
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionSearchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.MasDetailsKeyValuePair;
@@ -1798,8 +1799,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			setValueInMessageEditorForTransction("F35.05", transactionName, (MiscUtils.randomNumber(2) + device.getCvvData()));	
 			setValueInMessageEditorForTransction("F52", transactionName, device.getPinNumberForTransaction());
 		}
-		else if(transaction.contains("ECOM")) {
-			setValueInMessageEditorForTransction("F126.10", transactionName, (CVV2_PREFIX_VALUE + " " + device.getCvv2Data()));	
+		else if(transaction.contains("ECOM")) {			
+			String cvv2 = device.getCvv2Data() == null ? Constants.INVALID_CVV2 : device.getCvv2Data();
+			setValueInMessageEditorForTransction("F126.10", transactionName, (CVV2_PREFIX_VALUE + " " + cvv2));	
 		}
 		captureSaveScreenShot(methodName);
 		executeVisaTest(transactionName);
