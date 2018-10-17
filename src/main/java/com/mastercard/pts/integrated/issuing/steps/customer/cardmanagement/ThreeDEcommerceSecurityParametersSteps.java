@@ -46,5 +46,15 @@ public class ThreeDEcommerceSecurityParametersSteps {
 		threeDESParams.seteCommerceSecurityInterchange(interchange);
 		threeDECommerceSecurityParametersFlows.edit3DESParams(threeDESParams);
 	}
+	
+	@When("user edits 3D ecommerce security parameters to Decline all non secured transaction for product $type and interchange $interchange as $status")
+	public void editDeclineAllNonSecuredTransaction(String type, String interchange,String status) {
+		ThreeDECommerceSecurityParameters threeDESParams = new ThreeDECommerceSecurityParameters();
+		threeDESParams.setCheckStatus(status);
+		DeviceRange deviceRange =   context.get(ContextConstants.DEVICE_RANGE); 		
+		threeDESParams.setDeviceRangeFrom(deviceRange.getIssuerBinCode(deviceRange.getIssuerBin()) + ConstantData.START_RANGE_DIGITS);
+		threeDESParams.seteCommerceSecurityInterchange(interchange);
+		threeDECommerceSecurityParametersFlows.editDeclineAllNonSecured(threeDESParams);
+	}
 
 }

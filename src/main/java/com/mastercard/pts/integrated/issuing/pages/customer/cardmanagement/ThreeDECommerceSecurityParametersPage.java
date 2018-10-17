@@ -52,6 +52,9 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "skipValidationMc:checkBoxComponent")
 	private MCWebElement skipCvv2ChkBx;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "decNonsecuredTxnMc:checkBoxComponent")
+	private MCWebElement declineAllNonSecuredTransaction;
 
 	public void verifyUiOperationStatus() {
 		logger.info("3D E-Commerce Security Parameters");
@@ -73,15 +76,11 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 			verifyDuplicateBinAndClickCancel();
 		});
 	}
-	
+
 	public void edit3DESParams(ThreeDECommerceSecurityParameters threeDESParams) {
-		logger.info("Edit 3D E-Commerce Security Parameters");
-		selectSearchInterchange(threeDESParams.geteCommerceSecurityInterchange());
-		enterSearchDeviceRangeFrom(threeDESParams.getDeviceRangeFrom());
-		clickSearchButton();
-		editFirstRecord();
+		edit3DESecurityParameters(threeDESParams);
 		runWithinPopup("Edit 3D E-Commerce Security", () -> {
-			if(threeDESParams.getCheckStatus().equals("check"))
+			if (threeDESParams.getCheckStatus().equals("check"))
 				ClickCheckBox(skipCvv2ChkBx, true);
 			else
 				ClickCheckBox(skipCvv2ChkBx, false);
@@ -89,6 +88,24 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 		});
 	}
 
+	public void edit3DESecurityParameters(ThreeDECommerceSecurityParameters threeDESParams) {
+		logger.info("Edit 3D E-Commerce Security Parameters");
+		selectSearchInterchange(threeDESParams.geteCommerceSecurityInterchange());
+		enterSearchDeviceRangeFrom(threeDESParams.getDeviceRangeFrom());
+		clickSearchButton();
+		editFirstRecord();
+	}
+	
+	public void editDeclineAllNonSecuredTransaction(ThreeDECommerceSecurityParameters threeDESParams) {
+		edit3DESecurityParameters(threeDESParams);
+		runWithinPopup("Edit 3D E-Commerce Security", () -> {
+			if (threeDESParams.getCheckStatus().equals("check"))
+				ClickCheckBox(declineAllNonSecuredTransaction, true);
+			else
+				ClickCheckBox(declineAllNonSecuredTransaction, false);
+			clickSaveButton();
+		});
+	}
 	public void selectSearchInterchange(String interchangeToSearch) {
 		selectByVisibleText(interchange, interchangeToSearch);
 	}

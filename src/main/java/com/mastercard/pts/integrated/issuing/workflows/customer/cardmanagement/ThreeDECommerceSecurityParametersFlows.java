@@ -22,5 +22,10 @@ public class ThreeDECommerceSecurityParametersFlows {
 		ThreeDECommerceSecurityParametersPage page = navigator.navigateToPage(ThreeDECommerceSecurityParametersPage.class);
 		page.edit3DESParams(threeDESParams);
 	}
+	
+	public void editDeclineAllNonSecured(ThreeDECommerceSecurityParameters threeDESParams) {
+		ThreeDECommerceSecurityParametersPage page = navigator.navigateToPage(ThreeDECommerceSecurityParametersPage.class);
+		page.editDeclineAllNonSecuredTransaction(threeDESParams);
+	}
 
 }
