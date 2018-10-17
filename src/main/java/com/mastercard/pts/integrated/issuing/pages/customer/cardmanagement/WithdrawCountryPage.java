@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WithdrawCountry;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -27,7 +29,17 @@ public class WithdrawCountryPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement country;
-
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@type='submit']//..//..//..//select[@class='selectf']")
+	private MCWebElement countryDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "withdrawalReasonCode:input:dropdowncomponent")
+	private MCWebElement withdrawalReasonCodeDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "withdrawalDescription:input:textAreaComponent")
+	private MCWebElement txtWithdrawalDescription;
+	
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Withdraw Country");
 		verifySearchButton("Search");
@@ -36,5 +48,30 @@ public class WithdrawCountryPage extends AbstractBasePage {
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(country));
+	}
+	
+	public void withdrawCountry(WithdrawCountry withdrawCountry,DeviceRange deviceRange){
+		selectCountry(withdrawCountry.getWithdrawCountry());
+		clickSearchButton();
+		editFirstRecord();
+		runWithinPopup("Edit Withdraw Country", ()->{
+			waitForElementVisible(withdrawalReasonCodeDDwn);
+			selectReasonCode(withdrawCountry.getWithdrawReason());
+			enterDescription(withdrawCountry.getWithdrawDescription());
+			clickSaveButton();
+		});
+		verifyOperationStatus();
+	}
+	
+	public void selectCountry(String country){
+		selectDropDownByText(countryDDwn, country);
+	}
+	
+	public void selectReasonCode(String reasonCode){
+		selectDropDownByText(withdrawalReasonCodeDDwn, reasonCode);
+	}
+	
+	public void enterDescription(String description){
+		enterText(txtWithdrawalDescription, description);
 	}
 }

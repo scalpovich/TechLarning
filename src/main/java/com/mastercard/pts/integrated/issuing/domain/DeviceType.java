@@ -12,7 +12,7 @@ public class DeviceType {
 	
 	public static final String VIRTUAL_CARD = "Static Virtual Card [7]";
 	
-	public static final String PHYSICAL_NFC_DEVICE_MAG_STRIPE_PAYPASS = "Physical NFC Device - Mag Stripe Paypass [3]";
+	public static final String PHYSICAL_NFC_DEVICE_MAG_STRIPE_PAYPASS = "NFC Device - Mag Stripe Paypass [3]";
 	
 	public static final String LIMITED_VALIDITY_VIRTUAL_CARD = "Limited Validity Virtual Card [8]";
 	

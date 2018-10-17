@@ -52,7 +52,23 @@ public class ContextConstants {
 
 	public static final String AVAILABLE_BALANCE_OR_CREDIT_LIMIT = "AVAILABLE_BALANCE_OR_CREDIT_LIMIT";
 
+<<<<<<< HEAD
 	public static final String AVAILABLE_BALANCE_AFTER_LOYALTY_REDEMPTION = "AVAILABLE_BALANCE_AFTER_LOYALTY_REDEMPTION";
+=======
+	public static final String AVAILABLE_ACCOUNT_OR_CREDIT_LIMIT = "AVAILABLE_ACCOUNT_OR_CREDIT_LIMIT";
+	
+	public static final String AVAILABLE_CLIENT_OR_CREDIT_LIMIT = "AVAILABLE_CLIENT_OR_CREDIT_LIMIT";
+	
+	public static final String AVAILABLE_CLIENT = "AVAILABLE_CLIENT";
+	
+	public static final String AVAILABLE_ACCOUNT = "AVAILABLE_ACCOUNT";
+	
+	public static final String AVAILABLE_CARD = "AVAILABLE_CARD";
+	
+	public static final String CREDIT_TEMP_LIMIT = "CREDIT_TEMP_LIMIT";
+	
+	public static final String CREDIT_PER_LIMIT = "CREDIT_PER_LIMIT";
+>>>>>>> 4f82885185f2933cd8d64d35d6deab261fc6fbd6
 
 	public static final String INTERNATIONAL = "international";
 
@@ -65,6 +81,7 @@ public class ContextConstants {
 	public static final String PRIMARY_DEVICE = "PRIMARY_DEVICE";
 
 	public static final String PRIMARY_DEVICE_PLAN = "PRIMARY_DEVICE_PLAN";
+<<<<<<< HEAD
 
 	public static final String TRANSACTION_PLAN = "TRANSACTIONPLAN";
 
@@ -72,6 +89,53 @@ public class ContextConstants {
 
 	public static final String PROMOTION_PLAN_CODE = "PROMOTION_PLAN_CODE";
 
+=======
+	
+	public static final String INSTITUTION_DATE = "INSTITUTION_DATE";
+	
+	public static final String STATEMENT_FROM_DATE = "FROM_DATE";
+	
+	public static final String STATEMENT_TO_DATE = "TO_DATE";
+	
+	public static final String PDF_PASSWORD = "PDF_PASSWORD";
+	
+	public static final String ACCOUNT_NUMBER = "Account Number";
+	
+	public static final String STATEMENT_DATE = "Statement Date";
+	
+	public static final String PAYMENT_DUE_DATE = "Payment Due Date";
+	
+	public static final String MINIMUM_PAYMENT_DUE = "Minimum Payment Due";
+	
+	public static final String TOTAL_PAYMENT_DUE = "Total Payment Due";
+	
+	public static final String INTEREST = "Interest";
+	
+	public static final String LOAN_INTEREST = "Loan Interest";
+	
+	public static final String LOAN = "Loan";
+	
+	public static final String CREDIT_LIMIT = "Credit Limit";
+	
+	public static final String AVAILABLE_CREDIT_LIMIT = "Available Credit Limit";
+	
+	public static final String CLOSING_BALANCE = "Closing Balance";
+	
+	public static final String CREDIT_CARD_NUMBER_HEADER_IN_STATEMENT = "Credit Card Number";
+	
+	public static final String HELPDESK_VALUES = "HELPDESK_VALUES";
+	
+	public static final String INST_PROPERTY = "institution";
+	
+	public static final String CREDIT_LIMIT_AFTER_SR = "CREDIT_LIMIT_AFTER_SR";
+	
+	public static final String REJECTED_FILE_UPLOAD = "REJECTED_FILE_UPLOAD";
+	
+	public static final String JOB_ID = "JOB_ID";
+	
+	public static final String CLIENT_PHOTO_BATCH_PROCESS_TIME = "CLIENT_PHOTO_BATCH_PROCESS_TIME";
+	
+>>>>>>> 4f82885185f2933cd8d64d35d6deab261fc6fbd6
 	private ContextConstants() {
 	}
 

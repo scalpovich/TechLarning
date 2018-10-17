@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BatchJobHistory;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -22,6 +23,7 @@ import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.DatePicker;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -64,9 +66,13 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 	private MCWebElement searchBtn;
 
 	public String calelement = "//td[7]";
-
+	
+	@Autowired
+	private TestContext context;
+	
 	@Autowired
 	DatePicker date;
+
 
 	public void switchToViewBatchDetailsFrame() {
 		switchToIframe(Constants.VIEW_BATCH_DETAILS_FRAME);
@@ -87,8 +93,8 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 		date22[1] = String.valueOf(i);
 		String date11 = date22[0] + "/" + date22[1] + "/" + date22[2];
 		date.setDate(date11);
-		// date.setDate(date11);
 		waitForPageToLoad(getFinder().getWebDriver());
+		SimulatorUtilities.wait(2000);
 		date.setDateCalendar2(DateUtils.getDateinDDMMYYYY(), calelement);
 		waitForPageToLoad(getFinder().getWebDriver());
 	}
@@ -146,7 +152,6 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 		Assert.assertEquals(statusString, statuslabelTxt);
 		clickWhenClickable(closeBtn);
 		switchToDefaultFrame();
-
 	}
 
 	@Override

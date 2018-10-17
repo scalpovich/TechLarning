@@ -1,11 +1,14 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -319,7 +322,6 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		}
 		device.setBatchNumber(batchNumberTxt.getText());
 		logger.info(" *********** Batch number *********** : {}", device.getBatchNumber());
-
 		clickNextButton();
 	}
 
@@ -332,20 +334,24 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
 		SimulatorUtilities.wait(1000);
+		String programCodeDDwnBy = "view:programCode:input:dropdowncomponent";
 		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)
 				|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)) {
 			enterText(existingDeviceNumberTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));
-			SimulatorUtilities.wait(5000);
+			SimulatorUtilities.wait(8000);
 			moveToElementAndClick(existingClientLabel, 50, 50);
 			waitForWicket(driver());
-			SimulatorUtilities.wait(15000);
+			SimulatorUtilities.wait(10000);
+			JavascriptExecutor jse = (JavascriptExecutor) getFinder().getWebDriver();
+			jse.executeScript("el = document.elementFromPoint(400, 400); el.click();");
+
 		} else {
 			selectByVisibleText(customerTypeDDwn, device.getCustomerType());
-			SimulatorUtilities.wait(2000);
+			SimulatorUtilities.wait(10000);
+			waitForWicket(driver());
 			selectByVisibleText(programCodeDDwn, device.getProgramCode());
-			SimulatorUtilities.wait(2000);
 		}
-		SimulatorUtilities.wait(1000);
+		SimulatorUtilities.wait(10000);
 		clickNextButton();
 
 		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());
@@ -445,6 +451,11 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn, 1);
 			WebElementUtils.enterText(creditLimitTxt, String.valueOf(Integer.parseInt(program.getCreditLimit()) + 1));
 		}
+<<<<<<< HEAD
 		clickNextButton();
+=======
+
+		clickNextButton();		
+>>>>>>> 4f82885185f2933cd8d64d35d6deab261fc6fbd6
 	}
 }

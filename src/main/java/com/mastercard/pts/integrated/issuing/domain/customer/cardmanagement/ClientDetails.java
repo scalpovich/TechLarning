@@ -6,31 +6,23 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 public class ClientDetails {
 
-	private String title;
-	
-	private String firstName;
-	
-	private String middleName1;
-	
-	private String middleName2;
-	
-	private String lastName;
-	
-	private String gender;
-	
-	private LocalDate birthDate;
-	
-	private String maritialStatus;
-	
-	private String languagePreference;
-	
-	private String emailId;
-	
+	private String title;	
+	private String firstName;	
+	private String middleName1;	
+	private String middleName2;	
+	private String lastName;	
+	private String gender;	
+	private LocalDate birthDate;	
+	private String maritialStatus;	
+	private String languagePreference;	
+	private String emailId;	
 	private String nationality;
+	private String clientType;
 	
 	public static ClientDetails generateClient() {
 		ClientDetails client = new ClientDetails();
@@ -44,6 +36,12 @@ public class ClientDetails {
 		client.setLastName("Snow" + MiscUtils.randomAlphabet(3));
 		client.setGender("Male [M]");
 		client.setEmailId(RandomStringUtils.randomAlphabetic(8) + "@" + MiscUtils.randomAlphabet(6) + ".com");
+		return client;
+	}
+	
+	public static ClientDetails getClientDetails(KeyValueProvider provider) {
+		ClientDetails client = new ClientDetails();
+		client.setClientType(provider.getString("CLIENT_VIP_FLAG"));
 		return client;
 	}
 
@@ -135,6 +133,14 @@ public class ClientDetails {
 		this.emailId = emailId;
 	}
 
+	public String getClientType() {
+		return clientType;
+	}
+
+	public void setClientType(String clientType) {
+		this.clientType = clientType;
+	}
+	
 	@Override
 	public String toString() {
 		return ReflectionToStringBuilder.toString(this);

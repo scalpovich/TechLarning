@@ -141,9 +141,9 @@ public class HelpDeskFlows extends AbstractBasePage {
 		generalPage.endCall();
 	}
 
-	public String searchForDevicePrepaid(HelpDeskGeneral helpdeskgettersetter,String deviceNumber) {
+	public String searchForDevicePrepaid(HelpDeskGeneral helpdeskgettersetter) {
 		generalPage = navigator.navigateToPage(GeneralPage.class);
-		String status = searchpanelhelpdesk.searchDeviceUsingNumber(helpdeskgettersetter.getProductType(),deviceNumber);
+		String status = searchpanelhelpdesk.searchDeviceUsingNumber(helpdeskgettersetter.getProductType(),helpdeskgettersetter.getDeviceNumber());
 		searchpanelhelpdesk.clickSearchBtn();
 		return status;
 	}

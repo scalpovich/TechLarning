@@ -50,8 +50,7 @@ public class CloseBatchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "saveAll")
 	private MCWebElement processAll;
 	
-	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']/td[1]")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']/td[1]/span")
 	public MCWebElements allBatchNumberTxt;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[1]/td[1]/td[10]/span/input")
@@ -87,10 +86,10 @@ public class CloseBatchPage extends AbstractBasePage {
 	
 	public int identifyBatchNumberToProcess()
 	{
-		Device device=context.get(ContextConstants.DEVICE);
+		String batchNumber=context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
 		int index;
 		for(index=0;index<allBatchNumberRetrieval().size();index++){
-			if(allBatchNumberRetrieval().get(index).equals(device.getBatchNumber())){
+			if(allBatchNumberRetrieval().get(index).equals(batchNumber)){
 				logger.info("Batch Number: {}",allBatchNumberRetrieval().get(index));
 				break;
 			}			

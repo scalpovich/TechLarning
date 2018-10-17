@@ -132,7 +132,7 @@ When User fills Device Range section for prepaid product
 When add menus to access card holder portal
 When user creates new device of prepaid type for new client of Corporate customer
 Then device has "normal" status
-Then user get attached wallet details for device
+Then user gets attached wallet details for device
 Then user performs adjustment transaction
 When wallet to wallet transfer for general purpose account
 Then search with device in transaction screen and status for wallet to wallet transfer transaction
@@ -159,7 +159,7 @@ When User fills Device Range section for prepaid product
 When add menus to access card holder portal
 When user creates new device of prepaid type for new client of Corporate customer
 Then device has "normal" status
-Then user get attached wallet details for device
+Then user gets attached wallet details for device
 Then user performs adjustment transaction
 When wallet to wallet transfer for general purpose account
 Then search with device in transaction screen and status for wallet to wallet transfer transaction
@@ -186,7 +186,7 @@ When User fills Device Range section for prepaid product
 When add menus to access card holder portal
 When user creates new device of prepaid type for new client of Individual customer
 Then device has "normal" status
-Then user get attached wallet details for device
+Then user gets attached wallet details for device
 Then user performs adjustment transaction
 When wallet to wallet transfer for general purpose account
 Then search with device in transaction screen and status for wallet to wallet transfer transaction
@@ -213,7 +213,7 @@ When User fills Device Range section for prepaid product
 When add menus to access card holder portal
 When user creates new device of prepaid type for new client of Individual customer
 Then device has "normal" status
-Then user get attached wallet details for device
+Then user gets attached wallet details for device
 Then user performs adjustment transaction
 When wallet to wallet transfer for general purpose account
 Then search with device in transaction screen and status for wallet to wallet transfer transaction

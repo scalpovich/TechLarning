@@ -147,6 +147,7 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 			WebElementUtils.enterText(mobileNumberUploadTxt,helpDeskGeneral.getMobileNumber());
 			clickSearchButton();
 			waitForPageToLoad(driver());
+			SimulatorUtilities.wait(3000);
 			String normalStatus=driver().findElement(By.xpath("//table[@class='dataview']//tr//following-sibling::td["+statusHeader()+"]/span")).getText();
 			assertThat(STATUS_DEVICE_NOT_NORMAL, normalStatus, equalTo(UPLOAD_EXPECTED_STATUS));
 			logger.info("Device Number :" +"  "+counter+"   "+ "-" +" "+ deviceNumberTxt.getText());

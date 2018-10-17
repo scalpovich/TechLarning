@@ -107,7 +107,6 @@ public class WebElementUtils {
 		retryUntilNoErrors(() -> new Select(asWebElement(element)).selectByIndex(value));
 	}
 
-	@SuppressWarnings("deprecation")
 	public static void selectDropDownByVisibleText(MCWebElement element, String visibleText) {
 		try {
 			retryUntilNoErrors(() -> new Select(asWebElement(element)).selectByVisibleText(visibleText));
@@ -116,6 +115,10 @@ public class WebElementUtils {
 			Select sel = new Select(asWebElement(element));
 			sel.selectByVisibleText(visibleText);
 		}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4f82885185f2933cd8d64d35d6deab261fc6fbd6
 	}
 
 	public static void selectDDByVisibleText(MCWebElement element, String visibleText) {
@@ -209,13 +212,21 @@ public class WebElementUtils {
 
 	public static void pickDate(MCWebElement datePicker, LocalDate date) {
 		WebElement monthYear = fluentWait(() -> asWebElement(datePicker).findElement(By.cssSelector("a.calnav")));
-
 		asWebElement(datePicker).findElement(By.cssSelector("img")).click();
-
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
+<<<<<<< HEAD
 		monthYear = fluentWait(() -> asWebElement(datePicker).findElement(By.cssSelector("a.calnav")));
 		YearMonth currentYearMonth = YearMonth.parse(monthYear.getText(), formatter);
 
+=======
+		YearMonth currentYearMonth;
+		try {
+			currentYearMonth = YearMonth.parse(monthYear.getText(), formatter);
+		} catch (StaleElementReferenceException ex) {
+			monthYear = fluentWait(() -> asWebElement(datePicker).findElement(By.cssSelector("a.calnav")));
+			currentYearMonth = YearMonth.parse(monthYear.getText(), formatter);
+		} 
+>>>>>>> 4f82885185f2933cd8d64d35d6deab261fc6fbd6
 		if (date.getYear() != currentYearMonth.getYear() || date.getMonthValue() != currentYearMonth.getMonthValue()) {
 			monthYear.click();
 
