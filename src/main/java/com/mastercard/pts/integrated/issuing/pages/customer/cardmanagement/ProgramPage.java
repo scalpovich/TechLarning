@@ -16,7 +16,6 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ApplicationType;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
-import com.mastercard.pts.integrated.issuing.domain.SubApplicationType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
@@ -284,10 +283,10 @@ public class ProgramPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[contains(@name,'countryWbPlanCode:input:dropdowncomponent')]")
 	private MCWebElement countryWhiteBlackListPlan;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "authoLevelCard:checkBoxComponent")
 	private MCWebElement chkBxCardCreditLimitValidation;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[starts-with(text(),'Limits')]")
 	private MCWebElement txTLimitLevelValidation;
 
@@ -521,19 +520,18 @@ public class ProgramPage extends AbstractBasePage {
 		clickNextButton();
 		selectWalletPlanPlan1(program.getFirstWalletPlan());
 		selectDevicePlanPlan1DDwn(program.getDevicePlanPlan1());
-<<<<<<< HEAD
 
 		if (Objects.nonNull(program.getApplicationType()) || Objects.nonNull(program.getSubApplicationType())) {
 			if (program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)
-					|| program.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)
-							&& program.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)) {
+					|| program.getApplicationType().contains(
+							ApplicationType.ADD_ON_DEVICE) /*
+															 * && program.
+															 * getSubApplicationType
+															 * ().contains(
+															 * SubApplicationType
+															 * .EXISTING_CLIENT)
+															 */) {
 				selectDevicePlanPlan2DDwn(program.getDevicePlanPlan2());
-=======
-		
-		if(Objects.nonNull(program.getApplicationType()) || Objects.nonNull(program.getSubApplicationType())){
-			if(program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||program.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) /*&& program.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)*/){
-			      selectDevicePlanPlan2DDwn(program.getDevicePlanPlan2());
->>>>>>> 4f82885185f2933cd8d64d35d6deab261fc6fbd6
 			}
 		}
 
@@ -921,21 +919,23 @@ public class ProgramPage extends AbstractBasePage {
 			editsProgram(program, editItem);
 		});
 	}
+
 	public void editProgramToEnableCardLimit(String program) {
 		enterValueinTextBox(enterProgram, program);
 		clickWhenClickable(search);
 		waitForElementVisible(editProgram);
 		editFirstRecord();
 		Scrolldown(editProgram);
-		runWithinPopup(Constants.EDIT_PROGRAM_FRAME,()-> {
-			cardCreditLimitValidation();	
+		runWithinPopup(Constants.EDIT_PROGRAM_FRAME, () -> {
+			cardCreditLimitValidation();
 		});
 		verifyOperationStatus();
 	}
-	public void cardCreditLimitValidation(){
+
+	public void cardCreditLimitValidation() {
 		SimulatorUtilities.wait(2000);
 		clickWhenClickable(txTLimitLevelValidation);
-		ClickCheckBox(chkBxCardCreditLimitValidation,true);
+		ClickCheckBox(chkBxCardCreditLimitValidation, true);
 		clickSaveButton();
 	}
 }

@@ -298,20 +298,14 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers']/td[5]/span")
 	private MCWebElement deviceProductionHeaderBatchTxt;
-<<<<<<< HEAD
 
 	private static final int loopIterationToCheckBatchNumber = 21;
 
-=======
-	
-	private static final int loopIterationToCheckBatchNumber=21;
-	
-    @PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
 	private MCWebElement institutionDateTxt;
-    
-    int retryCounter =0;
-	
->>>>>>> 4f82885185f2933cd8d64d35d6deab261fc6fbd6
+
+	int retryCounter = 0;
+
 	@Autowired
 	void initMCElements(ElementFinderProvider finderProvider) {
 		MCAnnotationProcessor.initializeSuper(this, finderProvider);
@@ -535,7 +529,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected boolean waitForRow() {
 		try {
 			waitForWicket();
-			Thread.sleep(30000); // Pre-production batch and device production batch takes little longer hence the wait
+			Thread.sleep(30000); // Pre-production batch and device production
+									// batch takes little longer hence the wait
 			return driver().findElement(By.cssSelector(FIRST_ROW_SELECT)).isDisplayed();
 		} catch (NoSuchElementException | InterruptedException e) {
 			logger.debug("Result not found", e);
@@ -1264,31 +1259,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return null;
 	}
 
-<<<<<<< HEAD
-	public void selectByVisibleText(MCWebElement ele, String optionName) {
-		try {
-			String optionVisbleText = "";
-			waitUntilSelectOptionsPopulated(ele);
-			List<WebElement> selectedOptions = ele.getSelect().getOptions();
-			for (WebElement element : selectedOptions) {
-				if (element.getText().toUpperCase().contains(optionName.toUpperCase())) {
-					optionVisbleText = element.getText();
-					break;
-				}
-			}
-			ele.getSelect().selectByVisibleText(optionVisbleText);
-			waitForLoaderToDisappear();
-			waitForPageToLoad(driver());
-		} catch (StaleElementReferenceException e) {
-			String optionVisbleText = "";
-			Select sel = new Select(asWebElement(ele));
-			List<WebElement> selectedOptions = sel.getOptions();
-			for (WebElement element : selectedOptions) {
-				if (element.getText().toUpperCase().contains(optionName.toUpperCase())) {
-					optionVisbleText = element.getText();
-					break;
-				}
-=======
 	public void doSelectByVisibleText(MCWebElement ele, String optionName) {
 		String optionalVisibleText = "";
 		waitUntilSelectOptionsPopulated(ele);
@@ -1297,24 +1267,19 @@ public abstract class AbstractBasePage extends AbstractPage {
 			if (element.getText().toUpperCase().contains(optionName.toUpperCase())) {
 				optionalVisibleText = element.getText();
 				break;
->>>>>>> 4f82885185f2933cd8d64d35d6deab261fc6fbd6
 			}
-			ele.getSelect().selectByVisibleText(optionVisbleText);
 		}
-<<<<<<< HEAD
-=======
 		ele.getSelect().selectByVisibleText(optionalVisibleText);
 	}
 
 	public void selectByVisibleText(MCWebElement ele, String optionName) {
 		try {
 			doSelectByVisibleText(ele, optionName);
-		waitForLoaderToDisappear();
->>>>>>> 4f82885185f2933cd8d64d35d6deab261fc6fbd6
-		waitForPageToLoad(driver());
+			waitForLoaderToDisappear();
+			waitForPageToLoad(driver());
 		} catch (StaleElementReferenceException e) {
 			doSelectByVisibleText(ele, optionName);
-	}
+		}
 		waitForPageToLoad(driver());
 	}
 
@@ -1853,24 +1818,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 		Device device = context.get(CreditConstants.APPLICATION);
 		device.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
 	}
-<<<<<<< HEAD
 
 	public int getDeviceNumberIndex() {
 		int index = 0;
 		for (int i = 0; i < deviceProductionHeaders.getElements().size(); i++) {
 			if (deviceProductionHeaders.getElements().get(i).getText().equalsIgnoreCase(DeviceNumber)) {
 				index = i + 1;
-=======
-	
-	public int getDeviceNumberIndex()
-	{  
-		int index=0;
-		for(int i=0;i<deviceProductionHeaders.getElements().size();i++)
-		{
-			if(deviceProductionHeaders.getElements().get(i).getText().equalsIgnoreCase(DeviceNumber))
-			{
-				index=i+1;
->>>>>>> 4f82885185f2933cd8d64d35d6deab261fc6fbd6
+
 			}
 		}
 		return index;
@@ -1945,34 +1899,34 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public void switchToDefaultFrame(String element, int index) {
 		driver().switchTo().frame(Elements(element).get(index));
 	}
-	
-	public String getInstitutionDate(){	
-		logger.info("Institution date : {}",getTextFromPage(institutionDateTxt));
+
+	public String getInstitutionDate() {
+		logger.info("Institution date : {}", getTextFromPage(institutionDateTxt));
 		return getTextFromPage(institutionDateTxt);
 	}
-	
-	protected void waitForContentToLoad(MCWebElement element){
+
+	protected void waitForContentToLoad(MCWebElement element) {
 		waitForWicket();
 		SimulatorUtilities.wait(5000);
-		while(retryCounter < 4){
-			
-			if(element.getTagName().contains("input")){
-				if(element.getText().equals("-") || element.getText().isEmpty() || element.getText().equals("0")){
+		while (retryCounter < 4) {
+
+			if (element.getTagName().contains("input")) {
+				if (element.getText().equals("-") || element.getText().isEmpty() || element.getText().equals("0")) {
 					SimulatorUtilities.wait(3000);
 					retryCounter++;
 					waitForContentToLoad(element);
 				}
-			}else if(element.getTagName().contains("select")){
+			} else if (element.getTagName().contains("select")) {
 				Select options = new Select(asWebElement(element));
-				if(options.getOptions().size() < 1){
+				if (options.getOptions().size() < 1) {
 					retryCounter++;
-					waitForContentToLoad(element);	
+					waitForContentToLoad(element);
 				}
-			}else if(element.getText().equals("-") || element.getText().isEmpty() || element.getText().equals("0")){
+			} else if (element.getText().equals("-") || element.getText().isEmpty() || element.getText().equals("0")) {
 				SimulatorUtilities.wait(3000);
 				retryCounter++;
 				waitForContentToLoad(element);
-			}else{
+			} else {
 				break;
 			}
 		}

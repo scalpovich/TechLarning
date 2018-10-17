@@ -43,8 +43,8 @@ import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoadFromFileUploadWorkflow;
-import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ReportVerificationWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProcessBatchesFlows;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ReportVerificationWorkflow;
 
 /**
  * @author E071669
@@ -65,13 +65,13 @@ public class BatchProcessSteps {
 
 	@Autowired
 	private LoadFromFileUploadWorkflow loadFromFileUploadWorkflow;
-	
+
 	@Autowired
 	private ProcessBatchesFlows processBatchesFlows;
 
 	@Autowired
 	private ReportVerificationWorkflow reportVerificationWorkflow;
-	
+
 	@Autowired
 	private LinuxBox linuxBox;
 
@@ -83,9 +83,9 @@ public class BatchProcessSteps {
 	private String jobId;
 
 	private static final String INSTITUTION_CODE = "INSTITUTION_CODE";
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(BatchProcessSteps.class);
-	
+
 	private File batchFile;
 
 	@When("user creates a bulk device production request for $type")
@@ -204,36 +204,46 @@ public class BatchProcessSteps {
 				"STATEMENT_DOWNLOAD");
 		assertNotNull(partialFileName + " : Batch file is successfully donwloaded", batchFile);
 	}
-	
+
 	@Then("verify statement file is successfully downloaded")
 	@When("verify statement file is successfully downloaded")
-	public void verifyStatementFileSuccessfullyGenerated(){
-		Device device =  context.get(ContextConstants.DEVICE);
-		String institutionCode = System.getProperty(ContextConstants.INST_PROPERTY).substring(System.getProperty(ContextConstants.INST_PROPERTY).indexOf('[')+1, System.getProperty(ContextConstants.INST_PROPERTY).length() - 1);
-		String partialFileName = "STMT_" +institutionCode  +"_"+ device.getProgramCode() + "_" + device.getClientCode() +"_"+ context.get(ContextConstants.STATEMENT_TO_DATE) + context.get(ContextConstants.STATEMENT_FROM_DATE) + "_" + device.getDeviceNumber().substring(device.getDeviceNumber().length() - 4); 
-		logger.info("File Name :{} ",partialFileName);
-	    batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(partialFileName, tempDirectory.toString(), "STATEMENT_DOWNLOAD","proc");
-     	assertNotNull("Statement file is successfully donwloaded :  "+batchFile.getAbsolutePath(),batchFile);			
-		context.put(ContextConstants.DEVICE,device);	
+	public void verifyStatementFileSuccessfullyGenerated() {
+		Device device = context.get(ContextConstants.DEVICE);
+		String institutionCode = System.getProperty(ContextConstants.INST_PROPERTY).substring(
+				System.getProperty(ContextConstants.INST_PROPERTY).indexOf('[') + 1,
+				System.getProperty(ContextConstants.INST_PROPERTY).length() - 1);
+		String partialFileName = "STMT_" + institutionCode + "_" + device.getProgramCode() + "_"
+				+ device.getClientCode() + "_" + context.get(ContextConstants.STATEMENT_TO_DATE)
+				+ context.get(ContextConstants.STATEMENT_FROM_DATE) + "_"
+				+ device.getDeviceNumber().substring(device.getDeviceNumber().length() - 4);
+		logger.info("File Name :{} ", partialFileName);
+		batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(partialFileName, tempDirectory.toString(),
+				"STATEMENT_DOWNLOAD", "proc");
+		assertNotNull("Statement file is successfully donwloaded :  " + batchFile.getAbsolutePath(), batchFile);
+		context.put(ContextConstants.DEVICE, device);
 	}
-	
+
 	@When("validate the statement with parameters:$parameterTable")
 	@Then("validate the statement with parameters:$parameterTable")
 	public void validateStatement(ExamplesTable parameterTable) {
 		Device device = context.get(ContextConstants.DEVICE);
-		HashMap<String , String> helpdeskValues = context.get(ContextConstants.HELPDESK_VALUES);		
+		HashMap<String, String> helpdeskValues = context.get(ContextConstants.HELPDESK_VALUES);
 		helpdeskValues.put(ContextConstants.STATEMENT_DATE, context.get(ContextConstants.STATEMENT_DATE));
-		GenericReport report = GenericReport.createWithProvider(provider);			
-		String dateOfBirth = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH).format(device.getClientDetails().getBirthDate());
-		report.setPassword(device.getClientDetails().getFirstName().substring(0,4)+""+dateOfBirth.substring(0, dateOfBirth.length()-5).replaceAll("/", ""));				
+		GenericReport report = GenericReport.createWithProvider(provider);
+		String dateOfBirth = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH)
+				.format(device.getClientDetails().getBirthDate());
+		report.setPassword(device.getClientDetails().getFirstName().substring(0, 4) + ""
+				+ dateOfBirth.substring(0, dateOfBirth.length() - 5).replaceAll("/", ""));
 		for (int row = 0; row < parameterTable.getRows().size(); row++) {
-			String parameter = parameterTable.getRow(row).get(parameterTable.getHeaders().get(0));			
-			if(parameter.equals(ContextConstants.CREDIT_CARD_NUMBER_HEADER_IN_STATEMENT))
-				report.getFieldToValidate().put(helpdeskValues.get(ContextConstants.CREDIT_CARD_NUMBER_HEADER_IN_STATEMENT),device.getDeviceNumber());	
+			String parameter = parameterTable.getRow(row).get(parameterTable.getHeaders().get(0));
+			if (parameter.equals(ContextConstants.CREDIT_CARD_NUMBER_HEADER_IN_STATEMENT))
+				report.getFieldToValidate().put(
+						helpdeskValues.get(ContextConstants.CREDIT_CARD_NUMBER_HEADER_IN_STATEMENT),
+						device.getDeviceNumber());
 			else
 				report.getFieldToValidate().put(parameter, helpdeskValues.get(parameter));
-		}			
-		reportVerificationWorkflow.verifyStatement(report);		
+		}
+		reportVerificationWorkflow.verifyStatement(report);
 	}
 
 	@When("\"$batchType\" download batch is executed for $type")
@@ -271,24 +281,9 @@ public class BatchProcessSteps {
 	@Then("user validate downloaded DAT file")
 	public void validateDownloadedFile() {
 		String partialFileName = context.get(ConstantData.VISA_OUT_GOING_FILE_NAME);
-<<<<<<< HEAD
 		File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(partialFileName, tempDirectory.toString(),
-				ConstantData.VISA_BASEII_LINUX_DIRECTORY);
+				ConstantData.VISA_BASEII_LINUX_DIRECTORY, "proc");
 		Assert.assertTrue("Transaction Data Does not match ", batchProcessWorkflow.validateVisaOutGoingFile(batchFile));
-
-	}
-
-	@Then("\"$batchName\" batch is successful")
-	@When("\"$batchName\" batch is successful")
-	public void MatchingBatch(String batchName) {
-		ProcessBatches batch = new ProcessBatches();
-		batch.setBatchName(batchName);
-		assertEquals("SUCCESS [2]", batchProcessWorkflow.processSystemInternalProcessingBatchWithoutDateCheck(batch));
-
-=======
-		File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(partialFileName, tempDirectory.toString(), ConstantData.VISA_BASEII_LINUX_DIRECTORY,"proc");
-		Assert.assertTrue("Transaction Data Does not match ",batchProcessWorkflow.validateVisaOutGoingFile(batchFile));
->>>>>>> 4f82885185f2933cd8d64d35d6deab261fc6fbd6
 	}
 
 }
