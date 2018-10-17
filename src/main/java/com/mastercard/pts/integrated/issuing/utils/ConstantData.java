@@ -79,7 +79,6 @@ public class ConstantData {
 	public static final String THREE_D_SECURE_TRANSACTION = "3D_SECURE_CAVV";
 	public static final String THREE_D_SECURE_SCENARIO_1 = "3D_SECURE_SCENARIO_1";
 	public static final String THREE_D_SECURE_SCENARIO_2 = "3D_SECURE_SCENARIO_2";
-	public static final String THREE_D_SECURE_SCENARIO_3 = "3D_SECURE_SCENARIO_3";
 	public static final String DATA_ELEMENT_CAVV = "048.TLV.43";
 	
 	public static final String DEVICE_RANGE_DATA = "DeviceRangeData";
