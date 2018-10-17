@@ -52,7 +52,7 @@ public class ThreeDEcommerceSecurityParametersSteps {
 		ThreeDECommerceSecurityParameters threeDESParams = new ThreeDECommerceSecurityParameters();
 		threeDESParams.setCheckStatus(status);
 		DeviceRange deviceRange =   context.get(ContextConstants.DEVICE_RANGE); 		
-		threeDESParams.setDeviceRangeFrom(deviceRange.getIssuerBinCode(deviceRange.getIssuerBin()) + ConstantData.START_RANGE_DIGITS);
+		threeDESParams.setDeviceRangeFrom(deviceRange.getIssuerBin());
 		threeDESParams.seteCommerceSecurityInterchange(interchange);
 		threeDECommerceSecurityParametersFlows.editDeclineAllNonSecured(threeDESParams);
 	}
