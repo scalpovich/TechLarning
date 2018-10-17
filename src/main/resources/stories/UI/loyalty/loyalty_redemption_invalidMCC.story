@@ -24,7 +24,7 @@ And user sign out from customer portal
 Scenario: Loyalty points redemption - credit -invalidMCC
 Given setting json values in excel for Credit
 When user is logged in institution
-And user raises an authorization request
+And user raises an authorization request with invalid MCC
 Then status of request is "approved"
 And search Purchase authorization and verify Successful status
 When user verifies available balance after transaction
