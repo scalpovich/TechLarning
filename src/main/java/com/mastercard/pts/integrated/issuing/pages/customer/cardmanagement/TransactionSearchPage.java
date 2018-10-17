@@ -19,6 +19,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Tran
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -70,11 +71,14 @@ public class TransactionSearchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
 	private MCWebElement institutionDateTxt;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Transaction Date']/ancestor::a")
+	private MCWebElement transactionDateOrderByLink;
+	
 	private String authorizationStatus;	
 	
 	public void selectFromDate(LocalDate date)
 	{
-		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(1);
+		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(60);
 		WebElementUtils.pickDate(fromDateTxt, date);		
 	}
 	
@@ -174,20 +178,26 @@ public class TransactionSearchPage extends AbstractBasePage {
 	}
 
 	public TransactionSearchDetails searchTransactionWithDeviceAndGetDetails(Device device, TransactionSearch ts) {
-		TransactionSearchDetails transactionDetails= new TransactionSearchDetails();		int i;
+		TransactionSearchDetails transactionDetails= new TransactionSearchDetails();
+		int i;
 		logger.info("Select product {}", device.getProductType());
 		WebElementUtils.selectDropDownByVisibleText(productTypeSelect, device.getProductType());
 		logger.info("Search transaction for device {}", device.getDeviceNumber());
 		WebElementUtils.enterText(searchDeviceTxt, device.getDeviceNumber());
-		WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
-		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
+//		WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
+//		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
+		selectFromDate(LocalDate.now());
+		selectToDate(LocalDate.now());
 		waitForWicket();
 		WebElementUtils.elementToBeClickable(tranDateDDwn);
 		WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, "Transaction Date [T]");
 		clickSearchButton();
-		waitForWicket();
+		clickWhenClickable(transactionDateOrderByLink);	
+		SimulatorUtilities.wait(1000);
+		clickWhenClickable(transactionDateOrderByLink);	
+		SimulatorUtilities.wait(5000);
 		for (i = 1; i < 4; i++) {
-			if ("2".equals(getCellTextByColumnName(i, "Sequence Number")))
+			if ("1".equals(getCellTextByColumnName(i, "Sequence Number")))
 				break;
 		}
 		

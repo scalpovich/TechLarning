@@ -137,6 +137,8 @@ public class ConstantData {
 	
 	public static final String RETAIL_TO_LOAN = 	"215 - Retail Transaction to Loan";	
 	
+	public static final String APPLIED_ON_LOAN_AMOUNT= 	"Loan Amount [LA]";	
+	
 	private ConstantData() {
 	}
 

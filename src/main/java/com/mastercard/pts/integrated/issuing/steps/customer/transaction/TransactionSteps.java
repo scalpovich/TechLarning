@@ -444,13 +444,17 @@ public class TransactionSteps {
 		assertEquals(transactionWorkflow.searchTransactionWithArnAndGetStatus(rt.getArn(), ts), "Reversal [R]");
 	}
 
+	@When("search transaction with device number on transaction search screen")
 	@Then("search transaction with device number on transaction search screen")
 	public void thenSearchWithDeviceInTransactionScreenAndVerify() {
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
-		Device device = context.get(ContextConstants.DEVICE);
+		Device device = new Device();//context.get(ContextConstants.DEVICE);
+		device.setDeviceNumber("5742539370867516");
+		device.setProductType("Credit [C]");
 		TransactionSearchDetails transactionSearch = transactionWorkflow.searchTransactionWithDeviceAndGetDetails(device, ts);
 		Assert.assertTrue("Successfully transaction search",transactionSearch.getDeviceNumber().equalsIgnoreCase(device.getDeviceNumber()));
 		context.put(ContextConstants.TRANSACTION_SEARCH_DETAILS, transactionSearch);
+		context.put(ContextConstants.DEVICE, device);
 	}
 	
 	@Then("search with device in transaction screen and status for wallet to wallet transfer transaction")

@@ -28,6 +28,7 @@ import com.google.common.base.CharMatcher;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
@@ -70,7 +71,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final String PRIORITY_REQUEST = "Priority Request:";
 
 	private static String ERROR_MESSAGE = "This field is required.";
-
 	private static final Logger logger = LoggerFactory.getLogger(HelpdeskGeneralPage.class);
 	private String activeDeviceNumber;
 	private String saleDate;
@@ -305,6 +305,28 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Book Loan']")
 	private MCWebElement bookLoanBtn;
 	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Calculate EMI']")
+	private MCWebElement calculateEMIBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Note :']/../following-sibling::td[1]/span/textarea")
+	private MCWebElement noteTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Sanction']")
+	private MCWebElement sanctionBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td/span[text()='EMI :']/../following-sibling::td[1]/span/input")
+	private MCWebElement emiLbl;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td/span[text()='Processing Fee :']/../following-sibling::td[1]/span/input")
+	private MCWebElement processingFeeLbl;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td/span[text()='Moratorium Loan :']/../following-sibling::td[1]/span/input")
+	private MCWebElement moratoriumLoanLbl;
+	
+	@PageElement(findBy = FindBy.ID, valueToFind = "callReferenceNumber")
+	private MCWebElement callRefNumberLbl;
+	
+	
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
 		logger.info(WALLET_NUMBER, CharMatcher.DIGIT.retainFrom(walletNumber.getText()));
@@ -402,6 +424,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	public void enterNotes(String notes) {
 		WebElementUtils.enterText(notesTxt, notes);
+	}
+	
+	public void enterNote(String notes) {
+		noteTxt.sendKeys(notes);
+		//WebElementUtils.enterText(noteTxt, notes);
 	}
 
 	public void enterEmailID(HelpdeskGeneral general) {
@@ -1301,18 +1328,49 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return creditLimit;
 	}
 	
-	public void retailTransactionToLoan(HelpdeskGeneral helpdeskGeneral,LoanPlan loanPlan,TransactionSearchDetails transactionDetails){
+	public List<LoanDetails>  retailTransactionToLoan(HelpdeskGeneral helpdeskGeneral,LoanPlan loanPlan,TransactionSearchDetails transactionDetails){
+		List<LoanDetails> loanDetails = new ArrayList<>();		
 		selectServiceCode(helpdeskGeneral.getServiceCode());
+		clickGoButton();
 		runWithinPopup(ConstantData.RETAIL_TO_LOAN, ()->{
-			selectLoanPlan(loanPlan.buildDescriptionAndCode());
+			selectLoanPlan(loanPlan.getLoanPlanCode());
 			ClickButton(bookLoanBtn);
-			Element("//td//span[text()='" + transactionDetails.getARN() + "']/../../following-sibling::td[7]").click();
-			
+			SimulatorUtilities.wait(200);
+			loanDetails.add(sanctionLoan(transactionDetails));			
+			clickWhenClickable(cancelBtn);
 		});			
 
 		clickEndCall();
+		return loanDetails;
 
 	}
+	
+	public LoanDetails sanctionLoan(TransactionSearchDetails transactionDetails)
+	{		
+		LoanDetails loanDetails= new LoanDetails();
+		runWithinPopup("Add Retail To Loan Sanction", ()->{	
+			String checkBox = String.format("//td//span[text()='%s']/../../following-sibling::td[7]",transactionDetails.getARN());
+			String tranAmountLbl = String.format("//td//span[text()='%s']/../../following-sibling::td[6]/span/span",transactionDetails.getARN());
+			Element(checkBox).click();
+			loanDetails.setTransactionAmount(Element(tranAmountLbl).getText());
+			ClickButton(calculateEMIBtn);	
+			SimulatorUtilities.wait(1000);		
+			elementToBeClickable(sanctionBtn);
+			enterNote("Automation");
+			noteTxt.click();
+			loanDetails.setLoanEMI(emiLbl.getText());
+			loanDetails.setProcessingFee(processingFeeLbl.getText());
+			loanDetails.setMoratoriumLoan(moratoriumLoanLbl.getText());
+			clickWhenClickable(sanctionBtn);
+			elementToBeClickable(okBtn);
+			clickWhenClickable(okBtn);
+		});			
+		
+		return loanDetails;
+	}
+	
+	
+	
 	
 	
 }
