@@ -81,13 +81,13 @@ public class DeviceUsagePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[.//*[text()='Application Transaction Counter :']]/following-sibling::td[1]/span")
 	private MCWebElement applicationTransactionCounter;
-	
+
 	private final String DEVICE_TRANSACTION_USAGE ="//div[@id='tab2']//table[@class='dataview']//tbody//tr";
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "ul.tabs li a[href*='tab3']")
 	private MCWebElement walletMCGUsageSubMenu;
-	
-	private String closePopUpBtn = "a.w_close";
+
+	private final String closePopUpBtn = "a.w_close";
 
 	private static final String FRAME_VIEW_DEVICE_USAGE = "View Device Usage";
 	private static final String FRAME_VIEW_WALLET_USAGE = "View Wallet Usage";
@@ -146,7 +146,7 @@ public class DeviceUsagePage extends AbstractBasePage {
 		});
 		return deviceUsageDetails;
 	}
-	
+
 	public void enterDeviceNumber(DeviceUsage deviceUsage) {
 		enterValueinTextBox(deviceNumber, deviceUsage.getDeviceNumber());
 	}
@@ -154,7 +154,7 @@ public class DeviceUsagePage extends AbstractBasePage {
 	public void navigateToWalletMCGUsage() {
 		clickWhenClickable(walletMCGUsageSubMenu);
 	}
-	
+
 	public void clickXButton(){
 		getList(closePopUpBtn).get(1);
 		getList(closePopUpBtn).get(0);
@@ -162,22 +162,22 @@ public class DeviceUsagePage extends AbstractBasePage {
 
 	public DeviceUsage getWalletMCGUsageData(DeviceUsage deviceUsage, int rowNumber) {
 		try{
-		deviceUsage.setRecordedMCG(getCellTextByColumnName(rowNumber, MCG_CODE));
-		deviceUsage.setDailyAmountDomesticUtilized(getCellTextByColumnName(rowNumber, DAILY_AMOUNT_DOMESTIC_UTILIZED));
-		deviceUsage.setDailyVelocityDomesticUtilized(getCellTextByColumnName(rowNumber, DAILY_VELOCLITY_DOMESTIC_UTILIZED));
-		deviceUsage.setDailyAmountInternationalUtilized(getCellTextByColumnName(rowNumber, DAILY_AMOUNT_INTERNATIONAL_UTILIZED));
-		deviceUsage.setDailyVelocityInternationalUtilized(getCellTextByColumnName(rowNumber, DAILY_VELOCLITY_INTERNATIONAL_UTILIZED));
-        deviceUsage.setPeriodAmountDomesticUtilized(getCellTextByColumnName(rowNumber,PERIOD_AMOUNT_DOMESTIC_UTILIZED));
-        deviceUsage.setPeriodVelocityDomesticUtilized(getCellTextByColumnName(rowNumber,PERIOD_VELOCLITY_DOMESTIC_UTILIZED));
-        deviceUsage.setPeriodAmountInternationalUtilized(getCellTextByColumnName(rowNumber,PERIOD_AMOUNT_INTERNATIONAL_UTILIZED));
-        deviceUsage.setPeriodVelocityInternationalUtilized(getCellTextByColumnName(rowNumber,PERIOD_VELOCITY_INTERNATIONAL_UTILIZED));
-		clickCloseButton();
-        switchToDefaultFrame();
-        switchToIframe(FRAME_VIEW_DEVICE_USAGE);
-        clickCloseButton();
-        switchToDefaultFrame();
+			deviceUsage.setRecordedMCG(getCellTextByColumnName(rowNumber, MCG_CODE));
+			deviceUsage.setDailyAmountDomesticUtilized(getCellTextByColumnName(rowNumber, DAILY_AMOUNT_DOMESTIC_UTILIZED));
+			deviceUsage.setDailyVelocityDomesticUtilized(getCellTextByColumnName(rowNumber, DAILY_VELOCLITY_DOMESTIC_UTILIZED));
+			deviceUsage.setDailyAmountInternationalUtilized(getCellTextByColumnName(rowNumber, DAILY_AMOUNT_INTERNATIONAL_UTILIZED));
+			deviceUsage.setDailyVelocityInternationalUtilized(getCellTextByColumnName(rowNumber, DAILY_VELOCLITY_INTERNATIONAL_UTILIZED));
+			deviceUsage.setPeriodAmountDomesticUtilized(getCellTextByColumnName(rowNumber,PERIOD_AMOUNT_DOMESTIC_UTILIZED));
+			deviceUsage.setPeriodVelocityDomesticUtilized(getCellTextByColumnName(rowNumber,PERIOD_VELOCLITY_DOMESTIC_UTILIZED));
+			deviceUsage.setPeriodAmountInternationalUtilized(getCellTextByColumnName(rowNumber,PERIOD_AMOUNT_INTERNATIONAL_UTILIZED));
+			deviceUsage.setPeriodVelocityInternationalUtilized(getCellTextByColumnName(rowNumber,PERIOD_VELOCITY_INTERNATIONAL_UTILIZED));
+			clickCloseButton();
+			switchToDefaultFrame();
+			switchToIframe(FRAME_VIEW_DEVICE_USAGE);
+			clickCloseButton();
+			switchToDefaultFrame();
 
-		return deviceUsage;
+			return deviceUsage;
 		}
 		catch(WebDriverException | NullPointerException e){
 			e.printStackTrace();
@@ -233,7 +233,7 @@ public class DeviceUsagePage extends AbstractBasePage {
 		});
 		return atcDetails;
 	}
-		
+
 	public List<Map<String, Double>> getDeviceUsageDetails(Device device){
 		List<Map<String, Double>> deviceDetails = new LinkedList<>();
 		WebElementUtils.enterText(deviceNumber, device.getDeviceNumber());
@@ -251,7 +251,7 @@ public class DeviceUsagePage extends AbstractBasePage {
 			deviceTotalDetails.put(transactionAttributes[3], Double.parseDouble(periodDebitTransactionAmountUtilizedLbl.getText()));
 			deviceTotalDetails.put(transactionAttributes[4], Double.parseDouble(yearlyDebitTransactionVelocityUtilizedLbl.getText()));
 			deviceTotalDetails.put(transactionAttributes[5], Double.parseDouble(yearlyDebitTransactionAmountUtilizedLbl.getText()));
-			
+
 			clickWhenClickable(devicetransactionUsageTabLink);
 			SimulatorUtilities.wait(500);
 			deviceTransactionDetails.putAll(getDeviceTransactionUsage(deviceTransactionDetails));
@@ -278,14 +278,14 @@ public class DeviceUsagePage extends AbstractBasePage {
 		return deviceTransactionDetails;
 
 	}
-	
+
 	@Override
 	public String getCellTextByColumnName(int rowNumber, String columnName) {
 		String xpath = String.format("//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]", rowNumber, columnName);
 		try{
-		WebElement element = driver().findElement(By.xpath(xpath));
-		waitForElementVisible(element);
-		return element.getText().trim();}
+			WebElement element = Element(xpath);
+			waitForElementVisible(element);
+			return element.getText().trim();}
 		catch(WebDriverException e){
 			e.printStackTrace();
 			return null;

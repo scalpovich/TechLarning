@@ -68,8 +68,7 @@ public class MCGLimitPlan {
 
 	public static MCGLimitPlan getMCGLimitPlanData(KeyValueProvider provider) {
 		MCGLimitPlan plan = new MCGLimitPlan();
-		String random = CustomUtils.randomAlphaNumeric(5).toUpperCase();
-		plan.setMcgLimitPlanCode(random);
+		plan.setMcgLimitPlanCode(CustomUtils.randomAlphaNumeric(5).toUpperCase());
 		plan.setDescription(ConstantData.GENERIC_DESCRIPTION);
 		plan.setMcgCode(provider.getString(MCG_CODE));
 		plan.setFromMonthOnBook(FROM_MONTH_ON_BOOK);

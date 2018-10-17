@@ -25,6 +25,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CurrencyExchangeRate;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
+import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
@@ -117,9 +118,9 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
 	private MCWebElement cancelBtn;
 	
-	private String editLink = ".dataview tbody img[alt='Edit Record']"; 
+	private final String editLink = ".dataview tbody img[alt='Edit Record']"; 
 	
-	private String VIEW_CURRENCY_EXCHANGE_RATE = "View Currency Exchange Rate";
+	private final String VIEW_CURRENCY_EXCHANGE_RATE = "View Currency Exchange Rate";
 
 	@Autowired
 	ReadTestDataFromExcel dataReader;
@@ -380,22 +381,17 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 				domainObj.getRateOrigin().split(" ")[0],
 				domainObj.getProgram());
 		try{
-		clickOnFirstRowEditLink();
+		new HelpdeskGeneralPage().clickFirstRowEditLink();
 		}
 		catch(StaleElementReferenceException e ){
 			e.printStackTrace();
-			clickOnFirstRowEditLink();
+			new HelpdeskGeneralPage().clickFirstRowEditLink();
 		}
 		switchToIframe(VIEW_CURRENCY_EXCHANGE_RATE);
 		String rate = getTextFromPage(midRateLbl);
 		clickCloseButton();
 		switchToDefaultFrame();
 		return rate;
-	}
-	
-	private void clickOnFirstRowEditLink(){
-		SimulatorUtilities.wait(3000);
-		(driver().findElements(By.cssSelector(editLink))).get(0).click();
 	}
 
 	public void verifyUiOperationStatus() {
