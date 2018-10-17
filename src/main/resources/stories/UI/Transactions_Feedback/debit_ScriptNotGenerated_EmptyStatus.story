@@ -24,6 +24,7 @@ And user has wallet number information for debit device
 And user performs adjustment transaction
 And user has current wallet balance amount information for debit device
 And user sets invalid pin
+And embossing file batch was generated in correct format
 Then user sign out from customer portal
 
 Scenario:1.2 To Verify that the user can stoplist credit device from stoplist screen
@@ -74,4 +75,4 @@ And user sign out from customer portal
 And MAS simulator is closed
 
 Scenario:1.9 Verify DB has value in Application Unblock Column
-Then Verify APPLICATION_UNBLOCK_ICC has column value as Null
+Then Verify PIN_UNBLOCK_ICC has column value as Null
