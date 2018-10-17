@@ -102,7 +102,8 @@ public class TransactionProvider {
 		transaction.setDeKeyValuePair(parseDataElements(dataProvider.apply(DE),
 				transaction));
 		
-		if(testCaseName.equalsIgnoreCase(ConstantData.THREE_D_SECURE_TRANSACTION) || testCaseName.equalsIgnoreCase(ConstantData.THREE_D_SECURE_NO_CVV2)){
+		if(testCaseName.equalsIgnoreCase(ConstantData.THREE_D_SECURE_TRANSACTION) || testCaseName.equalsIgnoreCase(ConstantData.THREE_D_SECURE_NO_CVV2)|| testCaseName.equalsIgnoreCase(ConstantData.THREE_D_SECURE_SCENARIO_1) 
+				|| testCaseName.equalsIgnoreCase(ConstantData.THREE_D_SECURE_SCENARIO_2) || testCaseName.equalsIgnoreCase(ConstantData.THREE_D_SECURE_SCENARIO_3)){
 			Map<String , String> tempMap=transaction.getDeKeyValuePair();
 			StringBuffer elementChange=new StringBuffer(tempMap.get(ConstantData.DATA_ELEMENT_CAVV));
 			tempMap.put(ConstantData.DATA_ELEMENT_CAVV, elementChange.append("=").toString());
