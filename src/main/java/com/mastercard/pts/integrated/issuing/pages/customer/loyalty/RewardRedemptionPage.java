@@ -60,6 +60,7 @@ public class RewardRedemptionPage extends AbstractBasePage {
 		runWithinPopup("Redemption", () -> {
 			WebElementUtils.enterText(pointsredeemedtxt, rewards.getpointsToRedeem());
 			clickSaveButton();
+			SimulatorUtilities.wait(2000);
 		});
 	}
 

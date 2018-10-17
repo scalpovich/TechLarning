@@ -674,8 +674,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
-		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
-		editDeviceLink.click();
+		clickFirstRowEditLink();
 		clickWalletDetailsTab();
 		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
 		int rowCount = driver()
@@ -702,7 +701,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 						.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance"))
 						+ Double.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Settled Debit"));
 				logger.info("Current Available Balance + Settled Debit : " + dec.format(balance));
-
 				walletBalanceInformation = walletBalanceInformation + ","
 						+ getCellTextByColumnNameInEmbeddedTab(j, "Wallet Currency") + ":" + dec.format(balance) + ":"
 						+ getCellTextByColumnNameInEmbeddedTab(j, "WALLET_NUMBER");
@@ -716,7 +714,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		// logger.info("Get Wallet Balance Information for Device: {}",
 		// device.getDeviceNumber());
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, "Prepaid [P]");
-		WebElementUtils.enterText(deviceNumberSearchTxt, "5383164041897018");
+		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
 		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
 		editDeviceLink.click();
@@ -732,9 +730,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			Double balance = Double.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance"));
 
 			logger.info("Current Available Balance + Settled Credit : " + dec.format(balance));
-			walletBalanceInformation = walletBalanceInformation + ","
-					+ getCellTextByColumnNameInEmbeddedTab(j, "Wallet Currency") + ":" + dec.format(balance) + ":"
-					+ getCellTextByColumnNameInEmbeddedTab(j, "WALLET_NUMBER");
+			walletBalanceInformation = walletBalanceInformation + "," + dec.format(balance);
 		}
 		return walletBalanceInformation;
 	}

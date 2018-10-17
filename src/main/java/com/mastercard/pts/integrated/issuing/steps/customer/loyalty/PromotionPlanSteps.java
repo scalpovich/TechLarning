@@ -41,6 +41,7 @@ public class PromotionPlanSteps {
 		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
 		promotionPlan.setPromotionloyaltyPlan(data.getLoyaltyPlan());
 		context.put(ContextConstants.PROMOTION_PLAN, promotionPlan);
+		context.put(ContextConstants.PROMOTION_PLAN_CODE, promotionPlan.getPromotionPlanCode());
 		uiVerificationLoyaltyWorkflow.verifyPromotionPlanwithMCG(promotionPlan);
 	}
 

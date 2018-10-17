@@ -37,7 +37,7 @@ public class RewardsRedemptionSteps {
 	@Autowired
 	private TestContext context;
 
-	private String currentBalanceAmount;
+	// private String currentBalanceAmount;
 
 	@When("user verifies rewards and redemption screen")
 	@Then("user verifies rewards and redemption screen")
@@ -73,9 +73,9 @@ public class RewardsRedemptionSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
-		currentBalanceAmount = helpdeskWorkflow.getWalletBalanceAfterLoyaltyRedemption(device);
+		String currentBalanceAmount = helpdeskWorkflow.getWalletBalanceAfterLoyaltyRedemption(device);
 		context.put(ContextConstants.AVAILABLE_BALANCE_AFTER_LOYALTY_REDEMPTION, currentBalanceAmount);
-		Double balanceAfterLoyalty = Double.parseDouble(context.get("AVAILABLE_BALANCE_OR_CREDIT_LIMIT"))
+		Double balanceAfterLoyalty = Double.parseDouble(context.get("AVAILABLE_BALANCE_OR_CREDIT_LIMIT").toString())
 				+ Double.parseDouble(rewardsRedemption.getpointsToRedeem());
 		Assert.assertEquals(balanceAfterLoyalty, currentBalanceAmount);
 	}
