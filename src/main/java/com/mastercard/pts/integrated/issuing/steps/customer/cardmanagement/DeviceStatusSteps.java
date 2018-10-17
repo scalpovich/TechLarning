@@ -35,7 +35,6 @@ public class DeviceStatusSteps extends AbstractBaseSteps {
 	@When("User Changes Device Status to $status")
 	@Then("User Changes Device Status to $status")
 	public void userChangeDeviceStatusToCapture(String status) {
-		DeviceStatus deviceStatus=DeviceStatus.createWithProvider(keyProvider);
 		deviceStatusWorkflow.changeStatus(status);
 	}
 
