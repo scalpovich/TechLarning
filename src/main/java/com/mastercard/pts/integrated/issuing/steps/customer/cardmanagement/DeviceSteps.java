@@ -393,7 +393,7 @@ public class DeviceSteps {
 		context.put(ContextConstants.DEVICE, device);
 	}
 	
-	@When("user attach device promotional plan $promotionPlan")
+	@When("user attachs device promotion plan $promotionPlan")
 	public void userAttachDevicePromotionalPlan(String promotionPlan){
 		Device device = context.get(ContextConstants.DEVICE);
 		/*Device device = new Device();
