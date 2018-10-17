@@ -12,7 +12,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DatabaseFlows;
 
 @Component
-public class DatabaseSteps {
+public class DataBaseSteps {
 
 
 	@Autowired
