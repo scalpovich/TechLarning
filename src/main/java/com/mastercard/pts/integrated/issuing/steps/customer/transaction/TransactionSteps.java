@@ -240,7 +240,7 @@ public class TransactionSteps {
 
 		// changed ECOMMERCE to ECOM
 		if (transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE") || transactionWorkflow.isContains(transaction, "ASI_") || transactionWorkflow.isContains(transaction, "MMSR")
-				|| transactionWorkflow.isContains(transaction, ConstantData.THREE_D_SECURE_TRANSACTION)) {
+				|| transactionWorkflow.isContains(transaction, ConstantData.THREE_D_SECURE_TRANSACTION) || transactionWorkflow.isContains(transaction, "3D_SECURE_SCENARIO")) {
 			// for pinless card, we are not performing CVV validation as we do not know the CVV as this is fetched from embosing file on LInuxbox
 			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data()); // Transaction currency code
 		}
