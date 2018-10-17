@@ -26,6 +26,8 @@ public class TransactionFeeWaiverPlanSteps {
 	@Autowired
 	private TestContext context;
 	
+	private static final String TRANSACTION_FEE_WAIVER_PLAN = "TRANSACTION_FEE_WAIVER_PLAN";
+	
 	@When("user creates a transaction fee waiver")
 	public void createTransactionFeeWaiverPlan(){
 		TransactionFeeWaiverPlan plan=TransactionFeeWaiverPlan.createWithProvider(provider);
@@ -44,6 +46,7 @@ public class TransactionFeeWaiverPlanSteps {
 		plan.setEffectiveDate(convertedDate2.plusDays(1));
 		plan.setEndDate(convertedDate2.plusDays(1));
 		DevicePlan device=context.get(ContextConstants.DEVICE_PLAN);
+		device.setTransactionFeeWaiverPlan(provider.getString(TRANSACTION_FEE_WAIVER_PLAN));
 		transactionFeeWaiverPlanFlows.addTransactionFeeWaiverplanInExistingPlan(plan,device);
 	}
 }

@@ -194,8 +194,8 @@ And user sign out from customer portal
 Scenario:2.8 Perform Authorization transaction
 When user is logged in institution
 And user raises an authorization request
-And search Purchase authorization and verify 100-Do Not Honour status
-And assert Decline response with 20010 AuthDecline Code and Invalid wallet Status. as description
+And search Purchase authorization and verify 200-REFER CARD status
+And assert Refer response with 20010 AuthDecline Code and Invalid wallet Status. as description
 And user sign out from customer portal
 
 
@@ -237,6 +237,6 @@ And user sign out from customer portal
 Scenario:3.2 Perform Authorization transaction
 When user is logged in institution
 And user raises an authorization request
-And search Purchase authorization and verify 100-Do Not Honour status
-And assert Decline response with 20010 AuthDecline Code and Invalid wallet Status. as description
+And search Purchase authorization and verify 200-CAPTURE CARD status
+And assert Capture response with 20010 AuthDecline Code and Invalid wallet Status. as description
 And user sign out from customer portal
