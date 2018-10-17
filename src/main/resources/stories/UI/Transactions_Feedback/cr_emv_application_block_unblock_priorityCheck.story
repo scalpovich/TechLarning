@@ -56,7 +56,6 @@ Scenario:6 Verify DB has value in Application Unblock Column
 Given Verify APPLICATION_BLOCK_ICC has column value as NOT_NULL
 Then Verify APPLICATION_UNBLOCK_ICC has column value as NULL
 
-
 Scenario:9 Transaction of EMV_PURCHASE_ISSUER_SCRIPTING_RES for Application block
 When perform an EMV_PURCHASE_ISSUER_SCRIPTING_RES MAS transaction on the same card
 And user is logged in institution
