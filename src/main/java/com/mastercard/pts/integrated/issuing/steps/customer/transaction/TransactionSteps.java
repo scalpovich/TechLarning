@@ -28,6 +28,7 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.agent.channelmanagement.AssignPrograms;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalanceRequest;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
@@ -118,6 +119,7 @@ public class TransactionSteps {
 		}
 		performOperationOnSamecard(false);
 		givenOptimizedTransactionIsExecuted(temp);
+		context.put("transaction_date",context.get(ContextConstants.INSTITUTION_DATE));
 	}
 
 	@When("perform an $transaction MAS transaction on the same card")
@@ -312,6 +314,7 @@ public class TransactionSteps {
 
 	@When("Auth file is loaded into MCPS and processed")
 	public void loadAuthFileToMCPS() {
+		context.put(ContextConstants.INSTITUTION_DATE,context.get("transaction_date"));
 		arnNumber = transactionWorkflow.loadAuthFileToMCPS(authFilePath);
 		if (arnNumber.isEmpty()) {
 			logger.error("*********ARN number is empty");
