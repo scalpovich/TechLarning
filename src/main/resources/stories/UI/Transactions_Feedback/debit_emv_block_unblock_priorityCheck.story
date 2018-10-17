@@ -30,19 +30,19 @@ Given user is logged in institution
 When user stoplists a card from stoplist device screen
 And user edits deviceplan and enables stoplist flag
 And device has "lost" status
-Then user sign out from customer portal
+And user sign out from customer portal
 
 Scenario:1.3 Withdraw the device from stoplist
 Given user is logged in institution
 When user withdraws a card from withdraw device screen
-Then user sign out from customer portal
+And user sign out from customer portal
 
 Scenario:1.4 Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
-Then FINSim simulator is closed
+And FINSim simulator is closed
 
 Scenario:1.5 Transaction EMV_PURCHASE Application block
 Given connection to MAS is established
@@ -52,50 +52,28 @@ Then verify Pending [2] status of Last Executed Script Status in Device Details 
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario:1.6 Verify DB has value in Application Unblock Column
-Given Verify APPLICATION_BLOCK_ICC has column value as Null
-Then Verify APPLICATION_UNBLOCK_ICC has column value as Not Null
+Scenario:6 Verify DB has value in Application Unblock Column
+Given Verify APPLICATION_BLOCK_ICC has column value as NOT_NULL
+Then Verify APPLICATION_UNBLOCK_ICC has column value as NULL
 
-Scenario:1.7 To Verify that the user can stoplist credit device from stoplist screen
-Given user is logged in institution
-When user stoplists a card from stoplist device screen
-And user edits deviceplan and enables stoplist flag
-And device has "lost" status
-Then user sign out from customer portal
 
-Scenario:1.8 Withdraw the device from stoplist
-Given user is logged in institution
-When user withdraws a card from withdraw device screen
-Then user sign out from customer portal
-
-Scenario:1.9 Transaction of EMV_PURCHASE_ISSUER_SCRIPTING_RES for Application block
+Scenario:9 Transaction of EMV_PURCHASE_ISSUER_SCRIPTING_RES for Application block
 When perform an EMV_PURCHASE_ISSUER_SCRIPTING_RES MAS transaction on the same card
 And user is logged in institution
 Then verify Pending [2] status of Last Executed Script Status in Device Details Screen
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario:2.0 Verify DB has value in Application Unblock Column
-Given Verify APPLICATION_BLOCK_ICC has column value as Not Null
-Then Verify APPLICATION_UNBLOCK_ICC has column value as Null
+Scenario:10 Verify DB has value in Application Unblock Column
+Given Verify APPLICATION_BLOCK_ICC has column value as NULL
+Then Verify APPLICATION_UNBLOCK_ICC has column value as NOT_NULL
 
-Scenario:2.1 Transaction of EMV_PURCHASE_ISSUER_SCRIPTING_RES for Application block
-When perform an EMV_PURCHASE_ISSUER_SCRIPTING_RES MAS transaction on the same card
-And user is logged in institution
-Then verify Pending [2] status of Last Executed Script Status in Device Details Screen
-And user sign out from customer portal
-
-Scenario:2.2 Verify DB has value in Application Unblock Column
-Given Verify APPLICATION_BLOCK_ICC has column value as Null
-Then Verify APPLICATION_UNBLOCK_ICC has column value as Not Null
-
-Scenario:2.3 Transaction of EMV_PURCHASE_ISSUER_SCRIPTING_RES for Application block
+Scenario:11 Transaction of EMV_PURCHASE_ISSUER_SCRIPTING_RES for Application block
 When perform an EMV_PURCHASE_ISSUER_SCRIPTING_RES MAS transaction on the same card
 And user is logged in institution
 Then verify Success [0] status of Last Executed Script Status in Device Details Screen
 And user sign out from customer portal
-And MAS simulator is closed
 
-Scenario:2.4 Verify DB has value in Application Unblock Column
-Given Verify APPLICATION_BLOCK_ICC has column value as Null
-Then Verify APPLICATION_UNBLOCK_ICC has column value as Not Null
+Scenario:12 Verify DB has value in Application Unblock Column
+Given Verify APPLICATION_BLOCK_ICC has column value as NOT_NULL
+Then Verify APPLICATION_UNBLOCK_ICC has column value as NOT_NULL

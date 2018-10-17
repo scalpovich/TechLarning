@@ -56,17 +56,6 @@ Scenario:6 Verify DB has value in Application Unblock Column
 Given Verify APPLICATION_BLOCK_ICC has column value as NOT_NULL
 Then Verify APPLICATION_UNBLOCK_ICC has column value as NULL
 
-Scenario:7 To Verify that the user can stoplist credit device from stoplist screen
-Given user is logged in institution
-When user stoplists a card from stoplist device screen
-And user edits deviceplan and enables stoplist flag
-And device has "lost" status
-Then user sign out from customer portal
-
-Scenario:8 Withdraw the device from stoplist
-Given user is logged in institution
-When user withdraws a card from withdraw device screen
-Then user sign out from customer portal
 
 Scenario:9 Transaction of EMV_PURCHASE_ISSUER_SCRIPTING_RES for Application block
 When perform an EMV_PURCHASE_ISSUER_SCRIPTING_RES MAS transaction on the same card
@@ -76,26 +65,15 @@ And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario:10 Verify DB has value in Application Unblock Column
-Given Verify APPLICATION_BLOCK_ICC has column value as NOT_NULL
-Then Verify APPLICATION_UNBLOCK_ICC has column value as NULL
+Given Verify APPLICATION_BLOCK_ICC has column value as NULL
+Then Verify APPLICATION_UNBLOCK_ICC has column value as NOT_NULL
 
 Scenario:11 Transaction of EMV_PURCHASE_ISSUER_SCRIPTING_RES for Application block
 When perform an EMV_PURCHASE_ISSUER_SCRIPTING_RES MAS transaction on the same card
 And user is logged in institution
-Then verify Pending [2] status of Last Executed Script Status in Device Details Screen
+Then verify Success [0] status of Last Executed Script Status in Device Details Screen
 And user sign out from customer portal
 
 Scenario:12 Verify DB has value in Application Unblock Column
 Given Verify APPLICATION_BLOCK_ICC has column value as NOT_NULL
 Then Verify APPLICATION_UNBLOCK_ICC has column value as NOT_NULL
-
-Scenario:13 Transaction of EMV_PURCHASE_ISSUER_SCRIPTING_RES for Application block
-When perform an EMV_PURCHASE_ISSUER_SCRIPTING_RES MAS transaction on the same card
-And user is logged in institution
-Then verify Success [0] status of Last Executed Script Status in Device Details Screen
-And user sign out from customer portal
-And MAS simulator is closed
-
-Scenario:14 Verify DB has value in Application Unblock Column
-Given Verify APPLICATION_BLOCK_ICC has column value as NULL
-Then Verify APPLICATION_UNBLOCK_ICC has column value as NULL
