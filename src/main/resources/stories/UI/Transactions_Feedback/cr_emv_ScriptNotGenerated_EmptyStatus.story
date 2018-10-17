@@ -58,14 +58,12 @@ And search Purchase authorization and verify 106-Allowable Pin tries exceeded st
 And assert Decline response with 46053 AuthDecline Code and Pin retry limit exceeded. as description
 And device has "normal" status
 And user creates service request for Reset Pin Retry Counter [109] service
-
 Then user sign out from customer portal
 
 Scenario:1.7 Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 Then PIN is retrieved successfully with data from Pin Offset File
-And FINSim simulator is closed
 
 Scenario:1.8 Transaction EMV_PURCHASE Application block
 When perform an EMV_PURCHASE MAS transaction on the same card
@@ -74,6 +72,7 @@ Then verify Empty status of Last Executed Script Status in Device Details Screen
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 And MAS simulator is closed
+And FINSim simulator is closed
 
 Scenario:1.9 Verify DB has value in Application Unblock Column
 Then Verify PIN_UNBLOCK_ICC has column value as Null
