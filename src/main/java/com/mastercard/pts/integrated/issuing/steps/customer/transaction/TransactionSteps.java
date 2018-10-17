@@ -314,6 +314,7 @@ public class TransactionSteps {
 
 	@When("Auth file is loaded into MCPS and processed")
 	public void loadAuthFileToMCPS() {
+		logger.info("TXN Date "+context.get("transaction_date"));
 		context.put(ContextConstants.INSTITUTION_DATE,context.get("transaction_date"));
 		arnNumber = transactionWorkflow.loadAuthFileToMCPS(authFilePath);
 		if (arnNumber.isEmpty()) {
