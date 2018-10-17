@@ -205,6 +205,7 @@ public class AuthorizationSearchWorkflow {
 	}
 
 	public void verifyReconciliationStatus(String status, Device device) {
+		authorizationSearchPage = navigator.navigateToPage(AuthorizationSearchPage.class);
 		boolean condition=authorizationSearchPage.verifyReconciliationStatus(device.getDeviceNumber()).equalsIgnoreCase(status);
 		assertTrue("Reconciliation Status Doesnot match with Authoraization Report content", condition);
 	}

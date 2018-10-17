@@ -70,6 +70,7 @@ And user processes Billing Process - Credit system internal batch for Credit
 And device has "normal" status
 And user notes down required values from helpdesk for credit
 And user verify Billed amount for Purchase category
+And user update COLLECTION Administrative as Approve [0]
 And user sign out from customer portal
 
 Scenario: 1.7 Login & Logout to wait for date to be updated for next billing cycle
@@ -112,6 +113,7 @@ When user is logged in institution
 And user raises an authorization request
 Then status of request is "approved"
 And search Purchase authorization and verify 000-Successful status
+And user update COLLECTION Administrative as Decline [1]
 Then user sign out from customer portal
 
 Scenario: 2.1 Login & Logout to wait for date to be updated for next billing cycle
@@ -154,6 +156,7 @@ When user is logged in institution
 And user raises an authorization request
 And search Purchase authorization and verify 100-Do Not Honour status
 And assert Decline response with 20010 AuthDecline Code and Invalid wallet Status. as description
+And user update COLLECTION Administrative as Refer [2]
 And user sign out from customer portal
 
 Scenario: 2.5 Login & Logout to wait for date to be updated for next billing cycle
@@ -239,4 +242,5 @@ When user is logged in institution
 And user raises an authorization request
 And search Purchase authorization and verify 200-CAPTURE CARD status
 And assert Capture response with 20010 AuthDecline Code and Invalid wallet Status. as description
+And user update COLLECTION Administrative as Approve [0]
 And user sign out from customer portal

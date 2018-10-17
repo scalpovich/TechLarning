@@ -19,9 +19,9 @@ public class TransactionFeeWaiverPlanFlows {
 		page.setupTransactionTypeForSources(plan);
 	}
 
-	public void addTransactionFeeWaiverplanInExistingPlan(TransactionFeeWaiverPlan plan, DevicePlan device) {
+	public void addTransactionFeeWaiverplanInExistingPlan(TransactionFeeWaiverPlan plan) {
 		TransactionFeeWaiverPlanPage page=navigator.navigateToPage(TransactionFeeWaiverPlanPage.class);
-		page.addTransactionFeeWaiverplanInExistingPlan(plan,device);
+		page.addTransactionFeeWaiverplanInExistingPlan(plan);
 	}
 }
 

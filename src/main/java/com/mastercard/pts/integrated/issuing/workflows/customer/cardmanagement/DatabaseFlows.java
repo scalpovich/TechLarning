@@ -38,7 +38,7 @@ public class DatabaseFlows {
 		if (noOfDays.equalsIgnoreCase("next") || noOfDays.equalsIgnoreCase("one")) {
 			daysDifference = daysDifference + 1;
 		} else if (noOfDays.equalsIgnoreCase("three")) {
-			daysDifference = daysDifference + 4;
+			daysDifference = daysDifference + 3;
 		} else if (noOfDays.equalsIgnoreCase("21")) {
 			daysDifference = daysDifference + 20;
 		}

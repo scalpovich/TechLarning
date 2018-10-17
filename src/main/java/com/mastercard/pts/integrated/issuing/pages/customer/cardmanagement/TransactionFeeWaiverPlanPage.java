@@ -202,8 +202,8 @@ public class TransactionFeeWaiverPlanPage extends AbstractBasePage {
 		addTransactionFeeWaiverPlanMasterDetails(plan);
 	}
 
-	public void addTransactionFeeWaiverplanInExistingPlan(TransactionFeeWaiverPlan plan, DevicePlan device) {
-		WebElementUtils.enterText(waiverPlanCodeTxt, device.getTransactionFeeWaiverPlan().substring(12, 15));
+	public void addTransactionFeeWaiverplanInExistingPlan(TransactionFeeWaiverPlan plan) {
+		WebElementUtils.enterText(waiverPlanCodeTxt, plan.getTransactionFeeWaiverPlanCode().substring(12, 15));
 		clickSearchButton();
 		SimulatorUtilities.wait(500);
 		editFirstRecord();

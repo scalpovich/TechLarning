@@ -224,7 +224,7 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 
 	public String verifyReconciliationStatus(String deviceNumber) {
 		inputDeviceNumber(deviceNumber);
-		inputFromDate(LocalDate.now().minusDays(1),3);
+		inputFromDate(LocalDate.now().minusDays(1),5);
 		inputToDate(LocalDate.now());
 		waitAndSearchForRecordToAppear();
 		viewDeviceDetails();

@@ -37,16 +37,14 @@ And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 And FINSim simulator is closed
 
-Scenario:1.3 Perform EMV_PURCHASE Authorization transaction
+Scenario:1.3 Perform EMV_PURCHASE Authorization transaction and Generate Auth File for Clearing
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
-And MAS test results are verified
+Then MAS test results are verified
+When Auth file is generated after transaction
 And MAS simulator is closed
-When user is logged in institution
+And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
-When user verifies available balance after transaction
-And device has "normal" status
-When user verifies available Card limit for card after transaction
 Then user sign out from customer portal
 
 Scenario:1.4 Login & Logout to wait for date to be updated 
@@ -64,9 +62,6 @@ Scenario:1.5 Run Ageing Batch and verify reconciliation status
 Given user is logged in institution
 When "Ageing" batch for credit is successful
 And user verifies reconciliation status Aged in auth search
-When user verifies available balance after transaction
-And device has "normal" status
-When user verifies available Card limit for card after transaction
 Then user sign out from customer portal
 
 
