@@ -49,5 +49,5 @@ Then MAS simulator is closed
 
 Scenario:1.5 Uncheck Decline All Non Secured Transaction Check
 Given user is logged in institution
-When user edits 3D ecommerce security parameters to skip CVV2/CVC2 validation for product Credit and interchange Mastercard as check
+When user edits 3D ecommerce security parameters to Decline all non secured transaction for product Credit and interchange Mastercard as uncheck
 Then user sign out from customer portal
