@@ -23,7 +23,7 @@ Scenario:2 To Verify that the user can stoplist a credit device through helpdesk
 Given user is logged in institution
 When credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
-And device has "normal" status
+And device has "not activated" status
 And user activates device through helpdesk
 And user stop lists the device
 And user edits deviceplan and enables stoplist flag

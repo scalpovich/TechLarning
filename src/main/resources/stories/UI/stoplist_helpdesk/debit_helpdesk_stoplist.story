@@ -29,7 +29,7 @@ And processes device production batch for debit
 And user has wallet number information for debit device
 And user performs adjustment transaction
 And user has current wallet balance amount information for debit device
-And device has "normal" status
+And device has "not activated" status
 And user activates device through helpdesk
 And user stop lists the device
 And user edits deviceplan and enables stoplist flag
