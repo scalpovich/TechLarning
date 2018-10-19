@@ -1003,6 +1003,7 @@ public class HelpDeskSteps {
 		LoanPlan loanPlan = context.get(ContextConstants.LOAN_PLAN);			
 		TransactionSearchDetails transactionDetails = context.get(ContextConstants.TRANSACTION_SEARCH_DETAILS);
 		context.put(ContextConstants.LOAN_SACTION_DETAILS, helpdeskWorkflow.raiseRetailToLoanRequest(helpdeskGeneral,loanPlan,transactionDetails).get(1));
+		context.put(ContextConstants.LOAN_PROCESS_DATE,context.get(ContextConstants.INSTITUTION_DATE));
 		
 	}
 	

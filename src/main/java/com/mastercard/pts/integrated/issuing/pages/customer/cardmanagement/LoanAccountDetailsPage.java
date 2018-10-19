@@ -79,8 +79,8 @@ public class LoanAccountDetailsPage extends AbstractBasePage {
 			loanAccountDetails.put("Transaction Amount",getCellTextByColumnName(i,"Transaction Amount"));
 			loanAccountDetails.put("Principal Amount",getCellTextByColumnName(i,"Principal Amount"));
 			loanAccountDetails.put("Interest Amount",getCellTextByColumnName(i,"Interest Amount"));
-//			loanAccountDetails.put("Processing Date",getCellTextByColumnName(i,"Processing Date"));
-//			loanAccountDetails.put("Due Date",getCellTextByColumnName(i,"Due Date"));		
+			loanAccountDetails.put("Processing Date",getCellTextByColumnName(i,"Processing Date"));
+			loanAccountDetails.put("Due Date",getCellTextByColumnName(i,"Due Date"));		
 			records.add(loanAccountDetails);
 			}
 			clickCloseButton();
