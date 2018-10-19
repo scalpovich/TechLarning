@@ -14,9 +14,9 @@ When User add Boarding Offer type in Transaction Fee Waiver plan as Both origin 
 Then user sign out from customer portal
 
 Scenario:1.1 Bump next day to board the card
-When update institution date to next days
-Given user is logged in institution
-When user sign out from customer portal
+Given update institution date to next days
+When user is logged in institution
+And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 And user is logged in institution
@@ -59,7 +59,7 @@ Then user sign out from customer portal
 
 Scenario:1.5 Add plan in Trx Fee waiver plan- General type,Both origin and Daily frequency
 Given user is logged in institution
-When User add Boarding Offer type in Transaction Fee Waiver plan as Both origin and Daily frequency
+When User add Boarding Offer type in Transaction Fee Waiver plan as Domestic origin and Daily frequency
 And user sign out from customer portal
 
 Scenario:1.6 Bump next day to make transaction
