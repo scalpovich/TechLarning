@@ -83,7 +83,7 @@ public class ReversalTransactionPage extends AbstractDisputePage {
 	}
 	
 	public void searchTransactionForReversal(String deviceNumber, LocalDate transactionDate) {
-		transactionDate = DateUtils.convertTransactionDateInLocalDateFormat("03/08/2023 12:34:23"); // comment out for E2E
+//		transactionDate = DateUtils.convertTransactionDateInLocalDateFormat("03/08/2023 12:34:23"); // comment out for E2E
 		WebElementUtils.enterText(cardNumber, deviceNumber);
 		WebElementUtils.pickDate(toDate, transactionDate);
 		WebElementUtils.pickDate(fromDate, transactionDate);
