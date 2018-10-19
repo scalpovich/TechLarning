@@ -16,6 +16,7 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.jcabi.log.Logger;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AvailableBalance;
@@ -178,15 +179,13 @@ public class AuthorizationSearchSteps {
 	@Then("verify fixed transaction fee $isOrNot waived off")
 	public void veriyFixedTransactionFeeIsWaivedOff(String isOrNot) {
 		Device device = context.get(ContextConstants.DEVICE);
-		if (isOrNot.equalsIgnoreCase("is not")) {
-			TransactionFeePlan txnFeePlan = TransactionFeePlan.getAllTransactionFee(provider);
-			context.put("TransactionFeePlan", txnFeePlan);
-			assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()),
-					Matchers.hasItems(txnFeePlan.getfixedTxnFees(), txnFeePlan.getFixedRateFee(),
-							txnFeePlan.getBillingAmount()));
-		} else {
-			assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()),
-					Matchers.hasItems(DEFAULT_VALUE, DEFAULT_VALUE, DEFAULT_VALUE));
+		TransactionFeePlan txnFeePlan = TransactionFeePlan.getAllTransactionFee(provider);
+		if (isOrNot.equalsIgnoreCase("is")) {
+			txnFeePlan.setFixedTxnFees(DEFAULT_VALUE);
+			txnFeePlan.setFixedRateFee(DEFAULT_VALUE);
 		}
+		context.put("TransactionFeePlan", txnFeePlan);
+		assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()),
+				Matchers.hasItems(txnFeePlan.getfixedTxnFees(), txnFeePlan.getFixedRateFee()));
 	}
 }

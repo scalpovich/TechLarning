@@ -211,7 +211,7 @@ public class TransactionFeeWaiverPlanPage extends AbstractBasePage {
 			addTransactionFeeWaiverPlanDetails(plan);
 			clickSaveButton();
 		});
-
+		SimulatorUtilities.wait(1000);
 	}
 
 }
