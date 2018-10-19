@@ -8,6 +8,7 @@ Meta:
 @StoryName credit_emv_retail_loan
 @Individual
 @Primary	 
+
 Scenario:1.0 creation of mastercard_individual_primary_emv Card credit device
 Given setting json values in excel for Credit
 When user is logged in institution
@@ -34,6 +35,7 @@ When search transaction with device number on transaction search screen
 When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
 Then update institution date to next days
+And user sign out from customer portal
 
 Scenario:1.6 Login & Logout to wait for date to be updated 
 Given user is logged in institution
@@ -67,13 +69,14 @@ And user verify Unbilled amount for Loan Installment category
 And user processes Billing Process - Credit system internal batch for Credit
 And user verify Billed amount for Loan Installment category
 And user verify Outstanding amount for Loan Installment category
+Then update institution date to next days
+And user sign out from customer portal
 !-- And device has "normal" status
 !-- And user notes down required values from helpdesk for credit
 
 Scenario:1.9 Update institution date then Login & Logout to wait for date to be updated foe next billing
 Meta:
 @TestId 
-Then update institution date to next days
 Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
@@ -89,12 +92,12 @@ When user check balance details through helpdesk before payment
 And user makes EMI bill payment through cash
 When user processes EOD-Credit system internal batch for Credit
 When user check balance details through helpdesk after payment
+When update institution date to first of next month
 And user sign out from customer portal
 
 Scenario:1.9 Update institution date then Login & Logout to wait for date to be updated foe next billing
 Meta:
 @TestId 
-When update institution date to first of next month
 Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
@@ -109,12 +112,12 @@ And user processes EOD-Credit system internal batch for Credit
 And user processes Billing Process - Credit system internal batch for Credit
 And user verify Billed amount for Loan Installment category
 And user verify Outstanding amount for Loan Installment category
-
+Then update institution date to next days
+And user sign out from customer portal
 
 Scenario:1.9 Update institution date then Login & Logout to wait for date to be updated foe next billing
 Meta:
 @TestId 
-Then update institution date to next days
 Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
@@ -130,14 +133,14 @@ When user check balance details through helpdesk before payment
 And user makes EMI bill payment through cash
 When user processes EOD-Credit system internal batch for Credit
 When user check balance details through helpdesk after payment
+And update institution date to first of next month
 And user sign out from customer portal
 
 
 Scenario:1.9 Update institution date then Login & Logout to wait for date to be updated foe next billing
 Meta:
 @TestId 
-Given update institution date to first of next month
-When user is logged in institution
+Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
@@ -151,11 +154,12 @@ And user processes EOD-Credit system internal batch for Credit
 And user processes Billing Process - Credit system internal batch for Credit
 And user verify Billed amount for Loan Installment category
 And user verify Outstanding amount for Loan Installment category
+Then update institution date to next days
+And user sign out from customer portal
 
 Scenario:1.9 Update institution date then Login & Logout to wait for date to be updated foe next billing
 Meta:
 @TestId 
-Then update institution date to next days
 Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
@@ -171,13 +175,13 @@ When user check balance details through helpdesk before payment
 And user makes EMI bill payment through cash
 When user processes EOD-Credit system internal batch for Credit
 When user check balance details through helpdesk after payment
+When update institution date to first of next month
 And user sign out from customer portal
 
 
 Scenario:1.9 Update institution date then Login & Logout to wait for date to be updated foe next billing
 Meta:
-@TestId 
-When update institution date to first of next month
+@TestId
 Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
@@ -190,11 +194,12 @@ Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
 And user processes Billing Process - Credit system internal batch for Credit
+Then update institution date to next days
+And user sign out from customer portal
 
 Scenario:1.9 Update institution date then Login & Logout to wait for date to be updated foe next billing
 Meta:
 @TestId 
-Then update institution date to next days
 Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
@@ -209,4 +214,4 @@ And user processes EOD-Credit system internal batch for Credit
 And device has "normal" status
 And user notes down required values from helpdesk for credit
 Then user verifies no Loan Installment Outstanding after payment
-
+And user sign out from customer portal

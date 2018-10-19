@@ -44,7 +44,7 @@ public class ManualAuthorizationSteps {
 	public void whenUserRaisesAnAuthorizationRequest(){
 		AuthorizationRequest request = AuthorizationRequest.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE);
-		request.setDeviceNumber(device.getDeviceNumber());
+		request.setDeviceNumber("5742539370867516");
 		String trxDate=loginWorkflow.getInstitutionDateLogin();
 		logger.info("Transaction Date->"+loginWorkflow.getInstitutionDateLogin());
 		context.put("transaction_date",trxDate);
