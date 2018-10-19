@@ -26,6 +26,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Proc
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.AuthorizationSearchWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoadFromFileUploadWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
 
@@ -43,6 +44,10 @@ public class LoadFromFileUploadSteps {
 
 	@Autowired
 	private TransactionWorkflow transWorkflow;
+	
+	@Autowired
+	
+	private AuthorizationSearchWorkflow authSearchWorkFlow;
 
 	@Autowired
 	private LinuxBox linuxBox;
@@ -87,7 +92,12 @@ public class LoadFromFileUploadSteps {
 		transaction.getAdjustmentTransactionDetails().add(details);
 		loadFromFileUploadWorkflow.createAdjustmentTransaction(transaction);
 	}
-
+	
+	@Given("user generate Reversal for Transaction")
+	public void userGenerateReversalForTransaction(){
+		Device device = context.get(ContextConstants.DEVICE);
+		authSearchWorkFlow.generateReversalForTransaction(device.getDeviceNumber());
+	}
 	@Given("user performs adjustment transaction with $amount amount")
 	@When("user performs adjustment transaction with $amount amount")
 	@Then("user performs adjustment transaction with $amount amount")

@@ -5,7 +5,7 @@ I want to assert unbilled and billed amount on helpdesk and validate statement g
 
 Meta:
 @CreditRegression
-@StoryName credit_emv_retail_billing
+@StoryName credit_emv_retail_ageing
 @Individual
 @Primary	 
 
@@ -74,44 +74,7 @@ Meta:
 Given user is logged in institution
 When transaction status is "Matching Pending"
 When user processes Pre-clearing system internal batch for Credit
-And "Matching" batch for credit is successful
+And user processes Matching system internal batch for Credit
 And transaction status is "Presentment Matched with authorization"
 When user processes EOD-Credit system internal batch for Credit
-And user sign out from customer portal
-And update institution date to first of next month
-
-Scenario:1.9 Login & Logout to wait for date to be updated 
-Meta:
-@TestId 
-Given user is logged in institution
-When user sign out from customer portal
-And user is logged in institution
-And user sign out from customer portal
-And user is logged in institution
-And user sign out from customer portal
-
-Scenario:2.0 Process Batches for billing and validated values on helpdesk and statement 
-Meta:
-@TestId 
-Given user is logged in institution
-When user processes Pre-clearing system internal batch for Credit
-And user processes EOD-Credit system internal batch for Credit
-And user verify Unbilled amount for Purchase category
-And user processes Billing Process - Credit system internal batch for Credit
-And user verify Billed amount for Purchase category
-And device has "normal" status
-And user notes down required values from helpdesk for credit
-And user run Statement Extract system internal batch
-And verify statement file is successfully downloaded
-Then validate the statement with parameters:
-|parameters|
-|Credit Card Number|
-|Statement Date|
-|Payment Due Date|
-|Total Payment Due|
-|Minimum Payment Due|
-|Account Number|
-|Credit Limit|
-|Available Credit Limit|
-|Closing Balance|
 And user sign out from customer portal

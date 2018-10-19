@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
@@ -224,6 +226,36 @@ public class HelpdeskWorkflow {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		helpDeskPage.getDeviceStatus(device);
 		return helpDeskPage.verifyBillingDetails(device);
+	}
+	
+	public Map<String,String> fetchCardBalanceAndCloseHelpdesk(Device device) {
+		Map<String, String> balanceMapBeforePayments;	
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);	
+		balanceMapBeforePayments = helpDeskPage.checkCreditBalances(device);
+		helpDeskPage.clickEndCall();
+		return balanceMapBeforePayments;		
+	}
+	
+	public void compareBalancesAfterPayment(Payment payment){
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);	
+		helpDeskPage.checkAndCompareBalancePostPayment(payment);
+	}
+
+	public void checkBalanceDetailsThroughHelpdesk(Device device, String payment) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);	
+		helpDeskPage.checkBalancesDetails(device,payment);
+		helpDeskPage.clickEndCall();
+	}
+	
+	public void compareBalanceDetailsPostPayments(String payment){
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);	
+		helpDeskPage.compareBalanceDetailsPostPayments(payment);
+	}
+
+	public String verifyUnpaidAndAuthFlag(Device device, String label) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		helpDeskPage.getDeviceStatus(device);
+		return helpDeskPage.verifyUnpaidAndAuthFlag(device,label);
 	}
 	
 	public HashMap<String,BigDecimal> activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){

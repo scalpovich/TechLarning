@@ -145,6 +145,8 @@ public class ProgramSetupSteps {
 
 	private static final String EMBOSSING_VENDOR_FOR_DEVICE2 = "EMBOSSING_VENDOR_FOR_DEVICE2";
 
+	private static final String defaultPresentmentTimeLimit = "3";
+
 	@When("prepaid $deviceType device is available with balance amount")
 	@Given("prepaid $deviceType device is available with balance amount")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
@@ -1645,6 +1647,13 @@ public class ProgramSetupSteps {
 		TransactionLimitPlanDetails details = TransactionLimitPlanDetails.createWithProvider(provider);
 		transactionLimitPlan.getTransactionLimitPlanDetails().add(details);
 		programSetupWorkflow.createTransactionLimitPlan(transactionLimitPlan,limitType);	
+	}
+	
+	@When("user edits Presentment Time Limit in $plan")
+	public void userEditsPresentmentTimeLimit(String plan) {
+		DevicePlan device = context.get(ContextConstants.DEVICE_PLAN);
+		device.setTransSetPresentmentTimeLimit(defaultPresentmentTimeLimit);
+		programSetupWorkflow.editPlan(plan,device,program);
 	}
 
 	@When("user uses existing transaction limit plan for limit type $limitType")

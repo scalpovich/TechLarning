@@ -36,13 +36,10 @@ public class LoanAccountDetailsSteps extends AbstractBaseSteps {
 	@When("user verifies loan account details")
 	@Then("user verifies loan account details")
 	public void userVerifiesLoanAccountDetails() {
-		Device device = new Device();// context.get(ContextConstants.DEVICE);
-		device.setDeviceNumber("5742539370867516");
-		TransactionSearchDetails transaactionSerach = new TransactionSearchDetails();//context.get(ContextConstants.TRANSACTION_SEARCH_DETAILS);
-		transaactionSerach.setTransaction("100.00");
+		Device device = context.get(ContextConstants.DEVICE);
+		TransactionSearchDetails transaactionSerach = context.get(ContextConstants.TRANSACTION_SEARCH_DETAILS);
 		List<Map<String,String>> loanAccountDetails =  loanAccountWorkFlow.verifyLoanAccountDetail(device);	
 		BigDecimal totalInt = new BigDecimal("0.00") ;
-		BigDecimal totalIntCalculation = new BigDecimal("1.00");
 		for (Map<String, String> map : loanAccountDetails) {
 			if(map.get("Transaction Type").contains("Loan Installment"))
 			{

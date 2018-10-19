@@ -29,6 +29,7 @@ import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceGenerationBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequest;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CutOverProfile;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
@@ -184,10 +185,10 @@ public class BatchProcessSteps {
 	@Then("\"$batchName\" batch for $type is successful")
 	@When("\"$batchName\" batch for $type is successful")
 	public void whenMatchingBatchIsExecuted(String batchName, String type){
-		ProcessBatches batch =  new ProcessBatches();
-		batch.setProductType(ProductType.fromShortName(type));
+		ProcessBatches batch =  new ProcessBatches();;
+		batch.setProductType("Credit [C]");
 		batch.setBatchName(batchName);
-		assertEquals("SUCCESS [2]", batchProcessWorkflow.processSystemInternalProcessingBatchWithoutDateCheck(batch));			
+		assertEquals("SUCCESS [2]", batchProcessWorkflow.processSystemInternalProcessingBatch(batch));			
 
 	}
 	
@@ -209,7 +210,7 @@ public class BatchProcessSteps {
 	public void verifyStatementFileSuccessfullyGenerated(){
 		Device device =  context.get(ContextConstants.DEVICE);
 		String institutionCode = System.getProperty(ContextConstants.INST_PROPERTY).substring(System.getProperty(ContextConstants.INST_PROPERTY).indexOf('[')+1, System.getProperty(ContextConstants.INST_PROPERTY).length() - 1);
-		String partialFileName = "STMT_" +institutionCode  +"_"+ device.getProgramCode() + "_" + device.getClientCode() +"_"+ context.get(ContextConstants.STATEMENT_TO_DATE) + context.get(ContextConstants.STATEMENT_FROM_DATE) + "_" + device.getDeviceNumber().substring(device.getDeviceNumber().length() - 4); 
+		String partialFileName = "STMT_" +institutionCode  +"_"+ device.getProgramCode().substring(12,18) + "_" + device.getClientCode() +"_"+ context.get(ContextConstants.STATEMENT_TO_DATE) + context.get(ContextConstants.STATEMENT_FROM_DATE) + "_" + device.getDeviceNumber().substring(device.getDeviceNumber().length() - 4); 
 		logger.info("File Name :{} ",partialFileName);
 	    batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(partialFileName, tempDirectory.toString(), "STATEMENT_DOWNLOAD","proc");
      	assertNotNull("Statement file is successfully donwloaded :  "+batchFile.getAbsolutePath(),batchFile);			
@@ -223,8 +224,10 @@ public class BatchProcessSteps {
 		HashMap<String , String> helpdeskValues = context.get(ContextConstants.HELPDESK_VALUES);		
 		helpdeskValues.put(ContextConstants.STATEMENT_DATE, context.get(ContextConstants.STATEMENT_DATE));
 		GenericReport report = GenericReport.createWithProvider(provider);			
+		report.setReportUrl(batchFile.getAbsolutePath());
 		String dateOfBirth = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH).format(device.getClientDetails().getBirthDate());
-		report.setPassword(device.getClientDetails().getFirstName().substring(0,4)+""+dateOfBirth.substring(0, dateOfBirth.length()-5).replaceAll("/", ""));				
+		logger.info("passowrd for statement:{} ",device.getClientDetails().getFirstName().substring(0,4).toUpperCase()+dateOfBirth.substring(0, dateOfBirth.length()-5).replaceAll("/", "").trim());
+		report.setPassword(device.getClientDetails().getFirstName().substring(0,4).toUpperCase()+dateOfBirth.substring(0, dateOfBirth.length()-5).replaceAll("/", "").trim());				
 		for (int row = 0; row < parameterTable.getRows().size(); row++) {
 			String parameter = parameterTable.getRow(row).get(parameterTable.getHeaders().get(0));			
 			if(parameter.equals(ContextConstants.CREDIT_CARD_NUMBER_HEADER_IN_STATEMENT))

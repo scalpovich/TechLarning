@@ -33,6 +33,8 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	List<String> txnFeesFields = new ArrayList<>();
 
 	private String billingAmountForMarkUpFee;
+	private String reconcilationStatus;
+	BigDecimal availableBalanceAterReversal;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=cardNumber]")
 	private MCWebElement cardNumber;
@@ -94,6 +96,9 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	@PageElement(findBy=FindBy.X_PATH, valueToFind = "//td[contains(text(),'Available Balance')]/following-sibling::td[1]/span/span")
 	private MCWebElement availableBalanceTxt;
 	
+	@PageElement(findBy=FindBy.X_PATH, valueToFind = "//td/span[contains(text(),'Reconcilation Status')]/following::tr[1]/td[2]/span/span")
+	private MCWebElement txtReconcilationStatus;
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
 	private MCWebElement institutionDateTxt;
 	
@@ -108,8 +113,8 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 		WebElementUtils.enterText(cardNumber, deviceNumber);
 	}
 
-	public void inputFromDate(LocalDate date) {
-		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(1);
+	public void inputFromDate(LocalDate date,int day) {
+		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(day);
 		WebElementUtils.pickDate(fromDate, date);
 	}
 
@@ -124,7 +129,7 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 
 	public void authCheckTransactionFee(String deviceNumber) {
 		inputDeviceNumber(deviceNumber);
-		inputFromDate(LocalDate.now().minusDays(1));
+		inputFromDate(LocalDate.now().minusDays(1),1);
 		inputToDate(LocalDate.now());
 		waitAndSearchForRecordToAppear();
 		viewDeviceDetails();
@@ -132,7 +137,7 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 
 	public void authCheckMarkUpFee(String deviceNumber) {
 		inputDeviceNumber(deviceNumber);
-		inputFromDate(LocalDate.now().minusDays(1));
+		inputFromDate(LocalDate.now().minusDays(1),1);
 		inputToDate(LocalDate.now());
 		waitAndSearchForRecordToAppear();
 		viewDeviceDetails();
@@ -172,7 +177,7 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	public List<String> verifyState(String deviceNumber) {
 		List<String> fieldsForAssertion = new ArrayList<>();
 		inputDeviceNumber(deviceNumber);
-		inputFromDate(LocalDate.now().minusDays(1));
+		inputFromDate(LocalDate.now().minusDays(1),1);
 		inputToDate(LocalDate.now());
 		clickSearchButton();
 		viewFirstRecord();
@@ -184,6 +189,21 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 		});
 		return fieldsForAssertion;
 	}
+	
+	public BigDecimal viewAvailableBalanceAfterReversalTransaction(String deviceNumber) {
+		inputDeviceNumber(deviceNumber);
+		inputFromDate(LocalDate.now().minusDays(1),1);
+		inputToDate(LocalDate.now());
+		clickSearchButton();
+		viewFirstRecord();
+		runWithinPopup("View Authorization", () -> {
+		availableBalanceAterReversal = new BigDecimal(availableBalanceTxt.getText());
+			clickCloseButton();
+		});
+		return availableBalanceAterReversal;
+	}
+	
+	
 	
 	public AvailableBalance getAvailableBalance(){
 		String[] amountType = amountTypes.split(":");
@@ -200,5 +220,18 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 			clickCloseButton();
 		});
 		return availBal;
+	}
+
+	public String verifyReconciliationStatus(String deviceNumber) {
+		inputDeviceNumber(deviceNumber);
+		inputFromDate(LocalDate.now().minusDays(1),5);
+		inputToDate(LocalDate.now());
+		waitAndSearchForRecordToAppear();
+		viewDeviceDetails();
+		runWithinPopup("View Authorization", () -> {
+			reconcilationStatus=txtReconcilationStatus.getText();
+			clickCloseButton();
+		});
+		return reconcilationStatus;
 	}
 }

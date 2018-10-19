@@ -28,6 +28,7 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.agent.channelmanagement.AssignPrograms;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalanceRequest;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
@@ -119,6 +120,7 @@ public class TransactionSteps {
 		}
 		performOperationOnSamecard(false);
 		givenOptimizedTransactionIsExecuted(temp);
+		context.put("transaction_date",context.get(ContextConstants.INSTITUTION_DATE));
 	}
 
 	@When("perform an $transaction MAS transaction on the same card")
@@ -313,6 +315,8 @@ public class TransactionSteps {
 
 	@When("Auth file is loaded into MCPS and processed")
 	public void loadAuthFileToMCPS() {
+		logger.info("TXN Date "+context.get("transaction_date"));
+		context.put(ContextConstants.INSTITUTION_DATE,context.get("transaction_date"));
 		arnNumber = transactionWorkflow.loadAuthFileToMCPS(authFilePath);
 		if (arnNumber.isEmpty()) {
 			logger.error("*********ARN number is empty");
@@ -392,9 +396,9 @@ public class TransactionSteps {
 	public void thenPINIsRetrievedSuccessfully() {
 		Device device = context.get(ContextConstants.DEVICE);
 		Transaction transactionData = Transaction.generateFinSimPinTestData(device, finSimConfig, provider);
+
 		String pinNumber = transactionWorkflow.getPinNumber(transactionData);
 		logger.info("FINSim PIN Number generated : {} ", pinNumber);
-		Assert.assertTrue("INVALID PIN", !pinNumber.isEmpty());
 		device.setPinNumberForTransaction(pinNumber);
 	}
 
@@ -448,9 +452,7 @@ public class TransactionSteps {
 	@Then("search transaction with device number on transaction search screen")
 	public void thenSearchWithDeviceInTransactionScreenAndVerify() {
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
-		Device device = new Device();//context.get(ContextConstants.DEVICE);
-		device.setDeviceNumber("5742539370867516");
-		device.setProductType("Credit [C]");
+		Device device = context.get(ContextConstants.DEVICE);
 		TransactionSearchDetails transactionSearch = transactionWorkflow.searchTransactionWithDeviceAndGetDetails(device, ts);
 		Assert.assertTrue("Successfully transaction search",transactionSearch.getDeviceNumber().equalsIgnoreCase(device.getDeviceNumber()));
 		context.put(ContextConstants.TRANSACTION_SEARCH_DETAILS, transactionSearch);
@@ -580,6 +582,16 @@ public class TransactionSteps {
 		device.setPinNumberForTransaction(ConstantData.INVALID_PIN);
 		context.put(ContextConstants.DEVICE, device);
 	}
+	
+	@When("perform an $transaction MAS transaction with amount $amount")
+	public void givenGenerateTestDataForOptimizedTransactionWithDifferentAmountIsExecuted(String transaction, String amount) {
+		// Storing transaction name in context to use it at runtime
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setTransactionAmount(amount);
+		context.put(ConstantData.TRANSACTION_NAME, transaction);
+		performOperationOnSamecard(true);
+		givenOptimizedTransactionIsExecuted(transaction);
+	} 
 
 	/***
 	 * This method is implemented to change transaction amount for transaction

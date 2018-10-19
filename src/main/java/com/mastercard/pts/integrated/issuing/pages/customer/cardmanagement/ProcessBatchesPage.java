@@ -381,25 +381,22 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	}
 
 	public String processSystemInternalProcessingBatch(ProcessBatches batch) {
-		logger.info("Process System Internal Processing Batch: {}", batch.getBatchName());
+		selectBatchTypeAndName(batch);
 		Date todayDate;
 		Date dateFromUI;
-		batchStatus = null;
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
-		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, "SYSTEM INTERNAL PROCESSING [B]");
-		selectInternalBatchType(batch.getBatchName());
-		if (batch.getProductType() != null && !("".equals(batch.getProductType()))) {
-			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-		}
 		try {
 			todayDate = dateFormatter.parse(dateFormatter.format(new Date()));
 			dateFromUI = getDateFromUI(dateFormatter, batch);
 		} catch (ParseException e) {
 			throw Throwables.propagate(e);
 		}
+		
+		if(batch.getBatchName().equalsIgnoreCase("Matching")||batch.getBatchName().equalsIgnoreCase("Ageing"))
+			submitAndVerifyBatch();
 		if (!dateFromUI.after(todayDate))
 			submitAndVerifyBatch();
-
+		
 		return batchStatus;
 	}
 
@@ -424,6 +421,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		
 		else if("Billing Process - Credit".equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Billing Process - Credit [BILLING]"); 
+		
+		else if("Ageing".equalsIgnoreCase(batchName))
+			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Ageing Batch [AGEING_BATCH]"); 
 	}
 
 	public String processDownloadBatch(ProcessBatches batch) {
@@ -487,7 +487,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	public void submitAndVerifyBatch() {
 		submitBtn.click();
-		statusBtn.click();
+		//statusBtn.click();
+		clickWhenClickable(statusBtn);
 		runWithinPopup("View Batch Details", () -> {
 			logger.info("Retrieving batch status");
 			waitForBatchStatus();
@@ -691,9 +692,10 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		batchStatus = null;
 		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, SYSTEM_INTERNAL_PROCESSING);		
 		selectInternalBatchType(batch.getBatchName());
-		if(batch.getBatchName().equalsIgnoreCase("Pre-clearing"))
+		if (batch.getBatchName().equalsIgnoreCase("Pre-clearing") || batch.getBatchName().equalsIgnoreCase("Matching")
+				|| batch.getBatchName().equalsIgnoreCase("Ageing"))
 			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-	
+
 	}
 	
 }

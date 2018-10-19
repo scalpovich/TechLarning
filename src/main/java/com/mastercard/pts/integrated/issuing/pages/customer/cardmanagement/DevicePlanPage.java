@@ -462,6 +462,12 @@ public class DevicePlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind="view:pinUnblockPriority:input:dropdowncomponent")	
 	private MCWebElement pinUnblockPriorityDdwn;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind="presentmentTimeLimit:input:inputTextField")	
+	private MCWebElement txtPresentmentTimeLimit;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:txnFeeWaiverPlanCode:input:dropdowncomponent")
+	private MCWebElement iframeTransactionFeeWaiverPlanDdwn;
+	
 	public void AddDevicePlan() {
 		clickWhenClickable(AddDevicePlanBtn);
 		switchToAddDevicePlanFrame();
@@ -950,7 +956,12 @@ public class DevicePlanPage extends AbstractBasePage {
 		if (iframeTransactionLimitPlanDdwn.isEnabled())
 			WebElementUtils.selectDropDownByVisibleText(iframeTransactionLimitPlanDdwn, transactionLimitPlan);
 	}
-
+	
+	public void selectIframeTransactionFeeWaiverPlanDdwn(String transactionFeeWaiverPlan) {
+		if (iframeTransactionFeeWaiverPlanDdwn.isEnabled())
+			WebElementUtils.selectDropDownByVisibleText(iframeTransactionFeeWaiverPlanDdwn, transactionFeeWaiverPlan);
+	}
+	
 	public void selectIframeAfterKYCDdwn(String kycType) {
 		WebElementUtils.selectDropDownByVisibleText(iframeAfterKYCDdwn, kycType);
 	}
@@ -1183,10 +1194,11 @@ public class DevicePlanPage extends AbstractBasePage {
 	private void fillDevicePlanPage(DevicePlan devicePlan) {
 		selectIframeBaseDeviceEventBasedPlanDdwn(devicePlan.getBaseDeviceEventBasedPlan());
 		selectIframeBaseDeviceJoiningMemberShipPlanDdwn(devicePlan.getBaseDeviceJoiningMemberShipPlan());
-		if(!devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)){
-			selectIframeTransactionFeePlan(devicePlan.getTransactionFeePlan());
-		}
+		selectIframeTransactionFeePlan(devicePlan.getTransactionFeePlan());
 		selectIframeTransactionLimitPlanDdwn(devicePlan.getTransactionLimitPlan());
+		if(devicePlan.getTransactionFeeWaiverPlan() != null){
+			selectIframeTransactionFeeWaiverPlanDdwn(devicePlan.getTransactionFeeWaiverPlan());
+		}
 		clickIframeNextButton();		
 	}
 
@@ -1410,5 +1422,20 @@ public class DevicePlanPage extends AbstractBasePage {
 	
 	public void selectPriorityPassVendor(DevicePlan devicePlan){	
 		selectByVisibleText(iframePriorityPassVendorDdwn, devicePlan.getPriorityPassVendor());
+	}
+
+	public void editDevicePlan(DevicePlan device) {
+		enterValueinTextBox(devicePlanCode, device.getDevicePlanCode());
+		clickSearchButton();
+		editFirstRecord();				
+		runWithinPopup("Edit Device Plan", () -> {			
+			WebElementUtils.elementToBeClickable(authorizationTab);
+			clickWhenClickable(authorizationTab);
+			enterValueinTextBox(txtPresentmentTimeLimit, device.getTransSetPresentmentTimeLimit());
+			clickSaveButton();
+		});
+
+		verifyOperationStatus();
+		
 	}
 }

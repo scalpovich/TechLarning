@@ -71,6 +71,7 @@ public class CreditConstants {
 	
 	public static final String ALL_BATCH_NUMBERS_PREPRODUCTION="ALL_BATCH_NUMBERS_PREPRODUCTION";
 	
+	public static final String PAYMENT_REFERENCE_NUMBER="PAYMENT_REFERENCE_NUMBER";
 	public static final String JOB_ID="JOB_ID";
 
 	public static final String PARTNER_MEMBERSHIP_NUMBER = "PARTNER_MEMBERSHIP_NUMBER";

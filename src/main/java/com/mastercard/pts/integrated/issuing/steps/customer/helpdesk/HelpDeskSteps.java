@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.jayway.restassured.internal.http.ContentTypeExtractor;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
@@ -30,8 +32,11 @@ import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCas
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.distribution.Dispatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
@@ -48,6 +53,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.Proce
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
@@ -579,7 +585,6 @@ public class HelpDeskSteps {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE);
 		HashMap<String, String> helpdeskValues = helpdeskWorkflow.noteDownRequiredValues(device.getDeviceNumber());
-		helpdeskValues.put(ContextConstants.ACCOUNT_NUMBER,device.getAccountNumber());	
 		helpdeskValues.put(ContextConstants.CREDIT_CARD_NUMBER_HEADER_IN_STATEMENT, device.getClientDetails().getFirstName().toUpperCase()+" "+device.getClientDetails().getMiddleName1().toUpperCase()+" "+device.getClientDetails().getLastName().toUpperCase());
 		context.put(ContextConstants.HELPDESK_VALUES,helpdeskValues); 		
 	}
@@ -877,9 +882,97 @@ public class HelpDeskSteps {
 	public void assertionForBilling(String amount, String category){
 		String transactionAmount = context.get(ConstantData.TRANSACTION_AMOUNT);
 		Device device = context.get(ContextConstants.DEVICE);
+		TransactionFeePlan txnFeePlan = context.get("TransactionFeePlan");
 		device.setCategory(category);
 		device.setAmountType(amount);
-		assertThat(category +" "+ amount +BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device), equalTo(transactionAmount));
+		if (device.getCategory().equalsIgnoreCase("Fee") || device.getCategory().equalsIgnoreCase("Interest")) {
+			device = Device.createProviderForLatePaymentAndInterestOnPurchase(provider, device);
+	}
+		if (device.getCategory().equalsIgnoreCase("Fee") && device.getAmountType().equalsIgnoreCase("Unbilled")) {
+			transactionAmount = String.format("%.2f", Double.valueOf(device.getLatePaymentFee()));
+			logger.info("Unbilled Late Payment Fee->" + transactionAmount);
+		} else if (device.getCategory().equalsIgnoreCase("Fee")) {
+			logger.info("Late Payment Fee->" + device.getLatePaymentFee());
+			logger.info("Fixed txn Fee->" + txnFeePlan.getfixedTxnFees());
+			logger.info("Fixed rate Fee->" + txnFeePlan.getFixedRateFee());
+			transactionAmount = String.format("%.2f", Double.valueOf(device.getLatePaymentFee())
+					+ Double.valueOf(txnFeePlan.getfixedTxnFees()) + Double.valueOf(txnFeePlan.getFixedRateFee()));
+			logger.info("Total fee->" + transactionAmount);
+			context.put(ConstantData.TOTAL_FEE_OF_BILLING, transactionAmount);
+			logger.info("TOTAL_FEE_OF_BILLING" + context.get(ConstantData.TOTAL_FEE_OF_BILLING));
+		} else if (device.getCategory().equalsIgnoreCase("Interest")) {
+			int noOfDays = DateUtils.getDaysDifferenceBetweenTwoDates(context.get(ContextConstants.INSTITUTION_DATE),
+					context.get("transaction_date"));
+			logger.info("No of diff between Txn date and institution date ->" + noOfDays);
+			Double interest = ((Double.valueOf(device.getTransactionAmount())
+					+ Double.valueOf(context.get(ConstantData.TOTAL_FEE_OF_BILLING)) * noOfDays
+							* Double.valueOf(device.getInterestOnPurcahse()))
+					/ 100) / DateUtils.noOfDaysInYear(context.get(ContextConstants.INSTITUTION_DATE));
+			logger.info("Interest Occured on unpaid1 ->" + interest);
+			interest = (interest * 100D) / 100D;
+			BigDecimal bd = new BigDecimal(interest.toString());
+			bd = bd.setScale(2, RoundingMode.HALF_UP);
+			transactionAmount = String.format("%.2f", bd.doubleValue());
+			logger.info("Billed interest on unpaid1->" + transactionAmount);
+			context.put(ConstantData.BILLED_INTEREST, String.format("%.2f", bd.doubleValue()));
+			logger.info("BILLED_INTEREST" + context.get(ConstantData.BILLED_INTEREST));
+		} else if (device.getCategory().equalsIgnoreCase("Unpaid1")) {
+			logger.info("Unpaid1->" + context.get(ContextConstants.MINIMUM_PAYMENT_DUE));
+			context.put(ConstantData.UNPAID1_AMOUNT, context.get(ContextConstants.MINIMUM_PAYMENT_DUE));
+			transactionAmount = context.get(ContextConstants.MINIMUM_PAYMENT_DUE);
+		} else if (device.getCategory().equalsIgnoreCase("Unpaid2")) {
+			transactionAmount = context.get(ContextConstants.MINIMUM_PAYMENT_DUE);
+			context.put(ConstantData.UNPAID2_AMOUNT, context.get(ContextConstants.MINIMUM_PAYMENT_DUE));
+		}else if(device.getCategory().equalsIgnoreCase("Outstanding")) {
+			LoanDetails loanDetails = context.get(ContextConstants.LOAN_SACTION_DETAILS);	
+			transactionAmount = loanDetails.getLoanEMI();
+			context.put(ConstantData.LOAN_INSTALLMENT_OUTSTANDING, transactionAmount);
+		}
+
+		assertThat(category + " " + amount + BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device),
+				equalTo(transactionAmount));
+	}
+	
+
+	@When("check card balance details through helpdesk")
+	public void checkCardBalance(){
+		Device device = context.get(ContextConstants.DEVICE);
+		context.put(ContextConstants.DEVICE,device);
+		context.put("balanceBeforePayment", helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device));
+		
+	}
+	
+	@When("recheck card balance details through helpdesk after payment")
+	public void reCheckCardBalancePostPayment(){
+		Device device = context.get(ContextConstants.DEVICE);	
+		helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device);
+		context.put("balanceAfterPayment", helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device));	
+	}
+	
+	@Then("user check successful payments")
+	public void checkSuccessfulPayments(){		
+		Payment payment = context.get(ContextConstants.PAYMENT);
+		helpdeskWorkflow.compareBalancesAfterPayment(payment);
+	}
+	
+	@When("user check balance details through helpdesk $payment")
+	public void userCheckBalanceDetailsThroughHelpdesk(String payment){
+		Device device = context.get(ContextConstants.DEVICE);	
+		context.put(ContextConstants.DEVICE,device);
+		helpdeskWorkflow.checkBalanceDetailsThroughHelpdesk(device,payment);
+	}
+	
+	@Then("user compare balance details $payment")
+	public void compareBalanceDetails(String payment){
+		helpdeskWorkflow.compareBalanceDetailsPostPayments(payment);
+	}
+	
+	@When("user verify $label value for $category category is $value")
+	public void assertionForUnpaidAndAuthFlag(String label,String category,String value){
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setCategory(category);
+		assertThat(label + "value doesn't match ", helpdeskWorkflow.verifyUnpaidAndAuthFlag(device,label),
+				equalTo(value));
 	}
 	
 	@Then("user raises $limittype credit limit change request for $customerType")
@@ -911,6 +1004,14 @@ public class HelpDeskSteps {
 		TransactionSearchDetails transactionDetails = context.get(ContextConstants.TRANSACTION_SEARCH_DETAILS);
 		context.put(ContextConstants.LOAN_SACTION_DETAILS, helpdeskWorkflow.raiseRetailToLoanRequest(helpdeskGeneral,loanPlan,transactionDetails).get(1));
 		
+	}
+	
+	@When("user verifies no $oustandingOf after payment")
+	@Then("user verifies no $oustandingOf after payment")
+	public void userVerifiesNoOutstanding(String oustandingOf) {
+		HashMap<String, String > helpDeskValues = context.get(ContextConstants.HELPDESK_VALUES); 	
+		assertThat("Oustanding amount", helpDeskValues.get(oustandingOf),
+				equalTo(ContextConstants.ZERO_LOAN_INSTALLMENT_OUTSTANDING));
 	}
 
 }

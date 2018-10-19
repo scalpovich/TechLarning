@@ -139,7 +139,7 @@ public class JsonUtilitySteps {
 		String updatedValue = null;
 		for (Map.Entry<String, Object> entry : excelMap.entrySet()) {
 			for (Map.Entry<String, String> entryJson : jsonMap.entrySet()) {
-				if (entryJson.getKey().contains(entry.getKey().replaceAll("_", ""))) {
+				if (entryJson.getKey().equalsIgnoreCase(entry.getKey().replaceAll("_", ""))) {
 					updatedValue = String.valueOf(entry.getValue()).replaceAll(".+", entryJson.getValue());
 					excelMap.put(entry.getKey(), updatedValue);
 				}
