@@ -35,6 +35,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePriorityPassIDAndCardPackIDTemplate;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoyaltyPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCCRulePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCG;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MarketingMessageDetails;
@@ -101,6 +102,8 @@ public class ProgramSetupSteps {
 
 	private TransactionLimitPlan transactionLimitPlan;
 
+	private TransactionFeePlan transactionFeePlan;
+
 	private WalletPlan walletPlan;
 
 	private MarketingMessagePlan marketingMessagePlan;
@@ -124,6 +127,8 @@ public class ProgramSetupSteps {
 	private ApplicationDocumentChecklist documentCheckListPlan;
 
 	private MCCRulePlan mccRulePlan;
+
+	private LoyaltyPlan loyaltyPlan;
 
 	private PrepaidStatementPlan prepaidStatementPlan;
 	
@@ -624,6 +629,8 @@ public class ProgramSetupSteps {
 		} else {
 			devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());
 		}
+
+		devicePlan.setTransactionFeePlan(data.getTransactionFeePlan());
 		if (Objects.nonNull(transactionPlan)) {
 		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
@@ -1067,6 +1074,7 @@ public class ProgramSetupSteps {
 		// value is reset or set accordingly for Virtual and pinless cards
 		setPinRequiredToDefaultState();
 		transactionPlan = TransactionPlan.createWithProvider(dataProvider);
+		context.put(ContextConstants.TRANSACTION_PLAN, transactionPlan.getTransactionPlanCode());
 		transactionPlan.setProductType(ProductType.fromShortName(type));
 
 		programSetupWorkflow.createTransactionPlan(transactionPlan);
@@ -1173,10 +1181,15 @@ public class ProgramSetupSteps {
 		} else {
 			program.setMccRulePlan(data.getMccRulePlan());
 		}
+		if (Objects.nonNull(loyaltyPlan)) {
+			program.setLoyaltyPlan(loyaltyPlan.buildDescriptionAndCode());
+		} else {
+			program.setLoyaltyPlan(data.getLoyaltyPlan());
+		}
 		program.setProgramType(programType);
 		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID)){
 			if (Objects.nonNull(prepaidStatementPlan)) {
-			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
+				program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
 			} else {
 				program.setPrepaidStatementPlan(data.getPrepaidStatementPlan());
 			}

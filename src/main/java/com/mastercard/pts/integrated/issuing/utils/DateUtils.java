@@ -338,4 +338,11 @@ public class DateUtils {
 		return (int) (ChronoUnit.DAYS.between(localDate, monthLastDate) + 1);
 	}	
 	
+	public static LocalDate convertTransactionDateInLocalDateFormat(String institutionDate){
+		return LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+	}
+	
+	public static LocalDate convertInstitutionCurrentDateInLocalDateFormat(String institutionDate){
+		return LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+	}
 }

@@ -138,7 +138,8 @@
 				"creditPlan":"AUTOMATION [103]",
 				"billingCycle":"AUTOMATION [141]",
 				"transactionFeePlan":"Automation FIX Fee plan. [AUTOFEEP1]",
-				"walletPlan":"AUTOMATION [TESRERR]"
+				"walletPlan":"AUTOMATION [TESRERR]",
+				"loyaltyPlan" : "Automation Test [AUTO]"
 		},
 		{
 				"productIdentity":"Credit",
@@ -170,7 +171,8 @@
 				"transactionPlan":"AUTOMATION [T8426G]",
 				"creditPlan":"TA5339PGQX [103]",
 				"billingCycle":"AUTOMATION [340]",
-				"walletPlan":"AUTOMATION [TA1343CSGQ]"
+				"walletPlan":"AUTOMATION [TA1343CSGQ]",
+				"loyaltyPlan" : "Automation Test [AUTO]"
 		},
 		{
 				"productIdentity":"Prepaid",
@@ -202,7 +204,8 @@
 				"creditPlan":"AUTOMATION [103]",
 				"billingCycle":"AUTOMATION [141]",
 				"transactionFeePlan":"Automation FIX Fee plan. [AUTOFEEP1]",
-				"walletPlan":"   AUTOMATION [TA1856EIIY]"
+				"walletPlan":"   AUTOMATION [TA1856EIIY]",
+				"loyaltyPlan" : "Automation Test [AUTO]"
 		},
 		{
 				"productIdentity":"Debit",
@@ -504,7 +507,8 @@
 			   "creditPlan":"Automation [100]",
 			   "transactionFeePlan":"Automation FIX Fee plan. [AUTOFEEP1]",
 			   "billingCycle":"Automation Billing [100]",
-			   "walletPlan":"AUTOMATION [TA4946EBFC]"
+			   "walletPlan":"AUTOMATION [TA4946EBFC]",
+			   "loyaltyPlan" : "Automation Test [AUTO]"
 		},
 		{
 			   "productIdentity":"Prepaid",

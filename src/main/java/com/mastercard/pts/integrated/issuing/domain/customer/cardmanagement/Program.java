@@ -133,6 +133,15 @@ public class Program implements HasCodeAndDescription {
 	private String applicationType;
 	private String subApplicationType;
 	private String countryWhiteListAndBlackListPlan;
+	private String loyaltyPlan;
+
+	public String getLoyaltyPlan() {
+		return loyaltyPlan;
+	}
+
+	public void setLoyaltyPlan(String loyaltyPlan) {
+		this.loyaltyPlan = loyaltyPlan;
+	}
 
 	public static Program createWithProvider(DataProvider dataProvider, KeyValueProvider provider) {
 		Program programObject = dataProvider.getDataBySimpleClassName(Program.class);

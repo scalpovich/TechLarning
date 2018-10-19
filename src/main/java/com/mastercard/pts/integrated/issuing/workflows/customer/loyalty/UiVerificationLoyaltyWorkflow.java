@@ -3,6 +3,12 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.loyalty;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.InstitutionData;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
+import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.LoyaltyPromotionMapping;
+import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.PromotionPlan;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.loyalty.EventBasedLoyaltyPointsPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.loyalty.EventBasedLoyaltyPointsPostingPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.loyalty.GiftRewardCataloguePage;
@@ -16,11 +22,14 @@ import com.mastercard.pts.integrated.issuing.pages.customer.loyalty.RewardRedemp
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
 @Workflow
-public class  UiVerificationLoyaltyWorkflow{
+public class UiVerificationLoyaltyWorkflow {
 
 	@Autowired
 	private Navigator navigator;
-
+	
+	@Autowired
+	private TestContext context;
+	
 	public void verifyEventBasedLoyaltyPointsPage() {
 		EventBasedLoyaltyPointsPage page = navigator.navigateToPage(EventBasedLoyaltyPointsPage.class);
 		page.verifyUiOperationStatus();
@@ -35,14 +44,15 @@ public class  UiVerificationLoyaltyWorkflow{
 		GiftRewardCataloguePage page = navigator.navigateToPage(GiftRewardCataloguePage.class);
 		page.verifyUiOperationStatus();
 	}
-  public void verifyLoyaltyPlanPage() {
+
+	public void verifyLoyaltyPlanPage() {
 		LoyaltyPlanPage page = navigator.navigateToPage(LoyaltyPlanPage.class);
 		page.verifyUiOperationStatus();
 	}
-    
-   public void verifyLoyaltyPlanPromotionMappingPage() {
+
+	public void verifyLoyaltyPlanPromotionMappingPage(LoyaltyPromotionMapping loyaltyPromotionMapping) {
 		LoyaltyPlanPromotionMappingPage page = navigator.navigateToPage(LoyaltyPlanPromotionMappingPage.class);
-		page.verifyUiOperationStatus();
+		page.verifyUiOperationStatus(loyaltyPromotionMapping);
 	}
 
 	public void verifyLoyaltyPointsPage() {
@@ -54,9 +64,15 @@ public class  UiVerificationLoyaltyWorkflow{
 		LoyaltyTransactionPlanPage page = navigator.navigateToPage(LoyaltyTransactionPlanPage.class);
 		page.verifyUiOperationStatus();
 	}
-   public void verifyPromotionPlanPage() {
+
+	public void verifyPromotionPlanPage(PromotionPlan plan) {
 		PromotionPlanPage page = navigator.navigateToPage(PromotionPlanPage.class);
-		page.verifyUiOperationStatus();
+		page.verifyUiOperationStatus(plan);
+	}
+
+	public void verifyPromotionPlanwithMCG(PromotionPlan plan) {
+		PromotionPlanPage page = navigator.navigateToPage(PromotionPlanPage.class);
+		page.verifyUiOperationStatuswithMCG(plan);
 	}
 
 	public void verifyRedemptionPage() {
@@ -67,5 +83,13 @@ public class  UiVerificationLoyaltyWorkflow{
 	public void verifyRewardRedemptionPage() {
 		RewardRedemptionPage page = navigator.navigateToPage(RewardRedemptionPage.class);
 		page.verifyUiOperationStatus();
+	}
+	
+	public String getMaxLoyaltyPointsPerCycle() {
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+		LoyaltyPlanPage page = navigator.navigateToPage(LoyaltyPlanPage.class);
+		String plan = data.getLoyaltyPlan();
+		page.searchByPlanCode(plan.substring(plan.indexOf("[")+1, plan.indexOf("]")));
+		return page.getMaxPtsPerCycle();
 	}
 }

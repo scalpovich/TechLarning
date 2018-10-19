@@ -51,6 +51,8 @@ public class ContextConstants {
 	public static final String CARD_CREDIT_LIMIT = "CARD_CREDIT_LIMIT";
 	
 	public static final String AVAILABLE_BALANCE_OR_CREDIT_LIMIT = "AVAILABLE_BALANCE_OR_CREDIT_LIMIT";
+	
+	public static final String AVAILABLE_BALANCE_AFTER_LOYALTY_REDEMPTION = "AVAILABLE_BALANCE_AFTER_LOYALTY_REDEMPTION";
 
 	public static final String AVAILABLE_ACCOUNT_OR_CREDIT_LIMIT = "AVAILABLE_ACCOUNT_OR_CREDIT_LIMIT";
 	
@@ -121,6 +123,10 @@ public class ContextConstants {
 	public static final String JOB_ID = "JOB_ID";
 	
 	public static final String CLIENT_PHOTO_BATCH_PROCESS_TIME = "CLIENT_PHOTO_BATCH_PROCESS_TIME";
+	
+	public static final String TRANSACTION_PLAN = "TRANSACTIONPLAN";
+		
+	public static final String PROMOTION_PLAN = "PROMOTION_PLAN";
 	
 	private ContextConstants() {
 	}

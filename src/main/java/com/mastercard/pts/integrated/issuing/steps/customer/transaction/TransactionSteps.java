@@ -28,6 +28,7 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.agent.channelmanagement.AssignPrograms;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalanceRequest;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AuthorizationRequest;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
@@ -578,5 +579,21 @@ public class TransactionSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		device.setTransactionAmount(Integer.toString(i));
 		context.put(ContextConstants.DEVICE, device);
+	}
+	
+	@Then("user add transaction reversal with reason $reversalReason")
+	public void addTransactionReversal(String reversalReason) {
+		Device device = context.get(ContextConstants.DEVICE);
+		ReversalTransaction rt = ReversalTransaction.getProviderData(provider);
+		assertEquals("Record Added Successfully.", transactionWorkflow.addTransactionReversal(device.getDeviceNumber(), reversalReason, rt.getAmount()));
+	
+		if((provider.getString(Constants.FOR_LOYALTY) != null) && (provider.getString(Constants.FOR_LOYALTY).equalsIgnoreCase("yes"))) {
+			String availableLP = ((String)context.get(Constants.AVAILABLE_LOYALTY_POINTS)).trim();
+			if(availableLP.equals("-"))
+				availableLP = "0";
+			Double availablePoints = Double.parseDouble(availableLP) - Double.parseDouble(rt.getAmount());
+			context.put(Constants.AVAILABLE_LOYALTY_POINTS, availablePoints);
+			context.put(Constants.ACCUMULATED_REVERSED_POINTS, Double.parseDouble(rt.getAmount()));
+		}
 	}
 }

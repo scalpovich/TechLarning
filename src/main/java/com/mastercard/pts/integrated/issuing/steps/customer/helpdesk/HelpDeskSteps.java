@@ -46,9 +46,11 @@ import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.Proce
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpDeskFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpdeskWorkflow;
 
@@ -896,5 +898,30 @@ public class HelpDeskSteps {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setProductType(ProductType.PREPAID);
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.getWalletBalance(device), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
+	}
+	
+	@Then("user verifies loyalty details for $type device")
+	public void verifyLoyaltyDetails(String type) {
+		Map<String, String> points = givenUserHasLoyaltyPointsDetails(type);
+		Double availablePts = Double.parseDouble(points.get(Constants.AVAILABLE_LOYALTY_POINTS));
+		Double accumulatedPts = Double.parseDouble(points.get(Constants.ACCUMULATED_REVERSED_POINTS));
+		
+		assertEquals(context.get(Constants.AVAILABLE_LOYALTY_POINTS), availablePts);
+		assertEquals(context.get(Constants.ACCUMULATED_REVERSED_POINTS), accumulatedPts);
+	}
+	
+	@When("user has loyalty points details for $type device")
+	public Map<String, String> givenUserHasLoyaltyPointsDetails(String type) {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskWorkflow.navigateToLoyaltyDetails(device);
+		Map<String, String> points = helpdeskWorkflow.getLoyaltyDetails();
+		context.put(Constants.AVAILABLE_LOYALTY_POINTS, points.get(Constants.AVAILABLE_LOYALTY_POINTS));
+		context.put(Constants.ACCUMULATED_REVERSED_POINTS, points.get(Constants.ACCUMULATED_REVERSED_POINTS));
+		return points;
+	}
+	
+	@Then("user waits for $mins minutes")
+	public void waitFor(int mins) {
+		SimulatorUtilities.wait(mins*60000);
 	}
 }

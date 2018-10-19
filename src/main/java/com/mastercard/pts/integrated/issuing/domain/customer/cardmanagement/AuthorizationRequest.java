@@ -9,7 +9,7 @@ public class AuthorizationRequest {
 
 	private static final String MCC_CODE = "MCC";
 	
-	private static final String TRANSACTION_AMOUNT = "TRANSACTION_AMOUNT";
+	public static final String TRANSACTION_AMOUNT = "TRANSACTION_AMOUNT";
 	
 	private String deviceNumber;
 	

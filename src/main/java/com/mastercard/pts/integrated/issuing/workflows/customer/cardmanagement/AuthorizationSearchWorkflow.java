@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -21,6 +22,9 @@ import com.mastercard.pts.integrated.issuing.pages.collect.administration.Admini
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.AuthorizationSearchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.utils.DBUtility;
+import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 
 @Workflow
@@ -40,6 +44,9 @@ public class AuthorizationSearchWorkflow {
 
 	@Autowired
 	AuthorizationSearchPage authorizationSearchPage;
+	
+	@Autowired
+	private DBUtility dbUtils;
 
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
@@ -67,8 +74,11 @@ public class AuthorizationSearchWorkflow {
         SimulatorUtilities.wait(5000);
 		AuthorizationSearchPage authSearchPage = navigator.navigateToPage(AuthorizationSearchPage.class);
 		authSearchPage.inputDeviceNumber(device.getDeviceNumber());
-		authSearchPage.inputFromDate(LocalDate.now().minusDays(1));
-		authSearchPage.inputToDate(LocalDate.now());
+		String query = Constants.INSTITUTION_NUMBER_QUERY_START + context.get("USER_INSTITUTION_SELECTED") + Constants.INSTITUTION_NUMBER_QUERY_END;
+		String colName = Constants.INSTITUTION_DATE + "('"+ context.get("USER_INSTITUTION_SELECTED") + "')";
+		LocalDate date = DateUtils.convertInstitutionCurrentDateInLocalDateFormat(dbUtils.getSingleRecordColumnValueFromDB(query, colName));
+		authSearchPage.inputFromDate(date);
+		authSearchPage.inputToDate(date);
 		// using waitAndSearchForRecordToAppear instead of
 		// page.clickSearchButton(); it iterates for sometime before failing
 		authSearchPage.waitAndSearchForRecordToAppear();
@@ -80,8 +90,10 @@ public class AuthorizationSearchWorkflow {
 		String actualDescription = authSearchPage.getCellTextByColumnName(1, descriptionColumnName);
 		String authCodeValue = authSearchPage.getCellTextByColumnName(1, "Auth Code");
 		String transactionAmountValue = authSearchPage.getCellTextByColumnName(1, "Transaction Amount");
+		String transactionDate = authSearchPage.getCellTextByColumnName(1, "Transaction Date");
 		context.put(ConstantData.AUTHORIZATION_CODE, authCodeValue);
 		context.put(ConstantData.TRANSACTION_AMOUNT, transactionAmountValue);
+		context.put(ConstantData.TRANSACTION_DATE, DateUtils.convertTransactionDateInLocalDateFormat(transactionDate));
 		logger.info("CodeAction on Authorization Search Page : {} ", actualCodeAction);
 		logger.info("Description on Authorization Search Page : {} ", actualDescription);
 		logger.info("type on Authorization Search Page : {} ", type);

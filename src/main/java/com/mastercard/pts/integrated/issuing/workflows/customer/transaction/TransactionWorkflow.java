@@ -57,6 +57,7 @@ import com.mastercard.pts.integrated.issuing.pages.ValidationException;
 import com.mastercard.pts.integrated.issuing.pages.agent.settlement.InitiateSettlementPage;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceApprovePage;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceRequestPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.GenerateReversalPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReversalTransactionPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionSearchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
@@ -2109,5 +2110,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(2000);
 		winiumClickOperation("OK");
 
+	}
+	
+	public String addTransactionReversal(String device, String reversalReason, String cancelAmount) {
+		ReversalTransactionPage page = navigator.navigateToPage(ReversalTransactionPage.class);
+		page.searchTransactionForReversal(device, context.get(ConstantData.TRANSACTION_DATE));
+		return page.addTransactionReversal(cancelAmount, reversalReason);
 	}
 }

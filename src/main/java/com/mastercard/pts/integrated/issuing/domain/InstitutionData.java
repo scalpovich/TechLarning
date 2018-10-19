@@ -34,7 +34,16 @@ public class InstitutionData {
 	private String walletPlan;
 	private String productIdentity;
   	private String transactionFeePlan;
-  
+	private String loyaltyPlan;
+
+	public String getLoyaltyPlan() {
+		return loyaltyPlan;
+	}
+
+	public void setLoyaltyPlan(String loyaltyPlan) {
+		this.loyaltyPlan = loyaltyPlan;
+	}
+
  	public String getTransactionFeePlan() {
 		return transactionFeePlan;
 	}

@@ -469,5 +469,13 @@ public class Constants {
 	public static final String CARD_PACK_TEMPLATE = "Card Pack ID Template";
 	
 	public static final String PROGRAM = "Program";
-
+	
+	public static final String POINTS_EARNED = "pointsEarned";
+	public static final String AVAILABLE_LOYALTY_POINTS = "availableLoyaltyPoints";
+	public static final String ACCUMULATED_REVERSED_POINTS = "accumulatedReversedPoints";
+	public static final String FOR_LOYALTY = "FOR_LOYALTY";
+	public static final String TRANSACTION_DATE = "TRANSACTION_DATE";
+	public static final String INSTITUTION_NUMBER_QUERY_START = "SELECT INSTITUTION_DATE('";
+	public static final String INSTITUTION_NUMBER_QUERY_END = "') from dual";
+	public static final String INSTITUTION_DATE = "INSTITUTION_DATE";
 }
