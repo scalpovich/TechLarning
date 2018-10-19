@@ -31,9 +31,9 @@ Scenario:1.3 Retail Credit card authorization and Pre-clearing & EOD-Credit and 
 Given user is logged in institution
 When user raises an authorization request
 Then status of request is "approved"
-When search transaction with device number on transaction search screen
 When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
+When search transaction with device number on transaction search screen
 Then update institution date to next days
 And user sign out from customer portal
 
@@ -90,6 +90,7 @@ Meta:
 Given user is logged in institution
 When user check balance details through helpdesk before payment
 And user makes EMI bill payment through cash
+When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
 When user check balance details through helpdesk after payment
 When update institution date to first of next month
@@ -131,6 +132,7 @@ Meta:
 Given user is logged in institution
 When user check balance details through helpdesk before payment
 And user makes EMI bill payment through cash
+When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
 When user check balance details through helpdesk after payment
 And update institution date to first of next month
@@ -173,6 +175,7 @@ Meta:
 Given user is logged in institution
 When user check balance details through helpdesk before payment
 And user makes EMI bill payment through cash
+When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
 When user check balance details through helpdesk after payment
 When update institution date to first of next month
