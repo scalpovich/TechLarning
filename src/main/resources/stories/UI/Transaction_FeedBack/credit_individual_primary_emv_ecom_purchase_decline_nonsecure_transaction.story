@@ -40,7 +40,7 @@ Then FINSim simulator is closed
 
 Scenario:1.4 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
-When perform an EMV_PURCHASE MAS transaction
+When perform an ECOMM_PURCHASE MAS transaction
 And user is logged in institution
 !-- And search Purchase authorization and verify 000-Successful status
 !-- And assert Decline response with 46041 AuthDecline Code and CVV2 not present for E-Comm transaction. as description
