@@ -30,9 +30,9 @@ Scenario:1.3 Retail Credit card authorization and Pre-clearing & EOD-Credit and 
 Given user is logged in institution
 When user raises an authorization request
 Then status of request is "approved"
-When search transaction with device number on transaction search screen
 When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
+When search transaction with device number on transaction search screen
 Then update institution date to next days
 Then user sign out from customer portal
 

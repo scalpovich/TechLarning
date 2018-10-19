@@ -192,6 +192,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 		WebElementUtils.elementToBeClickable(tranDateDDwn);
 		WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, "Transaction Date [T]");
 		clickSearchButton();
+		SimulatorUtilities.wait(5000);
 		clickWhenClickable(transactionDateOrderByLink);	
 		SimulatorUtilities.wait(1000);
 		clickWhenClickable(transactionDateOrderByLink);	
