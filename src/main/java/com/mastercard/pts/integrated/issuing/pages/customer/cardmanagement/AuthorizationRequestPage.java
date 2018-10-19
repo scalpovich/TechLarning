@@ -13,21 +13,22 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Auth
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT,
-treeMenuItems = { CardManagementNav.L1_ACTIVITY, CardManagementNav.L2_AUTHORIZATION, CardManagementNav.L3_REQUEST})
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_ACTIVITY,
+		CardManagementNav.L2_AUTHORIZATION, CardManagementNav.L3_REQUEST })
 
-public class AuthorizationRequestPage extends AbstractBasePage{
+public class AuthorizationRequestPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(AuthorizationRequestPage.class);
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
 	private MCWebElement deviceNumberSearchTxt;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cardNumber:input:inputTextField")
 	private MCWebElement deviceNumberTxt;
 
@@ -44,11 +45,12 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 	private MCWebElement memoTxt;
 
 	private String successMessage = null;
-	
-	public String addAuthorizationRequest(AuthorizationRequest request){
+
+	public String addAuthorizationRequest(AuthorizationRequest request) {
 		logger.info("Authorization Request: {}", request.getDeviceNumber());
 		clickAddNewButton();
 		runWithinPopup("Add Request", () -> {
+			SimulatorUtilities.wait(3000);
 			WebElementUtils.enterText(deviceNumberTxt, request.getDeviceNumber());
 			WebElementUtils.selectDropDownByVisibleText(transactionCurrencyDDwn, request.getTransactionCurrency());
 			WebElementUtils.enterText(transactionAmountTxt, request.getTransactionAmount());
@@ -59,20 +61,19 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 			successMessage = getSuccessMessage();
 			logger.info("Success Meesage: " + successMessage);
 			clickOkButton();
-			});
-		
+		});
+
 		return successMessage;
 	}
-	
+
 	public void verifyUiOperationStatus() {
-	logger.info("Request");
-	verifySearchButton("Search");
-}
-	
+		logger.info("Request");
+		verifySearchButton("Search");
+	}
+
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(deviceNumberSearchTxt));
+		return Arrays.asList(WebElementUtils.elementToBeClickable(deviceNumberSearchTxt));
 	}
 
 }
