@@ -30,7 +30,7 @@ And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: 1.3 Perform EMV_PURCHASE Authorization transaction less than DPP and more than DP Floor Limit
+Scenario: 1.3 Perform EMV_PURCHASE Authorization transaction with TX amount less than DPP and more than DP Floor Limit
 Given connection to MAS is established
 When user updates transaction amount to 140
 And perform an EMV_PURCHASE MAS transaction
