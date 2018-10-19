@@ -20,4 +20,18 @@ public void addingWorkFlowRuleToProgram(String fieldName,String value)
 	Boolean workFlowRule=workFlowRuleFlows.userAddsNewWorkFlowRule(fieldName,value);
 	Assert.assertTrue("ApprovalScore is not added successfully", workFlowRule);
 }
+
+	@When("User Adds WorkFlow Rule with Credit Brueau for $fieldName and $value on program")
+	@Then("User Adds WorkFlow Rule with Credit Brueau for $fieldName and $value on program")
+	public void addingWorkFlowRuleToProgramWithCreditBureau(String fieldName, String value) {
+		Boolean workFlowRule = workFlowRuleFlows.userAddsWorkFlowRuleOnlyForCreditBureau(fieldName, value);
+		Assert.assertTrue("ApprovalScore is not added successfully", workFlowRule);
+	}
+	
+	@When("User Adds WorkFlow Rule with Application Scoring,Credit Brueau for $fieldName and $value on program")
+	@Then("User Adds WorkFlow Rule with Application Scoring,Credit Brueau for $fieldName and $value on program")
+	public void addingWorkFlowRuleToProgramWithApplicationScoringCreditBureau(String fieldName, String value) {
+		Boolean workFlowRule = workFlowRuleFlows.userAddsWorkFlowRuleForApplicationScoringCreditBureau(fieldName, value);
+		Assert.assertTrue("ApprovalScore is not added successfully", workFlowRule);
+	}
 }

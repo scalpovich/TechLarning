@@ -738,7 +738,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 		context.put(CreditConstants.EXISTING_DEVICE_NUMBER, deviceNumberFetch.getText());
 		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
 		selectFirstRecord();
-		clickProcessSelectedButton();		
+		SimulatorUtilities.wait(2000);
+		clickProcessSelectedButton();	
+		SimulatorUtilities.wait(2000);
+		System.out.println("Processed");
 	}	
 	
 	protected void waitAndSearchForRecordToExists() {
@@ -1905,8 +1908,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		WebElement table = asWebElement(tableHandle);
 		List<WebElement> rowstable = table.findElements(By.tagName("tr"));
 		int rowscount = rowstable.size();
-		outerloop:
-		for (int row = 1; row < rowscount; row++) {
+		outerloop: for (int row = 1; row < rowscount; row++) {
 			List<WebElement> columnsrow = rowstable.get(row).findElements(By.tagName("td"));
 			int columnscount = columnsrow.size();
 			for (int col = 0; col < columnscount; col++) {
@@ -1914,11 +1916,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 					WebElement checkBox = columnsrow.get(columnscount - 1).findElement(By.cssSelector("input[type=checkbox]"));
 					if (checkBox.isEnabled() && !checkBox.isSelected()) {
 						checkBox.click();
+						break outerloop;
 					}
 
 				}
-				break outerloop;
-
 			}
 		}
 	}

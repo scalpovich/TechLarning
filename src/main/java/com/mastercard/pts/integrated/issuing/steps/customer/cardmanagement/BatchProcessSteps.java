@@ -41,6 +41,7 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoadFromFileUploadWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ReportVerificationWorkflow;
@@ -170,6 +171,7 @@ public class BatchProcessSteps {
 		MiscUtils.reportToConsole("pin generation Batch: {}", batchNumber);
 		jobId = batchProcessWorkflow.processPinGenerationBatch(batch);
 		MiscUtils.reportToConsole("pin generation Job Id: {}", jobId);
+		SimulatorUtilities.wait(2000);
 	}
 	
 	@When("user processes pin generation batch for $type")	

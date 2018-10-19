@@ -1,13 +1,11 @@
 Narrative:
-In order to a add scoring parameters on New Credit Application under customer portal cardmanagement tab
+In order to a create a Credit Device under customer portal cardmanagement tab
 As a user
-I want to assert pages
-
+I want to board credit device via New Application Screen with Risk Analysis, Application scoring and Credit Bureau
+					 
 Meta:
-@StoryName credit_emv_retail
-Scenario:User is able to add Approval Score,Risk analysis for Credit Device SetUp and creates a Credit Device Using New Application
-Meta:
-@UserAddsApprovalScore
+@StoryName credit_emv_retail	 
+Scenario:To verify user is able to board credit device via New Application Screen with Risk Analysis, Application scoring and Credit Bureau
 Given setting json values in excel for Credit
 When user is logged in institution
 And for EMV Card User fills Device Plan for credit product for Mastercard
