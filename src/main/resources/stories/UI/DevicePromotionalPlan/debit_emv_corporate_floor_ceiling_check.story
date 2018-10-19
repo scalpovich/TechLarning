@@ -17,7 +17,6 @@ And User fills Business Mandatory Fields Screen for debit product
 And User fills Device Range section for debit product
 And user assigns service code to program
 And user creates new device of debit type for new client
-And device has "normal" status
 And user has wallet number information for debit device
 And user performs adjustment transaction
 Then user has current wallet balance amount information for debit device
