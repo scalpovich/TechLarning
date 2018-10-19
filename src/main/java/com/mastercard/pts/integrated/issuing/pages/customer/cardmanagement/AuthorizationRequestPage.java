@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -44,6 +45,7 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 	private MCWebElement memoTxt;
 
 	private String successMessage = null;
+	private String errorMessage = "";
 	
 	public String addAuthorizationRequest(AuthorizationRequest request){
 		logger.info("Authorization Request: {}", request.getDeviceNumber());
@@ -62,6 +64,19 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 			});
 		
 		return successMessage;
+	}
+	
+	public String createInvalidAuthRequest(AuthorizationRequest request) {
+		logger.info("Invalid Authorization Request: {}", request.getDeviceNumber());
+		clickAddNewButton();
+		runWithinPopup("Add Request", () -> {
+			WebElementUtils.enterText(deviceNumberTxt, request.getDeviceNumber());
+			WebElementUtils.asWebElement(deviceNumberTxt).sendKeys(Keys.TAB);		
+			errorMessage = getErrorMessage();
+			clickCancelButton();
+		});
+		
+		return errorMessage;
 	}
 	
 	public void verifyUiOperationStatus() {

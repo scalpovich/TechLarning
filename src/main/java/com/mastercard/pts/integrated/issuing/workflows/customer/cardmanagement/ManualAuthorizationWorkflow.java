@@ -17,5 +17,10 @@ public class ManualAuthorizationWorkflow {
 		AuthorizationRequestPage page = navigator.navigateToPage(AuthorizationRequestPage.class);
 		return page.addAuthorizationRequest(request);
 	}
+	
+	public String createInvalidRequest(AuthorizationRequest request) {
+		AuthorizationRequestPage page = navigator.navigateToPage(AuthorizationRequestPage.class);
+		return page.createInvalidAuthRequest(request);
+	}
 
 }
