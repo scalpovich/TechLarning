@@ -17,6 +17,8 @@ public class LoanPlan implements HasCodeAndDescription {
 	private static final String MIN_NUM_LOAN_AMOUNT ="MIN_NUM_LOAN_AMOUNT";
 	private static final String MAX_NUMBER_OF_INSTALLMENT ="MAX_NUMBER_OF_INSTALLMENT";
 	private static final String MIN_NUMBER_OF_INSTALLMENT ="MIN_NUMBER_OF_INSTALLMENT";
+	private static final String DEFAULT_NUMBER_OF_INSTALLMENT ="DEFAULT_NUMBER_OF_INSTALLMENT";
+	private static final String MIN_EMI_AMOUNT ="MIN_EMI_AMOUNT";
 	private static final String DEFAULT_INTEREST_RATE ="DEFAULT_INTEREST_RATE";
 	private static final String MIN_INTEREST_RATE ="MIN_INTEREST_RATE";
 	private static final String MAX_INTEREST_RATE ="MAX_INTEREST_RATE";
@@ -51,6 +53,8 @@ public class LoanPlan implements HasCodeAndDescription {
 	private String numberOfConcurrentLoan  ;
 	private String minimumLoanAmount   ;
 	private String maximumLoanAmount  ;
+	private String defaultNumberOfInstallment  ;
+	private String minimumEMIAmount  ;
 	private String minimumNumberOfInstallment   ;
 	private String maximumNumberOfInstallment  ;
 	private String defaultInterestRate   ;
@@ -74,6 +78,21 @@ public class LoanPlan implements HasCodeAndDescription {
 	private String programCode;
 	private String loanDescription;
 	
+	public String getDefaultNumberOfInstallment() {
+		return defaultNumberOfInstallment;
+	}
+
+	public void setDefaultNumberOfInstallment(String defaultNumberOfInstallment) {
+		this.defaultNumberOfInstallment = defaultNumberOfInstallment;
+	}
+
+	public String getMinimumEMIAmount() {
+		return minimumEMIAmount;
+	}
+
+	public void setMinimumEMIAmount(String minimumEMIAmount) {
+		this.minimumEMIAmount = minimumEMIAmount;
+	}
 	public String getPreclosureFeeAppliedOn() {
 		return preclosureFeeAppliedOn;
 	}
@@ -368,8 +387,12 @@ public class LoanPlan implements HasCodeAndDescription {
 		loanPlan.setNumberOfConcurrentLoan(keyValueProvider.getString(NUMBER_OF_CURRENT_LOAN));
 		loanPlan.setMinimumLoanAmount(keyValueProvider.getString(MIN_NUM_LOAN_AMOUNT));
 		loanPlan.setMaximumLoanAmount(keyValueProvider.getString(MAX_NUM_LOAN_AMOUNT));
+		
+		loanPlan.setDefaultNumberOfInstallment(keyValueProvider.getString(DEFAULT_NUMBER_OF_INSTALLMENT));
+		loanPlan.setMinimumEMIAmount(keyValueProvider.getString(MIN_EMI_AMOUNT));
 		loanPlan.setMinimumNumberOfInstallment(keyValueProvider.getString(MIN_NUMBER_OF_INSTALLMENT));
 		loanPlan.setMaximumNumberOfInstallment(keyValueProvider.getString(MAX_NUMBER_OF_INSTALLMENT));
+		
 		loanPlan.setMaximumMoratoriumPeriod(keyValueProvider.getString(MAX_MORATORIUM_PERIOD));
 		loanPlan.setLoanDescription(keyValueProvider.getString(LOAN_DESCRIPTION));
 		loanPlan.setLoanType(keyValueProvider.getString(LOAN_TYPE));

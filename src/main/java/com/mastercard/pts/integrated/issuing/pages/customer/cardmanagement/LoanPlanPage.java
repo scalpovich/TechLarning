@@ -80,6 +80,12 @@ public class LoanPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "maxLoanAmt:input:inputAmountField")
 	private MCWebElement maximumLoanAmountTxt ;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "defaultInstallmentNo:input:inputAmountField")
+	private MCWebElement defaultInstallmentNoTxt ;	
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "minEmiAmt:input:inputAmountField")
+	private MCWebElement minEmiAmtTxt ;	
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "minInstallmentNo:input:inputAmountField")
 	private MCWebElement minimumNumberOfInstallmentTxt ;
 	
@@ -222,6 +228,14 @@ public class LoanPlanPage extends AbstractBasePage {
 		enterText(minimumNumberOfInstallmentTxt, minimumNumberOfInstallment);
 	}
 	
+	public void enterDefaultNumberOfInstallment(String numberOfInstallment){
+		enterText(defaultInstallmentNoTxt, numberOfInstallment);
+	}
+	
+	public void enterMinEMIAmount(String emiAmount){
+		enterText(minEmiAmtTxt, emiAmount);
+	}
+	
 	public void enterMaximumNumberOfInstallment(String maximumNumberOfInstallment){
 		enterText(maximumNumberOfInstallmentTxt, maximumNumberOfInstallment);
 	}
@@ -344,6 +358,10 @@ public class LoanPlanPage extends AbstractBasePage {
 			WebElementUtils.scrollDown(driver(), 0, 250);
 			enterMinimumLoanAmount(loanPlan.getMinimumLoanAmount());
 			enterMaximumLoanAmount(loanPlan.getMaximumLoanAmount());
+			enterDefaultNumberOfInstallment(loanPlan.getDefaultNumberOfInstallment());
+			util.pressTab();
+			enterMinEMIAmount(loanPlan.getMinimumEMIAmount());
+			util.pressTab();
 			enterMinimumNumberOfInstallment(loanPlan.getMinimumNumberOfInstallment());
 			WebElementUtils.scrollDown(driver(), 0, 250);
 			enterMaximumNumberOfInstallment(loanPlan.getMaximumNumberOfInstallment());

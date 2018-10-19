@@ -30,4 +30,22 @@ Scenario:1.3 Retail Credit card authorization and Pre-clearing & EOD-Credit and 
 Given user is logged in institution
 When user raises an authorization request
 Then status of request is "approved"
+When search transaction with device number on transaction search screen
+When user processes Pre-clearing system internal batch for Credit
+When user processes EOD-Credit system internal batch for Credit
+Then update institution date to next days
 Then user sign out from customer portal
+
+Scenario:1.6 Login & Logout to wait for date to be updated 
+Given user is logged in institution
+When user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+And user is logged in institution
+And user sign out from customer portal
+
+Scenario:1.4 Raise Loan SR and Verify Loan Account Details then update institution date to 1st of next month
+Given user is logged in institution
+When user raises Retail Transaction to Loan [215] request for Credit
+When user verifies loan account details
+And user sign out from customer portal
