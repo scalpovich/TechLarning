@@ -34,5 +34,5 @@ Scenario: Loyalty points redemption - credit -invalidMCC
 Given setting json values in excel for Credit
 When user is logged in institution
 And pre-clearing and Loyalty Calc batches are run
-And user verifies rewards and redemption screen
+And And user verifies loyalty points not available for redemption
 And user sign out from customer portal
