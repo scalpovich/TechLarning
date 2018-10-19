@@ -53,7 +53,6 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 			WebElementUtils.selectDropDownByVisibleText(transactionCurrencyDDwn, request.getTransactionCurrency());
 			WebElementUtils.enterText(transactionAmountTxt, request.getTransactionAmount());
 			WebElementUtils.selectDropDownByVisibleText(mccDDwn, request.getMcc());
-			WebElementUtils.enterText(transactionAmountTxt, request.getTransactionAmount());
 			WebElementUtils.enterText(memoTxt, request.getMemo());
 			clickSaveButton();
 			successMessage = getSuccessMessage();
