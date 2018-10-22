@@ -1,7 +1,7 @@
 Narrative:
 In order to a create a Prepaid Device under customer portal cardmanagement tab
 As a user
-I want to perform Transaction on corporate prepaid card to check Decline Non Secure Transaction
+I want to perform Transaction on corporate prepaid card to check 3D Secure Decisioning Transaction
 
 Meta:
 @StoryName p_emv_corp_travel				 
@@ -24,30 +24,25 @@ And user activates device through helpdesk
 And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
+And embossing file batch was generated in correct format
 Then user sign out from customer portal
 
 Scenario:1.2 Check Decline All Non Secured Transaction Check
 Given user is logged in institution
-When user edits 3D ecommerce security parameters to Decline all non secured transaction for product Prepaid and interchange Mastercard as check
+When user edits 3D ecommerce security parameters to Decline Merchant Risk Based Decisioning Transaction for product Prepaid and interchange Mastercard as check
 Then user sign out from customer portal
-
-Scenario:1.3 Pin Generation
-Given connection to FINSim is established
-When Pin Offset file batch was generated successfully
-And embossing file batch was generated in correct format
-And PIN is retrieved successfully with data from Pin Offset File
-Then FINSim simulator is closed
 
 Scenario:1.4 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
-When perform an ECOMM_PURCHASE MAS transaction
+Given User set Decline Merchant Risk Based Decisioning Transaction flag true
+When perform an 3D_SECURE_CAVV MAS transaction
 And user is logged in institution
 And search E-Commerce Transaction* authorization and verify 100-Do Not Honour status
-And assert Decline response with 80019 AuthDecline Code and Non Secure Transaction as description
+And assert Decline response with 80040 AuthDecline Code and Merchant Risk Based Decisioning. as description
 And user sign out from customer portal
 Then MAS simulator is closed
 
 Scenario:1.5 Uncheck Decline All Non Secured Transaction Check
 Given user is logged in institution
-When user edits 3D ecommerce security parameters to Decline all non secured transaction for product Prepaid and interchange Mastercard as uncheck
+When user edits 3D ecommerce security parameters to Decline Merchant Risk Based Decisioning Transaction for product Prepaid and interchange Mastercard as uncheck
 Then user sign out from customer portal

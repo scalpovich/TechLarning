@@ -1,15 +1,14 @@
 Narrative:
 In order to a validate 3 d secure Transaction on credit device
 As a user
-I want to perform 3 d secure Transaction without CVV2
+I want to perform Transaction on corporate debit card to check 3D Secure Decisioning Transaction
 Meta:
 @CreditRegression
 @CreditWithPin
 @StoryName credit_emv_retail
 
 Scenario:1.1 creation of mastercard_corporate_primary_EMV Card credit device
-Meta:
-@TestId TC548377
+
 Given setting json values in excel for Credit
 When for EMV Card User fills without pin Device Plan for credit product for Mastercard
 And User fills Wallet Fee Plan for credit product
@@ -36,7 +35,7 @@ Given User set Decline Merchant Risk Based Decisioning Transaction flag true
 When perform an 3D_SECURE_CAVV MAS transaction
 And user is logged in institution
 And search E-Commerce Transaction* authorization and verify 100-Do Not Honour status
-And assert Decline response with 80040 AuthDecline Code and Merchant Risk Based Decisioning as description
+And assert Decline response with 80040 AuthDecline Code and Merchant Risk Based Decisioning. as description
 And user sign out from customer portal
 Then MAS simulator is closed
 

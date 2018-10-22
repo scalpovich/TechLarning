@@ -1,15 +1,14 @@
 Narrative:
 In order to a validate 3 d secure Transaction on credit device
 As a user
-I want to perform 3 d secure Transaction without CVV2
+I want to perform Transaction on corporate credit card to check Decline Non Secure Transaction
 Meta:
 @CreditRegression
 @CreditWithPin
 @StoryName credit_emv_retail
 
 Scenario:1.1 creation of mastercard_corporate_primary_EMV Card credit device
-Meta:
-@TestId TC548377
+
 Given setting json values in excel for Credit
 And user is logged in institution
 When for EMV Card User fills Device Plan for credit product for Mastercard

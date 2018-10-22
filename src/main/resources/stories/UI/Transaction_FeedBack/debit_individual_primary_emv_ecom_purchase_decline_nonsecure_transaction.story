@@ -1,7 +1,7 @@
 Narrative:
 In order to a create a Debit Device under customer portal cardmanagement tab
 As a user
-I want to perform Transaction on corporate credit card to check differenr status Refer/Capture.
+I want to perform Transaction on corporate debit card to check Decline Non Secure Transaction
 
 Meta:
 @StoryName d_emv_corp				 

@@ -1,7 +1,7 @@
 Narrative:
 In order to a create a Prepaid Device under customer portal cardmanagement tab
 As a user
-I want to perform Transaction on corporate prepaid card to check differenr status Refer/Capture.
+I want to perform Transaction on corporate prepaid card to check MSR Transaction on EMV Card with Invalid CVV
 
 Meta:
 @StoryName p_emv_corp_travel				 
