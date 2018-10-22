@@ -1567,8 +1567,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		List<LoanDetails> loanDetails = new ArrayList<>();		
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
-		runWithinPopup(ConstantData.RETAIL_TO_LOAN, ()->{
-			selectLoanPlan(loanPlan.getLoanPlanCode());
+		runWithinPopup(ConstantData.RETAIL_TO_LOAN, ()->{			
+			selectLoanPlan(loanPlan.getDescription() + " " + "[" + loanPlan.getLoanPlanCode() + "]");
 			ClickButton(bookLoanBtn);
 			SimulatorUtilities.wait(200);
 			loanDetails.add(sanctionLoan(transactionDetails));			
