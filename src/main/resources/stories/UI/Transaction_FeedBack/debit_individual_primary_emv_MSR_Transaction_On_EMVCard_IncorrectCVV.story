@@ -20,6 +20,7 @@ And processes pre-production batch for debit
 And processes device production batch for debit
 And processes pin generation batch for debit
 And device has "NOT ACTIVATED CARD [11]" status
+And user activates device through helpdesk
 And user has wallet number information for debit device
 And user performs adjustment transaction
 And user has current wallet balance amount information for debit device

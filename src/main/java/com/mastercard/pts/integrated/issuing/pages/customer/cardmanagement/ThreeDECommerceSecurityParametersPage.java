@@ -14,6 +14,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Thre
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -55,6 +56,9 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "decNonsecuredTxnMc:checkBoxComponent")
 	private MCWebElement declineAllNonSecuredTransaction;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "decMerchantRiskBaseTxnMc:checkBoxComponent")
+	private MCWebElement declineMerchantRiskBasedTransaction;
 
 	public void verifyUiOperationStatus() {
 		logger.info("3D E-Commerce Security Parameters");
@@ -95,7 +99,7 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 		clickSearchButton();
 		editFirstRecord();
 	}
-	
+
 	public void editDeclineAllNonSecuredTransaction(ThreeDECommerceSecurityParameters threeDESParams) {
 		edit3DESecurityParameters(threeDESParams);
 		runWithinPopup("Edit 3D E-Commerce Security", () -> {
@@ -103,6 +107,19 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 				ClickCheckBox(declineAllNonSecuredTransaction, true);
 			else
 				ClickCheckBox(declineAllNonSecuredTransaction, false);
+			clickSaveButton();
+			SimulatorUtilities.wait(3000);
+		});
+		
+	}
+
+	public void editMerchantRiskBasedDecisioningTransaction(ThreeDECommerceSecurityParameters threeDESParams) {
+		edit3DESecurityParameters(threeDESParams);
+		runWithinPopup("Edit 3D E-Commerce Security", () -> {
+			if (threeDESParams.getCheckStatus().equals("check"))
+				ClickCheckBox(declineMerchantRiskBasedTransaction, true);
+			else
+				ClickCheckBox(declineMerchantRiskBasedTransaction, false);
 			clickSaveButton();
 		});
 	}

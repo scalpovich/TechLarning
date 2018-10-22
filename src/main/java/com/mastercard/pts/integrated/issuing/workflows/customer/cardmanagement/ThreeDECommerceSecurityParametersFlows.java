@@ -27,5 +27,9 @@ public class ThreeDECommerceSecurityParametersFlows {
 		ThreeDECommerceSecurityParametersPage page = navigator.navigateToPage(ThreeDECommerceSecurityParametersPage.class);
 		page.editDeclineAllNonSecuredTransaction(threeDESParams);
 	}
-
+	
+	public void editMerchantRiskBasedDecisioningTransaction(ThreeDECommerceSecurityParameters threeDESParams) {
+		ThreeDECommerceSecurityParametersPage page = navigator.navigateToPage(ThreeDECommerceSecurityParametersPage.class);
+		page.editMerchantRiskBasedDecisioningTransaction(threeDESParams);
+	}
 }
