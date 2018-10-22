@@ -626,9 +626,7 @@ public class HelpDeskSteps {
 	@Then("device has \"$deviceStatus\" status")
 	public void thenDeviceHasStatus(String deviceStatus) {
 		String expectedStatus = DeviceStatus.fromShortName(deviceStatus);
-		Device device = new Device();//context.get(ContextConstants.DEVICE);
-		device.setDeviceNumber("5742534528169311");
-		device.setProductType("Credit [C]");
+		Device device = context.get(ContextConstants.DEVICE);
 		device.setAppliedForProduct(device.getProductType());
 		String actualStatus = helpdeskWorkflow.getDeviceStatus(device);
 		assertThat(STATUS_INCORRECT_INFO_MSG, actualStatus, equalTo(expectedStatus));
