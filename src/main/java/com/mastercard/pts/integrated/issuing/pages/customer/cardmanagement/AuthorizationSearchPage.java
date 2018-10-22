@@ -201,4 +201,15 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 		});
 		return availBal;
 	}
+	
+	public String getTransactionFee(){
+		List<String> fieldsForAssertion = new ArrayList<>();
+		viewFirstRecord();
+		runWithinPopup("View Authorization", () -> {
+			fieldsForAssertion.add(getTextFromPage(fixedTransactionFee));
+			clickCloseButton();
+		});
+		return fieldsForAssertion.get(0);
+		
+	}
 }

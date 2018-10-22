@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -128,6 +129,29 @@ public class AuthorizationSearchWorkflow {
 		return myList;
 
 	}
+	
+	public String calculateTransactionFee(TransactionFeePlan txnFeePlan) {
+
+		DecimalFormat df2 = new DecimalFormat("0.00");
+		double txnRateFee;
+		double FIXED_TRANSACTION_FEE = Double.parseDouble(txnFeePlan.getfixedTxnFees());
+		double transactionAmt = Double.parseDouble(context.get(ConstantData.TRANSACTION_AMOUNT));//device.getTransactionAmount());
+		double rate = Double.parseDouble(txnFeePlan.getRateTxnFee());
+		txnRateFee = transactionAmt * (rate / 100) + FIXED_TRANSACTION_FEE;
+		double minFee = Double.parseDouble(txnFeePlan.getMinTxnRate());
+		double maxFee = Double.parseDouble(txnFeePlan.getMaxTxnRate());
+		if(txnRateFee > maxFee){
+			txnRateFee = maxFee;
+		}else if(txnRateFee < minFee){
+			txnRateFee = minFee;
+		}
+		
+		logger.info("Calculated Trasaction Fee: {} ", df2.format(txnRateFee));
+		return df2.format(txnRateFee);
+
+	}
+	
+	
 
 	public List<String> checkTransactionMaxFee(String deviceNumber) {
 
@@ -183,5 +207,9 @@ public class AuthorizationSearchWorkflow {
 		logger.info("Sum of all applicable fee and amounts = {}" , availBal.getSum());
 		logger.info("Available balance after transaction amount = {}", availBal.getAvailableBal());
 		return availBal;
+	}
+	
+	public String getTransactionFee(){
+		return authorizationSearchPage.getTransactionFee();
 	}
 }

@@ -150,4 +150,13 @@ public class AuthorizationSearchSteps {
 		assertThat("Verify Available Balance", availableBalanceBeforeTransaction.subtract(availBal.getSum()), equalTo(availBal.getAvailableBal()));
 		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, availBal.getAvailableBal());
 	}
+	
+	@Then("user verifies applied transaction fee")
+	public void userVerifiesAppliedTransactionFee(){
+		TransactionFeePlan txnFeePlan = TransactionFeePlan.getAllTransactionFee(provider);
+		String transactionFeeAppliedFromScreen = authorizationSearchWorkflow.getTransactionFee();
+		String calculatedTxnFee				   = authorizationSearchWorkflow.calculateTransactionFee(txnFeePlan);
+		assertThat("Incorrect Transaction fee is applied on transaction",transactionFeeAppliedFromScreen,equalTo(calculatedTxnFee));
+		
+	}
 }
