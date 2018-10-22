@@ -10,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 import java.awt.AWTException;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jbehave.core.annotations.Alias;
@@ -110,11 +111,13 @@ public class TransactionSteps {
 
 		String temp = transaction;
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
-		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));
+		if(!Objects.isNull(context.get(ConstantData.IS_PIN_REQUIRED))){
+			MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));				
 		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
 			// ECOMM are pinless tranasactions
 			if (!transaction.toLowerCase().contains("ecom"))
 				temp = transaction + "_PIN";
+		}
 		}
 		performOperationOnSamecard(false);
 		givenOptimizedTransactionIsExecuted(temp);
