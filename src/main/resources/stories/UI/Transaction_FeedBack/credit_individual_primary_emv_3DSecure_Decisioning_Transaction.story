@@ -28,7 +28,7 @@ Then user sign out from customer portal
 Scenario:1.2 Check Decline All Non Secured Transaction Check
 Given user is logged in institution
 When user edits 3D ecommerce security parameters to Decline Merchant Risk Based Decisioning Transaction for product Credit and interchange Mastercard as check
-!-- Then user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario:1.4 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
