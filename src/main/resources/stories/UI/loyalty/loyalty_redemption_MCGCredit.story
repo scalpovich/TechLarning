@@ -4,7 +4,7 @@ I want to configure the LoyaltyProgram
 So that the Loyalty points can be calculated and can be redeemed by the user
 
 Meta:
-@StoryName prepaid_msr_retail_loyalty	
+@StoryName credit_msr_retail_loyalty	
 
 Scenario: Loyalty program setup - Credit
 Given setting json values in excel for Credit
@@ -34,6 +34,7 @@ And search Purchase authorization and verify Successful status
 When user verifies available balance after transaction
 And device has "normal" status
 And user verifies available Card limit for card after transaction
+And user waits for 400000 milliseconds
 And user sign out from customer portal
 
 Scenario: Loyalty program setup - Credit
