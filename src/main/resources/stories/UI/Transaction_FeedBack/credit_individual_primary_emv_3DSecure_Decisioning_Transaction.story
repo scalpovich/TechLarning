@@ -32,6 +32,7 @@ Then user sign out from customer portal
 
 Scenario:1.4 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
+Given User set Decline Merchant Risk Based Decisioning Transaction flag true
 When perform an 3D_SECURE_CAVV MAS transaction
 And user is logged in institution
 And search E-Commerce Transaction* authorization and verify 100-Do Not Honour status

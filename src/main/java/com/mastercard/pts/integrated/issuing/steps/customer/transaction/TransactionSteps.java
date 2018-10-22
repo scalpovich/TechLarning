@@ -92,6 +92,8 @@ public class TransactionSteps {
 	private static String PASS_MESSAGE = "Transaction is succcessful!  - Expected Result : ";
 
 	private static String FAILED = "Transaction failed! ";
+	
+	private boolean declineMerchantRiskBased=false;
 
 	private static String FAIL_MESSAGE = FAILED + " -  Result : ";
 
@@ -236,6 +238,11 @@ public class TransactionSteps {
 		if (transactionWorkflow.isContains(transaction, "BALANCE_INQUIRY") || transactionWorkflow.isContains(transaction, "PIN_CHANGE") || transactionWorkflow.isContains(transaction, "ASI_")) {
 			// this value is expected to be 0's for Balance Enquiry
 			transactionData.setDeKeyValuePairDynamic("004", "000000000000");
+		}
+		
+		if (declineMerchantRiskBased)
+		{
+			transactionData.setDeKeyValuePairDynamic("048.TLV.42.01.02", ConstantData.DECLINE_MERCHANT_RISK_VALUE);
 		}
 
 		// changed ECOMMERCE to ECOM
@@ -579,4 +586,19 @@ public class TransactionSteps {
 		device.setTransactionAmount(Integer.toString(i));
 		context.put(ContextConstants.DEVICE, device);
 	}
+	
+	@When("User update DE Value for Decline Merchant Risk Based Decision Transaction to $type for $transaction")
+	@Given("User update DE Value for Decline Merchant Risk Based Decision Transaction to $type")
+	public void userUpdateDEValueForRiskBasedDecisionTransaction(String value, String transaction)
+	{
+		Transaction transactionData = transactionProvider.loadTransaction(transaction);
+		transactionData.setDeKeyValuePairDynamic("048.42.01.02", value);
+	}
+	
+	@Given("User set Decline Merchant Risk Based Decisioning Transaction flag $type")
+	@When("User set Decline Merchant Risk Based Decisioning Transaction flag $type")
+	public void userSetMIDTIDFlagAndCaseValue(boolean declineMerchantRiskBased) {
+		this.declineMerchantRiskBased = declineMerchantRiskBased;
+	}
+	
 }
