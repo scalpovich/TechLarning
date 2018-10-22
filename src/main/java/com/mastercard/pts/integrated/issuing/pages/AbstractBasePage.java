@@ -739,9 +739,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
 		selectFirstRecord();
 		SimulatorUtilities.wait(2000);
-		clickProcessSelectedButton();	
+		clickProcessSelectedButton();
 		SimulatorUtilities.wait(2000);
-		System.out.println("Processed");
 	}	
 	
 	protected void waitAndSearchForRecordToExists() {
