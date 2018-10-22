@@ -381,11 +381,11 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 				domainObj.getRateOrigin().split(" ")[0],
 				domainObj.getProgram());
 		try{
-		new HelpdeskGeneralPage().clickFirstRowEditLink();
+			clickFirstRowEditLink();
 		}
 		catch(StaleElementReferenceException e ){
 			e.printStackTrace();
-			new HelpdeskGeneralPage().clickFirstRowEditLink();
+			clickFirstRowEditLink();
 		}
 		switchToIframe(VIEW_CURRENCY_EXCHANGE_RATE);
 		String rate = getTextFromPage(midRateLbl);

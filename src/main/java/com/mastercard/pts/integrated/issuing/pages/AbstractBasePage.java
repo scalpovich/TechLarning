@@ -1886,4 +1886,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 			}
 		}
 	}
+	
+	public void clickFirstRowEditLink() {
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(firstRowEditLink)).click();
+	}
 }
