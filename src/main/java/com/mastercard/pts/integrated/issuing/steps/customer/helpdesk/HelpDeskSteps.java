@@ -626,7 +626,9 @@ public class HelpDeskSteps {
 	@Then("device has \"$deviceStatus\" status")
 	public void thenDeviceHasStatus(String deviceStatus) {
 		String expectedStatus = DeviceStatus.fromShortName(deviceStatus);
-		Device device = context.get(ContextConstants.DEVICE);
+		Device device = new Device();//context.get(ContextConstants.DEVICE);
+		device.setDeviceNumber("5742534528169311");
+		device.setProductType("Credit [C]");
 		device.setAppliedForProduct(device.getProductType());
 		String actualStatus = helpdeskWorkflow.getDeviceStatus(device);
 		assertThat(STATUS_INCORRECT_INFO_MSG, actualStatus, equalTo(expectedStatus));
@@ -1002,7 +1004,7 @@ public class HelpDeskSteps {
 		helpdeskGeneral.setServiceCode(serviceCode);
 		LoanPlan loanPlan = context.get(ContextConstants.LOAN_PLAN);			
 		TransactionSearchDetails transactionDetails = context.get(ContextConstants.TRANSACTION_SEARCH_DETAILS);
-		context.put(ContextConstants.LOAN_SACTION_DETAILS, helpdeskWorkflow.raiseRetailToLoanRequest(helpdeskGeneral,loanPlan,transactionDetails).get(1));
+		context.put(ContextConstants.LOAN_SACTION_DETAILS, helpdeskWorkflow.raiseRetailToLoanRequest(helpdeskGeneral,loanPlan,transactionDetails).get(0));
 		context.put(ContextConstants.LOAN_PROCESS_DATE,context.get(ContextConstants.INSTITUTION_DATE));
 		
 	}
