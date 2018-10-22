@@ -19,7 +19,7 @@ And a new device was created
 And processes pre-production batch for debit
 And processes device production batch for debit
 And processes pin generation batch for debit
-And device has "normal" status
+And device has "NOT ACTIVATED CARD [11]" status
 And user has wallet number information for debit device
 And user performs adjustment transaction
 And user has current wallet balance amount information for debit device
