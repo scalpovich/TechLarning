@@ -381,11 +381,11 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 				domainObj.getRateOrigin().split(" ")[0],
 				domainObj.getProgram());
 		try{
-			clickFirstRowEditLink();
+			clickOnFirstRowEditLink();
 		}
 		catch(StaleElementReferenceException e ){
 			e.printStackTrace();
-			clickFirstRowEditLink();
+			clickOnFirstRowEditLink();
 		}
 		switchToIframe(VIEW_CURRENCY_EXCHANGE_RATE);
 		String rate = getTextFromPage(midRateLbl);
@@ -397,6 +397,11 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 	public void verifyUiOperationStatus() {
 		logger.info("Currency Exchange Rate");
 		verifyUiOperationNoEdit("Add Currency Exchange Rate");
+	}
+	
+	private void clickOnFirstRowEditLink(){
+		SimulatorUtilities.wait(3000);
+		(driver().findElements(By.cssSelector(editLink))).get(0).click();
 	}
 
 	@Override
