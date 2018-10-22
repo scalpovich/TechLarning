@@ -37,16 +37,6 @@ public class DeviceUsageWorkflow extends MenuFlows {
 
 	private static final String TRANSACTION = "transaction";
 
-	public void deviceUsageVerification(String cardNumber) {
-		DeviceUsagePage page = navigator.navigateToPage(DeviceUsagePage.class);
-		List<String> list = page.getDeviceTotalTransactionUsage(cardNumber);
-		String expectedResult = context.get(ConstantData.TRANSACTION_AMOUNT);
-		for (String actualResult : list) {
-			logger.info("Actual Result :: {}", actualResult);
-			logger.info("Expected Result :: {}", expectedResult);
-			assertThat(actualResult, is(expectedResult));
-		}
-	}
 
 	public DeviceUsage getWalletMCGUsage(DeviceUsage deviceUsage) {
 		DeviceUsagePage page = navigator.navigateToPage(DeviceUsagePage.class);

@@ -64,13 +64,6 @@ public class DeviceUsageSteps {
 	    deviceUsage = DeviceUsage.createWithProvider(provider);
 		deviceUsageWorkflow.deviceUsageVerification(device.getDeviceNumber(), tab, deviceUsage);
 	}
-	
-
-	@Then("user searches device on device usage screen and performs assertions on device tool usage and device transaction usage tabs")
-	public void whenUserSearchesDeviceOnDeviceUsageScreen() {
-	    device = context.get(ContextConstants.DEVICE);
-		deviceUsageWorkflow.deviceUsageVerification(device.getDeviceNumber());
-	}
 
 	@Then("verify the MCG limit utilization in Device Usage Screen for $type transaction after failed transaction")
 	public void verifyDeviceUsageAfterFailedTransactuon(String type) {
