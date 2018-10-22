@@ -50,6 +50,7 @@ And user sign out from customer portal
 
 Scenario:1.4 Raise Loan SR and Verify Loan Account Details then update institution date to 1st of next month
 Given user is logged in institution
+When device has "normal" status
 When user raises Retail Transaction to Loan [215] request for Credit
 When user verifies loan account details
 And update institution date to first of next month

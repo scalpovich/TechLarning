@@ -11,6 +11,7 @@ Meta:
 Scenario:1.0 creation of mastercard_individual_primary_emv Card credit device
 Given setting json values in excel for Credit
 When user is logged in institution
+And user verify Unbilled amount for Loan Installment category
 And for EMV Card User fills Device Plan for credit product for Mastercard
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
@@ -49,6 +50,19 @@ And user sign out from customer portal
 
 Scenario:1.4 Raise Loan SR and Verify Loan Account Details then update institution date to 1st of next month
 Given user is logged in institution
+When device has "normal" status
 When user raises Retail Transaction to Loan [215] request for Credit
 When user verifies loan account details
+And user sign out from customer portal
+
+
+Scenario:1.7 Process Batches for billing and validated values on helpdesk and statement 
+Given user is logged in institution
+When user processes Pre-clearing system internal batch for Credit
+And user processes EOD-Credit system internal batch for Credit
+And user verify Unbilled amount for Loan Installment category
+And user processes Billing Process - Credit system internal batch for Credit
+And user verify Billed amount for Loan Installment category
+And user verify Outstanding amount for Loan Installment category
+Then update institution date to next days
 And user sign out from customer portal
