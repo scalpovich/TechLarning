@@ -29,6 +29,11 @@ public class SearchApplicationSteps {
 		Assert.assertTrue("Application status not appeared as rejected", searchApplicationDetailsFlows.verifyApplicationIsRejected());
 	}
 	
+	@Then("application status not appeared as rejected on search application screen")
+	public void thenApplicationStatusNotAppearedRejected(){
+		Assert.assertFalse("Application status appeared as rejected", searchApplicationDetailsFlows.verifyApplicationIsRejected());
+	}
+	
 	@Then("application status appeared as refered on search application screen")
 	public void thenApplicationStatusAppearedRefered(){
 		Assert.assertTrue("Application status not appeared as rejected", searchApplicationDetailsFlows.verifyApplicationIsRefered());

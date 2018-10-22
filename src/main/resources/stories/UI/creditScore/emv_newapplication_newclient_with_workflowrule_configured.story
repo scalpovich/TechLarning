@@ -40,7 +40,6 @@ And User Primary fills new Program Retail Credit Card section for credit product
 And User adds Fixed Score for fieldName MARITAL STATUS and fieldValue SINGLE on program
 And User adds Variable Score for fieldName AGE on program
 And User adds Approval Score on program
-And User Adds Risk Analysis Rule for fieldName1 AGE and fieldName2 Credit Limit on program
 And User Adds WorkFlow Rule for fieldName1 Customer and fieldName2 Individual on program for application score
 And User Adds Credit Limit Rule on program for fieldName AGE
 And User fills Business Mandatory Fields Screen for credit product
@@ -48,7 +47,6 @@ When User fills Device Range section for credit product
 Then "credit" is created with "Primary Device" as application type with application sub-type as "New" and customer of type "Individual" with "EMV"
 When user verifies the credit application device
 When user processes close batch for new Application
-When user processesAll riskAnalysis batch for new Application
 When user processesAll applicationScoring batch for new Application
 When user processes deviceGeneration batch for new Application
 When user searches for created application
@@ -90,7 +88,6 @@ And User Primary fills new Program Retail Credit Card section for credit product
 And User adds Fixed Score for fieldName MARITAL STATUS and fieldValue SINGLE on program
 And User adds Variable Score for fieldName AGE on program
 And User adds Approval Score on program for auto refer
-And User Adds Risk Analysis Rule for fieldName1 AGE and fieldName2 Credit Limit on program
 And User Adds WorkFlow Rule for fieldName1 Customer and fieldName2 Individual on program for application score
 And User Adds Credit Limit Rule on program for fieldName AGE
 And User fills Business Mandatory Fields Screen for credit product
@@ -111,8 +108,7 @@ And User fills Wallet Plan for credit product and program Retail Credit Card
 And User Primary fills new Program Retail Credit Card section for credit product for mastercard
 And User adds Fixed Score for fieldName MARITAL STATUS and fieldValue SINGLE on program
 And User adds Variable Score for fieldName AGE on program
-And User adds Approval Score on program with less end range
-And User Adds Risk Analysis Rule for fieldName1 AGE and fieldName2 Credit Limit on program
+And User adds Approval Score on program with less end range for auto reject
 And User Adds WorkFlow Rule for fieldName1 Customer and fieldName2 Individual on program for application score
 And User Adds Credit Limit Rule on program for fieldName AGE
 And User fills Business Mandatory Fields Screen for credit product
@@ -121,4 +117,4 @@ Then "credit" is created with "Primary Device" as application type with applicat
 When user verifies the credit application device
 When user processes close batch for new Application
 When user processesAll applicationScoring batch for new Application
-Then application status appeared as refered on search application screen
+Then application status not appeared as rejected on search application screen
