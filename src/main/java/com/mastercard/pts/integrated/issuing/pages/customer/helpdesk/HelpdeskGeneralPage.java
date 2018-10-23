@@ -1593,9 +1593,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			elementToBeClickable(sanctionBtn);
 			enterNote("Automation");
 			noteTxt.click();
-			loanDetails.setLoanEMI(emiLbl.getText());
-			loanDetails.setProcessingFee(processingFeeLbl.getText());
-			loanDetails.setMoratoriumLoan(moratoriumLoanLbl.getText());
+			loanDetails.setLoanEMI(emiLbl.getAttribute("value"));
+			loanDetails.setProcessingFee(processingFeeLbl.getAttribute("value"));
+			loanDetails.setMoratoriumLoan(moratoriumLoanLbl.getAttribute("value"));
 			clickWhenClickable(sanctionBtn);
 			elementToBeClickable(okBtn);
 			clickWhenClickable(okBtn);
