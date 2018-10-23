@@ -33,12 +33,4 @@ public void closeFirstBatchExecutionForNewApplication(){
 public void AllCloseBatchExecutionForNewApplication(){
 	closeBatchFlows.closeAllBatchExecution();
 }
-
-@When("user processesAll close batch with conformation message as $No for new Application")
-@Then("user processesAll close batch with conformation message as $No for new Application")
-public void AllCloseBatchExecutionWithNoForNewApplication(String conformStatusAsNo){
-	Device device = Device.createWithProvider(provider);
-	device.setConformStatusAsNo(conformStatusAsNo);
-	closeBatchFlows.closeAllBatchExecution();
-}
 }

@@ -1,6 +1,5 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -8,9 +7,7 @@ import java.util.Objects;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

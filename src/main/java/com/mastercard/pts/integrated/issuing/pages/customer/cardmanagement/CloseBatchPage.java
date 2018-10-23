@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -14,9 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
@@ -50,6 +49,9 @@ public class CloseBatchPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement processSelected;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "saveAll")
+	private MCWebElement processAll;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']/td[1]/span")
 	private MCWebElement btnProcessSelected;
@@ -62,9 +64,6 @@ public class CloseBatchPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Yes']")
 	private MCWebElement btnYes;
-	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='No']")
-	private MCWebElement btnNo;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//h3[text()= 'Confirmation Message']/ancestor::div//iframe")
 	private MCWebElement btnConfirmMsg;
@@ -118,18 +117,27 @@ public class CloseBatchPage extends AbstractBasePage {
 	}
 	
 	public void processAllBatch() {
-		Device device = Device.createWithProvider(provider);
 		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
 		clickProcessSelectedButton();
 		try {
 			if (btnConfirmMsg.isEnabled() && btnConfirmMsg.isVisible()) {
 				switchToIframe("Confirmation Message");
-				if(Objects.nonNull(device.getConformStatusAsNo())){
-					clickWhenClickable(btnNo);
-				}
-				else{
-					clickWhenClickable(btnYes);
-				}
+				clickWhenClickable(btnYes);
+				verifyOperationStatus();
+			} else {
+				verifyOperationStatus();
+			}
+		} catch (Exception e) {
+			e.getMessage();
+		}
+	}
+	
+	public void processAllClick() {
+		clickWhenClickable(processAll);
+		try {
+			if (btnConfirmMsg.isEnabled() && btnConfirmMsg.isVisible()) {
+				switchToIframe("Confirmation Message");
+				clickWhenClickable(btnYes);
 				verifyOperationStatus();
 			} else {
 				verifyOperationStatus();

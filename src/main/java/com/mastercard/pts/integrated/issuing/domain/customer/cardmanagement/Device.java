@@ -108,8 +108,6 @@ public class Device {
   	private static double deviceAmountUsage = 0.00;
   	private static double deviceVelocity = 0;
   	private String dedupe;
-  	private String conformStatusAsNo;
-
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
 		device.setApplicationType(provider.getString(APPLICATION_TYPE));
@@ -712,11 +710,4 @@ public class Device {
 		this.dedupe = dedupe;
 	}
 	
-	public String getConformStatusAsNo() {
-		return conformStatusAsNo;
-	}
-
-	public void setConformStatusAsNo(String conformStatusAsNo) {
-		this.conformStatusAsNo = conformStatusAsNo;
-	}
 }
