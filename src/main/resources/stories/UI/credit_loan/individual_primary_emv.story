@@ -71,7 +71,7 @@ When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
 And user verify Unbilled amount for Loan Installment category
 And user processes Billing Process - Credit system internal batch for Credit
-And user verify Billed amount for Loan Installment category
+!-- And user verify Billed amount for Loan Installment category
 And user verify Outstanding amount for Loan Installment category
 Then update institution date to next days
 And user sign out from customer portal
@@ -114,8 +114,9 @@ Scenario:1.7 Process Batches for billing and validated values on helpdesk and st
 Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
+And user verify Unbilled amount for Loan Installment category
 And user processes Billing Process - Credit system internal batch for Credit
-And user verify Billed amount for Loan Installment category
+!-- And user verify Billed amount for Loan Installment category
 And user verify Outstanding amount for Loan Installment category
 Then update institution date to next days
 And user sign out from customer portal
@@ -157,8 +158,9 @@ Scenario:1.7 Process Batches for billing and validated values on helpdesk and st
 Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
+And user verify Unbilled amount for Loan Installment category
 And user processes Billing Process - Credit system internal batch for Credit
-And user verify Billed amount for Loan Installment category
+!-- And user verify Billed amount for Loan Installment category
 And user verify Outstanding amount for Loan Installment category
 Then update institution date to next days
 And user sign out from customer portal
