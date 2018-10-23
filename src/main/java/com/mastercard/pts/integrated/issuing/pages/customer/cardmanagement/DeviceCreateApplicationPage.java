@@ -389,7 +389,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		WebElementUtils.enterText(currentAddressPostalCode, currentAddress.getPostalCode());		
 		SimulatorUtilities.wait(5000);		
 		pageScrollDown();
-		SimulatorUtilities.wait(5000);
+		SimulatorUtilities.wait(10000);
 		clickNextButton();		
 	}
 
