@@ -27,7 +27,8 @@ When user verifies the credit application device
 When user processesAll close batch for new Application
 When user processesAll riskAnalysis batch for new Application
 When user processesAll applicationScoring batch for new Application
-When user processes deviceGeneration batch for new Application
+When user refers the credit application device
+Then user processes deviceGeneration batch for new Application
 
 Scenario: 2.0 To verify credit application is boarded successfully when WF rule is configured for Application Score with the set value within auto approval range.
 Meta:
