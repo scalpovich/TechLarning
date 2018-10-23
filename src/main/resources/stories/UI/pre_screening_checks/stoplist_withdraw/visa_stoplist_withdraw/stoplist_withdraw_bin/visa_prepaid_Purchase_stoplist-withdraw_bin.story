@@ -58,4 +58,4 @@ And VISA test results are verified for POS-Retail-Magstripe-purchase_with_Pin
 And user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
-Then VISA simulator is closed
+And VISA simulator is closed

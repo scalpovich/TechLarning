@@ -51,10 +51,10 @@ When user withdraws a country from withdraw country screen
 Then user sign out from customer portal
 
 Scenario:1.6 Transaction - Purchase Completion transaction after withdraw country
-When connection to VISA is established
+Given connection to VISA is established
 When perform an POS-Retail-Magstripe-purchase_with_Pin VISA transaction
-When VISA test results are verified for POS-Retail-Magstripe-purchase_with_Pin
-Given user is logged in institution
+And VISA test results are verified for POS-Retail-Magstripe-purchase_with_Pin
+And user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 Then VISA simulator is closed
