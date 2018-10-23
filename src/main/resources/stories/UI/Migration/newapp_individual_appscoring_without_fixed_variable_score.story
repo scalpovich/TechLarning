@@ -1,11 +1,11 @@
 Narrative:
 In order to a create a Credit Device under customer portal cardmanagement tab
 As a user
-I want to board credit device via New Application Screen with Application scoring and Credit Bureau
+I want to board credit device via New Application Screen when WF rule is configured for Application Score without Fixed , variable score setup.
 					 
 Meta:
 @StoryName credit_card	 
-Scenario:To verify user is able to board credit device via New Application Screen with Application scoring and Credit Bureau
+Scenario:To verify credit application is Referred/Reject/Approved when WF rule is configured for Application Score without Fixed , variable score setup.
 Given setting json values in excel for Credit
 When user is logged in institution
 And for EMV Card User fills Device Plan for credit product for Mastercard

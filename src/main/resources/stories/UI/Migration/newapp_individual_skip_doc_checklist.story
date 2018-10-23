@@ -25,7 +25,7 @@ And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
 And User fills MCC Rules for credit product
 And User Primary Device fills New Program Retail Credit Card section for credit product for Visa
-When for Primary Device and New Client user fills Device Range section for credit product
+And for Primary Device and New Client user fills Device Range section for credit product
 And credit device is created using new Application screen for Individual [0] and "Primary Device [P]" and New Client [N] and Magnetic Stripe Card [1]
 And user verifies the credit application device
 And user approves the credit application device
