@@ -159,7 +159,7 @@ public class AuthorizationSearchSteps {
 			String calculatedTxnFee				   = authorizationSearchWorkflow.calculateTransactionFee(txnFeePlan);
 			assertThat("Incorrect Transaction fee is applied on transaction",transactionFeeAppliedFromScreen,equalTo(calculatedTxnFee));
 		}else if ("FIXED_FEE".equalsIgnoreCase(feeType)){
-			assertThat("Incorrect Transaction fee is applied on transaction",transactionFeeAppliedFromScreen,equalTo(txnFeePlan.getFixedRateFee()));
+			assertThat("Incorrect Transaction fee is applied on transaction",transactionFeeAppliedFromScreen,equalTo(txnFeePlan.getfixedTxnFees()));
 		}
 
 	}
