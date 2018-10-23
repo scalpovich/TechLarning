@@ -25,6 +25,7 @@ import com.google.common.base.Throwables;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.BatchType;
+import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
@@ -34,6 +35,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
+import com.mastercard.pts.integrated.issuing.utils.DBUtility;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
@@ -51,6 +53,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	@Autowired
 	private TestContext context;
+
+	@Autowired
+	private DBUtility dbUtils;
 
 	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
 
@@ -184,6 +189,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.yui-skin-sam")
 	private MCWebElement bussinessDateTxt;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class='yui-skin-sam']/..")
+	private MCWebElement businessDate;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
 	private MCWebElement institutionDateTxt;
@@ -388,25 +396,47 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		return batchStatus;
 	}
 
+	public void inputToDate(LocalDate date) {
+		WebElementUtils.pickDate(businessDate, date);
+	}
+
 	public String processSystemInternalProcessingBatch(ProcessBatches batch) {
 		logger.info("Process System Internal Processing Batch: {}", batch.getBatchName());
-		Date todayDate;
-		Date dateFromUI;
+		Date todayDate = null;
+		Date dateFromUI = null;
 		batchStatus = null;
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
 		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, "SYSTEM INTERNAL PROCESSING [B]");
 		selectInternalBatchType(batch.getBatchName());
-		if (batch.getProductType() != null && !("".equals(batch.getProductType()))) {
-			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-		}
-		try {
-			todayDate = dateFormatter.parse(dateFormatter.format(new Date()));
-			dateFromUI = getDateFromUI(dateFormatter, batch);
-		} catch (ParseException e) {
-			throw Throwables.propagate(e);
-		}
-		if (!dateFromUI.after(todayDate))
+		if (!(batch.getBatchName().contains("Loyalty"))) {
+
+			if (batch.getProductType() != null && !("".equals(batch.getProductType()))) {
+				WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+			}
+			try {
+				if ((batch.getProductType().equalsIgnoreCase(ProductType.CREDIT))
+						|| (batch.getBatchName().equalsIgnoreCase("End Of Day - Credit [DAILY]"))) {
+					String query = Constants.INSTITUTION_NUMBER_QUERY_START + context.get("USER_INSTITUTION_SELECTED")
+							+ Constants.INSTITUTION_NUMBER_QUERY_END;
+					String colName = Constants.INSTITUTION_DATE + "('" + context.get("USER_INSTITUTION_SELECTED")
+							+ "')";
+					inputToDate(DateUtils.convertInstitutionCurrentDateInLocalDateFormat(
+							dbUtils.getSingleRecordColumnValueFromDB(query, colName)));
+					submitAndVerifyBatch();
+				} else {
+					todayDate = dateFormatter.parse(dateFormatter.format(new Date()));
+					dateFromUI = getDateFromUI(dateFormatter, batch);
+				}
+
+			} catch (ParseException e) {
+				throw Throwables.propagate(e);
+			}
+
+			if (dateFromUI != null && !dateFromUI.after(todayDate))
+				submitAndVerifyBatch();
+		} else {
 			submitAndVerifyBatch();
+		}
 
 		return batchStatus;
 	}

@@ -25,6 +25,7 @@ And device has "normal" status
 When user notes down available Card limit for card
 And user sign out from customer portal
 
+
 Scenario: Loyalty program setup - Credit
 Given setting json values in excel for Credit
 When user is logged in institution
@@ -43,4 +44,5 @@ When user is logged in institution
 And pre-clearing and Loyalty Calc batches are run
 And user verifies rewards and redemption screen
 And user verifies current wallet balance amount information after loyalty redemption CREDIT device
+And user deletes promotion Plan and loyalty Plan mapping
 And user sign out from customer portal

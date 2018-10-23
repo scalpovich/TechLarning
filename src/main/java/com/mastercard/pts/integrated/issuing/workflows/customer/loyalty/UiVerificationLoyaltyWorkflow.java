@@ -54,6 +54,11 @@ public class UiVerificationLoyaltyWorkflow {
 		page.verifyUiOperationStatus(loyaltyPromotionMapping);
 	}
 
+	public void deleteLoyaltyPlanPromotionMappingPage(LoyaltyPromotionMapping loyaltyPromotionMapping) {
+		LoyaltyPlanPromotionMappingPage page = navigator.navigateToPage(LoyaltyPlanPromotionMappingPage.class);
+		page.deleteLoyaltyPromotionMapping(loyaltyPromotionMapping);
+	}
+
 	public void verifyLoyaltyPointsPage() {
 		LoyaltyPointsPage page = navigator.navigateToPage(LoyaltyPointsPage.class);
 		page.verifyUiOperationStatus();

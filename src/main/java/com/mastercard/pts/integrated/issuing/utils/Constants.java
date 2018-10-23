@@ -134,7 +134,7 @@ public class Constants {
 	public static String VIEW_TRANSACTION_TYPE_FRAME = "View Transaction Type";
 
 	public static String ADD_ADD_INSTITUTION_FRAME = "Add Institution";
-	
+
 	public static final String EDIT_INSTITUTION_FRAME = "Edit Institution";
 
 	public static String ADD_ACCOUNT_MASTER_FRAME = "Add Account Master";
@@ -348,7 +348,7 @@ public class Constants {
 	final public static String COMPARE_RETURN_OPERATION = "compare_return";
 
 	final public static String BOTH_PRIVILEGE_OPERATION = "both_privilege";
-	
+
 	final public static String BOTH = "Both";
 
 	final public static String DELETE_PRODUCTION_OPERATION = "delete_production";
@@ -443,15 +443,14 @@ public class Constants {
 	public static final String ADD_ACCOUNT_ROUTING_PLAN = "Add Account Range Routing";
 	public static final String ADD_LINK_API = "Add Link API to institution";
 	public static final String ADD_AGGREGATE_LOAD_LIMIT = "Add Aggregate Load Limits";
-	public static final String ADD_EASY_PAY_PLAN_RULE= "Add Easy Pay Plan Rule";
-	public static final String ADD_RULE= "Add Rules";
-	
+	public static final String ADD_EASY_PAY_PLAN_RULE = "Add Easy Pay Plan Rule";
+	public static final String ADD_RULE = "Add Rules";
+
 	public static final String ENV_DEMO = "demo";
 	public static final String ENV_STAGESA = "stageSA";
 
 	public static final String BLOCK_DEVICE = "Blocking the device";
 	public static final String UNBLOCK_DEVICE = "Unblocking the device";
-	
 
 	public static final String UPLOAD_PATH_CURR = "/home/dc-user/integrated/elt_bo/data/CURR_EXCHANGE_UPLOAD";
 	public static final String UPLOAD_PATH_CURR_STAGE = "/mptshome/STAGE2/integrated/elt_bo/data/CURR_EXCHANGE_UPLOAD";
@@ -461,13 +460,16 @@ public class Constants {
 	public static final String ASSIGN_SERVICE_CODE = "Assign Service Code";
 
 	public static final String ENV = "env";
-	public static final String MSR_SERVICE_CODE="101";
-	public static final String EMV_SERVICE_CODE="201";
+	public static final String MSR_SERVICE_CODE = "101";
+	public static final String EMV_SERVICE_CODE = "201";
 
-	public static final String PRIORITY_PASS_TEMPLATE ="Priority Pass ID [P]";
+	public static final String PRIORITY_PASS_TEMPLATE = "Priority Pass ID [P]";
 	public static final String DEVICE_TEMPLATE = "Device Template";
 	public static final String CARD_PACK_TEMPLATE = "Card Pack ID Template";
-	
+
 	public static final String PROGRAM = "Program";
 
+	public static final String INSTITUTION_NUMBER_QUERY_START = "SELECT INSTITUTION_DATE('";
+	public static final String INSTITUTION_NUMBER_QUERY_END = "') from dual";
+	public static final String INSTITUTION_DATE = "INSTITUTION_DATE";
 }

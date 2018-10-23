@@ -10,10 +10,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
@@ -29,9 +27,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
-import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
 
 @Component
 public class DateUtils {
@@ -52,33 +47,34 @@ public class DateUtils {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		return dateFormat.format(new Date()).replaceAll("[/,:,\\s+]", "");
 
-	}	
-    public static String currentDateddMMyyyy(){
-    	Date date = new Date();
-        String format = "dd/MM/yyyy";
-        SimpleDateFormat sdf = new SimpleDateFormat(format);
-        return sdf.format(date);
-    }
-    
-    public static String currentDateYYMMDD(){
-    	Date date = new Date();
-        String format = "yyMMdd";
-        SimpleDateFormat sdf = new SimpleDateFormat(format);
-        return sdf.format(date);
-    }
-	
+	}
+
+	public static String currentDateddMMyyyy() {
+		Date date = new Date();
+		String format = "dd/MM/yyyy";
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		return sdf.format(date);
+	}
+
+	public static String currentDateYYMMDD() {
+		Date date = new Date();
+		String format = "yyMMdd";
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		return sdf.format(date);
+	}
+
 	public static String getDateTimeDDMMYYYYHHMMSS() {
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyyHHmmss");
 		return sdf.format(cal.getTime());
 	}
-	
-	public static String getEffectiveDate(){
-		Calendar c = Calendar.getInstance();   
-		c.add(Calendar.MONTH, 1);   
+
+	public static String getEffectiveDate() {
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.MONTH, 1);
 		return new SimpleDateFormat("MM/dd/yyyy").format(c.getTime());
-	} 
-	
+	}
+
 	public static String getDate() {
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyy");
@@ -148,7 +144,7 @@ public class DateUtils {
 	public static String addressLine(int number) {
 		return org.apache.commons.lang.RandomStringUtils.random(number, false, true);
 	}
-	
+
 	public static String generateStringWithUniqueKey(String text) {
 		return generateStringWithUniqueKey(text, DEFAULT_KEY_LENGTH);
 	}
@@ -165,10 +161,11 @@ public class DateUtils {
 		long ts = new Date().getTime();
 		return StringUtils.right(Long.toString(ts), keyLength);
 	}
-	
-	public static String getLocalDateInYYYYMMDD(){
-		return	LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+
+	public static String getLocalDateInYYYYMMDD() {
+		return LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 	}
+
 	public static String getDateDDMMYYFormat() {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		return dateFormat.format(new Date()).replaceAll("[/,:,\\s+]", "");
@@ -182,10 +179,10 @@ public class DateUtils {
 		return dateFormat.format(new Date()).replaceAll("[/,:,\\s+]", "");
 
 	}
-	
+
 	public String getDateDDMMFormat() {
-		
-		return getDateMMDDFormat().substring(2, 4)+getDateMMDDFormat().substring(0, 2);
+
+		return getDateMMDDFormat().substring(2, 4) + getDateMMDDFormat().substring(0, 2);
 	}
 
 	public void datePicker(JFrame parent)// create constructor
@@ -297,7 +294,6 @@ public class DateUtils {
 		return f.format(calendar.getTime()) + "/" + f1.format(calendar.getTime()) + "/" + f2.format(calendar.getTime());
 	}
 
-
 	public static String getDateTimeDDMMYYHHMMSS() {
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyHHmmss");
@@ -308,13 +304,15 @@ public class DateUtils {
 		Date date = new Date();
 		return new SimpleDateFormat("MMMM/dd/yyyy").format(date);
 	}
+
 	public static String getNextDateInDDMMYYYY() {
-		   Calendar calendar = Calendar.getInstance(); 
-		   Date today = calendar.getTime();  
-		  calendar.add(Calendar.DAY_OF_YEAR, 1); 
-		  Date tomorrow = calendar.getTime(); 
+		Calendar calendar = Calendar.getInstance();
+		Date today = calendar.getTime();
+		calendar.add(Calendar.DAY_OF_YEAR, 1);
+		Date tomorrow = calendar.getTime();
 		return new SimpleDateFormat("MMMM/dd/yyyy").format(tomorrow);
 	}
+
 	public static String getDateInYYMM(String dateVal) {
 		// for format of date to be passed is YYMM .Ex: Input is 10-2022..
 		// output should be 2210
@@ -323,19 +321,28 @@ public class DateUtils {
 		return tempVal + tempArr[0];
 	}
 
-	public static LocalDate convertInstitutionDateInLocalDateFormat(String institutionDate){
-		return LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
+	public static LocalDate convertInstitutionDateInLocalDateFormat(String institutionDate) {
+		return LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
 	}
-	
-	public static int getNextMonthFirstDayDifference(String institutionDate){			
+
+	public static LocalDate convertTransactionDateInLocalDateFormat(String institutionDate) {
+		return LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+	}
+
+	public static LocalDate convertInstitutionCurrentDateInLocalDateFormat(String institutionDate) {
+		return LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+	}
+
+	public static int getNextMonthFirstDayDifference(String institutionDate) {
 		LocalDate localDate = LocalDate.now();
-		logger.info("localDate date : {}" , localDate);
+		logger.info("localDate date : {}", localDate);
 		LocalDate convertedDate = LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
-		logger.info("Coverted Institution date : {} " , convertedDate);
-		LocalDate monthLastDate = convertedDate.withDayOfMonth(convertedDate.getMonth().length(convertedDate.isLeapYear())) ;
-		logger.info("monthLastDate date : {}" ,monthLastDate);
-		logger.info("Diffrence Days : {}",ChronoUnit.DAYS.between(localDate, monthLastDate));
+		logger.info("Coverted Institution date : {} ", convertedDate);
+		LocalDate monthLastDate = convertedDate
+				.withDayOfMonth(convertedDate.getMonth().length(convertedDate.isLeapYear()));
+		logger.info("monthLastDate date : {}", monthLastDate);
+		logger.info("Diffrence Days : {}", ChronoUnit.DAYS.between(localDate, monthLastDate));
 		return (int) (ChronoUnit.DAYS.between(localDate, monthLastDate) + 1);
-	}	
-	
+	}
+
 }

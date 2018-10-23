@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.Assert;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -34,6 +35,10 @@ public class LoyaltyPlanPromotionMappingPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement loyaltyPlanDDwn;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:1:componentPanel:input:dropdowncomponent")
+	private MCWebElement promotionPlanDDwn;
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:1:cols:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement ddwnLoyaltyPlanMapping;
 
@@ -69,6 +74,29 @@ public class LoyaltyPlanPromotionMappingPage extends AbstractBasePage {
 		enterPriority(loyaltypromotionmapping);
 		clickSaveButton();
 		Assert.assertTrue("LoyaltyPlan Mapping success message is not proper", messageSuccess());
+	}
+
+	public void deleteLoyaltyPromotionMapping(LoyaltyPromotionMapping loyaltypromotionmapping) {
+		WebElementUtils.selectDropDownByVisibleText(loyaltyPlanDDwn,
+				loyaltypromotionmapping.getMappingLoyaltyPlanddwn());
+		WebElementUtils.selectDropDownByVisibleText(promotionPlanDDwn,
+				loyaltypromotionmapping.getMappingPromotionPlanddwn());
+		deleteRecord();
+
+	}
+
+	public void deleteRecord() {
+		if (isDeleteColumnPresent()) {
+			deleteFirstRecord();
+			Alert alert = driver().switchTo().alert();
+			String actualAlertText = null;
+			boolean isAlertPresent = alert != null;
+			if (isAlertPresent) {
+				actualAlertText = alert.getText();
+				Assert.assertTrue(actualAlertText.contains("Are you sure you want to delete the highlighted record?"));
+				alert.accept();
+			}
+		}
 	}
 
 	public boolean messageSuccess() {

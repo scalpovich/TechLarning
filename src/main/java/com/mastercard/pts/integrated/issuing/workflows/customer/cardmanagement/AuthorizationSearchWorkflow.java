@@ -59,12 +59,14 @@ public class AuthorizationSearchWorkflow {
 	}
 
 	public void verifyTransactionAndBillingCurrency(String transactionCurrency, String billingCurrency, Device device) {
-		authSearchAndVerification(device, transactionCurrency, billingCurrency, "Transaction Currency", "Billing Currency");
+		authSearchAndVerification(device, transactionCurrency, billingCurrency, "Transaction Currency",
+				"Billing Currency");
 	}
 
-	private void authSearchAndVerification(Device device, String type, String state, String codeColumnName, String descriptionColumnName) {
+	private void authSearchAndVerification(Device device, String type, String state, String codeColumnName,
+			String descriptionColumnName) {
 		boolean condition;
-        SimulatorUtilities.wait(5000);
+		SimulatorUtilities.wait(5000);
 		AuthorizationSearchPage authSearchPage = navigator.navigateToPage(AuthorizationSearchPage.class);
 		authSearchPage.inputDeviceNumber(device.getDeviceNumber());
 		authSearchPage.inputFromDate(LocalDate.now().minusDays(1));
@@ -98,7 +100,8 @@ public class AuthorizationSearchWorkflow {
 
 		// Device Usage Code
 		String billingAmountValue = authSearchPage.getCellTextByColumnName(1, "Billing Amount");
-		if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && !ConstantData.PRE_AUTH.equalsIgnoreCase(type)){
+		if (ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction)
+				&& !ConstantData.PRE_AUTH.equalsIgnoreCase(type)) {
 			device.setDeviceVelocity();
 			device.setDeviceAmountUsage(Double.parseDouble(billingAmountValue));
 		}
@@ -159,28 +162,33 @@ public class AuthorizationSearchWorkflow {
 		transactionReport.setRrnNumber(context.get(ConstantData.RRN_NUMBER));
 		transactionReport.setUsername(context.get(USERNAME));
 
-		List<String> reportContent = reconciliationWorkFlow.verifyAuthReport(ConstantData.AUTHORIZATION_REPORT_FILE_NAME,transactionReport);
+		List<String> reportContent = reconciliationWorkFlow
+				.verifyAuthReport(ConstantData.AUTHORIZATION_REPORT_FILE_NAME, transactionReport);
 		String authFileData = "";
 		for (int i = 0; i < reportContent.size(); i++) {
 			authFileData += reportContent.get(i) + " ";
 		}
 
-		boolean condition = authFileData.contains(context.get(ConstantData.AUTHORIZATION_CODE)) && authFileData.contains(device.getDeviceNumber()) 
-				&& authFileData.contains(context.get(ConstantData.TRANSACTION_AMOUNT)) && authFileData.contains(context.get(ConstantData.RRN_NUMBER));
+		boolean condition = authFileData.contains(context.get(ConstantData.AUTHORIZATION_CODE))
+				&& authFileData.contains(device.getDeviceNumber())
+				&& authFileData.contains(context.get(ConstantData.TRANSACTION_AMOUNT))
+				&& authFileData.contains(context.get(ConstantData.RRN_NUMBER));
 		assertTrue("Auth Code Doesnot match with Authoraization Report content", condition);
 	}
 
 	public void verifyStateAuthSearch(String deviceNumber, List<String> authStatus) {
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
 		List<String> actualAuthStatus = page.verifyState(deviceNumber);
-		assertTrue(String.format("Response, Auth Code and Auth Description does not match. Expecting %s. Actual %s", authStatus, actualAuthStatus), actualAuthStatus.containsAll(authStatus));
+		assertTrue(String.format("Response, Auth Code and Auth Description does not match. Expecting %s. Actual %s",
+				authStatus, actualAuthStatus), actualAuthStatus.containsAll(authStatus));
 	}
 
-	public AvailableBalance getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(BigDecimal availableBalance){
+	public AvailableBalance getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(
+			BigDecimal availableBalance) {
 		authorizationSearchPage.viewDeviceDetails();
 		AvailableBalance availBal = authorizationSearchPage.getAvailableBalance();
 		logger.info("Available balance before transaction amount = {}", availableBalance);
-		logger.info("Sum of all applicable fee and amounts = {}" , availBal.getSum());
+		logger.info("Sum of all applicable fee and amounts = {}", availBal.getSum());
 		logger.info("Available balance after transaction amount = {}", availBal.getAvailableBal());
 		return availBal;
 	}
