@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -15,7 +16,8 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -34,6 +36,9 @@ public class CloseBatchPage extends AbstractBasePage {
 
 	@Autowired
 	TestContext context;
+	
+	@Autowired
+	private KeyValueProvider provider;
 	
 	protected  static final Logger logger = LoggerFactory.getLogger(CloseBatchPage.class);
 	
@@ -57,6 +62,9 @@ public class CloseBatchPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Yes']")
 	private MCWebElement btnYes;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='No']")
+	private MCWebElement btnNo;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//h3[text()= 'Confirmation Message']/ancestor::div//iframe")
 	private MCWebElement btnConfirmMsg;
@@ -110,12 +118,18 @@ public class CloseBatchPage extends AbstractBasePage {
 	}
 	
 	public void processAllBatch() {
+		Device device = Device.createWithProvider(provider);
 		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
 		clickProcessSelectedButton();
 		try {
 			if (btnConfirmMsg.isEnabled() && btnConfirmMsg.isVisible()) {
 				switchToIframe("Confirmation Message");
-				clickWhenClickable(btnYes);
+				if(Objects.nonNull(device.getConformStatusAsNo())){
+					clickWhenClickable(btnNo);
+				}
+				else{
+					clickWhenClickable(btnYes);
+				}
 				verifyOperationStatus();
 			} else {
 				verifyOperationStatus();

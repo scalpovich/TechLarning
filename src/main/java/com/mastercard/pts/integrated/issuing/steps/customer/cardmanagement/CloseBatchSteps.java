@@ -5,6 +5,8 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.steps.AbstractBaseSteps;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.CloseBatchFlows;
 
@@ -12,6 +14,9 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.C
 public class CloseBatchSteps extends AbstractBaseSteps {
 @Autowired
 CloseBatchFlows closeBatchFlows;
+
+@Autowired
+private KeyValueProvider provider;
 
 @When("user processes close batch for new Application")
 public void closeBatchExecutionForNewApplication(){
@@ -26,6 +31,14 @@ public void closeFirstBatchExecutionForNewApplication(){
 @When("user processesAll close batch for new Application")
 @Then("user processesAll close batch for new Application")
 public void AllCloseBatchExecutionForNewApplication(){
+	closeBatchFlows.closeAllBatchExecution();
+}
+
+@When("user processesAll close batch with conformation message as $No for new Application")
+@Then("user processesAll close batch with conformation message as $No for new Application")
+public void AllCloseBatchExecutionWithNoForNewApplication(String conformStatusAsNo){
+	Device device = Device.createWithProvider(provider);
+	device.setConformStatusAsNo(conformStatusAsNo);
 	closeBatchFlows.closeAllBatchExecution();
 }
 }
