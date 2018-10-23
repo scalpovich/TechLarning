@@ -925,7 +925,7 @@ public class HelpDeskSteps {
 			context.put(ConstantData.UNPAID2_AMOUNT, context.get(ContextConstants.MINIMUM_PAYMENT_DUE));
 		}else if(device.getCategory().equalsIgnoreCase("Loan Installment") ) {
 			LoanDetails loanDetails = context.get(ContextConstants.LOAN_SACTION_DETAILS);	
-			transactionAmount = loanDetails.getLoanEMI();
+			transactionAmount = loanDetails.getLoanEMI().replaceAll(",", "");
 			context.put(ConstantData.LOAN_INSTALLMENT_OUTSTANDING, transactionAmount);
 		}
 
