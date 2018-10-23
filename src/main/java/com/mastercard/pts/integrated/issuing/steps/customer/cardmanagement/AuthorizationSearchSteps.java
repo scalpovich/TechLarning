@@ -32,7 +32,7 @@ public class AuthorizationSearchSteps {
 
 	@Autowired
 	private KeyValueProvider provider;
-	
+
 	@When("search $type authorization and verify $state status")
 	@Then("search $type authorization and verify $state status")
 	public void thenUserSearchDeviceNumerWithTodaysDate(String type, String state) {
@@ -57,7 +57,7 @@ public class AuthorizationSearchSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		authorizationSearchWorkflow.verifyTransactionAndBillingCurrency(tcurrency, bcurrency, device);
 	}
-    
+
 	@When("verify fixed transaction fee applied on purchase transaction")
 	@Then("verify fixed transaction fee applied on purchase transaction")
 	public void veriyFixedTransactionFeeonPurchaseTransaction() {
@@ -66,7 +66,7 @@ public class AuthorizationSearchSteps {
 		assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()),
 				Matchers.hasItems(txnFeePlan.getfixedTxnFees(), txnFeePlan.getFixedRateFee(), txnFeePlan.getBillingAmount()));
 	}
-	
+
 	@Then("verify transaction fee waived off")
 	public void veriyTransactionFeeWaivedOff() {
 		Device device = context.get(ContextConstants.DEVICE);
@@ -74,7 +74,7 @@ public class AuthorizationSearchSteps {
 		assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()),
 				Matchers.hasItems(txnFeePlan.getfixedTxnFees(), txnFeePlan.getFixedRateFee(), txnFeePlan.getBillingAmount()));
 	}
-	
+
 	@Then("verify fixed transaction fee applied on purchase transaction waived off")
 	public void veriyFixedTransactionFeePurchaseTransaction(){
 		Device device = context.get(ContextConstants.DEVICE);
@@ -121,7 +121,7 @@ public class AuthorizationSearchSteps {
 
 	@When("verify markup rate fee applied on transaction")
 	@Then("verify markup rate fee applied on transaction")
-		public void veriyMarkupRateFeeOnTransaction() {
+	public void veriyMarkupRateFeeOnTransaction() {
 		Device device = context.get(ContextConstants.DEVICE);
 		TransactionFeePlan txnFeePlan = TransactionFeePlan.getMarkUpFees(provider);
 		Double billingAmount = Double.parseDouble(authorizationSearchWorkflow.checkMarkupFee(device.getDeviceNumber()).get(0));
@@ -141,7 +141,7 @@ public class AuthorizationSearchSteps {
 			authorizationSearchWorkflow.verifyAuthTransactionSearchReport(device);
 		} 
 	}
-	
+
 	@When("user verifies available balance after transaction")
 	@Then("user verifies available balance after transaction")
 	public void validateAvailableBalanceAfterTransaction(){
@@ -150,13 +150,17 @@ public class AuthorizationSearchSteps {
 		assertThat("Verify Available Balance", availableBalanceBeforeTransaction.subtract(availBal.getSum()), equalTo(availBal.getAvailableBal()));
 		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, availBal.getAvailableBal());
 	}
-	
-	@Then("user verifies applied transaction fee")
-	public void userVerifiesAppliedTransactionFee(){
+
+	@Then("user verifies $feeType applied on transaction")
+	public void userVerifiesAppliedTransactionFee(String feeType){
 		TransactionFeePlan txnFeePlan = TransactionFeePlan.getAllTransactionFee(provider);
 		String transactionFeeAppliedFromScreen = authorizationSearchWorkflow.getTransactionFee();
-		String calculatedTxnFee				   = authorizationSearchWorkflow.calculateTransactionFee(txnFeePlan);
-		assertThat("Incorrect Transaction fee is applied on transaction",transactionFeeAppliedFromScreen,equalTo(calculatedTxnFee));
-		
+		if("VARIABLE_FEE".equalsIgnoreCase(feeType)){
+			String calculatedTxnFee				   = authorizationSearchWorkflow.calculateTransactionFee(txnFeePlan);
+			assertThat("Incorrect Transaction fee is applied on transaction",transactionFeeAppliedFromScreen,equalTo(calculatedTxnFee));
+		}else if ("FIXED_FEE".equalsIgnoreCase(feeType)){
+			assertThat("Incorrect Transaction fee is applied on transaction",transactionFeeAppliedFromScreen,equalTo(txnFeePlan.getFixedRateFee()));
+		}
+
 	}
 }

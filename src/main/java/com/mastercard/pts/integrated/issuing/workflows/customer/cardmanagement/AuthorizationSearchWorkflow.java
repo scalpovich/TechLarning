@@ -127,32 +127,8 @@ public class AuthorizationSearchWorkflow {
 		String txnRateFeeString = Double.toString(txnRateFee);
 		myList.add(txnRateFeeString);
 		return myList;
-
 	}
 	
-	public String calculateTransactionFee(TransactionFeePlan txnFeePlan) {
-
-		DecimalFormat df2 = new DecimalFormat("0.00");
-		double txnRateFee;
-		double FIXED_TRANSACTION_FEE = Double.parseDouble(txnFeePlan.getfixedTxnFees());
-		double transactionAmt = Double.parseDouble(context.get(ConstantData.TRANSACTION_AMOUNT));//device.getTransactionAmount());
-		double rate = Double.parseDouble(txnFeePlan.getRateTxnFee());
-		txnRateFee = transactionAmt * (rate / 100) + FIXED_TRANSACTION_FEE;
-		double minFee = Double.parseDouble(txnFeePlan.getMinTxnRate());
-		double maxFee = Double.parseDouble(txnFeePlan.getMaxTxnRate());
-		if(txnRateFee > maxFee){
-			txnRateFee = maxFee;
-		}else if(txnRateFee < minFee){
-			txnRateFee = minFee;
-		}
-		
-		logger.info("Calculated Trasaction Fee: {} ", df2.format(txnRateFee));
-		return df2.format(txnRateFee);
-
-	}
-	
-	
-
 	public List<String> checkTransactionMaxFee(String deviceNumber) {
 
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
@@ -210,6 +186,28 @@ public class AuthorizationSearchWorkflow {
 	}
 	
 	public String getTransactionFee(){
-		return authorizationSearchPage.getTransactionFee();
+		String appliedTransactionFee = authorizationSearchPage.getTransactionFee();
+		logger.info("Applied Trasaction Fee on screen: {} ", appliedTransactionFee);
+		return appliedTransactionFee;
+	}
+	
+	public String calculateTransactionFee(TransactionFeePlan txnFeePlan) {
+		DecimalFormat df2 = new DecimalFormat("0.00");
+		double txnRateFee;
+		double FIXED_TRANSACTION_FEE = Double.parseDouble(txnFeePlan.getfixedTxnFees());
+		double transactionAmt = Double.parseDouble(context.get(ConstantData.TRANSACTION_AMOUNT));//device.getTransactionAmount());
+		double rate = Double.parseDouble(txnFeePlan.getRateTxnFee());
+		txnRateFee = transactionAmt * (rate / 100) + FIXED_TRANSACTION_FEE;
+		double minFee = Double.parseDouble(txnFeePlan.getMinTxnRate());
+		double maxFee = Double.parseDouble(txnFeePlan.getMaxTxnRate());
+		logger.info("Calculated Trasaction Fee: {} ", df2.format(txnRateFee));
+		
+		if(txnRateFee > maxFee){
+			txnRateFee = maxFee;
+		}else if(txnRateFee < minFee){
+			txnRateFee = minFee;
+		}
+		logger.info("Applied Trasaction Fee: {} ", df2.format(txnRateFee));
+		return df2.format(txnRateFee);
 	}
 }

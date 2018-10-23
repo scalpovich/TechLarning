@@ -18,7 +18,7 @@ And credit device is created using new device screen for Individual and Primary 
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pinProduction batch using new Device for Supplementary
-And user attachs device promotion plan TX_FEE_PROMOTION_PLAN
+And user attachs device promotion plan FIXED_TX_FEE_PROMOTION_PLAN
 And device has "normal" status
 Then user sign out from customer portal
 
@@ -31,26 +31,26 @@ Then FINSim simulator is closed
 
 Scenario: 1.3 Perform EMV_PURCHASE Authorization transaction to check transaction fee applied
 Given connection to MAS is established
-When user updates transaction amount to 70
+When user updates transaction amount to 10
 And perform an EMV_PURCHASE MAS transaction
 Then user is logged in institution
 And search Purchase authorization and verify 000-Successful status
-And user verifies VARIABLE_FEE applied on transaction
+And user verifies FIXED_FEE applied on transaction
 And user sign out from customer portal
 
 Scenario: 1.4 Perform EMV_PURCHASE Authorization transaction to check minimum transaction fee applied
-Given user updates transaction amount to 40
+Given user updates transaction amount to 100
 And perform an EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 And search Purchase authorization and verify 000-Successful status
-And user verifies VARIABLE_FEE applied on transaction
+And user verifies FIXED_FEE applied on transaction
 And user sign out from customer portal
 
 Scenario: 1.5 Perform EMV_PURCHASE Authorization transaction to check maximum transaction fee applied
-Given user updates transaction amount to 110
+Given user updates transaction amount to 1000
 And perform an EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 And search Purchase authorization and verify 000-Successful status
-And user verifies VARIABLE_FEE applied on transaction
+And user verifies FIXED_FEE applied on transaction
 And user sign out from customer portal
 And MAS simulator is closed
