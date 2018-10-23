@@ -47,10 +47,11 @@ public class AuthorizationSearchSteps {
 		List<String> authStatus = new ArrayList<>();
 		authStatus.add(response);
 		authStatus.add(code);
-		if(MCGLimitPlan.getAuthDeclineDescription().get(descriptionBrief)==null)
-		    authStatus.add(descriptionBrief);
-		else
+		if(MCGLimitPlan.getAuthDeclineDescription().get(descriptionBrief)==null){
+			authStatus.add(descriptionBrief);   
+		}else{
 			authStatus.add(MCGLimitPlan.getAuthDeclineDescription().get(descriptionBrief));
+		}
 		Device device = context.get(ContextConstants.DEVICE);
 		authorizationSearchWorkflow.verifyStateAuthSearch(device.getDeviceNumber(), authStatus);
 	}

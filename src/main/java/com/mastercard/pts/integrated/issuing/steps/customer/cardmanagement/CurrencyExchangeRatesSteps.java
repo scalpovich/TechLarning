@@ -287,21 +287,23 @@ public class CurrencyExchangeRatesSteps {
 				currencyExchangeRateDomainPage.getUploadPathCER());
 	}
 	
-	@Then("fetches currency exchange rate from $Source currency to program currency")
-	@When("fetches currency exchange rate from $Source currency to program currency")
+	@Then("user fetches currency exchange rate from $Source currency to program currency")
+	@When("user fetches currency exchange rate from $Source currency to program currency")
 	public void fetchSourcetoDestinationCurrency(String currency) {
 		try{
-		Device device =context.get(ContextConstants.DEVICE);
-		Program program =context.get(ContextConstants.PROGRAM);
-		currencyExchangeRateDomainPage.setSourceCurrency(currency);
-		currencyExchangeRateDomainPage.setDestinationCurrency(program.getBaseCurrency());
-		if(program.getProduct().equalsIgnoreCase(ProductType.PREPAID)){
-		currencyExchangeRateDomainPage.setRateOrigin(program.getInterchange());}
-		else{
-			currencyExchangeRateDomainPage.setRateOrigin(program.getCurrencyConversionBy());}
-		String currencyRate = currencyExchangeRatesFlows.fetchSourceToDestinationCurrency(currencyExchangeRateDomainPage);
-		device.setExchangeRate(currencyRate);
-		context.put(ContextConstants.DEVICE,device);
+			Device device =context.get(ContextConstants.DEVICE);
+			Program program =context.get(ContextConstants.PROGRAM);
+			currencyExchangeRateDomainPage.setSourceCurrency(currency);
+			currencyExchangeRateDomainPage.setDestinationCurrency(program.getBaseCurrency());
+			if(program.getProduct().equalsIgnoreCase(ProductType.PREPAID)){
+				currencyExchangeRateDomainPage.setRateOrigin(program.getInterchange());
+			}
+			else{
+				currencyExchangeRateDomainPage.setRateOrigin(program.getCurrencyConversionBy());
+			}
+			String currencyRate = currencyExchangeRatesFlows.fetchSourceToDestinationCurrency(currencyExchangeRateDomainPage);
+			device.setExchangeRate(currencyRate);
+			context.put(ContextConstants.DEVICE,device);
 		}
 		catch(NullPointerException e)
 		{

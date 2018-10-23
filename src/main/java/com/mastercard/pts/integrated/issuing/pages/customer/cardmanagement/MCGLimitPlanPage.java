@@ -213,7 +213,7 @@ public class MCGLimitPlanPage extends AbstractBasePage {
 		selectByVisibleText(perTransactionResponseDdwn, plan.getPerTransactionResponse());
 	}
 	
-	public void enterperTransactionPercentageOFCreditLimit(MCGLimitPlan plan){
+	public void enterPerTransactionPerOFCreditLimit(MCGLimitPlan plan){
 		enterValueinTextBox(perTransactionPercentageOfCreditLimitTxt, plan.getPerTransactionPercentageOfCreditLimit());
 	}
 	
@@ -265,7 +265,7 @@ public class MCGLimitPlanPage extends AbstractBasePage {
 		selectByVisibleText(perTransactionInternationalResponseDdwn, plan.getPerTransactionInternationalResponse());
 	}
 	
-	public void enterperTransactionInternationalPercentageOFCreditLimit(MCGLimitPlan plan){
+	public void enterPerTransactionInternationalPerOfCreditLimit(MCGLimitPlan plan){
 		enterValueinTextBox(perTransactionInternationalPercentageOfCreditLimitTxt, plan.getPerTransactionPercentageOfCreditLimitInternational());
 	}
 	

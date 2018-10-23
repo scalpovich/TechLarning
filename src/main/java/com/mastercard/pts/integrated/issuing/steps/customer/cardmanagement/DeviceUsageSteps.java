@@ -54,44 +54,45 @@ public class DeviceUsageSteps {
 
 	private MCGLimitPlan mcgLimitPlan;
 
-	private DeviceUsage deviceUsage;
+	private DeviceUsage deviceUsuage;
 
 	private Device device;
 
 	@Then("user searches device on device usage screen and performs assertions on device $tab usage")
 	public void whenUserSearchesDeviceOnDeviceUsageScreen(String tab) {
 		device = context.get(ContextConstants.DEVICE);
-	    deviceUsage = DeviceUsage.createWithProvider(provider);
-		deviceUsageWorkflow.deviceUsageVerification(device.getDeviceNumber(), tab, deviceUsage);
+	    deviceUsuage = DeviceUsage.createWithProvider(provider);
+		deviceUsageWorkflow.deviceUsageVerification(device.getDeviceNumber(), tab, deviceUsuage);
 	}
 
 	@Then("verify the MCG limit utilization in Device Usage Screen for $type transaction after failed transaction")
-	public void verifyDeviceUsageAfterFailedTransactuon(String type) {
+	public void verifyDeviceUsageAfterFailedTransaction(String type) {
 		DecimalFormat df2 = new DecimalFormat("0.00"); 
 		mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
 		device = context.get(ContextConstants.DEVICE);
-		deviceUsage = context.get(DEVICE_USUAGE);
-		if(deviceUsage==null){
-		deviceUsage = DeviceUsage.getDeviceUsageDetails(provider);}
-		deviceUsage.setDeviceNumber(device.getDeviceNumber());
-		deviceUsage = deviceUsageWorkflow.getWalletMCGUsage(deviceUsage);
+		deviceUsuage = context.get(DEVICE_USUAGE);
+		if(deviceUsuage==null){
+			deviceUsuage = DeviceUsage.getDeviceUsageDetails(provider);
+		}
+		deviceUsuage.setDeviceNumber(device.getDeviceNumber());
+		deviceUsuage = deviceUsageWorkflow.getWalletMCGUsage(deviceUsuage);
 
-		if (Objects.nonNull(deviceUsage) && Objects.nonNull(deviceUsage.getRecordedMCG())) {
-			Assert.assertEquals("Error asserting MCG Code", mcgLimitPlan.getMcgCode(), deviceUsage.getRecordedMCG());
+		if (Objects.nonNull(deviceUsuage) && Objects.nonNull(deviceUsuage.getRecordedMCG())) {
+			Assert.assertEquals("Error asserting MCG Code", mcgLimitPlan.getMcgCode(), deviceUsuage.getRecordedMCG());
 			if (type.equalsIgnoreCase(DOMESTIC)) {
-				Assert.assertEquals("Domestic Daily Transaction Amount is changed even after failed transaction", df2.format(previousAmountUtilized), df2.format(Double.parseDouble(deviceUsage.getDailyAmountDomesticUtilized())));
-				Assert.assertEquals("Domestic Periodic Transaction Amount is changed even after failed transaction", df2.format(previousAmountUtilized), df2.format(Double.parseDouble(deviceUsage.getPeriodAmountDomesticUtilized())));
-				Assert.assertEquals("Domestic Daily Transaction velocity is changed even after failed transaction", deviceUsage.getPreviousVelocityValue(), deviceUsage.getDailyVelocityDomesticUtilized());
-				Assert.assertEquals("Domestic Periodic Transaction velocity is changed even after failed transaction", deviceUsage.getPreviousVelocityValue(), deviceUsage.getPeriodVelocityDomesticUtilized());
+				Assert.assertEquals("Domestic Daily Transaction Amount is changed even after failed transaction", df2.format(previousAmountUtilized), df2.format(Double.parseDouble(deviceUsuage.getDailyAmountDomesticUtilized())));
+				Assert.assertEquals("Domestic Periodic Transaction Amount is changed even after failed transaction", df2.format(previousAmountUtilized), df2.format(Double.parseDouble(deviceUsuage.getPeriodAmountDomesticUtilized())));
+				Assert.assertEquals("Domestic Daily Transaction velocity is changed even after failed transaction", deviceUsuage.getPreviousVelocityValue(), deviceUsuage.getDailyVelocityDomesticUtilized());
+				Assert.assertEquals("Domestic Periodic Transaction velocity is changed even after failed transaction", deviceUsuage.getPreviousVelocityValue(), deviceUsuage.getPeriodVelocityDomesticUtilized());
 			} else if (type.equalsIgnoreCase(INTERNATIONAL)) {
-				Assert.assertEquals("Internationl Daily Transaction Amount is changed even after failed transaction", df2.format(previousAmountUtilized), df2.format(Double.parseDouble(deviceUsage.getDailyAmountInternationalUtilized())));
-				Assert.assertEquals("Internationl Periodic Transaction Amount is changed even after failed transaction", df2.format(previousAmountUtilized), df2.format(Double.parseDouble(deviceUsage.getPeriodAmountInternationalUtilized())));
-				Assert.assertEquals("Internationl Daily Transaction Velocity is changed even after failed transaction", deviceUsage.getPreviousVelocityValue(), deviceUsage.getDailyVelocityInternationalUtilized());
-				Assert.assertEquals("Internationl Periodic Transaction Velocity is changed even after failed transaction", deviceUsage.getPreviousVelocityValue(), deviceUsage.getPeriodVelocityInternationalUtilized());
+				Assert.assertEquals("Internationl Daily Transaction Amount is changed even after failed transaction", df2.format(previousAmountUtilized), df2.format(Double.parseDouble(deviceUsuage.getDailyAmountInternationalUtilized())));
+				Assert.assertEquals("Internationl Periodic Transaction Amount is changed even after failed transaction", df2.format(previousAmountUtilized), df2.format(Double.parseDouble(deviceUsuage.getPeriodAmountInternationalUtilized())));
+				Assert.assertEquals("Internationl Daily Transaction Velocity is changed even after failed transaction", deviceUsuage.getPreviousVelocityValue(), deviceUsuage.getDailyVelocityInternationalUtilized());
+				Assert.assertEquals("Internationl Periodic Transaction Velocity is changed even after failed transaction", deviceUsuage.getPreviousVelocityValue(), deviceUsuage.getPeriodVelocityInternationalUtilized());
 			} else {
 				Assert.fail("Incorrect transaction type in step");
 			}
-		} else if(deviceUsage==null){
+		} else if(deviceUsuage==null){
 			Assert.fail("No Transaction was recorded under MCG usage");
 		}
 	}
@@ -101,32 +102,32 @@ public class DeviceUsageSteps {
 		DecimalFormat df2 = new DecimalFormat("0.00"); 
 		mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
 		device = context.get(ContextConstants.DEVICE);
-		deviceUsage = context.get(DEVICE_USUAGE);
-		if(deviceUsage==null){
-		deviceUsage = DeviceUsage.getDeviceUsageDetails(provider);}
-		deviceUsage.setDeviceNumber(device.getDeviceNumber());
-		deviceUsage = deviceUsageWorkflow.getWalletMCGUsage(deviceUsage);
+		deviceUsuage = context.get(DEVICE_USUAGE);
+		if(deviceUsuage==null){
+		deviceUsuage = DeviceUsage.getDeviceUsageDetails(provider);}
+		deviceUsuage.setDeviceNumber(device.getDeviceNumber());
+		deviceUsuage = deviceUsageWorkflow.getWalletMCGUsage(deviceUsuage);
 
-		if (Objects.nonNull(deviceUsage.getRecordedMCG())&&!deviceUsage.getRecordedMCG().isEmpty()) {
-			Assert.assertEquals("Error asserting MCG Code", mcgLimitPlan.getMcgCode(), deviceUsage.getRecordedMCG());
+		if (Objects.nonNull(deviceUsuage.getRecordedMCG())&&!deviceUsuage.getRecordedMCG().isEmpty()) {
+			Assert.assertEquals("Error asserting MCG Code", mcgLimitPlan.getMcgCode(), deviceUsuage.getRecordedMCG());
 			if (type.equalsIgnoreCase(DOMESTIC)) {
-				Assert.assertEquals("Error asserting Domestic Daily Transaction Amount", df2.format(Double.parseDouble(context.get(ConstantData.TRANSACTION_AMOUNT))), df2.format(Double.parseDouble(deviceUsage.getDailyAmountDomesticUtilized())-previousAmountUtilized));
-				Assert.assertEquals("Error asserting Domestic Periodic Transaction Amount", df2.format(Double.parseDouble(context.get(ConstantData.TRANSACTION_AMOUNT))), df2.format(Double.parseDouble(deviceUsage.getPeriodAmountDomesticUtilized())-previousAmountUtilized));
-				Assert.assertEquals("Error asserting Domestic Daily Velocity", deviceUsage.getVelocity(), deviceUsage.getDailyVelocityDomesticUtilized());
-				Assert.assertEquals("Error asserting Domestic Periodic Velocity", deviceUsage.getVelocity(), deviceUsage.getPeriodVelocityDomesticUtilized());
-				previousAmountUtilized = Double.parseDouble(deviceUsage.getDailyAmountDomesticUtilized());
+				Assert.assertEquals("Error asserting Domestic Daily Transaction Amount", df2.format(Double.parseDouble(context.get(ConstantData.TRANSACTION_AMOUNT))), df2.format(Double.parseDouble(deviceUsuage.getDailyAmountDomesticUtilized())-previousAmountUtilized));
+				Assert.assertEquals("Error asserting Domestic Periodic Transaction Amount", df2.format(Double.parseDouble(context.get(ConstantData.TRANSACTION_AMOUNT))), df2.format(Double.parseDouble(deviceUsuage.getPeriodAmountDomesticUtilized())-previousAmountUtilized));
+				Assert.assertEquals("Error asserting Domestic Daily Velocity", deviceUsuage.getVelocity(), deviceUsuage.getDailyVelocityDomesticUtilized());
+				Assert.assertEquals("Error asserting Domestic Periodic Velocity", deviceUsuage.getVelocity(), deviceUsuage.getPeriodVelocityDomesticUtilized());
+				previousAmountUtilized = Double.parseDouble(deviceUsuage.getDailyAmountDomesticUtilized());
 			} else if (type.equalsIgnoreCase(INTERNATIONAL)) {
-				Assert.assertEquals("Error asserting International Daily Transaction Amount", df2.format(Double.parseDouble(context.get(ConstantData.BILLING_AMOUNT))), df2.format(Double.parseDouble(deviceUsage.getDailyAmountInternationalUtilized())-previousAmountUtilized));
-				Assert.assertEquals("Error asserting International Periodic Transaction Amount", df2.format(Double.parseDouble(context.get(ConstantData.BILLING_AMOUNT))), df2.format(Double.parseDouble(deviceUsage.getPeriodAmountInternationalUtilized())-previousAmountUtilized));
-				Assert.assertEquals("Error asserting International Daily Velocity", deviceUsage.getVelocity(), deviceUsage.getDailyVelocityInternationalUtilized());
-				Assert.assertEquals("Error asserting International Periodic Velocity", deviceUsage.getVelocity(), deviceUsage.getPeriodVelocityInternationalUtilized());
-				previousAmountUtilized = Double.parseDouble(deviceUsage.getDailyAmountInternationalUtilized());
+				Assert.assertEquals("Error asserting International Daily Transaction Amount", df2.format(Double.parseDouble(context.get(ConstantData.BILLING_AMOUNT))), df2.format(Double.parseDouble(deviceUsuage.getDailyAmountInternationalUtilized())-previousAmountUtilized));
+				Assert.assertEquals("Error asserting International Periodic Transaction Amount", df2.format(Double.parseDouble(context.get(ConstantData.BILLING_AMOUNT))), df2.format(Double.parseDouble(deviceUsuage.getPeriodAmountInternationalUtilized())-previousAmountUtilized));
+				Assert.assertEquals("Error asserting International Daily Velocity", deviceUsuage.getVelocity(), deviceUsuage.getDailyVelocityInternationalUtilized());
+				Assert.assertEquals("Error asserting International Periodic Velocity", deviceUsuage.getVelocity(), deviceUsuage.getPeriodVelocityInternationalUtilized());
+				previousAmountUtilized = Double.parseDouble(deviceUsuage.getDailyAmountInternationalUtilized());
 			} else {
 				Assert.fail("Incorrect transaction type in step");
 			}
-			deviceUsage.setPreviousVelocityValue(deviceUsage.getVelocity());
-			deviceUsage.setVelocity();
-			context.put(DEVICE_USUAGE,deviceUsage);
+			deviceUsuage.setPreviousVelocityValue(deviceUsuage.getVelocity());
+			deviceUsuage.setVelocity();
+			context.put(DEVICE_USUAGE,deviceUsuage);
 		} else {
 			Assert.fail("No Transaction was recorded under MCG usage");
 		}

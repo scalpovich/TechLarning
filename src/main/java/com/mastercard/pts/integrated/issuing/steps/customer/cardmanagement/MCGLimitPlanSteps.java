@@ -28,7 +28,7 @@ public class MCGLimitPlanSteps {
 	private MCGLimitPlan mcgLimitPlan;
 
 	@Given("user creates MCG limit plan with details for $productType")
-	public void createSurchargePlan(String productType) {
+	public void createMCGLimitPlan(String productType) {
 		mcgLimitPlan = MCGLimitPlan.getMCGLimitPlanData(provider);
 		mcgLimitPlan.setProductType(ProductType.fromShortName(productType));
 		if(context.get(ContextConstants.MCG)!=null){
@@ -40,7 +40,7 @@ public class MCGLimitPlanSteps {
 	}
 
 	@Then("MCG limit plan should get created successfully")
-	public void verifySurchargePlan() {
+	public void verifyMCGLimitPlan() {
 		Assert.assertFalse(mcgLimitPlanWorkflows.isNoRecordsFoundInTableView(mcgLimitPlan));
 	}
 
