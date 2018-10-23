@@ -66,7 +66,7 @@ public class CashPaymentSteps {
 			logger.info("Remaining Bill Payment" + context.get(ContextConstants.TOTAL_PAYMENT_DUE));
 			cash.setAmount(context.get(ContextConstants.TOTAL_PAYMENT_DUE));
 		} else if (payment.equalsIgnoreCase("EMI")) {
-			logger.info("Loan EMI Payment" + context.get(ContextConstants.LOAN_INSTALLMENT_OUTSTANDING));
+			logger.info("Loan EMI Payment" + context.get(ConstantData.LOAN_INSTALLMENT_OUTSTANDING));
 			cash.setAmount(context.get(ConstantData.LOAN_INSTALLMENT_OUTSTANDING));
 		}
 		
