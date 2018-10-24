@@ -23,9 +23,9 @@ And user activates device through helpdesk
 And user has wallet number information for debit device
 And user performs adjustment transaction
 And user has current wallet balance amount information for debit device
-And embossing file batch was generated in correct format
 And user change all the fields of 3D Eccom Security for product Debit and interchange MasterCard as uncheck
 Then user sign out from customer portal
+And embossing file batch was generated in correct format
 
 
 Scenario:1.2 Check Decline All Non Secured Transaction Check

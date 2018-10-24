@@ -134,6 +134,8 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 			if (declineMerchantRiskBasedTransaction.isSelected())
 				declineMerchantRiskBasedTransaction.click();
 			   clickSaveButton();
+			   SimulatorUtilities.wait(2000);
+			   verifyOperationStatus();
 		});
 	}
 

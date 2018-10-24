@@ -23,9 +23,9 @@ And user activates device through helpdesk
 And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
-And embossing file batch was generated in correct format
 And user change all the fields of 3D Eccom Security for product Prepaid and interchange MasterCard as uncheck
 Then user sign out from customer portal
+And embossing file batch was generated in correct format
 
 Scenario:1.2 Check Decline All Non Secured Transaction Check
 Given user is logged in institution
