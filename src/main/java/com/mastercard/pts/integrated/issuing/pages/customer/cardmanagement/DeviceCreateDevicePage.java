@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
@@ -172,7 +173,8 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.ID, valueToFind = "uploadPhoto")
 	private MCWebElement uploadPhotoBtn;
 
-	private static final String PHOTO_FILE_PATH = "src/main/resources/InstitutionLogo/CreditLogo.png";
+	@Value("${default.upload.image.photo_file.path}")
+	private String photoUploadFilePath;
 
 	public String getWalletsFromPage(){
 		return getTextFromPage(createdWalletList);
@@ -452,8 +454,8 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn,1);
 			WebElementUtils.enterText(creditLimitTxt,String.valueOf(Integer.parseInt(program.getCreditLimit())+1));
 		}
-		if(device.getPhotoIndicator().equals("Photo [1]")) {
-			String filePath = new File(PHOTO_FILE_PATH).getAbsolutePath();
+		if("Photo [1]".equals(device.getPhotoIndicator())) {
+			String filePath = new File(photoUploadFilePath).getAbsolutePath();
 			logger.info("upload file path : {}",filePath);
 			photoFileInput.sendKeys(filePath);
 			SimulatorUtilities.wait(5000);
