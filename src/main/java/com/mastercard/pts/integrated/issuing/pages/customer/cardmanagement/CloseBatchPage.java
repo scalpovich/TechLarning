@@ -56,6 +56,9 @@ public class CloseBatchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Yes']")
 	private MCWebElement yesBtn;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='No']")
+	private MCWebElement noBtn;
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//h3[text()= 'Confirmation Message']/ancestor::div//iframe")
 	private MCWebElement confirmMsgBtn;
 	
@@ -90,6 +93,18 @@ public class CloseBatchPage extends AbstractBasePage {
 		String checkBox = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd'][" + identifyBatchNumberToProcess() + 1 + "]/td[10]/span/input";
 		clickWhenClickable(driver().findElement(By.xpath(checkBox)));
 		clickWhenClickable(processSelectedBtn);
+		try {
+			if (confirmMsgBtn.isEnabled() && confirmMsgBtn.isVisible()) {
+				switchToIframe("Confirmation Message");
+				clickWhenClickable(noBtn);
+				verifyOperationStatus();
+			} else {
+				verifyOperationStatus();
+			}
+
+		} catch (Exception e) {
+			e.getMessage();
+		}
 		verifyOperationStatus();
 
 	}

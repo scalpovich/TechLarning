@@ -396,7 +396,7 @@ public class ProgramPage extends AbstractBasePage {
 			selectProduct(program.getProduct());
 			SimulatorUtilities.wait(2000);
 			selectProgramType(program.getProgramType());					
-			SimulatorUtilities.wait(2000);
+			SimulatorUtilities.wait(5000);
 			selectBaseCurrency(program.getBaseCurrency());
 			program.setProgramCodeDevice(program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");

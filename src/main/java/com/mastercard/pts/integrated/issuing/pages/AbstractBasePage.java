@@ -23,6 +23,7 @@ import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
@@ -329,6 +330,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		SimulatorUtilities.wait(500);
 		clickWhenClickable(nextBtn);
+		SimulatorUtilities.wait(500);
+	}
+	
+	protected void clickNextButtonWithEnter() {
+		WebElementUtils.scrollDown(driver(), 0, 250);
+		SimulatorUtilities.wait(500);
+		driver().findElement(By.cssSelector("input[value='Next >']")).sendKeys(Keys.ENTER);
 		SimulatorUtilities.wait(500);
 	}
 
