@@ -35,6 +35,12 @@ public class BatchJobHistorySteps {
 	
 	@Autowired
 	TestContext context;
+	
+	private static final String BATCH_TYPE_UPLOAD = "UPLOAD [U]";
+	private static final String BATCH_TYPE_DOWNLOAD = "DOWNLOAD [D]";
+
+	private static final String CLIENT_PHOTO_FLAT_FILE_DOWNLOAD_BATCH = "Client Photo/Flat File Download Batch [CLIENT_PHOTO_DOWNLOAD]";
+	private static final String CARDHOLDER_DUMP_BATCH = "Cardholder Dump [CARDHOLDER_DUMP]";
 
 	@Then("Statement download batch is available on Batch Job History Page")
 	public void statementDownloadBatchIsAvailableOnBatchJobHistoryPage() {
@@ -58,17 +64,17 @@ public class BatchJobHistorySteps {
 	@When("check status in batch job history for $batchType batch and $batch")
 	@Then("check status in batch job history for $batchType batch and $batch")
 	public void checkBatchStatusForClientPhotoFlatFile(@Named("batchType") String batchType, @Named("batch") String batch) {		
-		if (batchType.equalsIgnoreCase("download")) {
-			batchjobhistory.setBatchType("DOWNLOAD [D]");
-		}else if (batchType.equalsIgnoreCase("upload")) {
-			batchjobhistory.setBatchType("UPLOAD [U]");
+		if ("download".equalsIgnoreCase(batchType)) {
+			batchjobhistory.setBatchType(BATCH_TYPE_DOWNLOAD);
+		}else if ("upload".equalsIgnoreCase(batchType)) {
+			batchjobhistory.setBatchType(BATCH_TYPE_UPLOAD);
 		}		
 		
 		batchjobhistory.setJobIdBatchJobHistory(context.get(ContextConstants.JOB_ID));
-		if(batch.equalsIgnoreCase("CLIENT_PHOTO_DOWNLOAD")){
-			batchjobhistory.setBatch("Client Photo/Flat File Download Batch [CLIENT_PHOTO_DOWNLOAD]");
-		} else if(batch.equalsIgnoreCase("CARDHOLDER_DUMP")) {
-			batchjobhistory.setBatch("Cardholder Dump [CARDHOLDER_DUMP]");
+		if("CLIENT_PHOTO_DOWNLOAD".equalsIgnoreCase(batch)){
+			batchjobhistory.setBatch(CLIENT_PHOTO_FLAT_FILE_DOWNLOAD_BATCH);
+		} else if("CARDHOLDER_DUMP".equalsIgnoreCase(batch)) {
+			batchjobhistory.setBatch(CARDHOLDER_DUMP_BATCH);
 		}
 		Assert.assertTrue( "Batch job status is not diplayed success",batchjobhistoryflows.verifyBatchJobHistoryStatusDisplayed(batchjobhistory) );
 	}

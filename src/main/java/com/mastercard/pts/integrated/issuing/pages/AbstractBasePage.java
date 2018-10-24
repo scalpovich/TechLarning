@@ -1886,15 +1886,15 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 	}
 	
-	protected void waitForBatchStatus(MCWebElement status) {
+	protected void waitForBatchStatus(MCWebElement successStatus) {
 		try {
 			WebElementUtils.waitForWicket(driver());
 			for (int l = 0; l < 21; l++) {
-				while ("PENDING [0]".equalsIgnoreCase(status.getText()) || "IN PROCESS [1]".equalsIgnoreCase(status.getText()))
-					Thread.sleep(10000); // waiting for page auto refresh
+				while (!isElementPresent(successStatus))
+					SimulatorUtilities.wait(10000);// waiting for page auto refresh
 				clickSearchButton();
 			}
-		} catch (NoSuchElementException | InterruptedException e) {
+		} catch (NoSuchElementException e) {
 			logger.debug("Result not found", e);
 		}
 	}

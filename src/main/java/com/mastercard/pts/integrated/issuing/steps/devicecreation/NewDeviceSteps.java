@@ -485,8 +485,7 @@ public class NewDeviceSteps {
 	public void whenProcessesClientPhotoFlatFileDownloadBatchForDevice(String type) {
 		ClientPhotoFlatFileDownloadBatch batch = new ClientPhotoFlatFileDownloadBatch();
 		batch.setProductType(ProductType.fromShortName(type));
-		boolean result = batchProcessFlows.processClientPhotoFlatFileDownloadBatchNewDevice(batch);
-		Assert.assertTrue("batch job id not displayed for Client photo/flat file download batch", result);
+		Assert.assertTrue("batch job id not displayed for Client photo/flat file download batch", batchProcessFlows.processClientPhotoFlatFileDownloadBatchNewDevice(batch));
 	}
 
 }

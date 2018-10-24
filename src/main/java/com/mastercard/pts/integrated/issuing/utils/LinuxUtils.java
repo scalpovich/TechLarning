@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Objects;
 import java.util.Properties;
 
 import org.apache.tools.ant.Project;
@@ -76,12 +77,11 @@ public abstract class LinuxUtils {
 		String strLine;
 		try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
 
-			while ((strLine = br.readLine()) != null) {
+			while (Objects.isNull(strLine = br.readLine())) {
 				strLine = strLine.trim().replaceAll("\\s+", " ");
 				MiscUtils.reportToConsole("*********   File Data *******  "
 						+ strLine);
 				String[] data = strLine.trim().split(",");
-				// MiscUtils.reportToConsole("********* Data *******  " + data);
 				int i = 0;
 				for (i = 0; i < data.length; i++) {
 					MiscUtils.reportToConsole(data[i]);

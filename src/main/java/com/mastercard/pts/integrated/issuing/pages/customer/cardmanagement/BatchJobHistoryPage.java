@@ -66,13 +66,12 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@class = 'searchButton']//input[@type= 'submit'][@value ='Search']")
 	private MCWebElement searchBtn;
 
+	public static final String PRIVILEGES_TABS = "//td[contains(text(),'%s')]";
+	
 	public String calelement = "//td[7]";
 	
-	@PageElement (findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr/td[6]")
-	private MCWebElement status;
-
-	@PageElement(findBy = FindBy.X_PATH, valueToFind="//table[@class='dataview']/tbody/tr/td[8]")
-	private MCWebElement csvFileName;
+	@PageElement (findBy = FindBy.X_PATH, valueToFind = "//span[text()='SUCCESS [2]']")
+	private MCWebElement batchJobSuccessStatus;
 	
 	@Autowired
 	private TestContext context;
@@ -196,31 +195,14 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 		return found;
 	}
 	
-
-	public void verifyBatchjobStatusDisplayed(BatchJobHistory batchjobhist) {
-		try {
-			WebElement SelectJobNoRecords = getFinder().getWebDriver()
-					.findElement(By.xpath("//td[contains(.,'No Records Found')]"));
-			if (SelectJobNoRecords.isDisplayed()) {
-				logger.info("No Records displayed or batch processed succesfully");
-			}
-		} catch (Exception e) {
-			WebElement SelectJob = getFinder().getWebDriver()
-					.findElement(By.xpath("//td[contains(.,'" + batchjobhist.getJobIdBatchJobHistory() + "')]"));
-			clickWhenClickable(SelectJob);
-			waitForResponse();
-		}
-
-	}
-	
 	public void waitForResponse() {
 		String statuslabelTxt;
-		Integer i = 0;
+		Integer index = 0;
 		switchToViewBatchDetailsFrame();
 		do {
 			statuslabelTxt = statusTxt.getText();
 			CustomUtils.ThreadDotSleep(2000);
-		} while (Strings.isNullOrEmpty(statuslabelTxt) && i++ < 100);
+		} while (Strings.isNullOrEmpty(statuslabelTxt) && index++ < 100);
 
 		logger.info("Status  -", statuslabelTxt);
 		Assert.assertTrue(!Strings.isNullOrEmpty(statuslabelTxt));
@@ -237,14 +219,9 @@ public class BatchJobHistoryPage extends AbstractBasePage {
         enterValueinTextBox(jobIdTxt, batchjobhistory.getJobIdBatchJobHistory());
         selectByVisibleText(batchDDwn,batchjobhistory.getBatch());
         clickSearchButton();
-        waitForBatchStatus(status);
-
-       context.put("CSVno",csvFileName.getText());
-        if(status.getText().equals("SUCCESS [2]")){
-               return true;
-        } else {
-               return false;
-        }
+		waitForBatchStatus(batchJobSuccessStatus);
+		context.put("CSVno", getCellTextByColumnName(1,"File Name"));
+		return isElementPresent(batchJobSuccessStatus);
 	}
 
 

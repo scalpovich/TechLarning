@@ -84,6 +84,10 @@ public class BatchProcessSteps {
 
 	private static final String INSTITUTION_CODE = "INSTITUTION_CODE";
 	
+	private static final String CARDHOLDER_DUMP = "Cardholder Dump [CARDHOLDER_DUMP]";
+	
+	private static final String EXTRACT_TYPE_FULL = "FULL [F]";
+	
 	private static final Logger logger = LoggerFactory.getLogger(BatchProcessSteps.class);
 	
 	private File batchFile;
@@ -246,8 +250,8 @@ public class BatchProcessSteps {
 	@When("cardholder dump download batch is processed for $type")
 	public void whenDownloadBatchIsProcessedForCredit(String batchType, String type){
 		ProcessBatches batch =  ProcessBatches.createWithProvider(provider);
-		batch.setBatchName("Cardholder Dump [CARDHOLDER_DUMP]");
-		batch.setExtractType("FULL [F]");
+		batch.setBatchName(CARDHOLDER_DUMP);
+		batch.setExtractType(EXTRACT_TYPE_FULL);
 		batch.setProductType(ProductType.fromShortName(type));
 		batchProcessWorkflow.processDownloadBatch(batch);
 	}

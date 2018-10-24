@@ -388,14 +388,18 @@ public class DeviceSteps {
 		context.put(ContextConstants.DEVICE, device);
 	}
 	
-	@Given("$type device with photo is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
-	@When("$type device with photo is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
-	@Then("$type device with photo is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
+	@Given("$type device with photoIndicator as $photoIndicator is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
+	@When("$type device with photoIndicator as $photoIndicator is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
+	@Then("$type device with photoIndicator as $photoIndicator is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
 	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceForGivenCustomerUsingNewPhotoDevice(
-			String type, String customerType, String applicationType,
+			String type, String photoIndicator, String customerType, String applicationType,
 			String subApplicationType, String deviceType) {
 		Device device = Device.createWithProviderForOtherDetails(provider);
-		device.setPhotoIndicator("Photo [1]");
+		if("photo".equalsIgnoreCase(photoIndicator)){
+			device.setPhotoIndicator("Photo [1]");
+		} else if("picture".equalsIgnoreCase(photoIndicator)){
+			device.setPhotoIndicator("Picture [2]");
+		}
 		device.setAppliedForProduct(ProductType.fromShortName(type));
 		device.setCustomerType(customerType);
 		device.setApplicationType(applicationType);
