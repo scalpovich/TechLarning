@@ -9,7 +9,7 @@ Meta:
 Scenario:1.1 Set up debit emv corporate travel card
 Given setting json values in excel for Debit
 When user is logged in institution
-And User fills Device Plan for "debit" "emv" card for issuer scripting
+And User fills Device Plan for "Debit" "emv" card without pin
 And User fills Wallet Plan for debit product
 And User fills Program section for debit product
 And User fills Business Mandatory Fields Screen for debit product
@@ -17,8 +17,7 @@ And User fills Device Range section for debit product
 And user creates new device of debit type for new client
 And a new device was created
 And processes pre-production batch for debit
-And processes device production batch for debit
-And processes pin generation batch for debit
+And processes device production batch for debits
 And device has "NOT ACTIVATED CARD [11]" status
 And user activates device through helpdesk
 And user has wallet number information for debit device

@@ -9,7 +9,7 @@ Meta:
 Scenario:1.1 Set up prepaid emv corporate travel card
 Given setting json values in excel for Prepaid
 When user is logged in institution
-And User fills Device Plan for "prepaid" "emv" card for issuer scripting
+And User fills Device Plan for "Prepaid" "emv" card without pin
 And User fills Wallet Plan for prepaid product
 And User fills Program section for prepaid product
 And User fills Business Mandatory Fields Screen for prepaid product
@@ -18,7 +18,6 @@ And user creates new device of prepaid type for new client
 And a new device was created
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
-And processes pin generation batch for prepaid
 And device has "NOT ACTIVATED CARD" status
 And user activates device through helpdesk
 And user has wallet number information for prepaid device
