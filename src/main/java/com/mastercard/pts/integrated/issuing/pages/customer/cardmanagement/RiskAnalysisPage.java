@@ -34,7 +34,8 @@ public class RiskAnalysisPage extends AbstractBasePage {
 
 	public void riskAnalysisBatchProcess() {
 
-		if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER))) {
+		int retryLimit = 20;
+		if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER)) && --retryLimit > 0) {
 			clickWhenClickable(riskAnalysisBtn);
 			riskAnalysisBatchProcess();
 		}

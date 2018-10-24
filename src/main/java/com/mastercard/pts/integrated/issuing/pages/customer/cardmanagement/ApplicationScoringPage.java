@@ -33,7 +33,8 @@ public class ApplicationScoringPage extends AbstractBasePage {
 
 	public void processAllApplicationScoring() {
 
-		if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER))) {
+		int retryLimit = 20;
+		if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER))&& retryLimit -- > 0) {
 			clickWhenClickable(applicationScoringBtn);
 			processAllApplicationScoring();
 		}
