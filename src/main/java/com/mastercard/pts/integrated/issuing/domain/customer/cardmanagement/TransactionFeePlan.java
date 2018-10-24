@@ -115,7 +115,7 @@ public class TransactionFeePlan {
 		txnFee.setBillingAmount(provider.getString(BILLING_AMOUNT));
 		txnFee.setBillingAmountRate(provider.getString(BILLING_AMOUNT_RATE));
 		txnFee.setMinTxnRate(provider.getString(MIN_TXN_RATE));
-		txnFee.setRateTxnFee(provider.getString(RATE_TXN_FEE));
+		//txnFee.setRateTxnFee(provider.getString(RATE_TXN_FEE));
 		txnFee.setMaxTxnRate(provider.getString(MAX_TXN_RATE));
 		txnFee.setFixedRateFee(provider.getString(FIXED_RATE_FEE));
 		txnFee.setFixedTxnFees(provider.getString(FIXED_TXN_FEE));

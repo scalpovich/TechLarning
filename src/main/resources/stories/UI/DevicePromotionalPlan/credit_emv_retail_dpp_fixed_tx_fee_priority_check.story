@@ -29,7 +29,7 @@ And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: 1.3 Perform EMV_PURCHASE Authorization transaction to check transaction fee applied
+Scenario: 1.3 Perform EMV_PURCHASE Authorization transaction to check fixed fee applied
 Given connection to MAS is established
 When user updates transaction amount to 10
 And perform an EMV_PURCHASE MAS transaction
@@ -38,7 +38,7 @@ And search Purchase authorization and verify 000-Successful status
 And user verifies FIXED_FEE applied on transaction
 And user sign out from customer portal
 
-Scenario: 1.4 Perform EMV_PURCHASE Authorization transaction to check minimum transaction fee applied
+Scenario: 1.4 Perform EMV_PURCHASE Authorization transaction to check fixed fee applied
 Given user updates transaction amount to 100
 And perform an EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
@@ -46,7 +46,7 @@ And search Purchase authorization and verify 000-Successful status
 And user verifies FIXED_FEE applied on transaction
 And user sign out from customer portal
 
-Scenario: 1.5 Perform EMV_PURCHASE Authorization transaction to check maximum transaction fee applied
+Scenario: 1.5 Perform EMV_PURCHASE Authorization transaction to check fixed fee applied
 Given user updates transaction amount to 1000
 And perform an EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
