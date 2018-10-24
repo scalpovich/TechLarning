@@ -317,7 +317,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			selectByVisibleText(programCodeDDwn, device.getProgramCode());
 			SimulatorUtilities.wait(10000);			
 		}
-		SimulatorUtilities.wait(5000);
+		SimulatorUtilities.wait(8000);
 		clickNextButton();
 		
 		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());		
