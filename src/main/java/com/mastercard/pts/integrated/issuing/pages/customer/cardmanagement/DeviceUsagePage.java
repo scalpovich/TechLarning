@@ -94,12 +94,12 @@ public class DeviceUsagePage extends AbstractBasePage {
 	public static final String MCG_CODE = "MCG Code";
 	public static final String DAILY_AMOUNT_DOMESTIC_UTILIZED = "Daily Amount Domestic Utilized";
 	public static final String DAILY_VELOCLITY_DOMESTIC_UTILIZED = "Daily Velocity Domestic Utilized";
-	public static final String DAILY_AMOUNT_INTERNATIONAL_UTILIZED = "Daily Amount International Utilized";
-	public static final String DAILY_VELOCLITY_INTERNATIONAL_UTILIZED = "Daily Velocity International Utilized";
-	public static final String PERIOD_AMOUNT_INTERNATIONAL_UTILIZED = "Period Amount International Utilized";
+	public static final String DAILY_AMOUNT_INTERNATIONAL_UTILIZED = "Daily Amount Intenational Utilized";
+	public static final String DAILY_VELOCLITY_INTERNATIONAL_UTILIZED = "Daily Velocity Intenational Utilized";
+	public static final String PERIOD_AMOUNT_INTERNATIONAL_UTILIZED = "Period Amount Intenational Utilized";
 	public static final String PERIOD_AMOUNT_DOMESTIC_UTILIZED = "Period Amount Domestic Utilized";
 	public static final String PERIOD_VELOCLITY_DOMESTIC_UTILIZED = "Period Velocity Domestic Utilized";
-	public static final String PERIOD_VELOCITY_INTERNATIONAL_UTILIZED = "Period Velocity International Utilized";
+	public static final String PERIOD_VELOCITY_INTERNATIONAL_UTILIZED = "Period Velocity Intenational Utilized";
 
 
 	public void verifyUiOperationStatus() {
