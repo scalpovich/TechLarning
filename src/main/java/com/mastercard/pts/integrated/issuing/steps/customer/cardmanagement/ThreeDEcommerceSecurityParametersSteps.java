@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -66,5 +67,14 @@ public class ThreeDEcommerceSecurityParametersSteps {
 		threeDESParams.seteCommerceSecurityInterchange(interchange);
 		threeDECommerceSecurityParametersFlows.editMerchantRiskBasedDecisioningTransaction(threeDESParams);
 	}
-
+	@Given("user change all the fields of 3D Eccom Security for product $type and interchange $interchange as $status")
+	@When("user change all the fields of 3D Eccom Security for product $type and interchange $interchange as $status")
+	public void userChangeAllTheFieldsAsUncheck(String type, String interchange, String status) {
+		ThreeDECommerceSecurityParameters threeDESParams = new ThreeDECommerceSecurityParameters();
+		threeDESParams.setCheckStatus(status);
+		DeviceRange deviceRange = context.get(ContextConstants.DEVICE_RANGE);
+		threeDESParams.setDeviceRangeFrom(deviceRange.getIssuerBinCode(deviceRange.getIssuerBin()) + ConstantData.START_RANGE_DIGITS);
+		threeDESParams.seteCommerceSecurityInterchange(interchange);
+		threeDECommerceSecurityParametersFlows.editAll3DSecureFieldsToUncheck(threeDESParams);
+	}
 }

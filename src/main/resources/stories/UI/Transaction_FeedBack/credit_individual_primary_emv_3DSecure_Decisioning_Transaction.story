@@ -22,6 +22,7 @@ And credit processes deviceproduction batch using new Device for Supplementary
 And device has "normal" status
 And user notes down available Card limit for card
 And embossing file batch was generated in correct format
+And user change all the fields of 3D Eccom Security for product Credit and interchange MasterCard as uncheck
 Then user sign out from customer portal
 
 Scenario:1.2 Check Decline All Non Secured Transaction Check

@@ -123,6 +123,20 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 			clickSaveButton();
 		});
 	}
+
+	public void editAll3DSecureFieldsToUncheck(ThreeDECommerceSecurityParameters threeDESParams) {
+		edit3DESecurityParameters(threeDESParams);
+		runWithinPopup("Edit 3D E-Commerce Security", () -> {
+			if (declineAllTransactionsWithoutCAVVAAVChkBx.isSelected())
+				declineAllTransactionsWithoutCAVVAAVChkBx.click();
+			if (declineAllNonSecuredTransaction.isSelected())
+				declineAllNonSecuredTransaction.click();
+			if (declineMerchantRiskBasedTransaction.isSelected())
+				declineMerchantRiskBasedTransaction.click();
+			   clickSaveButton();
+		});
+	}
+
 	public void selectSearchInterchange(String interchangeToSearch) {
 		selectByVisibleText(interchange, interchangeToSearch);
 	}
