@@ -65,8 +65,6 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@class = 'searchButton']//input[@type= 'submit'][@value ='Search']")
 	private MCWebElement searchBtn;
-
-	public static final String PRIVILEGES_TABS = "//td[contains(text(),'%s')]";
 	
 	public String calelement = "//td[7]";
 	
