@@ -45,6 +45,9 @@ public class RewardRedemptionPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "lrhPtsRedeemed:input:inputTextField")
 	private MCWebElement pointsredeemedtxt;
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
+	private MCWebElement saveBtn;
+
 	public void searchForRewardsRedemption(Device device) {
 		WebElementUtils.enterText(deviceNumberTxt, device.getDeviceNumber());
 		clickSearchButton();
@@ -61,8 +64,31 @@ public class RewardRedemptionPage extends AbstractBasePage {
 			WebElementUtils.enterText(pointsredeemedtxt, rewards.getpointsToRedeem());
 			SimulatorUtilities.wait(2000);
 			clickSaveButton();
-			SimulatorUtilities.wait(2000);
+			SimulatorUtilities.wait(5000);
+			while (checkButton(saveBtn)) {
+				saveBtn.click();
+				// driver.switchTo().alert().accept();
+
+				SimulatorUtilities.wait(2000);
+
+			}
+
+			// waitForElementInVisible(saveBtn);
+			// retryUntilNoErrors(clickSaveButton);
 		});
+
+	}
+
+	public static boolean checkButton(MCWebElement element) {
+		boolean b = true;
+		try {
+			if (element.isVisible())
+				return b = true;
+		} catch (Exception e) {
+			return b = false;
+		}
+		return b;
+
 	}
 
 	public void verifyLoyaltyPointsNotRedeemed() {
@@ -77,6 +103,7 @@ public class RewardRedemptionPage extends AbstractBasePage {
 	}
 
 	public void verifyLoyaltyPointsRedeemed(KeyValueProvider provider) {
+		waitForElementVisible(redeemBtn);
 		Assert.assertEquals(getCellTextByColumnName(1, "Total Loyalty Points Earned"),
 				provider.getString("TRANSACTION_AMOUNT"));
 		Assert.assertEquals(getCellTextByColumnName(1, "Redeemed"), provider.getString("POINTS_TO_REDEEM"));
