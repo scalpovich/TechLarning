@@ -1017,15 +1017,7 @@ public class ProgramSetupSteps {
 	public void whenUserFillsWalletPlan(String type) {
 		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
 		walletPlan.setProductType(ProductType.fromShortName(type));
-		if (context.get(ContextConstants.MCG_LIMIT_PLAN) != null) {
-			mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
-			walletPlan.setMcgLimitPlan(mcgLimitPlan.getMcgLimitPlanCode());
-		} else {
-			mcgLimitPlan =  MCGLimitPlan.getMCGLimitPlanData(provider);
-            mcgLimitPlan.setMcgLimitPlanCode(walletPlan.getMcgLimitPlan());
-            mcgLimitPlan.setMcgCode(walletPlan.getMCG());
-            context.put(ContextConstants.MCG_LIMIT_PLAN, mcgLimitPlan);
-		}
+		setMCGLimitPlan();
 		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			walletPlan.setCreditPlan(context.get(CreditConstants.CREDIT_PLAN));
 			walletPlan.setBillingCyleCode(context.get(CreditConstants.BILLING_CYCLE));
@@ -1040,15 +1032,7 @@ public class ProgramSetupSteps {
 		Map<String, Object> csvData = context.get(TestContext.KEY_STORY_DATA);
 		walletPlan.setProductType(ProductType.fromShortName(type));
 		walletPlan.setProgramType(programtype);
-		if (context.get(ContextConstants.MCG_LIMIT_PLAN) != null) {
-			mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
-			walletPlan.setMcgLimitPlan(mcgLimitPlan.getMcgLimitPlanCode());
-		} else {
-			mcgLimitPlan =  MCGLimitPlan.getMCGLimitPlanData(provider);
-            mcgLimitPlan.setMcgLimitPlanCode(walletPlan.getMcgLimitPlan());
-            mcgLimitPlan.setMcgCode(walletPlan.getMCG());
-            context.put(ContextConstants.MCG_LIMIT_PLAN, mcgLimitPlan);
-		}
+	    setMCGLimitPlan();
 		context.put(ContextConstants.WALLET, walletPlan);
 		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			if (Objects.nonNull(context.get(CreditConstants.CREDIT_PLAN))) {
@@ -1672,6 +1656,18 @@ public class ProgramSetupSteps {
 	public void userAlreadyCreatedTransactionLimitPlan(String limitType){
 		transactionLimitPlan = TransactionLimitPlan.createWithProvider(dataProvider);
 		transactionLimitPlan.setTransactionLimitPlanCode(provider.getString(limitType));
+	}
+	
+	public void setMCGLimitPlan(){
+		if (context.get(ContextConstants.MCG_LIMIT_PLAN) != null) {
+			mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
+			walletPlan.setMcgLimitPlan(mcgLimitPlan.getMcgLimitPlanCode());
+		} else {
+			mcgLimitPlan =  MCGLimitPlan.getMCGLimitPlanData(provider);
+            mcgLimitPlan.setMcgLimitPlanCode(walletPlan.getMcgLimitPlan());
+            mcgLimitPlan.setMcgCode(walletPlan.getMCG());
+            context.put(ContextConstants.MCG_LIMIT_PLAN, mcgLimitPlan);
+		}
 	}
 
 

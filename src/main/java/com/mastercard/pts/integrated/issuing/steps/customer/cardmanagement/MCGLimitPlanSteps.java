@@ -1,6 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;

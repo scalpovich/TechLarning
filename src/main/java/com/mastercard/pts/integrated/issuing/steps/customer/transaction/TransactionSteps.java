@@ -576,7 +576,7 @@ public class TransactionSteps {
 		}
 		else{
 			Double moderatedAmount = (Double.parseDouble(amount))/(Double.parseDouble(device.getExchangeRate()));
-			device.setTransactionAmount(Long.toString(new Double(Math.round(moderatedAmount*100.0)).longValue()));
+			device.setTransactionAmount(Long.toString(Math.round(moderatedAmount*100.0)));
 		}
 		context.put(ContextConstants.DEVICE, device);
 	}
