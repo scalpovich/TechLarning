@@ -253,7 +253,7 @@ public class MCGLimitPlanPage extends AbstractBasePage {
 		selectByVisibleText(periodicVelocityResponseDdwn, plan.getPeriodicVelocityResponse());
 	}
 	
-	public void enterPeriodicPercentageOfCreditLimit(MCGLimitPlan plan){
+	public void enterPeriodicPerOfCreditLimit(MCGLimitPlan plan){
 		enterValueinTextBox(periodicPercentageOfCreditLimitTxt, plan.getPeriodicPercentageOfCreditLimit());
 	}
 	
@@ -285,7 +285,7 @@ public class MCGLimitPlanPage extends AbstractBasePage {
 		selectByVisibleText(dailyVelocityInternationalResponseDdwn, plan.getDailyVelocityResponseInternational());
 	}
 	
-	public void enterDailyPercentageOfCreditLimitInternational(MCGLimitPlan plan){
+	public void enterDailyPerOfCreditLimitInternational(MCGLimitPlan plan){
 		enterValueinTextBox(dailyPercentageOfCreditLimitInternationalTxt, plan.getDailyPercentageOfCreditLimitInternational());
 	}
 	
@@ -305,7 +305,7 @@ public class MCGLimitPlanPage extends AbstractBasePage {
 		selectByVisibleText(periodicVelocityInternationalResponseDdwn, plan.getPeriodicVelocityResponseInternational());
 	}
 	
-	public void enterPeriodicPercentageOfCreditLimitInternational(MCGLimitPlan plan){
+	public void enterPeriodicPerOfCreditLimitInternational(MCGLimitPlan plan){
 		enterValueinTextBox(periodicPercentageOfCreditLimitInternationalTxt, plan.getPeriodicPercentageOfCreditLimitInternational());
 	}
 

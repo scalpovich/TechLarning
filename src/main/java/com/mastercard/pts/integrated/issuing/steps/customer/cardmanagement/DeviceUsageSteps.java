@@ -104,7 +104,8 @@ public class DeviceUsageSteps {
 		device = context.get(ContextConstants.DEVICE);
 		deviceUsuage = context.get(DEVICE_USUAGE);
 		if(deviceUsuage==null){
-		deviceUsuage = DeviceUsage.getDeviceUsageDetails(provider);}
+			deviceUsuage = DeviceUsage.getDeviceUsageDetails(provider);
+		}
 		deviceUsuage.setDeviceNumber(device.getDeviceNumber());
 		deviceUsuage = deviceUsageWorkflow.getWalletMCGUsage(deviceUsuage);
 

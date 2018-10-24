@@ -25,13 +25,13 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class MCGPage extends AbstractBasePage {
 	final Logger logger = LoggerFactory.getLogger(MCGPage.class);
 
-	@PageElement(findBy = FindBy.CSS, valueToFind = "input[name='mcgHeadPanel:mcgCode:input:inputTextField']")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "td#mcgCode>span>input")
 	private MCWebElement mcgCodeTxt;
 	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "input[name='searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField']")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "td.field>input[fld_fqn='mcgCode']")
 	private MCWebElement mcgCodeSearchTxt;
 
-	@PageElement(findBy = FindBy.CSS, valueToFind = "input[name='searchDiv:rows:1:componentList:1:componentPanel:input:inputTextField']")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "td#description>span>input")
 	private MCWebElement descriptionTxt;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
