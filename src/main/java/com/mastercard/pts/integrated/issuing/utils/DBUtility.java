@@ -108,11 +108,32 @@ public class DBUtility {
 			}
 	}
 	
+	/*
+	 * This method executes update query
+	 */
+	public void executeUpdate(String queryString) {
+		logger.info("** executing update query ** : {}",queryString);
+		try {
+			stmt = getConnection().createStatement();
+		      stmt.executeUpdate(queryString);
+		      conn.commit();
+		} catch (Exception e) {
+			MiscUtils.propagate(e);
+		} finally {
+			try {
+				stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				MiscUtils.propagate(e);
+			}
+		}
+	}
+	
 	public Connection getConnection()
 	{
 		try {
 			conn = DriverManager.getConnection("jdbc:oracle:thin:@" + dbHost
-					+ ":" + dbPort + ":" + dbServiceName, dbUsername,
+					+ ":" + dbPort + "/" + dbServiceName, dbUsername,
 					dbPassword);
 			return conn;
 		} catch (SQLException e) {

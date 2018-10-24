@@ -8,9 +8,10 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.CloseBatchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
+import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 
 @Component
-public class CloseBatchFlows {
+public class CloseBatchFlows extends AbstractBaseFlows {
 
 	@Autowired
 	Navigator navigator;

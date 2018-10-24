@@ -113,8 +113,10 @@ public class LoadFromFileUploadSteps {
 		transaction.getAdjustmentTransactionDetails().add(details);
 		loadFromFileUploadWorkflow.createAdjustmentTransaction(transaction);
 	}
-
-	@Then("user get attached wallet details for device")
+	
+	@Given("user gets attached wallet details for device")
+	@When("user gets attached wallet details for device")
+	@Then("user gets attached wallet details for device")
 	public void getWalletDetailsForDevice() {
 		Device device = context.get(ContextConstants.DEVICE);
 		List<String> wallets = loadFromFileUploadWorkflow.searchWalletDetailsPage(device);

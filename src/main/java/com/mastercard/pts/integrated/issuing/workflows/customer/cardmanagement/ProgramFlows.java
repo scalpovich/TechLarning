@@ -133,4 +133,9 @@ public class ProgramFlows extends MenuFlows {
 		programpage.editProgram(prog);
 		Assert.assertFalse("Adaptive Authentication Check Box is disabled", programpage.adaptiveAuthenticationChkBox());
 	}
+	
+	public void editProgramToEnableCardLimit(String prog) {
+		ProgramPage programpage = navigator.navigateToPage(ProgramPage.class);
+		programpage.editProgramToEnableCardLimit(prog);
+	}
 }

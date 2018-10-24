@@ -1,6 +1,5 @@
 package com.mastercard.pts.integrated.issuing.utils;
 
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
@@ -148,7 +147,6 @@ public class DatePicker extends AbstractBasePage {
 		setDateRangeYear(year);
 		clickCalendarMonthYearOkBtn();
 		waitForPageToLoad(getFinder().getWebDriver());
-		CustomUtils.ThreadDotSleep(5000);
 		setCalendarDay2(Calelement, day);
 	}
 	

@@ -86,7 +86,7 @@
       </repositories>
 
       <dependencies>
-      		<dependency>
+       		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-csv</artifactId>
 			<version>${commons-csv.version}</version>
@@ -179,6 +179,11 @@
                   <groupId>com.itextpdf</groupId>
                   <artifactId>itextpdf</artifactId>
                   <version>${pdf.reader.version}</version>
+            </dependency>
+                        <dependency>
+                  <groupId>org.apache.pdfbox</groupId>
+                  <artifactId>pdfbox</artifactId>
+                  <version>2.0.6</version>
             </dependency>
             <dependency>
                   <groupId>com.mastercard.testing</groupId>
@@ -313,8 +318,7 @@
                   <artifactId>spring-jdbc</artifactId>
                   <version>4.2.5.RELEASE</version>
             </dependency>
-      </dependencies>
-
+	      </dependencies>
       <build>
             <plugins>
                   <plugin>

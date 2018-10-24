@@ -2,13 +2,8 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.concurrent.atomic.AtomicBoolean;
-
-
-import javax.validation.constraints.AssertTrue;
 
 import org.junit.Assert;
-import org.mockito.internal.verification.AtMost;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -33,25 +28,25 @@ public class DeviceTrackingPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory.getLogger(DeviceTrackingPage.class);
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=cardNumber]")
-	private MCWebElement cardNumberTxt;
+	private MCWebElement txtCardNumber;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=clientCode]")
-	private MCWebElement clientCodeTxt;
+	private MCWebElement txtClientCode;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=cbsClientId]")
-	private MCWebElement cbsClientIdTxt;
+	private MCWebElement txtCbsClientId;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Device Embossing and Carrier Details']")
-	private MCWebElement deviceEmbossAndCarrierDetailsTab;
+	private MCWebElement tabDeviceEmbossAndCarrierDetails;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='photoCode']/span")
-	private MCWebElement photoReferenceNumberLabel;
+	private MCWebElement lablPhotoReferenceNumber;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='embossingFileName']/span")
-	private MCWebElement embossingFileNameLabel;
+	private MCWebElement lablEmbossingFileName;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=batchNumber]")
-	private MCWebElement batchNumberTxt;
+	private MCWebElement txtBatchNumber;
 
 	public void verifyUiOperationStatus() {
 		logger.info("Device Tracking");
@@ -60,26 +55,20 @@ public class DeviceTrackingPage extends AbstractBasePage {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.elementToBeClickable(cardNumberTxt), WebElementUtils.elementToBeClickable(clientCodeTxt),
-				WebElementUtils.elementToBeClickable(cbsClientIdTxt), WebElementUtils.elementToBeClickable(batchNumberTxt));
+		return Arrays.asList(WebElementUtils.elementToBeClickable(txtCardNumber), WebElementUtils.elementToBeClickable(txtClientCode), WebElementUtils.elementToBeClickable(txtCbsClientId), WebElementUtils.elementToBeClickable(txtBatchNumber));
 	}
-	
-	public void checkForNewFieldsAdded(Device device){
-		enterText(batchNumberTxt, device.getBatchNumber());
+
+	public void checkForNewFieldsAdded(Device device) {
+		enterText(txtBatchNumber, device.getBatchNumber());
 		clickSearchButton();
 		viewFirstRecord();
-		runWithinPopup("View Device Tracking", ()->{
-			clickWhenClickable(deviceEmbossAndCarrierDetailsTab);
-			logger.info("Photo referenceNumber on page", photoReferenceNumberLabel.getText());
-			logger.info("Embossing file name", embossingFileNameLabel.getText());
-			
-			boolean areNewFieldsAdded = device.getApplicationNumber().equals(photoReferenceNumberLabel.getText()) 
-					&& !Strings.isNullOrEmpty(embossingFileNameLabel.getText());
-			
-			Assert.assertTrue("No new fields added",areNewFieldsAdded);
-			
+		runWithinPopup("View Device Tracking", () -> {
+			clickWhenClickable(tabDeviceEmbossAndCarrierDetails);
+			logger.info("Photo referenceNumber on page", lablPhotoReferenceNumber.getText());
+			logger.info("Embossing file name", lablEmbossingFileName.getText());
+			boolean areNewFieldsAdded = device.getApplicationNumber().equals(lablPhotoReferenceNumber.getText()) && !Strings.isNullOrEmpty(lablEmbossingFileName.getText());
+			Assert.assertTrue("No new fields added", areNewFieldsAdded);
 			clickCloseButton();
 		});
-		
 	}
 }

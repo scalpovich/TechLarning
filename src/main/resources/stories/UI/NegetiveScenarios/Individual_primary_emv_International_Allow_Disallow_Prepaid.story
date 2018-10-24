@@ -27,7 +27,7 @@ And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
 And device has "normal" status
 And user activates device through helpdesk
-And user selects International Use Allow/Disallow status
+And user selects International Use Allow/Disallow [400] status
 And user sign out from customer portal
 
 Scenario: Pin Generation

@@ -18,7 +18,6 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ClientPhotoFlatFileDownloadBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -40,7 +39,7 @@ public class ClientPhotoFlatFileDownloadBatchPage extends AbstractBasePage {
 	private MCWebElement deviceNumberTxt;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='batchNumber']")
-	private MCWebElement batchNumberTxt;
+	private MCWebElement txtBatchNumber;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind =  "input[fld_fqn='batchDate']" )
 	private MCWebElement batchDate;
@@ -83,7 +82,7 @@ public class ClientPhotoFlatFileDownloadBatchPage extends AbstractBasePage {
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.visibilityOf(batchNumberTxt));
+		return Arrays.asList(WebElementUtils.visibilityOf(txtBatchNumber));
 	}
 
 }

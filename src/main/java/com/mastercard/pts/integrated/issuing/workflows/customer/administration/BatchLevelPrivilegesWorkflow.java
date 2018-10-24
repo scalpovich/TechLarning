@@ -28,25 +28,6 @@ public class BatchLevelPrivilegesWorkflow extends AbstractBaseFlows {
 		batch.clickSearchBtn();
 	}
 
-	public void verifyPhotoFileDownloadBatchPresent() {
-		navigator.navigateToPage(BatchLevelPreviledgePage.class);
-		Portal loginPortal = environment.getPortalByType(Portal.TYPE_CUSTOMER);
-		batch.selectEntityType("User [U]");
-		batch.selectEntityID(loginPortal.getUserName());
-		batch.clickSearchBtn();
-		batch.clickBatchDownloadTab();
-		batch.verifyClientPhotoBatchPresent();
-	}
-	
-	public void provideAccessToDownloadPhotoFileDownloadBatch() {
-		navigator.navigateToPage(BatchLevelPreviledgePage.class);
-		batch.selectEntityType("User [U]");
-		Portal loginPortal = environment.getPortalByType(Portal.TYPE_CUSTOMER);
-		batch.selectEntityID(loginPortal.getUserName());
-		batch.clickSearchBtn();
-		batch.supplyAccessToClientPhotoBatch();
-	}
-	
 	public void selectEntityTypeAsRole() {
 		batch.selectEntityType();
 		batch.selectEntityID();
@@ -93,4 +74,23 @@ public class BatchLevelPrivilegesWorkflow extends AbstractBaseFlows {
 		selectEntityTypeAsRole();
 		batch.supplyAccessToSystemInternalBatches();
 	}
+	public void verifyPhotoFileDownloadBatchPresent() {
+		navigator.navigateToPage(BatchLevelPreviledgePage.class);
+		Portal loginPortal = environment.getPortalByType(Portal.TYPE_CUSTOMER);
+		batch.selectEntityType("User [U]");
+		batch.selectEntityID(loginPortal.getUserName());
+		batch.clickSearchBtn();
+		batch.clickBatchDownloadTab();
+		batch.verifyClientPhotoBatchPresent();
+	}
+	
+	public void provideAccessToDownloadPhotoFileDownloadBatch() {
+		navigator.navigateToPage(BatchLevelPreviledgePage.class);
+		batch.selectEntityType("User [U]");
+		Portal loginPortal = environment.getPortalByType(Portal.TYPE_CUSTOMER);
+		batch.selectEntityID(loginPortal.getUserName());
+		batch.clickSearchBtn();
+		batch.supplyAccessToClientPhotoBatch();
+	}
+	
 }

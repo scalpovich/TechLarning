@@ -425,8 +425,6 @@ public abstract class LinuxUtils {
 		// channel1.close();
 
 	}
-	
-	
 
 	public static boolean isPhotoReferenceNumberPresentFlatFile(File filePath,
 			String applicationNumber) {

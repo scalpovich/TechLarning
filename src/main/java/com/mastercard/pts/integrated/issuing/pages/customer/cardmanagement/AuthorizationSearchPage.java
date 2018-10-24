@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -93,8 +94,11 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	@PageElement(findBy=FindBy.X_PATH, valueToFind = "//td[contains(text(),'Available Balance')]/following-sibling::td[1]/span/span")
 	private MCWebElement availableBalanceTxt;
 	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
+	private MCWebElement institutionDateTxt;
+	
 	private String amountTypes = "Billing Amount:Transaction Fee:Service Tax:Markup Fee:Markup Service Tax";
-
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Authorization Search");
 		verifySearchButton("Search");
@@ -105,10 +109,12 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	}
 
 	public void inputFromDate(LocalDate date) {
+		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(1);
 		WebElementUtils.pickDate(fromDate, date);
 	}
 
 	public void inputToDate(LocalDate date) {
+		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
 		WebElementUtils.pickDate(toDate, date);
 	}
 
@@ -187,7 +193,7 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 			for(String str : amountType){
 				String value = Element("//span[contains(text(),'"+str+"')]/../span[2]/span").getText();
 				logger.info("value of " + str + " = "+  value);
-				sum = sum.add(new BigDecimal(value),  new MathContext(5));
+				sum = sum.add(new BigDecimal(value),  new MathContext(6));
 			}
 			availBal.setSum(sum);
 			availBal.setAvailableBal(new BigDecimal(getTextFromPage(availableBalanceTxt)));			

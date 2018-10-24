@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.helpdesk;
 
+import java.math.BigDecimal;
+
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ProductType;
@@ -19,6 +21,22 @@ public class HelpdeskGeneral {
 	private static final String NEW_MOBILE_ISD = "NEW_MOBILE_ISD";
 	private static final String DEVICE_NUMBER = "DEVICE_NUMBER";
 	private static final String PRODUCT_TYPE = "PRODUCT_TYPE";
+	private static final String LIMIT_TYPE = "LIMIT_TYPE";
+	private static final String CLIENT_CREDIT_LIMIT = "CLIENT_CREDIT_LIMIT";
+	private static final String ACCOUNT_CREDIT_LIMIT = "ACCOUNT_CREDIT_LIMIT";
+	private static final String NEW_CREDIT_LIMIT = "NEW_CREDIT_LIMIT";
+	private static final String LIMIT_TYPE_STATUS="LIMIT_TYPE_STATUS";
+	private static final String AVAILABLE_BALANCE="AVAILABLE_BALANCE";
+	
+	private String availableBalance;
+	public String getAvailableBalance() {
+		return availableBalance;
+	}
+
+	public void setAvailableBalance(String availableBalance) {
+		this.availableBalance = availableBalance;
+	}
+
 	private String transactionNote;
 	private String initialLoadTxnDetails;
 	private String transactionDetails;
@@ -35,8 +53,54 @@ public class HelpdeskGeneral {
 	private String newMobileNo;
 	private String newMobileISD;
 	private String defaultWalletNumber;
+	private String limitType;
+	private String limitTypeStatus;
+	private String clientCreditLimit;
+	private String accountCreditLimit; 
+	private String newCreditLimit;
+	private String customerType;
 	
 	
+	public String getCustomerType() {
+		return customerType;
+	}
+
+	public void setCustomerType(String customerType) {
+		this.customerType = customerType;
+	}
+
+	public String getLimittypestatus() {
+		return limitTypeStatus;
+	}
+
+	public void setLimittypestatus(String limittypestatus) {
+		this.limitTypeStatus = limittypestatus;
+	}
+	
+	public String getClientCreditLimit() {
+		return clientCreditLimit;
+	}
+
+	public void setClientCreditLimit(String clientCreditLimit) {
+		this.clientCreditLimit = clientCreditLimit;
+	}
+
+	public String getAccountCreditLimit() {
+		return accountCreditLimit;
+	}
+
+	public void setAccountCreditLimit(String accountCreditLimit) {
+		this.accountCreditLimit = accountCreditLimit;
+	}
+
+	public String getNewCreditLimit() {
+		return newCreditLimit;
+	}
+
+	public void setNewCreditLimit(String newCreditLimit) {
+		this.newCreditLimit = newCreditLimit;
+	}
+
 	public static HelpdeskGeneral createWithProvider(KeyValueProvider provider) {
 		HelpdeskGeneral plan = new HelpdeskGeneral();
 		plan.setServiceCode(provider.getString(CS_SERVICE_CODE));
@@ -54,6 +118,17 @@ public class HelpdeskGeneral {
 		plan.setNewMobileNo(provider.getString(NEW_MOBILE_NO));
 		plan.setNewMobileISD(provider.getString(NEW_MOBILE_ISD));
 		plan.setDeviceNumber(provider.getString(DEVICE_NUMBER));
+		return plan;
+	}
+	
+	public static HelpdeskGeneral createWithProviderWithCreditCardLimits(KeyValueProvider provider) {
+		HelpdeskGeneral plan = createWithProvider(provider);
+		plan.setLimitType(provider.getString(LIMIT_TYPE));
+		plan.setLimittypestatus(provider.getString(LIMIT_TYPE_STATUS));
+		plan.setClientCreditLimit(provider.getString(CLIENT_CREDIT_LIMIT));
+		plan.setAccountCreditLimit(provider.getString(ACCOUNT_CREDIT_LIMIT));
+		plan.setNewCreditLimit(provider.getString(NEW_CREDIT_LIMIT));
+		plan.setAvailableBalance(provider.getString(AVAILABLE_BALANCE));
 		return plan;
 	}
 	
@@ -183,6 +258,14 @@ public class HelpdeskGeneral {
 
 	public void setNewMobileISD(String newMobileISD) {
 		this.newMobileISD = newMobileISD;
+	}
+	
+	public String getLimitType() {
+		return limitType;
+	}
+
+	public void setLimitType(String limitType) {
+		this.limitType = limitType;
 	}
 
 	@Override

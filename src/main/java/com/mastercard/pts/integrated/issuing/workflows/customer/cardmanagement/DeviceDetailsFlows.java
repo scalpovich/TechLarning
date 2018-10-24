@@ -21,7 +21,7 @@ public class DeviceDetailsFlows {
 	
 	public void findAndPutDeviceApplicationNumberInContext() {
 		DeviceDetailsPage deviceDetailsPage = navigator.navigateToPage(DeviceDetailsPage.class);
-		deviceDetailsPage.retrievDeviceApplicationNumber();
+		deviceDetailsPage.retriveDeviceApplicationNumber();
 	}
 
 }

@@ -1,13 +1,10 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +13,6 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Cred
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
-import com.mastercard.pts.integrated.issuing.utils.DatePicker;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -81,16 +77,17 @@ TestContext context;
 	public void verifyapplication() {
 		Device device = context.get(CreditConstants.APPLICATION);
 		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
-		WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
-		WebElementUtils.pickDate(toDatePicker, LocalDate.now());
+		WebElementUtils.pickDate(fromDate, LocalDate.now().minusDays(1));
+		WebElementUtils.pickDate(toDate, LocalDate.now());
 		clickSearchButton();
 	}
 
 	public String editAndVerifyApplication(){
 		verifyapplication();
 		waitForPageToLoad(driver());
-		clickWhenClickable(editImg);
 		SimulatorUtilities.wait(5000);
+		clickWhenClickable(editImg);
+		SimulatorUtilities.wait(30000);
 		
 		runWithinPopup("Edit Application", () ->{					
 			clickWhenClickable(verifyBtn);
