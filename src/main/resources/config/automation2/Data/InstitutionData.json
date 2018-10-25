@@ -27,6 +27,7 @@
 	   "deviceEventBasedFeePlan":"AUTOMATION [TA5853EM]",
 	   "transactionLimitPlan":"AUTOMATION [TA1192KMNW]",
 	   "transactionPlan":"AUTOMATION [T1962C]",
+	   "transactionFeePlan":"Automation FIX Fee plan. [AUTOFEEP1]",
 	   "creditPlan":"TA4413NYAX [102]",
 	   "billingCycle":"AUTOMATION [131]",
 	   "walletPlan":"AUTOMATION [TA1160XDAT]"
@@ -89,6 +90,7 @@
 	   "deviceJoiningAndMemberShipFeePlan":"AUTOMATION [TA3608VH]",
 	   "deviceEventBasedFeePlan":"AUTOMATION [TA1764NE]",
 	   "transactionLimitPlan":"AUTOMATION [TA1347LPRR]",
+	   "transactionFeePlan":"Automation FIX Fee plan. [AUTOFEEP1]",
 	   "transactionPlan":"AUTOMATION [T8278L]",
 	   "creditPlan":"TA4413NYAX [102]",
 	   "billingCycle":"AUTOMATION [131]",
