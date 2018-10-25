@@ -17,7 +17,7 @@ And User fills Device Range section for debit product
 And user creates new device of debit type for new client
 And a new device was created
 And processes pre-production batch for debit
-And processes device production batch for debits
+And processes device production batch for debit
 And device has "NOT ACTIVATED CARD [11]" status
 And user activates device through helpdesk
 And user has wallet number information for debit device
