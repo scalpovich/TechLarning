@@ -37,7 +37,7 @@ And user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
 When search transaction with device number on transaction search screen
-Then update institution date to next days
+!-- Then update institution date to next days
 And user sign out from customer portal
 
 Scenario:1.6 Login & Logout to wait for date to be updated 
