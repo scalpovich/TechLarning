@@ -226,7 +226,6 @@ public class BatchSteps {
 	@When("to verify photo reference number is present in card holder dump file")
 	@Then("to verify photo reference number is present in card holder dump file")
 	public void  cardHolderDumpFileWasGeneratedSuccessfullyForPhotoCard() {
-		MiscUtils.reportToConsole("******** Embossing File Start ***** " );
 		flow.findAndPutDeviceApplicationNumberInContext();
 		try {
 			String CSVno = context.get("CSVno");
