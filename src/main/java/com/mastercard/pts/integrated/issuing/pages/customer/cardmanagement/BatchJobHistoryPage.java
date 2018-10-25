@@ -193,21 +193,6 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 		return found;
 	}
 	
-	public void waitForResponse() {
-		String statuslabelTxt;
-		Integer index = 0;
-		switchToViewBatchDetailsFrame();
-		do {
-			statuslabelTxt = statusTxt.getText();
-			CustomUtils.ThreadDotSleep(2000);
-		} while (Strings.isNullOrEmpty(statuslabelTxt) && index++ < 100);
-
-		logger.info("Status  -", statuslabelTxt);
-		Assert.assertTrue(!Strings.isNullOrEmpty(statuslabelTxt));
-		clickWhenClickable(closeBtn);
-		switchToDefaultFrame();
-	}
-	
 	public boolean checkBatchStatus(BatchJobHistory batchjobhistory) {
         
         selectByVisibleText(batchTypeDDwn, batchjobhistory.getBatchType());

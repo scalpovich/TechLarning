@@ -36,7 +36,7 @@ public class ClientPhotoFlatFileDownloadBatchPage extends AbstractBasePage {
 	TestContext context;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='cardNumber']")
-	private MCWebElement deviceNumberTxt;
+	private MCWebElement txtDeviceNumber;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='batchNumber']")
 	private MCWebElement txtBatchNumber;
@@ -53,7 +53,7 @@ public class ClientPhotoFlatFileDownloadBatchPage extends AbstractBasePage {
 	public boolean processClientPhotoFlatFileDownloadBatch(ClientPhotoFlatFileDownloadBatch batch) {
 		Device device = context.get(ContextConstants.DEVICE);
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-		WebElementUtils.enterText(deviceNumberTxt, device.getDeviceNumber());
+		WebElementUtils.enterText(txtDeviceNumber, device.getDeviceNumber());
 
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
