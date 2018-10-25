@@ -1,23 +1,22 @@
 Narrative:
-In order to a create a Credit Device under customer portal cardmanagement tab
+In order to verify user is not able to board a duplicate application when dedupe plan is not configured
 As a user
-I want to create board credit device via New Application Screen with Credit Bureau
-					 
+I want to board a duplicate application when dedupe plan is not configured.
+
 Meta:
-@StoryName credit_card	 
-Scenario:To verify user is able to board credit device via New Application Screen with Credit Bureau
+@StoryName credit_emv_retail
+Scenario: To verify user is able to board a duplicate application when dedupe plan is not configured.
 Given setting json values in excel for Credit
-When user is logged in institution
-And for EMV Card User fills Device Plan for credit product for Mastercard
+And user is logged in institution
+When for EMV Card User fills Device Plan for credit product for Mastercard
 And User fills Wallet Plan for credit product and program Retail Credit Card
-And User Primary fills new Program Retail Credit Card section for credit product for mastercard
-And User Adds WorkFlow Rule with Credit Brueau for Customer and Individual on program
+And User Primary fills new Program Retail Credit Card section for credit product without dedupe for mastercard
+And User fills Business Mandatory Fields Screen for Credit product
 And User fills Device Range section for credit product
-Then "credit" is created with "Primary Device" as application type with application sub-type as "New" and customer of type "Individual" with "EMV"
+Then "credit" is created with "Primary Device" as application type with application sub-type as "New" and customer of type "Individual" with "EMV" with dedupe
 And user verifies the credit application device
+And user approves the credit application device
 And user processesAll close batch for new Application
-And user refer the credit application device
-And user processesAll creditBureauVerification batch for new Application
 And user processesAll deviceGeneration batch for new Application
 And user searches for created application
 And user sign out from customer portal
@@ -40,4 +39,10 @@ Then user sign out from customer portal
 Scenario: To search New Application on HelpDesk Screen
 Given user is logged in institution
 When User search for new application on search screen for credit and validates the status as NORMAL
+Then user sign out from customer portal
+
+Scenario: To get the Client Code and Generate the Device Activity Report
+Given user is logged in institution
+When user get the client code
+When generate device activity report
 Then user sign out from customer portal

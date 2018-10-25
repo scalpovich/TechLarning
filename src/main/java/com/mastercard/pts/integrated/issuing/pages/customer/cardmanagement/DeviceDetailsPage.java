@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -38,7 +39,7 @@ public class DeviceDetailsPage extends AbstractCardManagementPage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//ul/li/a[contains(text(),'Client & Wallet Information')]")
 	private MCWebElement clientAndWalletInfoTab;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/tbody/tr/td[8]")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='applicationNumber']")
 	private MCWebElement applicationNumberTxt;
 
 	@PageElement(findBy = FindBy.ID, valueToFind = "lastExecutedScriptStatus")
@@ -74,6 +75,15 @@ public class DeviceDetailsPage extends AbstractCardManagementPage {
 			clickCloseButton();
 		});
 		logger.info("device application number :{}",device.getApplicationNumber());
+	}
+	
+	public String getClientCode() {
+		Device device = context.get(CreditConstants.APPLICATION);
+		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
+		clickSearchButton();
+		waitForRow();
+		device.setClientCode(getCellTextByColumnName(1, "Client Code"));
+		return device.getClientCode();
 	}
 
 	@Override

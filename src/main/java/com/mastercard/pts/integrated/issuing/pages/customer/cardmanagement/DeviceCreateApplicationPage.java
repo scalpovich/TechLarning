@@ -320,11 +320,11 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			SimulatorUtilities.wait(8000);
 			waitForWicket(driver());
 			selectByVisibleText(programCodeDDwn, device.getProgramCode());
-			SimulatorUtilities.wait(5000);			
+			SimulatorUtilities.wait(10000);			
 		}
 		SimulatorUtilities.wait(1000);
 		clickNextButton();
-		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());		
+		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());
 		WebElementUtils.selectDropDownByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
 		WebElementUtils.selectDropDownByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
 	}
@@ -424,11 +424,13 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			WebElementUtils.enterText(firstNameTxt, client.getDedupeFirstName());
 			WebElementUtils.enterText(lastNameTxt, client.getDedupeLastName());
 			WebElementUtils.pickDate(birthDateDPkr, client.getDedupeBithDate());
+			WebElementUtils.enterText(registeredMailIdTxt, client.getDedupeEmailId());
 		}
 		else{
 			WebElementUtils.enterText(firstNameTxt, client.getFirstName());
 			WebElementUtils.enterText(lastNameTxt, client.getLastName());
 			WebElementUtils.pickDate(birthDateDPkr, client.getBirthDate());
+			WebElementUtils.enterText(registeredMailIdTxt, client.getEmailId());
 		}
 		
 		if (client.getMiddleName1() != null) {
@@ -447,7 +449,6 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByVisibleText(accountTypeDDwn, device.getAccountType());
 		}
 		
-		WebElementUtils.enterText(registeredMailIdTxt, client.getEmailId());
 		WebElementUtils.selectDropDownByVisibleText(languagePreferencesDDwn, client.getLanguagePreference());
 		WebElementUtils.selectDropDownByVisibleText(vipDDwn, device.getVip());
 		WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn,1);

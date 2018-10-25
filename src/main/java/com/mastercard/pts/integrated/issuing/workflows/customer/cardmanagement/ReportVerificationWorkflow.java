@@ -11,10 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.GenericReport;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.collect.administration.AdministrationHomePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ApplicationPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceActivityPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReportVerificationPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
@@ -88,6 +91,21 @@ public class ReportVerificationWorkflow {
 			});
 		});
 		assertTrue("Application Number is not present in the System", verificationStatus);
+	}
+	
+	public void generateDeviceActivityReport(Device device,GenericReport report,Program program) {
+    	DeviceActivityPage page = navigator.navigateToPage(DeviceActivityPage.class);
+		deleteExistingReportsFromSystem(report.getReportName());
+		String reportUrl = page.generateDeviceActivityReport(device,report,program);
+		report.setReportUrl(reportUrl);
+		Map<Object, String> reportContent= getReportContent(report);
+		System.out.println("Client Code:" +report.getClientCode());
+		reportContent.forEach((k,v)-> {
+			if(v.contains(report.getClientCode())){
+				toggle();
+			}
+		});		
+		assertTrue("Client Code is not present",verificationStatus);
 	}
 	
 	private void toggle(){
