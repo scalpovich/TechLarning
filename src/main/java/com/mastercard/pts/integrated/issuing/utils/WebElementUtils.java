@@ -204,12 +204,15 @@ public class WebElementUtils {
 
 	public static void pickDate(MCWebElement datePicker, LocalDate date) {
 		WebElement monthYear = fluentWait(() -> asWebElement(datePicker).findElement(By.cssSelector("a.calnav")));
-
 		asWebElement(datePicker).findElement(By.cssSelector("img")).click();
-
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
-		YearMonth currentYearMonth = YearMonth.parse(monthYear.getText(), formatter);
-
+		YearMonth currentYearMonth;
+		try {
+			currentYearMonth = YearMonth.parse(monthYear.getText(), formatter);
+		} catch (StaleElementReferenceException ex) {
+			monthYear = fluentWait(() -> asWebElement(datePicker).findElement(By.cssSelector("a.calnav")));
+			currentYearMonth = YearMonth.parse(monthYear.getText(), formatter);
+		} 
 		if (date.getYear() != currentYearMonth.getYear() || date.getMonthValue() != currentYearMonth.getMonthValue()) {
 			monthYear.click();
 
