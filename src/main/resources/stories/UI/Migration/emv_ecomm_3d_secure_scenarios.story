@@ -14,4 +14,4 @@ Then MAS test results are verified
 Scenario:3 Perform EMV-RetailGeneralPurposeCard Purchase 1st transaction
 Given perform an 3D_SECURE_ECOMM_SCENARIO_2 MAS transaction on the same card
 Then MAS test results are verified
-Then MAS simulator is closed
+And MAS simulator is closed
