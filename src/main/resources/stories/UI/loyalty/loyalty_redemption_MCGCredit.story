@@ -32,7 +32,6 @@ When user is logged in institution
 And user raises an authorization request
 Then status of request is "approved"
 And search Purchase authorization and verify Successful status
-When user verifies available balance after transaction
 And device has "normal" status
 And user verifies available Card limit for card after transaction
 And user waits for 400000 milliseconds
