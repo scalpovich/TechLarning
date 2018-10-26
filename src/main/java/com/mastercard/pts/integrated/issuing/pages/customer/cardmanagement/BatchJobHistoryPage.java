@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.google.common.base.Strings;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BatchJobHistory;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -68,7 +68,7 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 	
 	public String calelement = "//td[7]";
 	
-	@PageElement (findBy = FindBy.X_PATH, valueToFind = "//span[text()='SUCCESS [2]']")
+	@PageElement (findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'SUCCESS')]")
 	private MCWebElement batchJobSuccessStatus;
 	
 	@Autowired
@@ -203,7 +203,7 @@ public class BatchJobHistoryPage extends AbstractBasePage {
         selectByVisibleText(batchDDwn,batchjobhistory.getBatch());
         clickSearchButton();
 		waitForBatchStatus(batchJobSuccessStatus);
-		context.put("CSVno", getCellTextByColumnName(1,"File Name"));
+		context.put(ContextConstants.CSV_FILE_NAME, getCellTextByColumnName(1,"File Name"));
 		return isElementPresent(batchJobSuccessStatus);
 	}
 

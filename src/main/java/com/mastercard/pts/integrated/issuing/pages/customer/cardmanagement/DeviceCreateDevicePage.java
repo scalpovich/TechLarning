@@ -454,7 +454,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn,1);
 			WebElementUtils.enterText(creditLimitTxt,String.valueOf(Integer.parseInt(program.getCreditLimit())+1));
 		}
-		if("Photo [1]".equals(device.getPhotoIndicator())) {
+		if(device.getPhotoIndicator().contains("Photo")) {
 			String filePath = new File(photoUploadFilePath).getAbsolutePath();
 			logger.info("upload file path : {}",filePath);
 			photoFileInput.sendKeys(filePath);

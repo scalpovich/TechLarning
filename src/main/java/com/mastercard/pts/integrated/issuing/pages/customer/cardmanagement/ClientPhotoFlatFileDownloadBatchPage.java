@@ -20,6 +20,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Clie
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -60,11 +61,8 @@ public class ClientPhotoFlatFileDownloadBatchPage extends AbstractBasePage {
 		String successMessage[] = getSuccessMessage().split(" ");
 		String jobId = successMessage[successMessage.length-1];
 		context.put(ContextConstants.JOB_ID, jobId);
-		LocalDateTime serverTime = LocalDateTime.now(ZoneId.of("GMT-5"));
-		if(serverTime.getHour()>12){
-			serverTime = serverTime.minusHours(12);
-		}
-	    String timeStamp = serverTime.format(DateTimeFormatter.ofPattern("ddMMyyyyHHmm")); //CDT time when batch download is done. 
+		
+	    String timeStamp = LinuxUtils.getServerTimeInddMMyyyyHHmm();
         context.put(ContextConstants.CLIENT_PHOTO_BATCH_PROCESS_TIME,timeStamp);
         logger.info("timestamp of processing",timeStamp);
         

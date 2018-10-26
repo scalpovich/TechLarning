@@ -1,3 +1,4 @@
+
 package com.mastercard.pts.integrated.issuing.context;
 
 public class ContextConstants {
@@ -121,6 +122,8 @@ public class ContextConstants {
 	public static final String JOB_ID = "JOB_ID";
 	
 	public static final String CLIENT_PHOTO_BATCH_PROCESS_TIME = "CLIENT_PHOTO_BATCH_PROCESS_TIME";
+	
+	public static final String CSV_FILE_NAME = "CSV_FILE_NAME";
 	
 	private ContextConstants() {
 	}

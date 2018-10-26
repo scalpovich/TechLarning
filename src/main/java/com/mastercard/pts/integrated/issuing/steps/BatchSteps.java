@@ -228,8 +228,8 @@ public class BatchSteps {
 	public void  cardHolderDumpFileWasGeneratedSuccessfullyForPhotoCard() {
 		flow.findAndPutDeviceApplicationNumberInContext();
 		try {
-			String CSVno = context.get("CSVno");
-			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(CSVno, tempDirectory.toString(), "CARDHOLDER_DUMP","proc");
+			String csvFileName = context.get(ContextConstants.CSV_FILE_NAME);
+			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(csvFileName, tempDirectory.toString(), "CARDHOLDER_DUMP","proc");
 			Device device = context.get(ContextConstants.DEVICE);
 			boolean flg= LinuxUtils.getPhotoReferenceNumberinDumpFile(batchFile,device.getApplicationNumber());
 			Assert.assertTrue("Photo Reference Number is present in Card Holder Dump File",flg);

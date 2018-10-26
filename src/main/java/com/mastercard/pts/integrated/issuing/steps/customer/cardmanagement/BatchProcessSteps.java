@@ -287,16 +287,13 @@ public class BatchProcessSteps {
 	
 	@When("user checks for the client photo/flat file batch trace for $batchType batch")
 	@Then("user checks for the client photo/flat file batch trace for $batchType batch")
-	public void checkBatchTraceForClientPhotoFlatFile(@Named("batchType") String batchType) {		
-				
-		
+	public void checkBatchTraceForClientPhotoFlatFile(@Named("batchType") String batchType) {						
 		batchProcessWorkflow.verifyBatchTraceAvailability(context.get(ContextConstants.JOB_ID));	
-		
 	}
 	
 	@When("process batch for $batchType type and Batch name $batchName")
 	@Then("process batch for $batchType type and Batch name $batchName")
-	public void submitJobforProcessing(String batchType, String batchName) {
+	public void submitJobForProcessing(String batchType, String batchName) {
 		processBatchesFlows.processDownloadBatches(batchType, batchName);
 	}
 

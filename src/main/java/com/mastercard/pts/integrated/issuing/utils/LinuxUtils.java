@@ -7,6 +7,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -464,5 +467,13 @@ public abstract class LinuxUtils {
 			throw MiscUtils.propagate(e);
 		}
 		return photoFileName;
+	}
+	
+	public static String getServerTimeInddMMyyyyHHmm(){
+		LocalDateTime serverTime = LocalDateTime.now(ZoneId.of("GMT-5")); //CDT time of Linux server. 
+		if(serverTime.getHour()>12){
+			serverTime = serverTime.minusHours(12);
+		}
+		return serverTime.format(DateTimeFormatter.ofPattern("ddMMyyyyHHmm")); 
 	}
 }
