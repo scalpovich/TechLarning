@@ -142,6 +142,11 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.getWalletBalanceInformationAfterLoyaltyRedemption(device);
 	}
 
+	public HashMap<String, BigDecimal> getWalletBalanceAfterLoyaltyRedemptionCredit() {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		return helpDeskPage.noteDownCreditLimit("Card");
+	}
+
 	public String getWalletBalanceInformationForRemittance(Device device, CardToCash cardToCash) {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		return helpDeskPage.getWalletBalanceInformationForRemittance(device, cardToCash);

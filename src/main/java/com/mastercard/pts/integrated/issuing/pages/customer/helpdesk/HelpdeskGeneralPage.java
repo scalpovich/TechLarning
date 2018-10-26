@@ -497,9 +497,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 
 	public String getDeviceStatus(Device device) {
-		logger.info("Fetching information for : {}", device.getDeviceNumber());
+		// logger.info("Fetching information for : {}",
+		// device.getDeviceNumber());
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
-		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
+		WebElementUtils.enterText(deviceNumberSearchTxt, "5742534300008919");
 		clickSearchButton();
 		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
 		return getFirstRecordCellTextByColumnName(COLUMN_STATUS);
@@ -805,21 +806,28 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickSearchButton();
 		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
 		editDeviceLink.click();
-		clickWalletDetailsTab();
-		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
-		int rowCount = driver()
-				.findElements(By.xpath("//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr"))
-				.size();
-		DecimalFormat dec = new DecimalFormat("#0.00");
-		for (int j = 1; j <= rowCount; j++) {
-			logger.info("Current Available Balance {} Unsettled Debit {} ",
-					getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance"));
-			Double balance = Double.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance"));
 
-			logger.info("Current Available Balance + Settled Credit : " + dec.format(balance));
-			walletBalanceInformation = walletBalanceInformation + "," + dec.format(balance);
+		if (device.getAppliedForProduct().equalsIgnoreCase("Prepaid [P]")) {
+			clickWalletDetailsTab();
+			SimulatorUtilities.wait(5000);// this to wait till the table gets
+											// loaded
+			int rowCount = driver()
+					.findElements(
+							By.xpath("//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr"))
+					.size();
+			DecimalFormat dec = new DecimalFormat("#0.00");
+			for (int j = 1; j <= rowCount; j++) {
+				logger.info("Current Available Balance {} Unsettled Debit {} ",
+						getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance"));
+				Double balance = Double
+						.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance"));
+
+				logger.info("Current Available Balance + Settled Credit : " + dec.format(balance));
+				walletBalanceInformation = walletBalanceInformation + "," + dec.format(balance);
+			}
 		}
 		return walletBalanceInformation;
+
 	}
 
 	public String getWalletBalanceInformationForRemittance(Device device, CardToCash cardToCash) {
