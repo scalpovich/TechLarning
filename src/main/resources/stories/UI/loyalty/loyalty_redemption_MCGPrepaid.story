@@ -31,6 +31,7 @@ When user raises an authorization request
 Then status of request is "approved"
 And search Purchase authorization and verify Successful status
 And user has current wallet balance amount information for Prepaid [P] device
+And user waits for 400000 milliseconds
 And user sign out from customer portal
 
 Scenario: Loyalty program setup - prepaid
@@ -39,4 +40,5 @@ When user is logged in institution
 And pre-clearing and Loyalty Calc batches are run
 And user verifies rewards and redemption screen
 And user verifies current wallet balance amount information after loyalty redemption PREPAID device
+And user deletes promotion Plan and loyalty Plan mapping
 And user sign out from customer portal
