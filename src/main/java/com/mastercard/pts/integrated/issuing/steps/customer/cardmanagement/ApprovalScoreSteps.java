@@ -20,7 +20,7 @@ public class ApprovalScoreSteps {
 		Assert.assertTrue("ApprovalScore is added successfully", approvalScoreWorkFlow.userAddsNewApprovalScore());
 	}
 
-	@When("user verifies edit and verify Approval Score")
+	@When("user verifies and edits Approval Score")
 	public void userVerifiesAndEditsApprovalScore() {
 		approvalScoreWorkFlow.userVerifiesAndEditsNewApprovalScore();
 	}
