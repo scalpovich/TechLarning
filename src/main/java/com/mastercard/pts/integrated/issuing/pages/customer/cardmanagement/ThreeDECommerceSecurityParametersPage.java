@@ -1,8 +1,11 @@
 
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -59,7 +62,7 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "decMerchantRiskBaseTxnMc:checkBoxComponent")
 	private MCWebElement declineMerchantRiskBasedTransaction;
-
+	
 	public void verifyUiOperationStatus() {
 		logger.info("3D E-Commerce Security Parameters");
 		verifySearchButton("Search");
@@ -127,16 +130,20 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 	public void editAll3DSecureFieldsToUncheck(ThreeDECommerceSecurityParameters threeDESParams) {
 		edit3DESecurityParameters(threeDESParams);
 		runWithinPopup("Edit 3D E-Commerce Security", () -> {
-			if (declineAllTransactionsWithoutCAVVAAVChkBx.isSelected())
-				declineAllTransactionsWithoutCAVVAAVChkBx.click();
-			if (declineAllNonSecuredTransaction.isSelected())
-				declineAllNonSecuredTransaction.click();
-			if (declineMerchantRiskBasedTransaction.isSelected())
-				declineMerchantRiskBasedTransaction.click();
-			   clickSaveButton();
-			   SimulatorUtilities.wait(2000);
-			   verifyOperationStatus();
+			List<MCWebElement> secureElement = new LinkedList<MCWebElement>();
+			secureElement.add(declineMerchantRiskBasedTransaction);
+			secureElement.add(declineAllNonSecuredTransaction);
+			secureElement.add(declineAllTransactionsWithoutCAVVAAVChkBx);
+			for (int i = 0; i < secureElement.size(); i++) {
+				for (MCWebElement elementLocator : secureElement) {
+					ClickCheckBox(elementLocator, false);
+				}
+			}
+			clickSaveButton();
+			SimulatorUtilities.wait(2000);
+			verifyOperationStatus();
 		});
+
 	}
 
 	public void selectSearchInterchange(String interchangeToSearch) {
