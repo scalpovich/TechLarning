@@ -18,15 +18,15 @@ public class DeDupeSDNVerificationSteps {
 	@Autowired
 	DeDupeSDNVerificationWorkflow dedupeSDNVerificationWorkflow;
 	
-	@When("approves duplicate application caught on dedupeSDN")
-	@Then("approves duplicate application caught on dedupeSDN")
-	public void whenApplicationCaughtonDedupeSDNThenApprove(){
-		Assert.assertTrue("Application Not Approved",dedupeSDNVerificationWorkflow.verifyAndApproveTheApplication());
+	@When("$approves duplicate application caught on dedupeSDN")
+	@Then("$approves duplicate application caught on dedupeSDN")
+	public void whenApplicationCaughtonDedupeSDNThenApprove(String approve){
+		Assert.assertTrue("Application Not Approved",dedupeSDNVerificationWorkflow.verifyApproveRejectTheApplication(approve));
 	}
 	
-	@When("reject duplicate application caught on dedupeSDN")
-	@Then("reject duplicate application caught on dedupeSDN")
-	public void whenApplicationCaughtonDedupeSDNThenReject(){
-		Assert.assertTrue("Application Not Rejected",dedupeSDNVerificationWorkflow.verifyAndRejectTheApplication());
+	@When("$reject duplicate application caught on dedupeSDN")
+	@Then("$reject duplicate application caught on dedupeSDN")
+	public void whenApplicationCaughtonDedupeSDNThenReject(String reject){
+		Assert.assertTrue("Application Not Rejected",dedupeSDNVerificationWorkflow.verifyApproveRejectTheApplication(reject));
 	}
 }

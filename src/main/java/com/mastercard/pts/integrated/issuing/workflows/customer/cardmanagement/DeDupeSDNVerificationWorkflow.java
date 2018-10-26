@@ -19,13 +19,8 @@ public class DeDupeSDNVerificationWorkflow {
 	@Autowired
 	private DeDupeSDNVerificationPage deDupeSDNVerificationPage;
 	
-	public Boolean verifyAndApproveTheApplication() {
+	public Boolean verifyApproveRejectTheApplication(String operation) {
 		deDupeSDNVerificationPage = navigator.navigateToPage(DeDupeSDNVerificationPage.class);
-		return deDupeSDNVerificationPage.approveApplication();
-	}
-
-	public Boolean verifyAndRejectTheApplication() {
-		deDupeSDNVerificationPage = navigator.navigateToPage(DeDupeSDNVerificationPage.class);
-		return deDupeSDNVerificationPage.rejectApplication();
+		return deDupeSDNVerificationPage.approveRejectApplication(operation);
 	}
 }

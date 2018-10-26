@@ -18,7 +18,6 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.DatePicker;
-import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -39,8 +38,6 @@ public class ApplicationPage extends AbstractBasePage {
 	
 	@Autowired
 	DatePicker date;
-	
-	public String calElement = "//td[2]";
 	
 	private static final String FILE_TYPE_REPORT = "FILE_TYPE_REPORT";
 	
@@ -74,18 +71,6 @@ public class ApplicationPage extends AbstractBasePage {
 		SimulatorUtilities.wait(5000);
 		generateReportBtn.click();
 		return verifyReportDownloaded(reportFileName);
-	}
-	
-	public void selectCalender() {
-		String[] dateTransReportCal1 = DateUtils.getDateinDDMMYYYY().split("/");
-		int newdate = Integer.parseInt(dateTransReportCal1[1]);
-		int i = newdate - 1;
-		dateTransReportCal1[1] = String.valueOf(i);
-		String date11 = dateTransReportCal1[0] + "/" + dateTransReportCal1[1] + "/" + dateTransReportCal1[2];
-		date.setDate(date11);
-		waitForPageToLoad(getFinder().getWebDriver());
-		date.setDateCalendar2(DateUtils.getDateinDDMMYYYY(), calElement);
-		waitForPageToLoad(getFinder().getWebDriver());
 	}
 	
 	public void verifyUiOperationStatus() {
