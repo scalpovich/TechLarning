@@ -284,6 +284,12 @@ public class ProgramPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[contains(@name,'countryWbPlanCode:input:dropdowncomponent')]")
 	private MCWebElement countryWhiteBlackListPlan;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "authoLevelCard:checkBoxComponent")
+	private MCWebElement chkBxCardCreditLimitValidation;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[starts-with(text(),'Limits')]")
+	private MCWebElement txTLimitLevelValidation;
 
 	private final String COUNTRY_WHITELIST_AND_BLACKLIST_PLAN="country white and black list";
 	public void addProgram(String programCode) {
@@ -891,5 +897,22 @@ public class ProgramPage extends AbstractBasePage {
 		runWithinPopup("Edit Program", () -> {
 			editsProgram(program, editItem);
 		});
+	}
+	public void editProgramToEnableCardLimit(String program) {
+		enterValueinTextBox(enterProgram, program);
+		clickWhenClickable(search);
+		waitForElementVisible(editProgram);
+		editFirstRecord();
+		Scrolldown(editProgram);
+		runWithinPopup(Constants.EDIT_PROGRAM_FRAME,()-> {
+			cardCreditLimitValidation();	
+		});
+		verifyOperationStatus();
+	}
+	public void cardCreditLimitValidation(){
+		SimulatorUtilities.wait(2000);
+		clickWhenClickable(txTLimitLevelValidation);
+		ClickCheckBox(chkBxCardCreditLimitValidation,true);
+		clickSaveButton();
 	}
 }
