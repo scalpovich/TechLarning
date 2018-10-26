@@ -16,7 +16,7 @@ And User fills Wallet Plan for Prepaid product and program Retail General Purpos
 When user edits the loyalty plan for Maximum Points Each Period
 When user adds promotion Plan with Cumulative Transactions
 When user edits the start date for promotion plan
-When user maps promotion Plan with loyalty Plan
+When user maps promotion Plan with loyalty Plan with priority 1
 And User Primary Device fills New Program Retail General Purpose Card section for Prepaid product for Mastercard
 And for Primary Device and New Client user fills Device Range section for Prepaid [P] product
 And Prepaid device is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card

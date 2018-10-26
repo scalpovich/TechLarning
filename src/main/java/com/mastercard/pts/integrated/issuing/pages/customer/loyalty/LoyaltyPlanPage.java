@@ -31,7 +31,10 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 	private static final int NUMBER = 3;
 	private static final int NUMBER1 = 1;
 	private static final String ADD_LOYALTY_PLAN = "Add Loyalty Plan";
+	private static final String VIEW_LOYALTY_PLAN = "View Loyalty Plan";
 	private static final String currency = "INR [356]";
+	private String maxPtsPerCycle;
+
 	@Autowired
 	NewLoyaltyPlan newLoyaltyPlan;
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
@@ -51,6 +54,9 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=maxPtsPerCycle]")
 	private MCWebElement maxPtsPerCycleTxt;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='maxPtsPerCycle']/..")
+	private MCWebElement maxPtsPerCycleValue;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:3:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement periodUnitDDwn;
@@ -117,6 +123,20 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 			WebElementUtils.enterText(maxPtsPerCycleTxt, loyaltyplan.getMaxloyaltypoints());
 			clickSaveButton();
 		});
+	}
+
+	public void searchByPlanCode(String code) {
+		WebElementUtils.enterText(lytPlanCodeTxt, code);
+		clickSearchButton();
+		viewFirstRecord();
+	}
+
+	public String getMaxPtsPerCycle() {
+		runWithinPopup(VIEW_LOYALTY_PLAN, () -> {
+			maxPtsPerCycle = maxPtsPerCycleValue.getText();
+			clickCloseButton();
+		});
+		return maxPtsPerCycle;
 	}
 
 	@Override

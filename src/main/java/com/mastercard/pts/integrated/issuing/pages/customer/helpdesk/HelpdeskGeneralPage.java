@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
@@ -34,6 +35,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGe
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -80,6 +82,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private String[] values;
 	private String walletBalanceInformation;
 	public boolean serviceStatus = false;
+	private Map<String, String> points;
 
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -297,6 +300,20 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Type :']/../following-sibling::td[1]/select")
 	private MCWebElement selectLimitTypeDdwn;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value = 'Loyalty']")
+	private MCWebElement loyaltyBtn;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Points Earned:']/following::span/span")
+	private MCWebElement pointsEarned;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Available Loyalty Points:']/following::span/span")
+	private MCWebElement availableLoyaltyPoints;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Accumulated Reversed Points:']/following::span/span")
+	private MCWebElement accumulatedReversedPoints;
+
+	private final String LOYALTY_DETAILS = "Loyalty Details";
 
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec)
@@ -783,7 +800,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public String getWalletBalanceInformationAfterLoyaltyRedemption(Device device) {
 		// logger.info("Get Wallet Balance Information for Device: {}",
 		// device.getDeviceNumber());
-		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, "Prepaid [P]");
+		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
 		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
@@ -1350,4 +1367,27 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 		return creditLimit;
 	}
+
+	public void clickLoyaltyBtn() {
+		WebElementUtils.scrollDown(driver(), 0, 250);
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(loyaltyBtn)).click();
+	}
+
+	public void clickEditDeviceLink() {
+		editDeviceLink.click();
+	}
+
+	public Map<String, String> getLoyaltyDetails() {
+		points = new HashMap<String, String>();
+		runWithinPopup(LOYALTY_DETAILS, () -> {
+			points.put(Constants.POINTS_EARNED, pointsEarned.getText());
+			points.put(Constants.AVAILABLE_LOYALTY_POINTS, availableLoyaltyPoints.getText());
+			points.put(Constants.ACCUMULATED_REVERSED_POINTS, accumulatedReversedPoints.getText());
+			clickCloseButton();
+		});
+		SimulatorUtilities.wait(3000);
+		clickEndCall();
+		return points;
+	}
+
 }

@@ -18,6 +18,25 @@ public class PromotionPlan implements HasCodeAndDescription {
 	private String promotionCurrency;
 	private String promotionamountSpent;
 	private String promotionpointsEarned;
+	private String promotionIssuanceamountSpent;
+	private String promotionIssuancepointsEarned;
+
+	public String getPromotionIssuanceamountSpent() {
+		return promotionIssuanceamountSpent;
+	}
+
+	public void setPromotionIssuanceamountSpent(String promotionIssuanceamountSpent) {
+		this.promotionIssuanceamountSpent = promotionIssuanceamountSpent;
+	}
+
+	public String getPromotionIssuancepointsEarned() {
+		return promotionIssuancepointsEarned;
+	}
+
+	public void setPromotionIssuancepointsEarned(String promotionIssuancepointsEarned) {
+		this.promotionIssuancepointsEarned = promotionIssuancepointsEarned;
+	}
+
 	private String promotionloyaltyBatchDate;
 	private String floortransactionAmount;
 	private String mccCode;
@@ -161,6 +180,8 @@ public class PromotionPlan implements HasCodeAndDescription {
 		plan.setPromotionCurrency(provider.getString("PROMOTION_CURRENCY"));
 		plan.setPromotionamountSpent(provider.getString("PROMOTION_AMOUNT_SPENT"));
 		plan.setPromotionpointsEarned(provider.getString("PROMOTION_POINTS_EARNED"));
+		plan.setPromotionIssuanceamountSpent(provider.getString("PROMOTION_ISSUANCE_AMOUNT_SPENT"));
+		plan.setPromotionIssuancepointsEarned(provider.getString("PROMOTION_ISSUANCE_POINTS_EARNED"));
 		plan.setFloortransactionAmount(provider.getString("FLOOR_TRANSACTION_AMOUNT"));
 		plan.setThresholdAmount(provider.getString("THRESHOLD_AMOUNT"));
 		plan.setNumberOfTransactions(provider.getString("NO._OF_TRANSACTIONS"));

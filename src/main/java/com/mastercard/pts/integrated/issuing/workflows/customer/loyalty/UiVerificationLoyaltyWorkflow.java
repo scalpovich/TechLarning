@@ -3,6 +3,9 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.loyalty;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.InstitutionData;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoyaltyPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.LoyaltyPromotionMapping;
 import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.PromotionPlan;
@@ -23,6 +26,9 @@ public class UiVerificationLoyaltyWorkflow {
 
 	@Autowired
 	private Navigator navigator;
+
+	@Autowired
+	private TestContext context;
 
 	public void verifyEventBasedLoyaltyPointsPage() {
 		EventBasedLoyaltyPointsPage page = navigator.navigateToPage(EventBasedLoyaltyPointsPage.class);
@@ -84,6 +90,11 @@ public class UiVerificationLoyaltyWorkflow {
 		page.addPromotionPlanwithCumulativeTxn(plan);
 	}
 
+	public void addPromotionPlanwithIssuance(PromotionPlan plan) {
+		PromotionPlanPage page = navigator.navigateToPage(PromotionPlanPage.class);
+		page.addPromotionPlanwithIssuance(plan);
+	}
+
 	public void editPromotionPlanDate(PromotionPlan plan) {
 		PromotionPlanPage page = navigator.navigateToPage(PromotionPlanPage.class);
 		page.editpromotionPlanStartDate(plan);
@@ -97,5 +108,13 @@ public class UiVerificationLoyaltyWorkflow {
 	public void verifyRewardRedemptionPage() {
 		RewardRedemptionPage page = navigator.navigateToPage(RewardRedemptionPage.class);
 		page.verifyUiOperationStatus();
+	}
+
+	public String getMaxLoyaltyPointsPerCycle() {
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+		LoyaltyPlanPage page = navigator.navigateToPage(LoyaltyPlanPage.class);
+		String plan = data.getLoyaltyPlan();
+		page.searchByPlanCode(plan.substring(plan.indexOf("[") + 1, plan.indexOf("]")));
+		return page.getMaxPtsPerCycle();
 	}
 }

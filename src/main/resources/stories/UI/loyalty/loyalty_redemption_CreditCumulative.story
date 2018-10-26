@@ -16,7 +16,7 @@ And User fills Wallet Plan for Credit product and program Retail Credit Card [9]
 When user edits the loyalty plan for Maximum Points Each Period
 When user adds promotion Plan with Cumulative Transactions
 When user edits the start date for promotion plan
-When user maps promotion Plan with loyalty Plan
+When user maps promotion Plan with loyalty Plan with priority 1
 And User Primary Device fills New Program Retail Credit Card [9] section for Credit product for Mastercard
 And for Primary Device and New Client user fills Device Range section for Credit [C] product
 And Credit device is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card

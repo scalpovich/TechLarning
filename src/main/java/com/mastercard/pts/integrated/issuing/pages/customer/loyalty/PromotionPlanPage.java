@@ -87,6 +87,12 @@ public class PromotionPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = ".//*[@alt='Edit Record']")
 	private MCWebElement editBtn;
 
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@fld_fqn='lypPromotionType']/input[@value='I']")
+	private MCWebElement promotionTypeissuance;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@fld_fqn='lypPromotionType']/input[@value='T']")
+	private MCWebElement promotionTypetransaction;
+
 	public void verifyUiOperationStatus(PromotionPlan plan) {
 		logger.info("Promotion Plan");
 		addPromotionPlanConfiguration(plan);
@@ -155,6 +161,32 @@ public class PromotionPlanPage extends AbstractBasePage {
 		clickSaveButton();
 	}
 
+	public void addPromotionPlanwithIssuance(PromotionPlan plan) {
+		clickAddNewButton();
+		runWithinPopup(ADD_PROMOTION_PLAN, () -> {
+			WebElementUtils.enterText(lypPromotionCodeTxt, plan.getPromotionPlanCode());
+			WebElementUtils.enterText(lypDescriptionTxt, plan.getPromotionDescription());
+			WebElementUtils.selectRadioBtn(promotionTypeissuance);
+			WebElementUtils.selectDropDownByVisibleText(currencyDDwn, plan.getPromotionCurrency());
+			// WebElementUtils.enterText(lypAmtSpentTxt,
+			// plan.getPromotionIssuanceamountSpent());
+			waitForElementVisible(startDateDPkr);
+			WebElementUtils.pickDate(startDateDPkr, futureDate);
+			waitForElementVisible(endDateDPkr);
+			WebElementUtils.pickDate(endDateDPkr, futureEndDate);
+			WebElementUtils.enterText(lypPtsEarnedTxt, plan.getPromotionIssuancepointsEarned());
+			WebElementUtils.enterText(lypPriorrunsTxt, NUMBER);
+			// WebElementUtils.enterText(lypCumTxnamtTxt, NUMBER);
+			// WebElementUtils.enterText(lypCumNotxnsTxt, NUMBER);
+			// clickWhenClickable(calculationMethodPerTXn);
+			// WebElementUtils.enterText(floorTxnAmtTxt,
+			// plan.getFloortransactionAmount());
+			// WebElementUtils.selectDropDownByVisibleText(mcgRuleDdwn,
+			// plan.getMcgCode());
+			clickSaveButton();
+		});
+	}
+
 	public void addPromotionPlanwithCumulativeTxn(PromotionPlan plan) {
 		clickAddNewButton();
 		runWithinPopup(ADD_PROMOTION_PLAN, () -> {
@@ -173,6 +205,7 @@ public class PromotionPlanPage extends AbstractBasePage {
 			clickWhenClickable(calculationMethodCumulativeTXn);
 			WebElementUtils.enterText(thresholdAmtTxt, plan.getThresholdAmount());
 			WebElementUtils.enterText(NoOfTrnxsTxt, plan.getNumberOfTransactions());
+			WebElementUtils.selectDropDownByVisibleText(mccRuleDdwn, plan.getMccCode());
 			clickSaveButton();
 		});
 	}

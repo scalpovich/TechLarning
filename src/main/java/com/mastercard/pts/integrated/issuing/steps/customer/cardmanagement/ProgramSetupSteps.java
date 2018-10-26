@@ -854,7 +854,7 @@ public class ProgramSetupSteps {
 			devicePlan.setBeforeKYC(data.getTransactionPlan());
 		}
 		devicePlan.setDeviceType(deviceType);
-
+		devicePlan.setTransactionFeePlan(data.getTransactionFeePlan());
 		programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
