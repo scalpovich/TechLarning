@@ -13,10 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
@@ -38,33 +36,36 @@ public class CloseBatchPage extends AbstractBasePage {
 	TestContext context;
 	
 	protected  static final Logger logger = LoggerFactory.getLogger(CloseBatchPage.class);
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview-div")
 	private MCWebElement batchNoColumn;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[2]/div[4]/div[2]/div[2]/form[1]/div[2]/div[4]/table/tbody/tr/td[10]/span/input")
 	private MCWebElement closeBatchRecord;
-
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement processSelected;
 	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "saveAll")
-	private MCWebElement processAll;
-	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']/td[1]/span")
-	public MCWebElements allBatchNumberTxt;
+	private MCWebElement btnProcessSelected;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']/td[1]")
+	public MCWebElements txtAllBatchNumber;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[1]/td[1]/td[10]/span/input")
-	public MCWebElement firstBatchNumberTxt;
-	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
-	private MCWebElements allRowsTxt;
+	public MCWebElement txtFirstBatchNumber;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Yes']")
-	private MCWebElement yesBtn;
+	private MCWebElement btnYes;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//h3[text()= 'Confirmation Message']/ancestor::div//iframe")
-	private MCWebElement confirmMsgBtn;
+	private MCWebElement btnConfirmMsg;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Process All']")
+	private MCWebElement btnProcessAll;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview")
+	private MCWebElement searchTable;
 
 	public void closebatch() {
 		waitForLoaderToDisappear();
@@ -74,14 +75,12 @@ public class CloseBatchPage extends AbstractBasePage {
 		CustomUtils.ThreadDotSleep(1000);
 	}
 	
-	public List<String> allBatchNumberRetrieval(){
-		List<String>batchNumbers = new ArrayList<>();
-		
-		allBatchNumberTxt.getElements().stream().forEach((element)->{
-				batchNumbers.add(element.getText());
+	public List<String> allBatchNumberRetrieval() {
+		List<String> batchNumbers = new ArrayList<>();
+		txtAllBatchNumber.getElements().stream().forEach((element) -> {
+			batchNumbers.add(element.getText());
 		});
-		
-		return batchNumbers;			
+		return batchNumbers;
 	}
 	
 	public int identifyBatchNumberToProcess()
@@ -92,32 +91,31 @@ public class CloseBatchPage extends AbstractBasePage {
 			if(allBatchNumberRetrieval().get(index).equals(batchNumber)){
 				logger.info("Batch Number: {}",allBatchNumberRetrieval().get(index));
 				break;
-			}			
+			}
 		}
 		return index;
-	}	
-	
-	public void processAppropriateBatchForApplication(){
-		String checkBox = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']["+identifyBatchNumberToProcess()+1+"]/td[10]/span/input";
-		clickWhenClickable(driver().findElement(By.xpath(checkBox)));
-		processSelected.click();
-		verifyOperationStatus();		
 	}
 	
+	public void processAppropriateBatchForApplication() {
+		String checkBox = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd'][" + identifyBatchNumberToProcess() + 1 + "]/td[10]/span/input";
+		clickWhenClickable(driver().findElement(By.xpath(checkBox)));
+		clickWhenClickable(btnProcessSelected);
+		verifyOperationStatus();
+	}
 	
 	public void processFirstBatch() {
-		clickWhenClickable(firstBatchNumberTxt);
-		processSelected.click();
+		clickWhenClickable(txtFirstBatchNumber);
+		clickWhenClickable(btnProcessSelected);
 		verifyOperationStatus();
-		
 	}
 	
-	public void processAllClick() {
-		clickWhenClickable(processAll);
+	public void processAllBatch() {
+		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
+		clickProcessSelectedButton();
 		try {
-			if (confirmMsgBtn.isEnabled()) {
+			if (btnConfirmMsg.isEnabled() && btnConfirmMsg.isVisible()) {
 				switchToIframe("Confirmation Message");
-				clickWhenClickable(yesBtn);
+				clickWhenClickable(btnYes);
 				verifyOperationStatus();
 			} else {
 				verifyOperationStatus();
@@ -144,11 +142,11 @@ public class CloseBatchPage extends AbstractBasePage {
 	public void processAppropriateBatchForApplicationForFileUpload() {
 		String checkBox = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd'][" + identifyBatchNumberToProcessForFileUpload() + 1 + "]/td[10]/span/input";
 		clickWhenClickable(driver().findElement(By.xpath(checkBox)));
-		clickWhenClickable(processSelected);
+		clickWhenClickable(btnProcessSelected);
 		try {
-			if (asWebElement(confirmMsgBtn).isDisplayed()) {
+			if (asWebElement(btnConfirmMsg).isDisplayed()) {
 				switchToIframe("Confirmation Message");
-				clickWhenClickable(yesBtn);
+				clickWhenClickable(btnYes);
 				verifyOperationStatus();
 			} else {
 				verifyOperationStatus();

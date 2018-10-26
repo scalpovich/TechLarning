@@ -57,15 +57,15 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	private MCWebElement deviceGenerationLink;	
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[1]/td[1]/td[10]/span/input")
-	public MCWebElement firstBatchNumberTxt;	
-
+	public MCWebElement firstBatchNumberTxt;
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Process All']")
 	public MCWebElement processAllBtn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview")
 	private MCWebElement searchTable;
 
-	public List<String> allBatchNumberRetrieval(){
+	public List<String> allBatchNumberRetrieval() {
 		List<String>batchNumbers = new ArrayList<>();
 		allBatchNumberTxt.getElements().stream().forEach((element)->{
 			batchNumbers.add(element.getText());
@@ -73,12 +73,11 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 		return batchNumbers;	
 	}	
 	
-
-	public int identifyBatchNumberToProcess(){
+	public int identifyBatchNumberToProcess() {
 		Device device = context.get(ContextConstants.DEVICE);
 		int index = 0;
-		for(int i=0;i < allBatchNumberRetrieval().size(); i++){
-			if(allBatchNumberRetrieval().get(i).equals(device.getBatchNumber())){
+		for (int i = 0; i < allBatchNumberRetrieval().size(); i++) {
+			if (allBatchNumberRetrieval().get(i).equals(device.getBatchNumber())) {
 				logger.info("Batch Number: {}",allBatchNumberRetrieval().get(i));
 				index = i;
 			}
@@ -88,7 +87,7 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	
 	public void processAppropriateBatchForApplication(){  
 		checkWhetherRecordPersists();
-		String checkBox = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']["+identifyBatchNumberToProcess()+1+"]/td[8]/span/input";
+		String checkBox="//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']["+identifyBatchNumberToProcess()+1+"]/td[8]/span/input";
 		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(checkBox)));
 		processSelected.click();
 		verifyOperationStatus();		
@@ -105,7 +104,7 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 		processAll.click();
 		verifyOperationStatus();
 	}
-	
+
 	public void processAllClick() {
 		SimulatorUtilities.wait(8000);
 		if (!waitForRow()) {
@@ -124,6 +123,7 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 			clickWhenClickable(deviceGenerationLink);
 			deviceGenerationBatch();
 		}
+		clickWhenClickable(processAll);
 	}
 	
 	public int identifyBatchNumberToProcessForFileUpload() {
@@ -144,7 +144,6 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(checkBox)));
 		processSelected.click();
 		verifyOperationStatus();
-
 	}
 	
     @Override
