@@ -499,7 +499,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public String getDeviceStatus(Device device) {
 		// logger.info("Fetching information for : {}",
 		// device.getDeviceNumber());
-		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
+		// WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn,
+		// device.getAppliedForProduct());
+		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, "Credit [C]");
 		WebElementUtils.enterText(deviceNumberSearchTxt, "5742534300008919");
 		clickSearchButton();
 		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded

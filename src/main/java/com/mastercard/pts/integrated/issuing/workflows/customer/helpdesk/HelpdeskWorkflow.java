@@ -143,7 +143,7 @@ public class HelpdeskWorkflow {
 	}
 
 	public HashMap<String, BigDecimal> getWalletBalanceAfterLoyaltyRedemptionCredit() {
-		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		// helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		return helpDeskPage.noteDownCreditLimit("Card");
 	}
 

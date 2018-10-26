@@ -14,6 +14,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.RewardsRedemptionFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpdeskWorkflow;
 
@@ -77,7 +78,7 @@ public class RewardsRedemptionSteps {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
 		HashMap<String, BigDecimal> creditLimit;
-		if (type.equalsIgnoreCase("Prepaid [P]")) {
+		if (helpdeskGeneral.getProductType().equalsIgnoreCase("Prepaid [P]")) {
 			String currentBalanceAmount = helpdeskWorkflow.getWalletBalanceAfterLoyaltyRedemption(device);
 			System.out.println(currentBalanceAmount);
 			context.put(ContextConstants.AVAILABLE_BALANCE_AFTER_LOYALTY_REDEMPTION, currentBalanceAmount);
@@ -86,9 +87,11 @@ public class RewardsRedemptionSteps {
 			System.out.println(balanceAfterLoyalty);
 			Assert.assertEquals(balanceAfterLoyalty, currentBalanceAmount);
 		}
-		if (type.equalsIgnoreCase("Credit [C]")) {
+		if (helpdeskGeneral.getProductType().equalsIgnoreCase("Credit [C]")) {
 			creditLimit = helpdeskWorkflow.getWalletBalanceAfterLoyaltyRedemptionCredit();
-			context.put(ContextConstants.AVAILABLE_BALANCE_AFTER_LOYALTY_REDEMPTION, creditLimit);
+			System.out.println(creditLimit.get(ConstantData.AVAIL_CARD_LIMIT));
+			context.put(ContextConstants.AVAILABLE_BALANCE_AFTER_LOYALTY_REDEMPTION,
+					creditLimit.get(ConstantData.AVAIL_CARD_LIMIT));
 			Double balanceAfterLoyaltyCredit = Double
 					.parseDouble(context.get("AVAILABLE_BALANCE_OR_CREDIT_LIMIT").toString()
 							+ Double.parseDouble(rewardsRedemption.getpointsToRedeem()));

@@ -43,6 +43,7 @@ Given setting json values in excel for Credit
 When user is logged in institution
 And pre-clearing and Loyalty Calc batches are run
 And user verifies rewards and redemption screen
+And device has "normal" status
 And user verifies current wallet balance amount information after loyalty redemption CREDIT device
 And user deletes promotion Plan and loyalty Plan mapping
 And user sign out from customer portal
