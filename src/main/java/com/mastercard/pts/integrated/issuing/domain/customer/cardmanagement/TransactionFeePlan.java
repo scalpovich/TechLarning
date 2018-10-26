@@ -35,6 +35,8 @@ public class TransactionFeePlan {
 	private static final String MAX_TXN_RATE = "MAX_TXN_RATE";
 	private static final String FIXED_RATE_FEE = "FIXED_RATE_FEE";
 	private static final String FIXED_TXN_FEE = "FIXED_TXN_FEE";
+	
+	private static final String TRANSACTION_WAIVED_OFF_FEE="TRANSACTION_WAIVED_OFF_FEE";
 	private String transactionFeePlanCode;
 
 	private String description;
@@ -88,6 +90,8 @@ public class TransactionFeePlan {
 	private String sourceCurrency;
 	
 	private String billingCurrency;
+	
+	private String transactionWaivedOffFee;
 
 	public static TransactionFeePlan createWithProvider(KeyValueProvider provider) {
 		TransactionFeePlan details = new TransactionFeePlan();
@@ -119,6 +123,7 @@ public class TransactionFeePlan {
 		txnFee.setMaxTxnRate(provider.getString(MAX_TXN_RATE));
 		txnFee.setFixedRateFee(provider.getString(FIXED_RATE_FEE));
 		txnFee.setFixedTxnFees(provider.getString(FIXED_TXN_FEE));
+		txnFee.setTransactionWaivedOffFee(provider.getString(TRANSACTION_WAIVED_OFF_FEE));
 
 		return txnFee;
 	}
@@ -346,5 +351,13 @@ public class TransactionFeePlan {
    {
 	   this.billingCurrency=billingcurrency;
    }
+   
+   public String getTransactionWaivedOffFee() {
+		return transactionWaivedOffFee;
+	}
+
+	public void setTransactionWaivedOffFee(String transactionWaivedOffFee) {
+		this.transactionWaivedOffFee = transactionWaivedOffFee;
+	}
 
 }

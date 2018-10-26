@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hamcrest.Matchers;
+import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,6 +153,7 @@ public class AuthorizationSearchSteps {
 	}
 
 	@Then("user verifies $feeType applied on transaction")
+	@Alias("user verifies $feeType waived off on transaction")
 	public void userVerifiesAppliedTransactionFee(String feeType){
 		TransactionFeePlan txnFeePlan = TransactionFeePlan.getAllTransactionFee(provider);
 		String transactionFeeAppliedFromScreen = authorizationSearchWorkflow.getTransactionFee();
@@ -160,7 +162,8 @@ public class AuthorizationSearchSteps {
 			assertThat("Incorrect Transaction fee is applied on transaction",transactionFeeAppliedFromScreen,equalTo(calculatedTxnFee));
 		}else if ("FIXED_FEE".equalsIgnoreCase(feeType)){
 			assertThat("Incorrect Transaction fee is applied on transaction",transactionFeeAppliedFromScreen,equalTo(txnFeePlan.getfixedTxnFees()));
+		}else if("TRANSACTION_FEE".equalsIgnoreCase(feeType)){
+			assertThat("Transaction fee is applied on transaction",transactionFeeAppliedFromScreen,equalTo(txnFeePlan.getTransactionWaivedOffFee()));
 		}
-
 	}
 }
