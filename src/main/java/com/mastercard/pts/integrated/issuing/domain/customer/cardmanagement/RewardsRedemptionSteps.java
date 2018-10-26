@@ -1,5 +1,8 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
+
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -73,11 +76,24 @@ public class RewardsRedemptionSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setProductType(ProductType.fromShortName(type));
-		String currentBalanceAmount = helpdeskWorkflow.getWalletBalanceAfterLoyaltyRedemption(device);
-		context.put(ContextConstants.AVAILABLE_BALANCE_AFTER_LOYALTY_REDEMPTION, currentBalanceAmount);
-		Double balanceAfterLoyalty = Double.parseDouble(context.get("AVAILABLE_BALANCE_OR_CREDIT_LIMIT").toString())
-				+ Double.parseDouble(rewardsRedemption.getpointsToRedeem());
-		Assert.assertEquals(balanceAfterLoyalty, currentBalanceAmount);
+		HashMap<String, BigDecimal> creditLimit;
+		if (type.equalsIgnoreCase("Prepaid [P]")) {
+			String currentBalanceAmount = helpdeskWorkflow.getWalletBalanceAfterLoyaltyRedemption(device);
+			System.out.println(currentBalanceAmount);
+			context.put(ContextConstants.AVAILABLE_BALANCE_AFTER_LOYALTY_REDEMPTION, currentBalanceAmount);
+			Double balanceAfterLoyalty = Double.parseDouble(context.get("AVAILABLE_BALANCE_OR_CREDIT_LIMIT").toString())
+					+ Double.parseDouble(rewardsRedemption.getpointsToRedeem());
+			System.out.println(balanceAfterLoyalty);
+			Assert.assertEquals(balanceAfterLoyalty, currentBalanceAmount);
+		}
+		if (type.equalsIgnoreCase("Credit [C]")) {
+			creditLimit = helpdeskWorkflow.getWalletBalanceAfterLoyaltyRedemptionCredit();
+			context.put(ContextConstants.AVAILABLE_BALANCE_AFTER_LOYALTY_REDEMPTION, creditLimit);
+			Double balanceAfterLoyaltyCredit = Double
+					.parseDouble(context.get("AVAILABLE_BALANCE_OR_CREDIT_LIMIT").toString()
+							+ Double.parseDouble(rewardsRedemption.getpointsToRedeem()));
+		}
+
 	}
 
 }
