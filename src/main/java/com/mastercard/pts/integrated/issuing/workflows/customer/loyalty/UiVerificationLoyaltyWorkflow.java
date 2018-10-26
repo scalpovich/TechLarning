@@ -4,11 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
-import com.mastercard.pts.integrated.issuing.domain.InstitutionData;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.LoyaltyPromotionMapping;
 import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.PromotionPlan;
-import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.loyalty.EventBasedLoyaltyPointsPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.loyalty.EventBasedLoyaltyPointsPostingPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.loyalty.GiftRewardCataloguePage;
@@ -85,11 +82,21 @@ public class UiVerificationLoyaltyWorkflow {
 		page.verifyUiOperationStatus();
 	}
 	
-	public String getMaxLoyaltyPointsPerCycle() {
-		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+	public String getMaxLoyaltyPointsPerCycle(String plan) {
 		LoyaltyPlanPage page = navigator.navigateToPage(LoyaltyPlanPage.class);
-		String plan = data.getLoyaltyPlan();
 		page.searchByPlanCode(plan.substring(plan.indexOf("[")+1, plan.indexOf("]")));
 		return page.getMaxPtsPerCycle();
+	}
+	
+	public void disableLoyaltyPlan(String plan) {
+		LoyaltyPlanPage page = navigator.navigateToPage(LoyaltyPlanPage.class);
+		page.searchByPlanCode(plan.substring(plan.indexOf("[")+1, plan.indexOf("]")));
+		page.disableLoyaltyPlan();
+	}
+	
+	public void selectPeriodUnitByIndex(String plan, String value) {
+		LoyaltyPlanPage page = navigator.navigateToPage(LoyaltyPlanPage.class);
+		page.searchByPlanCode(plan.substring(plan.indexOf("[")+1, plan.indexOf("]")));
+		page.selectPeriodUnitByIndex(value);
 	}
 }

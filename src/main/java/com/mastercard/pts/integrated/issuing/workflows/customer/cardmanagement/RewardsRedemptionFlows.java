@@ -30,4 +30,9 @@ public class RewardsRedemptionFlows {
 		rewards.selectLoyaltyPlan(rewardsRedemption);
 		rewards.verifyLoyaltyPointsNotRedeemed();
 	}
+	
+	public String getExpiredLoyaltyPoints() {
+		RewardRedemptionPage rewards = navigator.navigateToPage(RewardRedemptionPage.class);
+		return rewards.getExpiredLoyaltyPoints();
+	}
 }

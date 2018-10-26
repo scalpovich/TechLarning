@@ -158,6 +158,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Next >']")
 	private MCWebElement nextBtn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Previous']")
+	private MCWebElement prevBtn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Finish']")
 	private MCWebElement finishBtn;
@@ -1884,5 +1887,16 @@ public abstract class AbstractBasePage extends AbstractPage {
 				break;
 			}
 		}
+	}
+	
+	public String getFirstRowColValueFor(int col) {
+		return firstRowColumnValues.getElements().get(col).getText();
+	}
+	
+	protected void clickPrevButton() {
+		WebElementUtils.scrollDown(driver(), 0, 250);
+		SimulatorUtilities.wait(500);
+		clickWhenClickable(prevBtn);
+		SimulatorUtilities.wait(500);
 	}
 }

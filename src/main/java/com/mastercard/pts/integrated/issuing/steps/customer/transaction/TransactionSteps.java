@@ -588,11 +588,11 @@ public class TransactionSteps {
 		assertEquals("Record Added Successfully.", transactionWorkflow.addTransactionReversal(device.getDeviceNumber(), reversalReason, rt.getAmount()));
 	
 		if((provider.getString(Constants.FOR_LOYALTY) != null) && (provider.getString(Constants.FOR_LOYALTY).equalsIgnoreCase("yes"))) {
-			String availableLP = ((String)context.get(Constants.AVAILABLE_LOYALTY_POINTS)).trim();
-			if(availableLP.equals("-"))
-				availableLP = "0";
-			Double availablePoints = Double.parseDouble(availableLP) - Double.parseDouble(rt.getAmount());
-			context.put(Constants.AVAILABLE_LOYALTY_POINTS, availablePoints);
+//			String availableLP = ((String)context.get(Constants.AVAILABLE_LOYALTY_POINTS)).trim();
+//			if(availableLP.equals("-"))
+//				availableLP = "0";
+//			Double availablePoints = Double.parseDouble(availableLP) - Double.parseDouble(rt.getAmount());
+//			context.put(Constants.AVAILABLE_LOYALTY_POINTS, availablePoints);
 			context.put(Constants.ACCUMULATED_REVERSED_POINTS, Double.parseDouble(rt.getAmount()));
 		}
 	}

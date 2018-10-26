@@ -30,7 +30,7 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 	private static final int NUMBER = 3;
 	private static final int NUMBER1 = 1;
 	private static final String ADD_LOYALTY_PLAN = "Add Loyalty Plan";
-	private static final String VIEW_LOYALTY_PLAN = "View Loyalty Plan";
+	private static final String EDIT_LOYALTY_PLAN = "Edit Loyalty Plan";
 	private static final String currency="INR [356]";
 	private String maxPtsPerCycle;
 	@Autowired
@@ -53,7 +53,7 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=maxPtsPerCycle]")
 	private MCWebElement maxPtsPerCycleTxt;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='maxPtsPerCycle']/..")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:3:cols:colspanMarkup:inputField:input:inputAmountField")
 	private MCWebElement maxPtsPerCycleValue;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:3:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
@@ -76,6 +76,12 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=lytRedeemAmt]")
 	private MCWebElement lytRedeemAmtTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "//input[@name='radtables:1:rows:5:cols:colspanMarkup:inputField:radioComponentio' and @value='A']")
+	private MCWebElement radioBtnActive;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='tables:1:rows:5:cols:colspanMarkup:inputField:radioComponent' and @value='I']")
+	private MCWebElement radioBtnInactive;
 
 	public void verifyUiOperationStatus() {
 		logger.info(ADD_LOYALTY_PLAN);
@@ -117,14 +123,36 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 	public void searchByPlanCode(String code) {
 		WebElementUtils.enterText(lytPlanCodeTxt, code);
 		clickSearchButton();
-		viewFirstRecord();
+		editFirstRecord();
 	}
 	
 	public String getMaxPtsPerCycle() {
-		runWithinPopup(VIEW_LOYALTY_PLAN, () -> {
+		runWithinPopup(EDIT_LOYALTY_PLAN, () -> {
 			maxPtsPerCycle = maxPtsPerCycleValue.getText();
 			clickCloseButton();
 		});
 		return maxPtsPerCycle;
 	}
+	
+	public void disableLoyaltyPlan() {
+		runWithinPopup(EDIT_LOYALTY_PLAN, () -> {
+			WebElementUtils.selectRadioBtn(radioBtnInactive);
+			saveOrDetailsOrSearchClick();
+		});
+	}
+	
+	public void enableLoyaltyPlan() {
+		runWithinPopup(EDIT_LOYALTY_PLAN, () -> {
+			WebElementUtils.selectRadioBtn(radioBtnActive);
+			saveOrDetailsOrSearchClick();
+		});
+	}
+	
+	public void selectPeriodUnitByIndex(String value) {
+		runWithinPopup(EDIT_LOYALTY_PLAN, () -> {
+			WebElementUtils.selectDropDownByValue(periodUnitDDwn, value);
+			saveOrDetailsOrSearchClick();
+		});
+	}
+	
 }

@@ -29,4 +29,9 @@ public class DatabaseFlows {
 	{
 		return institution.substring(institution.indexOf('[')+1, institution.indexOf(']'));
 	}
+	
+	public void updateLoyaltyExpiryDate(String expiryDate, String cardNumber) {
+		String queryString = "update lyt_pts_earned set LPE_EXPIRY_DATE='" + expiryDate + "' where CARD_NUMBER='" + cardNumber + "'";
+		dbUtil.executeUpdate(queryString);
+	}
 }

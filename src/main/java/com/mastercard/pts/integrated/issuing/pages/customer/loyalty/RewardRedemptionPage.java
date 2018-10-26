@@ -93,4 +93,8 @@ public class RewardRedemptionPage extends AbstractBasePage {
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(deviceNumberTxt));
 	}
+	
+	public String getExpiredLoyaltyPoints() {
+		return getFirstRowColValueFor(6);
+	}
 }

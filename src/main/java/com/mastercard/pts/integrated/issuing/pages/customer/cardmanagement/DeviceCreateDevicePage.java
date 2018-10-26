@@ -347,9 +347,12 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			waitForWicket(driver());
 			selectByVisibleText(programCodeDDwn, device.getProgramCode());		
 		}
-		SimulatorUtilities.wait(10000);
+		SimulatorUtilities.wait(3000);
+		clickPrevButton();
+		SimulatorUtilities.wait(3000);
 		clickNextButton();
-		
+		SimulatorUtilities.wait(5000);
+		clickNextButton();
 		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());		
 		WebElementUtils.selectDropDownByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
 		WebElementUtils.selectDropDownByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
