@@ -15,10 +15,8 @@ public class FixedScoreSteps {
 	
 	@When("User adds Fixed Score for fieldName $fieldName and fieldValue $fieldValue on program")
 	@Then("User adds Fixed Score for fieldName $fieldName and fieldValue $fieldValue on program")
-	public void addingFixedScoreOnProgram(String fieldName,String fieldValue)
-	{
-		Boolean fixedScore=fixedScoreWorkFlow.userAddsFixedScore(fieldName,fieldValue);
-		Assert.assertTrue("ApprovalScore is not added successfully", fixedScore);	
+	public void addingFixedScoreOnProgram(String fieldName, String fieldValue) {
+		Assert.assertTrue("ApprovalScore is not added successfully", fixedScoreWorkFlow.userAddsFixedScore(fieldName, fieldValue));
 	}
 
 }

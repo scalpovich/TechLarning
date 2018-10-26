@@ -35,7 +35,7 @@ public class CreditBureauVerificationPage extends AbstractBasePage {
 	private MCWebElement manualApprovalLink;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='OK']")
-	private MCWebElement OKButtonClick;
+	private MCWebElement okBtn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview")
 	private MCWebElement searchTable;
@@ -50,7 +50,7 @@ public class CreditBureauVerificationPage extends AbstractBasePage {
 	public void switchToManualApprovalLink() {
 		clickWhenClickable(manualApprovalLink);
 		switchToIframe(CREDIT_BUREAU_VERIFICATION_FRAME);
-		clickWhenClickable(OKButtonClick);
+		clickWhenClickable(okBtn);
 		SimulatorUtilities.wait(3000);
 		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
 		return;

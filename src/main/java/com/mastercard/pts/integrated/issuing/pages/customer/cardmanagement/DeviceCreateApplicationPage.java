@@ -425,7 +425,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		if (device.getDedupe().equals("dedupe")) {			
 			WebElementUtils.enterText(firstNameTxt, client.getDedupeFirstName());
 			WebElementUtils.enterText(lastNameTxt, client.getDedupeLastName());
-			WebElementUtils.pickDate(birthDateDPkr, client.getDedupeBithDate());
+			WebElementUtils.pickDate(birthDateDPkr, client.getDedupeBirthDate());
 		}
 		else{
 			WebElementUtils.enterText(firstNameTxt, client.getFirstName());

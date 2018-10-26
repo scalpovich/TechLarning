@@ -13,11 +13,9 @@ public class WorkFlowRuleSteps {
 @Autowired
 WorkFlowRuleFlows workFlowRuleFlows;
 
-@When("User Adds WorkFlow Rule for fieldName1 $fieldName and fieldName2 $value on program")
-@Then("User Adds WorkFlow Rule for fieldName1 $fieldName and fieldName2 $value on program")
-public void addingWorkFlowRuleToProgram(String fieldName,String value)
-{
-	Boolean workFlowRule=workFlowRuleFlows.userAddsNewWorkFlowRule(fieldName,value);
-	Assert.assertTrue("ApprovalScore is not added successfully", workFlowRule);
-}
+	@When("User Adds WorkFlow Rule for fieldName1 $fieldName and fieldName2 $value on program")
+	@Then("User Adds WorkFlow Rule for fieldName1 $fieldName and fieldName2 $value on program")
+	public void addingWorkFlowRuleToProgram(String fieldName, String value) {
+		Assert.assertTrue("ApprovalScore is not added successfully", workFlowRuleFlows.userAddsNewWorkFlowRule(fieldName, value));
+	}
 }

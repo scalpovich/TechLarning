@@ -10,10 +10,10 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 public class ApprovalScoreWorkFlow {
 	@Autowired
 	private Navigator navigator;
-	
-    private ApprovalScorePage approvalScorePage;
-	public boolean userAddsNewApprovalScore()
-	{
+
+	private ApprovalScorePage approvalScorePage;
+
+	public boolean userAddsNewApprovalScore() {
 		approvalScorePage = navigator.navigateToPage(ApprovalScorePage.class);
 		approvalScorePage.addApproverScorePlan();
 		approvalScorePage.addMandatoryLabelsAndFields();
@@ -25,10 +25,9 @@ public class ApprovalScoreWorkFlow {
 		approvalScorePage.saveButtonClick();
 		return approvalScorePage.successMessageDisplay();
 	}
-	public void userVerifiesAndEditsNewApprovalScore()
-	{
-	approvalScorePage.verifyUiOperationStatus();
+
+	public void userVerifiesAndEditsNewApprovalScore() {
+		approvalScorePage.verifyUiOperationStatus();
 	}
-	
 	
 }

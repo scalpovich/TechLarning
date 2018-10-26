@@ -21,14 +21,12 @@ public class DeDupeSDNVerificationSteps {
 	@When("approves duplicate application caught on dedupeSDN")
 	@Then("approves duplicate application caught on dedupeSDN")
 	public void whenApplicationCaughtonDedupeSDNThenApprove(){
-		Boolean approvedSuccess = dedupeSDNVerificationWorkflow.verifyAndApproveTheApplication();
-		Assert.assertTrue(approvedSuccess);
+		Assert.assertTrue("Application Not Approved",dedupeSDNVerificationWorkflow.verifyAndApproveTheApplication());
 	}
 	
 	@When("reject duplicate application caught on dedupeSDN")
 	@Then("reject duplicate application caught on dedupeSDN")
 	public void whenApplicationCaughtonDedupeSDNThenReject(){
-		Boolean rejectedSuccess = dedupeSDNVerificationWorkflow.verifyAndRejectTheApplication();
-		Assert.assertTrue(rejectedSuccess);
+		Assert.assertTrue("Application Not Rejected",dedupeSDNVerificationWorkflow.verifyAndRejectTheApplication());
 	}
 }

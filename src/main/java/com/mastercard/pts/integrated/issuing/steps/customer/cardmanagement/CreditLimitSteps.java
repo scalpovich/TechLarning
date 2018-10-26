@@ -13,12 +13,10 @@ public class CreditLimitSteps {
 @Autowired
 CreditLimitWorkFlow creditLimitWorkFlow;
 
-@When("User Adds Credit Limit Rule on program for fieldName $fieldName")
-@Then("User Adds Credit Limit Rule on program for fieldName $fieldName")
-
-public void creditLimitPlanAdd(String fieldName)
-{
-	Boolean creditLimitRule=creditLimitWorkFlow.addCreditLimitRule(fieldName);
-	Assert.assertTrue("Credit Limit Rule is not added properly", creditLimitRule);
-}
+	@When("User Adds Credit Limit Rule on program for fieldName $fieldName")
+	@Then("User Adds Credit Limit Rule on program for fieldName $fieldName")
+	public void creditLimitPlanAdd(String fieldName) {
+		Boolean creditLimitRule = creditLimitWorkFlow.addCreditLimitRule(fieldName);
+		Assert.assertTrue("Credit Limit Rule is not added properly", creditLimitRule);
+	}
 }

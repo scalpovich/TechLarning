@@ -10,18 +10,18 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.A
 
 @Component
 public class ApprovalScoreSteps {
+	
 	@Autowired
 	ApprovalScoreWorkFlow approvalScoreWorkFlow;
-    @When("User adds Approval Score on program")
-    @Then("User adds Approval Score on program")
-	public void userAddsAApprovalScore()
-	{
-		Boolean approvalScore=approvalScoreWorkFlow.userAddsNewApprovalScore();
-		Assert.assertTrue("ApprovalScore is added successfully", approvalScore);
-		}
-   @When("user verifies edit and verify Approval Score") 
-    public void userVerifiesAndEditsApprovalScore()
-    {
-    	approvalScoreWorkFlow.userVerifiesAndEditsNewApprovalScore();
-    }
+	
+	@When("User adds Approval Score on program")
+	@Then("User adds Approval Score on program")
+	public void userAddsAApprovalScore() {
+		Assert.assertTrue("ApprovalScore is added successfully", approvalScoreWorkFlow.userAddsNewApprovalScore());
+	}
+
+	@When("user verifies edit and verify Approval Score")
+	public void userVerifiesAndEditsApprovalScore() {
+		approvalScoreWorkFlow.userVerifiesAndEditsNewApprovalScore();
+	}
 }

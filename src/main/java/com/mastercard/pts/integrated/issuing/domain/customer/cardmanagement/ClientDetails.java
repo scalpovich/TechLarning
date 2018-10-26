@@ -23,7 +23,7 @@ public class ClientDetails {
 	private String emailId;	
 	private String nationality;
 	private String clientType;
-	private LocalDate dedupeBithDate;
+	private LocalDate dedupeBirthDate;
 	private String dedupeFirstName;
 	private String dedupeLastName;
 	
@@ -42,15 +42,13 @@ public class ClientDetails {
 	public void setDedupeLastName(String dedupeLastName) {
 		this.dedupeLastName = dedupeLastName;
 	}
-
-
 	
-	public LocalDate getDedupeBithDate() {
-		return dedupeBithDate;
+	public LocalDate getDedupeBirthDate() {
+		return dedupeBirthDate;
 	}
 
-	public void setDedupeBithDate(LocalDate dedupeBithDate) {
-		this.dedupeBithDate = dedupeBithDate;
+	public void setDedupeBirthDate(LocalDate dedupeBirthDate) {
+		this.dedupeBirthDate = dedupeBirthDate;
 	}
 
 	public static ClientDetails generateClient() {
@@ -59,7 +57,7 @@ public class ClientDetails {
 		client.setBirthDate(LocalDate.now().minusYears(RandomUtils.nextLong(20, 50)));
 		client.setDedupeFirstName("John");
 		client.setDedupeLastName("Ted");
-		client.setDedupeBithDate(LocalDate.now().minusYears(29));
+		client.setDedupeBirthDate(LocalDate.now().minusYears(29));
 		client.setNationality("INDIA [356]");
 		client.setMaritialStatus("Married [1]");
 		client.setLanguagePreference("English [en]");

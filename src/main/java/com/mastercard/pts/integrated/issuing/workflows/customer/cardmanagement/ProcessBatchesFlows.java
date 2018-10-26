@@ -21,7 +21,6 @@ public class ProcessBatchesFlows {
 	@Autowired
 	private Navigator navigator;
 
-
 	public void runProcessBatchFlows(ProcessBatches processBatchesDomainPage) {
 		processBatchesPage.processBatch(FileCreation.filenameStatic,
 				processBatchesDomainPage);

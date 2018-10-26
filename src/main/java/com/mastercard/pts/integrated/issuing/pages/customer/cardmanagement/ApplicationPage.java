@@ -17,7 +17,6 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Prog
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
-import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.DatePicker;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -41,7 +40,7 @@ public class ApplicationPage extends AbstractBasePage {
 	@Autowired
 	DatePicker date;
 	
-	public String calelement = "//td[2]";
+	public String calElement = "//td[2]";
 	
 	private static final String FILE_TYPE_REPORT = "FILE_TYPE_REPORT";
 	
@@ -85,7 +84,7 @@ public class ApplicationPage extends AbstractBasePage {
 		String date11 = dateTransReportCal1[0] + "/" + dateTransReportCal1[1] + "/" + dateTransReportCal1[2];
 		date.setDate(date11);
 		waitForPageToLoad(getFinder().getWebDriver());
-		date.setDateCalendar2(DateUtils.getDateinDDMMYYYY(), calelement);
+		date.setDateCalendar2(DateUtils.getDateinDDMMYYYY(), calElement);
 		waitForPageToLoad(getFinder().getWebDriver());
 	}
 	
