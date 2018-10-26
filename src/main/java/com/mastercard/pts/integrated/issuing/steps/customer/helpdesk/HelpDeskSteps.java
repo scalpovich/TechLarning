@@ -902,9 +902,16 @@ public class HelpDeskSteps {
 	
 	@Then("user verifies loyalty details for $type device")
 	public void verifyLoyaltyDetails(String type) {
+		Double availablePts, accumulatedPts;
 		Map<String, String> points = givenUserHasLoyaltyPointsDetails(type);
-		Double availablePts = Double.parseDouble(points.get(Constants.AVAILABLE_LOYALTY_POINTS));
-		Double accumulatedPts = Double.parseDouble(points.get(Constants.ACCUMULATED_REVERSED_POINTS));
+		if(points.get(Constants.AVAILABLE_LOYALTY_POINTS).trim().equals("-"))
+			availablePts = 0.0;
+		else
+			availablePts = Double.parseDouble(points.get(Constants.AVAILABLE_LOYALTY_POINTS));
+		if(points.get(Constants.AVAILABLE_LOYALTY_POINTS).trim().equals("-"))
+			accumulatedPts = 0.0;
+		else
+			accumulatedPts = Double.parseDouble(points.get(Constants.ACCUMULATED_REVERSED_POINTS));
 		
 		assertEquals(context.get(Constants.AVAILABLE_LOYALTY_POINTS), availablePts);
 		assertEquals(context.get(Constants.ACCUMULATED_REVERSED_POINTS), accumulatedPts);
