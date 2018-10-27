@@ -60,7 +60,7 @@ public class DeviceSale {
 		plan.setCurrentAddressLine1(provider.getString(CURRENT_ADDRESS_LINE_1));
 		plan.setCountry(provider.getString(COUNTRY_XL));
 		plan.setKycremarks(ConstantData.GENERIC_DESCRIPTION);
-		plan.setLegalId(provider.getString(LEGAL_ID));
+		plan.setLegalId(RandomStringUtils.randomAlphabetic(1).toUpperCase()+RandomStringUtils.randomNumeric(8));
 		plan.setPostalCode(provider.getString(POSTAL_CODE));
 		plan.setDocument1Type(provider.getString(DOCUMENT_1_TYPE));
 		plan.setApplicantProfession(provider.getString(APPLICANT_PROFESSION));
