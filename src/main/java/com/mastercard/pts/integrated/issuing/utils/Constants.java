@@ -477,4 +477,5 @@ public class Constants {
 	public static final String INSTANT_REPLACE_DEVICE = "Instant Replacement Device [150]";
 	public static final String DEVICE_WITHDRAW_STOPLIST_REQ = "Withdraw Device from Stop-list [221]";
 
+	public static final String APP_REJECT_REPORT = "Application Reject Report";
 }

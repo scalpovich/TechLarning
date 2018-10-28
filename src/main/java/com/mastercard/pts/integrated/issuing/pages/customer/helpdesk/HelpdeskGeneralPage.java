@@ -46,7 +46,6 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Component
 @Navigation(tabTitle = HelpdeskNav.TAB_HELPDESK, treeMenuItems = { HelpdeskNav.L1_ACTIVITY, HelpdeskNav.L2_GENERAL })
 public class HelpdeskGeneralPage extends AbstractBasePage {
-
 	@Autowired
 	private TestContext context;
 
@@ -138,6 +137,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value = 'End Call']")
 	private MCWebElement endCallBtn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody a img")
+	private MCWebElement editDeviceLink;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value = 'Transactions']")
 	private MCWebElement transactionsBtn;
@@ -282,9 +284,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Interest :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement loanInterestLabel;
-  
-    @PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody a img")
-	private MCWebElement editDeviceLink;
 	
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
 	
@@ -292,7 +291,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Balance Details']")
 	private MCWebElement balanceDetailsTab;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//th[text()='New Credit Limit']/../following-sibling::tr[1]/td[4]/input")
 	private MCWebElement creditClientLimitTxt;
 
@@ -1174,7 +1173,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 		return creditLimit;
 	}
-	
+
 	public HashMap<String,BigDecimal> noteDownCreditLimit(String type) {
 		HashMap<String,BigDecimal> creditLimit=new HashMap<>();
 		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
@@ -1248,7 +1247,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		}
 		return 0;
 	}
-	
+
 	public HashMap<String,BigDecimal> activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
 		logger.info("credit limit change request: {}",helpdeskGeneral.getCardPackId());
 		selectServiceCode(helpdeskGeneral.getServiceCode());
@@ -1260,7 +1259,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			return creditLimitChangeRequestCorporate(helpdeskGeneral,crediLimit);
 		
 		return new HashMap<String,BigDecimal>();
-	}
+}
 	
 	
 	public HashMap<String,BigDecimal> creditLimitChangeRequestCorporate(HelpdeskGeneral helpdeskGeneral,HashMap<String,BigDecimal> creditLimit){
@@ -1332,8 +1331,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 					} else {
 						selectReasonForRequest(element,
 								helpdeskGeneral.getReason());
-						if (helpdeskGeneral.getServiceCode()
-								.equals(Constants.INSTANT_REPLACE_DEVICE)) {
+						if (helpdeskGeneral.getServiceCode().equals(
+								Constants.INSTANT_REPLACE_DEVICE)) {
 							DeviceDetails deviceDetails = context
 									.get(ContextConstants.DEVICE_DETAILS);
 							enterNewPackID(deviceDetails.getCardPackID());
