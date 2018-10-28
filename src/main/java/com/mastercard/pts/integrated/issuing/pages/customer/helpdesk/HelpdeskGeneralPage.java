@@ -304,22 +304,22 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Type :']/../following-sibling::td[1]/select")
 	private MCWebElement selectLimitTypeDdwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "//td[contains(.,'Reason')]//following::select[@class = 'mandatoryFlag selectf']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'Reason')]//following::select[@class = 'mandatoryFlag selectf']")
 	private MCWebElement stoplistReasonDDwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "//td[contains(.,'New Device Number :')]//following::input[@type='checkbox']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'New Device Number :')]//following::input[@type='checkbox']")
 	private MCWebElement chkBxNewDeviceNumber;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "//td[contains(.,'Reason :')]//following::select[@class='mandatoryFlag textf']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'Reason :')]//following::select[@class='mandatoryFlag textf']")
 	private MCWebElement replaceDeviceRequestReasonDdwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "//td[contains(.,'New Pack ID :')]//following::input[@class='mandatoryFlag textf']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'New Pack ID :')]//following::input[@class='mandatoryFlag textf']")
 	private MCWebElement txtnewPackID;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "//td[contains(.,'Withdrawal Reason :')]//following::select[@class='mandatoryFlag selectf']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'Withdrawal Reason :')]//following::select[@class='mandatoryFlag selectf']")
 	private MCWebElement withdrawStoplistReasonDDwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "//span[text()='Apply Fees :']//following::input[@type='checkbox']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Apply Fees :']//following::input[@type='checkbox']")
 	private MCWebElement chkBxApplyFees;
 
 	protected String getWalletNumber() {
