@@ -13,7 +13,7 @@ public class ManualAuthorizationWorkflow {
 	@Autowired
 	private Navigator navigator;
 
-	AuthorizationRequestPage page;
+	private AuthorizationRequestPage page;
 
 	public String authorizeDevice(AuthorizationRequest request){
 		page = navigator.navigateToPage(AuthorizationRequestPage.class);

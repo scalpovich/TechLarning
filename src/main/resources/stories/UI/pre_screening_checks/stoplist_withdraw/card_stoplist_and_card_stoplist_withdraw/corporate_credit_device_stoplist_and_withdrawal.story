@@ -36,7 +36,7 @@ Then user sign out from customer portal
 Scenario:4 Transaction - Verify that the transaction declines with appropriate response for stoplisting
 Given user is logged in institution
 When user raises an authorization request
-And status of request is declined with reason Expired
+And status of request is declined with reason EXPIRED
 And search Purchase authorization and verify 101-EXPIRED CARD status
 And assert Decline response with 70123 AuthDecline Code and Card Status is Expired with Decline Response as description
 Then user sign out from customer portal

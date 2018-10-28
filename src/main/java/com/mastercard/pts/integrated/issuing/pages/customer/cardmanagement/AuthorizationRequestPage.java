@@ -45,7 +45,7 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 	@PageElement(findBy = FindBy.NAME, valueToFind = "memo:input:textAreaComponent")
 	private MCWebElement memoTxt;
 
-	private String statusMessage = null;
+	private String statusMessage = "";
 	
 	public String addAuthorizationRequest(AuthorizationRequest request){
 		logger.info("Authorization Request: {}", request.getDeviceNumber());
@@ -79,19 +79,17 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 	}
 
 	public String getDeclineReasonMessage(String declineReasonCode) {
-		String declineMessage = null;
+		String declineMessage = "";
 		switch (declineReasonCode) {
-		case "Lost":
-		case "lost":
+		case "LOST":
 			declineMessage = Constants.REPLACE_DECLINE_MESSAGE_LOST;
 			break;
 
-		case "Expired":
-		case "expired":
+		case "EXPIRED":
 			declineMessage = Constants.REPLACE_DECLINE_MESSAGE_EXPIRED;
 			break;
 
-		case "Not delivered":
+		case "NOT DELIVERED":
 			declineMessage = Constants.REPLACE_DECLINE_MESSAGE_NOT_DELIVERED;
 			break;
 		default:

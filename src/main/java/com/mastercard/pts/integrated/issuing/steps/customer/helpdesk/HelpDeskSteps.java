@@ -22,7 +22,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.yecht.Data.Str;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
@@ -885,20 +884,20 @@ public class HelpDeskSteps {
 
 
 	@When("user stop lists the device")
-	public void stopListsDevice() {
+	public void stopListDevice() {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
-		helpdeskWorkflow.raiseStoplistRequest(device,
-				provider.getString(STOPLIST_NOTES),
-				provider.getString(STOPLIST_REASON));
+		helpdeskGeneral.setNotes(provider.getString(STOPLIST_NOTES));
+		helpdeskGeneral.setReason(provider.getString(STOPLIST_REASON));
+		helpdeskWorkflow.raiseStoplistRequest(device, helpdeskGeneral);
 	}
 
 	@When("user withdraws the stoplisted device")
 	public void withdrawStoplistedDevice() {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
-		helpdeskWorkflow.withdrawStoplistDeviceFlows(helpdeskGeneral, device,
-				provider.getString(WITHDRAWAL_REASON));
+		helpdeskGeneral.setReason(provider.getString(WITHDRAWAL_REASON));
+		helpdeskWorkflow.withdrawStoplistDeviceFlows(helpdeskGeneral, device);
 	}
 
 	

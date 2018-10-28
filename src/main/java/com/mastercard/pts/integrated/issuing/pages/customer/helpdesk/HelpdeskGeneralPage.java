@@ -305,22 +305,22 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Type :']/../following-sibling::td[1]/select")
 	private MCWebElement selectLimitTypeDdwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "udf20:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "//td[contains(.,'Reason')]//following::select[@class = 'mandatoryFlag selectf']")
 	private MCWebElement stoplistReasonDDwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "udf12:checkBoxComponent")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "//td[contains(.,'New Device Number :')]//following::input[@type='checkbox']")
 	private MCWebElement chkBxNewDeviceNumber;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "udf1:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "//td[contains(.,'Reason :')]//following::select[@class='mandatoryFlag textf']")
 	private MCWebElement replaceDeviceRequestReasonDdwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "udf13:input:inputTextField")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "//td[contains(.,'New Pack ID :')]//following::input[@class='mandatoryFlag textf']")
 	private MCWebElement txtnewPackID;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "udf11:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "//td[contains(.,'Withdrawal Reason :')]//following::select[@class='mandatoryFlag selectf']")
 	private MCWebElement withdrawStoplistReasonDDwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "udf13:checkBoxComponent")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "//span[text()='Apply Fees :']//following::input[@type='checkbox']")
 	private MCWebElement chkBxApplyFees;
 
 	protected String getWalletNumber() {
@@ -1315,12 +1315,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return creditLimit;
 	}
 
-	public void addServiceRequest(String reason, String notes,
-			MCWebElement element, String frame, String serviceCode,
-			boolean isNewDevice) {
+	public void addServiceRequest(HelpdeskGeneral helpdeskGeneral,
+			MCWebElement element, String frame, boolean isNewDevice) {
 		editFirstRecord();
 		SimulatorUtilities.wait(2000);
-		selectServiceCode(serviceCode);
+		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
 		runWithinPopup(
 				frame,
@@ -1328,17 +1327,19 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 					if (isNewDevice) {
 						selectNewDeviceCheckBox(isNewDevice);
 						SimulatorUtilities.wait(2000);
-						selectReasonForRequest(element, reason);
+						selectReasonForRequest(element,
+								helpdeskGeneral.getReason());
 					} else {
-						selectReasonForRequest(element, reason);
-						if (serviceCode
+						selectReasonForRequest(element,
+								helpdeskGeneral.getReason());
+						if (helpdeskGeneral.getServiceCode()
 								.equals(Constants.INSTANT_REPLACE_DEVICE)) {
 							DeviceDetails deviceDetails = context
 									.get(ContextConstants.DEVICE_DETAILS);
 							enterNewPackID(deviceDetails.getCardPackID());
 						}
 					}
-					enterNotes(notes);
+					enterNotes(helpdeskGeneral.getNotes());
 					clickSaveButton();
 					verifyOperationStatus();
 					clickOKButtonPopup();
@@ -1367,14 +1368,13 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.enterText(txtnewPackID, newPackID);
 	}
 
-	public void withdrawDeviceFromStoplist(HelpdeskGeneral helpdeskGeneral,
-			String withdrawReason) {
+	public void withdrawDeviceFromStoplist(HelpdeskGeneral helpdeskGeneral) {
 		editFirstRecord();
 		SimulatorUtilities.wait(5000);
 		selectServiceCode(Constants.DEVICE_WITHDRAW_STOPLIST_REQ);
 		clickGoButton();
 		runWithinPopup("221 - Withdraw Device from Stop-list", () -> {
-			selectWithdrawlReason(withdrawReason);
+			selectWithdrawlReason(helpdeskGeneral.getReason());
 			selectApplyFeesChkBx(false);
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();

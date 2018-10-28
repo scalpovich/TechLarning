@@ -227,20 +227,21 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.activateCreditLimitChangeRequest(helpdeskGeneral);
 	}
 
-	public void raiseStoplistRequest(Device device, String notes, String reason) {
+	public void raiseStoplistRequest(Device device,
+			HelpdeskGeneral helpdeskGeneral) {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		helpDeskPage.searchByDeviceNumber(device);
-		helpDeskPage.addServiceRequest(reason, notes,
+		helpdeskGeneral.setServiceCode(Constants.DEVICE_STOPLIST_REQ);
+		helpDeskPage.addServiceRequest(helpdeskGeneral,
 				helpDeskPage.getstoplistReasonDDwn(),
-				Constants.FRAME_STOPLIST_REQUEST,
-				Constants.DEVICE_STOPLIST_REQ, false);
+				Constants.FRAME_STOPLIST_REQUEST, false);
 	}
 
 	public void withdrawStoplistDeviceFlows(HelpdeskGeneral general,
-			Device device, String withdrawReason) {
+			Device device) {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		helpDeskPage.searchByDeviceNumber(device);
-		helpDeskPage.withdrawDeviceFromStoplist(general, withdrawReason);
+		helpDeskPage.withdrawDeviceFromStoplist(general);
 
 	}
 }
