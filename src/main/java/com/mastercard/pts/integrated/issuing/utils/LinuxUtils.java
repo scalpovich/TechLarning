@@ -75,7 +75,7 @@ public abstract class LinuxUtils {
 		return getFileFromLinuxBox(connectiondetails, lookUpFor);
 	}
 	
-	public static boolean isPhotoReferenceNumberPresentInCSVFile(File filePath, String applicationNumber) {
+	public static boolean isPhotoReferenceNumberPresentInDataFile(File filePath, String applicationNumber) {
 		MiscUtils.reportToConsole("*********   started reading in Dump File *******  ");
 		boolean flg = false;
 		try {
@@ -413,27 +413,6 @@ public abstract class LinuxUtils {
 		fileOutputStream.close();
 		// channel1.close();
 
-	}
-
-	public static boolean isPhotoReferenceNumberPresentFlatFile(File filePath,
-			String applicationNumber) {
-		MiscUtils.reportToConsole("*********   starting Flat file check*******  ");
-		boolean isPhotoReferenceNumberFound = false;
-		try (BufferedReader br = new BufferedReader(new FileReader(filePath)))
-		{
-			String strLine;
-			while ((strLine = br.readLine()) != null)
-			{
-				MiscUtils.reportToConsole("*********   File Data *******  " + strLine);
-				isPhotoReferenceNumberFound = strLine.contains(applicationNumber);
-			}
-		} catch (Exception e) {
-			MiscUtils.reportToConsole("getphotoReferenceNumber Exception :  " + e.toString());
-			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
-			throw MiscUtils.propagate(e);
-		}
-		MiscUtils.reportToConsole("*********   ending Flat file check*******  ");		
-		return isPhotoReferenceNumberFound;
 	}
 
 	public static String getJPEGPhotoFileName(File batchFile) {

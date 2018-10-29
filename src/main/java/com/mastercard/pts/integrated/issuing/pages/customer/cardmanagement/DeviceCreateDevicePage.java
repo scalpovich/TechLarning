@@ -173,8 +173,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.ID, valueToFind = "uploadPhoto")
 	private MCWebElement uploadPhotoBtn;
 
-	@Value("${default.upload.image.photo_file.path}")
-	private String photoUploadFilePath;
+	private static final String PHOTO_FILE_PATH = "src/main/resources/InstitutionLogo/CreditLogo.png";
 
 	public String getWalletsFromPage(){
 		return getTextFromPage(createdWalletList);
@@ -455,7 +454,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			WebElementUtils.enterText(creditLimitTxt,String.valueOf(Integer.parseInt(program.getCreditLimit())+1));
 		}
 		if(device.getPhotoIndicator().contains("Photo")) {
-			String filePath = new File(photoUploadFilePath).getAbsolutePath();
+			String filePath = new File(PHOTO_FILE_PATH).getAbsolutePath();
 			logger.info("upload file path : {}",filePath);
 			photoFileInput.sendKeys(filePath);
 			SimulatorUtilities.wait(5000);

@@ -192,7 +192,7 @@ public class BatchSteps {
 			MiscUtils.reportToConsole("Flat file path name :  " + partialFileName);
 			
 			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(partialFileName, tempDirectory.toString(), "CLIENT_PHOTO_BATCH","proc");		
-			isPhotoReferencePresentInFlatFile = LinuxUtils.isPhotoReferenceNumberPresentFlatFile(batchFile,deviceApplicationNumber);
+			isPhotoReferencePresentInFlatFile = LinuxUtils.isPhotoReferenceNumberPresentInDataFile(batchFile, deviceApplicationNumber);
 			MiscUtils.reportToConsole("Device Application number :  " + deviceApplicationNumber );
 			MiscUtils.reportToConsole("******** Photo Flat File Completed ***** " );
 
@@ -231,7 +231,7 @@ public class BatchSteps {
 			String csvFileName = context.get(ContextConstants.CSV_FILE_NAME);
 			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(csvFileName, tempDirectory.toString(), "CARDHOLDER_DUMP","proc");
 			Device device = context.get(ContextConstants.DEVICE);
-			boolean flg= LinuxUtils.isPhotoReferenceNumberPresentInCSVFile(batchFile,device.getApplicationNumber());
+			boolean flg= LinuxUtils.isPhotoReferenceNumberPresentInDataFile(batchFile,device.getApplicationNumber());
 			Assert.assertTrue("Photo Reference Number is present in Card Holder Dump File",flg);
 		}
 		catch(Exception e) {}
