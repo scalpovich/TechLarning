@@ -58,7 +58,7 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 			WebElementUtils.enterText(transactionAmountTxt, request.getTransactionAmount());
 			WebElementUtils.enterText(memoTxt, request.getMemo());
 			clickSaveButton();
-			SimulatorUtilities.wait(4000);
+			SimulatorUtilities.wait(6000);
 			statusMessage = getMessageFromFeedbackPanel();
 			logger.info("Authorization Status: " + statusMessage);
 			clickOkButton();

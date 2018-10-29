@@ -50,7 +50,7 @@ public class ManualAuthorizationSteps {
 	@Then("status of request is declined with reason $declineReason")
 	@When("status of request is declined with reason $declineReason")
 	public void thenVerifyDeclineStatusCode(String declineReason) {
-		assertThat("Authorization is declined", statusMessage,
+		assertThat("Authorization is declined ", statusMessage,
 				containsString(manualAuthorizationWorkflow
 						.getDeclineReasonMessage(declineReason)));
 	}
