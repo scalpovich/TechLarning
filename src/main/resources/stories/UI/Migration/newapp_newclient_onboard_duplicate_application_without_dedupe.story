@@ -43,6 +43,6 @@ Then user sign out from customer portal
 
 Scenario: To get the Client Code and Generate the Device Activity Report
 Given user is logged in institution
-When user get the client code
-When generate device activity report
+When user gets the client code
+And generate device activity report
 Then user sign out from customer portal

@@ -60,12 +60,11 @@ public class DeviceActivityPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(selectReportDDwn, DEVICE_ACTIVITY_REPORT);
 		clicksearchButtonElement();
 		String productType = device.getAppliedForProduct();
-		String[] arrSplit = productType.split(" ");
-		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, arrSplit[0]);
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, productType.split(" ")[0]);
 		WebElementUtils.selectDropDownByVisibleText(reportTypeDDwn, DELIVERED_KYC_NOT_DONE);
 		selectByVisibleText(programDDwn, program.getCode());
 		WebElementUtils.selectDropDownByVisibleText(fileTypeDDwn, ConstantData.PDF_FORMAT);
-		generateReportBtn.click();
+		clickWhenClickable(generateReportBtn);
 		return verifyReportDownloaded(report.getReportName());
 	}
 

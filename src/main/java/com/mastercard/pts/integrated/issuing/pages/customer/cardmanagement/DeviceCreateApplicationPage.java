@@ -316,11 +316,11 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			waitForWicket(driver());
 			SimulatorUtilities.wait(10000);
 		}else{
-			selectByVisibleText(customerTypeDDwn, device.getCustomerType());          
+			selectByVisibleText(customerTypeDDwn, device.getCustomerType());  
 			SimulatorUtilities.wait(8000);
 			waitForWicket(driver());
 			selectByVisibleText(programCodeDDwn, device.getProgramCode());
-			SimulatorUtilities.wait(10000);			
+			SimulatorUtilities.wait(5000);			
 		}
 		SimulatorUtilities.wait(1000);
 		clickNextButton();

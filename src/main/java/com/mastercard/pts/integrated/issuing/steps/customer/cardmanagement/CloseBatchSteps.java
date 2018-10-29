@@ -5,7 +5,6 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.steps.AbstractBaseSteps;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.CloseBatchFlows;
 
@@ -13,9 +12,6 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.C
 public class CloseBatchSteps extends AbstractBaseSteps {
 @Autowired
 CloseBatchFlows closeBatchFlows;
-
-@Autowired
-private KeyValueProvider provider;
 
 @When("user processes close batch for new Application")
 public void closeBatchExecutionForNewApplication(){

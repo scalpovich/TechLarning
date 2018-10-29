@@ -19,5 +19,5 @@ And credit device is created using new Application screen for Individual and "Pr
 And user verifies the credit application device
 Then user pushback the credit application device
 And user checks in Incomplete Application and adds duplicate data for the credit application device
-And verify duplicate application caught on dedupeSDN
+And verify duplicate application in dedupe / SDN
 And user logouts from customer portal

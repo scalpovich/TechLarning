@@ -18,8 +18,8 @@ public class DeviceDetailsSteps {
 		detailsFlows.verifyLastExecutedScriptStatusFromDeviceDetails(lastExecutedScriptStatus);
 	}
 	
-	@When("user get the client code")
-	@Then("user get the client code")
+	@When("user gets the client code")
+	@Then("user gets the client code")
 	public void getClientCodeForRiskValue() {
 		detailsFlows.getClientCode();
 	}

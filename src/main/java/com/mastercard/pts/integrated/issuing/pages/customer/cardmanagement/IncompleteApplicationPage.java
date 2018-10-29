@@ -88,7 +88,7 @@ public class IncompleteApplicationPage extends AbstractCardManagementPage {
 	private MCWebElement txtBirthDate;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='birthDate']")
-	private MCWebElement birthDateDPkr;
+	private MCWebElement dedupeBirthDatePkr;
 
 	public void incompleteApplication() {
 		Device device = context.get(CreditConstants.APPLICATION);
@@ -129,7 +129,7 @@ public class IncompleteApplicationPage extends AbstractCardManagementPage {
 			clickWhenClickable(tabProfile);
 			WebElementUtils.enterText(txtFirstName, client.getDedupeFirstName());
 			WebElementUtils.enterText(txtLastName, client.getDedupeLastName());
-			WebElementUtils.pickDate(birthDateDPkr, client.getDedupeBirthDate());
+			WebElementUtils.pickDate(dedupeBirthDatePkr, client.getDedupeBirthDate());
 			clickWhenClickable(saveBtn);
 		});
 		verifyOperationStatus();

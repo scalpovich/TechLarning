@@ -166,4 +166,36 @@ public class WorkflowRulePage extends AbstractBasePage {
 		verifyUiOperation("Add Workflow Rule");
 	}
 
+	public boolean workFlowRulesForCreditBureau(String fieldName1, String fieldName2) {
+		selectFieldName(fieldName1);
+		selectOperator1();
+		selectOperator1Value1(fieldName2);
+		clickAppendButton();
+		clickRiskCheckBox(true);
+		clickScoreCheckBox(true);
+		saveButtonClick();
+		return successMessageDisplay();
+	}
+	
+	public boolean workFlowRulesForApplicationScoring(String fieldName1, String fieldName2) {
+		selectFieldName(fieldName1);
+		selectOperator1();
+		selectOperator1Value1(fieldName2);
+		clickAppendButton();
+		clickRiskCheckBox(true);
+		clickCreditBureauCheckBox(true);
+		saveButtonClick();
+		return successMessageDisplay();
+	}
+
+	public boolean workFlowRulesForApplicationScoringCreditBureau(String fieldName1, String fieldName2) {
+		selectFieldName(fieldName1);
+		selectOperator1();
+		selectOperator1Value1(fieldName2);
+		clickAppendButton();
+		clickRiskCheckBox(true);
+		saveButtonClick();
+		return successMessageDisplay();
+	}
+
 }

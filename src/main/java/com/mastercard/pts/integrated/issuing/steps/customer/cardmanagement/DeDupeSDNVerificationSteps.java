@@ -25,14 +25,14 @@ public class DeDupeSDNVerificationSteps {
 	@Autowired
 	TestContext context;
 	
-	@When("$approvesReject duplicate application caught on dedupeSDN")
-	@Then("$approvesReject duplicate application caught on dedupeSDN")
+	@When("$approvesReject duplicate application caught in dedupe / SDN")
+	@Then("$approvesReject duplicate application caught in dedupe / SDN")
 	public void whenApplicationCaughtonDedupeSDNThenApproveReject(String operation){
 		Assert.assertTrue("Application Not Approved/Rejected",dedupeSDNVerificationWorkflow.verifyApproveRejectTheApplication(operation));
 	}
 	
-	@When("verify duplicate application caught on dedupeSDN")
-	@Then("verify duplicate application caught on dedupeSDN")
+	@When("verify duplicate application in dedupe / SDN")
+	@Then("verify duplicate application in dedupe / SDN")
 	public void whenDuplicateApplicationCaughtonDedupeSDN(){
 		Device device = context.get(ContextConstants.DEVICE);
 		String dedupeAppliaction = dedupeSDNVerificationWorkflow.verifyDuplicateApplication();

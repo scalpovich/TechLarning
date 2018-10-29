@@ -26,41 +26,20 @@ public class WorkFlowRuleFlows {
 		
 	}
 	
-	public boolean userAddsWorkFlowRuleOnlyForCreditBureau(String fieldName1,String fieldName2)
-	{
-		workFlowRulePage=navigator.navigateToPage(WorkflowRulePage.class);
-		workFlowRulePage.selectFieldName(fieldName1);
-		workFlowRulePage.selectOperator1();
-		workFlowRulePage.selectOperator1Value1(fieldName2);
-		workFlowRulePage.clickAppendButton();
-		workFlowRulePage.clickRiskCheckBox(true);
-		workFlowRulePage.clickScoreCheckBox(true);
-		workFlowRulePage.saveButtonClick();
-		return workFlowRulePage.successMessageDisplay();
+	public boolean userAddsWorkFlowRuleOnlyForCreditBureau(String fieldName1, String fieldName2) {
+		workFlowRulePage = navigator.navigateToPage(WorkflowRulePage.class);
+		return workFlowRulePage.workFlowRulesForCreditBureau(fieldName1, fieldName2);
 	}
 	
 	public boolean userAddsWorkFlowRuleOnlyForApplicationScoring(String fieldName1,String fieldName2)
 	{
 		workFlowRulePage=navigator.navigateToPage(WorkflowRulePage.class);
-		workFlowRulePage.selectFieldName(fieldName1);
-		workFlowRulePage.selectOperator1();
-		workFlowRulePage.selectOperator1Value1(fieldName2);
-		workFlowRulePage.clickAppendButton();
-		workFlowRulePage.clickRiskCheckBox(true);
-		workFlowRulePage.clickCreditBureauCheckBox(true);
-		workFlowRulePage.saveButtonClick();
-		return workFlowRulePage.successMessageDisplay();
+		return workFlowRulePage.workFlowRulesForApplicationScoring(fieldName1, fieldName2);
 	}
 	
 	public boolean userAddsWorkFlowRuleForApplicationScoringCreditBureau(String fieldName1,String fieldName2)
 	{
 		workFlowRulePage=navigator.navigateToPage(WorkflowRulePage.class);
-		workFlowRulePage.selectFieldName(fieldName1);
-		workFlowRulePage.selectOperator1();
-		workFlowRulePage.selectOperator1Value1(fieldName2);
-		workFlowRulePage.clickAppendButton();
-		workFlowRulePage.clickRiskCheckBox(true);
-		workFlowRulePage.saveButtonClick();
-		return workFlowRulePage.successMessageDisplay();
+		return workFlowRulePage.workFlowRulesForApplicationScoringCreditBureau(fieldName1, fieldName2);
 	}
 }
