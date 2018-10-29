@@ -201,9 +201,9 @@ public class DeviceJoiningAndMembershipFeePlanPage extends AbstractBasePage {
 			WebElementUtils.pickDate(effectiveDateDPkr, details.getEffectiveDate());
 			WebElementUtils.pickDate(endDateDPkr, details.getEndDate());
 			selectIframeFeeType(details.getFeeType());
-			if (MiscUtils.getEnvironment().equalsIgnoreCase(Constants.ENV_DEMO)) {
+			//if (MiscUtils.getEnvironment().equalsIgnoreCase(Constants.ENV_DEMO)) {
 				selectCustomerTypeDeviceFees(Constants.BOTH);
-			}
+			//}
 			selectIframePostIssuanceFeeOn(details.getPostIssuanceFeeOn());
 			clickSaveButton();
 		});

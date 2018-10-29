@@ -22,22 +22,15 @@ public class DeDupeSDNVerificationSteps {
 	
 	@Autowired
 	DeDupeSDNVerificationWorkflow dedupeSDNVerificationWorkflow;
-	
+
 	@Autowired
 	TestContext context;
 	
-	@When("approves duplicate application caught on dedupeSDN")
-	@Then("approves duplicate application caught on dedupeSDN")
-	public void whenApplicationCaughtonDedupeSDNThenApprove(){
-		Boolean approvedSuccess = dedupeSDNVerificationWorkflow.verifyAndApproveTheApplication();
-		Assert.assertTrue(approvedSuccess);
+	@When("$approvesReject duplicate application caught on dedupeSDN")
+	@Then("$approvesReject duplicate application caught on dedupeSDN")
+	public void whenApplicationCaughtonDedupeSDNThenApproveReject(String operation){
+		Assert.assertTrue("Application Not Approved/Rejected",dedupeSDNVerificationWorkflow.verifyApproveRejectTheApplication(operation));
 	}
-	
-	@When("reject duplicate application caught on dedupeSDN")
-	@Then("reject duplicate application caught on dedupeSDN")
-	public void whenApplicationCaughtonDedupeSDNThenReject(){
-		Boolean rejectedSuccess = dedupeSDNVerificationWorkflow.verifyAndRejectTheApplication();
-		Assert.assertTrue(rejectedSuccess);
 	}
 	
 	@When("verify duplicate application caught on dedupeSDN")

@@ -12,8 +12,8 @@ public class ApprovalScoreWorkFlow {
 	private Navigator navigator;
 	
     private ApprovalScorePage approvalScorePage;
-	public boolean userAddsNewApprovalScore()
-	{
+
+	public boolean userAddsNewApprovalScore() {
 		approvalScorePage = navigator.navigateToPage(ApprovalScorePage.class);
 		approvalScorePage.addApproverScorePlan();
 		approvalScorePage.addMandatoryLabelsAndFields();
@@ -25,9 +25,9 @@ public class ApprovalScoreWorkFlow {
 		approvalScorePage.saveButtonClick();
 		return approvalScorePage.successMessageDisplay();
 	}
-	public void userVerifiesAndEditsNewApprovalScore()
-	{
-	approvalScorePage.verifyUiOperationStatus();
+
+	public void userVerifiesAndEditsNewApprovalScore() {
+		approvalScorePage.verifyUiOperationStatus();
 	}
 	
 	public boolean userAddsNewApprovalScore(String type) {
@@ -35,14 +35,12 @@ public class ApprovalScoreWorkFlow {
 		approvalScorePage.addApproverScorePlan();
 		approvalScorePage.addMandatoryLabelsAndFields();
 		approvalScorePage.selectProgram();
-
 		if (type.equalsIgnoreCase("Refer"))
 			approvalScorePage.selectAction(3);
 		else if (type.equalsIgnoreCase("Approve"))
 			approvalScorePage.selectAction(1);
 		else if (type.equalsIgnoreCase("Reject"))
 			approvalScorePage.selectAction(2);
-
 		approvalScorePage.enterStartRangeValue();
 		approvalScorePage.enterEndRangeValue();
 		approvalScorePage.settingMandatoryValuesWithLabels();

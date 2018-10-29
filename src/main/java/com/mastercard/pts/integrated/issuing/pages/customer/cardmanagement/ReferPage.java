@@ -67,19 +67,6 @@ public class ReferPage extends AbstractCardManagementPage {
 		WebElementUtils.pickDate(dtPkrTo, LocalDate.now());
 		clickSearchButton();
 	}
-	
-	public String editAndVerifyApplication()
-	{
-		waitForPageToLoad(driver());
-		clickWhenClickable(editImg);
-		switchToIframe(REFER_FRAME);
-		clickWhenClickable(btnRefer);
-		SimulatorUtilities.wait(5000);
-		verifyOperationStatus();
-		SimulatorUtilities.wait(5000);
-		String applicationNumber=getCodeFromInfoMessage("Application Number");
-		return applicationNumber;
-	}
 
 	public String editAndReferApplication() {
 		referApplication();

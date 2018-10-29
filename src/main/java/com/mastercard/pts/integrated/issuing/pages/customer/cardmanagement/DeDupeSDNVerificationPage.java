@@ -59,7 +59,11 @@ public class DeDupeSDNVerificationPage extends AbstractCardManagementPage {
 	private MCWebElement rejectReasonDDwn;
 	
 	private static String REJECTED_REASON = "Rejected in De-Dupe [RDEDUPE]";
-
+	
+	private static final String APPROVES = "approves";
+	
+	private static final String REJECT = "reject";
+	
 	private String inputApplicationNumber;
 	
 	@Override
@@ -75,7 +79,7 @@ public class DeDupeSDNVerificationPage extends AbstractCardManagementPage {
 		SimulatorUtilities.wait(1000);
 	}
 
-	public Boolean approveApplication() {
+	public Boolean approveRejectApplication(String operation) {
 		Device device = context.get(CreditConstants.APPLICATION);
 		inputApplicationNumber = device.getApplicationNumber();
 		logger.info(inputApplicationNumber);
@@ -83,25 +87,14 @@ public class DeDupeSDNVerificationPage extends AbstractCardManagementPage {
 		Boolean value = WebElementUtils.isTextAvailableinTable(searchTable, inputApplicationNumber);
 		clickWhenClickable(editRecord);
 		SimulatorUtilities.wait(1000);
-		runWithinPopup("Edit Application", () ->{					
-			clickWhenClickable(approveBtn);
-		});	
-		verifyOperationStatus();
-		return value;
-	}
-	
-	public Boolean rejectApplication() {
-		Device device = context.get(CreditConstants.APPLICATION);
-		inputApplicationNumber = device.getApplicationNumber();
-		logger.info(inputApplicationNumber);
-		verifyDuplicateApplication(inputApplicationNumber);
-		Boolean value = WebElementUtils.isTextAvailableinTable(searchTable, inputApplicationNumber);
-		clickWhenClickable(editRecord);
-		SimulatorUtilities.wait(1000);
-		runWithinPopup("Edit Application", () ->{
-			WebElementUtils.selectDropDownByVisibleText(rejectReasonDDwn, REJECTED_REASON);
-			clickWhenClickable(rejectBtn);
-		});	
+		runWithinPopup("Edit Application", () -> {
+			if (operation.contains(APPROVES)) {
+				clickWhenClickable(approveBtn);
+			} else if (operation.contains(REJECT)) {
+				WebElementUtils.selectDropDownByVisibleText(rejectReasonDDwn, REJECTED_REASON);
+				clickWhenClickable(rejectBtn);
+			}
+		});
 		verifyOperationStatus();
 		return value;
 	}

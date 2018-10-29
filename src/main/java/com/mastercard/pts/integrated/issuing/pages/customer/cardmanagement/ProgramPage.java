@@ -16,7 +16,6 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ApplicationType;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
-import com.mastercard.pts.integrated.issuing.domain.SubApplicationType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
@@ -289,7 +288,7 @@ public class ProgramPage extends AbstractBasePage {
 	private MCWebElement chkBxCardCreditLimitValidation;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[starts-with(text(),'Limits')]")
-	private MCWebElement txTLimitLevelValidation;
+	private MCWebElement txtLimitLevelValidation;
 
 	private final String COUNTRY_WHITELIST_AND_BLACKLIST_PLAN="country white and black list";
 	public void addProgram(String programCode) {
@@ -844,7 +843,6 @@ public class ProgramPage extends AbstractBasePage {
 		selectMarketingMessagePlan();
 		if (loyaltyPlan != null)
 			selectByVisibleText(loyaltyPlanDDwn, loyaltyPlan);
-
 	}
 
 	public void selectOtherPlans1() {
@@ -898,6 +896,7 @@ public class ProgramPage extends AbstractBasePage {
 			editsProgram(program, editItem);
 		});
 	}
+	
 	public void editProgramToEnableCardLimit(String program) {
 		enterValueinTextBox(enterProgram, program);
 		clickWhenClickable(search);
@@ -909,9 +908,10 @@ public class ProgramPage extends AbstractBasePage {
 		});
 		verifyOperationStatus();
 	}
+	
 	public void cardCreditLimitValidation(){
 		SimulatorUtilities.wait(2000);
-		clickWhenClickable(txTLimitLevelValidation);
+		clickWhenClickable(txtLimitLevelValidation);
 		ClickCheckBox(chkBxCardCreditLimitValidation,true);
 		clickSaveButton();
 	}

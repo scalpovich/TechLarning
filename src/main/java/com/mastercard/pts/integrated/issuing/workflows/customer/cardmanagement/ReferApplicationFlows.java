@@ -11,11 +11,8 @@ public class ReferApplicationFlows {
 	@Autowired
 	Navigator navigator;
 	
-	public String referCreditApplication()
-	{
+	public String referCreditApplication() {
 		ReferPage referPage = navigator.navigateToPage(ReferPage.class);
-		referPage.referApplication();
-		String message=referPage.editAndVerifyApplication();
-		return message;
+		return referPage.editAndReferApplication();
 	}
 }
