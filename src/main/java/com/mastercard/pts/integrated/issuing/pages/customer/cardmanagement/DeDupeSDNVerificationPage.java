@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
@@ -105,7 +106,7 @@ public class DeDupeSDNVerificationPage extends AbstractCardManagementPage {
 		logger.info(inputApplicationNumber);
 		verifyDuplicateApplication(inputApplicationNumber);
 		WebElementUtils.isTextAvailableinTable(searchTable, inputApplicationNumber);
-		logger.info(getFirstRecordCellTextByColumnName("Application Number"));
-		return getFirstRecordCellTextByColumnName("Application Number");
+		logger.info(getFirstRecordCellTextByColumnName(ContextConstants.APPLICATION_NUMBER));
+		return getFirstRecordCellTextByColumnName(ContextConstants.APPLICATION_NUMBER);
 	}
 }

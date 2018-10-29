@@ -135,6 +135,7 @@ public class ConstantData {
 	public static final String PRE_AUTH = "Pre-Auth Completion";
 	public static final String LIMIT_VALIDATION_PARAMETER = "Daily Velocity Utilized;Daily Amount Utilized;Periodic Velocity Utilized;Periodic Amount Utilized;Yearly Velocity Utilized;Yearly Amount Utilized";
 	
+	public static final String PDF_FORMAT = "PDF Format [pdf]";
 	public static final String DEVICE_ACTIVITY_REPORT_FILE_NAME = "Device Activity.pdf";
 	
 	private ConstantData() {

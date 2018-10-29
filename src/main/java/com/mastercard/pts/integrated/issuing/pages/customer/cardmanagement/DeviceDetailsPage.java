@@ -29,6 +29,8 @@ public class DeviceDetailsPage extends AbstractCardManagementPage {
 	private static final Logger logger = LoggerFactory.getLogger(DeviceDetailsPage.class);
 
 	private String statusText = "";
+	
+	private String txtClientCode = "Client Code";
 
 	@Autowired
 	private TestContext context;
@@ -82,7 +84,7 @@ public class DeviceDetailsPage extends AbstractCardManagementPage {
 		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
 		clickSearchButton();
 		waitForRow();
-		device.setClientCode(getCellTextByColumnName(1, "Client Code"));
+		device.setClientCode(getCellTextByColumnName(1, txtClientCode));
 		return device.getClientCode();
 	}
 

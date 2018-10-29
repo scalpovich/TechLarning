@@ -28,7 +28,6 @@ public class ApprovalScoreSteps {
 	@When("User adds Approval Score on program As $type")
 	@Then("User adds Approval Score on program As $type")
 	public void userAddsAApprovalScore(String type) {
-		Boolean approvalScore = approvalScoreWorkFlow.userAddsNewApprovalScore(type);
-		Assert.assertTrue("ApprovalScore is added successfully", approvalScore);
+		Assert.assertTrue("ApprovalScore is added successfully", approvalScoreWorkFlow.userAddsNewApprovalScore(type));
 	}
 }

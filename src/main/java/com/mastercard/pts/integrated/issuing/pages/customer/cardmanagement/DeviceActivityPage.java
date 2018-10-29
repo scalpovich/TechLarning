@@ -14,6 +14,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -63,7 +64,7 @@ public class DeviceActivityPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, arrSplit[0]);
 		WebElementUtils.selectDropDownByVisibleText(reportTypeDDwn, DELIVERED_KYC_NOT_DONE);
 		selectByVisibleText(programDDwn, program.getCode());
-		WebElementUtils.selectDropDownByVisibleText(fileTypeDDwn, "PDF Format [pdf]");
+		WebElementUtils.selectDropDownByVisibleText(fileTypeDDwn, ConstantData.PDF_FORMAT);
 		generateReportBtn.click();
 		return verifyReportDownloaded(report.getReportName());
 	}
