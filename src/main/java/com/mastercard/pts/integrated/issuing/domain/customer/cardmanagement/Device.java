@@ -709,5 +709,4 @@ public class Device {
 	public void setDedupe(String dedupe) {
 		this.dedupe = dedupe;
 	}
-	
 }
