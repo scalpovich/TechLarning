@@ -200,11 +200,5 @@ public class AuthorizationSearchWorkflow {
 		logger.info("Available balance after transaction amount = {}", availBal.getAvailableBal());
 		return availBal;
 	}
-	
-	public BigDecimal noteDownAvailableBalanceAfterReversal(String deviceNumber) {
-		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
-		return page.viewAvailableBalanceAfterReversalTransaction(deviceNumber);
-		
-	}
 
 }

@@ -184,19 +184,6 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 		return fieldsForAssertion;
 	}
 	
-	public BigDecimal viewAvailableBalanceAfterReversalTransaction(String deviceNumber) {
-		inputDeviceNumber(deviceNumber);
-		inputFromDate(LocalDate.now().minusDays(1));
-		inputToDate(LocalDate.now());
-		clickSearchButton();
-		viewFirstRecord();
-		runWithinPopup("View Authorization", () -> {
-			availableBalanceAfterReversal = new BigDecimal(availableBalanceTxt.getText());
-			clickCloseButton();
-		});
-		return availableBalanceAfterReversal;
-	}
-	
 	public AvailableBalance getAvailableBalance(){
 		String[] amountType = amountTypes.split(":");
 		AvailableBalance availBal = new AvailableBalance();

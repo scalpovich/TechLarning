@@ -151,32 +151,25 @@ public class AuthorizationSearchSteps {
 			authorizationSearchWorkflow.verifyAuthTransactionSearchReport(device);
 		} 
 	}
-	
+
 	@When("user verifies available balance after transaction")
 	@Then("user verifies available balance after transaction")
-	public void validateAvailableBalanceAfterTransaction(){
-		BigDecimal availableBalanceBeforeTransaction =context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT);
+	public void validateAvailableBalanceAfterTransaction() {
+		Device device = context.get(ContextConstants.DEVICE);
+		BigDecimal availableBalanceBeforeTransaction = context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT);
 		AvailableBalance availBal = authorizationSearchWorkflow.getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(availableBalanceBeforeTransaction);
 		assertThat("Verify Available Balance", availableBalanceBeforeTransaction.subtract(availBal.getSum()), equalTo(availBal.getAvailableBal()));
 		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, availBal.getAvailableBal());
 	}
-	
+
 	@When("verify available balance after completion transaction")
 	@Then("verify available balance after completion transaction")
-	public void validateAvailableBalanceAfterCompletionTransaction(){
-		BigDecimal availableBalanceBeforeTransaction =context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT);
+	public void validateAvailableBalanceAfterCompletionTransaction() {
+		BigDecimal availableBalanceBeforeTransaction = context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT);
 		Device device = context.get(ContextConstants.DEVICE);
 		AvailableBalance availBal = authorizationSearchWorkflow.getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(availableBalanceBeforeTransaction);
 		BigDecimal billingAmount = new BigDecimal(txnFeePlan.getBillingAmount());
-		BigDecimal difference=billingAmount.subtract(new BigDecimal(device.getTransactionAmount().substring(0, device.getTransactionAmount().length()-2)));
+		BigDecimal difference = billingAmount.subtract(new BigDecimal(device.getTransactionAmount().substring(0, device.getTransactionAmount().length() - 2)));
 		assertThat("Verify Available Balance", availableBalanceBeforeTransaction.add(difference), equalTo(availBal.getAvailableBal()));
-	}	
-	@Given("user verifies available balance after reversal")
-	@When("user verifies available balance after reversal")
-	@Then("user verifies available balance after reversal")
-	public void userVerifyAvailableBalanceAfterReversal() {
-		Device device = context.get(ContextConstants.DEVICE);
-		assertThat(INCORRECT_BALANCE_AFTER_REVERSAL, authorizationSearchWorkflow.noteDownAvailableBalanceAfterReversal(device.getDeviceNumber()),
-				equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
 	}
 }

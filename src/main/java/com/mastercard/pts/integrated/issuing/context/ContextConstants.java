@@ -51,6 +51,8 @@ public class ContextConstants {
 	public static final String CARD_CREDIT_LIMIT = "CARD_CREDIT_LIMIT";
 	
 	public static final String AVAILABLE_BALANCE_OR_CREDIT_LIMIT = "AVAILABLE_BALANCE_OR_CREDIT_LIMIT";
+	
+	public static final String BILLING_AMOUNT = "BILLING_AMOUNT";
 
 	public static final String AVAILABLE_ACCOUNT_OR_CREDIT_LIMIT = "AVAILABLE_ACCOUNT_OR_CREDIT_LIMIT";
 	

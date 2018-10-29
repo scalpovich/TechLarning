@@ -14,8 +14,10 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.GenericReport;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.collect.administration.AdministrationHomePage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ApplicationPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReportVerificationPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.PDFUtils;
 
 @Workflow
@@ -35,7 +37,9 @@ public class ReportVerificationWorkflow {
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
 	public static final int BILL_AMOUNT_INDEX_VALUE = 3;
-
+	
+	Boolean verificationStatus;
+	
     public void verifyGenericReport(GenericReport report) {
 		page = (ReportVerificationPage)getInstance(report.getReportName());
 		Map<Object, String> reportContent = getGenericReport(report);
@@ -66,6 +70,28 @@ public class ReportVerificationWorkflow {
 			}
 		});
 		}
+	}
+    
+	public void verifyReportGenerationAppRejectReport(GenericReport reports) {
+		reports.setReportName(Constants.APP_REJECT_REPORT);
+		deleteExistingReportsFromSystem(reports.getReportName());
+		ApplicationPage page = navigator.navigateToPage(ApplicationPage.class);
+		String reportUrl = page.generateApplicationRejectReport(reports.getReportName());
+		reports.setReportUrl(reportUrl);
+		Map<Object, String> reportContent = getReportContent(reports);
+		reportContent.forEach((k, v) -> {
+			reports.getFieldToValidate().forEach((field, fieldValue) -> {
+				if (v.contains(fieldValue)) {
+					toggle();
+					logger.info("{field} is present in the report", fieldValue);
+				}
+			});
+		});
+		assertTrue("Application Number is not present in the System", verificationStatus);
+	}
+	
+	private void toggle(){
+		verificationStatus = true;
 	}
     
     public void verifyStatement(GenericReport report) {		

@@ -28,8 +28,6 @@ public class AuthorizationTransactionFactory {
 
 	private static final Logger logger = LoggerFactory.getLogger(AuthorizationTransactionFactory.class);
 	
-	private String ATC_DE="055.9F36";
-
 	@Autowired
 	private Path tempDir;
 

@@ -79,6 +79,9 @@ public class DeviceProductionPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr")
 	private MCWebElements rowSize;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class='headers']//a/span")
+	private MCWebElements deviceNumberHeaderTxt;
+
 	public void deviceproduction(String prodType, String batchNum, String DeviceNumber) {
 		menuSubMenuPage.getDeviceProduction().click();
 		selectDropDownByText(productTypeDDwn, prodType);
@@ -222,6 +225,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	public void processDeviceProductionBatchNewApplication(DeviceProductionBatch batch) {
 		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		WebElementUtils.enterText(batchNumberTxt,batchNumber);
 		waitAndSearchForRecordToExist();
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
@@ -231,20 +235,20 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	public void processDeviceProductionBatchNewDevice(DeviceProductionBatch batch) {
 		Device device = context.get(ContextConstants.DEVICE);
-        WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		WebElementUtils.enterText(batchNumberTxt, device.getBatchNumber());
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
 	}
 	
 	public void processDeviceProductionBatchNewDeviceSupplementary(DeviceProductionBatch batch) {		
-		String batchNumber=context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
+		String batchNumber = context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
 		selectByVisibleText(productTypeDDwn, batch.getProductType());
-		WebElementUtils.enterText(batchNumberTxt, batchNumber);
+		WebElementUtils.enterText(batchNumberTxt, batchNumber);		
 		waitAndSearchForRecordToExistForSupplementary();
 		verifyOperationStatus();
 	}
-   
+	
 	protected void waitForRecordAndAssignDevice() {
 		waitAndSearchForRecordToAppear();
 		context.put(CreditConstants.EXISTING_DEVICE_NUMBER, deviceNumberFetch.getText());
