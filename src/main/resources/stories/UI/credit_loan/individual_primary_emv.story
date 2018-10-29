@@ -37,9 +37,10 @@ And user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
 When search transaction with device number on transaction search screen
-Then update institution date to next days
+Then update institution date to 5 days
 And user sign out from customer portal
-
+!-- And device has "normal" status
+!-- And user notes down required values from helpdesk for credit
 
 Scenario:1.9 Update institution date then Login & Logout to wait for date to be updated foe next billing
 Meta:
