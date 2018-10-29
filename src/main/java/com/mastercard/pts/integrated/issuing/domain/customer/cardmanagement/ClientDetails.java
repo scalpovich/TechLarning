@@ -23,11 +23,41 @@ public class ClientDetails {
 	private String emailId;	
 	private String nationality;
 	private String clientType;
+	private LocalDate dedupeBirthDate;
+	private String dedupeFirstName;
+	private String dedupeLastName;
 	
+	public String getDedupeFirstName() {
+		return dedupeFirstName;
+	}
+
+	public void setDedupeFirstName(String dedupeFirstName) {
+		this.dedupeFirstName = dedupeFirstName;
+	}
+
+	public String getDedupeLastName() {
+		return dedupeLastName;
+	}
+
+	public void setDedupeLastName(String dedupeLastName) {
+		this.dedupeLastName = dedupeLastName;
+	}
+	
+	public LocalDate getDedupeBirthDate() {
+		return dedupeBirthDate;
+	}
+
+	public void setDedupeBirthDate(LocalDate dedupeBirthDate) {
+		this.dedupeBirthDate = dedupeBirthDate;
+	}
+
 	public static ClientDetails generateClient() {
 		ClientDetails client = new ClientDetails();
 		client.setTitle("Mr. [1]");
 		client.setBirthDate(LocalDate.now().minusYears(RandomUtils.nextLong(20, 50)));
+		client.setDedupeFirstName("John");
+		client.setDedupeLastName("Ted");
+		client.setDedupeBirthDate(LocalDate.now().minusYears(29));
 		client.setNationality("INDIA [356]");
 		client.setMaritialStatus("Married [1]");
 		client.setLanguagePreference("English [en]");
