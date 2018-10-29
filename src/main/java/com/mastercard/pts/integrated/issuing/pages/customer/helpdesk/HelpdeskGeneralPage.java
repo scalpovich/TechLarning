@@ -134,6 +134,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value = 'End Call']")
 	private MCWebElement endCallBtn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody a img")
+	private MCWebElement editDeviceLink;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value = 'Transactions']")
 	private MCWebElement transactionsBtn;
@@ -1191,7 +1194,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 		return creditLimit;
 	}
-	
+
 	public HashMap<String,BigDecimal> noteDownCreditLimit(String type) {
 		HashMap<String,BigDecimal> creditLimit=new HashMap<>();
 		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
@@ -1265,7 +1268,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		}
 		return 0;
 	}
-	
+
 	public HashMap<String,BigDecimal> activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
 		logger.info("credit limit change request: {}",helpdeskGeneral.getCardPackId());
 		selectServiceCode(helpdeskGeneral.getServiceCode());
@@ -1277,7 +1280,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			return creditLimitChangeRequestCorporate(helpdeskGeneral,crediLimit);
 		
 		return new HashMap<String,BigDecimal>();
-	}
+}
 	
 	
 	public HashMap<String,BigDecimal> creditLimitChangeRequestCorporate(HelpdeskGeneral helpdeskGeneral,HashMap<String,BigDecimal> creditLimit){

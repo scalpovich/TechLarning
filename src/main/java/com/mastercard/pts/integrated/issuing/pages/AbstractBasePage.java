@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages;
 
+import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
@@ -17,9 +18,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.xerces.dom3.as.ASElementDeclaration;
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -51,6 +52,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomM
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.utils.PDFUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementFinderProvider;
@@ -479,7 +481,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	public String getCellTextByColumnName(int rowNumber, String columnName) {
-		String xpath = String.format("//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]", rowNumber, columnName);
+		String xpath = String.format("//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]/span", rowNumber, columnName);
+		SimulatorUtilities.wait(3000);
 		WebElement element = driver().findElement(By.xpath(xpath));
 		waitForElementVisible(element);
 		return element.getText().trim();
@@ -1255,6 +1258,27 @@ public abstract class AbstractBasePage extends AbstractPage {
 			}
 		});
 	}
+	
+	protected String verifyReportDownloaded(String reportName) {
+		StringBuffer path= new StringBuffer();
+		WebDriverWait wait = new WebDriverWait(driver(), TIMEOUT);
+		wait.until(new ExpectedCondition<Boolean>() {
+			@Override
+			public Boolean apply(WebDriver driver) {
+				Boolean exists = false;
+				for (File file: new File(PDFUtils.getuserDownloadPath()).listFiles()) {
+				 if(file.isFile()&& file.getName().startsWith(reportName)&&FilenameUtils.getExtension(file.getName()).equalsIgnoreCase("pdf")){
+					exists = true;
+				    path.append(file.getAbsolutePath());
+				    logger.info("File Path:"+path.toString());
+					 break;
+				 }
+			}
+				return exists;
+			}
+		});
+		return path.toString();
+	}
 
 	protected void selectByText(MCWebElement ele, String optionName) {
 		waitForElementVisible(ele);
@@ -1846,6 +1870,62 @@ public abstract class AbstractBasePage extends AbstractPage {
 		Actions action = new Actions(driver());		
 		action.moveToElement(asWebElement(element), xOffset, yOffset).click().build().perform();
 	}
+	
+	public void ifTextAvailableinTableThenDelete(MCWebElement tableHandle, String text) {
+		WebElement table = asWebElement(tableHandle);
+
+		List<WebElement> rowstable = table.findElements(By.tagName("tr"));
+
+		int rowscount = rowstable.size();
+		outerloop:
+		for (int row = 0; row < rowscount; row++) {
+
+			List<WebElement> columnsrow = rowstable.get(row).findElements(By.tagName("td"));
+
+			int columnscount = columnsrow.size();
+			for (int col = 0; col < columnscount; col++) {
+				if (columnsrow.get(col).getText().equals(text)) {
+					List<WebElement> editAndDeleteIcon = rowstable.get(row).findElements(By.tagName("img"));
+					
+						for (int icon = 0; icon < editAndDeleteIcon.size(); icon++) {
+							if (editAndDeleteIcon.get(icon).getAttribute("alt").contains("Delete")) {
+								editAndDeleteIcon.get(icon).click();
+								SimulatorUtilities.wait(2000);
+								Alert alert = driver().switchTo().alert();
+								alert.accept();
+								break outerloop;
+							}
+						}
+				
+
+				}
+			}
+		}
+
+	}
+	
+	public void clickOncheckBoxIfBatchAvailableinTable(MCWebElement tableHandle, String text) {
+		WebElement table = asWebElement(tableHandle);
+		List<WebElement> rowstable = table.findElements(By.tagName("tr"));
+		int rowscount = rowstable.size();
+		outerloop:
+		for (int row = 1; row < rowscount; row++) {
+			List<WebElement> columnsrow = rowstable.get(row).findElements(By.tagName("td"));
+			int columnscount = columnsrow.size();
+			for (int col = 0; col < columnscount; col++) {
+				if (columnsrow.get(col).getText().equals(text)) {
+					WebElement checkBox = columnsrow.get(columnscount - 1).findElement(By.cssSelector("input[type=checkbox]"));
+					if (checkBox.isEnabled() && !checkBox.isSelected()) {
+						checkBox.click();
+					}
+
+				}
+				break outerloop;
+
+			}
+		}
+	}
+	
 	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
