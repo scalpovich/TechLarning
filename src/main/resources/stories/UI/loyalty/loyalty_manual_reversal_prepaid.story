@@ -21,15 +21,10 @@ And prepaid device is created using new device screen for Individual and Primary
 And prepaid processes pre-production batch using new Device
 And prepaid processes deviceproduction batch using new Device for Supplementary
 And prepaid processes pingeneration batch using new Device for Supplementary
+When user performs adjustment transaction
+When user has current wallet balance amount information for prepaid device
 And device has "normal" status
 Then user sign out from customer portal
-
-Scenario:1.2 Pin Generation
-Given connection to FINSim is established
-When Pin Offset file batch was generated successfully
-Then embossing file batch was generated in correct format
-And PIN is retrieved successfully with data from Pin Offset File
-And FINSim simulator is closed
 
 Scenario:1.3 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
