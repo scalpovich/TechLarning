@@ -193,14 +193,14 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 		return found;
 	}
 	
-	public boolean checkBatchStatus(BatchJobHistory batchjobhistory) {
+	public boolean checkBatchStatus(BatchJobHistory batchJobHistory) {
         
-        selectByVisibleText(batchTypeDDwn, batchjobhistory.getBatchType());
+        selectByVisibleText(batchTypeDDwn, batchJobHistory.getBatchType());
         SimulatorUtilities.wait(1000);
         WebElementUtils.pickDate(fromJobStartDttmDPkr, LocalDate.now());
         WebElementUtils.pickDate(toJobStartDttmDPkr, LocalDate.now());
-        enterValueinTextBox(jobIdTxt, batchjobhistory.getJobIdBatchJobHistory());
-        selectByVisibleText(batchDDwn,batchjobhistory.getBatch());
+        enterValueinTextBox(jobIdTxt, batchJobHistory.getJobIdBatchJobHistory());
+        selectByVisibleText(batchDDwn,batchJobHistory.getBatch());
         clickSearchButton();
 		waitForBatchStatus(batchJobSuccessStatus);
 		context.put(ContextConstants.CSV_FILE_NAME, getCellTextByColumnName(1,"File Name"));

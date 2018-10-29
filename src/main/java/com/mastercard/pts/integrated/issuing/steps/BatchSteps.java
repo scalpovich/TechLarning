@@ -174,8 +174,8 @@ public class BatchSteps {
 		Assert.assertTrue(photoReferenceNumber.equals(deviceApplicationNumber));		
 	}
 	
-	@When("photo flat file generated with photo reference number")
-	@Then("photo flat file generated with photo reference number")
+	@When("photo flat file is generated with photo reference number")
+	@Then("photo flat file is generated with photo reference number")
 	public void thenflatFileGeneratedWithPhotoReferenceNumber() {
 		
 		flow.findAndPutDeviceApplicationNumberInContext();
@@ -203,8 +203,8 @@ public class BatchSteps {
 		Assert.assertTrue(isPhotoReferencePresentInFlatFile);
 	}
 	
-	@When("photo image file generated in JPEG format")
-	@Then("photo image file generated in JPEG format")
+	@When("photo image file is generated in JPEG format")
+	@Then("photo image file is generated in JPEG format")
 	public void thenPhotoFileGeneratedInJPEGFormat() {
 		flow.findAndPutDeviceApplicationNumberInContext();
 		Device device = context.get(ContextConstants.DEVICE);
