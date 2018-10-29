@@ -115,7 +115,6 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 	
 	public void processAllBatch() {
 		deviceGenerationBatch();
-		clickWhenClickable(processAllBtn);
 	}
 	
 	private void deviceGenerationBatch() {
@@ -123,7 +122,13 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 			clickWhenClickable(deviceGenerationLink);
 			deviceGenerationBatch();
 		}
-		clickWhenClickable(processAll);
+	}
+	
+	public void clickProcessAll() {
+		waitForWicket();
+		waitForElementVisible(searchTable);
+		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
+		clickProcessSelectedButton();
 	}
 	
 	public int identifyBatchNumberToProcessForFileUpload() {

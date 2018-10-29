@@ -9,8 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.GenericReport;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -28,9 +32,40 @@ public class DeviceActivityPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "componentPanel")
 	private MCWebElement selectReportDDwn;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Product Type')]/../../td[2]//select")
+	private MCWebElement productTypeDDwn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Report Type')]/../../td[2]//select")
+	private MCWebElement reportTypeDDwn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Program')]/../../td[4]//select")
+	private MCWebElement programDDwn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'File Type')]/../../td[2]//select")
+	private MCWebElement fileTypeDDwn; 
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "generateReport")
+	private MCWebElement generateReportBtn;  
+	
+	private static final String DEVICE_ACTIVITY_REPORT = "Device Activity Report";
+
+	private static final String DELIVERED_KYC_NOT_DONE = "Delivered but KYC Not Done";
+
 	public void verifyUiOperationStatus() {
 		logger.info("Device Activity");
 		verifySearchButton("Go");
+	}
+	
+	public String generateDeviceActivityReport(Device device, GenericReport report, Program program) {
+		WebElementUtils.selectDropDownByVisibleText(selectReportDDwn, DEVICE_ACTIVITY_REPORT);
+		clicksearchButtonElement();
+		String productType = device.getAppliedForProduct();
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, productType.split(" ")[0]);
+		WebElementUtils.selectDropDownByVisibleText(reportTypeDDwn, DELIVERED_KYC_NOT_DONE);
+		selectByVisibleText(programDDwn, program.getCode());
+		WebElementUtils.selectDropDownByVisibleText(fileTypeDDwn, ConstantData.PDF_FORMAT);
+		clickWhenClickable(generateReportBtn);
+		return verifyReportDownloaded(report.getReportName());
 	}
 
 	@Override

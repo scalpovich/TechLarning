@@ -117,7 +117,7 @@ public class Device {
 		device.setCreateOpenBatch(provider.getString(CREATE_OPEN_BATCH));
 		device.setCustomerType(provider.getString(DEVICE_CUSTOMER_TYPE));
 		device.setDeviceType1(provider.getString(DEVICE_TYPE));
-		device.setClientDetails(ClientDetails.generateClient());
+		device.setClientDetails(ClientDetails.generateClient(provider));
 		device.setCurrentAddress(Address.generateAddress());
 		device.setBranchCode(provider.getString(BRANCH));
 		device.setAccountNumber(RandomStringUtils.randomNumeric(16));
