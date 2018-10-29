@@ -37,7 +37,7 @@ public class LoyaltyPlanSteps {
 		assertTrue(maxPts >= availablePts);
 	}
 	
-	@Then("inactivate loyalty plan")
+	@Then("deactivate loyalty plan")
 	public void inactivateLoyaltyPlan() {
 		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
 		uiVerificationLoyaltyWorkflow.disableLoyaltyPlan(data.getLoyaltyPlan());
@@ -49,4 +49,13 @@ public class LoyaltyPlanSteps {
 		uiVerificationLoyaltyWorkflow.selectPeriodUnitByIndex(data.getLoyaltyPlan(), value);
 	}
 	
+	@Then("use loyalty plan $plan")
+	public void useLoyaltyPlan(String plan) {
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+		if(plan.equals("none"))
+			data.setLoyaltyPlan("");
+		else
+			data.setLoyaltyPlan(plan);
+		context.put(CreditConstants.JSON_VALUES, data);
+	}
 }
