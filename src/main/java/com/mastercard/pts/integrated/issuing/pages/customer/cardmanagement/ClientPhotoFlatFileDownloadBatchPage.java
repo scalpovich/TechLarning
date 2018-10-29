@@ -62,7 +62,7 @@ public class ClientPhotoFlatFileDownloadBatchPage extends AbstractBasePage {
 		String jobId = successMessage[successMessage.length-1];
 		context.put(ContextConstants.JOB_ID, jobId);
 		
-	    String timeStamp = LinuxUtils.getServerTimeInddMMyyyyHHmm();
+	    String timeStamp = LinuxUtils.getServerTime(DateTimeFormatter.ofPattern("ddMMyyyyHHmm"));
         context.put(ContextConstants.CLIENT_PHOTO_BATCH_PROCESS_TIME,timeStamp);
         logger.info("timestamp of processing",timeStamp);
         

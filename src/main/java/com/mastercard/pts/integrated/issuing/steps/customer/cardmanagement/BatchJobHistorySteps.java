@@ -58,7 +58,7 @@ public class BatchJobHistorySteps {
 		} else {
 			batchjobhistory.setJobIdBatchJobHistory(bulkdevicerequestbatch.getJobId());
 		}
-		batchjobhistoryflows.CheckBatchJobHistory(batchjobhistory);
+		batchjobhistoryflows.checkBatchJobHistory(batchjobhistory);
 	}
 	
 	@When("check status in batch job history for $batchType batch and $batch")
@@ -76,6 +76,6 @@ public class BatchJobHistorySteps {
 		} else if("CARDHOLDER_DUMP".equalsIgnoreCase(batch)) {
 			batchjobhistory.setBatch(CARDHOLDER_DUMP_BATCH);
 		}
-		Assert.assertTrue( "Batch job status is not diplayed success",batchjobhistoryflows.verifyBatchJobHistoryStatusDisplayed(batchjobhistory) );
+		Assert.assertTrue( "Batch job status is not displayed success",batchjobhistoryflows.verifyBatchJobHistoryStatusDisplayed(batchjobhistory) );
 	}
 }

@@ -10,9 +10,12 @@ import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.taskdefs.optional.ssh.Scp;
 import org.slf4j.Logger;
@@ -72,29 +75,21 @@ public abstract class LinuxUtils {
 		return getFileFromLinuxBox(connectiondetails, lookUpFor);
 	}
 	
-	public static boolean getPhotoReferenceNumberinDumpFile(File filePath,
-			String applicationNumber) {
-		MiscUtils
-				.reportToConsole("*********   starting getPhotoReferenceNumber in Dump File *******  ");
+	public static boolean isPhotoReferenceNumberPresentInCSVFile(File filePath, String applicationNumber) {
+		MiscUtils.reportToConsole("*********   started reading in Dump File *******  ");
 		boolean flg = false;
-		String strLine;
-		try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-
-			while (Objects.isNull(strLine = br.readLine())) {
-				strLine = strLine.trim().replaceAll("\\s+", " ");
+		try {
+			List<String> lines = FileUtils.readLines(filePath);
+			for (String line : lines) {
+				line = line.trim().replaceAll("\\s+", " ");
 				MiscUtils.reportToConsole("*********   File Data *******  "
-						+ strLine);
-				String[] data = strLine.trim().split(",");
-				int i = 0;
-				for (i = 0; i < data.length; i++) {
-					MiscUtils.reportToConsole(data[i]);
-					if (data[i].equals(applicationNumber))
-
-					{
+						+ line);
+				String[] data = line.trim().split(",");
+				for (String string : data) {
+					if (string.equals(applicationNumber)) {
 						flg = true;
 						break;
 					}
-
 				}
 				if (flg)
 					break;
@@ -287,27 +282,18 @@ public abstract class LinuxUtils {
 		return cardData;
 	}
 	
-	public static String getPhotoReferenceNumber(File filePath) {
-		MiscUtils.reportToConsole("*********   starting getPhotoReferenceNumber *******  ");
-		int lnNumber = 1;
+	public static String getPhotoReferenceNumberFromEmbossingFile(File filePath) {
 		String photoReferenceNumber = "";
 		try (BufferedReader br = new BufferedReader(new FileReader(filePath)))
 		{
-			String strLine;
-			while ((strLine = br.readLine()) != null)
-			{
-				if (lnNumber == 2)
-				{
-					strLine = strLine.trim().replaceAll("\\s+"," ");
-					MiscUtils.reportToConsole("*********   File Data *******  " + strLine);
-					String[] data = strLine.trim().split(" ");
-					photoReferenceNumber = data[data.length-1];
-					break;
-				}
-				lnNumber++;
-			}
+			List<String> strLines = FileUtils.readLines(filePath);
+			String strLine = strLines.get(1).trim().replaceAll("\\s+", " ");
+			MiscUtils.reportToConsole("********* File Data on second line *******  "
+					+ strLine);
+			String[] data = strLine.trim().split(" ");
+			photoReferenceNumber = data[data.length - 1];
 		} catch (Exception e) {
-			MiscUtils.reportToConsole("getphotoReferenceNumber Exception :  " + e.toString());
+			MiscUtils.reportToConsole("getPhotoReferenceNumberFromEmbossingFile Exception :  " + e.toString());
 			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
 			throw MiscUtils.propagate(e);
 		}
@@ -469,11 +455,11 @@ public abstract class LinuxUtils {
 		return photoFileName;
 	}
 	
-	public static String getServerTimeInddMMyyyyHHmm(){
+	public static String getServerTime(DateTimeFormatter formatter){
 		LocalDateTime serverTime = LocalDateTime.now(ZoneId.of("GMT-5")); //CDT time of Linux server. 
 		if(serverTime.getHour()>12){
 			serverTime = serverTime.minusHours(12);
 		}
-		return serverTime.format(DateTimeFormatter.ofPattern("ddMMyyyyHHmm")); 
+		return serverTime.format(formatter); 
 	}
 }

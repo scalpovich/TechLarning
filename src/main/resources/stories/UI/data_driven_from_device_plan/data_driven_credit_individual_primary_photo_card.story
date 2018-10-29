@@ -20,14 +20,14 @@ And for Primary Device and New Client user fills Device Range section for credit
 And credit device with photoIndicator as photo is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device
-Then photo reference number present at given position in embossing file
+Then photo reference number is present at given position in embossing file
 And user sign out from customer portal
 
 Scenario: 2.1 To verify that new batch name named ?Get Photo Card? is present under download batch in Batch level access
 Meta:
 @TC857968
 Given user is logged in institution
-Then client photo/flat file download batch is present under download in batch level priviledge page
+Then client photo/flat file download batch is present under download in batch level privilege page
 And user sign out from customer portal
 
 Scenario: 2.2 To verify that Super Admin user is able to provide access for new download batch ?Get Photo Card?  to operations user
@@ -58,7 +58,7 @@ And for Primary Device and New Client user fills Device Range section for credit
 And credit device with photoIndicator as photo is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device
-Then credit processes Client photo/flat file download batch using new Device
+Then user processes Client photo/flat file download batch for new credit Device
 And user sign out from customer portal
 
 Scenario: 2.6 To verify that status(Successful/Failed/In Progress) of scheduled Get Photo Card batch is displayed on batch job history page when searched with either job id or batch name along with schedule date
@@ -116,5 +116,5 @@ And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device
 And process batch for DOWNLOAD type and Batch name CARDHOLDER_DUMP
 And check status in batch job history for DOWNLOAD batch and CARDHOLDER_DUMP
-And to verify photo reference number is present in card holder dump file
+Then photo reference number is present in card holder dump file
 And user sign out from customer portal

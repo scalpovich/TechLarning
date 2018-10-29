@@ -14,13 +14,13 @@ public class BatchJobHistoryFlows extends MenuFlows {
 	@Autowired
 	Navigator navigator;
 
-	public void CheckBatchJobHistory(BatchJobHistory batchjobhist) {
-		BatchJobHistoryPage batchjobhistorypage = navigator.navigateToPage(BatchJobHistoryPage.class);
-		batchjobhistorypage.searchBatchJob(batchjobhist);
-		batchjobhistorypage.clickBatchjob(batchjobhist);
+	public void checkBatchJobHistory(BatchJobHistory batchjobhist) {
+		BatchJobHistoryPage batchJobHistoryPage = navigator.navigateToPage(BatchJobHistoryPage.class);
+		batchJobHistoryPage.searchBatchJob(batchjobhist);
+		batchJobHistoryPage.clickBatchjob(batchjobhist);
 	}
 	public boolean verifyBatchJobHistoryStatusDisplayed(BatchJobHistory batchjobhist) {
-		BatchJobHistoryPage batchjobhistorypage = navigator.navigateToPage(BatchJobHistoryPage.class);
-		return batchjobhistorypage.checkBatchStatus(batchjobhist);
+		BatchJobHistoryPage batchJobHistoryPage = navigator.navigateToPage(BatchJobHistoryPage.class);
+		return batchJobHistoryPage.checkBatchStatus(batchjobhist);
 	}
 }

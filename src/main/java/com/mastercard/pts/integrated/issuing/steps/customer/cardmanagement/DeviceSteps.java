@@ -391,7 +391,7 @@ public class DeviceSteps {
 	@Given("$type device with photoIndicator as $photoIndicator is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
 	@When("$type device with photoIndicator as $photoIndicator is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
 	@Then("$type device with photoIndicator as $photoIndicator is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
-	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceForGivenCustomerUsingNewPhotoDevice(
+	public void thenNewPhotoDeviceIsCreated(
 			String type, String photoIndicator, String customerType, String applicationType,
 			String subApplicationType, String deviceType) {
 		Device device = Device.createWithProviderForOtherDetails(provider);
@@ -408,18 +408,17 @@ public class DeviceSteps {
 
 		Program program = context.get(ContextConstants.PROGRAM);
 		device.setProgramCode(program.buildDescriptionAndCode());
+		DevicePlan devicePlan;
 		if (device.getApplicationType().contains(
 				ApplicationType.SUPPLEMENTARY_DEVICE)
 				|| device.getApplicationType().contains(
 						ApplicationType.ADD_ON_DEVICE)) {
-			DevicePlan devicePlan = context
+			devicePlan = context
 					.get(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY);
-			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
 		} else {
-			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
-			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
+			devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		}
-
+		device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
 		deviceWorkflow.createDevice(device);
 	}
 }

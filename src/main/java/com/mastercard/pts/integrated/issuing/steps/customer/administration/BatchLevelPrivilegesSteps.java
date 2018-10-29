@@ -53,9 +53,9 @@ public class BatchLevelPrivilegesSteps {
 				.buildDescriptionAndCode());
 	}
 
-	@When("client photo/flat file download batch is present under download in batch level priviledge page")
-	@Then("client photo/flat file download batch is present under download in batch level priviledge page")
-	public void photoFileBatchDownloadPresentUnderBatchLevelPriviledgeScreen(){
+	@When("client photo/flat file download batch is present under download in batch level privilege page")
+	@Then("client photo/flat file download batch is present under download in batch level privilege page")
+	public void thenPhotoFileDownloadBatchPresentInBatchLevelPriviledgeScreen(){
 		batchlevelprevFlow.verifyPhotoFileDownloadBatchPresent();
 	}
 	

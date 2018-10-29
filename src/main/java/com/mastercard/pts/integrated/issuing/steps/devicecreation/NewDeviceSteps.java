@@ -1,6 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps.devicecreation;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.jbehave.core.annotations.Composite;
 import org.jbehave.core.annotations.Named;
@@ -480,8 +480,8 @@ public class NewDeviceSteps {
 
 	}
 	
-	@Then("$type processes Client photo/flat file download batch using new Device")
-	@When("$type processes Client photo/flat file download batch using new Device")
+	@Then("user processes Client photo/flat file download batch for new $type Device")
+	@When("user processes Client photo/flat file download batch for new $type Device")
 	public void whenProcessesClientPhotoFlatFileDownloadBatchForDevice(String type) {
 		ClientPhotoFlatFileDownloadBatch batch = new ClientPhotoFlatFileDownloadBatch();
 		batch.setProductType(ProductType.fromShortName(type));

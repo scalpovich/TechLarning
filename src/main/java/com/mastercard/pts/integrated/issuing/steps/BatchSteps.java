@@ -149,8 +149,8 @@ public class BatchSteps {
 		return provider.getString(" BATCH_TRAILER_PATTERN", DEFAULT_TRAILER);
 	}
 
-	@When("photo reference number present at given position in embossing file")
-	@Then("photo reference number present at given position in embossing file")
+	@When("photo reference number is present at given position in embossing file")
+	@Then("photo reference number is present at given position in embossing file")
 	public void  photoReferenceNumberPresentAtGivenPosition() {
 		
 		flow.findAndPutDeviceApplicationNumberInContext();
@@ -161,7 +161,7 @@ public class BatchSteps {
 		String photoReferenceNumber = "";
 		try {
 			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "DEVICE","proc");		
-			photoReferenceNumber = LinuxUtils.getPhotoReferenceNumber(batchFile);
+			photoReferenceNumber = LinuxUtils.getPhotoReferenceNumberFromEmbossingFile(batchFile);
 			MiscUtils.reportToConsole("Device Application number :  " + device.getApplicationNumber() );
 			MiscUtils.reportToConsole("Photo Reference number :  " + photoReferenceNumber );
 			MiscUtils.reportToConsole("Device Application number :  " + device.getApplicationNumber() );			
@@ -223,15 +223,15 @@ public class BatchSteps {
 	}
 
 
-	@When("to verify photo reference number is present in card holder dump file")
-	@Then("to verify photo reference number is present in card holder dump file")
-	public void  cardHolderDumpFileWasGeneratedSuccessfullyForPhotoCard() {
+	@When("photo reference number is present in card holder dump file")
+	@Then("photo reference number is present in card holder dump file")
+	public void  thenPhotoReferenceNumberIsPresentInCardholderDump() {
 		flow.findAndPutDeviceApplicationNumberInContext();
 		try {
 			String csvFileName = context.get(ContextConstants.CSV_FILE_NAME);
 			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(csvFileName, tempDirectory.toString(), "CARDHOLDER_DUMP","proc");
 			Device device = context.get(ContextConstants.DEVICE);
-			boolean flg= LinuxUtils.getPhotoReferenceNumberinDumpFile(batchFile,device.getApplicationNumber());
+			boolean flg= LinuxUtils.isPhotoReferenceNumberPresentInCSVFile(batchFile,device.getApplicationNumber());
 			Assert.assertTrue("Photo Reference Number is present in Card Holder Dump File",flg);
 		}
 		catch(Exception e) {}
