@@ -35,8 +35,4 @@ And pre-clearing and Loyalty Calc batches are run
 Then user verifies loyalty details for Credit device
 And user sign out from customer portal
 
-Examples:
-| plan   |
-| none  |
-| AUTOMATION [LP1]	|
 
