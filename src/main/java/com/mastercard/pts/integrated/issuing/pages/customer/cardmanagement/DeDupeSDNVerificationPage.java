@@ -103,10 +103,10 @@ public class DeDupeSDNVerificationPage extends AbstractCardManagementPage {
 	public String checkDuplicateApplication(){
 		Device device = context.get(CreditConstants.APPLICATION);
 		inputApplicationNumber = device.getApplicationNumber();
-		logger.info("Application Number : ",inputApplicationNumber);
+		logger.info("Application Number : {}",inputApplicationNumber);
 		verifyDuplicateApplication(inputApplicationNumber);
 		WebElementUtils.isTextAvailableinTable(searchTable, inputApplicationNumber);
-		logger.info("Application Number From Table Records : ",getFirstRecordCellTextByColumnName(ContextConstants.APPLICATION_NUMBER));
+		logger.info("Application Number From Table Records :{}",getFirstRecordCellTextByColumnName(ContextConstants.APPLICATION_NUMBER));
 		return getFirstRecordCellTextByColumnName(ContextConstants.APPLICATION_NUMBER);
 	}
 }
