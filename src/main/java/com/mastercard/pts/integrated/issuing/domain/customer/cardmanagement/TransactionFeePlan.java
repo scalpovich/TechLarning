@@ -112,7 +112,7 @@ public class TransactionFeePlan {
 
 		TransactionFeePlan txnFee = new TransactionFeePlan();
 		txnFee.setRateTxnFee(String.format("%.2f", Double.valueOf(provider.getString(TRANSACTION_RATE))));
-		txnFee.setBillingAmount(String.format("%.2f", Double.valueOf(provider.getString(BILLING_AMOUNT)+".00")));
+		txnFee.setBillingAmount(String.format("%.2f", Double.valueOf(provider.getString(BILLING_AMOUNT))));
 		txnFee.setBillingAmountRate(provider.getString(BILLING_AMOUNT_RATE));
 		txnFee.setMinTxnRate(provider.getString(MIN_TXN_RATE));
 		txnFee.setRateTxnFee(provider.getString(RATE_TXN_FEE));
