@@ -129,7 +129,7 @@ public class IncompleteApplicationPage extends AbstractCardManagementPage {
 			clickWhenClickable(tabProfile);
 			WebElementUtils.enterText(txtFirstName, client.getDedupeFirstName());
 			WebElementUtils.enterText(txtLastName, client.getDedupeLastName());
-			WebElementUtils.pickDate(birthDateDPkr, client.getDedupeBithDate());
+			WebElementUtils.pickDate(birthDateDPkr, client.getDedupeBirthDate());
 			clickWhenClickable(saveBtn);
 		});
 		verifyOperationStatus();

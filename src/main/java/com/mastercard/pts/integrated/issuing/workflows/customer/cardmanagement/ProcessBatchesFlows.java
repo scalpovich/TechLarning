@@ -17,6 +17,7 @@ public class ProcessBatchesFlows {
 
 	@Autowired
 	private ProcessBatchesPage processBatchesPage;
+	
 	@Autowired
 	private Navigator navigator;
 
