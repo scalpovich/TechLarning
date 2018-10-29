@@ -26,7 +26,7 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceUsageWorkflow;
 
-@Component
+
 public class DeviceUsageSteps {
 	
 	private static final String DOMESTIC = "DOMESTIC";

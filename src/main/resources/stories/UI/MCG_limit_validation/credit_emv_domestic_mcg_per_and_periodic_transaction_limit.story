@@ -30,7 +30,7 @@ And set the transaction amount to 110 in program currency
 When perform an EMV_PURCHASE MAS transaction
 And user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
-And assert Decline response with 40005 AuthDecline Code and Exceeds Amount Limit Per Trans Domestic as description
+And assert Decline response with 40002 AuthDecline Code and Exceeds Amount Limit Per Trans Domestic as description
 Then verify the MCG limit utilization in Device Usage Screen for domestic transaction after failed transaction
 And user sign out from customer portal
 
