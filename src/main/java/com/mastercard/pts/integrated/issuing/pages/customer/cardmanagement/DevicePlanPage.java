@@ -1287,13 +1287,13 @@ public class DevicePlanPage extends AbstractBasePage {
 
 			if (devicePlan.getEmvPlanApplicationBlock().equalsIgnoreCase(STATUS_YES)) {
 				clickWhenClickable(applicationBlockChkBx);
-				WebElementUtils.selectDropDownByVisibleText(applicationBlockPriorityDdwn,
+				selectByVisibleText(applicationBlockPriorityDdwn,
 						devicePlan.getEmvPlanApplicationBlockPriority());
 			}
 
 			if (devicePlan.getEmvPlanApplicationUnblock().equalsIgnoreCase(STATUS_YES)) {
 				clickWhenClickable(applicationUnblockChkBx);
-				WebElementUtils.selectDropDownByVisibleText(applicationUnblockPriorityDdwn,
+				selectByVisibleText(applicationUnblockPriorityDdwn,
 						devicePlan.getEmvPlanApplicationUnblockPriority());
 			}
 		

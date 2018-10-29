@@ -31,8 +31,6 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 
 	List<String> txnFeesFields = new ArrayList<>();
 	
-	BigDecimal availableBalanceAfterReversal;
-
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=cardNumber]")
 	private MCWebElement cardNumber;
 

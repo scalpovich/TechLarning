@@ -165,16 +165,6 @@ public class TransactionSteps {
 		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData, sameCard);
 	}
 	
-	@When("user performs an optimized $transaction MAS transaction for ATC Range")
-	@Given("user performs an optimized $transaction MAS transaction for ATC Range")
-	public void givenOptimizedTransactionIsExecutedForUpdatedATCRange(String transaction, String ATCRange) {
-		transactionWorkflow.browserMinimize(); // minimize browser
-		// operation of MAS/MDFS ... Storing transaction name in context to use it at runtime
-		context.put(ConstantData.TRANSACTION_NAME, transaction);
-		Transaction transactionData = generateMasTestDataForTransaction(transaction);
-		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData, sameCard);
-	}
-	
 	@When("perform an $type MAS transaction with wrong keys")
 	public void performTransactionWithWrongKeys(String transaction) {
 		TransactionWorkflow.STAGE_KEYS = INVALID_KEYS;
@@ -188,15 +178,14 @@ public class TransactionSteps {
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		generateMasTestDataForTransaction(transaction);
 	}
-	
-	@Given("user updates ATC value as $type and value as $type")
-	@Then("user updates ATC value as $type and value as $type")
-	public void userUpdateATCValueAsRequired(String flag, String atcvalue)
-	{
-		atcCounterFlag=true;
+
+	@Given("user updates ATC value as $type and value as $ATCValue")
+	@Then("user updates ATC value as $type and value as $ATCValue")
+	public void userUpdateATCValueAsRequired(String flag, String atcvalue) {
+		atcCounterFlag = true;
 		Device device = context.get(ContextConstants.DEVICE);
 		device.setUpdatedATCValue(atcvalue);
-		context.put(ContextConstants.DEVICE,device);		
+		context.put(ContextConstants.DEVICE, device);
 	}
 
 	private Transaction generateMasTestDataForTransaction(String transaction) {

@@ -19,7 +19,7 @@ public class CreditCardPaymentWorkFlows {
 	@Autowired
 	TestContext context;
 	
-	CashPage cashPage;
+	private CashPage cashPage;
 	
 	public void makeCashPayment(Payment cashPay){
 		cashPage = navigator.navigateToPage(CashPage.class);

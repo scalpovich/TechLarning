@@ -70,7 +70,6 @@ public class AuthorizationSearchSteps {
 	public void veriyFixedTransactionFeeonPurchaseTransaction() {
 		Device device = context.get(ContextConstants.DEVICE);
 		txnFeePlan = TransactionFeePlan.getAllTransactionFee(provider);
-		context.put(ContextConstants.DEVICE, device);
 		assertThat(authorizationSearchWorkflow.checkTransactionFixedFee(device.getDeviceNumber()),
 				Matchers.hasItems(txnFeePlan.getfixedTxnFees(), txnFeePlan.getFixedRateFee(), txnFeePlan.getBillingAmount()));
 	}

@@ -2,7 +2,10 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Collection;
 
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -134,5 +137,10 @@ public class CashPage extends AbstractBasePage {
 	public void verifyUiOperationStatus() {
 		logger.info("Cash");
 		verifyUiOperationNoEdit("Add Cash");
+	}
+
+	@Override
+	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
+		return Arrays.asList(WebElementUtils.elementToBeClickable(txtRemittanceNumber), WebElementUtils.elementToBeClickable(remittanceSeq));
 	}
 }
