@@ -1319,7 +1319,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		editFirstRecord();
 		SimulatorUtilities.wait(2000);
 		selectServiceCode(helpdeskGeneral.getServiceCode());
+		SimulatorUtilities.wait(500);
 		clickGoButton();
+		SimulatorUtilities.wait(2000);
 		runWithinPopup(
 				frame,
 				() -> {
