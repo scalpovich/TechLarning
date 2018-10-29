@@ -3,7 +3,6 @@ In order to a create a Credit Device under customer portal cardmanagement tab
 As a user
 I want to create Add-On photo card
 
-
 Meta:
 @StoryName credit_card	 
 Scenario:verify that the Add-on photo indicator should be available in Credit Screen

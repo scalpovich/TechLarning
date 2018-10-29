@@ -17,7 +17,7 @@ public class ReferCreditDeviceSteps {
 
 	@Autowired
 	ReferCreditApplicationFlows referCreditApplicationFlows;
-
+	
 	@Given("user refer the credit application device")
 	@When("user refer the credit application device")
 	@Then("user refer the credit application device")

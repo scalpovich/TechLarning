@@ -88,6 +88,8 @@ public class ContextConstants {
 	
 	public static final String ACCOUNT_NUMBER = "Account Number";
 	
+	public static final String APPLICATION_NUMBER = "Application Number";
+	
 	public static final String STATEMENT_DATE = "Statement Date";
 	
 	public static final String PAYMENT_DUE_DATE = "Payment Due Date";

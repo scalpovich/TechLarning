@@ -738,7 +738,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 		context.put(CreditConstants.EXISTING_DEVICE_NUMBER, deviceNumberFetch.getText());
 		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
 		selectFirstRecord();
-		clickProcessSelectedButton();		
+		SimulatorUtilities.wait(10000);
+		clickProcessSelectedButton();
 	}	
 	
 	protected void waitAndSearchForRecordToExists() {
@@ -1870,42 +1871,32 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	public void ifTextAvailableinTableThenDelete(MCWebElement tableHandle, String text) {
 		WebElement table = asWebElement(tableHandle);
-
 		List<WebElement> rowstable = table.findElements(By.tagName("tr"));
-
 		int rowscount = rowstable.size();
-		outerloop:
-		for (int row = 0; row < rowscount; row++) {
-
+		outerloop: for (int row = 0; row < rowscount; row++) {
 			List<WebElement> columnsrow = rowstable.get(row).findElements(By.tagName("td"));
-
 			int columnscount = columnsrow.size();
 			for (int col = 0; col < columnscount; col++) {
 				if (columnsrow.get(col).getText().equals(text)) {
 					List<WebElement> editAndDeleteIcon = rowstable.get(row).findElements(By.tagName("img"));
-					
-						for (int icon = 0; icon < editAndDeleteIcon.size(); icon++) {
-							if (editAndDeleteIcon.get(icon).getAttribute("alt").contains("Delete")) {
-								editAndDeleteIcon.get(icon).click();
-								SimulatorUtilities.wait(2000);
-								Alert alert = driver().switchTo().alert();
-								alert.accept();
-								break outerloop;
-							}
+					for (int icon = 0; icon < editAndDeleteIcon.size(); icon++) {
+						if (editAndDeleteIcon.get(icon).getAttribute("alt").contains("Delete")) {
+							editAndDeleteIcon.get(icon).click();
+							SimulatorUtilities.wait(2000);
+							Alert alert = driver().switchTo().alert();
+							alert.accept();
+							break outerloop;
 						}
-				
-
+					}
 				}
 			}
 		}
-
 	}
 	
 	public void clickOncheckBoxIfBatchAvailableinTable(MCWebElement tableHandle, String text) {
 		WebElement table = asWebElement(tableHandle);
 		List<WebElement> rowstable = table.findElements(By.tagName("tr"));
 		int rowscount = rowstable.size();
-		outerloop:
 		for (int row = 1; row < rowscount; row++) {
 			List<WebElement> columnsrow = rowstable.get(row).findElements(By.tagName("td"));
 			int columnscount = columnsrow.size();
@@ -1914,15 +1905,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 					WebElement checkBox = columnsrow.get(columnscount - 1).findElement(By.cssSelector("input[type=checkbox]"));
 					if (checkBox.isEnabled() && !checkBox.isSelected()) {
 						checkBox.click();
+						break;
 					}
-
 				}
-				break outerloop;
-
 			}
 		}
 	}
-	
 	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
