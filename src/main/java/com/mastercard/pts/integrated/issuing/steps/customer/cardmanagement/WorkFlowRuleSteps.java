@@ -16,24 +16,24 @@ WorkFlowRuleFlows workFlowRuleFlows;
 @When("User Adds WorkFlow Rule for fieldName1 $fieldName and fieldName2 $value on program")
 @Then("User Adds WorkFlow Rule for fieldName1 $fieldName and fieldName2 $value on program")
 	public void addingWorkFlowRuleToProgram(String fieldName, String value) {
-		Assert.assertTrue("ApprovalScore is not added successfully", workFlowRuleFlows.userAddsNewWorkFlowRule(fieldName, value));
+		Assert.assertTrue("Approval Score is not added successfully", workFlowRuleFlows.userAddsNewWorkFlowRule(fieldName, value));
 }
 
-	@When("User Adds WorkFlow Rule with Credit Brueau for $fieldName and $value on program")
-	@Then("User Adds WorkFlow Rule with Credit Brueau for $fieldName and $value on program")
+	@When("User Adds WorkFlow Rule with Credit Bureau for $fieldName and $value on program")
+	@Then("User Adds WorkFlow Rule with Credit Bureau for $fieldName and $value on program")
 	public void addingWorkFlowRuleToProgramWithCreditBureau(String fieldName, String value) {
-		Assert.assertTrue("ApprovalScore is not added successfully", workFlowRuleFlows.userAddsWorkFlowRuleOnlyForCreditBureau(fieldName, value));
+		Assert.assertTrue("Credit Bureau is not added successfully", workFlowRuleFlows.userAddsWorkFlowRuleOnlyForCreditBureau(fieldName, value));
 	}
 	
 	@When("User Adds WorkFlow Rule with Application Scoring for $fieldName and $value on program")
 	@Then("User Adds WorkFlow Rule with Application Scoring for $fieldName and $value on program")
 	public void addingWorkFlowRuleToProgramWithApplicationScoring(String fieldName, String value) {
-		Assert.assertTrue("ApprovalScore is not added successfully", workFlowRuleFlows.userAddsWorkFlowRuleOnlyForApplicationScoring(fieldName, value));
+		Assert.assertTrue("Application Scoring is not added successfully", workFlowRuleFlows.userAddsWorkFlowRuleOnlyForApplicationScoring(fieldName, value));
 	}
 	
-	@When("User Adds WorkFlow Rule with Application Scoring,Credit Brueau for $fieldName and $value on program")
-	@Then("User Adds WorkFlow Rule with Application Scoring,Credit Brueau for $fieldName and $value on program")
+	@When("User Adds WorkFlow Rule with Application Scoring,Credit Bureau for $fieldName and $value on program")
+	@Then("User Adds WorkFlow Rule with Application Scoring,Credit Bureau for $fieldName and $value on program")
 	public void addingWorkFlowRuleToProgramWithApplicationScoringCreditBureau(String fieldName, String value) {
-		Assert.assertTrue("ApprovalScore is not added successfully", workFlowRuleFlows.userAddsWorkFlowRuleForApplicationScoringCreditBureau(fieldName, value));
+		Assert.assertTrue("Application Scoring & Credit Bureau is not added successfully", workFlowRuleFlows.userAddsWorkFlowRuleForApplicationScoringCreditBureau(fieldName, value));
 	}
 }

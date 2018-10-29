@@ -8,7 +8,6 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Work
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
-import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -166,11 +165,14 @@ public class WorkflowRulePage extends AbstractBasePage {
 		verifyUiOperation("Add Workflow Rule");
 	}
 
-	public boolean workFlowRulesForCreditBureau(String fieldName1, String fieldName2) {
+	public void addWorkFlowDetails(String fieldName1, String fieldName2){
 		selectFieldName(fieldName1);
 		selectOperator1();
 		selectOperator1Value1(fieldName2);
 		clickAppendButton();
+	}
+	public boolean workFlowRulesForCreditBureau(String fieldName1, String fieldName2) {
+		addWorkFlowDetails(fieldName1, fieldName2);
 		clickRiskCheckBox(true);
 		clickScoreCheckBox(true);
 		saveButtonClick();
@@ -178,10 +180,7 @@ public class WorkflowRulePage extends AbstractBasePage {
 	}
 	
 	public boolean workFlowRulesForApplicationScoring(String fieldName1, String fieldName2) {
-		selectFieldName(fieldName1);
-		selectOperator1();
-		selectOperator1Value1(fieldName2);
-		clickAppendButton();
+		addWorkFlowDetails(fieldName1, fieldName2);
 		clickRiskCheckBox(true);
 		clickCreditBureauCheckBox(true);
 		saveButtonClick();
@@ -189,10 +188,7 @@ public class WorkflowRulePage extends AbstractBasePage {
 	}
 
 	public boolean workFlowRulesForApplicationScoringCreditBureau(String fieldName1, String fieldName2) {
-		selectFieldName(fieldName1);
-		selectOperator1();
-		selectOperator1Value1(fieldName2);
-		clickAppendButton();
+		addWorkFlowDetails(fieldName1, fieldName2);
 		clickRiskCheckBox(true);
 		saveButtonClick();
 		return successMessageDisplay();

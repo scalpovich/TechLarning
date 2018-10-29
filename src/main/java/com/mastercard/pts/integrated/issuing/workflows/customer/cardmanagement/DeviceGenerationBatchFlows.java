@@ -39,6 +39,6 @@ public class DeviceGenerationBatchFlows {
      public void deviceGenerationAllBatchExecution() {
  		deviceGenerationBatchPage = navigator.navigateToPage(DeviceGenerationBatchPage.class);
  		deviceGenerationBatchPage.processAllBatch();
- 		deviceGenerationBatchPage.clickProcessALL();
+ 		deviceGenerationBatchPage.clickProcessAll();
 	}
 }

@@ -124,7 +124,7 @@ public class DeviceGenerationBatchPage extends AbstractBasePage {
 		}
 	}
 	
-	public void clickProcessALL() {
+	public void clickProcessAll() {
 		waitForWicket();
 		waitForElementVisible(searchTable);
 		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));

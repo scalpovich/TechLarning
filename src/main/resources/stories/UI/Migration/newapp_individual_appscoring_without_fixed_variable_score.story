@@ -5,7 +5,7 @@ I want to board credit device via New Application Screen when WF rule is configu
 					 
 Meta:
 @StoryName credit_card	 
-Scenario:To verify credit application is Referred/Reject/Approved when WF rule is configured for Application Score without Fixed , variable score setup.
+Scenario:1.1 To verify credit application is Referred/Reject/Approved when WF rule is configured for Application Score without Fixed , variable score setup.
 Given setting json values in excel for Credit
 When user is logged in institution
 And for EMV Card User fills Device Plan for credit product for Mastercard
@@ -23,22 +23,22 @@ And user processesAll deviceGeneration batch for new Application
 And user searches for created application
 And user sign out from customer portal
 
-Scenario: To process Pre-Production batch
+Scenario:1.2 To process Pre-Production batch
 Given user is logged in institution
 When credit processes pre-production batch using new Application
 Then user sign out from customer portal
 
-Scenario: To process Device-Production batch
+Scenario:1.3 To process Device-Production batch
 Given user is logged in institution
 When credit processes deviceproduction batch using new Application
 Then user sign out from customer portal
 
-Scenario: To process Pin-Generation batch
+Scenario:1.4 To process Pin-Generation batch
 Given user is logged in institution
 When new Application processes pin generation batch for credit
 Then user sign out from customer portal
 
-Scenario: To search New Application on HelpDesk Screen
+Scenario:1.5 To search New Application on HelpDesk Screen
 Given user is logged in institution
 When User search for new application on search screen for credit and validates the status as NORMAL
 Then user sign out from customer portal

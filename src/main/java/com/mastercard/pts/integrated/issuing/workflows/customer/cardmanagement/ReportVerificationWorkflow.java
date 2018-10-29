@@ -99,7 +99,7 @@ public class ReportVerificationWorkflow {
 		String reportUrl = page.generateDeviceActivityReport(device,report,program);
 		report.setReportUrl(reportUrl);
 		Map<Object, String> reportContent= getReportContent(report);
-		System.out.println("Client Code:" +report.getClientCode());
+		logger.info("Client Code:" +report.getClientCode());
 		reportContent.forEach((k,v)-> {
 			if(v.contains(report.getClientCode())){
 				toggle();

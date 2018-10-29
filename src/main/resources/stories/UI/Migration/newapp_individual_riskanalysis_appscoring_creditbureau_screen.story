@@ -5,7 +5,7 @@ I want to board credit device via New Application Screen with Risk Analysis, App
 					 
 Meta:
 @StoryName credit_emv_retail	 
-Scenario:To verify user is able to board credit device via New Application Screen with Risk Analysis, Application scoring and Credit Bureau
+Scenario:1.1 To verify user is able to board credit device via New Application Screen with Risk Analysis, Application scoring and Credit Bureau
 Given setting json values in excel for Credit
 When user is logged in institution
 And for EMV Card User fills Device Plan for credit product for Mastercard
@@ -29,22 +29,22 @@ And user processesAll deviceGeneration batch for new Application
 And user searches for created application
 And user sign out from customer portal
 
-Scenario: To process Pre-Production batch
+Scenario:1.2 To process Pre-Production batch
 Given user is logged in institution
 When credit processes pre-production batch using new Application
 Then user sign out from customer portal
 
-Scenario: To process Device-Production batch
+Scenario:1.3 To process Device-Production batch
 Given user is logged in institution
 When credit processes deviceproduction batch using new Application
 Then user sign out from customer portal
 
-Scenario: To process Pin-Generation batch
+Scenario:1.4 To process Pin-Generation batch
 Given user is logged in institution
 When new Application processes pin generation batch for credit
 Then user sign out from customer portal
 
-Scenario: To search New Application on HelpDesk Screen
+Scenario:1.5 To search New Application on HelpDesk Screen
 Given user is logged in institution
 When User search for new application on search screen for credit and validates the status as NORMAL
 Then user sign out from customer portal
