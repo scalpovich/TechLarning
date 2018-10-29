@@ -469,5 +469,14 @@ public class Constants {
 	public static final String CARD_PACK_TEMPLATE = "Card Pack ID Template";
 	
 	public static final String PROGRAM = "Program";
+	
+	//batch processing
+	public static final String BATCH_TYPE_UPLOAD = "UPLOAD [U]";
+	public static final String BATCH_TYPE_DOWNLOAD = "DOWNLOAD [D]";
 
+	public static final String CLIENT_PHOTO_FLAT_FILE_DOWNLOAD_BATCH = "Client Photo/Flat File Download Batch [CLIENT_PHOTO_DOWNLOAD]";
+	public static final String CARDHOLDER_DUMP_BATCH = "Cardholder Dump [CARDHOLDER_DUMP]";
+	
+	public static final String PRODUCT_TYPE_CREDIT = "Credit [C]";
+	public static final String EXTRACT_TYPE_FULL = "FULL [F]";
 }

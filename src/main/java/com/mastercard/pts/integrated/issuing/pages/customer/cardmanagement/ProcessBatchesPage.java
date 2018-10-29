@@ -697,18 +697,16 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	}
 	
 	public void processDownloadBatch(String batchType, String batchName) {
-		selectByVisibleText(batchTypeDdwn, "DOWNLOAD [D]");
-		if (batchName.equalsIgnoreCase("CLIENT_PHOTO_BATCH"))
-			selectByVisibleText(batchNameDdwn,
-					"Client Photo/Flat File Download Batch [CLIENT_PHOTO_DOWNLOAD]");
+		selectByVisibleText(batchTypeDdwn, Constants.BATCH_TYPE_DOWNLOAD);
+		if ("CLIENT_PHOTO_BATCH".equalsIgnoreCase(batchName))
+			selectByVisibleText(batchNameDdwn,Constants.CLIENT_PHOTO_FLAT_FILE_DOWNLOAD_BATCH);
 		else {
-			if (batchName.equalsIgnoreCase("CARDHOLDER_DUMP"))
-				selectByVisibleText(batchNameDdwn,
-						"Cardholder Dump [CARDHOLDER_DUMP]");
+			if ("CARDHOLDER_DUMP".equalsIgnoreCase(batchName))
+				selectByVisibleText(batchNameDdwn,Constants.CARDHOLDER_DUMP_BATCH);
 		}
 		SimulatorUtilities.wait(2000);
-		selectByVisibleText(productTypeDDwn, "Credit [C]");
-		selectByVisibleText(extractTypeDrpDwn, "FULL [F]");
+		selectByVisibleText(productTypeDDwn, Constants.PRODUCT_TYPE_CREDIT);
+		selectByVisibleText(extractTypeDrpDwn, Constants.EXTRACT_TYPE_FULL);
 		WebElementUtils.pickDate(fromDateAuth, LocalDate.now());
 		WebElementUtils.pickDate(toDateAuth, LocalDate.now());
 		WebElementUtils.enterText(cardHolderKycFromDateHHTxtBx, "00");
