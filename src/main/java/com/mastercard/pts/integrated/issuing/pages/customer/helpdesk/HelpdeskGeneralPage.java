@@ -1597,6 +1597,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			loanDetails.setProcessingFee(processingFeeLbl.getAttribute("value"));
 			loanDetails.setMoratoriumLoan(moratoriumLoanLbl.getAttribute("value"));
 			clickWhenClickable(sanctionBtn);
+			SimulatorUtilities.wait(3000);	
+			waitForElementVisible(okBtn);
 			elementToBeClickable(okBtn);
 			clickWhenClickable(okBtn);
 		});			
