@@ -110,6 +110,12 @@ public class UiVerificationLoyaltyWorkflow {
 		page.verifyUiOperationStatus();
 	}
 
+	public String getMaxLoyaltyPointsPerCycle(String plan) {
+		LoyaltyPlanPage page = navigator.navigateToPage(LoyaltyPlanPage.class);
+		page.searchByPlanCode(plan.substring(plan.indexOf("[") + 1, plan.indexOf("]")));
+		return page.getMaxPtsPerCycle();
+	}
+
 	public String getMaxLoyaltyPointsPerCycle() {
 		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
 		LoyaltyPlanPage page = navigator.navigateToPage(LoyaltyPlanPage.class);

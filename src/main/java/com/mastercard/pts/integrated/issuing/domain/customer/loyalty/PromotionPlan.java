@@ -40,6 +40,16 @@ public class PromotionPlan implements HasCodeAndDescription {
 	private String promotionloyaltyBatchDate;
 	private String floortransactionAmount;
 	private String mccCode;
+	private String invalidMccCode;
+
+	public String getInvalidMccCode() {
+		return invalidMccCode;
+	}
+
+	public void setInvalidMccCode(String invalidMccCode) {
+		this.invalidMccCode = invalidMccCode;
+	}
+
 	private String mcgCode;
 	private String thresholdAmount;
 	private String numberOfTransactions;
@@ -185,7 +195,8 @@ public class PromotionPlan implements HasCodeAndDescription {
 		plan.setFloortransactionAmount(provider.getString("FLOOR_TRANSACTION_AMOUNT"));
 		plan.setThresholdAmount(provider.getString("THRESHOLD_AMOUNT"));
 		plan.setNumberOfTransactions(provider.getString("NO._OF_TRANSACTIONS"));
-		plan.setMccCode(provider.getString("MCC_CODE_INVALID"));
+		plan.setMccCode(provider.getString("CODE_MCC"));
+		plan.setInvalidMccCode("MCC_CODE_INVALID");
 		plan.setMcgCode(provider.getString("MCG_CODE"));
 		return plan;
 	}

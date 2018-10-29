@@ -35,21 +35,23 @@ public class LoyaltyPlanSteps {
 		uiVerificationLoyaltyWorkflow.verifyLoyaltyPlanPage();
 	}
 
+	@Then("verify available loyalty points should be within loyalty plan limit")
+	public void verifyMaxAccruedLoyalty() {
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+		Double availablePts = 0.0;
+		Double maxPts = Double
+				.parseDouble(uiVerificationLoyaltyWorkflow.getMaxLoyaltyPointsPerCycle(data.getLoyaltyPlan()));
+		if (!(context.get(Constants.AVAILABLE_LOYALTY_POINTS).equals("-")))
+			availablePts = Double.parseDouble(context.get(Constants.AVAILABLE_LOYALTY_POINTS));
+		assertTrue(maxPts >= availablePts);
+	}
+
 	@When("user edits the loyalty plan for $field")
 	public void editLoyaltyPlan() {
 		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
 		loyaltyplan.setLoyaltyTransactionPlan(data.getLoyaltyPlan().substring(17).replace("]", ""));
 		loyaltyplan.setMaxloyaltypoints(provider.getString("MAX_AMT_EACH_PERIOD"));
 		uiVerificationLoyaltyWorkflow.EditLoyaltyPlanPage(loyaltyplan);
-	}
-
-	@Then("user verifies available loyalty points should be within loyalty plan limit")
-	public void verifyMaxAccruedLoyalty() {
-		Double availablePts = 0.0;
-		Double maxPts = Double.parseDouble(uiVerificationLoyaltyWorkflow.getMaxLoyaltyPointsPerCycle());
-		if (!(context.get(Constants.AVAILABLE_LOYALTY_POINTS).equals("-")))
-			availablePts = Double.parseDouble(context.get(Constants.AVAILABLE_LOYALTY_POINTS));
-		assertTrue(maxPts >= availablePts);
 	}
 
 }
