@@ -129,9 +129,7 @@ public class ContextConstants {
 	public static final String BALANCE_BEFORE_PAYMENT = "BALANCE_BEFORE_PAYMENT";
 	
 	public static final String BALANCE_AFTER_PAYMENT = "BALANCE_AFTER_PAYMENT";
-	
 
-	
 	private ContextConstants() {
 	}
 

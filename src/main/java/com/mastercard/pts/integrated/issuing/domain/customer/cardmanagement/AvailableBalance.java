@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class AvailableBalance {
 	
 	private BigDecimal availableBal;
-	BigDecimal billingAmount;
+	private BigDecimal billingAmount;
 	public BigDecimal getAvailableBal() {
 		return availableBal;
 	}
