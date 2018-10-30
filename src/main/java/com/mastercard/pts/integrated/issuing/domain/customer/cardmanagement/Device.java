@@ -44,7 +44,6 @@ public class Device {
 	private static final String JOINING_FEES = "JOINING_FEES";
 	private static final String MEMBERSHIP_FEES = "MEMBERSHIP_FEES";
 	
-	
 	private String currencyofTransfer;
 	private String currentTransPassword;
 	private String newTransPassword;
@@ -72,6 +71,7 @@ public class Device {
 	private String existingDeviceNumber;
 	private String photoIndicator;
 	private String batchNumber;
+	private String partnerMembershipNumber;
 	private String sequenceNumber;
 	private String cvvData;
 	private String expirationYear;
@@ -107,11 +107,14 @@ public class Device {
   	private String walletCurrency;
  	private String category;
   	private String amountType;
+  	private String updatedATCValue;
+  	private static double deviceAmountUsage = 0.00;
+  	private static double deviceVelocity = 0;
+  	private String dedupe;
 	private String joiningFees;
 	private String membershipFees;
 	private String promotionPlanCode;
   	
-
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
 		device.setApplicationType(provider.getString(APPLICATION_TYPE));
@@ -120,7 +123,7 @@ public class Device {
 		device.setCreateOpenBatch(provider.getString(CREATE_OPEN_BATCH));
 		device.setCustomerType(provider.getString(DEVICE_CUSTOMER_TYPE));
 		device.setDeviceType1(provider.getString(DEVICE_TYPE));
-		device.setClientDetails(ClientDetails.generateClient());
+		device.setClientDetails(ClientDetails.generateClient(provider));
 		device.setCurrentAddress(Address.generateAddress());
 		device.setBranchCode(provider.getString(BRANCH));
 		device.setAccountNumber(RandomStringUtils.randomNumeric(16));
@@ -136,7 +139,7 @@ public class Device {
 		device.setConfirmNewTransPassword(provider.getString(CHP_NEW_PASSWORD));	
 		device.setProductType(provider.getString(PRODUCT_TYPE));
 		device.setTransactionDateType(provider.getString(DATE_TYPE));
-      	device.setLegalID(RandomStringUtils.randomAlphanumeric(9));	
+      	device.setLegalID(RandomStringUtils.randomAlphabetic(1).toUpperCase()+ RandomStringUtils.randomNumeric(7));	
 		device.setProgramCode(provider.getString(PROGRAM_CODE));
 		device.setDevicePlan1(provider.getString(DEVICE_PLAN));     
 		device.setTransactionPassword(provider.getString(TRANSACTION_PASSWORD));		
@@ -568,6 +571,14 @@ public class Device {
 		this.batchNumber = batchNumber;
 	}
 
+	public String getPartnerMembershipNumber() {
+		return partnerMembershipNumber;
+	}
+
+	public void setPartnerMembershipNumber(String partnerMembershipNumber) {
+		this.partnerMembershipNumber = partnerMembershipNumber;
+	}
+
 	public String getSequenceNumber() {
 		return sequenceNumber;
 	}
@@ -626,6 +637,15 @@ public class Device {
 		this.vip = vip;
 	}
 	
+	public String getUpdatedATCValue() {
+
+		return updatedATCValue;
+	}
+
+	public void setUpdatedATCValue(String updatedATCValue) {
+		this.updatedATCValue = updatedATCValue;
+	}
+	
 	public String getServiceCode() {
 		return serviceCode;
 	}
@@ -681,6 +701,31 @@ public class Device {
 	public void setAmountType(String amountType) {
 		this.amountType = amountType;
 	}
+	
+	public double getDeviceAmountUsage() {
+		return deviceAmountUsage;
+	}
+
+	public void setDeviceAmountUsage(double deviceAmountUsage) {
+		Device.deviceAmountUsage = Device.deviceAmountUsage + deviceAmountUsage;
+	}
+
+	public double getDeviceVelocity() {
+		return deviceVelocity;
+	}
+
+	public void setDeviceVelocity() {
+		++deviceVelocity;
+	}
+
+	public String getDedupe() {
+		return dedupe;
+	}
+
+	public void setDedupe(String dedupe) {
+		this.dedupe = dedupe;
+	}
+	
 	public String getJoiningFees() {
 		return joiningFees;
 	}
@@ -695,9 +740,8 @@ public class Device {
 
 	public void setMemberShipFees(String membershipFees) {
 		this.membershipFees = membershipFees;
-}
-	
-	
+	}
+
 	public String getPromotionPlanCode() {
 		return promotionPlanCode;
 	}

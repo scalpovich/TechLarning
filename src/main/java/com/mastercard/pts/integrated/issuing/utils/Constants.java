@@ -348,6 +348,8 @@ public class Constants {
 	final public static String COMPARE_RETURN_OPERATION = "compare_return";
 
 	final public static String BOTH_PRIVILEGE_OPERATION = "both_privilege";
+	
+	final public static String BOTH = "Both";
 
 	final public static String DELETE_PRODUCTION_OPERATION = "delete_production";
 
@@ -467,5 +469,6 @@ public class Constants {
 	public static final String CARD_PACK_TEMPLATE = "Card Pack ID Template";
 	
 	public static final String PROGRAM = "Program";
+	public static final String APP_REJECT_REPORT = "Application Reject Report";
 
 }

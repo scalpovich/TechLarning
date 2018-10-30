@@ -18,7 +18,7 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.R
 @Component
 public class ReconciliationSteps {
 	private static final String BATCH_TYPE = "BATCH_TYPE";
-	private static final String BATCH_NAME_POST_MAINTENENCE = "BATCH_NAME_POST_MAINTENENCE";
+	private static final String BATCH_NAME_POST_MAINTENANCE = "BATCH_NAME_POST_MAINTENANCE";
 	@Autowired
 	private TestContext context;
 
@@ -53,20 +53,14 @@ public class ReconciliationSteps {
 		reconciliationWorkFlow.runPreClearingAndPrepaidEodBatch(processBatches);
 	}
 
-	@When("post maintenence batch is run")
-	public void whenPostMaintenenceBatchIsRun() {
+	@When("post maintenance batch is run")
+	public void whenPostMaintenanceBatchIsRun() {
 
-		List<ProcessBatches> processBatches = new ArrayList<>();
-
-		ProcessBatches postMaintenenceBatch = new ProcessBatches();
-		postMaintenenceBatch.setProductType(provider.getString(BATCH_TYPE));
-		postMaintenenceBatch.setBatchName(provider.getString(BATCH_NAME_POST_MAINTENENCE));
-
-		processBatches.add(postMaintenenceBatch);
-
-		reconciliationWorkFlow.runPostMaintenenceBatch(processBatches);
+		ProcessBatches postMaintenanceBatch = new ProcessBatches();
+		postMaintenanceBatch.setBatchName(provider.getString(BATCH_NAME_POST_MAINTENANCE));
+		reconciliationWorkFlow.runPostMaintenanceBatch(postMaintenanceBatch);
 	}
-
+	
 	@When("pre-clearing and Loyalty Calc batches are run")
 	public void whenPreclearingAndLoyaltyBatchesAreRun() {
 

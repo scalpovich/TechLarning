@@ -18,7 +18,6 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PinGenerationBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ResendPinRequest;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.VisaFeeCollection;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.BatchJobHistoryPage;
@@ -29,10 +28,11 @@ import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.Devic
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.PinGenerationBatchPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.PreProductionBatchPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ResendPINRequestPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.MenuFlows;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ResendPinRequest;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ResendPINRequestPage;
 
 @Workflow
 public class BatchProcessWorkflow extends MenuFlows{
@@ -79,6 +79,11 @@ public class BatchProcessWorkflow extends MenuFlows{
 		BatchTraceHistoryPage page = navigator.navigateToPage(BatchTraceHistoryPage.class);
 		return page.searchJob(jobId);
 	}
+	
+	public boolean verifyBatchTraceAvailability(String jobId){
+		BatchTraceHistoryPage page = navigator.navigateToPage(BatchTraceHistoryPage.class);
+		return page.searchJobTrace(jobId);
+	}
 
 	public boolean searchBatchJobHistory(String jobId){
 		BatchJobHistoryPage page = navigator.navigateToPage(BatchJobHistoryPage.class);
@@ -90,44 +95,30 @@ public class BatchProcessWorkflow extends MenuFlows{
 		return page.processSystemInternalProcessingBatch(batch);
 		
 	}
-	public void processDownloadBatch(ProcessBatches batch){
+
+	public void processDownloadBatch(ProcessBatches batch) {
 		ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
 		page.processDownloadBatch(batch);
-		
 	}
-
 
 	public String processSystemInternalProcessingBatchWithoutDateCheck(ProcessBatches batch){
 		ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
 		return page.processSystemInternalProcessingBatchWithoutDateCheck(batch);
-		
 	}
 
 	public String processSystemInternalProcessingMatchingBatch(ProcessBatches batch){
 		ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
 		return page.processSystemInternalProcessingBatchMatchingBatch(batch);
-		
 	}
 
 	public String processIpmDownloadBatch(ProcessBatches batch){
 		ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
 		return page.ipmDownloadBatch(batch);
 	}
+	
 	public String processVisaOutgoingBatch(ProcessBatches batch){
 		ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
 		return page.visaOutgoingDownloadBatch(batch);
-	}
-	
-	public String processCarrierDownloadBatch(ProcessBatches batch){
-		ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
-		return page.processCarrierDownloadBatch(batch);
-		
-	}
-	
-	public void processResendPinRequestBatch(ResendPinRequest batch)
-	{
-		ResendPINRequestPage page = navigator.navigateToPage(ResendPINRequestPage.class);
-		page.processResendPinRequestBatch(batch);
 	}
 	
 	public String getTransactionFromFile(File file)
@@ -168,5 +159,13 @@ public class BatchProcessWorkflow extends MenuFlows{
 		return  tranLine.substring(61, 73).contains(visafeecollection.getSourceAmount()) && tranLine.substring(27, 43).equals(device.getDeviceNumber()) ;
 	}
 	
-	
+	public String processCarrierDownloadBatch(ProcessBatches batch) {
+		ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
+		return page.processCarrierDownloadBatch(batch);
+	}
+
+	public void processResendPinRequestBatch(ResendPinRequest batch) {
+		ResendPINRequestPage page = navigator.navigateToPage(ResendPINRequestPage.class);
+		page.processResendPinRequestBatch(batch);
+	}
 }

@@ -1,7 +1,7 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.springframework.stereotype.Component;
-
+import java.time.LocalDate;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 @Component
@@ -18,13 +18,9 @@ public class ProcessBatches {
 	private String extractType;
 	private String methodToGenerateFile;
 	private String vendorName;
-
+	private LocalDate businessDate;
 	
-	
-
-
 	private static final String BATCH_TYPE = "UPLOAD [U]";
-	
 //	private static final String BATCH_NAME = "Transaction Upload [TRANSACTION_UPLOAD]";
 	private static final String BATCH_NAME = "Load IPM Incoming File [IPM_INCOMING]";
 	private static String fileName;
@@ -146,6 +142,11 @@ public class ProcessBatches {
 		this.vendorName = vendorName;
 	}
 	
-	
+	public void setBusinessDate(LocalDate businessDate) {
+		this.businessDate = businessDate;
+	}
 
+	public LocalDate getBusinessDate() {
+		return businessDate;
+	}
 }

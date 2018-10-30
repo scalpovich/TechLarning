@@ -1,7 +1,7 @@
 credit emv verification of Promotion Fee
 
 Narrative:
-In order to provide to client easy-to-use multi-purpose credit card pinless
+In order to provide to client easy-to-use retail general purpose credit card pinless
 As an issuer
 I want to create EMV Credit card pinless and verify Promotion fee
 
@@ -26,7 +26,7 @@ Then user sign out from customer portal
 
 Scenario: Post maintenance batch and pre-clearing batch is run 
 Given user is logged in institution
-When post maintenence batch is run
+When post maintenance batch is run
 And user processes Pre-clearing system internal batch for Credit
 Then user sign out from customer portal
 
@@ -34,3 +34,4 @@ Scenario: Promotion Fee is been Deducted
 Given user is logged in institution
 When search with device in transaction screen and status for Joining Fee
 Then user signs out from customer portal
+

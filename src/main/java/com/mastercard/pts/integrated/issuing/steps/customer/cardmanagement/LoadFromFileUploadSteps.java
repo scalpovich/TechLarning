@@ -31,6 +31,7 @@ import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoadFromFileUploadWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProcessBatchesFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.AuthorizationSearchWorkflow;
 
 @Component
 public class LoadFromFileUploadSteps {
@@ -52,6 +53,9 @@ public class LoadFromFileUploadSteps {
 
 	@Autowired
 	private LinuxBox linuxBox;
+	
+	@Autowired
+	private AuthorizationSearchWorkflow authSearchWorkFlow;
 
 	private File notFileName, pinOffsetFileName;
 
@@ -212,5 +216,13 @@ public class LoadFromFileUploadSteps {
 	@Then("batch is successful")
 	public void thenBatchisSuccesful() {
 		assertEquals("SUCCESS [2]", jobStatus);
+	}
+	
+	@Given("user generates Reversal for Transaction")
+	@When("user generates Reversal for Transaction")
+	@Then("user generates Reversal for Transaction")
+	public void userGenerateReversalForTransaction(){
+		Device device = context.get(ContextConstants.DEVICE);
+		authSearchWorkFlow.generateReversalForTransaction(device.getDeviceNumber());
 	}
 }

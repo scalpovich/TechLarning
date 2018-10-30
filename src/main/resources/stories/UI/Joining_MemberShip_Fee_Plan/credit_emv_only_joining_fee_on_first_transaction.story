@@ -1,7 +1,7 @@
 credit emv verification of joining fee
 
 Narrative:
-In order to provide to client easy-to-use multi-purpose credit card with pin
+In order to provide to client easy-to-use retail general purpose credit card with pin
 As an issuer
 I want to create EMV Credit card with pin and verify joining Fee
 
@@ -39,7 +39,7 @@ And MAS simulator is closed
 
 Scenario: Post maintenance batch and pre-clearing batch is run 
 Given user is logged in institution
-When post maintenence batch is run
+When post maintenance batch is run
 And user processes Pre-clearing system internal batch for Credit
 Then user sign out from customer portal
 

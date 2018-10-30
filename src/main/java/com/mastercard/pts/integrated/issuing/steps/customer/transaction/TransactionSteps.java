@@ -48,6 +48,7 @@ import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKeyValuePair;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceUsageWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
 
 @Component
@@ -61,6 +62,8 @@ public class TransactionSteps {
 	private static final String PIN_PRODUCTION = "pin production";
 	private static final String IPMINCOMING = "ipm incoming";
 	private static Boolean sameCard = false;
+	private static final String ATC = "ATC" ;
+	public boolean atcCounterFlag = false;
 
 	@Autowired
 	private TestContext context;
@@ -79,6 +82,9 @@ public class TransactionSteps {
 
 	@Autowired
 	private TransactionProvider transactionProvider;
+	
+	@Autowired
+	private DeviceUsageWorkflow deviceUsageWorkflow;
 
 	@Autowired
 	private ClearingTestCaseProvider clearingTestCaseProvider;
@@ -97,6 +103,8 @@ public class TransactionSteps {
 	private static String FAILED = "Transaction failed! ";
 
 	private static String FAIL_MESSAGE = FAILED + " -  Result : ";
+	
+	private static String INVALID_KEYS = "(default) - M/Chip Key Set from the related BIN range will be used";
 
 	public String getTransactionAmount() {
 		return transactionAmount;
@@ -125,7 +133,7 @@ public class TransactionSteps {
 
 	@When("perform an $transaction MAS transaction on the same card")
 	@Aliases(values={"a sample simulator \"$transaction\" is executed on the same card",
-    "user performs an \"$transaction\" MAS transaction on the same card"})
+	"user performs an \"$transaction\" MAS transaction on the same card"})
 	@Given("perform an $transaction MAS transaction on the same card")
 	public void givenTransactionIsExecutedOnTheSameCard(String transaction) {
 		String temp = transaction;
@@ -159,6 +167,12 @@ public class TransactionSteps {
 		Transaction transactionData = generateMasTestDataForTransaction(transaction);
 		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData, sameCard);
 	}
+	
+	@When("perform an $type MAS transaction with wrong keys")
+	public void performTransactionWithWrongKeys(String transaction) {
+		TransactionWorkflow.STAGE_KEYS = INVALID_KEYS;
+		givenTransactionIsExecuted(transaction);
+	}
 
 	@When("user performs generate TestData for an optimized $transaction MAS transaction")
 	@Given("user performs generate TestData for an optimized $transaction MAS transaction")
@@ -166,6 +180,15 @@ public class TransactionSteps {
 		// Storing transaction name in context to use it at runtime
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		generateMasTestDataForTransaction(transaction);
+	}
+
+	@Given("user updates ATC value as $type and value as $ATCValue")
+	@Then("user updates ATC value as $type and value as $ATCValue")
+	public void userUpdateATCValueAsRequired(String flag, String atcvalue) {
+		atcCounterFlag = true;
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setUpdatedATCValue(atcvalue);
+		context.put(ContextConstants.DEVICE, device);
 	}
 
 	private Transaction generateMasTestDataForTransaction(String transaction) {
@@ -276,6 +299,10 @@ public class TransactionSteps {
 		transactionData.setCardDataElementsDynamic("045.02", device.getDeviceNumber());
 		transactionData.setCardDataElementsDynamic("045.06", device.getExpirationDate());
 		transactionData.setCardDataElementsDynamic("035.04", device.getServiceCode());
+		if (atcCounterFlag)
+		{
+			transactionData.setCardDataElementsDynamic("055.9F36", device.getUpdatedATCValue());
+		}
 		if (transactionWorkflow.isContains(transaction, "EMV")) {
 			transactionData.setCardDataElementsDynamic("035.05", "000" + device.getIcvvData());
 		} else if (transactionWorkflow.isContains(transaction, "MSR") || transactionWorkflow.isContains(transaction, "FALLBACK") ) {
@@ -396,10 +423,10 @@ public class TransactionSteps {
 		Transaction transactionData = Transaction.generateFinSimPinTestData(device, finSimConfig, provider);
 		String pinNumber = transactionWorkflow.getPinNumber(transactionData);
 		logger.info("FINSim PIN Number generated : {} ", pinNumber);
-      	Assert.assertTrue("INVALID PIN", !pinNumber.isEmpty());
+		Assert.assertTrue("INVALID PIN", !pinNumber.isEmpty());
 		device.setPinNumberForTransaction(pinNumber);
 	}
-	
+
 	@When("PIN is created for Pin Change First Transaction")
 	@Then("PIN is created for Pin Change First Transaction")
 	public void thenPINIsCreatedForPinChangeFirstTransaction() {
@@ -465,8 +492,7 @@ public class TransactionSteps {
 		device.setJoiningFees(provider.getString("JOINING_FEES"));
 		device.setMemberShipFees(provider.getString("MEMBERSHIP_FEES"));
 		assertThat(transactionWorkflow.searchTransactionWithDeviceAndGetFees(device, ts), Matchers.hasItems(device.getJoiningFees(), device.getMembershipFees()));
-		
-				}
+	}
 	
 	@When("search with device in transaction screen and status for Joining Fee")
 	@Then("search with device in transaction screen and status for Joining Fee")
@@ -476,8 +502,7 @@ public class TransactionSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		device.setJoiningFees(provider.getString("JOINING_FEES"));
 		assertEquals(transactionWorkflow.searchTransactionWithDeviceAndGetJoiningFee(device, ts), device.getJoiningFees());
-		
-				}
+	}
 
 	@When("user performs load balance request")
 	public void whenUserPerformsLoadBalanceRequest() {
@@ -490,15 +515,15 @@ public class TransactionSteps {
 	
 	@When("user performs load balance request for Joining and Membership plan")
 	public void whenUserPerformsLoadBalanceRequestforJoiningandMemberShipPlan() {
-		Device device= new Device();
+		Device device = context.get(ContextConstants.DEVICE);
 		device.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
-		System.out.println(device);
 		LoadBalanceRequest lbr = LoadBalanceRequest.getProviderData(provider);
 		String loadRequestReferenceNumber = transactionWorkflow.performLoadBalanceRequestAndGetRequestReferenceNumber(device, lbr);
 		lbr.setLoadRequestReferenceNumber(loadRequestReferenceNumber);
 		context.put("LOADBALANCEREQUEST", lbr);
 	}
 
+	@When("load balance request is successful")
 	@Then("load balance request is successful")
 	public void thenLoadBalanceRequestIsSuccessful() {
 		assertThat("Load Balance Request Failed", transactionWorkflow.getLoadBalanceRequestSuccessMessage(), containsString("Load balance request forwarded for approval with request number :"));
@@ -511,6 +536,7 @@ public class TransactionSteps {
 		transactionWorkflow.performLoadBalanceApprove(device, lbr);
 	}
 
+	@When("load balance approve is successful")
 	@Then("load balance approve is successful")
 	public void thenLoadBalanceApproveIsSuccessful() {
 		assertThat("Load Balance Approve Failed", transactionWorkflow.getLoadBalanceApproveSuccessMessage(), containsString("approved successfully."));
@@ -542,6 +568,7 @@ public class TransactionSteps {
 
 	@When("$tool test results are verified for $transaction")
 	@Then("$tool test results are verified for $transaction")
+	@Given("$tool test results are verified for $transaction")
 	public void thenVisaTestResultsAreReported(String tool, String transaction) {
 		String testResults = null;
 		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseToSelect(transaction);
@@ -595,7 +622,7 @@ public class TransactionSteps {
 			transactionWorkflow.setFolderPermisson(provider.getString(IPM_INCOMING));
 		transactionWorkflow.closeWinSCP();
 	}
-	
+
 	@Then("user sets invalid pin")
 	@When("user sets invalid pin")
 	public void userSetInvalidPin(){
@@ -603,4 +630,28 @@ public class TransactionSteps {
 		device.setPinNumberForTransaction(ConstantData.INVALID_PIN);
 		context.put(ContextConstants.DEVICE, device);
 	}
+
+	/***
+	 * This method is implemented to change transaction amount for transaction
+	 * @param amount : Decimal representation for amount
+	 * */
+	@When("user updates transaction amount to $amount")
+	@Given("user updates transaction amount to $amount")
+	public void userSetTransactionAmount(Double amount){
+		int i = new Double(amount * 100).intValue(); 
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setTransactionAmount(Integer.toString(i));
+		context.put(ContextConstants.DEVICE, device);
+	}
+
+	@When("perform an $transaction MAS transaction with amount $amount")
+	public void givenGenerateTestDataForOptimizedTransactionWithDifferentAmountIsExecuted(String transaction, String amount) {
+		// Storing transaction name in context to use it at runtime
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setTransactionAmount(amount);
+		context.put(ConstantData.TRANSACTION_NAME, transaction);
+		performOperationOnSamecard(false);
+		givenOptimizedTransactionIsExecuted(transaction);
+	}
+
 }

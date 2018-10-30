@@ -17,6 +17,10 @@ public class DeviceTrackingWorkflow {
 	@Autowired
 	private Navigator navigator;
 	
+	public void checkForNewFieldsAdded(Device device) {
+		DeviceTrackingPage page = navigator.navigateToPage(DeviceTrackingPage.class);
+		page.checkForNewFieldsAdded(device);
+	}
 	
 	public String searchInDeviceTrackingWithDeviceAndCarrierStatus(Device device)
 	{
@@ -24,6 +28,5 @@ public class DeviceTrackingWorkflow {
 			return page.searchInDeviceTrackingWithDeviceAndCarrierStatus(device);
 		
 	}
-
 	
 }

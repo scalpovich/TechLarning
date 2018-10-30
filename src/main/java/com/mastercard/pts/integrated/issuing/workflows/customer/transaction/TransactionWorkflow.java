@@ -15,8 +15,10 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.jbehave.web.selenium.WebDriverProvider;
@@ -108,8 +110,13 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private static final String RESULT_IDENTIFIER = "Refresh";
 	private static final String VISA_FAILURE_MESSAGE = "Visa Incomming Message for transaction did not come :: {}";
 	private static final String SIMULATOR_LICENSE_TYPE_17 = "17";
+	public static String STAGE_KEYS="00998 - Example ETEC1 - 0213";
 	private static final String SIMULATOR_LICENSE_TYPE_18 = "18";
-
+	private static final String REVERSAL="Reversal";
+	private static final String STIP="STIP";
+	private static final int MAX_RETRY = 30;
+	private static final String CVV2_PREFIX_VALUE = "11";
+	
 	@Autowired
 	private WebDriverProvider webProvider;
 
@@ -1200,7 +1207,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void fillEmvChipKeySetDetails() {
 		if ("stagesa".equalsIgnoreCase(getEnv()))
-			selectMChipKeySet("00998 - Example ETEC1 - 0213");
+			selectMChipKeySet(STAGE_KEYS);
 		else if ("automation".equalsIgnoreCase(getEnv()) || "demo".equalsIgnoreCase(getEnv()))
 			if (SimulatorConstantsData.MAS_LICENSE_TYPE.contains("18") || SimulatorConstantsData.MAS_LICENSE_TYPE.contains("16"))
 				selectMChipKeySet("00999 - Example ETEC1 - 0213");
@@ -1506,6 +1513,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void winiumClickOperation(String locator) {
 		logger.info(WINIUM_LOG_COMMENT, locator);
+		SimulatorUtilities.wait(8000);
 		winiumDriver.findElementByName(locator).click();
 	}
 
@@ -1795,8 +1803,13 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		captureSaveScreenShot(methodName);
 		selectVisaTestCaseToMakeDataElementChange(transactionName);
 		Device device = context.get(ContextConstants.DEVICE);
-		if (transaction.toLowerCase().contains("pin"))
+		if (transaction.toLowerCase().contains("pin")) {
+			setValueInMessageEditorForTransction("F35.05", transactionName, (MiscUtils.randomNumber(2) + device.getCvvData()));	
 			setValueInMessageEditorForTransction("F52", transactionName, device.getPinNumberForTransaction());
+		}
+		else if(transaction.contains("ECOM")) {
+			setValueInMessageEditorForTransction("F126.10", transactionName, (CVV2_PREFIX_VALUE + " " + device.getCvv2Data()));	
+		}
 		captureSaveScreenShot(methodName);
 		executeVisaTest(transactionName);
 	}
@@ -1886,6 +1899,25 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		return tempValue;
 	}
 
+	private void waitForReturnButtonToGetEnable() {
+		boolean flag = false;
+		int retry = 0;
+		WebElement returnButton = null;
+		try {
+			while (!flag && retry <= MAX_RETRY) {
+				returnButton = winiumDriver.findElementByName("Return");
+				flag = returnButton.isEnabled();
+				wait(500);
+				retry ++;
+			}
+
+		} catch (NoSuchElementException ex) {
+			logMessage("Waiting for elemnt to get enabled", ex.getMessage());
+		}
+		returnButton.click();
+		wait(3000);
+	}
+
 	public void executeVisaTest(String transaction) {
 		MiscUtils.reportToConsole(" ******* executeVisaTest ******");
 		String methodName = new Object() {
@@ -1899,13 +1931,15 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		captureSaveScreenShot(methodName);
 		winiumClickOperation("Execute Test");
 		wait(5000);
+		waitForReturnButtonToGetEnable();
 		captureSaveScreenShot(methodName);
-		executeAutoITExe("visaTestExeution.exe");
+//		executeAutoITExe("visaTestExecution.exe");
 		captureSaveScreenShot(methodName);
 	}
 
 	public String verifyVisaOutput(String transaction) {
 		String results;
+		List<WebElement> lst;
 		MiscUtils.reportToConsole(" ******* verifyVisaOutput ******");
 		winiumClickOperation(transaction);
 		pressEnter();
@@ -1917,7 +1951,13 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(1000);
 		winiumClickOperation(RESULT_IDENTIFIER);
 		Actions action = new Actions(winiumDriver);
-		List<WebElement> lst = winiumDriver.findElements(By.name("0110 ISO Message, INCOMING. Match found"));
+		if (transaction.contains(REVERSAL)){
+			lst = winiumDriver.findElements(By.name("0410 ISO Message, INCOMING. Match found"));
+		} else if(transaction.contains(STIP)){
+			lst = winiumDriver.findElements(By.name("0130 ISO Message, INCOMING. Match found"));
+		} else{
+			lst = winiumDriver.findElements(By.name("0110 ISO Message, INCOMING. Match found"));
+		}
 		if (lst.isEmpty()) {
 			logMessage(VISA_FAILURE_MESSAGE, "");
 			return VISA_FAILURE_MESSAGE;
@@ -1929,7 +1969,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		browserMaximize();
 		return results;
 	}
-
+	
 	private void deleteOldLogs() {
 		executeAutoITExe("vtsDeleteOlderLogViewerLogs.exe");
 		executeAutoITExe("vtsCloseLogViewer.exe");

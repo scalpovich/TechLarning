@@ -2,7 +2,6 @@ package com.mastercard.pts.integrated.issuing.steps.devicecreation;
 
 import java.io.File;
 
-import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -13,32 +12,31 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PinGenerationBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ResendPinRequest;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SearchApplicationDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.processingcenter.Institution;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
-import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessFlows;
-import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProcessBatchesFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.SearchApplicationDetailsFlows;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ResendPinRequest;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessWorkflow;
 
 @Component
 public class ApplicationUploadSteps {
-	
-	@Autowired
-	private TestContext context;
 
 	@Autowired
 	private FileCreation fileCreation;
@@ -46,6 +44,8 @@ public class ApplicationUploadSteps {
 	@Autowired
 	private ProcessBatches processBatch;
 
+	private String jobId;
+	
 	@Autowired
 	private SearchApplicationDetailsFlows search;
 
@@ -62,9 +62,6 @@ public class ApplicationUploadSteps {
 	private BatchProcessFlows batchProcessFlows;
 	
 	@Autowired
-	private BatchProcessWorkflow batchProcessWorkflow;
-	
-	@Autowired
 	Program program;
 	
 	@Autowired
@@ -74,7 +71,15 @@ public class ApplicationUploadSteps {
 	private DataProvider provider;
 	
 	@Autowired
+	private TestContext context;
+	
+	@Autowired
+	private BatchProcessWorkflow batchProcessWorkflow;
+	
+	@Autowired
 	private KeyValueProvider keyValueProvider;
+	
+	private String ExpectedRejectedTxt = "Reuter reference number is Business mandatory field.";
 	
 	public SearchApplicationDetails searchDomain;
 
@@ -93,7 +98,29 @@ public class ApplicationUploadSteps {
 		SimulatorUtilities.wait(5000);
 		Assert.assertTrue(processBatchesFlows.verifyFileProcessFlowsUpload(processBatch, fileName));
 	}
+	
+	@When("user creates $application_upload_file batch file with duplicate data and upload it on server for $customerType for $cardType")
+	public void createFileForApplicationUploadWithDuplicateData(@Named("application_upload_file") String batchName, @Named("customerType") String customerType, @Named("cardType") String cardType) throws Exception {
+		String fileName = "";
+		if (ProductType.PREPAID.toUpperCase().contains(cardType.toUpperCase())) {
+			fileName = fileCreation.createApplicationUploadFileWithDuplicateData(Institution.createWithProvider(provider).getCode(), customerType, cardType);
+		} else if (ProductType.CREDIT.toUpperCase().contains(cardType.toUpperCase())) {
+			fileName = fileCreation.createApplicationUploadFileWithDuplicateData(Institution.createWithProvider(provider).getCodeCredit(), customerType, cardType);
+		} else if (cardType.contains("Static"))
+		{
+			fileName=fileCreation.createApplicationUploadForFileStaticVirtualCard(program.getInstitute(), customerType);
+		}
+		processBatch.setJoBID(processBatchesFlows.processUploadBatches(batchName, fileName));
+		SimulatorUtilities.wait(5000);
+		Assert.assertTrue(processBatchesFlows.verifyProcessUploadBatch(processBatch, fileName));
+	}
 
+	@When("Application Upload rejected due to missing Business Mandatory feild")
+	public void applicationUploadRejectedDueToMissingBMF(){
+		String rejectedDueToMissingMandatory = context.get(ContextConstants.REJECTED_FILE_UPLOAD);
+		Assert.assertEquals("Reuter reference number is Business mandatory field.",rejectedDueToMissingMandatory,ExpectedRejectedTxt);
+	}
+	
 	@When("user creates $application_upload_file batch file and uploads it on server for $customerType")
 	public void createFileForApplicationUpload(@Named("application_upload_file") String batchName, @Named("customerType") String customerType) throws Exception {
 		String fileName = fileCreation.createApplicationUploadForFile(program.getInstitute(), customerType);
@@ -101,7 +128,7 @@ public class ApplicationUploadSteps {
 		CustomUtils.ThreadDotSleep(5000);
 		Assert.assertTrue(processBatchesFlows.verifyFileProcessFlowsUpload(processBatch, fileName));
 	}
-	
+
 	@Then("The file will process the records successfully if all the all the business mandatory field are configured in file")
 	public void verifyApplicationFileUpload() {
 		searchDomain = searchDomain.getSearchApplicationData();
@@ -110,7 +137,6 @@ public class ApplicationUploadSteps {
 
 	@When("processes $type pre-production batch")
 	public void whenProcessesPreproductionBatchForPrepaid(String type) {
-
 		preProductionBatch.setProductType(ProductType.fromShortName(type));
 		preProductionBatch.setJobID(processBatch.getJoBID());
 		batchProcessFlows.processPreProductionBatch(preProductionBatch);
@@ -119,7 +145,6 @@ public class ApplicationUploadSteps {
 	@Then("$type processes pre-production batch using new Device")
 	@When("$type processes pre-production batch using new Device")
 	public void whenProcessesPreproductionBatchForDevice(String type) {
-
 		preProductionBatch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processPreProductionBatchNewDevice(preProductionBatch);
 	}
@@ -134,9 +159,15 @@ public class ApplicationUploadSteps {
 	@Then("$type processes pre-production batch using new Application for fileUpload in Bulk")
 	@When("$type processes pre-production batch using new Application for fileUpload in Bulk")
 	public void whenProcessesPreproductionBatchForDeviceUsingApplicationForFileUpload(String type) {
-
 		preProductionBatch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processPreProductionBatchNewApplicationFileUpload(preProductionBatch);
+	}
+	
+	@Then("$type processes pre-production batch using new Application for fileUpload in Bulk from jobid")
+	@When("$type processes pre-production batch using new Application for fileUpload in Bulk from jobid")
+	public void whenProcessesPreproductionBatchForDeviceUsingApplicationForFileUploadForPrepaid(String type) {
+		preProductionBatch.setProductType(ProductType.fromShortName(type));
+		batchProcessFlows.processPreProductionBatchNewApplicationFileUploadForPrepaid(preProductionBatch);
 	}
 
 	@Then("$type processes deviceproduction batch using new Device")
@@ -147,6 +178,12 @@ public class ApplicationUploadSteps {
 		batchProcessFlows.processDeviceProductionBatchNewDevice(batch);
 	}
 	
+	@Then("Date should be displayed as editable on screen")
+	@When("Date should be displayed as editable on screen")
+	public void thenDateShouldBeDisplayedOnOnScreen() {
+		boolean result = batchProcessFlows.verifyClientPhotoFlatFileDownloadBatchScreen();
+		Assert.assertTrue("Client photo/flat file download batch screen is not displayed properly", result);
+	}
 	
 	@Then("$type processes deviceproduction batch using new Device for Supplementary")
 	@When("$type processes deviceproduction batch using new Device for Supplementary")
@@ -155,7 +192,7 @@ public class ApplicationUploadSteps {
 		batch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processDeviceProductionBatchNewDeviceSupplementary(batch);
 	}
-
+	
 	@Then("$type processes pinProduction batch using new Application")
 	@When("$type processes pinProduction batch using new Application")
 	public void whenProcessesPinproductionBatchForNewApplication(String type) {
@@ -234,6 +271,14 @@ public class ApplicationUploadSteps {
 		batchProcessFlows.processDeviceProductionBatchAllForFileUpload(batch);
 	}
 	
+	@Then("All processes $type device production batch for fileUpload in Bulk from jobid")
+	@When("All processes $type device production batch for fileUpload in Bulk from jobid")
+	public void whenProcessesDeviceProductionBatchForAllForFileUploadForPrepaid(String type) {
+		DeviceProductionBatch batch = new DeviceProductionBatch();
+		batch.setProductType(ProductType.fromShortName(type));
+		batchProcessFlows.processDeviceProductionBatchAllForFileUploadForPrepaid(batch);
+	}
+	
 	@Then("All processes $type pin production batch for fileUpload in Bulk")
 	@When("All processes $type pin production batch for fileUpload in Bulk")
 	public void whenProcessesPinProductionBatchForAllForFileUpload(String type) {
@@ -242,7 +287,6 @@ public class ApplicationUploadSteps {
 		batchProcessFlows.processPinProductionBatchAllForFileUpload(batch);
 	}
 	
-
 	@When("User creates UPLOAD $batchName batch")
 	@Then("User creates UPLOAD $batchName batch")
 	public void thenUserCreatesUploadPinFileAcknowledgementBatch(String batchName) {
@@ -275,5 +319,4 @@ public class ApplicationUploadSteps {
 		batch.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
 		batchProcessWorkflow.processResendPinRequestBatch(batch);
 	}
-	
 }

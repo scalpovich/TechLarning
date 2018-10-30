@@ -28,6 +28,9 @@ import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoadFromFileUploadWorkflow;
+import java.time.LocalDateTime;
+import org.junit.Assert;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceDetailsFlows;
 
 @Component
 public class BatchSteps {
@@ -55,6 +58,11 @@ public class BatchSteps {
 	
 	@Autowired
 	private LoadFromFileUploadWorkflow loadFromFileUploadWorkflow;
+	
+	@Autowired
+	DeviceDetailsFlows flow; 
+	
+	private static final int PHOTO_REFERENCE_NUMBER_POSITION = 29;
 	
 	@When("embossing file batch was generated in correct format")
 	@Then("embossing file batch was generated in correct format")
@@ -141,7 +149,7 @@ public class BatchSteps {
 			MiscUtils.renamePinFile(batchFile.toString());
 			MiscUtils.reportToConsole("******** Pin Offset Completed ***** ");
 		} catch (NullPointerException | FileNotFoundException e) {
-			MiscUtils.reportToConsole("getPinFileData Exception :/  " + e.toString());
+			MiscUtils.reportToConsole("getPinFileData Exception :  " + e.toString());
 			if (e.getLocalizedMessage().contains("NullPointerException")) {
 				device.setPinOffset("pin not retrieved");
 				MiscUtils.reportToConsole("Pin Offset :  " + "pin not retrieved");

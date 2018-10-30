@@ -52,6 +52,8 @@ public class ContextConstants {
 	
 	public static final String AVAILABLE_BALANCE_OR_CREDIT_LIMIT = "AVAILABLE_BALANCE_OR_CREDIT_LIMIT";
 	
+	public static final String BILLING_AMOUNT = "BILLING_AMOUNT";
+
 	public static final String AVAILABLE_ACCOUNT_OR_CREDIT_LIMIT = "AVAILABLE_ACCOUNT_OR_CREDIT_LIMIT";
 	
 	public static final String AVAILABLE_CLIENT_OR_CREDIT_LIMIT = "AVAILABLE_CLIENT_OR_CREDIT_LIMIT";
@@ -69,7 +71,7 @@ public class ContextConstants {
 	public static final String INTERNATIONAL = "international";
 	
 	public static final String DOMESTIC = "domestic";
-
+	
 	public static final String DEVICE_RANGE = "DEVICE_RANGE";
 	
 	public static final String ALL_DEVICE_NUMBERS = "ALL_DEVICE_NUMBERS";
@@ -87,6 +89,8 @@ public class ContextConstants {
 	public static final String PDF_PASSWORD = "PDF_PASSWORD";
 	
 	public static final String ACCOUNT_NUMBER = "Account Number";
+	
+	public static final String APPLICATION_NUMBER = "Application Number";
 	
 	public static final String STATEMENT_DATE = "Statement Date";
 	
@@ -114,12 +118,24 @@ public class ContextConstants {
 	
 	public static final String INST_PROPERTY = "institution";
 	
+	public static final String PAYMENT = "PAYMENT";
+	
 	public static final String CREDIT_LIMIT_AFTER_SR = "CREDIT_LIMIT_AFTER_SR";
+	
+	public static final String REJECTED_FILE_UPLOAD = "REJECTED_FILE_UPLOAD";
+	
+	public static final String JOB_ID = "JOB_ID";
+	
+	public static final String CLIENT_PHOTO_BATCH_PROCESS_TIME = "CLIENT_PHOTO_BATCH_PROCESS_TIME";
+	
+	public static final String BALANCE_BEFORE_PAYMENT = "BALANCE_BEFORE_PAYMENT";
+	
+	public static final String BALANCE_AFTER_PAYMENT = "BALANCE_AFTER_PAYMENT";
 	
 	public static final String PIN_OFFSET_FILE = "PIN_OFFSET_FILE";
 	
 	public static final String DAT_FILE_NAME = "DAT_FILE_NAME";
-	
+
 	private ContextConstants() {
 	}
 

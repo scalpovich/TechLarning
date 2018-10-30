@@ -11,11 +11,13 @@ import org.springframework.stereotype.Component;
 
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ClientPhotoFlatFileDownloadBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PinGenerationBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.BatchProcessingPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ClientPhotoFlatFileDownloadBatchPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceProductionPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.PinGenerationBatchPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.PreProductionBatchPage;
@@ -133,6 +135,11 @@ public class BatchProcessFlows extends MenuFlows {
 		page.processPreProductionBatchNewApplicationForFileUpload(batch);
 	}
 	
+	public void processPreProductionBatchNewApplicationFileUploadForPrepaid(PreProductionBatch batch) {
+		PreProductionBatchPage page = navigator.navigateToPage(PreProductionBatchPage.class);
+		page.processPreProductionBatchNewApplicationForFileUploadForPrepaid(batch);
+	}
+	
 	public void processDeviceProductionBatch(DeviceProductionBatch batch) {
 		deviceProductionPage = navigator.navigateToPage(DeviceProductionPage.class);
 		deviceProductionPage.processDeviceProductionBatch(batch);
@@ -151,6 +158,11 @@ public class BatchProcessFlows extends MenuFlows {
 	public void processDeviceProductionBatchAllForFileUpload(DeviceProductionBatch batch) {
 		deviceProductionPage = navigator.navigateToPage(DeviceProductionPage.class);
 		deviceProductionPage.processDeviceProductionBatchForAllForFileUpload(batch);
+	}
+	
+	public void processDeviceProductionBatchAllForFileUploadForPrepaid(DeviceProductionBatch batch) {
+		deviceProductionPage = navigator.navigateToPage(DeviceProductionPage.class);
+		deviceProductionPage.processDeviceProductionBatchForAllForFileUploadForPrepaid(batch);
 	}
 	
 	public void processPinProductionBatchAllForFileUpload(PinGenerationBatch batch) {
@@ -184,12 +196,17 @@ public class BatchProcessFlows extends MenuFlows {
 	
 	public void processPinProductionBatchNewDeviceCredit(PinGenerationBatch batch) {
 		PinGenerationBatchPage page = navigator.navigateToPage(PinGenerationBatchPage.class);
-		page.processPinProductionBatchNewDeviceCredit(batch);;
+		page.processPinProductionBatchNewDeviceCredit(batch);
 	}
 
 	public void processPinProductionBatchNewApplication(PinGenerationBatch batch) {
 		PinGenerationBatchPage page = navigator.navigateToPage(PinGenerationBatchPage.class);
 		page.processPinProductionBatchNewApplication(batch);
+	}
+
+	public boolean verifyClientPhotoFlatFileDownloadBatchScreen() {
+		ClientPhotoFlatFileDownloadBatchPage page = navigator.navigateToPage(ClientPhotoFlatFileDownloadBatchPage.class);
+		return page.isBatchDatePresent();
 	}
 
 }
