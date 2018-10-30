@@ -105,6 +105,7 @@ public class Device {
   	private String walletCurrency;
  	private String category;
   	private String amountType;
+  	private String updatedATCValue;
   	private static double deviceAmountUsage = 0.00;
   	private static double deviceVelocity = 0;
   	private String dedupe;
@@ -628,6 +629,15 @@ public class Device {
 	
 	public void setVip(String vip) {
 		this.vip = vip;
+	}
+	
+	public String getUpdatedATCValue() {
+
+		return updatedATCValue;
+	}
+
+	public void setUpdatedATCValue(String updatedATCValue) {
+		this.updatedATCValue = updatedATCValue;
 	}
 	
 	public String getServiceCode() {
