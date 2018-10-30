@@ -34,7 +34,6 @@ When user updates transaction amount to 10
 And perform an EMV_PURCHASE MAS transaction
 Then user is logged in institution
 And search Purchase authorization and verify 000-Successful status
-And user verifies FIXED_FEE applied on transaction
 And user sign out from customer portal
 
 Scenario: 1.4 Perform Reversal Transaction
