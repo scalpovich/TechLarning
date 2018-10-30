@@ -37,7 +37,9 @@ Scenario: 1.3 Perform EMV_PURCHASE Authorization transaction to check transactio
 Given connection to MAS is established
 When user updates transaction amount to 100
 And perform an EMV_PURCHASE MAS transaction
-Then user is logged in institution
+Then MAS test results are verified
+And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And user verifies TRANSACTION_FEE waived off on transaction
 And user sign out from customer portal
+And MAS simulator is closed
