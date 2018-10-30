@@ -1576,6 +1576,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		});			
 
 		clickEndCall();
+		
 		return loanDetails;
 
 	}
@@ -1595,13 +1596,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			noteTxt.click();
 			loanDetails.setLoanEMI(emiLbl.getAttribute("value"));
 			loanDetails.setProcessingFee(processingFeeLbl.getAttribute("value"));
-			loanDetails.setMoratoriumLoan(moratoriumLoanLbl.getAttribute("value"));
-			loanDetails.setProcessingDate(LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")));
-			clickWhenClickable(sanctionBtn);
+			loanDetails.setMoratoriumLoan(moratoriumLoanLbl.getAttribute("value"));			
+			clickWhenClickable(sanctionBtn);			
 			SimulatorUtilities.wait(3000);	
 			waitForElementVisible(okBtn);
 			elementToBeClickable(okBtn);
-			clickWhenClickable(okBtn);
+			clickWhenClickable(okBtn);			
 		});			
 		
 		return loanDetails;
