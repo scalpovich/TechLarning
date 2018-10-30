@@ -33,4 +33,3 @@ Scenario: Joining and MemberShip Fees is been Deducted
 Given user is logged in institution
 When search with device in transaction screen and status for Joining and Membership Fees
 Then user signs out from customer portal
-
