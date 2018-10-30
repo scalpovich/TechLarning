@@ -579,4 +579,10 @@ public class TransactionSteps {
 		device.setTransactionAmount(Integer.toString(i));
 		context.put(ContextConstants.DEVICE, device);
 	}
+	
+	@Then("Reversal Transaction")
+	public void reverseTransaction(){
+		String transaction = context.get(ConstantData.TRANSACTION_NAME);
+		transactionWorkflow.reverseTransaction(transaction,"17");
+	}
 }

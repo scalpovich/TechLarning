@@ -22,6 +22,7 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.jbehave.web.selenium.WebDriverProvider;
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
@@ -2109,5 +2110,38 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(2000);
 		winiumClickOperation("OK");
 
+	}
+	
+	public void reverseTransaction(String transaction, String reversalType) {
+		//launchWinSCP();
+		activateMas(transaction);
+		MiscUtils.reportToConsole("******************** Reversal Transaction Started ******************");
+		clickTestPreparations(transaction);
+		selectTestCaseFromImportedCases(transaction);
+		winiumClickOperation("Transaction Profiles");
+		SimulatorUtilities.wait(1000);
+		performClickOperationOnImages("TrxProfiles_Ref");
+		pressRightArrow();
+		performClickOperation("0400_Folder");
+		pressRightArrow(3);
+		performClickOperationOnImages("TrxProfiles_Ref");
+		performDoubleClickOperation("LinkedTransaction");
+		winiumClickOperation("Data Elements");
+		performClickOperation("FullName");
+		pressRightArrow(2);
+		pressPageUp(5);
+		pressPageDown(2);
+		SimulatorUtilities.wait(1000);
+		performDoubleClickOperation("ResponseCode");
+		performDoubleClickOperation("default");
+		winiumClickOperation("Enter value");
+		pressTab();
+		try {
+			setText(reversalType);
+		} catch (AWTException e) {
+			logger.error(e.getMessage(), e);
+		}
+		winiumClickOperation("OK");
+		performExecution(transaction);
 	}
 }
