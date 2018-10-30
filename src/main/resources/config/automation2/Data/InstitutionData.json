@@ -64,7 +64,10 @@
 	   "creditPlan":"TA4413NYAX [102]",
 	   "billingCycle":"AUTOMATION [131]",
    	   "walletPlan":"AUTOMATION [TA1160XDAT]",
-   	   "loyaltyPlan" : "Automation Test [AUTO]"
+   	   "loyaltyPlan" : "123 [123]",
+	   "devicePlan" : "TA5049IP",
+	   "walletFeePlan" : "A272985",
+	   "programCode" : "T7019T"
    },
    {
 	   "productIdentity":"Prepaid",

@@ -600,6 +600,7 @@ public class HelpDeskSteps {
 	}
 		else
 		{
+			logger.info(equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)) + "");
 			assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, creditLimit.get(ConstantData.AVAIL_ACCOUNT_LIMIT), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
 		}
 
@@ -917,7 +918,7 @@ public class HelpDeskSteps {
 		assertEquals(context.get(Constants.ACCUMULATED_REVERSED_POINTS), accumulatedPts);
 	}
 	
-	@When("user has loyalty points details for $type device")
+	@Then("user has loyalty points details for $type device")
 	public Map<String, String> givenUserHasLoyaltyPointsDetails(String type) {
 		Double zero = 0.0;
 		Device device = context.get(ContextConstants.DEVICE);
