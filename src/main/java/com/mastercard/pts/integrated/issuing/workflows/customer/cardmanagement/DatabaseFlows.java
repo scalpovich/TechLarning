@@ -27,7 +27,7 @@ public class DatabaseFlows {
 	@Autowired
 	private DBUtility dbUtil;	
 	
-	@Value("${institution}")
+	//@Value("${institution}")
 	private String institution;
 
 	public void updateInstituteDateToFirstOfNextMonth(String date)
