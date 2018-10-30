@@ -15,11 +15,9 @@ public class SendToCarrierWorkflow
 {
 	@Autowired
 	private Navigator navigator;
-
-
+	
 	public void processSendToCarrierBatch(SendToCarrier sendToCarrier) {
 		SendToCarrierPage page = navigator.navigateToPage(SendToCarrierPage.class);
 		page.processSendToCarrierBatch(sendToCarrier);
 	}
-
 }

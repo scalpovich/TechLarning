@@ -5,7 +5,6 @@ public class ResendPinRequest {
 	private String deviceNumber;
 	private String productType;
 	
-	
 	public String getProductType() {
 		return productType;
 	}
@@ -21,6 +20,4 @@ public class ResendPinRequest {
 	public void setDeviceNumber(String deviceNumber) {
 		this.deviceNumber = deviceNumber;
 	}
-	
-
 }

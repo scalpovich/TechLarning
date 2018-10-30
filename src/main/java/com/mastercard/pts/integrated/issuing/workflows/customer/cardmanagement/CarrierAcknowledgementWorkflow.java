@@ -10,16 +10,13 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
 @Workflow
 public class CarrierAcknowledgementWorkflow {
-
 	
 	@Autowired
 	private Navigator navigator;
-
 
 	public void processCarrierAcknowledgementBatch(CarrierAcknowledgement carrierAcknowledgement) {
 		CarrierAcknowledgementPage page = navigator.navigateToPage(CarrierAcknowledgementPage.class);
 		page.processCarrierAcknowledgementBatch(carrierAcknowledgement);
 	}
-
 	
 }

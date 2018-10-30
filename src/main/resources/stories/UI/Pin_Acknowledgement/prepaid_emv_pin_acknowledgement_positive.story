@@ -31,7 +31,7 @@ And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
 And device has "normal" status
-Then user sign out from customer portal
+And user sign out from customer portal
 
 Scenario: 3. Update pin offset file with pin acknowledgement and upload it on server
 Given Pin Offset file batch was generated successfully
@@ -45,5 +45,5 @@ And user processes Send To Carrier batch for PIN File Type and product prepaid
 And prepaid processes DOWNLOAD Carrier Download Batch batch for PIN File Type
 And prepaid processes Carrier Acknowledgement batch for PIN File Type
 And search with device in device tracking screen and status of carrier
-Then user sign out from customer portal
+And user sign out from customer portal
 

@@ -356,7 +356,6 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setFillEMVPlan(provider.getString(FILL_EMV_PLAN));
 		plan.setAllowInternationalTransaction(provider.getString(DP_ALLOW_INTERNATIONAL_TRANSACTIONS));
 		plan.setTransactionFeePlan(provider.getString(TRANSACTION_FEE_PLAN));
-		
 		return plan;
 	}
 

@@ -110,5 +110,4 @@ public class CarrierAcknowledgementPage extends AbstractBasePage {
 			clickSaveButton();
 		});
 	}
-
 }

@@ -82,7 +82,6 @@ public class DeviceTrackingPage extends AbstractBasePage {
 	}
 	
 	public String searchInDeviceTrackingWithDeviceAndCarrierStatus(Device device) {
-
 		WebElementUtils.enterText(txtCardNumber, device.getDeviceNumber());
 		clickSearchButton();
 		SimulatorUtilities.wait(2000);
@@ -94,6 +93,5 @@ public class DeviceTrackingPage extends AbstractBasePage {
 			clickCloseButton();
 		});
 		return carrierStatus;
-
-}
+	}
 }

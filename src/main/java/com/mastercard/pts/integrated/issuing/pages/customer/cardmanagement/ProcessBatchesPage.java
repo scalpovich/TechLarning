@@ -436,7 +436,6 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		
 		else if("Post Maintence Fee Batch [POST_MAINTENANCE_FEE]".equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Post Maintence Fee Batch [POST_MAINTENANCE_FEE]"); 
-		
 	}
 
 	public String processDownloadBatch(ProcessBatches batch) {

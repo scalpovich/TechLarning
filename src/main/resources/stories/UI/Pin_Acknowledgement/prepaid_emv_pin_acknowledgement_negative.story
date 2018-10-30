@@ -20,7 +20,7 @@ And User fills Business Mandatory Fields Screen for prepaid product
 And User fills Device Range section for prepaid product
 And user assigns service code to program
 Then user creates new device of prepaid type for new client
-Then user sign out from customer portal
+And user sign out from customer portal
 
 Scenario: 2. prepaid emv corporate travel card device production
 Given user is logged in institution
@@ -32,7 +32,7 @@ And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
 And device has "normal" status
-Then user sign out from customer portal
+And user sign out from customer portal
 
 Scenario: 3. Update pin offset file with negative pin acknowledgement and upload it on server
 Given Pin Offset file batch was generated successfully
@@ -45,7 +45,7 @@ Given user is logged in institution
 When User creates UPLOAD PIN Offset File Acknowledgement Upload batch
 And prepaid processes resend pin request batch using new Device
 And prepaid processes pingeneration batch using new Device for Supplementary
-Then user sign out from customer portal
+And user sign out from customer portal
 
 Scenario: 5. Update pin offset file with positive pin acknowledgement and upload it on server
 Given Pin Offset file batch was generated successfully
@@ -59,5 +59,5 @@ And user processes Send To Carrier batch for PIN File Type and product prepaid
 And prepaid processes DOWNLOAD Carrier Download Batch batch for PIN File Type
 And prepaid processes Carrier Acknowledgement batch for PIN File Type
 And search with device in device tracking screen and status of carrier
-Then user sign out from customer portal
+And user sign out from customer portal
 

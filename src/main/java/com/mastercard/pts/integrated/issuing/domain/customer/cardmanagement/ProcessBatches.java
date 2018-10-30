@@ -25,7 +25,6 @@ public class ProcessBatches {
 	private static final String BATCH_NAME = "Load IPM Incoming File [IPM_INCOMING]";
 	private static String fileName;
 
-
 	public static ProcessBatches createWithProvider(KeyValueProvider provider){
 		ProcessBatches batch = new ProcessBatches();
 		batch.setBatchName(provider.getString(BATCH_NAME));

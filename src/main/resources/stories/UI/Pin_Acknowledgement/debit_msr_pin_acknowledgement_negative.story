@@ -24,7 +24,7 @@ And device has "normal" status
 And user has wallet number information for debit device
 And user performs adjustment transaction
 And user has current wallet balance amount information for debit device
-Then user sign out from customer portal
+And user sign out from customer portal
 
 Scenario: 2. debit msr corporate debit card device production
 Given user is logged in institution
@@ -33,7 +33,7 @@ And processes pre-production batch for debit
 And processes device production batch for debit
 And processes pin generation batch for debit
 And device has "normal" status
-Then user sign out from customer portal
+And user sign out from customer portal
 
 Scenario: 3. Update pin offset file with negative pin acknowledgement and upload it on server
 Given Pin Offset file batch was generated successfully
@@ -46,7 +46,7 @@ Given user is logged in institution
 When User creates UPLOAD PIN Offset File Acknowledgement Upload batch
 And debit processes resend pin request batch using new Device
 And debit processes pingeneration batch using new Device for Supplementary
-Then user sign out from customer portal
+And user sign out from customer portal
 
 Scenario: 5. Update pin offset file with positive pin acknowledgement and upload it on server
 Given Pin Offset file batch was generated successfully
@@ -60,5 +60,5 @@ And user processes Send To Carrier batch for PIN File Type and product debit
 And debit processes DOWNLOAD Carrier Download Batch batch for PIN File Type
 And debit processes Carrier Acknowledgement batch for PIN File Type
 And search with device in device tracking screen and status of carrier
-Then user sign out from customer portal
+And user sign out from customer portal
 

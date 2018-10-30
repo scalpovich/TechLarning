@@ -308,7 +308,6 @@ public class ApplicationUploadSteps {
 		batch.setProductType(ProductType.fromShortName(type));
 		batch.setFileType(fileType);
 		batchProcessWorkflow.processCarrierDownloadBatch(batch);
-		
 	}	 
 	
 	@When("$type processes resend pin request batch using new Device")

@@ -24,7 +24,7 @@ And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pingeneration batch using new Device for Supplementary
 And device has "normal" status
-Then user sign out from customer portal
+And user sign out from customer portal
 
 Scenario: 2. Update pin offset file with pin acknowledgement and upload it on server
 Given Pin Offset file batch was generated successfully
@@ -38,4 +38,4 @@ And user processes Send To Carrier batch for PIN File Type and product credit
 And credit processes DOWNLOAD Carrier Download Batch batch for PIN File Type
 And credit processes Carrier Acknowledgement batch for PIN File Type
 And search with device in device tracking screen and status of carrier
-Then user sign out from customer portal
+And user sign out from customer portal

@@ -74,13 +74,10 @@ public class ResendPINRequestPage extends AbstractBasePage {
 				);
 	}
 	
-	
 	public void processResendPinRequestBatch(ResendPinRequest batch)
 	{
 		WebElementUtils.enterText(deviceNumber, batch.getDeviceNumber());
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
-		
 	}
-	
 }

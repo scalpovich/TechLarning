@@ -13,7 +13,6 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 @Workflow
 public class DeviceTrackingWorkflow {
 	
-	
 	@Autowired
 	private Navigator navigator;
 	
@@ -25,8 +24,6 @@ public class DeviceTrackingWorkflow {
 	public String searchInDeviceTrackingWithDeviceAndCarrierStatus(Device device)
 	{
 			DeviceTrackingPage page = navigator.navigateToPage(DeviceTrackingPage.class);
-			return page.searchInDeviceTrackingWithDeviceAndCarrierStatus(device);
-		
+			return page.searchInDeviceTrackingWithDeviceAndCarrierStatus(device);	
 	}
-	
 }

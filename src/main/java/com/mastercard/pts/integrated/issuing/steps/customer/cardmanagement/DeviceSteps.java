@@ -407,8 +407,6 @@ public class DeviceSteps {
 		context.put(CreditConstants.APPLICATION, device);
 	}
 	
-	
-	
 	@When("user selects secondary card for transaction")
 	public void userSelectSecondaryCardForTrasaction(){
 		//Code for saving primary device for future use
