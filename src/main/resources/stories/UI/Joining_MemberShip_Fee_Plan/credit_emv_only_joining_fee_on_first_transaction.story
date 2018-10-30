@@ -22,14 +22,14 @@ And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pingeneration batch using new Device for Supplementary
 And device has "normal" status
-Then user sign out from customer portal
+And user sign out from customer portal
 
 Scenario: Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
-Then FINSim simulator is closed
+And FINSim simulator is closed
 
 Scenario: Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
@@ -41,10 +41,10 @@ Scenario: Post maintenance batch and pre-clearing batch is run
 Given user is logged in institution
 When post maintenance batch is run
 And user processes Pre-clearing system internal batch for Credit
-Then user sign out from customer portal
+And user sign out from customer portal
 
 Scenario: Joining Fee is been Deducted
 Given user is logged in institution
 When search with device in transaction screen and status for Joining Fee
-Then user signs out from customer portal
+And user signs out from customer portal
 

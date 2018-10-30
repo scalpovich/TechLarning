@@ -12,7 +12,7 @@ Scenario: Set up prepaid emv retail general purpose card
 Given user is logged in institution
 And device range for program with device plan for "prepaid" "emv" card without pin
 When user creates new device of prepaid type for new client
-Then user signs out from customer portal
+And user signs out from customer portal
 
 Scenario: prepaid emv retail general purpose card device production
 Given user is logged in institution
