@@ -124,7 +124,7 @@ And user processes EOD-Credit system internal batch for Credit
 And user verify Unbilled amount for Loan Installment category
 And user processes Billing Process - Credit system internal batch for Credit
 And user verifies batch job history with job id
-And user verify Billed amount for Loan Installment category
+!-- And user verify Billed amount for Loan Installment category
 And user verify Outstanding amount for Loan Installment category
 Then update institution date to 5 days
 And user sign out from customer portal
@@ -169,7 +169,7 @@ And user processes EOD-Credit system internal batch for Credit
 And user verify Unbilled amount for Loan Installment category
 And user processes Billing Process - Credit system internal batch for Credit
 And user verifies batch job history with job id
-And user verify Billed amount for Loan Installment category
+!-- And user verify Billed amount for Loan Installment category
 And user verify Outstanding amount for Loan Installment category
 Then update institution date to next days
 And user sign out from customer portal
