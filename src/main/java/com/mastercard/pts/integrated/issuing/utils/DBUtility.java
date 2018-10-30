@@ -142,4 +142,10 @@ public class DBUtility {
 		}
 		return null;
 	}
+	
+	public String getCurrentDateForInstitution(String institutionCode) {
+		String query = Constants.INSTITUTION_NUMBER_QUERY_START + institutionCode + Constants.INSTITUTION_NUMBER_QUERY_END;
+		String colName = Constants.INSTITUTION_DATE+"('"+ institutionCode +"')";
+		return getSingleRecordColumnValueFromDB(query, colName);
+	}
 }
