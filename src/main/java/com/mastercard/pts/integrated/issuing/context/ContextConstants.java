@@ -136,6 +136,8 @@ public class ContextConstants {
 	
 	public static final String LOAN_PROCESS_DATE = "LOAN_PROCESS_DATE";
 	
+	public static final String PROCESSED_BATCHES = "PROCESSED_BATCHES";
+	
 	private ContextConstants() {
 	}
 

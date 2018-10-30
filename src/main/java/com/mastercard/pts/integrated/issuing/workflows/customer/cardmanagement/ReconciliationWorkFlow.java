@@ -127,7 +127,7 @@ public class ReconciliationWorkFlow {
 		}
 	}
 	
-	public String runCreditBillingBatch(ProcessBatches batch) {
+	public ProcessBatches runCreditBillingBatch(ProcessBatches batch) {
 		ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
 		return processBatch.processCreditBillingBatch(batch);
 	}

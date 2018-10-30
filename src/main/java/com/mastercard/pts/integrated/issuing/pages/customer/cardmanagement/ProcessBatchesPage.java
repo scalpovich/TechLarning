@@ -669,11 +669,14 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	 * @param batch 
 	 * @return status of batch e.g pass, fail
 	 */
-	public String processCreditBillingBatch(ProcessBatches batch) {
+	public ProcessBatches processCreditBillingBatch(ProcessBatches batch) {
+		ProcessBatches batches = new ProcessBatches();
 		selectBatchTypeAndName(batch);
 		WebElementUtils.pickDate(bussinessDateTxt, DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt)));
 		submitAndVerifyBatch();
-		return batchStatus;
+		batches.setJoBID(processBatchjobIDTxt.getText());
+		batches.setStatus(batchStatus);
+		return batches;
 	}
 
 	/**
