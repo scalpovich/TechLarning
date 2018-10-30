@@ -9,7 +9,7 @@ Meta:
 @Individual
 @Primary	 
 
-Scenario:1.0 creation of mastercard_individual_primary_emv Card credit device
+Scenario:1.1 creation of mastercard_individual_primary_emv Card credit device
 Given setting json values in excel for Credit
 When user is logged in institution
 And for EMV Card User fills Device Plan for credit product for Mastercard
@@ -42,7 +42,7 @@ And user sign out from customer portal
 !-- And device has "normal" status
 !-- And user notes down required values from helpdesk for credit
 
-Scenario:1.9 Update institution date then Login & Logout to wait for date to be updated foe next billing
+Scenario:1.4 Update institution date then Login & Logout to wait for date to be updated foe next billing
 Meta:
 @TestId 
 Given user is logged in institution
@@ -52,11 +52,13 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:1.4 Raise Loan SR and Verify Loan Account Details then update institution date to 1st of next month
+Scenario:1.5 Raise Loan SR and Verify Loan Account Details then update institution date to 1st of next month
 Given user is logged in institution
 When device has "normal" status
 When user raises Retail Transaction to Loan [215] request for Credit
 When user verifies loan account details
+When user processes Pre-clearing system internal batch for Credit
+And user processes EOD-Credit system internal batch for Credit
 And update institution date to first of next month
 And user sign out from customer portal
 
@@ -69,7 +71,7 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:1.7 Process Batches for billing and validated values on helpdesk and statement 
+Scenario:1.7 Process Batches for billing and validated values on helpdesk
 Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
@@ -83,7 +85,7 @@ And user sign out from customer portal
 !-- And device has "normal" status
 !-- And user notes down required values from helpdesk for credit
 
-Scenario:1.9 Update institution date then Login & Logout to wait for date to be updated foe next billing
+Scenario:1.8 Update institution date then Login & Logout to wait for date to be updated foe next billing
 Meta:
 @TestId 
 Given user is logged in institution
@@ -93,7 +95,7 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:1.8 Verify User is able to make Payment of credit card through cash mode after billing cycle
+Scenario:1.9 Verify User is able to make Payment of credit card through cash mode after billing cycle
 Meta:
 @PaymentCash
 Given user is logged in institution
@@ -105,7 +107,7 @@ When user check balance details through helpdesk after payment
 When update institution date to first of next month
 And user sign out from customer portal
 
-Scenario:1.9 Update institution date then Login & Logout to wait for date to be updated foe next billing
+Scenario:2.0 Update institution date then Login & Logout to wait for date to be updated foe next billing
 Meta:
 @TestId 
 Given user is logged in institution
@@ -115,7 +117,7 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:1.7 Process Batches for billing and validated values on helpdesk and statement 
+Scenario:2.1 Process Batches for billing and validated values on helpdesk 
 Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
@@ -127,7 +129,7 @@ And user verify Outstanding amount for Loan Installment category
 Then update institution date to next days
 And user sign out from customer portal
 
-Scenario:1.9 Update institution date then Login & Logout to wait for date to be updated foe next billing
+Scenario:2.2 Update institution date then Login & Logout to wait for date to be updated foe next billing
 Meta:
 @TestId 
 Given user is logged in institution
@@ -137,7 +139,7 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:1.8 Verify User is able to make Payment of credit card through cash mode after billing cycle
+Scenario:2.3 Verify User is able to make Payment of credit card through cash mode after billing cycle
 Meta:
 @PaymentCash
 Given user is logged in institution
@@ -150,7 +152,7 @@ And update institution date to first of next month
 And user sign out from customer portal
 
 
-Scenario:1.9 Update institution date then Login & Logout to wait for date to be updated foe next billing
+Scenario:2.4 Update institution date then Login & Logout to wait for date to be updated foe next billing
 Meta:
 @TestId 
 Given user is logged in institution
@@ -160,7 +162,7 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:1.7 Process Batches for billing and validated values on helpdesk and statement 
+Scenario:2.5 Process Batches for billing and validated values on helpdesk
 Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
@@ -172,7 +174,7 @@ And user verify Outstanding amount for Loan Installment category
 Then update institution date to next days
 And user sign out from customer portal
 
-Scenario:1.9 Update institution date then Login & Logout to wait for date to be updated foe next billing
+Scenario:2.6 Update institution date then Login & Logout to wait for date to be updated foe next billing
 Meta:
 @TestId 
 Given user is logged in institution
@@ -182,7 +184,7 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:1.8 Verify User is able to make Payment of credit card through cash mode after billing cycle
+Scenario:2.7 Verify User is able to make Payment of credit card through cash mode after billing cycle
 Meta:
 @PaymentCash
 Given user is logged in institution
@@ -195,7 +197,7 @@ When update institution date to first of next month
 And user sign out from customer portal
 
 
-Scenario:1.9 Update institution date then Login & Logout to wait for date to be updated foe next billing
+Scenario:2.8 Update institution date then Login & Logout to wait for date to be updated foe next billing
 Meta:
 @TestId
 Given user is logged in institution
@@ -205,7 +207,7 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:1.7 Process Batches for billing and validated values on helpdesk and statement 
+Scenario:2.9 Process Batches for billing and validated values on helpdesk
 Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
@@ -214,7 +216,7 @@ And user verifies batch job history with job id
 Then update institution date to next days
 And user sign out from customer portal
 
-Scenario:1.9 Update institution date then Login & Logout to wait for date to be updated foe next billing
+Scenario:3.0 Update institution date then Login & Logout to wait for date to be updated foe next billing
 Meta:
 @TestId 
 Given user is logged in institution
@@ -224,7 +226,7 @@ And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
 
-Scenario:1.7 Process Batches for billing and validated values on helpdesk and statement 
+Scenario:3.1 Process Batches for billing and validated values on helpdesk
 Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
