@@ -42,7 +42,7 @@ And search Purchase authorization and verify 000-Successful status
 And verify fixed transaction fee applied on purchase transaction
 And user sign out from customer portal
 
-Scenario:1.4 When user perform Reveral of Purchase Transaction
+Scenario:1.4 When user perform Reversal of Purchase Transaction
 Given user is logged in institution
 When user generates Reversal for Transaction
 Then search Purchase Reversal authorization and verify 000-Successful status
