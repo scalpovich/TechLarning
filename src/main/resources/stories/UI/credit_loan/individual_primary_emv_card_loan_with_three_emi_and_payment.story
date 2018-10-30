@@ -49,8 +49,7 @@ Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
-And user is logged in institution
-And user sign out from customer portal
+
 
 Scenario:1.5 Raise Loan SR and Verify Loan Account Details then update institution date to 1st of next month
 Given user is logged in institution
@@ -68,8 +67,7 @@ Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
-And user is logged in institution
-And user sign out from customer portal
+
 
 Scenario:1.7 Process Batches for billing and validated values on helpdesk
 Given user is logged in institution
@@ -92,8 +90,7 @@ Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
-And user is logged in institution
-And user sign out from customer portal
+
 
 Scenario:1.9 Verify User is able to make Payment of credit card through cash mode after billing cycle
 Meta:
@@ -114,8 +111,7 @@ Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
-And user is logged in institution
-And user sign out from customer portal
+
 
 Scenario:2.1 Process Batches for billing and validated values on helpdesk 
 Given user is logged in institution
@@ -136,8 +132,7 @@ Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
-And user is logged in institution
-And user sign out from customer portal
+
 
 Scenario:2.3 Verify User is able to make Payment of credit card through cash mode after billing cycle
 Meta:
@@ -159,8 +154,7 @@ Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
-And user is logged in institution
-And user sign out from customer portal
+
 
 Scenario:2.5 Process Batches for billing and validated values on helpdesk
 Given user is logged in institution
@@ -181,8 +175,7 @@ Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
-And user is logged in institution
-And user sign out from customer portal
+
 
 Scenario:2.7 Verify User is able to make Payment of credit card through cash mode after billing cycle
 Meta:
@@ -204,8 +197,7 @@ Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
-And user is logged in institution
-And user sign out from customer portal
+
 
 Scenario:2.9 Process Batches for billing and validated values on helpdesk
 Given user is logged in institution
@@ -223,8 +215,7 @@ Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
-And user is logged in institution
-And user sign out from customer portal
+
 
 Scenario:3.1 Process Batches for billing and validated values on helpdesk
 Given user is logged in institution
