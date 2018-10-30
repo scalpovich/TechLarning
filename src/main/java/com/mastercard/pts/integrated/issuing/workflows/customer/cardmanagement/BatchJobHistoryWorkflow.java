@@ -18,7 +18,7 @@ public class BatchJobHistoryWorkflow {
 		return page.findRecord();
 	}
 	
-	public ProcessBatches searchRecordByJobIDInBatchJobHistory(ProcessBatches batches) {
+	public ProcessBatches searchRecordByJobIDInBatchJobHistory(ProcessBatches batches){
 		BatchJobHistoryPage page = navigator.navigateToPage(BatchJobHistoryPage.class);
 		return page.searchRecord(batches);
 	}
