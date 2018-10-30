@@ -215,17 +215,5 @@ public class Payment {
 		cash.setAuthNumber(CustomUtils.RandomNumbers(Integer.valueOf(provider.getString(AUTH_NUMBER))));
 		return cash;
 	}
-
-	public static Payment outStationChequePaymentDataProvider(KeyValueProvider provider) {
-		Payment outStationCheque = new Payment();
-		outStationCheque.setDeviceNumber("");
-		outStationCheque.setChequeNumber(CustomUtils.RandomNumbers(Integer.valueOf(provider.getString(CHEQUE_NUMBER))));
-		outStationCheque.setChequeDate(LocalDate.now());
-		outStationCheque.setChequeAmount(provider.getString(CHEQUE_AMOUNT));
-		outStationCheque.setTransactionCurrency(provider.getString(TRANSACTION_CURRENCY));
-		outStationCheque.setMemo(provider.getString(MEMO_MSG));
-		return outStationCheque;
-	}
-
+	
 }
-

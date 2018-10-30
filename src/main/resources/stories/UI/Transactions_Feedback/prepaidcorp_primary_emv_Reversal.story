@@ -40,12 +40,11 @@ Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And verify fixed transaction fee applied on purchase transaction
-And user verifies available balance after transaction
 And user sign out from customer portal
 
 Scenario:1.4 When user perform Reveral of Purchase Transaction
 Given user is logged in institution
 When user generates Reversal for Transaction
 Then search Purchase Reversal authorization and verify 000-Successful status
-And user verifies available balance after transaction
+And user verifies available balance after reversal
 And MAS simulator is closed

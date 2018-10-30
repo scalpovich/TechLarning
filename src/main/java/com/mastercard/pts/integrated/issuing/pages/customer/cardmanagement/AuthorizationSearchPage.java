@@ -96,6 +96,8 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	
 	private String amountTypes = "Billing Amount:Transaction Fee:Service Tax:Markup Fee:Markup Service Tax";
 	
+	private BigDecimal availableBalanceAfterReversal;
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Authorization Search");
 		verifySearchButton("Search");
@@ -198,4 +200,19 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 		});
 		return availBal;
 	}
+
+	public BigDecimal viewAvailableBalanceAfterReversalTransaction(String deviceNumber) {
+		inputDeviceNumber(deviceNumber);
+		inputFromDate(LocalDate.now().minusDays(1));
+		inputToDate(LocalDate.now());
+		clickSearchButton();
+		viewFirstRecord();
+
+		runWithinPopup("View Authorization", () -> {
+			availableBalanceAfterReversal = new BigDecimal(availableBalanceTxt.getText());
+			clickCloseButton();
+		});
+		return availableBalanceAfterReversal;
+	}
+
 }
