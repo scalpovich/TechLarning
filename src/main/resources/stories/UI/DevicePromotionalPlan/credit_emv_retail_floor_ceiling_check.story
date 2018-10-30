@@ -34,13 +34,14 @@ Scenario: 1.3 Perform EMV_PURCHASE Authorization transaction with TX amount less
 Given connection to MAS is established
 When user updates transaction amount to 140
 And perform an EMV_PURCHASE MAS transaction
-Then user is logged in institution
+Then MAS test results are verified
+And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: 1.4 Perform EMV_PURCHASE Authorization transaction to check Ceiling Amount Check
 Given user updates transaction amount to 10
-And perform an EMV_PURCHASE MAS transaction on the same card
+When perform an EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 And search Purchase authorization and verify 100-Do Not Honour status
 And assert 32000 response with Decline AuthDecline Code and Transaction amount is less than Minimum amount configured at device promo level. as description
