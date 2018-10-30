@@ -41,6 +41,8 @@ public class DatabaseFlows {
 			daysDifference = daysDifference + 3;
 		} else if (noOfDays.equalsIgnoreCase("21")) {
 			daysDifference = daysDifference + 20;
+		}else {
+			daysDifference = daysDifference + Integer.parseInt(noOfDays);
 		}
 
 		logger.info("Diffrence Days : " + daysDifference);
