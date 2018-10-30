@@ -62,7 +62,6 @@ public class BatchJobHistorySteps {
 	@Then("user verifies batch job history with job id")
 	public void userSerachBatchJobHistoryWithJobID() {
 		ProcessBatches batches = context.get(ContextConstants.PROCESSED_BATCHES);
-		batchJobHistoryWorkflow.searchRecordByJobIDInBatchJobHistory(batches);
 		assertEquals("SUCCESS [2]", batchJobHistoryWorkflow.searchRecordByJobIDInBatchJobHistory(batches).getStatus());
 	}
 }

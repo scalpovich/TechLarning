@@ -8,6 +8,7 @@ import java.util.Collection;
 import junit.framework.Assert;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -122,11 +123,21 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 		WebElementUtils.pickDate(toJobStartDttmDPkr, LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")));
 		WebElementUtils.enterText(jobIdTxt, batches.getJoBID());
 		clickSearchButton();
-		viewFirstRecord();
-		waitForBatchStatus();
-		batches.setStatus(batchStatus.getText());
-		return batches;
-	
+		viewFirstRecord();		
+		runWithinPopup("View Batch Details", () -> {
+			logger.info("Retrieving batch status");
+			waitForBatchStatus();
+			batches.setStatus(batchStatus.getText());
+			try{
+				clickCloseButton();
+			}
+				catch(StaleElementReferenceException ex)
+			{
+					clickCloseButton();
+			}
+		});		
+		
+		return batches;	
 	}
 
 	public String[] findRecord() {

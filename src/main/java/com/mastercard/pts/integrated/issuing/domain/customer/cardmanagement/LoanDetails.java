@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
+import java.time.LocalDate;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,7 +14,14 @@ public class LoanDetails {
 	private String interestAmount;
 	private String moratoriumLoan;
 	private String transactionAmount;
+	private LocalDate processingDate;
 	
+	public LocalDate getProcessingDate() {
+		return processingDate;
+	}
+	public void setProcessingDate(LocalDate processingDate) {
+		this.processingDate = processingDate;
+	}
 	public String getTransactionAmount() {
 		return transactionAmount;
 	}

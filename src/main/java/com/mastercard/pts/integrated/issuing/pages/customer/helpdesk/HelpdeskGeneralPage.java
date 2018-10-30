@@ -1596,6 +1596,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			loanDetails.setLoanEMI(emiLbl.getAttribute("value"));
 			loanDetails.setProcessingFee(processingFeeLbl.getAttribute("value"));
 			loanDetails.setMoratoriumLoan(moratoriumLoanLbl.getAttribute("value"));
+			loanDetails.setProcessingDate(LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")));
 			clickWhenClickable(sanctionBtn);
 			SimulatorUtilities.wait(3000);	
 			waitForElementVisible(okBtn);

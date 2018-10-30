@@ -137,6 +137,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	private MCWebElement jobId;
 
 	private String batchStatus;
+	
+	private String jobID;
 	@PageElement(findBy = FindBy.NAME, valueToFind = "batchType:input:dropdowncomponent")
 	private MCWebElement batchTypeDdwn;
 
@@ -494,6 +496,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			logger.info("Retrieving batch status");
 			waitForBatchStatus();
 			batchStatus = batchStatusTxt.getText();
+			jobID = processBatchjobIDTxt.getText();
 			try{
 			clickCloseButton();
 			}
@@ -674,7 +677,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		selectBatchTypeAndName(batch);
 		WebElementUtils.pickDate(bussinessDateTxt, DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt)));
 		submitAndVerifyBatch();
-		batches.setJoBID(processBatchjobIDTxt.getText());
+		batches.setJoBID(jobID);
 		batches.setStatus(batchStatus);
 		return batches;
 	}

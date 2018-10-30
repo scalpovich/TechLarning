@@ -80,7 +80,7 @@ And user processes Billing Process - Credit system internal batch for Credit
 And user verifies batch job history with job id
 And user verify Billed amount for Loan Installment category
 And user verify Outstanding amount for Loan Installment category
-Then update institution date to next days
+Then update institution date to 5 days
 And user sign out from customer portal
 !-- And device has "normal" status
 !-- And user notes down required values from helpdesk for credit
@@ -126,7 +126,7 @@ And user processes Billing Process - Credit system internal batch for Credit
 And user verifies batch job history with job id
 And user verify Billed amount for Loan Installment category
 And user verify Outstanding amount for Loan Installment category
-Then update institution date to next days
+Then update institution date to 5 days
 And user sign out from customer portal
 
 Scenario:2.2 Update institution date then Login & Logout to wait for date to be updated foe next billing
@@ -213,7 +213,7 @@ When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
 And user processes Billing Process - Credit system internal batch for Credit
 And user verifies batch job history with job id
-Then update institution date to next days
+Then update institution date to 5 days
 And user sign out from customer portal
 
 Scenario:3.0 Update institution date then Login & Logout to wait for date to be updated foe next billing
