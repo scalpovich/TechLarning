@@ -1,14 +1,12 @@
 
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
-import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Locale;
@@ -30,7 +28,6 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceGenerationBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequest;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ClientDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
@@ -41,14 +38,14 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreP
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
-import com.mastercard.pts.integrated.issuing.pages.collect.administration.AdministrationHomePage;
-import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoadFromFileUploadWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ReportVerificationWorkflow;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProcessBatchesFlows;
 
 /**
  * @author E071669
@@ -69,6 +66,9 @@ public class BatchProcessSteps {
 
 	@Autowired
 	private LoadFromFileUploadWorkflow loadFromFileUploadWorkflow;
+	
+	@Autowired
+	private ProcessBatchesFlows processBatchesFlows;
 
 	@Autowired
 	private ReportVerificationWorkflow reportVerificationWorkflow;
@@ -162,14 +162,16 @@ public class BatchProcessSteps {
 	}
 	
 	@When("new Application processes pin generation batch for $type")
+	@Then("new Application processes pin generation batch for $type")
 	public void whenProcessesPinGenerationBatchUsingNewApplication(String type){
 		PinGenerationBatch batch = new PinGenerationBatch();
 		batch.setProductType(ProductType.fromShortName(type));
-		String batchNumber=context.get(CreditConstants.NEW_APPLICATION_BATCH);
+		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
 		batch.setBatchNumber(batchNumber);
 		MiscUtils.reportToConsole("pin generation Batch: {}", batchNumber);
 		jobId = batchProcessWorkflow.processPinGenerationBatch(batch);
 		MiscUtils.reportToConsole("pin generation Job Id: {}", jobId);
+		SimulatorUtilities.wait(2000);
 	}
 	
 	@When("user processes pin generation batch for $type")	
@@ -272,6 +274,6 @@ public class BatchProcessSteps {
 		String partialFileName = context.get(ConstantData.VISA_OUT_GOING_FILE_NAME);
 		File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(partialFileName, tempDirectory.toString(), ConstantData.VISA_BASEII_LINUX_DIRECTORY,"proc");
 		Assert.assertTrue("Transaction Data Does not match ",batchProcessWorkflow.validateVisaOutGoingFile(batchFile));
-
 	}
+
 }

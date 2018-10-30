@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.springframework.stereotype.Component;
 
+import com.google.common.base.Strings;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BatchLevelPriviledge;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.AdministrationNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -24,10 +25,10 @@ public class BatchLevelPreviledgePage extends BatchLevelPriviledge {
 	public String optionLocator = "//span[.='%s']/../../..//input";
 	public String accessCheckBox = "//div[@id='tab%i']//label[.='Access']/preceding-sibling::input";
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[contains(@name,'componentList:0')]")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[text()='Entity Type']//following-sibling::td[@class='field'][1]/select")
 	private MCWebElement entityType;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[contains(@name,'componentList:1')]")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[text()='Entity ID']//following-sibling::td[@class='field'][1]/select")
 	private MCWebElement entityID;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Search']")
@@ -54,8 +55,12 @@ public class BatchLevelPreviledgePage extends BatchLevelPriviledge {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class='feedbackPanelINFO']")
 	private MCWebElement feedBackPanel;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'CLIENT_PHOTO_DOWNLOAD')]")
+	private MCWebElement clientPhotoDownloadRow;
 	
-
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Client Photo/Flat File Download Batch')]/following::input")
+	private MCWebElement clientPhotoDownloadChkBox;
+	
 	public WebElement BatchTypeAccessWithName(String OptionName) {
 		return getFinder().getWebDriver().findElement(
 				By.xpath(optionLocator.replace("%s", OptionName)));
@@ -129,5 +134,15 @@ public class BatchLevelPreviledgePage extends BatchLevelPriviledge {
 		accessOnTab(String.valueOf(3)).click();
 		clickWhenClickable(saveBtn);
 	}
-
+	
+	public void verifyClientPhotoBatchPresent(){
+		Assert.assertTrue(isElementPresent(clientPhotoDownloadRow));
+	}
+	
+	public void supplyAccessToClientPhotoBatch(){
+		clickBatchDownloadTab();
+		ClickCheckBox(clientPhotoDownloadChkBox, true);
+		clickSaveButton();
+		Assert.assertTrue(!Strings.isNullOrEmpty(getSuccessMessage()));
+	}
 }

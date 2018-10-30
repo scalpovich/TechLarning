@@ -155,6 +155,15 @@ public class UserManagementSteps {
 		userDefaultInstitution = ConstantData.PROCESSING_INSTITUTION;
 		loginWorkflow.logInInstitutionAsAdmin(csrPortal, userDefaultInstitution);
 	}
+	
+	@Given("user is logged in customer portal as admin user in default institution")
+	@When("user is logged in customer portal as admin user in default institution")
+	public void givenUserIsLoggedInCustomerPortalInDefaultInstitution() {
+		Portal csrPortal = environment.getPortalByType(Portal.TYPE_CUSTOMER);
+		String institution = Institution.createWithProvider(provider).buildAbbreviationAndCode();
+		loginWorkflow.logInInstitutionAsAdmin(csrPortal, institution);
+	}
+	
     @Given("user logs in with valid credentials")
 	@When("user logs in with valid credentials")
 	public void whenUserLogsInWithValidCredentials() {

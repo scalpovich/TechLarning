@@ -309,11 +309,16 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
   	}
 
 	private void fillBatchDetails(Device device) {
-		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
-		clickWhenClickable(generateDeviceBatchBtn);
-		waitForWicket();
-		SimulatorUtilities.wait(10000);
-		context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());
+		if(device.getApplicationType().contains(ApplicationType.PRIMARY_DEVICE)){
+			WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
+			clickWhenClickable(generateDeviceBatchBtn);
+			waitForWicket();
+			SimulatorUtilities.wait(10000);
+			context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());
+		}else if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){
+			WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn,ConstantData.OPEN_BATCH);
+			WebElementUtils.selectDropDownByVisibleText(openBatchDdwn, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));			
+		}		
 		device.setBatchNumber(batchNumberTxt.getText());
 		logger.info(" *********** Batch number *********** : {}",device.getBatchNumber());		
 		clickNextButton();
@@ -328,7 +333,9 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
 		SimulatorUtilities.wait(1000);
-		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)) {
+		String programCodeDDwnBy = "view:programCode:input:dropdowncomponent";
+		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)
+				|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)) {
 			enterText(existingDeviceNumberTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));
 			SimulatorUtilities.wait(8000);
 			moveToElementAndClick(existingClientLabel, 50, 50);
@@ -337,21 +344,23 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			JavascriptExecutor jse = (JavascriptExecutor) getFinder().getWebDriver();
 			jse.executeScript("el = document.elementFromPoint(400, 400); el.click();");
 
-		}else{
+		} else {
 			selectByVisibleText(customerTypeDDwn, device.getCustomerType());
 			SimulatorUtilities.wait(10000);
 			waitForWicket(driver());
 			selectByVisibleText(programCodeDDwn, device.getProgramCode());
-			SimulatorUtilities.wait(10000);	
+			SimulatorUtilities.wait(10000);
 			waitForWicket(driver());
+			selectByVisibleText(programCodeDDwn, device.getProgramCode());
+
 		}
 		SimulatorUtilities.wait(1000);
+		SimulatorUtilities.wait(10000);
 		clickNextButton();
-		
-		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());		
+
+		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());
 		WebElementUtils.selectDropDownByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
-		if(Objects.nonNull(device.getPromotionPlanCode()))
-		{
+		if (Objects.nonNull(device.getPromotionPlanCode())) {
 			WebElementUtils.selectDropDownByVisibleText(promotionPlanDDwn, device.getPromotionPlanCode());
 		}
 		WebElementUtils.selectDropDownByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());

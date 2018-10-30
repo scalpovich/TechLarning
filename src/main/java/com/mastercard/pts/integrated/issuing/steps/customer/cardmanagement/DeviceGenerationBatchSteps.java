@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,12 @@ public class DeviceGenerationBatchSteps {
 	
 	@When("user processes deviceGeneration batch for new Application for FileUpload")
 	public void closeFirstBatchExecutionForNewApplication(){
-		deviceGenerationBatchFlows.deviceGenerationFirstBatchExecution();
-	}	
+		deviceGenerationBatchFlows.deviceGenerationBatchExecutionForFileUpload();
+	}
+	
+	@When("user processesAll deviceGeneration batch for new Application")
+	@Then("user processesAll deviceGeneration batch for new Application")
+	public void closetBatchExecutionForNewApplication(){
+		deviceGenerationBatchFlows.deviceGenerationAllBatchExecution();
+	}
 }

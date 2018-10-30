@@ -14,6 +14,7 @@ import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
@@ -130,6 +131,7 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 		enterText(this.deviceNumber, deviceNumber);
 		waitForElementVisible(searchBtn);
 		searchBtn.click();
+		SimulatorUtilities.wait(4000);
 		return getCellTextByColumnName(Constants.TABLE_ROW_NUM, Constants.COLUMN_NAME);
 	}
 	
@@ -145,6 +147,7 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 			WebElementUtils.enterText(mobileNumberUploadTxt,helpDeskGeneral.getMobileNumber());
 			clickSearchButton();
 			waitForPageToLoad(driver());
+			SimulatorUtilities.wait(3000);
 			String normalStatus=driver().findElement(By.xpath("//table[@class='dataview']//tr//following-sibling::td["+statusHeader()+"]/span")).getText();
 			assertThat(STATUS_DEVICE_NOT_NORMAL, normalStatus, equalTo(UPLOAD_EXPECTED_STATUS));
 			logger.info("Device Number :" +"  "+counter+"   "+ "-" +" "+ deviceNumberTxt.getText());

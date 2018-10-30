@@ -56,6 +56,7 @@ public class ConstantData {
 	public static final String AUTHORIZATION_REPORT_FILE_KEY = "Auto";
 	public static final String AUTHORIZATION_CODE = "authCode";
 	public static final String TRANSACTION_AMOUNT = "transactionAmount";
+	public static final String TRANSACTION_AMOUNT_BD = "transactionAmountbd";
 	public static final String INTERNATIONAL_ALLOW_DISALLOW = "International Use Allow/Disallow [400]";
 	public static final String ECCOMERCE_ALLOW_DISALLOW= "E-commerce Activation/Deactivation [304]";
 
@@ -86,6 +87,7 @@ public class ConstantData {
 	public static final String PIN_REQUIRED_FALSE = "false";
 	public static final String JSON_DATA_DRIVEN_EXECUTION = "dataDrivenExecution";
 	public static final String VIRTUAL_DEVICE_TYPE = "virtual";
+	public static final String RESPONSE_CODE_DESCRIPTION = "Capture";
 
 
 	public static final String INVALID_CVV = "123";	
@@ -107,7 +109,36 @@ public class ConstantData {
 	
 	public static final String ZERO_ZERO = "00";
 	public static final String NINE_NINE = "99";
+	
 
+	public static final String CLIENT_LIMIT = "Client";
+	public static final String AVAIL_CLIENT_LIMIT = "Avail Client";
+	
+	
+	public static final String ACCOUNT_LIMIT = "Account";
+	public static final String AVAIL_ACCOUNT_LIMIT = "Avail Account";
+	
+	public static final String CARD_LIMIT = "Card";
+	public static final String AVAIL_CARD_LIMIT = "Avail Card";	
+	
+	public static final String TEMPORARY_LIMIT = "Temporary [T]";
+	public static final String PERMANENT_LIMIT = "Permanent [P]";	
+	
+	public static final String CREDIT_LIMIT_CHANGE_REQUEST = "226 - Credit limit Change Request";
+	public static final String CREDIT_LIMIT_CHANGE_COMMERCIAL_CARDS = 	"227 - Credit limit Change Commercial Cards";
+	
+	public static final String DAILY = "Daily";
+	public static final String PERIODIC = "Periodic";
+	public static final String YEARLY = "Yearly";
+	public static final String PERIODICITY = "Month [9]";
+	public static final String PERIODICITY_MONTH = "12";
+	public static final String TX_SUCESSFUL_MESSAGE = "000-Successful";
+	public static final String PRE_AUTH = "Pre-Auth Completion";
+	public static final String LIMIT_VALIDATION_PARAMETER = "Daily Velocity Utilized;Daily Amount Utilized;Periodic Velocity Utilized;Periodic Amount Utilized;Yearly Velocity Utilized;Yearly Amount Utilized";
+	
+	public static final String PDF_FORMAT = "PDF Format [pdf]";
+	public static final String DEVICE_ACTIVITY_REPORT_FILE_NAME = "Device Activity.pdf";
+	
 	private ConstantData() {
 	}
 

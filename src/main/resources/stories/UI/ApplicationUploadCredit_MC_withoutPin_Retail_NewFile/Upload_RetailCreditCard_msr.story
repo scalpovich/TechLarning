@@ -9,22 +9,11 @@ Meta:
 Scenario: creation of MC_Individual_primary_msr credit device using applicationUpload functionality
 Given setting json values in excel for Credit
 When user is logged in institution
-And User fills Statement Message Plan for credit product
-And User fills Marketing Message Plan for credit product
-And User fills Transaction Plan for credit product
-And User fills Transaction Limit Plan for credit product
-And User fills Document Checklist Screen for credit product
-And User fills Device Joining and Membership Fee Plan for credit product
-And User fills Device Event Based Fee Plan for credit product
 And for Magnetic Stripe Card User fills without pin Device Plan for credit product for Mastercard
-And User fills Billing Cycle
-And User fills Payment Priority
-And User fills Transaction Rule Plan
-And User fills Credit Plan
-And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
 And User fills MCC Rules for credit product
-And User Primary Device fills New Program Retail Credit Card section without dedupe for credit product for Mastercard
+And User Primary Device fills New Program Retail Credit Card section for credit product for Mastercard
+!-- And User Primary Device fills New Program Retail Credit Card section without dedupe for credit product for Mastercard
 And for Primary Device and New Client user fills Device Range section for credit product
 And user creates Application Upload Credit batch file and upload it on server for Individual for credit
 And user verifies the credit application device for fileUpload

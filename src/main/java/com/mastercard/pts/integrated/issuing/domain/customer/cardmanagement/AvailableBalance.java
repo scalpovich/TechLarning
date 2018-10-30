@@ -4,7 +4,8 @@ import java.math.BigDecimal;
 
 public class AvailableBalance {
 	
-	BigDecimal availableBal;
+	private BigDecimal availableBal;
+	private BigDecimal billingAmount;
 	public BigDecimal getAvailableBal() {
 		return availableBal;
 	}
@@ -16,6 +17,12 @@ public class AvailableBalance {
 	}
 	public void setSum(BigDecimal sum) {
 		this.sum = sum;
+	}
+	public BigDecimal getBillingAmount(){
+		return billingAmount;
+	}
+	public void setBillingAmount (BigDecimal billingAmount){
+		this.billingAmount = billingAmount;
 	}
 	BigDecimal sum;
 }

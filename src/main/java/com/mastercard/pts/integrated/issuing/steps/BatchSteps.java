@@ -3,10 +3,12 @@ package com.mastercard.pts.integrated.issuing.steps;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceDetailsFlows;
 
 @Component
 public class BatchSteps {
@@ -30,6 +33,8 @@ public class BatchSteps {
 	private static final String DEFAULT_TRAILER = "TR\\d{8}";
 
 	private static final String DEFAULT_HEADER = "[\\w ]{32}\\d{6}";
+	
+	private static final int PHOTO_REFERENCE_NUMBER_POSITION = 29;
 	
 	private static final Logger logger = LoggerFactory.getLogger(BatchSteps.class);
 
@@ -39,6 +44,8 @@ public class BatchSteps {
 	@Autowired
 	private Path tempDirectory;
 
+	@Autowired
+	DeviceDetailsFlows flow; 
 	@Autowired
 	private LinuxBox linuxBox;
 
@@ -83,8 +90,8 @@ public class BatchSteps {
 			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
 			throw MiscUtils.propagate(e);
 		}
-	}
-	
+	}	
+		
 	@When("user sets invalid cvv/ccv2/icvv to device")
 	@Then("user sets invalid cvv/ccv2/icvv to device")
 	public void  userSetInvaliCVVCVV2ICVV() {
@@ -103,8 +110,7 @@ public class BatchSteps {
 			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
 			throw MiscUtils.propagate(e);
 		}
-	}
-	
+	}	
 	
 	@When("Pin Offset file batch was generated successfully")
 	@Then("Pin Offset file batch was generated successfully")
@@ -137,7 +143,7 @@ public class BatchSteps {
 			throw MiscUtils.propagate(e);
 		}
 	}
-	
+		
 	@SuppressWarnings("unused")
 	private String getHeaderPattern() {
 		return provider.getString("BATCH_HEADER_PATTERN", DEFAULT_HEADER);
