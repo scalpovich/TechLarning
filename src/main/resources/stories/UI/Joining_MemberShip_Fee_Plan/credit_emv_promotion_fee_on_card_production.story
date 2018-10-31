@@ -33,4 +33,3 @@ Scenario: 1.3 Promotion Fee is been Deducted
 Given user is logged in institution
 When search with device in transaction screen and status for Joining Fee
 And user signs out from customer portal
-
