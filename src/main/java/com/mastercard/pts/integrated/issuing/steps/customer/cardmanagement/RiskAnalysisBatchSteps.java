@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+import junit.framework.Assert;
+
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +25,11 @@ public class RiskAnalysisBatchSteps {
 	@Then("user processes riskAnalysis batch for new Application")
 	public void closeBatchExecutionForNewApplication() {
 		riskAnalysisBatchFlow.processRiskAnalysisBatch();
+	}
+	
+	@When("user process riskAnalysis batch for new Application")
+	@Then("user process riskAnalysis batch for new Application")
+	public void processRiskAnalysisBatch() {
+		Assert.assertEquals("Batch(s) Scheduled Successfully.", riskAnalysisBatchFlow.processBatchForRiskAnalysis());
 	}
 }

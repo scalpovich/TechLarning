@@ -20,5 +20,5 @@ And user pushback the credit application device
 And user checks in Incomplete Application for the credit application device
 And user verifies the credit application device
 And user processesAll close batch for new Application
-And user processes riskAnalysis batch for new Application
+And user process riskAnalysis batch for new Application
 And user sign out from customer portal
