@@ -9,7 +9,7 @@ Meta:
 @StoryName credit_emv_retail_cardproduction
 @JMFCreditPlans
 
-Scenario: Set up credit emv retail general purpose card device production
+Scenario: 1.1 Set up credit emv retail general purpose card device production
 Given setting json values in excel for Credit
 When user is logged in institution
 And for EMV Card User fills without pin Device Plan for credit product for Visa
@@ -23,13 +23,13 @@ And credit processes deviceproduction batch using new Device for Supplementary
 And device has "normal" status
 And user sign out from customer portal
 
-Scenario: Post maintenance batch and pre-clearing batch is run 
+Scenario: 1.2 Post maintenance batch and pre-clearing batch is run 
 Given user is logged in institution
 When post maintenance batch is run
 And user processes Pre-clearing system internal batch for Credit
 And user sign out from customer portal
 
-Scenario: Joining and MemberShip Fees is been Deducted
+Scenario: 1.3 Joining and MemberShip Fees is been Deducted
 Given user is logged in institution
 When search with device in transaction screen and status for Joining and Membership Fees
 And user signs out from customer portal

@@ -201,7 +201,6 @@ public class TransactionSearchPage extends AbstractBasePage {
 		return joiningFees.getText();
 	}
 	
-	
 	public void verifyUiOperationStatus() {
 		logger.info("Transaction Search");
 		verifySearchButton("Search");
@@ -211,5 +210,4 @@ public class TransactionSearchPage extends AbstractBasePage {
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(searchARNTxt));
 	}
-
 }

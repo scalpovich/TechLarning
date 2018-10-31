@@ -9,7 +9,7 @@ Meta:
 @StoryName credit_emv_retail_firsttransaction
 @JMFCreditPlans
 
-Scenario: Set up credit emv retail general purpose card device production
+Scenario: 1.1 Set up credit emv retail general purpose card device production
 Given setting json values in excel for Credit
 When user is logged in institution
 And for EMV Card User fills Device Plan for credit product for Visa
@@ -24,14 +24,14 @@ And credit processes pingeneration batch using new Device for Supplementary
 And device has "normal" status
 And user sign out from customer portal
 
-Scenario: Pin Generation
+Scenario: 1.2 Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 And FINSim simulator is closed
 
-Scenario: Transaction - Purchase with pin transaction
+Scenario: 1.3 Transaction - Purchase with pin transaction
 Given connection to VISA is established
 When perform an POS-Retail-Magstripe-purchase_with_Pin_Highrisk VISA transaction
 And VISA test results are verified for POS-Retail-Magstripe-purchase_with_Pin_Highrisk
@@ -40,13 +40,13 @@ And user verifies available balance after transaction
 And user sign out from customer portal
 And VISA simulator is closed
 
-Scenario: Post maintenance batch and pre-clearing batch is run 
+Scenario: 1.4 Post maintenance batch and pre-clearing batch is run 
 Given user is logged in institution
 When post maintenance batch is run
 And user processes Pre-clearing system internal batch for Credit
 And user sign out from customer portal
 
-Scenario: Joining Fee is been Deducted
+Scenario: 1.5 Joining Fee is been Deducted
 Given user is logged in institution
 When search with device in transaction screen and status for Joining Fee
 And user signs out from customer portal
