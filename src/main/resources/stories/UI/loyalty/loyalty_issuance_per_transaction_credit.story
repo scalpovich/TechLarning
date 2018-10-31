@@ -1,8 +1,7 @@
 Narrative:
 As a(n)  Customer portal user 
-I want to configure the LoyaltyProgram
-In order to manually reverse transaction
-So that reversed accrued loyalty points can be verified on credit device
+I want to configure the LoyaltyProgram with issuance and per transaction promotion plans
+In order to verify accrued loyalty points on purchase transaction
 Meta:
 @StoryName credit_msr_retail_loyalty
 @migration_loyalty
@@ -22,10 +21,8 @@ And Credit processes pre-production batch using new Device
 And Credit processes deviceproduction batch using new Device for Supplementary
 And device has "normal" status
 Then user notes down max loyalty points for plan
-!-- PROMO2 is per transaction promotion plan
 And user notes down promotion plan details for PROMO2
 And user has loyalty points details for Credit device
-!-- PROMO1 is issuance promotion plan
 Then verify loyalty points are credited on issuance for promotion plan code PROMO1
 And verify available loyalty points should be within loyalty plan limit
 And user raises an authorization request
