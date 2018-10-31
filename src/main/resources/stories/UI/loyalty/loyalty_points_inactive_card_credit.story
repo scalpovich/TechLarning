@@ -20,7 +20,7 @@ And Credit processes pre-production batch using new Device
 And Credit processes deviceproduction batch using new Device for Supplementary
 And device has "normal" status
 Then user has loyalty points details for Credit device
-Then select loyalty plan period unit as Month[M]/Year[Y] - M
+Then select loyalty plan period unit as Month[M]/Year[Y] - Y
 Then deactivate loyalty plan
 And user raises an authorization request
 Then status of request is "approved"

@@ -128,7 +128,7 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 	
 	public String getMaxPtsPerCycle() {
 		runWithinPopup(EDIT_LOYALTY_PLAN, () -> {
-			maxPtsPerCycle = maxPtsPerCycleValue.getText();
+			maxPtsPerCycle = maxPtsPerCycleValue.getAttribute("value");
 			clickCancelButton();
 		});
 		return maxPtsPerCycle;

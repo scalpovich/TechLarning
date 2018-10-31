@@ -23,8 +23,10 @@ And Credit processes pre-production batch using new Device
 And Credit processes deviceproduction batch using new Device for Supplementary
 And device has "normal" status
 Then user notes down max loyalty points for plan
-And user notes down promotion plan details for PROMO1
+!-- PROMO2 is per transaction promotion plan
+And user notes down promotion plan details for PROMO2
 And user has loyalty points details for Credit device
+!-- PROMO1 is issuance promotion plan
 Then verify loyalty points are credited on issuance for promotion plan code PROMO1
 And verify available loyalty points should be within loyalty plan limit
 And user raises an authorization request

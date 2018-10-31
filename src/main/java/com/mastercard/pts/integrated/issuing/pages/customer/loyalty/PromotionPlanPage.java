@@ -156,7 +156,7 @@ public class PromotionPlanPage extends AbstractBasePage {
 	
 	public String getPointsEarned() {
 		runWithinPopup(EDIT_PROMOTION_PLAN, () -> {
-			pointsEarned = lypPtsEarnedTxt.getText();
+			pointsEarned = lypPtsEarnedTxt.getAttribute("value");
 			clickCancelButton();
 		});
 		return pointsEarned;
@@ -170,7 +170,7 @@ public class PromotionPlanPage extends AbstractBasePage {
 	
 	public String getAmntSpent() {
 		runWithinPopup(EDIT_PROMOTION_PLAN, () -> {
-			pointsEarned = lypAmtSpentTxt.getText();
+			pointsEarned = lypAmtSpentTxt.getAttribute("value");
 			clickCancelButton();
 		});
 		return pointsEarned;
