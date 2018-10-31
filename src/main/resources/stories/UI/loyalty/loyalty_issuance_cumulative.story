@@ -24,7 +24,7 @@ And for Primary Device and New Client user fills Device Range section for Prepai
 And Prepaid device is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
 And Prepaid processes pre-production batch using new Device
 And Prepaid processes deviceproduction batch using new Device for Supplementary
-And user has loyalty points details for Credit device
+Then user verifies loyalty details for Prepaid device
 And user sign out from customer portal
 
 Scenario: Loyalty program setup - prepaid
@@ -41,6 +41,6 @@ Scenario: Loyalty program setup - prepaid
 Given setting json values in excel for Prepaid
 When user is logged in institution
 And pre-clearing and Loyalty Calc batches are run
-And user has loyalty points details for Credit device
+Then user verifies loyalty details for Prepaid device
 Then verify available loyalty points should be within loyalty plan limit
 And user sign out from customer portal
