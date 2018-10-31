@@ -88,7 +88,7 @@ public class LoyaltyPlanSteps {
 	public void calculateLoyaltyPoints() {
 		AuthorizationRequest request = AuthorizationRequest.createWithProvider(provider);
 		if((provider.getString(Constants.FOR_LOYALTY) != null) && (provider.getString(Constants.FOR_LOYALTY).equalsIgnoreCase("yes"))) {
-			Double points = (Double)context.get(Constants.AVAILABLE_LOYALTY_POINTS) + (Double.parseDouble(request.getTransactionAmount()) / (Double)context.get(ContextConstants.PROMOTION_PLAN_AMT_SPENT));
+			Double points = (Double)context.get(Constants.AVAILABLE_LOYALTY_POINTS) + ((Double.parseDouble(request.getTransactionAmount()) * (Double)context.get(ContextConstants.PROMOTION_PLAN_POINTS_EARNED)) / (Double)context.get(ContextConstants.PROMOTION_PLAN_AMT_SPENT));
 			Double maxLP = context.get(Constants.MAX_LOYALTY_POINTS);
 			if(maxLP != null && points != null) {
 				if(points < maxLP)

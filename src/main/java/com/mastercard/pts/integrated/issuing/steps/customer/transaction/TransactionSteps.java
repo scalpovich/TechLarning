@@ -625,12 +625,12 @@ public class TransactionSteps {
 		assertEquals("Record Added Successfully.", transactionWorkflow.addTransactionReversal(device.getDeviceNumber(), reversalReason, rt.getAmount()));
 	
 		if((provider.getString(Constants.FOR_LOYALTY) != null) && (provider.getString(Constants.FOR_LOYALTY).equalsIgnoreCase("yes"))) {
-//			String availableLP = ((String)context.get(Constants.AVAILABLE_LOYALTY_POINTS)).trim();
-//			if(availableLP.equals("-"))
-//				availableLP = "0";
-			Double availablePoints = (Double)context.get(Constants.AVAILABLE_LOYALTY_POINTS) - Double.parseDouble(rt.getAmount());
+			Double availablePoints = 0.0;
+			Double availableLP = context.get(Constants.AVAILABLE_LOYALTY_POINTS);
+			if(availableLP != 0.0)
+				availablePoints = (Double)context.get(Constants.AVAILABLE_LOYALTY_POINTS) - ((Double.parseDouble(rt.getAmount()) * (Double)context.get(ContextConstants.PROMOTION_PLAN_POINTS_EARNED)) / (Double)context.get(ContextConstants.PROMOTION_PLAN_AMT_SPENT));
 			context.put(Constants.AVAILABLE_LOYALTY_POINTS, availablePoints);
-			context.put(Constants.ACCUMULATED_REVERSED_POINTS, Double.parseDouble(rt.getAmount()));
+			context.put(Constants.ACCUMULATED_REVERSED_POINTS, ((Double.parseDouble(rt.getAmount()) * (Double)context.get(ContextConstants.PROMOTION_PLAN_POINTS_EARNED)) / (Double)context.get(ContextConstants.PROMOTION_PLAN_AMT_SPENT)));
 		}
 	}
 }

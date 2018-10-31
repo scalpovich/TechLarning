@@ -47,6 +47,8 @@ public class PromotionPlanSteps {
 	@Then("user notes down promotion plan details for $plan")
 	public void notePromoPlanDetails(String plan) {
 		Double amtSpent = Double.parseDouble(uiVerificationLoyaltyWorkflow.getAmtSpentOnPromotionPlan(plan));
+		Double ptsEarned = Double.parseDouble(uiVerificationLoyaltyWorkflow.getPointsEarnedOnPromotionPlan(plan));
 		context.put(ContextConstants.PROMOTION_PLAN_AMT_SPENT, amtSpent);
+		context.put(ContextConstants.PROMOTION_PLAN_POINTS_EARNED, ptsEarned);
 	}
 }

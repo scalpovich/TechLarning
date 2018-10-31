@@ -23,6 +23,7 @@ And Credit processes deviceproduction batch using new Device for Supplementary
 And device has "normal" status
 When user notes down available Card limit for card
 Then user notes down max loyalty points for plan
+And user notes down promotion plan details for AUTO
 Then user has loyalty points details for Credit device
 And user raises an authorization request
 And status of request is "approved"

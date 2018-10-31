@@ -140,6 +140,8 @@ public class ContextConstants {
 	
 	public static final String PROMOTION_PLAN_AMT_SPENT = "PROMOTION_PLAN_AMT_SPENT";
 	
+	public static final String PROMOTION_PLAN_POINTS_EARNED = "PROMOTION_PLAN_POINTS_EARNED";
+	
 	private ContextConstants() {
 	}
 

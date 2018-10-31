@@ -14,7 +14,6 @@ When user is logged in institution
 And for Magnetic Stripe Card [1] User fills Device Plan for Credit product for Mastercard
 And User fills Wallet Fee Plan for Credit product
 And User fills Wallet Plan for Credit product and program Retail Credit Card [9]
-When User fills Transaction Plan for Credit product
 And user selects all the transactions for loyalty transaction plan
 And User Primary Device fills New Program Retail Credit Card [9] section for Credit product for Mastercard
 And for Primary Device and New Client user fills Device Range section for Credit [C] product
