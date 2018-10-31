@@ -130,8 +130,6 @@ public class ContextConstants {
 	
 	public static final String CLIENT_PHOTO_BATCH_PROCESS_TIME = "CLIENT_PHOTO_BATCH_PROCESS_TIME";
 			
-	public static final String PROMOTION_PLAN = "PROMOTION_PLAN";
-	
 	public static final String BALANCE_BEFORE_PAYMENT = "BALANCE_BEFORE_PAYMENT";
 	
 	public static final String BALANCE_AFTER_PAYMENT = "BALANCE_AFTER_PAYMENT";

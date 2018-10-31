@@ -641,7 +641,10 @@ public class ProgramSetupSteps {
 		}
 		devicePlan.setDeviceType(deviceType);
 
-		programSetupWorkflow.createDevicePlan(devicePlan);
+		if(data.getDevicePlan() != null && !data.getDevicePlan().trim().isEmpty())
+			devicePlan.setDevicePlanCode(data.getDevicePlan());
+		else
+			programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 	
@@ -997,7 +1000,12 @@ public class ProgramSetupSteps {
 		walletFeePlan.setProductType(ProductType.fromShortName(type));
 		WalletFeePlanDetails details = WalletFeePlanDetails.createWithProvider(provider);
 		walletFeePlan.getWalletFeePlanDetails().add(details);
-		programSetupWorkflow.createWalletFeePlan(walletFeePlan, ProductType.fromShortName(type));
+		
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+		if(data.getWalletFeePlan() != null && !data.getWalletFeePlan().trim().isEmpty())
+			walletFeePlan.setWalletFeePlanCode(data.getWalletFeePlan());
+		else
+			programSetupWorkflow.createWalletFeePlan(walletFeePlan, ProductType.fromShortName(type));
 	}
 
 	@When("User fills Business Mandatory Fields Screen for $type product")
@@ -1052,7 +1060,10 @@ public class ProgramSetupSteps {
 				}
 			}
 		}
-		programSetupWorkflow.createWalletPlan(walletPlan);
+		if(data.getWalletPlan() != null && !data.getWalletPlan().isEmpty())
+			walletPlan.setWalletPlanCode(data.getWalletPlan().substring(data.getWalletPlan().indexOf("[")+1, data.getWalletPlan().indexOf("]")));
+		else
+			programSetupWorkflow.createWalletPlan(walletPlan);
 	}
 
 	@When("fills Wallet Plan for $type product and program $programtype")
@@ -1194,7 +1205,10 @@ public class ProgramSetupSteps {
 				program.setPrepaidStatementPlan(data.getPrepaidStatementPlan());
 			}
 		}
-		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
+		if(data.getProgramCode() != null && !data.getProgramCode().trim().isEmpty())
+			program.setProgramCode(data.getProgramCode());
+		else
+			programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
 		context.put(ContextConstants.PROGRAM, program);
 	}
 		

@@ -19,13 +19,11 @@ And Credit device is created using new device screen for Individual and Primary 
 And Credit processes pre-production batch using new Device
 And Credit processes deviceproduction batch using new Device for Supplementary
 And device has "normal" status
-And user has loyalty points details for Credit device
+Then user has loyalty points details for Credit device
 And user raises an authorization request
 Then status of request is "approved"
 And search Purchase authorization and verify Successful status
-When user verifies available balance after transaction
 And device has "normal" status
-And user verifies available Card limit for card after transaction
 Then user waits for 5 minutes
 And user sign out from customer portal
 

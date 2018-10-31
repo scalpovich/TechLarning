@@ -1,4 +1,5 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.loyalty;
+import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,5 +42,11 @@ public class PromotionPlanSteps {
 		promotionPlan.setPromotionloyaltyPlan(data.getLoyaltyPlan());
 		context.put(ContextConstants.PROMOTION_PLAN, promotionPlan);
 		uiVerificationLoyaltyWorkflow.verifyPromotionPlanwithMCG(promotionPlan);
+	}
+	
+	@Then("user notes down promotion plan details for $plan")
+	public void notePromoPlanDetails(String plan) {
+		Double amtSpent = Double.parseDouble(uiVerificationLoyaltyWorkflow.getAmtSpentOnPromotionPlan(plan));
+		context.put(ContextConstants.PROMOTION_PLAN_AMT_SPENT, amtSpent);
 	}
 }

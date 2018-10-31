@@ -472,6 +472,7 @@ public class Constants {
 	public static final String APP_REJECT_REPORT = "Application Reject Report";
 	
 	public static final String POINTS_EARNED = "pointsEarned";
+	public static final String MAX_LOYALTY_POINTS = "maxLoyaltyPoints";
 	public static final String AVAILABLE_LOYALTY_POINTS = "availableLoyaltyPoints";
 	public static final String ACCUMULATED_REVERSED_POINTS = "accumulatedReversedPoints";
 	public static final String FOR_LOYALTY = "FOR_LOYALTY";

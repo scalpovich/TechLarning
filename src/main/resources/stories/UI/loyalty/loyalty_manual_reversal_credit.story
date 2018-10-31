@@ -22,19 +22,18 @@ And Credit processes pre-production batch using new Device
 And Credit processes deviceproduction batch using new Device for Supplementary
 And device has "normal" status
 When user notes down available Card limit for card
+Then user notes down max loyalty points for plan
+Then user has loyalty points details for Credit device
 And user raises an authorization request
-Then status of request is "approved"
+And status of request is "approved"
+Then calculate loyalty points
 And search Purchase authorization and verify Successful status
-When user verifies available balance after transaction
-And device has "normal" status
-And user verifies available Card limit for card after transaction
 Then user waits for 5 minutes
 And user sign out from customer portal
 
 Scenario:2 User verifies loyalty points after manual reversal of transaction
 When user is logged in institution
 And pre-clearing and Loyalty Calc batches are run
-And user has loyalty points details for Credit device
 Then verify available loyalty points should be within loyalty plan limit
 Then user add transaction reversal with reason Manual Reversal [1]
 And pre-clearing and Loyalty Calc batches are run

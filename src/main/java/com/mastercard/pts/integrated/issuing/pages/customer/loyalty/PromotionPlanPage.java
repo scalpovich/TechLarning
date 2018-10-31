@@ -26,9 +26,12 @@ public class PromotionPlanPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(PromotionPlanPage.class);
 	private static final String ADD_PROMOTION_PLAN = "Add Promotion Plan";
+	private static final String EDIT_PROMOTION_PLAN = "Edit Promotion Plan";
 	private static final String TEXT = "TEST";
 	private static final int NUMBER = 3;
 	private static final String currency="INR [356]";
+	private String pointsEarned;
+	
 	@Autowired
 	PromotionPlan promotionPlan;
 
@@ -149,5 +152,27 @@ public class PromotionPlanPage extends AbstractBasePage {
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(promotionalPlanCodeTxt));
+	}
+	
+	public String getPointsEarned() {
+		runWithinPopup(EDIT_PROMOTION_PLAN, () -> {
+			pointsEarned = lypPtsEarnedTxt.getText();
+		});
+		clickCancelButton();
+		return pointsEarned;
+	}
+	
+	public void searchByPlanCode(String code) {
+		WebElementUtils.enterText(lypPromotionCodeTxt, code);
+		clickSearchButton();
+		editFirstRecord();
+	}
+	
+	public String getAmntSpent() {
+		runWithinPopup(EDIT_PROMOTION_PLAN, () -> {
+			pointsEarned = lypAmtSpentTxt.getText();
+		});
+		clickCancelButton();
+		return pointsEarned;
 	}
 }

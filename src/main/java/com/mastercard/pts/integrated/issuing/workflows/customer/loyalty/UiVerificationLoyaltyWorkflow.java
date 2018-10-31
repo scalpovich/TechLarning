@@ -99,4 +99,16 @@ public class UiVerificationLoyaltyWorkflow {
 		page.searchByPlanCode(plan.substring(plan.indexOf("[")+1, plan.indexOf("]")));
 		page.selectPeriodUnitByIndex(value);
 	}
+	
+	public String getPointsEarnedOnPromotionPlan(String plan) {
+		PromotionPlanPage page = navigator.navigateToPage(PromotionPlanPage.class);
+		page.searchByPlanCode(plan);
+		return page.getPointsEarned();
+	}
+	
+	public String getAmtSpentOnPromotionPlan(String plan) {
+		PromotionPlanPage page = navigator.navigateToPage(PromotionPlanPage.class);
+		page.searchByPlanCode(plan);
+		return page.getAmntSpent();
+	}
 }

@@ -628,8 +628,8 @@ public class TransactionSteps {
 //			String availableLP = ((String)context.get(Constants.AVAILABLE_LOYALTY_POINTS)).trim();
 //			if(availableLP.equals("-"))
 //				availableLP = "0";
-//			Double availablePoints = Double.parseDouble(availableLP) - Double.parseDouble(rt.getAmount());
-//			context.put(Constants.AVAILABLE_LOYALTY_POINTS, availablePoints);
+			Double availablePoints = (Double)context.get(Constants.AVAILABLE_LOYALTY_POINTS) - Double.parseDouble(rt.getAmount());
+			context.put(Constants.AVAILABLE_LOYALTY_POINTS, availablePoints);
 			context.put(Constants.ACCUMULATED_REVERSED_POINTS, Double.parseDouble(rt.getAmount()));
 		}
 	}
