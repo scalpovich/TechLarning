@@ -171,8 +171,8 @@ public class PromotionPlanPage extends AbstractBasePage {
 	public String getAmntSpent() {
 		runWithinPopup(EDIT_PROMOTION_PLAN, () -> {
 			pointsEarned = lypAmtSpentTxt.getText();
+			clickCancelButton();
 		});
-		clickCancelButton();
 		return pointsEarned;
 	}
 }
