@@ -518,9 +518,9 @@
 			   "billingCycle":"Automation Billing [100]",
 			   "walletPlan":"AUTOMATION [TA4946EBFC]",
 			   "loyaltyPlan" : "Automation Test [AUTO]",
-			   "devicePlan" : "TA2941SX",
-			   "walletFeePlan" : "A392926",
-			   "programCode" : "T5875Z" 
+			   "devicePlan" : "",
+			   "walletFeePlan" : "",
+			   "programCode" : ""
 		},
 		{
 			   "productIdentity":"Prepaid",
