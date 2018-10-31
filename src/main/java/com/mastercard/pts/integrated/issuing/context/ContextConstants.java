@@ -54,6 +54,8 @@ public class ContextConstants {
 	
 	public static final String AVAILABLE_BALANCE_AFTER_LOYALTY_REDEMPTION = "AVAILABLE_BALANCE_AFTER_LOYALTY_REDEMPTION";
 
+	public static final String BILLING_AMOUNT = "BILLING_AMOUNT";
+
 	public static final String AVAILABLE_ACCOUNT_OR_CREDIT_LIMIT = "AVAILABLE_ACCOUNT_OR_CREDIT_LIMIT";
 	
 	public static final String AVAILABLE_CLIENT_OR_CREDIT_LIMIT = "AVAILABLE_CLIENT_OR_CREDIT_LIMIT";
@@ -90,6 +92,8 @@ public class ContextConstants {
 	
 	public static final String ACCOUNT_NUMBER = "Account Number";
 	
+	public static final String APPLICATION_NUMBER = "Application Number";
+	
 	public static final String STATEMENT_DATE = "Statement Date";
 	
 	public static final String PAYMENT_DUE_DATE = "Payment Due Date";
@@ -116,6 +120,8 @@ public class ContextConstants {
 	
 	public static final String INST_PROPERTY = "institution";
 	
+	public static final String PAYMENT = "PAYMENT";
+	
 	public static final String CREDIT_LIMIT_AFTER_SR = "CREDIT_LIMIT_AFTER_SR";
 	
 	public static final String REJECTED_FILE_UPLOAD = "REJECTED_FILE_UPLOAD";
@@ -123,7 +129,13 @@ public class ContextConstants {
 	public static final String JOB_ID = "JOB_ID";
 	
 	public static final String CLIENT_PHOTO_BATCH_PROCESS_TIME = "CLIENT_PHOTO_BATCH_PROCESS_TIME";
+			
+	public static final String PROMOTION_PLAN = "PROMOTION_PLAN";
 	
+	public static final String BALANCE_BEFORE_PAYMENT = "BALANCE_BEFORE_PAYMENT";
+	
+	public static final String BALANCE_AFTER_PAYMENT = "BALANCE_AFTER_PAYMENT";
+
 	public static final String TRANSACTION_PLAN = "TRANSACTIONPLAN";
 		
 	public static final String PROMOTION_PLAN = "PROMOTION_PLAN";

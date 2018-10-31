@@ -23,4 +23,9 @@ public class DeDupeSDNVerificationWorkflow {
 		deDupeSDNVerificationPage = navigator.navigateToPage(DeDupeSDNVerificationPage.class);
 		return deDupeSDNVerificationPage.approveRejectApplication(operation);
 	}
+	
+	public String verifyDuplicateApplication() {
+		deDupeSDNVerificationPage = navigator.navigateToPage(DeDupeSDNVerificationPage.class);
+		return deDupeSDNVerificationPage.checkDuplicateApplication();
+	}
 }

@@ -105,6 +105,7 @@ public class Device {
   	private String walletCurrency;
  	private String category;
   	private String amountType;
+  	private String updatedATCValue;
   	private static double deviceAmountUsage = 0.00;
   	private static double deviceVelocity = 0;
   	private String dedupe;
@@ -116,7 +117,7 @@ public class Device {
 		device.setCreateOpenBatch(provider.getString(CREATE_OPEN_BATCH));
 		device.setCustomerType(provider.getString(DEVICE_CUSTOMER_TYPE));
 		device.setDeviceType1(provider.getString(DEVICE_TYPE));
-		device.setClientDetails(ClientDetails.generateClient());
+		device.setClientDetails(ClientDetails.generateClient(provider));
 		device.setCurrentAddress(Address.generateAddress());
 		device.setBranchCode(provider.getString(BRANCH));
 		device.setAccountNumber(RandomStringUtils.randomNumeric(16));
@@ -628,6 +629,15 @@ public class Device {
 	
 	public void setVip(String vip) {
 		this.vip = vip;
+	}
+	
+	public String getUpdatedATCValue() {
+
+		return updatedATCValue;
+	}
+
+	public void setUpdatedATCValue(String updatedATCValue) {
+		this.updatedATCValue = updatedATCValue;
 	}
 	
 	public String getServiceCode() {

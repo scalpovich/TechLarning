@@ -111,8 +111,11 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private static final String EXCEPTION_MESSAGE = "Exception Message - {} ";
 	
 	public static final String INVALID_TRANSACTION_MESSAGE = "Invalid transaction type - ";
-    
-    private static final String Device = null;
+	
+	private static final String Device = null;
+	
+	public static final String REFUND_SUCCESS = "Refund is successful";
+	
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
 
@@ -139,6 +142,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Cancel']")
 	private MCWebElement cancelBtn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Reverse']")
+	private MCWebElement reverseBtn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Process Selected']")
 	private MCWebElement processSelectedBtn;
@@ -300,6 +306,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	private static final String DeviceNumber="Device Number";
 	
+	private static final String REFUND_MESSAGE="//span[contains(text(),'Refund')]";
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers']/td[5]/span")
 	private MCWebElement deviceProductionHeaderBatchTxt;
 	
@@ -360,7 +368,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public void clickSubmitButton() {
 		clickWhenClickable(submitButton);
 	}
-
+	
+	public void clickReverseButton(){
+		WebElementUtils.scrollDown(driver(), 0, 250);
+		clickWhenClickable(reverseBtn);
+	}
+	
 	public void clickConfirmButton() {
 		clickWhenClickable(confirmButton);
 	}
@@ -523,7 +536,14 @@ public abstract class AbstractBasePage extends AbstractPage {
 		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
 		logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
 	}
+	
+	public boolean verifyRefundMessage() {
+		WebElement refundMessage = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(REFUND_MESSAGE)));
+		String refundStatus = refundMessage.getText();
+		return refundStatus.equalsIgnoreCase(REFUND_SUCCESS);
 
+	}
+	
 	protected boolean waitForRow() {
 		try {
 			waitForWicket();
@@ -741,7 +761,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 		context.put(CreditConstants.EXISTING_DEVICE_NUMBER, deviceNumberFetch.getText());
 		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
 		selectFirstRecord();
-		clickProcessSelectedButton();		
+		SimulatorUtilities.wait(10000);
+		clickProcessSelectedButton();
 	}	
 	
 	protected void waitAndSearchForRecordToExists() {
@@ -1873,42 +1894,32 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	public void ifTextAvailableinTableThenDelete(MCWebElement tableHandle, String text) {
 		WebElement table = asWebElement(tableHandle);
-
 		List<WebElement> rowstable = table.findElements(By.tagName("tr"));
-
 		int rowscount = rowstable.size();
-		outerloop:
-		for (int row = 0; row < rowscount; row++) {
-
+		outerloop: for (int row = 0; row < rowscount; row++) {
 			List<WebElement> columnsrow = rowstable.get(row).findElements(By.tagName("td"));
-
 			int columnscount = columnsrow.size();
 			for (int col = 0; col < columnscount; col++) {
 				if (columnsrow.get(col).getText().equals(text)) {
 					List<WebElement> editAndDeleteIcon = rowstable.get(row).findElements(By.tagName("img"));
-					
-						for (int icon = 0; icon < editAndDeleteIcon.size(); icon++) {
-							if (editAndDeleteIcon.get(icon).getAttribute("alt").contains("Delete")) {
-								editAndDeleteIcon.get(icon).click();
-								SimulatorUtilities.wait(2000);
-								Alert alert = driver().switchTo().alert();
-								alert.accept();
-								break outerloop;
-							}
+					for (int icon = 0; icon < editAndDeleteIcon.size(); icon++) {
+						if (editAndDeleteIcon.get(icon).getAttribute("alt").contains("Delete")) {
+							editAndDeleteIcon.get(icon).click();
+							SimulatorUtilities.wait(2000);
+							Alert alert = driver().switchTo().alert();
+							alert.accept();
+							break outerloop;
 						}
-				
-
+					}
 				}
 			}
 		}
-
 	}
 	
 	public void clickOncheckBoxIfBatchAvailableinTable(MCWebElement tableHandle, String text) {
 		WebElement table = asWebElement(tableHandle);
 		List<WebElement> rowstable = table.findElements(By.tagName("tr"));
 		int rowscount = rowstable.size();
-		outerloop:
 		for (int row = 1; row < rowscount; row++) {
 			List<WebElement> columnsrow = rowstable.get(row).findElements(By.tagName("td"));
 			int columnscount = columnsrow.size();
@@ -1917,15 +1928,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 					WebElement checkBox = columnsrow.get(columnscount - 1).findElement(By.cssSelector("input[type=checkbox]"));
 					if (checkBox.isEnabled() && !checkBox.isSelected()) {
 						checkBox.click();
+						break;
 					}
-
 				}
-				break outerloop;
-
 			}
 		}
 	}
-	
 	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {

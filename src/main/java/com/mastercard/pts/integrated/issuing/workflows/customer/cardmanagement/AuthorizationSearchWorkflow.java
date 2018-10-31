@@ -21,11 +21,13 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.collect.administration.AdministrationHomePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.AuthorizationSearchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.GenerateReversalPage;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DBUtility;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
+import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpdeskWorkflow;
 
 @Workflow
 public class AuthorizationSearchWorkflow {
@@ -48,6 +50,9 @@ public class AuthorizationSearchWorkflow {
 	@Autowired
 	private DBUtility dbUtils;
 
+	@Autowired
+	HelpdeskWorkflow helpDeskWorkFlow;
+	
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
 	public static final int BILL_AMOUNT_INDEX_VALUE = 3;
@@ -116,6 +121,17 @@ public class AuthorizationSearchWorkflow {
 		}
 
 		assertTrue("Latest (Row) Description and Code Action does not match on Authorization Search Screen", condition);
+	}
+	
+	public void generateReversalForTransaction(String deviceNumber)
+	{
+		GenerateReversalPage page = navigator.navigateToPage(GenerateReversalPage.class);
+		authorizationSearchPage.inputDeviceNumber(deviceNumber);
+		authorizationSearchPage.inputFromDate(LocalDate.now().minusDays(1));
+		authorizationSearchPage.inputToDate(LocalDate.now());
+		authorizationSearchPage.waitAndSearchForRecordToAppear();
+		helpDeskWorkFlow.clickCustomerCareEditLink();
+		page.createReversalForTransaction();
 	}
 
 	public List<String> checkTransactionFixedFee(String deviceNumber) {
@@ -196,4 +212,11 @@ public class AuthorizationSearchWorkflow {
 		logger.info("Available balance after transaction amount = {}", availBal.getAvailableBal());
 		return availBal;
 	}
+	
+	public BigDecimal noteDownAvailableBalanceAfterReversal(String deviceNumber) {
+		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
+		return page.viewAvailableBalanceAfterReversalTransaction(deviceNumber);
+		
+	}
+
 }

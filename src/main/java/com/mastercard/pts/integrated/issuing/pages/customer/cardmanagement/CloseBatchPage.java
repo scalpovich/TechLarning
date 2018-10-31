@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
@@ -35,6 +36,9 @@ public class CloseBatchPage extends AbstractBasePage {
 	@Autowired
 	TestContext context;
 	
+	@Autowired
+	private KeyValueProvider provider;
+	
 	protected  static final Logger logger = LoggerFactory.getLogger(CloseBatchPage.class);
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview-div")
@@ -45,6 +49,9 @@ public class CloseBatchPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement processSelected;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "saveAll")
+	private MCWebElement processAll;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']/td[1]/span")
 	private MCWebElement btnProcessSelected;
@@ -112,6 +119,21 @@ public class CloseBatchPage extends AbstractBasePage {
 	public void processAllBatch() {
 		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
 		clickProcessSelectedButton();
+		try {
+			if (btnConfirmMsg.isEnabled() && btnConfirmMsg.isVisible()) {
+				switchToIframe("Confirmation Message");
+				clickWhenClickable(btnYes);
+				verifyOperationStatus();
+			} else {
+				verifyOperationStatus();
+			}
+		} catch (Exception e) {
+			e.getMessage();
+		}
+	}
+	
+	public void processAllClick() {
+		clickWhenClickable(processAll);
 		try {
 			if (btnConfirmMsg.isEnabled() && btnConfirmMsg.isVisible()) {
 				switchToIframe("Confirmation Message");

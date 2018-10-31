@@ -87,6 +87,7 @@ public class ConstantData {
 	public static final String PIN_REQUIRED_FALSE = "false";
 	public static final String JSON_DATA_DRIVEN_EXECUTION = "dataDrivenExecution";
 	public static final String VIRTUAL_DEVICE_TYPE = "virtual";
+	public static final String RESPONSE_CODE_DESCRIPTION = "Capture";
 
 
 	public static final String INVALID_CVV = "123";	
@@ -135,6 +136,8 @@ public class ConstantData {
 	public static final String PRE_AUTH = "Pre-Auth Completion";
 	public static final String LIMIT_VALIDATION_PARAMETER = "Daily Velocity Utilized;Daily Amount Utilized;Periodic Velocity Utilized;Periodic Amount Utilized;Yearly Velocity Utilized;Yearly Amount Utilized";
 	
+	public static final String PDF_FORMAT = "PDF Format [pdf]";
+	public static final String DEVICE_ACTIVITY_REPORT_FILE_NAME = "Device Activity.pdf";
 	public static final String TRANSACTION_DATE = "transactionDate";
 	
 	private ConstantData() {

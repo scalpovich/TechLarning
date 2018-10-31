@@ -14,6 +14,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
 import com.mastercard.pts.integrated.issuing.utils.ConnectionUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
@@ -232,6 +233,18 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.activateCreditLimitChangeRequest(helpdeskGeneral);
 	}
 	
+	public Map<String, String> fetchCardBalanceAndCloseHelpdesk(Device device) {
+		Map<String, String> balanceMapBeforePayments;
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		balanceMapBeforePayments = helpDeskPage.checkCreditBalances(device);
+		helpDeskPage.clickEndCall();
+		return balanceMapBeforePayments;
+	}
+
+	public void compareBalancesAfterPayment(Payment payment) {
+		helpDeskPage.checkAndCompareBalancePostPayment(payment);
+	}
+
 	public void navigateToLoyaltyDetails(Device device) {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		helpDeskPage.searchByDeviceNumber(device);

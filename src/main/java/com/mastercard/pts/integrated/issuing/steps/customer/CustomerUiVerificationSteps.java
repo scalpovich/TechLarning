@@ -595,12 +595,7 @@ public class CustomerUiVerificationSteps {
 	public void thenLoanTypePageOfCardManagementTabIsRenderedCorrectly() {
 		uiVerificationCardManagementWorkflow.verifyLoanTypePage();
 	}
-
-	@Then("LocalCheque page of card management tab is rendered correctly")
-	public void thenLocalChequePageOfCardManagementTabIsRenderedCorrectly() {
-		uiVerificationCardManagementWorkflow.verifyLocalChequePage();
-	}
-
+	
 	@Then("ManualAlerts page of card management tab is rendered correctly")
 	public void thenManualAlertsPageOfCardManagementTabIsRenderedCorrectly() {
 		uiVerificationCardManagementWorkflow.verifyManualAlertsPage();
@@ -690,17 +685,7 @@ public class CustomerUiVerificationSteps {
 	public void thenOtherTransactionsPageOfCardManagementTabIsRenderedCorrectly() {
 		uiVerificationCardManagementWorkflow.verifyOtherTransactionsPage();
 	}
-
-	@Then("OutstationChequeCollection page of card management tab is rendered correctly")
-	public void thenOutstationChequeCollectionPageOfCardManagementTabIsRenderedCorrectly() {
-		uiVerificationCardManagementWorkflow.verifyOutstationChequeCollectionPage();
-	}
-
-	@Then("OutstationChequeProcessing page of card management tab is rendered correctly")
-	public void thenOutstationChequeProcessingPageOfCardManagementTabIsRenderedCorrectly() {
-		uiVerificationCardManagementWorkflow.verifyOutstationChequeProcessingPage();
-	}
-
+	
 	@Then("Override page of card management tab is rendered correctly")
 	public void thenOverridePageOfCardManagementTabIsRenderedCorrectly() {
 		uiVerificationCardManagementWorkflow.verifyOverridePage();
