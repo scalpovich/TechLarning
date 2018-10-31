@@ -1,7 +1,7 @@
 credit emv verification of joining fee
 
 Narrative:
-In order to provide to client easy-to-use multi-purpose credit card with pin
+In order to provide to client easy-to-use retail general purpose credit card with pin
 As an issuer
 I want to create EMV Credit card with pin and verify joining Fee
 
