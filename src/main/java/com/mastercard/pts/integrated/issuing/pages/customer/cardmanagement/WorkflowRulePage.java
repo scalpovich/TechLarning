@@ -186,6 +186,14 @@ public class WorkflowRulePage extends AbstractBasePage {
 		saveButtonClick();
 		return successMessageDisplay();
 	}
+	
+	public boolean workFlowRulesForRiskAnalysis(String fieldName1, String fieldName2) {
+		addWorkFlowDetails(fieldName1, fieldName2);
+		clickScoreCheckBox(true);
+		clickCreditBureauCheckBox(true);
+		saveButtonClick();
+		return successMessageDisplay();
+	}
 
 	public boolean workFlowRulesForApplicationScoringCreditBureau(String fieldName1, String fieldName2) {
 		addWorkFlowDetails(fieldName1, fieldName2);
