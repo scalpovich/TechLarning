@@ -26,7 +26,6 @@ Given user is logged in institution
 When a new device was created
 And processes pre-production batch for debit
 And processes device production batch for debit
-And embossing file batch was generated in correct format
 And user has wallet number information for debit device
 And user performs adjustment transaction
 And user has current wallet balance amount information for debit device
@@ -38,6 +37,7 @@ And user sign out from customer portal
 
 Scenario:3 Transaction - Verify that the transaction declines with appropriate response for stoplisting
 Given user is logged in institution
+When embossing file batch was generated in correct format
 When user raises an authorization request
 And status of request is declined with reason LOST
 And search Purchase authorization and verify 208-LOST CARD, PICK-UP status
