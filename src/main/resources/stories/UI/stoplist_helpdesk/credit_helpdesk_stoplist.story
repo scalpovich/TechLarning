@@ -27,12 +27,12 @@ And device has "normal" status
 And user stop lists the device
 And user edits deviceplan and enables stoplist flag
 Then device has "lost" status
-And embossing file batch was generated in correct format
 And user sign out from customer portal
 
 Scenario:3 Transaction - Verify that the transaction declines with appropriate response for stoplisting
 Given user is logged in institution
-When user raises an authorization request
+When embossing file batch was generated in correct format
+And user raises an authorization request
 And status of request is declined with reason LOST
 And search Purchase authorization and verify 208-LOST CARD, PICK-UP status
 Then assert Capture response with 70053 AuthDecline Code and Card Status is Lost with Capture Response as description
