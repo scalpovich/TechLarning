@@ -27,8 +27,8 @@ public class RiskAnalysisBatchSteps {
 		riskAnalysisBatchFlow.processRiskAnalysisBatch();
 	}
 	
-	@When("user process riskAnalysis batch for new Application")
-	@Then("user process riskAnalysis batch for new Application")
+	@When("user process batch in risk analysis for new Application")
+	@Then("user process batch in risk analysis for new Application")
 	public void processRiskAnalysisBatch() {
 		Assert.assertEquals("Batch(s) Scheduled Successfully.", riskAnalysisBatchFlow.processBatchForRiskAnalysis());
 	}

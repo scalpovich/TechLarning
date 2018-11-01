@@ -19,4 +19,10 @@ public class CreditBureauVerificationBatchFlow {
 		creditBureauVerificationPage.creditBureauVerificationBatchProcess();
 		creditBureauVerificationPage.switchToManualApprovalLink();
 	}
+	
+	public String processBatchForCreditBureauVerification() {
+		creditBureauVerificationPage = navigator.navigateToPage(CreditBureauVerificationPage.class);
+		creditBureauVerificationPage.creditBureauVerificationBatchProcess();
+		return creditBureauVerificationPage.switchToManualApproval();
+	}
 }

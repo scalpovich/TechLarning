@@ -17,5 +17,8 @@ Then "credit" is created with "Primary Device" as application type with applicat
 And user verifies the credit application device
 And user pushback the credit application device
 And user checks in Incomplete Application for the credit application device
-And user processesAll creditBureauVerification batch for new Application
+And user verifies the credit application device
+And user processesAll close batch for new Application
+And user refer the credit application device
+And user process batch in credit bureau verification for new Application
 And user sign out from customer portal
