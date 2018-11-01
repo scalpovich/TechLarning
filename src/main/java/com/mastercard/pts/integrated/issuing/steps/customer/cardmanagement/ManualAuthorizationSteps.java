@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertThat;
 
+import org.jbehave.core.annotations.Composite;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -33,6 +34,7 @@ public class ManualAuthorizationSteps {
 	@Given("user raises an authorization request")
 	@When("user raises an authorization request")
 	@Then("user raises an authorization request")
+	@Composite(steps = {"When embossing file batch was generated in correct format","user raises an authorization request"})
 	public void whenUserRaisesAnAuthorizationRequest(){
 		AuthorizationRequest request = AuthorizationRequest.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE);
