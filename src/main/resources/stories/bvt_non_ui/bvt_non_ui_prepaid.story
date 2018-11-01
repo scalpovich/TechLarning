@@ -34,6 +34,7 @@ And user has current wallet balance amount information for prepaid device
 And device has "Not Activated" status
 And user activates device through helpdesk
 Then user sign out from customer portal
+And embossing file batch was generated in correct format
 
 Scenario:3 emv corporate gift prepaid card authorization
 Meta:

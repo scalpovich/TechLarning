@@ -29,6 +29,8 @@ And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 And user activates device through helpdesk
+And user signs out from customer portal
+And embossing file batch was generated in correct format
 
 Scenario: msr retail general purpose prepaid card authorization
 Meta:
@@ -37,3 +39,4 @@ Given user is logged in institution
 And a new device was created
 When user raises an authorization request
 Then status of request is "approved"
+And user signs out from customer portal
