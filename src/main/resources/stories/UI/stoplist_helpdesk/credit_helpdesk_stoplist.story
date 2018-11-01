@@ -23,6 +23,7 @@ Scenario:2 To Verify that the user can stoplist a credit device through helpdesk
 Given user is logged in institution
 When credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
+And embossing file batch was generated in correct format
 And device has "normal" status
 And user stop lists the device
 And user edits deviceplan and enables stoplist flag
@@ -43,5 +44,3 @@ When user withdraws the stoplisted device
 Then user raises an authorization request
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
-
-

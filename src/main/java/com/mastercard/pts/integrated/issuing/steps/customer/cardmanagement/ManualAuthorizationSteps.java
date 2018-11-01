@@ -37,6 +37,7 @@ public class ManualAuthorizationSteps {
 		AuthorizationRequest request = AuthorizationRequest.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE);
 		request.setDeviceNumber(device.getDeviceNumber());
+		request.setCvv2(device.getCvv2Data());
 		statusMessage = manualAuthorizationWorkflow.authorizeDevice(request);
 	}
 	
