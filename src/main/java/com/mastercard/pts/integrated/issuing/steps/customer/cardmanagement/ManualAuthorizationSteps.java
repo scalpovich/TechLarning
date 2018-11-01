@@ -33,10 +33,12 @@ public class ManualAuthorizationSteps {
 	@Given("user raises an authorization request")
 	@When("user raises an authorization request")
 	@Then("user raises an authorization request")
+	@Composite(steps = {"When embossing file batch was generated in correct format","user raises an authorization request"})
 	public void whenUserRaisesAnAuthorizationRequest(){
 		AuthorizationRequest request = AuthorizationRequest.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE);
 		request.setDeviceNumber(device.getDeviceNumber());
+		request.setCvv2(device.getCvv2Data());
 		successMessage = manualAuthorizationWorkflow.authorizeDevice(request);
 	}
 	

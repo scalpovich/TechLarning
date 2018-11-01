@@ -332,9 +332,7 @@ public class DeviceEventBasedFeePlanPage extends AbstractBasePage {
 					WebElementUtils.pickDate(effectiveDateDPkr,
 							details.getEffectiveDate());
 					WebElementUtils.pickDate(endDateDPkr, details.getEndDate());
-					if (MiscUtils.getEnvironment().equalsIgnoreCase(Constants.ENV_DEMO)) {
-						selectCustomerTypeDeviceFees(Constants.BOTH);
-					}
+					selectCustomerTypeDeviceFees(Constants.BOTH);
 					waitForWicket();
 					WebElementUtils.scrollDown(driver(), 0, 250);
 					clickSaveButton();
