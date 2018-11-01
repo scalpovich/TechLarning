@@ -25,11 +25,11 @@ Given user is logged in institution
 When a new device was created
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
+And embossing file batch was generated in correct format
 And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
-And device has "not activated" status
-And user activates device through helpdesk
+And device has "normal" status
 And user stop lists the device
 And user edits deviceplan and enables stoplist flag
 Then device has "lost" status
