@@ -1,6 +1,5 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -8,7 +7,6 @@ import java.util.List;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -347,7 +345,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			waitForWicket(driver());
 			selectByVisibleText(programCodeDDwn, device.getProgramCode());		
 		}
-		SimulatorUtilities.wait(10000);
+		SimulatorUtilities.wait(30000);
 		clickNextButton();
 		
 		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());		
