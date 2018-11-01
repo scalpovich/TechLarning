@@ -23,11 +23,11 @@ Scenario:2 To Verify that the user can stoplist a credit device through helpdesk
 Given user is logged in institution
 When credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
-And embossing file batch was generated in correct format
 And device has "normal" status
 And user stop lists the device
 And user edits deviceplan and enables stoplist flag
 Then device has "lost" status
+And embossing file batch was generated in correct format
 And user sign out from customer portal
 
 Scenario:3 Transaction - Verify that the transaction declines with appropriate response for stoplisting
