@@ -3,7 +3,6 @@ package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertThat;
 
-import org.jbehave.core.annotations.Composite;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -39,6 +38,7 @@ public class ManualAuthorizationSteps {
 		AuthorizationRequest request = AuthorizationRequest.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE);
 		request.setDeviceNumber(device.getDeviceNumber());
+		request.setCvv2(device.getCvv2Data());
 		successMessage = manualAuthorizationWorkflow.authorizeDevice(request);
 	}
 	
