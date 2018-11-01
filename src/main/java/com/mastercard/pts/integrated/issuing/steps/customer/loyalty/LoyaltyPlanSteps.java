@@ -92,7 +92,7 @@ public class LoyaltyPlanSteps {
 			Double maxLP = context.get(Constants.MAX_LOYALTY_POINTS);
 			if(maxLP != null && points != null) {
 				if(points < maxLP)
-					context.put(Constants.AVAILABLE_LOYALTY_POINTS, points);
+					context.put(Constants.AVAILABLE_LOYALTY_POINTS, Math.floor(points));
 				else
 					context.put(Constants.AVAILABLE_LOYALTY_POINTS, maxLP);
 			}

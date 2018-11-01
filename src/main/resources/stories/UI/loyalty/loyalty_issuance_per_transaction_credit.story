@@ -6,7 +6,7 @@ Meta:
 @StoryName credit_msr_retail_loyalty
 @migration_loyalty
 
-Scenario:1 Loyalty points manual reversal - credit
+Scenario:1 Create credit device and perform manual auth
 Given setting json values in excel for Credit
 Then use loyalty plan AUTOMATION [LP1]
 When user is logged in institution
@@ -33,9 +33,14 @@ And device has "normal" status
 Then user waits for 5 minutes
 And user sign out from customer portal
 
-Scenario:2 User verifies loyalty points after manual auth
+Scenario:2 Verify loyalty points after manual auth
 When user is logged in institution
 And pre-clearing and Loyalty Calc batches are run
 Then verify available loyalty points should be within loyalty plan limit
+And user verifies loyalty details for Credit device
+
+Scenario:3 Verify loyalty points after manual reversal of transaction
+Then user add transaction reversal with reason Manual Reversal [1]
+And pre-clearing and Loyalty Calc batches are run
 And user verifies loyalty details for Credit device
 And user sign out from customer portal

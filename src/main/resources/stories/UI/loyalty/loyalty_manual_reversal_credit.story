@@ -7,7 +7,7 @@ Meta:
 @StoryName credit_msr_retail_loyalty
 @migration_loyalty
 
-Scenario:1 Loyalty points manual reversal - credit
+Scenario:1 Create credit device and perform manual auth
 Given setting json values in excel for Credit
 When user is logged in institution
 And for Magnetic Stripe Card [1] User fills Device Plan for Credit product for Mastercard
@@ -32,7 +32,7 @@ And search Purchase authorization and verify Successful status
 Then user waits for 5 minutes
 And user sign out from customer portal
 
-Scenario:2 User verifies loyalty points after manual reversal of transaction
+Scenario:2 Verify loyalty points after manual reversal of transaction
 When user is logged in institution
 And pre-clearing and Loyalty Calc batches are run
 Then verify available loyalty points should be within loyalty plan limit
