@@ -198,6 +198,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	private final String failStatus = "FAILED [3]";
 	
 	private final String successStatus = "SUCCESS [2]";
+	
+	private static final String  POST_MAINTENANCE_FEE_BATCH = "Post Maintence Fee Batch [POST_MAINTENANCE_FEE]";
 
 	public void selectBatchType(String option) {
 		selectByVisibleText(batchTypeDDwn, option);
@@ -425,9 +427,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		else if("Billing Process - Credit".equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Billing Process - Credit [BILLING]"); 
 		
-		else if("Post Maintence Fee Batch [POST_MAINTENANCE_FEE]".equalsIgnoreCase(batchName))
+		else if(POST_MAINTENANCE_FEE_BATCH.equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Post Maintence Fee Batch [POST_MAINTENANCE_FEE]"); 
-		
 	}
 
 	public String processDownloadBatch(ProcessBatches batch) {
@@ -691,17 +692,15 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		SimulatorUtilities.wait(2000);
 		selectInternalBatchType(batch.getBatchName());
 		SimulatorUtilities.wait(2000);
-		
+
 		try {
 			todayDate = dateFormatter.parse(dateFormatter.format(new Date()));
 			dateFromUI = getDateFromUI(dateFormatter, batch);
 		} catch (ParseException e) {
-			throw new RuntimeException(e);
+			throw MiscUtils.propagate(e);
 		}
 
 		submitAndVerifyBatch();
-
 		return batchStatus;
 	}
-	
 }

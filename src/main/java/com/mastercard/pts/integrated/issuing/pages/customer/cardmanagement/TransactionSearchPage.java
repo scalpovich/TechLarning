@@ -171,7 +171,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 		return getCellTextByColumnName(i, "Description");
 	}
 
-	public List<String> searchTransactionWithDeviceAndGetJoiningAndMemberShipFees(Device device, TransactionSearch ts) {
+	public List<String> searchTransactionWithDeviceAndGetJoiningAndMemberShipFees(Device device, TransactionSearch ts, Boolean membershipFlag) {
 		logger.info("Select product {}", device.getProductType());
 		WebElementUtils.selectDropDownByVisibleText(productTypeSelect, device.getProductType());
 		logger.info("Search transaction for device {}", device.getDeviceNumber());
@@ -182,23 +182,14 @@ public class TransactionSearchPage extends AbstractBasePage {
 		WebElementUtils.elementToBeClickable(tranDateDDwn);
 		WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, "Transaction Date [T]");
 		waitAndSearchForRecordToAppear();
-		joiningAndMembershipFees.add(joiningFees.getText());
-		joiningAndMembershipFees.add(membershipFees.getText());
+		
+		if (membershipFlag) {
+			joiningAndMembershipFees.add(joiningFees.getText());
+			joiningAndMembershipFees.add(membershipFees.getText());
+		} else {
+			joiningAndMembershipFees.add(joiningFees.getText());
+		}
 		return joiningAndMembershipFees;
-	}
-	
-	public String searchTransactionWithDeviceAndGetJoiningFees(Device device, TransactionSearch ts) {
-		logger.info("Select product {}", device.getProductType());
-		WebElementUtils.selectDropDownByVisibleText(productTypeSelect, device.getProductType());
-		logger.info("Search transaction for device {}", device.getDeviceNumber());
-		WebElementUtils.enterText(searchDeviceTxt, device.getDeviceNumber());
-		WebElementUtils.pickDate(fromDateTxt, DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt)));
-		WebElementUtils.pickDate(toDateTxt, DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt)));
-		waitForWicket();
-		WebElementUtils.elementToBeClickable(tranDateDDwn);
-		WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, "Transaction Date [T]");
-		waitAndSearchForRecordToAppear();
-		return joiningFees.getText();
 	}
 	
 	public void verifyUiOperationStatus() {

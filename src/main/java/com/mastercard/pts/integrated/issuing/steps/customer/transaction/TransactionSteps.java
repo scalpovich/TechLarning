@@ -105,6 +105,8 @@ public class TransactionSteps {
 	private static String FAIL_MESSAGE = FAILED + " -  Result : ";
 	
 	private static String INVALID_KEYS = "(default) - M/Chip Key Set from the related BIN range will be used";
+	
+	public boolean membershipFlag = false;
 
 	public String getTransactionAmount() {
 		return transactionAmount;
@@ -483,25 +485,26 @@ public class TransactionSteps {
 	}
 	
 	
-	@When("search with device in transaction screen and status for Joining and Membership Fees")
-	@Then("search with device in transaction screen and status for Joining and Membership Fees")
-	public void thenSearchWithDeviceInTransactionScreenAndStatusForJoiningandMembershipFees() {
+	@When("search with device in transaction screen and Verify Joining and Membership Fees")
+	@Then("search with device in transaction screen and Verify Joining and Membership Fees")
+	public void verifyJoiningAndMembershipFeesOnTransactionSearch() {
 		
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		Device device = context.get(ContextConstants.DEVICE);
 		device.setJoiningFees(provider.getString("JOINING_FEES"));
 		device.setMemberShipFees(provider.getString("MEMBERSHIP_FEES"));
-		assertThat(transactionWorkflow.searchTransactionWithDeviceAndGetFees(device, ts), Matchers.hasItems(device.getJoiningFees(), device.getMembershipFees()));
+		membershipFlag = true;
+		assertThat(transactionWorkflow.searchTransactionWithDeviceAndGetFees(device, ts, membershipFlag), Matchers.hasItems(device.getJoiningFees(), device.getMembershipFees()));
 	}
 	
-	@When("search with device in transaction screen and status for Joining Fee")
-	@Then("search with device in transaction screen and status for Joining Fee")
-	public void thenSearchWithDeviceInTransactionScreenAndStatusForJoiningFee() {
+	@When("search with device in transaction screen and Verify Joining Fee")
+	@Then("search with device in transaction screen and Verify Joining Fee")
+	public void verifyJoiningFeeOnTransactionSearch() {
 		
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		Device device = context.get(ContextConstants.DEVICE);
 		device.setJoiningFees(provider.getString("JOINING_FEES"));
-		assertEquals(transactionWorkflow.searchTransactionWithDeviceAndGetJoiningFee(device, ts), device.getJoiningFees());
+		assertEquals(transactionWorkflow.searchTransactionWithDeviceAndGetFees(device, ts, membershipFlag), device.getJoiningFees());
 	}
 
 	@When("user performs load balance request")
@@ -510,7 +513,7 @@ public class TransactionSteps {
 		LoadBalanceRequest lbr = LoadBalanceRequest.getProviderData(provider);
 		String loadRequestReferenceNumber = transactionWorkflow.performLoadBalanceRequestAndGetRequestReferenceNumber(device, lbr);
 		lbr.setLoadRequestReferenceNumber(loadRequestReferenceNumber);
-		context.put("LOADBALANCEREQUEST", lbr);
+		context.put(ContextConstants.LOAD_BALANCE_REQUEST, lbr);
 	}
 	
 	@When("user performs load balance request for Joining and Membership plan")
@@ -520,7 +523,7 @@ public class TransactionSteps {
 		LoadBalanceRequest lbr = LoadBalanceRequest.getProviderData(provider);
 		String loadRequestReferenceNumber = transactionWorkflow.performLoadBalanceRequestAndGetRequestReferenceNumber(device, lbr);
 		lbr.setLoadRequestReferenceNumber(loadRequestReferenceNumber);
-		context.put("LOADBALANCEREQUEST", lbr);
+		context.put(ContextConstants.LOAD_BALANCE_REQUEST, lbr);
 	}
 
 	@When("load balance request is successful")
@@ -532,7 +535,7 @@ public class TransactionSteps {
 	@When("user performs load balance approve")
 	public void whenUserPerformsLoadBalanceApprove() {
 		Device device = context.get(ContextConstants.DEVICE);
-		LoadBalanceRequest lbr = context.get("LOADBALANCEREQUEST");
+		LoadBalanceRequest lbr = context.get(ContextConstants.LOAD_BALANCE_REQUEST);
 		transactionWorkflow.performLoadBalanceApprove(device, lbr);
 	}
 

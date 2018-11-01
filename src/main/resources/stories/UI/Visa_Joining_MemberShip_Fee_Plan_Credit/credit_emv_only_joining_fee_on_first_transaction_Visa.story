@@ -48,6 +48,6 @@ And user sign out from customer portal
 
 Scenario: 1.5 Joining Fee is been Deducted
 Given user is logged in institution
-When search with device in transaction screen and status for Joining Fee
+When search with device in transaction screen and Verify Joining Fee
 And user signs out from customer portal
 
