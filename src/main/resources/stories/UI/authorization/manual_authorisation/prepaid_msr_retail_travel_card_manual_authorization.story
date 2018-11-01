@@ -16,7 +16,6 @@ Given user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
 Then device has "normal" status
-And user signs out from customer portal
 
 Scenario: msr retail travel prepaid card device production
 Meta:
@@ -30,8 +29,6 @@ And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 And user activates device through helpdesk
-And embossing file batch was generated in correct format
-And user signs out from customer portal
 
 Scenario: msr retail travel prepaid card authorization
 Meta:
@@ -40,4 +37,3 @@ Given user is logged in institution
 And a new device was created
 When user raises an authorization request
 Then status of request is "approved"
-And user signs out from customer portal

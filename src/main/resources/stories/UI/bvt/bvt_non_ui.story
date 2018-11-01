@@ -23,17 +23,14 @@ And processes device production batch for debit
 !-- When user has current wallet balance amount information for debit device
 !-- Then device has "normal" status
 !-- When user activates device through helpdesk
-And user signs out from customer portal
-And embossing file batch was generated in correct format
 Scenario:2 Non-UI Verification - emv debit card manual authorization
 Meta:
 @TestId TC408283
 Given user is logged in institution
-When embossing file batch was generated in correct format
 Given a new device was created
 Given user raises an authorization request
 Then status of request is "approved"
-And user signs out from customer portal
+
 
 Scenario: Non-UI Verification - Event Trigger Validation
 Meta:

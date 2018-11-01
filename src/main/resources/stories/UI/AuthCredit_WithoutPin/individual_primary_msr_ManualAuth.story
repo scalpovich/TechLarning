@@ -35,7 +35,6 @@ And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
 And user sign out from customer portal
-And embossing file batch was generated in correct format
 
 Scenario: emv corporate travel prepaid card authorization
 Meta:
