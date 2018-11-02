@@ -933,28 +933,6 @@ public class HelpDeskSteps {
 				equalTo(transactionAmount));
 	}
 	
-
-	@When("check card balance details through helpdesk")
-	public void checkCardBalance(){
-		Device device = context.get(ContextConstants.DEVICE);
-		context.put(ContextConstants.DEVICE,device);
-		context.put("balanceBeforePayment", helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device));
-		
-	}
-	
-	@When("recheck card balance details through helpdesk after payment")
-	public void reCheckCardBalancePostPayment(){
-		Device device = context.get(ContextConstants.DEVICE);	
-		helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device);
-		context.put("balanceAfterPayment", helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device));	
-	}
-	
-	@Then("user check successful payments")
-	public void checkSuccessfulPayments(){		
-		Payment payment = context.get(ContextConstants.PAYMENT);
-		helpdeskWorkflow.compareBalancesAfterPayment(payment);
-	}
-	
 	@When("user check balance details through helpdesk $payment")
 	public void userCheckBalanceDetailsThroughHelpdesk(String payment){
 		Device device = context.get(ContextConstants.DEVICE);	
@@ -992,6 +970,27 @@ public class HelpDeskSteps {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setProductType(ProductType.PREPAID);
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.getWalletBalance(device), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
+	}
+	
+	@When("check card balance details through helpdesk")
+	public void checkCardBalance(){
+		Device device = context.get(ContextConstants.DEVICE);
+		context.put(ContextConstants.DEVICE,device);
+		context.put("balanceBeforePayment", helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device));
+		
+	}
+	
+	@When("recheck card balance details through helpdesk after payment")
+	public void reCheckCardBalancePostPayment(){
+		Device device = context.get(ContextConstants.DEVICE);	
+		helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device);
+		context.put("balanceAfterPayment", helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device));	
+	}
+	
+	@Then("user checks successful payments")
+	public void checkSuccessfulPayments(){		
+		Payment payment = context.get(ContextConstants.PAYMENT);
+		helpdeskWorkflow.compareBalancesAfterPayment(payment);
 	}
 	
 	@When("user raises $serviceCode request for $customerType")

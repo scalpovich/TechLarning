@@ -144,9 +144,15 @@ public class ConstantData {
 	public static final String DEVICE_ACTIVITY_REPORT_FILE_NAME = "Device Activity.pdf";
 	public static final String RETAIL_TO_LOAN = 	"215 - Retail Transaction to Loan";	
 	
-	public static final String APPLIED_ON_LOAN_AMOUNT= 	"Loan Amount [LA]";	
-	
+	public static final String APPLIED_ON_LOAN_AMOUNT= 	"Loan Amount [LA]";		
 	public static final String LOAN_INSTALLMENT_OUTSTANDING= 	"LOAN_INSTALLMENT_OUTSTANDING";	
+	
+	public static final String TRANSACTION_TYPE = "Transaction Type" ;
+	public static final String LOAN_TRANSACTION_AMOUNT = "Transaction Amount" ;
+	public static final String PRINCIPAL_AMOUNT  = "Principal Amount";
+	public static final String INTEREST_AMOUNT  = "Interest Amount" ;
+	public static final String PROCESSING_DATE  = "Processing Date" ;
+	public static final String DUE_DATE  = "Due Date" ;
 	
 	private ConstantData() {
 	}

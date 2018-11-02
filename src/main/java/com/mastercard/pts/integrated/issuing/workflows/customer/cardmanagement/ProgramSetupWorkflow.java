@@ -45,7 +45,6 @@ import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.Devic
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceRangePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.MCCRulePlanPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.MarketingMessagePlanPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.NetworkMembershipPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.PrepaidStatementPlanPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProgramPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.StatementMessagePlanPage;

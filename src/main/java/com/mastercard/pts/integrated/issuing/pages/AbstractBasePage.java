@@ -113,6 +113,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	public static final String INVALID_TRANSACTION_MESSAGE = "Invalid transaction type - ";
     
+	public static final String REFUND_SUCCESS = "Refund is successful";
+	
     private static final String Device = null;
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -141,6 +143,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Cancel']")
 	private MCWebElement cancelBtn;
 
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Reverse']")
+	private MCWebElement reverseBtn;
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Process Selected']")
 	private MCWebElement processSelectedBtn;
 
@@ -298,6 +303,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	private static final String DeviceNumber="Device Number";
 	
+	private static final String REFUND_MESSAGE="//span[contains(text(),'Refund')]";
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers']/td[5]/span")
 	private MCWebElement deviceProductionHeaderBatchTxt;
 	
@@ -363,6 +370,11 @@ public abstract class AbstractBasePage extends AbstractPage {
 		clickWhenClickable(confirmButton);
 	}
 
+	public void clickReverseButton(){
+		WebElementUtils.scrollDown(driver(), 0, 250);
+		clickWhenClickable(reverseBtn);
+	}
+	
 	protected void clickCancelButton() {
 		clickWhenClickable(cancelBtn);
 	}
@@ -521,6 +533,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 		logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
 	}
 
+	public boolean verifyRefundMessage() {
+		WebElement refundMessage = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(REFUND_MESSAGE)));
+		String refundStatus = refundMessage.getText();
+		return refundStatus.equalsIgnoreCase(REFUND_SUCCESS);
+
+	}
+	
 	protected boolean waitForRow() {
 		try {
 			waitForWicket();
@@ -1235,6 +1254,27 @@ public abstract class AbstractBasePage extends AbstractPage {
 		ele.getSelect().selectByVisibleText(optionalVisibleText);
 	}
 
+	protected String verifyReportDownloaded(String reportName) {
+		StringBuffer path= new StringBuffer();
+		WebDriverWait wait = new WebDriverWait(driver(), TIMEOUT);
+		wait.until(new ExpectedCondition<Boolean>() {
+			@Override
+			public Boolean apply(WebDriver driver) {
+				Boolean exists = false;
+				for (File file: new File(PDFUtils.getuserDownloadPath()).listFiles()) {
+				 if(file.isFile()&& file.getName().startsWith(reportName)&&FilenameUtils.getExtension(file.getName()).equalsIgnoreCase("pdf")){
+					exists = true;
+				    path.append(file.getAbsolutePath());
+				    logger.info("File Path:"+path.toString());
+					 break;
+				 }
+			}
+				return exists;
+			}
+		});
+		return path.toString();
+	}
+	
 	public void selectByVisibleText(MCWebElement ele, String optionName) {
 		try {
 			doSelectByVisibleText(ele, optionName);
@@ -1279,27 +1319,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	}
 
-	protected String verifyReportDownloaded(String reportName) {
-		StringBuffer path= new StringBuffer();
-		WebDriverWait wait = new WebDriverWait(driver(), TIMEOUT);
-		wait.until(new ExpectedCondition<Boolean>() {
-			@Override
-			public Boolean apply(WebDriver driver) {
-				Boolean exists = false;
-				for (File file: new File(PDFUtils.getuserDownloadPath()).listFiles()) {
-				 if(file.isFile()&& file.getName().startsWith(reportName)&&FilenameUtils.getExtension(file.getName()).equalsIgnoreCase("pdf")){
-					exists = true;
-				    path.append(file.getAbsolutePath());
-				    logger.info("File Path:"+path.toString());
-					 break;
-				 }
-			}
-				return exists;
-			}
-		});
-		return path.toString();
-	}
-	
 	protected void clickWhenClickable(WebElement element) {
 		SimulatorUtilities.wait(900);
 		waitForElementVisible(element);		
@@ -1867,20 +1886,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		action.moveToElement(asWebElement(element), xOffset, yOffset).click().build().perform();
 	}
 	
-	@Override
-	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		logger.info("Not validaiting any elements, as this is an Abstraction layer to Pages");
-		return null;
-	}
-	
-	public void switchToDefaultFrame(String element,int index) {
-		driver().switchTo().frame(Elements(element).get(index));
-	}
-	
-	public String getInstitutionDate(){	
-		logger.info("Institution date : {}",getTextFromPage(institutionDateTxt));
-		return getTextFromPage(institutionDateTxt);
-	}
 	
 	public void ifTextAvailableinTableThenDelete(MCWebElement tableHandle, String text) {
 		WebElement table = asWebElement(tableHandle);
@@ -1904,6 +1909,40 @@ public abstract class AbstractBasePage extends AbstractPage {
 				}
 			}
 		}
+	}
+	
+	public void clickOncheckBoxIfBatchAvailableinTable(MCWebElement tableHandle, String text) {
+		WebElement table = asWebElement(tableHandle);
+		List<WebElement> rowstable = table.findElements(By.tagName("tr"));
+		int rowscount = rowstable.size();
+		for (int row = 1; row < rowscount; row++) {
+			List<WebElement> columnsrow = rowstable.get(row).findElements(By.tagName("td"));
+			int columnscount = columnsrow.size();
+			for (int col = 0; col < columnscount; col++) {
+				if (columnsrow.get(col).getText().equals(text)) {
+					WebElement checkBox = columnsrow.get(columnscount - 1).findElement(By.cssSelector("input[type=checkbox]"));
+					if (checkBox.isEnabled() && !checkBox.isSelected()) {
+						checkBox.click();
+						break;
+					}
+				}
+			}
+		}
+	}
+	
+	@Override
+	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
+		logger.info("Not validaiting any elements, as this is an Abstraction layer to Pages");
+		return null;
+	}
+	
+	public void switchToDefaultFrame(String element,int index) {
+		driver().switchTo().frame(Elements(element).get(index));
+	}
+	
+	public String getInstitutionDate(){	
+		logger.info("Institution date : {}",getTextFromPage(institutionDateTxt));
+		return getTextFromPage(institutionDateTxt);
 	}
 	
 	protected void waitForContentToLoad(MCWebElement element){
@@ -1931,24 +1970,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 				break;
 			}
 		}
-	}
+	}	
 	
-	public void clickOncheckBoxIfBatchAvailableinTable(MCWebElement tableHandle, String text) {
-		WebElement table = asWebElement(tableHandle);
-		List<WebElement> rowstable = table.findElements(By.tagName("tr"));
-		int rowscount = rowstable.size();
-		for (int row = 1; row < rowscount; row++) {
-			List<WebElement> columnsrow = rowstable.get(row).findElements(By.tagName("td"));
-			int columnscount = columnsrow.size();
-			for (int col = 0; col < columnscount; col++) {
-				if (columnsrow.get(col).getText().equals(text)) {
-					WebElement checkBox = columnsrow.get(columnscount - 1).findElement(By.cssSelector("input[type=checkbox]"));
-					if (checkBox.isEnabled() && !checkBox.isSelected()) {
-						checkBox.click();
-						break;
-					}
-				}
-			}
-		}
-	}
 }

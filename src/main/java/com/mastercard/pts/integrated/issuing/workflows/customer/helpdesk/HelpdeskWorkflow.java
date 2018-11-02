@@ -228,6 +228,10 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.verifyBillingDetails(device);
 	}
 	
+	public HashMap<String,BigDecimal> activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
+		return helpDeskPage.activateCreditLimitChangeRequest(helpdeskGeneral);
+	}
+	
 	public Map<String,String> fetchCardBalanceAndCloseHelpdesk(Device device) {
 		Map<String, String> balanceMapBeforePayments;	
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);	
@@ -258,10 +262,6 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.verifyUnpaidAndAuthFlag(device,label);
 	}
 	
-	public HashMap<String,BigDecimal> activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
-		return helpDeskPage.activateCreditLimitChangeRequest(helpdeskGeneral);
-	}
-
 	public List<LoanDetails> raiseRetailToLoanRequest(HelpdeskGeneral helpdeskGeneral,LoanPlan loanPlan,TransactionSearchDetails transactionDetails){
 		return helpDeskPage.retailTransactionToLoan(helpdeskGeneral,loanPlan,transactionDetails);
 	}

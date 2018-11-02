@@ -1137,6 +1137,58 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return verifyFieldPresence(LOGGED_BY);
 	}
 
+	public List<String> getCreditCardBallance(){	
+		ArrayList<String> list = new ArrayList<>();		
+		clickWhenClickableDoNotWaitForWicket(balanceDetailsTab);
+		for (MCWebElement element: purchaseComponents.getElements()){
+			logger.info("Elemnent Text-> " + element.getText());
+			list.add(element.getText());
+		}
+		for (MCWebElement element: paymentComponents.getElements()){
+			list.add(element.getText());
+			logger.info("Elemnent Text-> " + element.getText());
+		}		
+		return list;		
+	}
+	
+	public Map<String,String> checkCreditBalances(Device device){
+		Map<String, String> balanceMapBeforePayments;	
+		List<String> list;
+		logger.info("get Credit balances");
+		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getProductType());
+		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
+		clickSearchButton();
+		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
+		editDeviceLink.click();
+		clickCurrentStatusLimitTab();
+		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
+		balanceMapBeforePayments = getCreditLimitComponents();
+			clickBalanceDetailsTab();
+			SimulatorUtilities.wait(5000);//this to wait till the table gets loaded	
+			list=getCreditCardBallance();
+			balanceMapBeforePayments.put("UnbllledPayments", list.get(1));
+			balanceMapBeforePayments.put("OutstandingPayments", list.get(2));			
+			return balanceMapBeforePayments;
+	}
+	
+	public void checkAndCompareBalancePostPayment(Payment payment){		
+		Map<String, String> mapA= context.get("balanceBeforePayment");
+		Map<String, String> mapB =context.get("balanceAfterPayment");
+		    if (mapA != null && mapB != null && mapA.size() == mapB.size()) {
+		        for (Map.Entry m : mapA.entrySet()) {
+		            String keyFromFirstMap = (String) m.getKey();		           
+		            String valueFromFirstMap = (String) m.getValue();
+		            String valueFromSecondMap = mapB.get(keyFromFirstMap);
+		            if(keyFromFirstMap.equals("UnbllledPayments")){
+		            if (!valueFromSecondMap.equals(Integer.valueOf(valueFromFirstMap + payment.getAmount()))) {
+		               Assert.assertEquals("Payment has been done successfully", keyFromFirstMap + "::::" + valueFromSecondMap,  keyFromFirstMap + "::::" + Integer.valueOf(valueFromFirstMap + 500));
+		            }
+		        } }
+		        
+		    } 
+		    
+		}
+	
 	public boolean verifyEstimatedClosurePeriod() {
 		return verifyFieldPresence(CLOSURE_PERIOD);
 	}
@@ -1242,18 +1294,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return creditLimit;
 	}
 	
-	public String verifyBillingDetails(Device device){
-		List<String> lst = new ArrayList<String>();
-		SimulatorUtilities.wait(5000);
-		editDeviceLink.click();
-		SimulatorUtilities.wait(1000);
-		clickWhenClickable(balanceDetailsTab);
-		SimulatorUtilities.wait(2000);
-		lst.add(Element("//span[contains(text(),'"+device.getCategory()+" :')]//ancestor::tr//td["+resolve(device.getAmountType())+"]/span/span").getText());
-		clickEndCall();
-		return lst.get(0);
-	}
-
 	public void resetPinRetryCounter(HelpdeskGeneral helpdeskGeneral) {
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
@@ -1292,6 +1332,18 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return helpDeskValues;
 	}
 	
+	public String verifyBillingDetails(Device device){
+		List<String> lst = new ArrayList<String>();
+		SimulatorUtilities.wait(5000);
+		editDeviceLink.click();
+		SimulatorUtilities.wait(1000);
+		clickWhenClickable(balanceDetailsTab);
+		SimulatorUtilities.wait(2000);
+		lst.add(Element("//span[contains(text(),'"+device.getCategory()+" :')]//ancestor::tr//td["+resolve(device.getAmountType())+"]/span/span").getText());
+		clickEndCall();
+		return lst.get(0);
+	}
+	
 	private int resolve(String amountType)
 	{
 		switch(amountType){
@@ -1327,58 +1379,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return map;
 	}
 	
-	public List<String> getCreditCardBallance(){	
-		ArrayList<String> list = new ArrayList<>();		
-		clickWhenClickableDoNotWaitForWicket(balanceDetailsTab);
-		for (MCWebElement element: purchaseComponents.getElements()){
-			logger.info("Elemnent Text-> " + element.getText());
-			list.add(element.getText());
-		}
-		for (MCWebElement element: paymentComponents.getElements()){
-			list.add(element.getText());
-			logger.info("Elemnent Text-> " + element.getText());
-		}		
-		return list;		
-	}
-	
-	public Map<String,String> checkCreditBalances(Device device){
-		Map<String, String> balanceMapBeforePayments;	
-		List<String> list;
-		logger.info("get Credit balances");
-		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getProductType());
-		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
-		clickSearchButton();
-		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
-		editDeviceLink.click();
-		clickCurrentStatusLimitTab();
-		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
-		balanceMapBeforePayments = getCreditLimitComponents();
-			clickBalanceDetailsTab();
-			SimulatorUtilities.wait(5000);//this to wait till the table gets loaded	
-			list=getCreditCardBallance();
-			balanceMapBeforePayments.put("UnbllledPayments", list.get(1));
-			balanceMapBeforePayments.put("OutstandingPayments", list.get(2));			
-			return balanceMapBeforePayments;
-	}
-	
-	public void checkAndCompareBalancePostPayment(Payment payment){		
-		Map<String, String> mapA= context.get("balanceBeforePayment");
-		Map<String, String> mapB =context.get("balanceAfterPayment");
-		    if (mapA != null && mapB != null && mapA.size() == mapB.size()) {
-		        for (Map.Entry m : mapA.entrySet()) {
-		            String keyFromFirstMap = (String) m.getKey();		           
-		            String valueFromFirstMap = (String) m.getValue();
-		            String valueFromSecondMap = mapB.get(keyFromFirstMap);
-		            if(keyFromFirstMap.equals("UnbllledPayments")){
-		            if (!valueFromSecondMap.equals(Integer.valueOf(valueFromFirstMap + payment.getAmount()))) {
-		               Assert.assertEquals("Payment has been done successfully", keyFromFirstMap + "::::" + valueFromSecondMap,  keyFromFirstMap + "::::" + Integer.valueOf(valueFromFirstMap + 500));
-		            }
-		        } }
-		        
-		    } 
-		    
-		}
-
 	public void checkBalancesDetails(Device device, String payment) {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getProductType());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
