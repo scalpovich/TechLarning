@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
+import org.jbehave.core.annotations.When;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Gene
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ReportVerificationWorkflow;
 
 @Component
@@ -45,12 +47,20 @@ public class ReportVerificationSteps {
 		report.setDeviceNumber(device.getDeviceNumber());
 		report.setUsername(context.get(UserManagementSteps.USERNAME));
 		for(String field : reportFields.split(",")){
-			report.setFieldToValidate(field, context.get(ConstantData.fromShortName(field)));
-			logger.info("value of {field} is {value}",field,context.get(ConstantData.fromShortName(field)));
+				report.setFieldToValidate(field, context.get(ConstantData.fromShortName(field)));
+				logger.info("value of {field} is {value}",field,context.get(ConstantData.fromShortName(field)));
 		}
 		reportVerificationWorkflow.verifyGenericReport(report);		
 	}
 	
-	
+	@When("verify application in application reject report")
+	@Then("verify application in application reject report")
+	public void verifyApplicationInApplicationRejectReport() {
+		GenericReport report = GenericReport.createWithProvider(provider);
+		report.setPassword(((String)context.get(UserManagementSteps.USERNAME)).substring(0,4)+(new DateUtils()).getDateDDMMFormat());
+		Device device = context.get(ContextConstants.DEVICE);
+		report.setFieldToValidate("application number", device.getApplicationNumber());
+		reportVerificationWorkflow.verifyReportGenerationAppRejectReport(report);
+	}
 
 }

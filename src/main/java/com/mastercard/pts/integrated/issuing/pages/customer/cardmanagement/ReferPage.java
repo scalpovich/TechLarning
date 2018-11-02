@@ -25,14 +25,8 @@ public class ReferPage extends AbstractCardManagementPage {
 	@Autowired
 	TestContext context;
 
-	// ------------- Card Management > Institution Parameter Setup > Institution
-	// Currency [ISSAP0F]
-
 	private static final String REFER_FRAME = "Edit Application";
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
-	private MCWebElement save;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='applicationNumber']")
 	private MCWebElement txtApplicationNumber;
 
@@ -66,7 +60,7 @@ public class ReferPage extends AbstractCardManagementPage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='lastName']")
 	private MCWebElement txtLastName;
 
-	public void referapplication() {
+	public void referApplication() {
 		Device device = context.get(CreditConstants.APPLICATION);
 		WebElementUtils.enterText(txtApplicationNumber, device.getApplicationNumber());
 		WebElementUtils.pickDate(dtPkrFrom, LocalDate.now().minusDays(1));
@@ -75,16 +69,29 @@ public class ReferPage extends AbstractCardManagementPage {
 	}
 
 	public String editAndReferApplication() {
-		referapplication();
+		referApplication();
 		waitForPageToLoad(driver());
 		clickWhenClickable(editImg);
 		SimulatorUtilities.wait(5000);
-
 		runWithinPopup("Edit Application", () -> {
 			clickWhenClickable(btnRefer);
 		});
-
 		verifyOperationStatus();
+		return getCodeFromInfoMessage("Application Number");
+	}
+	
+	public void clickEditImageForTheRecordDisplayed() {
+		waitForPageToLoad(driver());
+		clickWhenClickable(editImg);
+	}
+	
+	public void referButtonClick() {
+		switchToIframe(REFER_FRAME);
+		clickWhenClickable(btnRefer);
+		verifyOperationStatus();
+	}
+	
+	public String getApplicationNumber() {
 		return getCodeFromInfoMessage("Application Number");
 	}
 

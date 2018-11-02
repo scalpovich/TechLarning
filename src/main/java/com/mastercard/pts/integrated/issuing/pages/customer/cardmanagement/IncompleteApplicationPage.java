@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ClientDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
@@ -79,6 +80,15 @@ public class IncompleteApplicationPage extends AbstractCardManagementPage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='lastName']")
 	private MCWebElement txtLastName;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[text()='Profile']")
+	private MCWebElement tabProfile;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=birthDate]")
+	private MCWebElement txtBirthDate;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='birthDate']")
+	private MCWebElement dedupeBirthDatePkr;
 
 	public void incompleteApplication() {
 		Device device = context.get(CreditConstants.APPLICATION);
@@ -94,7 +104,6 @@ public class IncompleteApplicationPage extends AbstractCardManagementPage {
 		waitForPageToLoad(driver());
 		clickWhenClickable(editImg);
 		SimulatorUtilities.wait(5000);
-
 		runWithinPopup("Edit Application", () -> {
 			if (isElementPresent(txtPartnerMSNumberAdded)) {
 				String randomPartnerMSNumber=CustomUtils.randomNumbers(5);
@@ -105,7 +114,24 @@ public class IncompleteApplicationPage extends AbstractCardManagementPage {
 			}
 			clickWhenClickable(saveBtn);
 		});
-
+		verifyOperationStatus();
+		return getCodeFromInfoMessage("Application Number");
+	}
+	
+	public String incompleteApplicationWithExistingData() {
+		Device device = Device.createWithProviderForOtherDetails(provider);
+		ClientDetails client = device.getClientDetails();
+		incompleteApplication();
+		waitForPageToLoad(driver());
+		clickWhenClickable(editImg);
+		SimulatorUtilities.wait(5000);
+		runWithinPopup("Edit Application", () -> {
+			clickWhenClickable(tabProfile);
+			WebElementUtils.enterText(txtFirstName, client.getDedupeFirstName());
+			WebElementUtils.enterText(txtLastName, client.getDedupeLastName());
+			WebElementUtils.pickDate(dedupeBirthDatePkr, client.getDedupeBirthDate());
+			clickWhenClickable(saveBtn);
+		});
 		verifyOperationStatus();
 		return getCodeFromInfoMessage("Application Number");
 	}
