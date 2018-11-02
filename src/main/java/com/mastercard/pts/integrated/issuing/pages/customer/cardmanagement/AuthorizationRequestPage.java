@@ -42,6 +42,9 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "memo:input:textAreaComponent")
 	private MCWebElement memoTxt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "cvv2:input:inputTextField")
+	private MCWebElement cvv2;
 
 	private String successMessage = null;
 	
@@ -54,6 +57,7 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 			WebElementUtils.enterText(transactionAmountTxt, request.getTransactionAmount());
 			WebElementUtils.selectDropDownByVisibleText(mccDDwn, request.getMcc());
 			WebElementUtils.enterText(memoTxt, request.getMemo());
+			WebElementUtils.enterText(cvv2, request.getCvv2());
 			clickSaveButton();
 			successMessage = getSuccessMessage();
 			logger.info("Success Meesage: " + successMessage);

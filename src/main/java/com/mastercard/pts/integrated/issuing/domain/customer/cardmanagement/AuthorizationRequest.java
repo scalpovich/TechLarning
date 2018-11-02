@@ -20,6 +20,16 @@ public class AuthorizationRequest {
 	private String transactionAmount;
 	
 	private String memo;
+	
+	private String cvv2;
+
+	public String getCvv2() {
+		return cvv2;
+	}
+
+	public void setCvv2(String cvv2) {
+		this.cvv2 = cvv2;
+	}
 
 	public static AuthorizationRequest createWithProvider(KeyValueProvider provider){
 		AuthorizationRequest request = new AuthorizationRequest();

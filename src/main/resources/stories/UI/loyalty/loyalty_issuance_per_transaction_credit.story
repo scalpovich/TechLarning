@@ -6,7 +6,7 @@ Meta:
 @StoryName credit_msr_retail_loyalty
 @migration_loyalty
 
-Scenario:1 Create credit device and perform manual auth
+Scenario:1 Create credit device
 Given setting json values in excel for Credit
 Then use loyalty plan AUTOMATION [LP1]
 When user is logged in institution
