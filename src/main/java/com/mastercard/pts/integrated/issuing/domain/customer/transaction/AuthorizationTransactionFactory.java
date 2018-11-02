@@ -27,7 +27,7 @@ public class AuthorizationTransactionFactory {
 	private static final String CARD_PROFILE_NAME = "CardProfiles_User.AUTOMATION CARD";
 
 	private static final Logger logger = LoggerFactory.getLogger(AuthorizationTransactionFactory.class);
-
+	
 	@Autowired
 	private Path tempDir;
 
@@ -64,7 +64,6 @@ public class AuthorizationTransactionFactory {
 			throw MiscUtils.propagate(e);
 		}
 	}
-
 	public String createCsvTesCase(Transaction transaction) {
 		MiscUtils.reportToConsole(" *******  start createCsvTesCase *******");
 		LinkedListMultimap<String, String> elements = createTestCaseDataElements(transaction);

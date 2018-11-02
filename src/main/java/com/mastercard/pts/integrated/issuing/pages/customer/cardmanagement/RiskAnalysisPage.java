@@ -34,7 +34,7 @@ public class RiskAnalysisPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Batch No')]")
 	private MCWebElement batchNoColumn;
-
+	
 	@Autowired
 	TestContext context;
 
@@ -57,7 +57,6 @@ public class RiskAnalysisPage extends AbstractBasePage {
 	private MCWebElement searchTable;
 
 	public void riskAnalysisBatchProcess() {
-
 		if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER))) {
 			clickWhenClickable(riskAnalysisBtn);
 			riskAnalysisBatchProcess();
@@ -66,7 +65,8 @@ public class RiskAnalysisPage extends AbstractBasePage {
 	}
 
 	public void clickProcessALL() {
-		clickWhenClickable(processAllBtn);
+		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
+		clickProcessSelectedButton();
 	}
 
 	public List<String> allBatchNumberRetrieval() {

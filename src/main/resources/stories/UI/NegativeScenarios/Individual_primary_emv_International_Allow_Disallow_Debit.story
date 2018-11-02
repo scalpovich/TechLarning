@@ -12,12 +12,14 @@ Meta:
 Scenario: Set up program for debit emv corporate debit card
 Given user is logged in institution
 When device range for program with device plan for "debit" "emv" card
-Then user creates new device of debit type for new client
+Then user sign out from customer portal
+Given user is logged in institution
+When user creates new device of debit type for new client
 And device has "normal" status
 And user has wallet number information for debit device
 And user performs adjustment transaction
 And user has current wallet balance amount information for debit device
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario: debit emv corporate debit card device production
 Given user is logged in institution
