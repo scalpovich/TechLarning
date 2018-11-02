@@ -86,6 +86,6 @@ Meta:
 @TestId 
 Given user is logged in institution
 When transaction status is "Matching Pending"
-And user processes Matching system internal batch for Credit
+And "Matching" batch for credit is successful
 And transaction status is "Presentment Matched with authorization"
 Then user sign out from customer portal
