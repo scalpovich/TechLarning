@@ -110,6 +110,10 @@ public class ConstantData {
 	public static final String ZERO_ZERO = "00";
 	public static final String NINE_NINE = "99";
 	
+	public static final String TOTAL_FEE_OF_BILLING = "0.00";
+	public static final String BILLED_INTEREST = "0.00";
+	public static final String UNPAID1_AMOUNT = "0.00";
+	public static final String UNPAID2_AMOUNT = "0.00";
 
 	public static final String CLIENT_LIMIT = "Client";
 	public static final String AVAIL_CLIENT_LIMIT = "Avail Client";
@@ -138,6 +142,11 @@ public class ConstantData {
 	
 	public static final String PDF_FORMAT = "PDF Format [pdf]";
 	public static final String DEVICE_ACTIVITY_REPORT_FILE_NAME = "Device Activity.pdf";
+	public static final String RETAIL_TO_LOAN = 	"215 - Retail Transaction to Loan";	
+	
+	public static final String APPLIED_ON_LOAN_AMOUNT= 	"Loan Amount [LA]";	
+	
+	public static final String LOAN_INSTALLMENT_OUTSTANDING= 	"LOAN_INSTALLMENT_OUTSTANDING";	
 	
 	private ConstantData() {
 	}

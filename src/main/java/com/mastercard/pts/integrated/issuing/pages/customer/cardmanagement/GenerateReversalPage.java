@@ -70,8 +70,8 @@ public class GenerateReversalPage extends AbstractBasePage {
 		runWithinPopup(
 				"Edit Generate Reversal",
 				() -> {
-				    clickReverseButton();
-				    verifyRefundMessage();
+//				    clickReverseButton();
+//				    verifyRefundMessage();
 				    clickOkButton();
 				});
 	}

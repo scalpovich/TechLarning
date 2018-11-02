@@ -13,6 +13,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Auth
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -60,10 +61,11 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 			WebElementUtils.enterText(transactionAmountTxt, request.getTransactionAmount());
 			WebElementUtils.enterText(memoTxt, request.getMemo());
 			clickSaveButton();
-			successMessage = getSuccessMessage();
+			SimulatorUtilities.wait(40000);
+			successMessage = getMessageFromFeedbackPanel();
 			logger.info("Success Meesage: " + successMessage);
 			clickOkButton();
-			});
+		});
 		
 		return successMessage;
 	}

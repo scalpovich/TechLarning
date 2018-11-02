@@ -1,6 +1,7 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import org.jbehave.core.annotations.Named;
@@ -14,6 +15,7 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BatchJobHistory;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequestbatch;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchJobHistoryFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchJobHistoryWorkflow;
@@ -55,4 +57,11 @@ public class BatchJobHistorySteps {
 		batchjobhistoryflows.CheckBatchJobHistory(batchjobhistory);
 	}
 	
+	
+	@When("user verifies batch job history with job id")
+	@Then("user verifies batch job history with job id")
+	public void userSerachBatchJobHistoryWithJobID() {
+		ProcessBatches batches = context.get(ContextConstants.PROCESSED_BATCHES);
+		assertEquals("SUCCESS [2]", batchJobHistoryWorkflow.searchRecordByJobIDInBatchJobHistory(batches).getStatus());
+	}
 }

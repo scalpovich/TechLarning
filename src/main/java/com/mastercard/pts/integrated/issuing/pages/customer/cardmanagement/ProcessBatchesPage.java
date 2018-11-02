@@ -136,6 +136,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	private MCWebElement jobId;
 
 	private String batchStatus;
+	
+	private String jobID;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "batchType:input:dropdowncomponent")
 	private MCWebElement batchTypeDdwn;
 
@@ -643,11 +646,14 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	 * @param batch 
 	 * @return status of batch e.g pass, fail
 	 */
-	public String processCreditBillingBatch(ProcessBatches batch) {
+	public ProcessBatches processCreditBillingBatch(ProcessBatches batch) {
+		ProcessBatches batches = new ProcessBatches();
 		selectBatchTypeAndName(batch);
 		WebElementUtils.pickDate(bussinessDateTxt, DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt)));
 		submitAndVerifyBatch();
-		return batchStatus;
+		batches.setJoBID(jobID);
+		batches.setStatus(batchStatus);
+		return batches;
 	}
 
 	/**
