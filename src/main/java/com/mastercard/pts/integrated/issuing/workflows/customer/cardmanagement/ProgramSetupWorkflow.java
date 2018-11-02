@@ -143,6 +143,11 @@ public class ProgramSetupWorkflow {
 		page.addBusinessMandatoryFields(applicationBusinessMandatoryFields);
 	}
 	
+	public void fillBusinessMandatoryField(String mandatoryField,ApplicationBusinessMandatoryFields  applicationBusinessMandatoryFields) {
+		ApplicationBusinessMandatoryFieldsPage page = navigator.navigateToPage(ApplicationBusinessMandatoryFieldsPage.class);
+		page.addBusinessMandatoryField(mandatoryField,applicationBusinessMandatoryFields);
+	}
+	
 	public void fillCreditCardBillingCycle(CreditCardBillingCycle creditCardBillingCycle)
 	{
 		CreditCardBillingCyclePage page = navigator.navigateToPage(CreditCardBillingCyclePage.class);

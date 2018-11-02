@@ -1000,6 +1000,14 @@ public class ProgramSetupSteps {
 		testDataObject.setProgramCode(program.buildDescriptionAndCode());
 		programSetupWorkflow.fillBusinessMandatoryFields(testDataObject);
 	}
+	
+	@When("User fills $mandatoryField as Business Mandatory Field for $type product")
+	public void whenUserFillsBusinessMandatoryFieldScreen(String mandatoryField,String type) {
+		ApplicationBusinessMandatoryFields testDataObject = ApplicationBusinessMandatoryFields.createWithProvider(provider);
+		testDataObject.setProductType(ProductType.fromShortName(type));
+		testDataObject.setProgramCode(program.buildDescriptionAndCode());
+		programSetupWorkflow.fillBusinessMandatoryField(mandatoryField,testDataObject);
+	}
 
 	@When("User fills Business Mandatory Fields Screen for $type product with $customerType")
 	public void whenUserFillsBusinessMandatoryFieldsScreen(String type, String customeType) {
