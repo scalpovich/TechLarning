@@ -34,6 +34,7 @@ public class DeviceUsage {
 
 	private String walletMCGCode;
 	private static int velocity =1;
+	private static double previousAmountUtilized =0.00;
 	private String deviceNumber;
 	private int previousVelocityValue;
 	
@@ -171,6 +172,14 @@ public class DeviceUsage {
 	public static DeviceUsage getDeviceUsageDetails(KeyValueProvider provider) {
 		DeviceUsage plan = new DeviceUsage();
 		return plan;
+	}
+
+	public static double getPreviousAmountUtilized() {
+		return previousAmountUtilized;
+	}
+
+	public static void setPreviousAmountUtilized(double previousAmountUtilized) {
+		DeviceUsage.previousAmountUtilized = previousAmountUtilized;
 	}
 
 	public String getWalletMCGCode() {
