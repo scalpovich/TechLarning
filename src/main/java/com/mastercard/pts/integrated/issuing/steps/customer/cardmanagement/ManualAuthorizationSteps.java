@@ -7,6 +7,8 @@ import org.jbehave.core.annotations.Composite;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +17,8 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AuthorizationRequest;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
+import com.mastercard.pts.integrated.issuing.workflows.LoginWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ManualAuthorizationWorkflow;
 
 @Component
@@ -29,8 +33,13 @@ public class ManualAuthorizationSteps {
 	@Autowired
 	private ManualAuthorizationWorkflow manualAuthorizationWorkflow;
 	
+	@Autowired
+	private LoginWorkflow loginWorkflow;
+	
+	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
 	private String successMessage;
 
+	
 	@When("user raises an authorization request only")
 	public void whenUserRaisesAnAuthorizationRequest(){
 		AuthorizationRequest request = AuthorizationRequest.createWithProvider(provider);
@@ -48,10 +57,10 @@ public class ManualAuthorizationSteps {
 	public void manualAuthComposite(){
 		
 	}
-	
 	@Then("status of request is \"approved\"")
 	public void thenStatusOfRequestIsapproved(){
 		 assertThat("Authorization is successful", successMessage, containsString("Authorization is successful"));
 
 	}
 }
+
