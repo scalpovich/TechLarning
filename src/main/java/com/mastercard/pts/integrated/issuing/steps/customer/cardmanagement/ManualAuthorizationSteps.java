@@ -31,16 +31,22 @@ public class ManualAuthorizationSteps {
 	
 	private String successMessage;
 
-	@Given("user raises an authorization request")
-	@When("user raises an authorization request")
-	@Then("user raises an authorization request")
-	@Composite(steps = {"When embossing file batch was generated in correct format","user raises an authorization request"})
+	@When("user raises an authorization request only")
 	public void whenUserRaisesAnAuthorizationRequest(){
 		AuthorizationRequest request = AuthorizationRequest.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE);
 		request.setDeviceNumber(device.getDeviceNumber());
+		String trxDate=loginWorkflow.getInstitutionDateLogin();
+		logger.info("Transaction Date->"+loginWorkflow.getInstitutionDateLogin());
+		context.put("transaction_date",trxDate);
 		request.setCvv2(device.getCvv2Data());
 		successMessage = manualAuthorizationWorkflow.authorizeDevice(request);
+	}
+	
+	@When("user raises an authorization request")
+	@Composite(steps = {"When embossing file batch was generated in correct format","When user raises an authorization request only"})
+	public void manualAuthComposite(){
+		
 	}
 	
 	@Then("status of request is \"approved\"")
