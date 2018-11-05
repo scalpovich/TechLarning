@@ -36,7 +36,7 @@ public class DeviceUsageSteps {
 	private static final String FAILED_MESSAGE_INFO = "Invalid ATC counter ";
 	private static final String ATC = "ATC" ;
 	
-	public static final String DEVICE_USUAGE = "DEVICE_USUAGE";
+	private static final String DEVICE_USUAGE = "DEVICE_USUAGE";
 	
 	private static final Logger logger = LoggerFactory.getLogger(DeviceUsageSteps.class);
 

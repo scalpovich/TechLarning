@@ -8,7 +8,7 @@ Meta:
 @Author Nitin Kumar
 @StoryName mcg_debit_emv_general_purpose
 
-Scenario:1 Set up prepaid emv retail general purpose card with MCG Limit Plan
+Scenario:1.1 Set up Debit emv retail general purpose card with MCG Limit Plan
 Given setting json values in excel for Debit
 And user is logged in institution
 When User fills Device Plan for "Debit" "emv" card without pin
@@ -19,7 +19,7 @@ And User fills Device Range section for Debit product
 And user assigns service code to program
 And user sign out from customer portal
 
-Scenario:2 prepaid EMV retail general purpose card device production
+Scenario:1.2 Debit EMV retail general purpose card device production
 Given user is logged in institution
 When user creates new device of Debit type for new client
 And a new device was created
@@ -33,7 +33,7 @@ And user has current wallet balance amount information for Debit device
 Then user sign out from customer portal
 And embossing file batch was generated in correct format
 
-Scenario:3 Perform EMV-RetailGeneralPurposeCard Purchase 1st transaction
+Scenario:1.3 Perform EMV-RetailGeneralPurposeCard Purchase 1st transaction
 Given connection to MAS is established
 And set the transaction amount to 80 in program currency
 When perform an EMV_PURCHASE MAS transaction
@@ -43,7 +43,7 @@ And search Purchase authorization and verify 000-Successful status
 Then verify the MCG daily transaction and velocity in Device Usage Screen for domestic transactions
 And user sign out from customer portal
 
-Scenario:4 Perform EMV-RetailGeneralPurposeCard Purchase 2nd transaction
+Scenario:1.4 Perform EMV-RetailGeneralPurposeCard Purchase 2nd transaction
 Given set the transaction amount to 70 in program currency
 When perform an EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution
@@ -52,7 +52,7 @@ And assert Decline response with 40005 AuthDecline Code and Exceeds Amount Limit
 And verify the MCG limit utilization in Device Usage Screen for domestic transaction after failed transaction
 And user sign out from customer portal
 
-Scenario:5 Perform EMV-RetailGeneralPurposeCard Purchase 3rd transaction
+Scenario:1.5 Perform EMV-RetailGeneralPurposeCard Purchase 3rd transaction
 Given set the transaction amount to 10 in program currency
 When perform an EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution
@@ -60,7 +60,7 @@ And search Purchase authorization and verify 000-Successful status
 Then verify the MCG daily transaction and velocity in Device Usage Screen for domestic transactions
 And user sign out from customer portal
 
-Scenario:6 Perform EMV-RetailGeneralPurposeCard Purchase 4th transaction
+Scenario:1.6 Perform EMV-RetailGeneralPurposeCard Purchase 4th transaction
 Given set the transaction amount to 10 in program currency
 When perform an EMV_PURCHASE MAS transaction on the same card
 Then MAS simulator is closed

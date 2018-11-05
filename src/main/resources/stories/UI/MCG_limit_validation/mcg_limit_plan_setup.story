@@ -8,19 +8,19 @@ Meta:
 @Author Nitin Kumar
 @StoryName mcg_debit_emv_general_purpose
 
-Scenario: Create MCG Limit Plan for Prepaid
+Scenario:1.1 Create MCG Limit Plan for Prepaid
 Given user is logged in institution
 And user creates MCG with MCC
 And user creates MCG limit plan with details for Prepaid
 Then MCG limit plan should get created successfully
 
-Scenario: Create MCG Limit Plan for Credit
+Scenario:1.2 Create MCG Limit Plan for Credit
 Given user is logged in institution
 And user creates MCG with MCC
 And user creates MCG limit plan with details for Credit
 Then MCG limit plan should get created successfully
 
-Scenario: Create MCG Limit Plan for Debit
+Scenario:1.3 Create MCG Limit Plan for Debit
 Given user is logged in institution
 And user creates MCG with MCC
 And user creates MCG limit plan with details for Debit
