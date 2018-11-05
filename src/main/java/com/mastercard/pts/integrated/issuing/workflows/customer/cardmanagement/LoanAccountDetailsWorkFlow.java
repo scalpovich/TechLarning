@@ -19,7 +19,7 @@ public class LoanAccountDetailsWorkFlow {
 	public List<Map<String,String>> verifyLoanAccountDetail(Device device){
 		LoanAccountDetailsPage page = navigator.navigateToPage(LoanAccountDetailsPage.class);		
 
-		return page.serachLoanAccountDetails(device);		
+		return page.searchLoanAccountDetails(device);		
 	
 	}
 	

@@ -185,7 +185,7 @@ public class BatchProcessSteps {
 	@Then("\"$batchName\" batch for $type is successful")
 	@When("\"$batchName\" batch for $type is successful")
 	public void whenMatchingBatchIsExecuted(String batchName, String type){
-		ProcessBatches batch =  new ProcessBatches();;
+		ProcessBatches batch =  new ProcessBatches();
 		batch.setProductType(ProductType.fromShortName(type));
 		batch.setBatchName(batchName);
 		assertEquals("SUCCESS [2]", batchProcessWorkflow.processSystemInternalProcessingBatch(batch));			

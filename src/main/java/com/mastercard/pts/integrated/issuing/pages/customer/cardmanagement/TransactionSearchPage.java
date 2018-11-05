@@ -184,8 +184,6 @@ public class TransactionSearchPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSelect, device.getProductType());
 		logger.info("Search transaction for device {}", device.getDeviceNumber());
 		WebElementUtils.enterText(searchDeviceTxt, device.getDeviceNumber());
-//		WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
-//		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
 		selectFromDate(LocalDate.now());
 		selectToDate(LocalDate.now());
 		waitForWicket();

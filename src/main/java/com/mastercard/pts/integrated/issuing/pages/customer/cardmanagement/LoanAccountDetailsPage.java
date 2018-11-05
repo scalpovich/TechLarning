@@ -67,7 +67,7 @@ public class LoanAccountDetailsPage extends AbstractBasePage {
 				);
 	}
 	
-	public List<Map<String,String>> serachLoanAccountDetails(Device device)
+	public List<Map<String,String>> searchLoanAccountDetails(Device device)
 	{
 		WebElementUtils.enterText(cardNumber, device.getDeviceNumber());
 		clickSearchButton();

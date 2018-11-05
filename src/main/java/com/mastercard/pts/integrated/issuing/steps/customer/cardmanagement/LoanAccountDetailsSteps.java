@@ -54,10 +54,7 @@ public class LoanAccountDetailsSteps extends AbstractBaseSteps {
 				assertThat("Interest Amount Verified", txnAmt.subtract(PncpAmt,  new MathContext(6)), equalTo(intAmt));
 				totalInt.add(intAmt);
 			}
-			//outstanding amount  * 31 * Rate of interest / 365 / 100
-//			totalIntCalculation = totalIntCalculation.multiply(new BigDecimal(transaactionSerach.getTransaction())).multiply(new BigDecimal("61.00")).multiply(new BigDecimal("2.00"));
-//			totalIntCalculation = totalIntCalculation.divide(new BigDecimal("365.00")).divide(new BigDecimal("100.00"));
-//			assertThat("Total Interest Amount Verified", totalInt, equalTo(totalIntCalculation));			
+
 		}
 	}
 
