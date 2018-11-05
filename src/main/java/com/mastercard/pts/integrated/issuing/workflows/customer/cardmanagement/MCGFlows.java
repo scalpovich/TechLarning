@@ -27,9 +27,9 @@ public class MCGFlows extends MenuFlows {
 		page.addMCGDetails(plan);
 	}
 	
-	public void addMCGwithMCC(MCG plan){
+	public void addMCGWithMCC(MCG plan){
 		page = navigator.navigateToPage(MCGPage.class);
-		page.addMCGwithMCCDetails(plan);
+		page.addMCGWithMCCDetails(plan);
 	}
 	
 	public String getFeedbackText() {

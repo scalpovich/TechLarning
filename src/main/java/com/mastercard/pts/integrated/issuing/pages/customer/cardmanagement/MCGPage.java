@@ -107,7 +107,7 @@ public class MCGPage extends AbstractBasePage {
 		clickSaveButton();
 	}
 
-	public void addMCGwithMCCDetails(MCG plan) {
+	public void addMCGWithMCCDetails(MCG plan) {
 		clickAddNewButton();
 		runWithinPopup(FRAME_ADD_MCG, () -> {
 			enterMCGCode(plan);

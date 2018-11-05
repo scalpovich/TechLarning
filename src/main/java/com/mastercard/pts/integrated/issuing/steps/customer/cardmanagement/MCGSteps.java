@@ -38,7 +38,7 @@ public class MCGSteps {
 	@Given("user creates MCG with MCC")
 	public void whenUserCreatesMCGwithMCC() {
 		mcg = MCG.getMCGDetails(provider);
-		mcgFlows.addMCGwithMCC(mcg);
+		mcgFlows.addMCGWithMCC(mcg);
 		Assert.assertEquals(ConstantData.RECORD_ADDED_SUCCESSFULLY, mcgFlows.getFeedbackText());
 		context.put(ContextConstants.MCG, mcg.getMCGCode());
 	}
