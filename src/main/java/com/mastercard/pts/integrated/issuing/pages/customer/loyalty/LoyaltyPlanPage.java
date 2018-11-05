@@ -10,13 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.NewLoyaltyPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
-import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -82,6 +80,9 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='tables:1:rows:5:cols:colspanMarkup:inputField:radioComponent' and @value='I']")
 	private MCWebElement radioBtnInactive;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:6:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	private MCWebElement blockedMCG;
 
 	public void verifyUiOperationStatus() {
 		logger.info(ADD_LOYALTY_PLAN);
@@ -155,4 +156,11 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 		});
 	}
 	
+	public void selectBlockedMCG(String value) {
+		runWithinPopup(EDIT_LOYALTY_PLAN, () -> {
+			WebElementUtils.selectDropDownByValue(blockedMCG, value);
+			saveOrDetailsOrSearchClick();
+		});
+	}
+
 }

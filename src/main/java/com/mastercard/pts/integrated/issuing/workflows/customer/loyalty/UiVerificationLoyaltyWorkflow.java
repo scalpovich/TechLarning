@@ -111,4 +111,10 @@ public class UiVerificationLoyaltyWorkflow {
 		page.searchByPlanCode(plan);
 		return page.getAmntSpent();
 	}
+
+	public void selectBlockedMCG(String plan, String value) {
+		LoyaltyPlanPage page = navigator.navigateToPage(LoyaltyPlanPage.class);
+		page.searchByPlanCode(plan.substring(plan.indexOf("[")+1, plan.indexOf("]")));
+		page.selectBlockedMCG(value);
+	}
 }

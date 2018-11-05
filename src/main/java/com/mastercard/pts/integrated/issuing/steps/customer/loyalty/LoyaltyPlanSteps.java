@@ -98,4 +98,10 @@ public class LoyaltyPlanSteps {
 			}
 		}
 	}
+
+	@Then("select blocked MCG for loyalty as $value")
+	public void selectBlockedMCG(String value) {
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+		uiVerificationLoyaltyWorkflow.selectBlockedMCG(data.getLoyaltyPlan(), value);
+	}
 }
