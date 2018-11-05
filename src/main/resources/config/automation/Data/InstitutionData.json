@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 {
   "institute": [
    {
@@ -28,11 +31,17 @@
    "deviceEventBasedFeePlan":"AUTOMATION [TA7820EY]",
    "transactionLimitPlan":"AUTOMATION [TA7329LAEI]",
    "transactionPlan":"AUTOMATION [T9995H]",
+<<<<<<< HEAD
    "transactionFeePlan":"Automation FIX Fee plan. [AUTOFEEP1]",
    "creditPlan":"TA5931RPHJ [101]",
    "billingCycle":"AUTOMATION [128]",
    "walletPlan":"AUTOMATION [TA6164QTOL]",
    "loyaltyPlan" : "Automation Test [AUTO]"
+=======
+   "creditPlan":"TA5931RPHJ [101]",
+   "billingCycle":"AUTOMATION [128]",
+   "walletPlan":"AUTOMATION [TA6164QTOL]"
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
    },
    {
    "productIdentity":"Credit",
@@ -53,6 +62,7 @@
    "corporateClientCode":"Credit [12121218003000051]",
    "dedupePlanCode":"TA5214BJPY [TA5214BJPY]",
    "prepaidStatementPlan":"AUTOMATION [TA2771PDXN]",
+<<<<<<< HEAD
    "statementMessagePlan":"AUTOMATION [TA9200JJTL]",
    "marketingMessagePlan":"AUTOMATION [TA9547VKKL]",
    "documentCheckListPlan":"AUTOMATION [TA7468JFEU]",
@@ -202,4 +212,53 @@
    }
   ]
 >>>>>>> 4f82885185f2933cd8d64d35d6deab261fc6fbd6
+=======
+   "statementMessagePlan": "AUTOMATION [TA7040ERWW]",
+   "marketingMessagePlan": "AUTOMATION [TA3108PAKC]",
+   "documentCheckListPlan":"AUTOMATION [TA7468JFEU]",
+   "mccRulePlan":"AUTOMATION [TA9261NC4]",
+   "deviceJoiningAndMemberShipFeePlan":"DEV [DEV]",
+   "transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
+   "deviceEventBasedFeePlan":"DEV [DEV]",
+   "transactionLimitPlan":"AUTOMATION [TA1370YJAB]",
+   "transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
+   "transactionPlan":"AUTOMATION [T1157Z]",
+   "creditPlan":"TA5931RPHJ [101]",
+   "billingCycle":"AUTOMATION [128]",
+   "walletPlan": "AUTOMATION [TA1387LADE]"
+   },
+   {
+   "productIdentity":"Prepaid",
+   "code":"121212",
+   "abbreviation":"AUTO",
+   "branch":"auto branch [1000]",
+   "cardPackIdGenerationTemplate":"AUTOMATION [PAN042]",
+   "deviceIdGenerationTemplate":"AUTOMATION [PAN019]",
+   "embossingVendor":"AUTOMATION PERS BUREAU [AUTOB1]",
+   "mastercardPrepaidIssuerBin":"532560",
+   "mastercardDebitIssuerBin":"543870",
+   "mastercardCreditIssuerBin":"589765",
+   "visaPrepaidIssuerBin":"443823",
+   "visaDebitIssuerBin":"418233",
+   "visaCreditIssuerBin":"489765",
+   "plasticId":"AUTOMATION PLASTIC CODE [AUT]",
+   "pictureCode":"AUTOMATION PICTURE CODE [AUT]",
+   "corporateClientCode":"Prepaid [12121217222000002]",
+   "dedupePlanCode":"TA5214BJPY [TA5214BJPY]",
+   "prepaidStatementPlan":"AUTOMATION [TA2771PDXN]",
+   "statementMessagePlan":"AUTOMATION [TA5527DLOS]",
+   "marketingMessagePlan":"AUTOMATION [TA6508TNRG]",
+   "documentCheckListPlan":"AUTOMATION [TA3988DCBJ]",
+   "mccRulePlan":"AUTOMATION [TA8840AT5]",
+   "deviceJoiningAndMemberShipFeePlan":"DEV [DEV]",
+   "transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
+   "deviceEventBasedFeePlan":"DEV [DEV]",
+   "transactionLimitPlan":"AUTOMATION [TA1370YJAB]",
+   "transactionPlan":"AUTOMATION [T2847S]",
+   "creditPlan":"TA5931RPHJ [101]",
+   "billingCycle":"AUTOMATION [128]",
+   "walletPlan":"AUTOMATION [TA6164QTOL]"
+   }
+  ]
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 }

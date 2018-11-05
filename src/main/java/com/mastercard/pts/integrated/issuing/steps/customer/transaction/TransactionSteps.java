@@ -45,6 +45,7 @@ import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKeyValuePair;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceUsageWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
 
 @Component
@@ -58,6 +59,8 @@ public class TransactionSteps {
 	private static final String PIN_PRODUCTION = "pin production";
 	private static final String IPMINCOMING = "ipm incoming";
 	private static Boolean sameCard = false;
+	private static final String ATC = "ATC" ;
+	public boolean atcCounterFlag = false;
 
 	@Autowired
 	private TestContext context;
@@ -76,6 +79,9 @@ public class TransactionSteps {
 
 	@Autowired
 	private TransactionProvider transactionProvider;
+	
+	@Autowired
+	private DeviceUsageWorkflow deviceUsageWorkflow;
 
 	@Autowired
 	private ClearingTestCaseProvider clearingTestCaseProvider;
@@ -94,6 +100,8 @@ public class TransactionSteps {
 	private static String FAILED = "Transaction failed! ";
 
 	private static String FAIL_MESSAGE = FAILED + " -  Result : ";
+	
+	private static String INVALID_KEYS = "(default) - M/Chip Key Set from the related BIN range will be used";
 
 	public String getTransactionAmount() {
 		return transactionAmount;
@@ -156,6 +164,12 @@ public class TransactionSteps {
 		Transaction transactionData = generateMasTestDataForTransaction(transaction);
 		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData, sameCard);
 	}
+	
+	@When("perform an $type MAS transaction with wrong keys")
+	public void performTransactionWithWrongKeys(String transaction) {
+		TransactionWorkflow.STAGE_KEYS = INVALID_KEYS;
+		givenTransactionIsExecuted(transaction);
+	}
 
 	@When("user performs generate TestData for an optimized $transaction MAS transaction")
 	@Given("user performs generate TestData for an optimized $transaction MAS transaction")
@@ -163,6 +177,15 @@ public class TransactionSteps {
 		// Storing transaction name in context to use it at runtime
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		generateMasTestDataForTransaction(transaction);
+	}
+
+	@Given("user updates ATC value as $type and value as $ATCValue")
+	@Then("user updates ATC value as $type and value as $ATCValue")
+	public void userUpdateATCValueAsRequired(String flag, String atcvalue) {
+		atcCounterFlag = true;
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setUpdatedATCValue(atcvalue);
+		context.put(ContextConstants.DEVICE, device);
 	}
 
 	private Transaction generateMasTestDataForTransaction(String transaction) {
@@ -273,6 +296,10 @@ public class TransactionSteps {
 		transactionData.setCardDataElementsDynamic("045.02", device.getDeviceNumber());
 		transactionData.setCardDataElementsDynamic("045.06", device.getExpirationDate());
 		transactionData.setCardDataElementsDynamic("035.04", device.getServiceCode());
+		if (atcCounterFlag)
+		{
+			transactionData.setCardDataElementsDynamic("055.9F36", device.getUpdatedATCValue());
+		}
 		if (transactionWorkflow.isContains(transaction, "EMV")) {
 			transactionData.setCardDataElementsDynamic("035.05", "000" + device.getIcvvData());
 		} else if (transactionWorkflow.isContains(transaction, "MSR") || transactionWorkflow.isContains(transaction, "FALLBACK") ) {
@@ -579,4 +606,15 @@ public class TransactionSteps {
 		device.setTransactionAmount(Integer.toString(i));
 		context.put(ContextConstants.DEVICE, device);
 	}
+
+	@When("perform an $transaction MAS transaction with amount $amount")
+	public void givenGenerateTestDataForOptimizedTransactionWithDifferentAmountIsExecuted(String transaction, String amount) {
+		// Storing transaction name in context to use it at runtime
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setTransactionAmount(amount);
+		context.put(ConstantData.TRANSACTION_NAME, transaction);
+		performOperationOnSamecard(false);
+		givenOptimizedTransactionIsExecuted(transaction);
+	}
+
 }

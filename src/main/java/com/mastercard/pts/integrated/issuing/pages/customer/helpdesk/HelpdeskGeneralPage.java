@@ -11,7 +11,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+<<<<<<< HEAD
 
+=======
+import org.junit.Assert;
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -22,31 +26,56 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+<<<<<<< HEAD
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.CharMatcher;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import com.google.common.base.CharMatcher;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+<<<<<<< HEAD
+=======
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+<<<<<<< HEAD
 import com.mastercard.pts.integrated.issuing.utils.Constants;
+=======
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
+<<<<<<< HEAD
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
+=======
+import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
+import com.mastercard.testing.mtaf.bindings.page.PageElement;
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 @Component
 @Navigation(tabTitle = HelpdeskNav.TAB_HELPDESK, treeMenuItems = { HelpdeskNav.L1_ACTIVITY, HelpdeskNav.L2_GENERAL })
 public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final String TABLE_XPATH = "//div[@class='TransScrollY']//table[@class='dataview']//tr";
+<<<<<<< HEAD
 	private static final String OPERATION = "//select[@name='udf1:input:dropdowncomponent']";
+=======
+	private static final String OPERATION="//select[@name='udf1:input:dropdowncomponent']";
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 	private static final String ROWCOUNT_REMITTANCE = "//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr";
 	private static final String COLUMN_STATUS = "Status";
 	private static final String CURRENT_AVAILABLE_BALANCE = "Current Available Balance";
@@ -82,10 +111,19 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private String[] values;
 	private String walletBalanceInformation;
 	public boolean serviceStatus = false;
+<<<<<<< HEAD
 	private Map<String, String> points;
 
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
+=======
+
+	@Value("${default.wait.timeout_in_sec}")
+	private long timeoutInSec;
+	
+	@Autowired
+	TestContext context;
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[text()='Product Type']/following-sibling::td[2]/select")
 	private MCWebElement productTypeSearchDDwn;
@@ -116,7 +154,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='udf4:input:inputTextField']")
 	private MCWebElement timeInHourTxt;
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Save']")
 	private MCWebElement saveBtn;
 
@@ -126,6 +168,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value = 'OK']")
 	private MCWebElement okBtn;
 
+<<<<<<< HEAD
+=======
+	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody a img")
+	private MCWebElement editDeviceLink;
+
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value = 'Cancel']")
 	private MCWebElement cancelBtn;
 
@@ -233,6 +281,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Current Status and Limits']")
 	private MCWebElement currentStatusAndLimitTab;
+<<<<<<< HEAD
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='udf23:radioComponent' and @value='0']")
 	private MCWebElement eccomDeactivate;
@@ -289,11 +338,80 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Balance Details']")
 	private MCWebElement balanceDetailsTab;
 
+=======
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@name='udf23:radioComponent' and @value='0']")
+	private MCWebElement eccomDeactivate;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@name='udf23:radioComponent' and @value='1']")
+	private MCWebElement eccomActivate;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Card :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement availCardCreditLimitLabel;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Card :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement cardCreditLimitLabel;
+
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//a[.='Current Status and Limits']")
+	private MCWebElement currentStatusLimits;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//div[@id='tab4']//table[1]//td//span[@class='labeltextr']")
+	private MCWebElements txtbxCreditLimitParamter;	
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//div[@id='tab4']//table[1]//td//span[@class='labeltextr']/preceding::span[1]")
+	private MCWebElements txtBxCreditLimitParamterLabels;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//td[contains(.,'Payment :')]/..//span[@class='labeltextr']")
+	private MCWebElements txtBxPaymentComponents;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Account :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement availAccountCreditLimitLabel;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Account :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement accountCreditLimitLabel;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Client :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement clientCreditLimitLabel;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Client :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement availClientCreditLimitLabel;	
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='PDD :']/../../following-sibling::td[1]/span/span/span")
+	private MCWebElement paymentDueDateLabel;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='MAD :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement minimumAmountDueLabel;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='TAD :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement totalAmountDueLabel;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Closing Balance :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement closingBalanceLabel;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Interest :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement interestLabel;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement loanLabel;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Interest :']/../../following-sibling::td[1]/span/span")
+	private MCWebElement loanInterestLabel;
+	
+	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
+	
+	private final String RESET_PIN_RETRY_COUNTER= "109 - Reset Pin Retry Counter";
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Balance Details']")
+	private MCWebElement balanceDetailsTab;
+	
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//th[text()='New Credit Limit']/../following-sibling::tr[1]/td[4]/input")
 	private MCWebElement creditClientLimitTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//th[text()='New Credit Limit']/../following-sibling::tr[2]/td[4]/input")
 	private MCWebElement creditAccountLimitTxt;
+<<<<<<< HEAD
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='newCreditLimit']")
 	private MCWebElement newCreditLimitTxt;
@@ -318,14 +436,29 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec)
 				.until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
+=======
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='newCreditLimit']")
+	private MCWebElement newCreditLimitTxt;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Type :']/../following-sibling::td[1]/select")
+	private MCWebElement selectLimitTypeDdwn;
+
+	protected String getWalletNumber() {
+		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 		logger.info(WALLET_NUMBER, CharMatcher.DIGIT.retainFrom(walletNumber.getText()));
 		return CharMatcher.DIGIT.retainFrom(walletNumber.getText());
 	}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
+<<<<<<< HEAD
 		return Arrays.asList(WebElementUtils.visibilityOf(productTypeSearchDDwn),
 				WebElementUtils.visibilityOf(deviceNumberSearchTxt));
+=======
+		return Arrays.asList(WebElementUtils.visibilityOf(productTypeSearchDDwn), WebElementUtils.visibilityOf(deviceNumberSearchTxt));
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 	}
 
 	public void clickFirstRowEditLink() {
@@ -389,8 +522,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 
 	public void storeActivationDate() {
+<<<<<<< HEAD
 		activationDate = new WebDriverWait(driver(), timeoutInSec)
 				.until(WebElementUtils.visibilityOf(activationDateTxt)).getText();
+=======
+		activationDate = new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(activationDateTxt)).getText();
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 	}
 
 	public String activationDate() {
@@ -398,8 +535,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 
 	public void storeDeliveryDate() {
+<<<<<<< HEAD
 		deliveryDate = new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(deliveryDateTxt))
 				.getText();
+=======
+		deliveryDate = new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(deliveryDateTxt)).getText();
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 	}
 
 	public String deliveryDate() {
@@ -430,16 +571,24 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public boolean validateMandatoryFields(int mandatoryFields) {
 		clickSaveButton();
 		clickSaveButton();
+<<<<<<< HEAD
 		if (errorMessage().size() == mandatoryFields
 				&& errorMessage().get(mandatoryFields - 1).equalsIgnoreCase(ERROR_MESSAGE))
+=======
+		if (errorMessage().size() == mandatoryFields && errorMessage().get(mandatoryFields - 1).equalsIgnoreCase(ERROR_MESSAGE))
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 			return true;
 		else
 			return false;
 	}
 
 	public String activationMessage() {
+<<<<<<< HEAD
 		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(activationMessage))
 				.getText();
+=======
+		return new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(activationMessage)).getText();
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 	}
 
 	public void clickOKButtonPopup() {
@@ -472,11 +621,19 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public void selectLimitType(String type) {
 		WebElementUtils.selectDropDownByVisibleText(selectLimitTypeDdwn, type);
 	}
+<<<<<<< HEAD
 
 	public void clickCurrentStatusAndLimitsTab() {
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(currentStatusAndLimitTab)).click();
 	}
 
+=======
+	
+	public void clickCurrentStatusAndLimitsTab(){
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(currentStatusAndLimitTab)).click();
+	}
+	
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 	public void setActiveDeviceNumberByCardPackId(HelpdeskGeneral helpdeskGeneral, String registeredType) {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, helpdeskGeneral.getProductType());
 		WebElementUtils.enterText(cardPackIdTxt, helpdeskGeneral.getCardPackId());
@@ -497,12 +654,18 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 
 	public String getDeviceStatus(Device device) {
+<<<<<<< HEAD
 		// logger.info("Fetching information for : {}",
 		// device.getDeviceNumber());
 		// WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn,
 		// device.getAppliedForProduct());
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, "Credit [C]");
 		WebElementUtils.enterText(deviceNumberSearchTxt, "5742534300008919");
+=======
+		logger.info("Fetching information for : {}", device.getDeviceNumber());
+		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
+		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 		clickSearchButton();
 		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
 		return getFirstRecordCellTextByColumnName(COLUMN_STATUS);
@@ -522,7 +685,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			clickSearchButton();
 			firstRow = getFirstColumnValueFromTable();
 			clickCloseButton();
+<<<<<<< HEAD
 
+=======
+			
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 		});
 		clickEndCall();
 		return firstRow.isEmpty();
@@ -552,8 +719,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				String[] data = values[i].trim().split(":");
 				String currencyName = data[0].trim();
 				String priority = data[1].trim();
+<<<<<<< HEAD
 				if (driver().findElement(By.xpath(TABLE_XPATH + "[" + j + "]/td[1]")).getText()
 						.equalsIgnoreCase(currencyName)) {
+=======
+				if (driver().findElement(By.xpath(TABLE_XPATH + "[" + j + "]/td[1]")).getText().equalsIgnoreCase(currencyName)) {
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 					WebElement element = driver().findElement(By.xpath(TABLE_XPATH + "[" + j + "]/td[2]//select"));
 					WebElementUtils.retryUntilNoErrors(() -> new Select(element).selectByVisibleText(priority));
 					break;
@@ -583,8 +754,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public void chooseOperationDeactivate(String status) {
 		SimulatorUtilities.wait(1000);
 		if (status.equalsIgnoreCase(ConstantData.INTERNATIONAL_ALLOW_DISALLOW)) {
+<<<<<<< HEAD
 			WebElementUtils
 					.retryUntilNoErrors(() -> new Select(driver().findElement(By.xpath(OPERATION))).selectByValue("0"));
+=======
+			WebElementUtils.retryUntilNoErrors(() -> new Select(driver().findElement(By.xpath(OPERATION))).selectByValue("0"));
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 		} else {
 			eccomDeactivate.click();
 		}
@@ -593,6 +768,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public void chooseOperationActivate(String status) {
 		if (status.equalsIgnoreCase(ConstantData.INTERNATIONAL_ALLOW_DISALLOW)) {
 			SimulatorUtilities.wait(1000);
+<<<<<<< HEAD
 			WebElement operation = driver().findElement(By.xpath("//select[@name='udf1:input:dropdowncomponent']"));
 			WebElement activationType = driver()
 					.findElement(By.xpath("//select[@name='udf2:input:dropdowncomponent']"));
@@ -603,6 +779,21 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		} else {
 			SimulatorUtilities.wait(1000);
 			List<WebElement> listEccom = driver().findElements(By.xpath("//input[@name='udf23:radioComponent']"));
+=======
+			WebElement operation = driver().findElement(
+					By.xpath("//select[@name='udf1:input:dropdowncomponent']"));
+			WebElement activationType = driver().findElement(
+					By.xpath("//select[@name='udf2:input:dropdowncomponent']"));
+			WebElementUtils.retryUntilNoErrors(() -> new Select(operation)
+					.selectByValue("1"));
+			WebElementUtils.retryUntilNoErrors(() -> new Select(activationType)
+					.selectByVisibleText(ConstantData.GENERIC_DESCRIPTION));
+			WebElementUtils.enterText(timeInHourTxt, "1");
+		} else {
+			SimulatorUtilities.wait(1000);
+			List<WebElement> listEccom = driver().findElements(
+					By.xpath("//input[@name='udf23:radioComponent']"));
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 			boolean rValue;
 			if (rValue = listEccom.get(1).isSelected()) {
 				listEccom.get(0).click();
@@ -613,7 +804,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			WebElementUtils.enterText(timeInHourTxt, "1");
 		}
 	}
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 	public void setupInternationalAllowDisallowCheck(String status) {
 		selectServiceCode(ConstantData.INTERNATIONAL_ALLOW_DISALLOW);
 		clickGoButton();
@@ -623,6 +818,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			enterNotes("Automation");
 			clickSaveButton();
 			verifyOperationStatus();
+<<<<<<< HEAD
 			clickOKButtonPopup();
 		});
 		// There is a delay in page rendering
@@ -630,6 +826,15 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 	}
 
+=======
+			clickOKButtonPopup();			
+		});
+		//There is a delay in page rendering
+		SimulatorUtilities.wait(5000);
+		clickEndCall();
+	}
+	
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 	public void setupEccomerceDisallowCheck(String status) {
 		selectServiceCode(ConstantData.ECCOMERCE_ALLOW_DISALLOW);
 		clickGoButton();
@@ -639,6 +844,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			enterNotes("Automation");
 			clickSaveButton();
 			verifyOperationStatus();
+<<<<<<< HEAD
 			clickOKButtonPopup();
 		});
 		// There is a delay in page rendering
@@ -658,6 +864,30 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				clickOKButtonPopup();
 			});
 		} else {
+=======
+			clickOKButtonPopup();			
+		});
+		//There is a delay in page rendering
+		SimulatorUtilities.wait(5000);
+		clickEndCall();
+	}
+	
+	public void allowTransactionForOneHour(String status) {
+		if (status.equalsIgnoreCase(ConstantData.INTERNATIONAL_ALLOW_DISALLOW))
+		{
+		selectServiceCode(ConstantData.INTERNATIONAL_ALLOW_DISALLOW);
+		clickGoButton();
+		runWithinPopup("400 - International Use Allow/Disallow", () -> {
+			chooseOperationActivate(status);
+			enterNotes(ConstantData.GENERIC_DESCRIPTION);
+			clickSaveButton();
+			verifyOperationStatus();
+			clickOKButtonPopup();			
+		});
+		}
+		else
+		{
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 			selectServiceCode(ConstantData.ECCOMERCE_ALLOW_DISALLOW);
 			clickGoButton();
 			runWithinPopup("304 - E-commerce Activation/Deactivation", () -> {
@@ -665,6 +895,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				enterNotes(ConstantData.GENERIC_DESCRIPTION);
 				clickSaveButton();
 				verifyOperationStatus();
+<<<<<<< HEAD
 				clickOKButtonPopup();
 			});
 		}
@@ -674,6 +905,17 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 	}
 
+=======
+				clickOKButtonPopup();			
+			});
+		}
+	
+		//There is a delay in page rendering
+		SimulatorUtilities.wait(5000);
+		clickEndCall();
+	}
+	
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 	public boolean verifyCurrencySetupDoneCorrectly(HelpdeskGeneral helpdeskGeneral, Device device) {
 		logger.info("verify added currecy for device number: {}", device.getDeviceNumber());
 		int count = 0;
@@ -735,8 +977,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickFirstRowEditLink();
 		clickWalletDetailsTab();
 		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
+<<<<<<< HEAD
 		BigDecimal balanceAmount = new BigDecimal(
 				getFirstRecordCellTextByColumnNameInEmbeddedTab(CURRENT_AVAILABLE_BALANCE));
+=======
+		BigDecimal balanceAmount = new BigDecimal(getFirstRecordCellTextByColumnNameInEmbeddedTab(CURRENT_AVAILABLE_BALANCE));
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 		clickEndCall();
 		return balanceAmount;
 	}
@@ -767,6 +1013,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickFirstRowEditLink();
 		clickWalletDetailsTab();
 		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
+<<<<<<< HEAD
 		int rowCount = driver()
 				.findElements(By.xpath("//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr"))
 				.size();
@@ -793,6 +1040,26 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				logger.info("Current Available Balance + Settled Debit : " + dec.format(balance));
 				walletBalanceInformation = walletBalanceInformation + ","
 						+ getCellTextByColumnNameInEmbeddedTab(j, "Wallet Currency") + ":" + dec.format(balance) + ":"
+=======
+		int rowCount = driver().findElements(By.xpath("//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr")).size();
+		DecimalFormat dec = new DecimalFormat("#0.00");
+		for (int j = 1; j <= rowCount; j++) {
+			if (j == 1) {
+				logger.info("Current Available Balance {} Settled Debit {} ", getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance"),
+						getCellTextByColumnNameInEmbeddedTab(j, "Settled Debit"));
+				Double balance = Double.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance"))
+						+ Double.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Settled Debit"));
+				logger.info("Current Available Balance + Settled Debit : " + dec.format(balance));
+				walletBalanceInformation = getCellTextByColumnNameInEmbeddedTab(j, "Wallet Currency") + ":" + dec.format(balance) + ":" + getCellTextByColumnNameInEmbeddedTab(j, "WALLET_NUMBER");
+
+			} else {
+				logger.info("Current Available Balance {} Settled Debit {} ", getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance"),
+						getCellTextByColumnNameInEmbeddedTab(j, "Settled Debit"));
+				Double balance = Double.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance"))
+						+ Double.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Settled Debit"));
+				logger.info("Current Available Balance + Settled Debit : " + dec.format(balance));
+				walletBalanceInformation = walletBalanceInformation + "," + getCellTextByColumnNameInEmbeddedTab(j, "Wallet Currency") + ":" + dec.format(balance) + ":"
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 						+ getCellTextByColumnNameInEmbeddedTab(j, "WALLET_NUMBER");
 			}
 		}
@@ -800,6 +1067,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return walletBalanceInformation;
 	}
 
+<<<<<<< HEAD
 	public String getWalletBalanceInformationAfterLoyaltyRedemption(Device device) {
 		// logger.info("Get Wallet Balance Information for Device: {}",
 		// device.getDeviceNumber());
@@ -832,6 +1100,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	}
 
+=======
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 	public String getWalletBalanceInformationForRemittance(Device device, CardToCash cardToCash) {
 		logger.info("Get Wallet Balance Information for Device: {}", device.getDeviceNumber());
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
@@ -841,6 +1111,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickFirstRowEditLink();
 		clickWalletDetailsTab();
 		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
+<<<<<<< HEAD
 		int rowCount = driver()
 				.findElements(By.xpath("//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr"))
 				.size();
@@ -857,6 +1128,18 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				logger.info("Current Available Balance + Settled Debit : " + dec.format(balance));
 				walletBalanceInformation = getCellTextByColumnNameInEmbeddedTab(j, "Wallet Currency") + ":"
 						+ dec.format(balance) + ":" + getCellTextByColumnNameInEmbeddedTab(j, "WALLET_NUMBER");
+=======
+		int rowCount = driver().findElements(By.xpath("//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr")).size();
+		DecimalFormat dec = new DecimalFormat("#0.00");
+		for (int j = 1; j <= rowCount; j++) {
+			if (j == 1) {
+				logger.info("Current Available Balance {} Settled Debit {} ", getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance"),
+						getCellTextByColumnNameInEmbeddedTab(j, "Settled Debit"));
+				Double balance = Double.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance"))
+						+ Double.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Settled Debit")) - Double.parseDouble(cardToCash.getRemittanceAmount());
+				logger.info("Current Available Balance + Settled Debit : " + dec.format(balance));
+				walletBalanceInformation = getCellTextByColumnNameInEmbeddedTab(j, "Wallet Currency") + ":" + dec.format(balance) + ":" + getCellTextByColumnNameInEmbeddedTab(j, "WALLET_NUMBER");
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 			}
 		}
 		clickEndCall();
@@ -864,8 +1147,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	}
 
+<<<<<<< HEAD
 	public boolean verifyBalanceUpdatedCorreclty(String beforeLoadBalanceInformation,
 			String transactionDetailsFromExcel, String afterLoadBalanceInformation) {
+=======
+	public boolean verifyBalanceUpdatedCorreclty(String beforeLoadBalanceInformation, String transactionDetailsFromExcel, String afterLoadBalanceInformation) {
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 		logger.info("Verify Wallet Balance Information for Device is added correctly");
 
 		String[] beforeLoadBalanceData = beforeLoadBalanceInformation.trim().split(",");
@@ -880,8 +1167,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				String[] beforeLoadBalanceDataValues = beforeLoadBalanceData[j].trim().split(":");
 				String[] afterLoadBalanceDataValues = afterLoadBalanceData[j].trim().split(":");
 				if (currencyName.equalsIgnoreCase(beforeLoadBalanceDataValues[0])) {
+<<<<<<< HEAD
 					BigDecimal calculatedBalance = new BigDecimal(beforeLoadBalanceDataValues[1])
 							.add(new BigDecimal(transactionDataValues[1]));
+=======
+					BigDecimal calculatedBalance = new BigDecimal(beforeLoadBalanceDataValues[1]).add(new BigDecimal(transactionDataValues[1]));
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 					if (calculatedBalance.equals(new BigDecimal(afterLoadBalanceDataValues[1]))) {
 						count++;
 						break;
@@ -892,8 +1183,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return (count == transactionData.length) ? true : false;
 	}
 
+<<<<<<< HEAD
 	public boolean verifyBalanceDeductedCorreclty(String beforeLoadBalanceInformation,
 			String transactionDetailsFromExcel, String afterLoadBalanceInformation) {
+=======
+	public boolean verifyBalanceDeductedCorreclty(String beforeLoadBalanceInformation, String transactionDetailsFromExcel, String afterLoadBalanceInformation) {
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 		logger.info("Verify Wallet Balance Information for Device after Transaction Deduction");
 
 		String[] beforeLoadBalanceData = beforeLoadBalanceInformation.trim().split(",");
@@ -908,8 +1203,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				String[] beforeLoadBalanceDataValues = beforeLoadBalanceData[j].trim().split(":");
 				String[] afterLoadBalanceDataValues = afterLoadBalanceData[j].trim().split(":");
 				if (currencyName.equalsIgnoreCase(beforeLoadBalanceDataValues[0])) {
+<<<<<<< HEAD
 					if (new BigDecimal(afterLoadBalanceDataValues[1])
 							.equals(new BigDecimal(transactionDataValues[1]))) {
+=======
+					if (new BigDecimal(afterLoadBalanceDataValues[1]).equals(new BigDecimal(transactionDataValues[1]))) {
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 
 						count++;
 						break;
@@ -934,8 +1233,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				String[] beforeLoadBalanceDataValues = beforeLoadBalanceData[j].trim().split(":");
 				String[] afterLoadBalanceDataValues = afterLoadBalanceData[j].trim().split(":");
 				if (currencyName.equalsIgnoreCase(beforeLoadBalanceDataValues[0])) {
+<<<<<<< HEAD
 					if (new BigDecimal(beforeLoadBalanceDataValues[1])
 							.equals(new BigDecimal(afterLoadBalanceDataValues[1]))) {
+=======
+					if (new BigDecimal(beforeLoadBalanceDataValues[1]).equals(new BigDecimal(afterLoadBalanceDataValues[1]))) {
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 						count++;
 						break;
 					}
@@ -945,8 +1248,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return (count == beforeLoadBalanceData.length) ? true : false;
 	}
 
+<<<<<<< HEAD
 	public boolean verifyInitialLoadBalanceUpdatedCorreclty(String transactionDetailsFromExcel,
 			String afterLoadBalanceInformation) {
+=======
+	public boolean verifyInitialLoadBalanceUpdatedCorreclty(String transactionDetailsFromExcel, String afterLoadBalanceInformation) {
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 		logger.info("Verify Initial Load Wallet Balance Information for Device");
 
 		String[] transactionData = transactionDetailsFromExcel.trim().split(",");
@@ -959,8 +1266,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			for (int j = 0; j < afterLoadBalanceData.length; j++) {
 				String[] afterLoadBalanceDataValues = afterLoadBalanceData[j].trim().split(":");
 				if (currencyName.equalsIgnoreCase(afterLoadBalanceDataValues[0])) {
+<<<<<<< HEAD
 					if (new BigDecimal(transactionDataValues[1])
 							.equals(new BigDecimal(afterLoadBalanceDataValues[1]))) {
+=======
+					if (new BigDecimal(transactionDataValues[1]).equals(new BigDecimal(afterLoadBalanceDataValues[1]))) {
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 						count++;
 						break;
 					}
@@ -978,15 +1289,23 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public void selectWalleFromTransfer(String walletNumber) {
 		waitForElementVisible(Element("//td[@id='fromCurrencyDataTable']"));
 		waitForWicket();
+<<<<<<< HEAD
 		clickWhenClickable(Element(
 				"//td[@id='fromCurrencyDataTable']//./td/span[text()='" + walletNumber + "']//..//..//td//input"));
+=======
+		clickWhenClickable(Element("//td[@id='fromCurrencyDataTable']//./td/span[text()='" + walletNumber + "']//..//..//td//input"));
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 	}
 
 	public void selectWalleToTransfer(String walletNumber) {
 		waitForElementVisible(Element("//td[@id='toCurrencyDataTable']"));
 		waitForWicket();
+<<<<<<< HEAD
 		clickWhenClickable(Element(
 				"//td[@id='toCurrencyDataTable']//./td/span[text()='" + walletNumber + "']//..//..//td//input"));
+=======
+		clickWhenClickable(Element("//td[@id='toCurrencyDataTable']//./td/span[text()='" + walletNumber + "']//..//..//td//input"));
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 	}
 
 	public void clickSaveButtonPopup() {
@@ -1083,8 +1402,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	public boolean verifyFieldPresence(String field) {
 		try {
+<<<<<<< HEAD
 			Element(String.format(
 					".//form[@id='id1a4']//table[@class='modelFormClass'][1]//*[text() [contains(.,'%s:')]]", field));
+=======
+			Element(String.format(".//form[@id='id1a4']//table[@class='modelFormClass'][1]//*[text() [contains(.,'%s:')]]", field));
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 			return true;
 		} catch (NoSuchElementException e) {
 			return false;
@@ -1092,12 +1415,17 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 
 	public boolean verifyCallReferenceNo() {
+<<<<<<< HEAD
 		return verifyFieldPresence(CALL_REFERENCE_NUMBER)
 				&& StringUtils.isNumeric(getTextFromPage(callReferenceNumberLbl));
+=======
+		return verifyFieldPresence(CALL_REFERENCE_NUMBER) && StringUtils.isNumeric(getTextFromPage(callReferenceNumberLbl));
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 
 	}
 
 	public boolean verifyServiceDescription(HelpdeskGeneral helpdeskGeneral) {
+<<<<<<< HEAD
 		return verifyFieldPresence(SERVICE_DESCRIPTION) && getTextFromPage(serviceDescriptionLbl).equalsIgnoreCase(
 				String.format(helpdeskGeneral.getServiceDescription() + " [%s]", helpdeskGeneral.getServiceCode()));
 	}
@@ -1105,6 +1433,14 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public boolean verifyDeviceNumber(HelpdeskGeneral helpdeskGeneral) {
 		return verifyFieldPresence(DEVICE_NUMBER)
 				&& getTextFromPage(deviceNumberLbl).equalsIgnoreCase(helpdeskGeneral.getDeviceNumber());
+=======
+		return verifyFieldPresence(SERVICE_DESCRIPTION)
+				&& getTextFromPage(serviceDescriptionLbl).equalsIgnoreCase(String.format(helpdeskGeneral.getServiceDescription() + " [%s]", helpdeskGeneral.getServiceCode()));
+	}
+
+	public boolean verifyDeviceNumber(HelpdeskGeneral helpdeskGeneral) {
+		return verifyFieldPresence(DEVICE_NUMBER) && getTextFromPage(deviceNumberLbl).equalsIgnoreCase(helpdeskGeneral.getDeviceNumber());
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 	}
 
 	public boolean verifyRequestDate() {
@@ -1124,8 +1460,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 
 	public boolean verifyWalletNumber(HelpdeskGeneral general) {
+<<<<<<< HEAD
 		return verifyFieldPresence(WALLET_NUMBER)
 				&& getTextFromPage(walletNumberLbl).equalsIgnoreCase(general.getDefaultWalletNumber());
+=======
+		return verifyFieldPresence(WALLET_NUMBER) && getTextFromPage(walletNumberLbl).equalsIgnoreCase(general.getDefaultWalletNumber());
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 	}
 
 	public boolean verifyClosureDate() {
@@ -1201,7 +1541,75 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 		return serviceStatus;
 	}
+<<<<<<< HEAD
 
+=======
+	
+	public Map<String, String> checkCreditBalances(Device device) {
+		Map<String, String> balanceMapBeforePayments;
+		List<String> list;
+		logger.info("get Credit balances");
+		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getProductType());
+		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
+		clickSearchButton();
+		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
+		editDeviceLink.click();
+		clickCurrentStatusLimitTab();
+		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
+		balanceMapBeforePayments = getCreditLimitComponents();
+		clickBalanceDetailsTab();
+		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
+		list = getCreditCardBalance();
+		balanceMapBeforePayments.put("Unbilled̥̥Payments", list.get(1));
+		balanceMapBeforePayments.put("OutstandingPayments", list.get(2));
+		return balanceMapBeforePayments;
+	}
+
+	public void clickCurrentStatusLimitTab() {
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(currentStatusLimits)).click();
+	}
+
+	public Map<String, String> getCreditLimitComponents() {
+		Map<String, String> map = new HashMap<>();
+		for (int i = 0; i <= txtbxCreditLimitParamter.getElements().size() - 2; i += 2) {
+			map.put(txtBxCreditLimitParamterLabels.getElements().get(i).getText(), txtbxCreditLimitParamter.getElements().get(i).getText());
+		}
+		return map;
+	}
+
+	public void clickBalanceDetailsTab() {
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(balanceDetailsTab)).click();
+	}
+
+	public List<String> getCreditCardBalance() {
+		ArrayList<String> list = new ArrayList<>();
+		clickWhenClickableDoNotWaitForWicket(balanceDetailsTab);
+		for (MCWebElement element : txtBxPaymentComponents.getElements()) {
+			list.add(element.getText());
+		}
+		return list;
+	}
+
+	public void checkAndCompareBalancePostPayment(Payment payment) {
+		Map<String, String> mapA = context.get(ContextConstants.BALANCE_BEFORE_PAYMENT);
+		Map<String, String> mapB = context.get(ContextConstants.BALANCE_AFTER_PAYMENT);
+		if (mapA != null && mapB != null && mapA.size() == mapB.size()) {
+			for (Map.Entry m : mapA.entrySet()) {
+				String keyFromFirstMap = (String) m.getKey();
+				String valueFromFirstMap = (String) m.getValue();
+				String valueFromSecondMap = mapB.get(keyFromFirstMap);
+				if (keyFromFirstMap.equals("UnbllledPayments")) {
+					if (!valueFromSecondMap.equals((valueFromFirstMap + payment.getAmount()))) {
+						Assert.assertEquals("Payment has been done successfully", keyFromFirstMap + "::::" + valueFromSecondMap, keyFromFirstMap + "::::" + Integer.valueOf(valueFromFirstMap + 500));
+					}
+				}
+			}
+
+		}
+
+	}
+	
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 	public boolean validateRequiredFields(HelpdeskGeneral general) {
 		logger.info("Validate required fields in change Registered Email ID Screen");
 
@@ -1231,6 +1639,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 		return creditLimit;
 	}
+<<<<<<< HEAD
 
 	public HashMap<String, BigDecimal> noteDownCreditLimit(String type) {
 		HashMap<String, BigDecimal> creditLimit = new HashMap<>();
@@ -1249,6 +1658,26 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return creditLimit;
 	}
 
+=======
+	
+	public HashMap<String,BigDecimal> noteDownCreditLimit(String type) {
+		HashMap<String,BigDecimal> creditLimit=new HashMap<>();
+		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
+		clickWhenClickable(currentStatusAndLimitTab);	
+		logger.info("Credit limit noted down : {} ", creditLimit);		
+		creditLimit.put(ConstantData.CLIENT_LIMIT,new BigDecimal(clientCreditLimitLabel.getText()));
+		creditLimit.put(ConstantData.AVAIL_CLIENT_LIMIT,new BigDecimal(availClientCreditLimitLabel.getText()));
+		
+		creditLimit.put(ConstantData.ACCOUNT_LIMIT,new BigDecimal(accountCreditLimitLabel.getText()));
+		creditLimit.put(ConstantData.AVAIL_ACCOUNT_LIMIT,new BigDecimal(availAccountCreditLimitLabel.getText()));
+
+		creditLimit.put(ConstantData.CARD_LIMIT,new BigDecimal(cardCreditLimitLabel.getText()));	
+		creditLimit.put(ConstantData.AVAIL_CARD_LIMIT,new BigDecimal(availCardCreditLimitLabel.getText()));	
+		clickEndCall();		
+		return creditLimit;
+	}
+	
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 	public void resetPinRetryCounter(HelpdeskGeneral helpdeskGeneral) {
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
@@ -1256,19 +1685,31 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();
 			verifyOperationStatus();
+<<<<<<< HEAD
 			clickOKButtonPopup();
+=======
+			clickOKButtonPopup();			
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 		});
 		SimulatorUtilities.wait(3000);
 		clickEndCall();
 	}
+<<<<<<< HEAD
 
 	public HashMap<String, String> noteDownRequiredValues(String deviceNumber) {
 		HashMap<String, String> helpDeskValues = new HashMap<>();
 		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
+=======
+	
+	public HashMap<String, String> noteDownRequiredValues(String deviceNumber) {
+		HashMap<String, String> helpDeskValues = new HashMap<>();		
+		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);		
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 		clickWhenClickable(currentStatusAndLimitTab);
 		helpDeskValues.put(ContextConstants.CREDIT_LIMIT, accountCreditLimitLabel.getText());
 		helpDeskValues.put(ContextConstants.AVAILABLE_CREDIT_LIMIT, availAccountCreditLimitLabel.getText());
 		helpDeskValues.put(ContextConstants.PAYMENT_DUE_DATE, paymentDueDateLabel.getText());
+<<<<<<< HEAD
 		helpDeskValues.put(ContextConstants.MINIMUM_PAYMENT_DUE, minimumAmountDueLabel.getText());
 		helpDeskValues.put(ContextConstants.CLOSING_BALANCE, closingBalanceLabel.getText());
 		WebElementUtils.elementToBeClickable(balanceDetailsTab);
@@ -1282,18 +1723,38 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 
 	public String verifyBillingDetails(Device device) {
+=======
+		helpDeskValues.put(ContextConstants.MINIMUM_PAYMENT_DUE, minimumAmountDueLabel.getText());		
+		helpDeskValues.put(ContextConstants.CLOSING_BALANCE, closingBalanceLabel.getText());	
+		WebElementUtils.elementToBeClickable(balanceDetailsTab);	
+		clickWhenClickable(balanceDetailsTab);
+		helpDeskValues.put(ContextConstants.TOTAL_PAYMENT_DUE, totalAmountDueLabel.getText());		
+		helpDeskValues.put(ContextConstants.INTEREST, interestLabel.getText());	
+		helpDeskValues.put(ContextConstants.LOAN, loanLabel.getText());	
+		helpDeskValues.put(ContextConstants.LOAN_INTEREST, loanInterestLabel.getText());	
+		clickEndCall();
+		return helpDeskValues;
+	}
+	
+	public String verifyBillingDetails(Device device){
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 		List<String> lst = new ArrayList<String>();
 		SimulatorUtilities.wait(5000);
 		editDeviceLink.click();
 		SimulatorUtilities.wait(1000);
 		clickWhenClickable(balanceDetailsTab);
 		SimulatorUtilities.wait(2000);
+<<<<<<< HEAD
 		lst.add(Element("//span[contains(text(),'" + device.getCategory() + " :')]//ancestor::tr//td["
 				+ resolve(device.getAmountType()) + "]/span/span").getText());
+=======
+		lst.add(Element("//span[contains(text(),'"+device.getCategory()+" :')]//ancestor::tr//td["+resolve(device.getAmountType())+"]/span/span").getText());
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 		clickEndCall();
 		return lst.get(0);
 	}
 
+<<<<<<< HEAD
 	private int resolve(String amountType) {
 		switch (amountType) {
 		case "Billed":
@@ -1301,10 +1762,21 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		case "Unbilled":
 			return 3;
 		case "Outstanding":
+=======
+	private int resolve(String amountType)
+	{
+		switch(amountType){
+		case "Billed" :
+			return 2;
+		case "Unbilled" :
+			return 3;
+		case "Outstanding" :
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 			return 4;
 		}
 		return 0;
 	}
+<<<<<<< HEAD
 
 	public HashMap<String, BigDecimal> activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral) {
 		logger.info("credit limit change request: {}", helpdeskGeneral.getCardPackId());
@@ -1327,16 +1799,44 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 					new BigDecimal(helpdeskGeneral.getNewCreditLimit()).stripTrailingZeros().toPlainString());
 			creditLimit.put(ConstantData.CARD_LIMIT, new BigDecimal(helpdeskGeneral.getNewCreditLimit()));
 			creditLimit.put(ConstantData.AVAIL_CARD_LIMIT, new BigDecimal(helpdeskGeneral.getNewCreditLimit()));
+=======
+	
+	public HashMap<String,BigDecimal> activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
+		logger.info("credit limit change request: {}",helpdeskGeneral.getCardPackId());
+		selectServiceCode(helpdeskGeneral.getServiceCode());
+		HashMap<String,BigDecimal> crediLimit = new HashMap<>();
+		clickGoButton();
+		if(ProductType.INDIVIDUAL.contains(helpdeskGeneral.getCustomerType()))
+			return creditLimitChangeRequestIndividual(helpdeskGeneral,crediLimit);
+		else if(ProductType.CORPORATE.contains(helpdeskGeneral.getCustomerType()))
+			return creditLimitChangeRequestCorporate(helpdeskGeneral,crediLimit);
+		
+		return new HashMap<String,BigDecimal>();
+	}
+	
+	
+	public HashMap<String,BigDecimal> creditLimitChangeRequestCorporate(HelpdeskGeneral helpdeskGeneral,HashMap<String,BigDecimal> creditLimit){
+		runWithinPopup(ConstantData.CREDIT_LIMIT_CHANGE_COMMERCIAL_CARDS, ()->{
+			selectLimitType(helpdeskGeneral.getLimitType());
+			enterNewCreditLimit(new BigDecimal(helpdeskGeneral.getNewCreditLimit()).stripTrailingZeros().toPlainString());		
+			creditLimit.put(ConstantData.CARD_LIMIT,new BigDecimal(helpdeskGeneral.getNewCreditLimit()));	
+			creditLimit.put(ConstantData.AVAIL_CARD_LIMIT,new BigDecimal(helpdeskGeneral.getNewCreditLimit()));		
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();
 			verifyOperationStatus();
 			clickOKButtonPopup();
+<<<<<<< HEAD
 		});
+=======
+		});			
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 		SimulatorUtilities.wait(5000);
 		clickCurrentStatusAndLimitsTab();
 		clickEndCall();
 		return creditLimit;
 	}
+<<<<<<< HEAD
 
 	public HashMap<String, BigDecimal> creditLimitChangeRequestIndividual(HelpdeskGeneral helpdeskGeneral,
 			HashMap<String, BigDecimal> creditLimit) {
@@ -1366,17 +1866,48 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 						new BigDecimal(helpdeskGeneral.getAccountCreditLimit()));
 				creditLimit.put(ConstantData.CARD_LIMIT, new BigDecimal(helpdeskGeneral.getNewCreditLimit()));
 				creditLimit.put(ConstantData.AVAIL_CARD_LIMIT, new BigDecimal(helpdeskGeneral.getNewCreditLimit()));
+=======
+	
+	public HashMap<String,BigDecimal> creditLimitChangeRequestIndividual(HelpdeskGeneral helpdeskGeneral,HashMap<String,BigDecimal> creditLimit){
+		runWithinPopup(ConstantData.CREDIT_LIMIT_CHANGE_REQUEST, ()->{
+			selectLimitType(helpdeskGeneral.getLimitType());			
+			enterClientCreditLimit(new BigDecimal(helpdeskGeneral.getClientCreditLimit()).stripTrailingZeros().toPlainString());
+			enterAccountCreditLimit(new BigDecimal(helpdeskGeneral.getAccountCreditLimit()).stripTrailingZeros().toPlainString());			
+			enterNewCreditLimit(new BigDecimal(helpdeskGeneral.getNewCreditLimit()).stripTrailingZeros().toPlainString());	
+			
+			if(helpdeskGeneral.getLimitType().equalsIgnoreCase(ConstantData.TEMPORARY_LIMIT))
+			{
+				WebElementUtils.pickDate(effectiveDateTxt, LocalDate.now());
+				WebElementUtils.pickDate(endDateTxt, LocalDate.now());
+				creditLimit.put(ConstantData.AVAIL_CLIENT_LIMIT,new BigDecimal(helpdeskGeneral.getClientCreditLimit()));
+				creditLimit.put(ConstantData.AVAIL_ACCOUNT_LIMIT,new BigDecimal(helpdeskGeneral.getAccountCreditLimit()));
+				creditLimit.put(ConstantData.AVAIL_CARD_LIMIT,new BigDecimal(helpdeskGeneral.getNewCreditLimit()));		
+			}
+			else if(helpdeskGeneral.getLimitType().equalsIgnoreCase(ConstantData.PERMANENT_LIMIT))
+			{					
+				creditLimit.put(ConstantData.CLIENT_LIMIT,new BigDecimal(helpdeskGeneral.getClientCreditLimit()));
+				creditLimit.put(ConstantData.AVAIL_CLIENT_LIMIT,new BigDecimal(helpdeskGeneral.getClientCreditLimit()));
+				creditLimit.put(ConstantData.ACCOUNT_LIMIT,new BigDecimal(helpdeskGeneral.getAccountCreditLimit()));
+				creditLimit.put(ConstantData.AVAIL_ACCOUNT_LIMIT,new BigDecimal(helpdeskGeneral.getAccountCreditLimit()));
+				creditLimit.put(ConstantData.CARD_LIMIT,new BigDecimal(helpdeskGeneral.getNewCreditLimit()));	
+				creditLimit.put(ConstantData.AVAIL_CARD_LIMIT,new BigDecimal(helpdeskGeneral.getNewCreditLimit()));			
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 			}
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();
 			verifyOperationStatus();
 			clickOKButtonPopup();
+<<<<<<< HEAD
 		});
+=======
+		});		
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 		SimulatorUtilities.wait(5000);
 		clickCurrentStatusAndLimitsTab();
 		clickEndCall();
 		return creditLimit;
 	}
+<<<<<<< HEAD
 
 	public void clickLoyaltyBtn() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
@@ -1400,4 +1931,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return points;
 	}
 
+=======
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 }

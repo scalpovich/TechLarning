@@ -7,8 +7,8 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -36,7 +36,10 @@ public class DeviceStatusPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "statusCode:input:dropdowncomponent")
 	private MCWebElement StatusCode;
-
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr//span[contains(text(),'LOST')]/ancestor::td/following-sibling::td[3]//a")
+	private MCWebElement responseCodeLink;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "responseCode:input:dropdowncomponent")
 	private MCWebElement ResponseCode;
 
@@ -70,5 +73,16 @@ public class DeviceStatusPage extends AbstractBasePage {
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(descriptionTxt), WebElementUtils.elementToBeClickable(statusCodeDDwn),
 				WebElementUtils.elementToBeClickable(responseCodeDDwn));
+	}
+	
+	public void changeDeviceStatus (String status)
+	{
+		responseCodeLink.click();
+		runWithinPopup("Edit Device Status", ()->{
+			ResponseCode.getSelect().selectByVisibleText(status);
+			Description.sendKeys(ConstantData.RESPONSE_CODE_DESCRIPTION);
+		    clickSaveButton();
+		});
+		verifyOperationStatus();
 	}
 }

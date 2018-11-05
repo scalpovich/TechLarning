@@ -595,14 +595,31 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	}
 
 	public boolean verifyFileProcessUpload(ProcessBatches processBatchesDomain, String fileName) {
-		FileCreation.filenameStatic = fileName;
-		String elementXpath = String.format("//span[contains(text(),'%s')]", FileCreation.filenameStatic);
-		Boolean isProcessed = false;
-		String statusXpath = elementXpath + "//parent::td//following-sibling::td/a";
-		SimulatorUtilities.wait(20000);
-		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(statusXpath)));
-		switchToIframe(Constants.VIEW_BATCH_DETAILS);
+        FileCreation.filenameStatic = fileName;
+        Boolean isProcessed = true;
+        String elementXpath = String.format("//span[contains(text(),'%s')]", FileCreation.filenameStatic);
+        String statusXpath = elementXpath + "//parent::td//following-sibling::td/a";
+        SimulatorUtilities.wait(20000);
+        clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(statusXpath)));
+        
+        SimulatorUtilities.wait(5000);//this delay is for table to load data 
+        runWithinPopup("View Batch Details", () -> {
+              logger.info("Retrieving batch status");
+              waitForBatchStatus();
+              SimulatorUtilities.wait(5000);
+              batchStatus = batchStatusTxt.getText();
+              processBatchesDomain.setJoBID(processBatchjobIDTxt.getText());
+              SimulatorUtilities.wait(5000);
+              clickCloseButton();
+        });
+        SimulatorUtilities.wait(3000);//this delay is for table to load data
+        MiscUtils.reportToConsole("JobID: {}", processBatchesDomain.getJoBID());
+        context.put(CreditConstants.JOB_ID, processBatchesDomain.getJoBID());
+        waitForWicket(driver());
+        getFinder().getWebDriver().switchTo().defaultContent();
+        return isProcessed;
 
+<<<<<<< HEAD
 		// unless it is completed, refresh it - No of attempts: 100
 		for (int i = 0; i < NUMBER_OF_ATTEMPTS_TO_CHECK_SUCCESS_STATE; i++) {
 			if (processBatchStatusTxt.getText().equalsIgnoreCase("PENDING [0]")
@@ -638,6 +655,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		waitForWicket(driver());
 		getFinder().getWebDriver().switchTo().defaultContent();
 		return isProcessed;
+=======
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 	}
 
 	public boolean processBatchUpload(ProcessBatches processBatchesDomain, String fileName) {

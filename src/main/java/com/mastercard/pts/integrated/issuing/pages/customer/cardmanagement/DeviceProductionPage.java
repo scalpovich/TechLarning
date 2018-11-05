@@ -79,7 +79,11 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr")
 	private MCWebElements rowSize;
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class='headers']//a/span")
 	private MCWebElements deviceNumberHeaderTxt;
 
@@ -226,10 +230,13 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	public void processDeviceProductionBatchNewApplication(DeviceProductionBatch batch) {
 		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
+<<<<<<< HEAD
 		WebElementUtils.enterText(batchNumberTxt, batchNumber);
-		waitAndSearchForRecordToExist();
+=======
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-		waitForRecordAndAssignDevice();
+		WebElementUtils.enterText(batchNumberTxt,batchNumber);
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
+		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
 	}
 
@@ -240,15 +247,24 @@ public class DeviceProductionPage extends AbstractBasePage {
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
 	}
+<<<<<<< HEAD
 
 	public void processDeviceProductionBatchNewDeviceSupplementary(DeviceProductionBatch batch) {
+=======
+	
+	public void processDeviceProductionBatchNewDeviceSupplementary(DeviceProductionBatch batch) {		
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 		String batchNumber = context.get(CreditConstants.PRIMARY_BATCH_NUMBER);
 		selectByVisibleText(productTypeDDwn, batch.getProductType());
-		WebElementUtils.enterText(batchNumberTxt, batchNumber);
+		WebElementUtils.enterText(batchNumberTxt, batchNumber);		
 		waitAndSearchForRecordToExistForSupplementary();
 		verifyOperationStatus();
 	}
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 	protected void waitForRecordAndAssignDevice() {
 		waitAndSearchForRecordToAppear();
 		context.put(CreditConstants.EXISTING_DEVICE_NUMBER, deviceNumberFetch.getText());

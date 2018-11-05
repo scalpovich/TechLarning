@@ -34,6 +34,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewD
 import com.mastercard.pts.integrated.issuing.domain.customer.distribution.Dispatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ReversalTransaction;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ChangeAddressRequest;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.EventAndAlerts;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
@@ -375,6 +376,7 @@ public class HelpDeskSteps {
 	}
 
 	@When("currency setup for $type device is done correctly and updated in wallet details tab")
+	@Then("currency setup for $type device is done correctly and updated in wallet details tab")
 	public void thenCurrencySetupForDeviceIsDoneCorrectlyAndUpdatedInWalletDetailsTab(String type) {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
@@ -582,6 +584,7 @@ public class HelpDeskSteps {
 
 	@Given("user notes down available $type limit for card")
 	@When("user notes down available $type limit for card")
+	@Then("user notes down available $type limit for card")
 	public void whenUserNotesDownLimitThroughHelpDesk(String type) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.noteDownAvailableLimit(type));
@@ -952,5 +955,24 @@ public class HelpDeskSteps {
 		context.put(Constants.AVAILABLE_LOYALTY_POINTS, points.get(Constants.AVAILABLE_LOYALTY_POINTS));
 		context.put(Constants.ACCUMULATED_REVERSED_POINTS, points.get(Constants.ACCUMULATED_REVERSED_POINTS));
 		return points;
+	}
+	@Given("check card balance details through helpdesk")
+	@When("check card balance details through helpdesk")
+	public void checkCardBalance(){
+		Device device = context.get(ContextConstants.DEVICE);
+		context.put(ContextConstants.BALANCE_BEFORE_PAYMENT, helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device));
+		
+	}
+	
+	@When("recheck card balance details through helpdesk after payment")
+	public void reCheckCardBalancePostPayment(){
+		Device device = context.get(ContextConstants.DEVICE);	
+		helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device);
+		context.put(ContextConstants.BALANCE_AFTER_PAYMENT, helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device));	
+	}
+	@Then("user checks successful payments")
+	public void checkSuccessfulPayments(){		
+		Payment payment = context.get(ContextConstants.PAYMENT);
+		helpdeskWorkflow.compareBalancesAfterPayment(payment);
 	}
 }

@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 {
   "institute": [
    {
@@ -28,11 +31,18 @@
    "deviceEventBasedFeePlan":"AUTOMATION [TA5853EE]",
    "transactionLimitPlan":"AUTOMATION [TA1192KMNW]",
    "transactionPlan":"AUTOMATION [T1962C]",
+<<<<<<< HEAD
    "creditPlan":"TA4413NYAX [102]",
    "billingCycle":"AUTOMATION [131]",
    "transactionFeePlan": "Automation FIX fee plan. [AUTOFEEP1]",
    "walletPlan":"AUTOMATION [TA1160XDAT]",
    "loyaltyPlan" : "Automation Test [AUTO]"
+=======
+   "transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
+   "creditPlan":"TA4413NYAX [102]",
+   "billingCycle":"AUTOMATION [131]",
+   "walletPlan":"AUTOMATION [TA1160XDAT]"
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
    },
    {
    "productIdentity":"Credit",
@@ -60,12 +70,20 @@
    "deviceJoiningAndMemberShipFeePlan":"AUTOMATION [TA787TG]",
    "deviceEventBasedFeePlan":"AUTOMATION [TA3376SE]",
    "transactionLimitPlan":"AUTOMATION [TA2917DEPC]",
+<<<<<<< HEAD
    "transactionPlan":"AUTOMATION [T6499A]",
    "creditPlan":"TA4413NYAX [102]",
    "billingCycle":"AUTOMATION [131]",
    "transactionFeePlan": "Automation FIX fee plan. [AUTOFEEP1]",
    "walletPlan":"AUTOMATION [TA1160XDAT]",
    "loyaltyPlan" : "Automation Test [AUTO]"
+=======
+   "transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
+   "transactionPlan":"AUTOMATION [T6499A]",
+   "creditPlan":"TA4413NYAX [102]",
+   "billingCycle":"AUTOMATION [131]",
+   "walletPlan":"AUTOMATION [TA1160XDAT]"
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
    },
    {
    "productIdentity":"Prepaid",
@@ -85,7 +103,11 @@
    "pictureCode":"AUTOMATION PICTURE CODE [AUT]",
    "corporateClientCode":"Prepaid [12121217222000002]",
    "dedupePlanCode":"TA5289SXCU [TA5289SXCU]",
+<<<<<<< HEAD
    "prepaidStatementPlan":"AUTOMATION [TA4048YAQU]",
+=======
+   "prepaidStatementPlan":"AUTOMATION [TA9718OEZE]",
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
    "statementMessagePlan":"AUTOMATION [TA4195CHGX]",
    "marketingMessagePlan":"AUTOMATION [TA1480MCFS]",
    "documentCheckListPlan":"AUTOMATION [TA9790HTCU]",
@@ -93,6 +115,7 @@
    "deviceJoiningAndMemberShipFeePlan":"AUTOMATION [TA3608VH]",
    "deviceEventBasedFeePlan":"AUTOMATION [TA1764NE]",
    "transactionLimitPlan":"AUTOMATION [TA1347LPRR]",
+<<<<<<< HEAD
    "transactionPlan":"AUTOMATION [T8278L]",
    "creditPlan":"TA4413NYAX [102]",
    "billingCycle":"AUTOMATION [131]",
@@ -200,4 +223,13 @@
    }
   ]
 >>>>>>> 4f82885185f2933cd8d64d35d6deab261fc6fbd6
+=======
+   "transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
+   "transactionPlan":"AUTOMATION [T8278L]",
+   "creditPlan":"TA4413NYAX [102]",
+   "billingCycle":"AUTOMATION [131]",
+   "walletPlan":"AUTOMATION [TA1160XDAT]"
+   }
+  ]
+>>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 }
