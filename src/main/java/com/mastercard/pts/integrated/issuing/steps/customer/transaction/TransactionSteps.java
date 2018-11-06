@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Aliases;
 import org.jbehave.core.annotations.Given;
@@ -28,6 +30,7 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.agent.channelmanagement.AssignPrograms;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalanceRequest;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
@@ -102,6 +105,8 @@ public class TransactionSteps {
 	private static String FAIL_MESSAGE = FAILED + " -  Result : ";
 	
 	private static String INVALID_KEYS = "(default) - M/Chip Key Set from the related BIN range will be used";
+	
+	public boolean membershipFlag = false;
 
 	public String getTransactionAmount() {
 		return transactionAmount;
@@ -478,6 +483,29 @@ public class TransactionSteps {
 		Assert.assertTrue("successfully completed the wallet to wallet fund transfer",
 				transactionWorkflow.searchTransactionWithDeviceAndGetStatus(device, ts).contains(" Wallet to Wallet Transfer(Credit)"));
 	}
+	
+	
+	@When("search with device in transaction screen and Verify Joining and Membership Fees")
+	@Then("search with device in transaction screen and Verify Joining and Membership Fees")
+	public void verifyJoiningAndMembershipFeesOnTransactionSearch() {
+		
+		TransactionSearch ts = TransactionSearch.getProviderData(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setJoiningFees(provider.getString("JOINING_FEES"));
+		device.setMemberShipFees(provider.getString("MEMBERSHIP_FEES"));
+		membershipFlag = true;
+		assertThat(transactionWorkflow.searchTransactionWithDeviceAndGetFees(device, ts, membershipFlag), Matchers.hasItems(device.getJoiningFees(), device.getMembershipFees()));
+	}
+	
+	@When("search with device in transaction screen and Verify Joining Fee")
+	@Then("search with device in transaction screen and Verify Joining Fee")
+	public void verifyJoiningFeeOnTransactionSearch() {
+		
+		TransactionSearch ts = TransactionSearch.getProviderData(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setJoiningFees(provider.getString("JOINING_FEES"));
+		assertEquals(transactionWorkflow.searchTransactionWithDeviceAndGetFees(device, ts, membershipFlag), device.getJoiningFees());
+	}
 
 	@When("user performs load balance request")
 	public void whenUserPerformsLoadBalanceRequest() {
@@ -485,9 +513,20 @@ public class TransactionSteps {
 		LoadBalanceRequest lbr = LoadBalanceRequest.getProviderData(provider);
 		String loadRequestReferenceNumber = transactionWorkflow.performLoadBalanceRequestAndGetRequestReferenceNumber(device, lbr);
 		lbr.setLoadRequestReferenceNumber(loadRequestReferenceNumber);
-		context.put("LOADBALANCEREQUEST", lbr);
+		context.put(ContextConstants.LOAD_BALANCE_REQUEST, lbr);
+	}
+	
+	@When("user performs load balance request for Joining and Membership plan")
+	public void whenUserPerformsLoadBalanceRequestforJoiningandMemberShipPlan() {
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
+		LoadBalanceRequest lbr = LoadBalanceRequest.getProviderData(provider);
+		String loadRequestReferenceNumber = transactionWorkflow.performLoadBalanceRequestAndGetRequestReferenceNumber(device, lbr);
+		lbr.setLoadRequestReferenceNumber(loadRequestReferenceNumber);
+		context.put(ContextConstants.LOAD_BALANCE_REQUEST, lbr);
 	}
 
+	@When("load balance request is successful")
 	@Then("load balance request is successful")
 	public void thenLoadBalanceRequestIsSuccessful() {
 		assertThat("Load Balance Request Failed", transactionWorkflow.getLoadBalanceRequestSuccessMessage(), containsString("Load balance request forwarded for approval with request number :"));
@@ -496,10 +535,11 @@ public class TransactionSteps {
 	@When("user performs load balance approve")
 	public void whenUserPerformsLoadBalanceApprove() {
 		Device device = context.get(ContextConstants.DEVICE);
-		LoadBalanceRequest lbr = context.get("LOADBALANCEREQUEST");
+		LoadBalanceRequest lbr = context.get(ContextConstants.LOAD_BALANCE_REQUEST);
 		transactionWorkflow.performLoadBalanceApprove(device, lbr);
 	}
 
+	@When("load balance approve is successful")
 	@Then("load balance approve is successful")
 	public void thenLoadBalanceApproveIsSuccessful() {
 		assertThat("Load Balance Approve Failed", transactionWorkflow.getLoadBalanceApproveSuccessMessage(), containsString("approved successfully."));

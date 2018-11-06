@@ -40,6 +40,7 @@ public class VisaTestCaseNameKeyValuePair {
 		visaTestCaseDetailsKeyValuePair.put("POS-Magstripe-eligibility-Inquiry_with_Pin", "Case 2: Eligibility Inquiry");
 		visaTestCaseDetailsKeyValuePair.put("POS-Retail-AccountFund", "AccountFunding");	
 		visaTestCaseDetailsKeyValuePair.put("POS-Retail-PreAuthCompletion_with_Pin", "PREAUTHCOMPLETION");	
+		visaTestCaseDetailsKeyValuePair.put("POS-Retail-Magstripe-purchase_with_Pin_Highrisk", "Case 1-Purchase Transaction With Pin");
 			
 		//International
 			
@@ -88,6 +89,7 @@ public class VisaTestCaseNameKeyValuePair {
 		visaTestDataFileToSelectKeyValuePair.put("POS-Magstripe-eligibility-Inquiry_with_Pin", "POS-Magstripe-eligibility-Inquiry_with_Pin");		
 		visaTestDataFileToSelectKeyValuePair.put("POS-Retail-AccountFund", "POS-Retail-AccountFund");
 		visaTestDataFileToSelectKeyValuePair.put("POS-Retail-PreAuthCompletion_with_Pin", "POS-Retail-PreAuthCompletion_with_Pin");
+		visaTestDataFileToSelectKeyValuePair.put("POS-Retail-Magstripe-purchase_with_Pin_Highrisk", "POS-Retail-Magstripe-purchase_with_Pin_Highrisk");
 		
 		//International
 		
