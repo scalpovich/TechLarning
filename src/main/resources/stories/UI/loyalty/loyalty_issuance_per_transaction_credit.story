@@ -24,7 +24,6 @@ Then user notes down max loyalty points for plan
 And user notes down promotion plan details for PROMO2
 And user has loyalty points details for Credit device
 Then verify loyalty points are credited on issuance for promotion plan code PROMO1
-And verify available loyalty points should be within loyalty plan limit
 And user raises an authorization request
 Then calculate loyalty points
 Then status of request is "approved"
