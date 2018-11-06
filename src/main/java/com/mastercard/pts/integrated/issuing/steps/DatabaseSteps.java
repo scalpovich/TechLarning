@@ -39,4 +39,9 @@ public class DatabaseSteps {
 		dbFlow.updateLoyaltyExpiryDate(expiryDate, device.getDeviceNumber());
 	}
 
+	@Then("add adjustment transaction of $amount at backend")
+	public void addAdjustmentTransaction(String amount) {
+		Device device = context.get(ContextConstants.DEVICE);
+		dbFlow.addAdjustmentTransaction(device.getDeviceNumber(), context.get("USER_INSTITUTION_SELECTED"), amount);
+	}
 }

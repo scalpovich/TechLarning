@@ -3,7 +3,7 @@ As a(n)  Customer portal user
 I want to configure the LoyaltyProgram with issuance and per transaction promotion plans
 In order to verify accrued loyalty points on purchase transaction
 Meta:
-@StoryName credit_msr_retail_loyalty_wo_eod
+@StoryName prepaid_msr_retail_loyalty
 @migration_loyalty
 
 Scenario:1 Create credit device and perform manual auth on blocked MCC
@@ -19,7 +19,7 @@ And Prepaid device is created using new device screen for Individual and Primary
 And Prepaid processes pre-production batch using new Device
 And Prepaid processes deviceproduction batch using new Device for Supplementary
 And device has "normal" status
-Then add adjustment transaction at backend
+Then add adjustment transaction of 50000 at backend
 Then select blocked MCG for loyalty as MCG
 Then user notes down max loyalty points for plan
 And user notes down promotion plan details for PROMO2

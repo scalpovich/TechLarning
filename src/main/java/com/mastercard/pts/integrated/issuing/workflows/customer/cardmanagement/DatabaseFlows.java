@@ -67,4 +67,9 @@ public class DatabaseFlows {
 		String queryString = "update lyt_pts_earned set LPE_EXPIRY_DATE='" + expiryDate + "' where CARD_NUMBER='" + cardNumber + "'";
 		dbUtil.executeUpdate(queryString);
 	}
+
+	public void addAdjustmentTransaction(String deviceNo, String bankCode, String amnt) {
+		String queryString = "update wallet set balance='" + amnt + "' where bank_code='" + bankCode + "' and wallet_number=(select wallet_number from DEVICE_WALLET_LINK where device_number='" + deviceNo + "' and bank_code='" + bankCode + "')";
+		dbUtil.executeUpdate(queryString);
+	}
 }
