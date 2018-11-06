@@ -8,6 +8,7 @@ Meta:
 
 Scenario:1 Create credit device and perform manual auth on blocked MCC
 Given setting json values in excel for Prepaid
+Then use loyalty plan AUTOMATION [LP1]
 When user is logged in institution
 And for Magnetic Stripe Card [1] User fills Device Plan for Prepaid product for Mastercard
 And User fills Wallet Fee Plan for Prepaid product
@@ -20,7 +21,7 @@ And Prepaid processes pre-production batch using new Device
 And Prepaid processes deviceproduction batch using new Device for Supplementary
 And device has "normal" status
 Then add adjustment transaction of 50000 at backend
-Then select blocked MCG for loyalty as MCG
+Then select blocked MCG for loyalty as AUT
 Then user notes down max loyalty points for plan
 And user notes down promotion plan details for PROMO2
 And user has loyalty points details for Prepaid device
