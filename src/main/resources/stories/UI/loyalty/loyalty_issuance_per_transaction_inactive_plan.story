@@ -1,14 +1,13 @@
 Narrative:
 As a(n)  Customer portal user 
 I want to configure the LoyaltyProgram with issuance and per transaction promotion plans
-In order to verify accrued loyalty points on purchase transaction
+In order to verify points calculation for inactive loyalty plan
 Meta:
 @StoryName credit_msr_retail_loyalty
 @migration_loyalty
 
-Scenario:1 Create credit device
+Scenario:1 create Credit device, deactivate loyalty plan and perform manual auth
 Given setting json values in excel for Credit
-Then use loyalty plan AUTOMATION [LP1]
 When user is logged in institution
 And for Magnetic Stripe Card [1] User fills Device Plan for Credit product for Mastercard
 And User fills Wallet Fee Plan for Credit product
@@ -20,27 +19,19 @@ And Credit device is created using new device screen for Individual and Primary 
 And Credit processes pre-production batch using new Device
 And Credit processes deviceproduction batch using new Device for Supplementary
 And device has "normal" status
-Then select loyalty plan period unit as Month[M]/Year[Y] - Y
-Then user notes down max loyalty points for plan
-And user notes down promotion plan details for PROMO2
+Then user has loyalty points details for Credit device
+Then select loyalty plan period unit as Month[M]/Year[Y] - M
+Then deactivate loyalty plan
 And user has loyalty points details for Credit device
-Then verify loyalty points are credited on issuance for promotion plan code PROMO1
 And user raises an authorization request
-Then calculate loyalty points
 Then status of request is "approved"
 And search Purchase authorization and verify Successful status
 And device has "normal" status
 Then user waits for 5 minutes
 And user sign out from customer portal
 
-Scenario:2 Verify loyalty points after manual auth
+Scenario:2 verify loyalty points are not accrued post transaction
 When user is logged in institution
 And pre-clearing and Loyalty Calc batches are run
-Then verify available loyalty points should be within loyalty plan limit
-And user verifies loyalty details for Credit device
+Then user verifies loyalty details for Credit device
 
-Scenario:3 Verify loyalty points after manual reversal of transaction
-Then user add transaction reversal with reason Manual Reversal [1]
-And pre-clearing and Loyalty Calc batches are run
-And user verifies loyalty details for Credit device
-And user sign out from customer portal

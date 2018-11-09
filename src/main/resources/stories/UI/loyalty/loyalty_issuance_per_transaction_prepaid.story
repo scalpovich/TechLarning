@@ -20,6 +20,7 @@ And Prepaid device is created using new device screen for Individual and Primary
 And Prepaid processes pre-production batch using new Device
 And Prepaid processes deviceproduction batch using new Device for Supplementary
 When user performs adjustment transaction
+Then select loyalty plan period unit as Month[M]/Year[Y] - Y
 Then user notes down max loyalty points for plan
 And user notes down promotion plan details for PROMO2
 And user has loyalty points details for Prepaid device
