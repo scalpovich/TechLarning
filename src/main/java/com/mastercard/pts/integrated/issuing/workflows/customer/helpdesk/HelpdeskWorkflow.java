@@ -266,4 +266,9 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.retailTransactionToLoan(helpdeskGeneral,loanPlan,transactionDetails);
 	}
 
+	public String raiseLoanCancellationRequest(LoanPlan loanPlan, Device device, HelpdeskGeneral helpdeskGeneral) {
+		return helpDeskPage.raiseLoanCancellationRequest(helpdeskGeneral,loanPlan,device);
+		
+	}
+
 }

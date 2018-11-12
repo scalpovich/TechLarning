@@ -361,7 +361,19 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.ID, valueToFind = "callReferenceNumber")
 	private MCWebElement callRefNumberLbl;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Account Number :']/../following-sibling::td[1]//span/select")
+	private MCWebElement selectLoanAccountNumberDdwn;
 	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Cancel Loan']")
+	private MCWebElement cancelLoanBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Cancellation Fee :']/../following-sibling::td[1]//span/input")
+	private MCWebElement txtCancellationFee;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Process']")
+	private MCWebElement processBtn;
+	
+	private String cancellationFee;
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
 		logger.info(WALLET_NUMBER, CharMatcher.DIGIT.retainFrom(walletNumber.getText()));
@@ -1604,9 +1616,42 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		
 		return loanDetails;
 	}
-	
-	
-	
-	
-	
+
+	public String raiseLoanCancellationRequest(HelpdeskGeneral helpdeskGeneral, LoanPlan loanPlan, Device device) {
+		selectServiceCode(helpdeskGeneral.getServiceCode());
+		clickGoButton();
+		runWithinPopup("243 - Loan Cancellation", ()->{	
+			selectLoanPlan(loanPlan.getLoanPlanDescription() + " " + "[" + loanPlan.getLoanPlanCode() + "]");
+			selectLoanAccountNumber(device.getLoanAccountNumber());
+			clickCancelLoanButton();
+			cancellationFee=processLoanCancel();
+			clickWhenClickable(processBtn);	
+			clickWhenClickable(cancelBtn);
+		});			
+
+		clickEndCall();	
+		return cancellationFee;
+	}
+
+	private String processLoanCancel() {
+		SimulatorUtilities.wait(500);
+		runWithinPopup("Process Loan Cancel", ()->{	
+			SimulatorUtilities.wait(500);
+			cancellationFee=txtCancellationFee.getText();
+			enterNote("Automation");
+			SimulatorUtilities.wait(3000);	
+			waitForElementVisible(okBtn);
+			elementToBeClickable(okBtn);
+			clickWhenClickable(okBtn);	
+		});	
+		return null;
+	}
+
+	private void clickCancelLoanButton() {
+		clickWhenClickable(cancelLoanBtn);
+	}
+
+	private void selectLoanAccountNumber(String loanAccountNumber) {
+		WebElementUtils.selectDropDownByVisibleText(selectLoanPlanDdwn, loanAccountNumber);
+	}
 }
