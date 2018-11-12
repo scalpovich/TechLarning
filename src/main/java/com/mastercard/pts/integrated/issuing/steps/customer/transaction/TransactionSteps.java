@@ -580,9 +580,9 @@ public class TransactionSteps {
 		context.put(ContextConstants.DEVICE, device);
 	}
 	
-	@Then("Reversal Transaction")
-	public void reverseTransaction(){
+	@Then("user perform reversal transaction of type $type")
+	public void reverseTransaction(String type){
 		String transaction = context.get(ConstantData.TRANSACTION_NAME);
-		transactionWorkflow.reverseTransaction(transaction,"17");
+		transactionWorkflow.reverseTransaction(transaction,type);
 	}
 }

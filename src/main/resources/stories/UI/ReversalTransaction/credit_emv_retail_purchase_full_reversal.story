@@ -37,4 +37,4 @@ And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: 1.4 Perform Reversal Transaction
-Then Reversal Transaction
+Then user perform reversal transaction of type 17 
