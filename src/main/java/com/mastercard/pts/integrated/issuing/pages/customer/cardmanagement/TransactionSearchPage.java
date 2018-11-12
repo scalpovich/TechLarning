@@ -83,12 +83,12 @@ public class TransactionSearchPage extends AbstractBasePage {
 	private MCWebElement joiningFees;
 
 	private String authorizationStatus;
+	
 	List<String> joiningAndMembershipFees = new ArrayList();
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Transaction Date']/ancestor::a")
 	private MCWebElement transactionDateOrderByLink;
-	
-	private String authorizationStatus;	
-	
+
 	public void selectFromDate(LocalDate date)
 	{
 		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(3);
