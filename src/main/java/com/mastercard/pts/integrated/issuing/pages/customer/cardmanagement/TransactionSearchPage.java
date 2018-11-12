@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -12,10 +15,12 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -79,10 +84,14 @@ public class TransactionSearchPage extends AbstractBasePage {
 
 	private String authorizationStatus;
 	List<String> joiningAndMembershipFees = new ArrayList();
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Transaction Date']/ancestor::a")
+	private MCWebElement transactionDateOrderByLink;
+	
+	private String authorizationStatus;	
 	
 	public void selectFromDate(LocalDate date)
 	{
-		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(1);
+		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(3);
 		WebElementUtils.pickDate(fromDateTxt, date);		
 	}
 	
@@ -201,4 +210,41 @@ public class TransactionSearchPage extends AbstractBasePage {
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(searchARNTxt));
 	}
+	public TransactionSearchDetails searchTransactionWithDeviceAndGetDetails(Device device, TransactionSearch ts) {
+		TransactionSearchDetails transactionDetails= new TransactionSearchDetails();
+		int i;
+		logger.info("Select product {}", device.getProductType());
+		WebElementUtils.selectDropDownByVisibleText(productTypeSelect, device.getProductType());
+		logger.info("Search transaction for device {}", device.getDeviceNumber());
+		WebElementUtils.enterText(searchDeviceTxt, device.getDeviceNumber());
+		selectFromDate(LocalDate.now());
+		selectToDate(LocalDate.now());
+		waitForWicket();
+		WebElementUtils.elementToBeClickable(tranDateDDwn);
+		WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, "Transaction Date [T]");
+		clickSearchButton();
+		SimulatorUtilities.wait(5000);
+		clickWhenClickable(transactionDateOrderByLink);	
+		SimulatorUtilities.wait(1000);
+		clickWhenClickable(transactionDateOrderByLink);	
+		SimulatorUtilities.wait(5000);
+		for (i = 1; i < 4; i++) {
+			if ("1".equals(getCellTextByColumnName(i, "Sequence Number")))
+				break;
+		}
+		
+		transactionDetails.setARN(getCellTextByColumnName(i, "ARN"));		
+		transactionDetails.setSequenceNumber(getCellTextByColumnName(i, "Sequence Number"));		
+		transactionDetails.setDeviceNumber(getCellTextByColumnName(i, "Device Number"));
+		transactionDetails.setTransaction(getCellTextByColumnName(i, "Transaction"));
+		transactionDetails.setTransactionDate(getCellTextByColumnName(i, "Transaction Date"));
+		transactionDetails.setProcessingDate(getCellTextByColumnName(i, "Processing Date"));
+		transactionDetails.setDescription(getCellTextByColumnName(i, "Description"));
+		transactionDetails.setBillingAmount(getCellTextByColumnName(i, "Billing Amount"));
+		transactionDetails.setBillingCurrency(getCellTextByColumnName(i, "Billing Currency"));
+		transactionDetails.setDR_CR(getCellTextByColumnName(i, "DR / CR"));
+		transactionDetails.setReversal(getCellTextByColumnName(i, "Reversal"));		
+		return transactionDetails;			
+	}
+
 }

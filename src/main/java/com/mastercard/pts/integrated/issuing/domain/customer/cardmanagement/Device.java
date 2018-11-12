@@ -43,6 +43,8 @@ public class Device {
 	private static final String CURRENCY_OF_TRANSFER = "CURRENCY_OF_TRANSFER";
 	private static final String JOINING_FEES = "JOINING_FEES";
 	private static final String MEMBERSHIP_FEES = "MEMBERSHIP_FEES";
+	private static final String LATE_PAYMENT_FEE = "LATE_PAYMENT_FEE";
+	private static final String INTEREST_ON_PURCHASE = "INTEREST_ON_PURCHASE";
 	
 	private String currencyofTransfer;
 	private String currentTransPassword;
@@ -107,6 +109,8 @@ public class Device {
   	private String walletCurrency;
  	private String category;
   	private String amountType;
+	private String interestOnPurcahse;
+	private String latePaymentFee;
   	private String updatedATCValue;
   	private static double deviceAmountUsage = 0.00;
   	private static double deviceVelocity = 0;
@@ -172,6 +176,12 @@ public class Device {
 		return device;
 	}
 
+	public static Device createProviderForLatePaymentAndInterestOnPurchase(KeyValueProvider provider,Device device){
+		device.setLatePaymentFee(provider.getString(LATE_PAYMENT_FEE));
+		device.setInterestOnPurcahse(provider.getString(INTEREST_ON_PURCHASE));
+		return device;
+	}
+	
 	public String getWalletCurrency() {
 		return walletCurrency;
 	}
@@ -700,6 +710,22 @@ public class Device {
 
 	public void setAmountType(String amountType) {
 		this.amountType = amountType;
+	}
+	
+	public String getLatePaymentFee() {
+		return latePaymentFee;
+	}
+
+	public void setLatePaymentFee(String latePaymentFee) {
+		this.latePaymentFee = latePaymentFee;
+	}
+
+	public String getInterestOnPurcahse() {
+		return interestOnPurcahse;
+	}
+
+	public void setInterestOnPurcahse(String interestOnPurcahse) {
+		this.interestOnPurcahse = interestOnPurcahse;
 	}
 	
 	public double getDeviceAmountUsage() {

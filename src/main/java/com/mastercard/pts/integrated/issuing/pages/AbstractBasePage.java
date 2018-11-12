@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.xerces.dom3.as.ASElementDeclaration;
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -111,9 +112,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private static final String EXCEPTION_MESSAGE = "Exception Message - {} ";
 	
 	public static final String INVALID_TRANSACTION_MESSAGE = "Invalid transaction type - ";
-	
+    
 	public static final String REFUND_SUCCESS = "Refund is successful";
 	
+    private static final String Device = null;
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
 
@@ -140,10 +142,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Cancel']")
 	private MCWebElement cancelBtn;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Reverse']")
 	private MCWebElement reverseBtn;
-
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Process Selected']")
 	private MCWebElement processSelectedBtn;
 
@@ -181,7 +183,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private MCWebElement paragraph;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[.//*[text()='Status :']]/following-sibling::td[1]")
-	private MCWebElement batchStatus;
+	protected MCWebElement batchStatus;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Create']")
 	private MCWebElement createBtn;
@@ -309,7 +311,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private static final int loopIterationToCheckBatchNumber=21;
 	
     @PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
-	private MCWebElement institutionDateTxt;
+	protected MCWebElement institutionDateTxt;
     
     int retryCounter =0;
 	
@@ -363,16 +365,16 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public void clickSubmitButton() {
 		clickWhenClickable(submitButton);
 	}
-	
+
+	public void clickConfirmButton() {
+		clickWhenClickable(confirmButton);
+	}
+
 	public void clickReverseButton(){
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		clickWhenClickable(reverseBtn);
 	}
 	
-	public void clickConfirmButton() {
-		clickWhenClickable(confirmButton);
-	}
-
 	protected void clickCancelButton() {
 		clickWhenClickable(cancelBtn);
 	}
@@ -489,8 +491,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	public String getCellTextByColumnName(int rowNumber, String columnName) {
-		String xpath = String.format("//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]/span", rowNumber, columnName);
-		SimulatorUtilities.wait(3000);
+		String xpath = String.format("//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]", rowNumber, columnName);
 		WebElement element = driver().findElement(By.xpath(xpath));
 		waitForElementVisible(element);
 		return element.getText().trim();
@@ -531,7 +532,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
 		logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
 	}
-	
+
 	public boolean verifyRefundMessage() {
 		WebElement refundMessage = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(REFUND_MESSAGE)));
 		String refundStatus = refundMessage.getText();
@@ -756,8 +757,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		context.put(CreditConstants.EXISTING_DEVICE_NUMBER, deviceNumberFetch.getText());
 		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
 		selectFirstRecord();
-		SimulatorUtilities.wait(10000);
-		clickProcessSelectedButton();
+		clickProcessSelectedButton();		
 	}	
 	
 	protected void waitAndSearchForRecordToExists() {
@@ -1254,27 +1254,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		ele.getSelect().selectByVisibleText(optionalVisibleText);
 	}
 
-	public void selectByVisibleText(MCWebElement ele, String optionName) {
-		try {
-			doSelectByVisibleText(ele, optionName);
-		waitForLoaderToDisappear();
-		waitForPageToLoad(driver());
-		} catch (StaleElementReferenceException e) {
-			doSelectByVisibleText(ele, optionName);
-	}
-		waitForPageToLoad(driver());
-	}
-
-	private void waitUntilSelectOptionsPopulated(MCWebElement ele) {
-		WebDriverWait wait = new WebDriverWait(driver(), 100);
-		wait.until(new ExpectedCondition<Boolean>() {
-			@Override
-			public Boolean apply(WebDriver driver) {
-				return ele.getSelect().getOptions().size() > 1;
-			}
-		});
-	}
-	
 	protected String verifyReportDownloaded(String reportName) {
 		StringBuffer path= new StringBuffer();
 		WebDriverWait wait = new WebDriverWait(driver(), TIMEOUT);
@@ -1294,6 +1273,27 @@ public abstract class AbstractBasePage extends AbstractPage {
 			}
 		});
 		return path.toString();
+	}
+	
+	public void selectByVisibleText(MCWebElement ele, String optionName) {
+		try {
+			doSelectByVisibleText(ele, optionName);
+		waitForLoaderToDisappear();
+		waitForPageToLoad(driver());
+		} catch (StaleElementReferenceException e) {
+			doSelectByVisibleText(ele, optionName);
+	}
+		waitForPageToLoad(driver());
+	}
+
+	private void waitUntilSelectOptionsPopulated(MCWebElement ele) {
+		WebDriverWait wait = new WebDriverWait(driver(), 100);
+		wait.until(new ExpectedCondition<Boolean>() {
+			@Override
+			public Boolean apply(WebDriver driver) {
+				return ele.getSelect().getOptions().size() > 1;
+			}
+		});
 	}
 
 	protected void selectByText(MCWebElement ele, String optionName) {
@@ -1475,7 +1475,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public void ClickButton(MCWebElement BtnName) {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		BtnName.click();
-		// addWicketAjaxListeners(getFinder().getWebDriver());
 	}
 
 	public void ClickCheckBox(MCWebElement optionChkBox, boolean value) {
@@ -1887,6 +1886,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		action.moveToElement(asWebElement(element), xOffset, yOffset).click().build().perform();
 	}
 	
+	
 	public void ifTextAvailableinTableThenDelete(MCWebElement tableHandle, String text) {
 		WebElement table = asWebElement(tableHandle);
 		List<WebElement> rowstable = table.findElements(By.tagName("tr"));
@@ -1970,5 +1970,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 				break;
 			}
 		}
-	}
+	}	
+	
 }

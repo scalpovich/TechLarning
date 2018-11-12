@@ -1,11 +1,13 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.springframework.stereotype.Component;
+
+import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 @Component
-public class LoanPlan {
+public class LoanPlan implements HasCodeAndDescription {
 	
 	private static final String LOAN_PLAN_CODE = "LOAN_PLAN_CODE";
 	private static final String LOAN_PLAN_DESCRIPTION = "LOAN_PLAN_DESCRIPTION";
@@ -15,12 +17,25 @@ public class LoanPlan {
 	private static final String MIN_NUM_LOAN_AMOUNT ="MIN_NUM_LOAN_AMOUNT";
 	private static final String MAX_NUMBER_OF_INSTALLMENT ="MAX_NUMBER_OF_INSTALLMENT";
 	private static final String MIN_NUMBER_OF_INSTALLMENT ="MIN_NUMBER_OF_INSTALLMENT";
+	private static final String DEFAULT_NUMBER_OF_INSTALLMENT ="DEFAULT_NUMBER_OF_INSTALLMENT";
+	private static final String MIN_EMI_AMOUNT ="MIN_EMI_AMOUNT";
+	private static final String DEFAULT_INTEREST_RATE ="DEFAULT_INTEREST_RATE";
 	private static final String MIN_INTEREST_RATE ="MIN_INTEREST_RATE";
 	private static final String MAX_INTEREST_RATE ="MAX_INTEREST_RATE";
 	private static final String MAX_MORATORIUM_PERIOD ="MAX_MORATORIUM_PERIOD";
 	private static final String PROCESSING_FIXED_FEE_AMOUNT ="PROCESSING_FIXED_FEE_AMOUNT";
-	private static final String PRE_CLOSURE_FIXED_FEE_AMOUNT ="PRE_CLOSURE_FIXED_FEE_AMOUNT";
+	private static final String PROCESSING__FEE_PERCENT_OF_LOAN_AMOUNT ="PROCESSING__FEE_PERCENT_OF_LOAN_AMOUNT";
+	private static final String MIN_PROCESSING_FEE ="MIN_PROCESSING_FEE";
+	private static final String MAX_PROCESSING_FEE ="MIN_PROCESSING_FEE";
 	private static final String CANCELLATION_FIXED_FEE_AMOUNT ="CANCELLATION_FIXED_FEE_AMOUNT";
+	private static final String CANCELLATION_FEE_PERCENT_OF_LOAN_AMOUNT ="CANCELLATION_FEE_PERCENT_OF_LOAN_AMOUNT";
+	private static final String MIN_CANCELLATION_FEE ="MIN_CANCELLATION_FEE";
+	private static final String MAX_CANCELLATION_FEE ="MIN_CANCELLATION_FEE";	
+	private static final String PRE_CLOSURE_FIXED_FEE_AMOUNT ="PRE_CLOSURE_FIXED_FEE_AMOUNT";
+	private static final String PRECLOSURE_FEE_APPLIED_ON ="PRECLOSURE_FEE_APPLIED_ON";
+	private static final String PRECLOSURE_FEE_PERCENT_OF_LOAN_AMOUNT ="PRECLOSURE_FEE_PERCENT_OF_LOAN_AMOUNT";
+	private static final String MIN_PRECLOSURE_FEE ="MIN_PRECLOSURE_FEE";
+	private static final String MAX_PRECLOSURE_FEE ="MAX_PRECLOSURE_FEE";	
 	private static final String PROGRAM_CODE = "PROGRAM_CODE";
 	private static final String PROGRAM_WALLET_PROMOTION_CODE ="PROGRAM_WALLET_PROMOTION_CODE";
 	private static final String LOAN_DESCRIPTION ="LOAN_DESCRIPTION";
@@ -38,18 +53,133 @@ public class LoanPlan {
 	private String numberOfConcurrentLoan  ;
 	private String minimumLoanAmount   ;
 	private String maximumLoanAmount  ;
+	private String defaultNumberOfInstallment  ;
+	private String minimumEMIAmount  ;
 	private String minimumNumberOfInstallment   ;
 	private String maximumNumberOfInstallment  ;
+	private String defaultInterestRate   ;
 	private String minimumInterestRate   ;
 	private String maximumInterestRate  ;
 	private String maximumMoratoriumPeriod;
 	private String processingFixedFeeAmount ;
-	private String preclosureFixedFeeAmount;
+	private String preclosureFeeAppliedOn;
+	private String processingFeePercentOfLoanAmount ;
+	private String minimumProcessingFee ;
+	private String maximumProcessingFee ;
 	private String cancellationFixedFeeAmount;
+	private String cancellationFeePercentOfLoanAmount;
+	private String minimumCancellationFee;
+	private String maximumCancellationFee;
+	private String preclosureFixedFeeAmount;
+	private String preclosureFeePercentOfAmount;
+	private String minimumPreclosureFee;
+	private String maximumPreclosureFee;
 	private String walletCode;
 	private String programCode;
 	private String loanDescription;
 	
+	public String getDefaultNumberOfInstallment() {
+		return defaultNumberOfInstallment;
+	}
+
+	public void setDefaultNumberOfInstallment(String defaultNumberOfInstallment) {
+		this.defaultNumberOfInstallment = defaultNumberOfInstallment;
+	}
+
+	public String getMinimumEMIAmount() {
+		return minimumEMIAmount;
+	}
+
+	public void setMinimumEMIAmount(String minimumEMIAmount) {
+		this.minimumEMIAmount = minimumEMIAmount;
+	}
+	public String getPreclosureFeeAppliedOn() {
+		return preclosureFeeAppliedOn;
+	}
+
+	public void setPreclosureFeeAppliedOn(String processingFixedFeeAppliedOn) {
+		this.preclosureFeeAppliedOn = processingFixedFeeAppliedOn;
+	}
+	
+	public String getDefaultInterestRate() {
+		return defaultInterestRate;
+	}
+
+	public void setDefaultInterestRate(String defaultInterestRate) {
+		this.defaultInterestRate = defaultInterestRate;
+	}
+
+	public String getProcessingFeePercentOfLoanAmount() {
+		return processingFeePercentOfLoanAmount;
+	}
+
+	public void setProcessingFeePercentOfLoanAmount(String processingFeePercentOfLoanAmount) {
+		this.processingFeePercentOfLoanAmount = processingFeePercentOfLoanAmount;
+	}
+
+	public String getMinimumProcessingFee() {
+		return minimumProcessingFee;
+	}
+
+	public void setMinimumProcessingFee(String minimumProcessingFee) {
+		this.minimumProcessingFee = minimumProcessingFee;
+	}
+
+	public String getMaximumProcessingFee() {
+		return maximumProcessingFee;
+	}
+
+	public void setMaximumProcessingFee(String maximumProcessingFee) {
+		this.maximumProcessingFee = maximumProcessingFee;
+	}
+
+	public String getCancellationFeePercentOfLoanAmount() {
+		return cancellationFeePercentOfLoanAmount;
+	}
+
+	public void setCancellationFeePercentOfLoanAmount(String cancellationFeePercentOfLoanAmount) {
+		this.cancellationFeePercentOfLoanAmount = cancellationFeePercentOfLoanAmount;
+	}
+
+	public String getMinimumCancellationFee() {
+		return minimumCancellationFee;
+	}
+
+	public void setMinimumCancellationFee(String minimumCancellationFee) {
+		this.minimumCancellationFee = minimumCancellationFee;
+	}
+
+	public String getMaximumCancellationFee() {
+		return maximumCancellationFee;
+	}
+
+	public void setMaximumCancellationFee(String maximumCancellationFee) {
+		this.maximumCancellationFee = maximumCancellationFee;
+	}
+
+	public String getPreclosureFeePercentOfAmount() {
+		return preclosureFeePercentOfAmount;
+	}
+
+	public void setPreclosureFeePercentOfAmount(String preclosureFeePercentOfAmount) {
+		this.preclosureFeePercentOfAmount = preclosureFeePercentOfAmount;
+	}
+
+	public String getMinimumPreclosureFee() {
+		return minimumPreclosureFee;
+	}
+
+	public void setMinimumPreclosureFee(String minimumPreclosureFee) {
+		this.minimumPreclosureFee = minimumPreclosureFee;
+	}
+
+	public String getMaximumPreclosureFee() {
+		return maximumPreclosureFee;
+	}
+
+	public void setMaximumPreclosureFee(String maximumPreclosureFee) {
+		this.maximumPreclosureFee = maximumPreclosureFee;
+	}
 	
 	public String getMaximumEligibleLoanFixedAmount() {
 		return maximumEligibleLoanFixedAmount;
@@ -257,18 +387,50 @@ public class LoanPlan {
 		loanPlan.setNumberOfConcurrentLoan(keyValueProvider.getString(NUMBER_OF_CURRENT_LOAN));
 		loanPlan.setMinimumLoanAmount(keyValueProvider.getString(MIN_NUM_LOAN_AMOUNT));
 		loanPlan.setMaximumLoanAmount(keyValueProvider.getString(MAX_NUM_LOAN_AMOUNT));
+		
+		loanPlan.setDefaultNumberOfInstallment(keyValueProvider.getString(DEFAULT_NUMBER_OF_INSTALLMENT));
+		loanPlan.setMinimumEMIAmount(keyValueProvider.getString(MIN_EMI_AMOUNT));
 		loanPlan.setMinimumNumberOfInstallment(keyValueProvider.getString(MIN_NUMBER_OF_INSTALLMENT));
 		loanPlan.setMaximumNumberOfInstallment(keyValueProvider.getString(MAX_NUMBER_OF_INSTALLMENT));
-		loanPlan.setMinimumInterestRate(keyValueProvider.getString(MIN_INTEREST_RATE));
-		loanPlan.setMaximumInterestRate(keyValueProvider.getString(MAX_INTEREST_RATE));
+		
 		loanPlan.setMaximumMoratoriumPeriod(keyValueProvider.getString(MAX_MORATORIUM_PERIOD));
-		loanPlan.setProcessingFixedFeeAmount(keyValueProvider.getString(PROCESSING_FIXED_FEE_AMOUNT));
-		loanPlan.setPreclosureFixedFeeAmount(keyValueProvider.getString(PRE_CLOSURE_FIXED_FEE_AMOUNT));
-		loanPlan.setCancellationFixedFeeAmount(keyValueProvider.getString(CANCELLATION_FIXED_FEE_AMOUNT));
 		loanPlan.setLoanDescription(keyValueProvider.getString(LOAN_DESCRIPTION));
 		loanPlan.setLoanType(keyValueProvider.getString(LOAN_TYPE));
 		loanPlan.setWalletCode(keyValueProvider.getString(WALLET_CODE));
+		
+		loanPlan.setDefaultInterestRate(keyValueProvider.getString(DEFAULT_INTEREST_RATE));
+		loanPlan.setMinimumInterestRate(keyValueProvider.getString(MIN_INTEREST_RATE));
+		loanPlan.setMaximumInterestRate(keyValueProvider.getString(MAX_INTEREST_RATE));
+		
+		loanPlan.setProcessingFixedFeeAmount(keyValueProvider.getString(PROCESSING_FIXED_FEE_AMOUNT));
+		loanPlan.setProcessingFeePercentOfLoanAmount(keyValueProvider.getString(PROCESSING__FEE_PERCENT_OF_LOAN_AMOUNT));
+		loanPlan.setMinimumProcessingFee(keyValueProvider.getString(MIN_PROCESSING_FEE));
+		loanPlan.setMaximumProcessingFee(keyValueProvider.getString(MAX_PROCESSING_FEE));
+		
+		loanPlan.setCancellationFixedFeeAmount(keyValueProvider.getString(CANCELLATION_FIXED_FEE_AMOUNT));
+		loanPlan.setCancellationFeePercentOfLoanAmount(keyValueProvider.getString(CANCELLATION_FEE_PERCENT_OF_LOAN_AMOUNT));
+		loanPlan.setMinimumCancellationFee(keyValueProvider.getString(MIN_CANCELLATION_FEE));
+		loanPlan.setMaximumCancellationFee(keyValueProvider.getString(MAX_CANCELLATION_FEE));
+		
+		loanPlan.setPreclosureFixedFeeAmount(keyValueProvider.getString(PRE_CLOSURE_FIXED_FEE_AMOUNT));
+		loanPlan.setPreclosureFeeAppliedOn(keyValueProvider.getString(PRECLOSURE_FEE_APPLIED_ON));
+		loanPlan.setPreclosureFeePercentOfAmount(keyValueProvider.getString(PRECLOSURE_FEE_PERCENT_OF_LOAN_AMOUNT));
+		loanPlan.setMinimumPreclosureFee(keyValueProvider.getString(MIN_PRECLOSURE_FEE));
+		loanPlan.setMaximumPreclosureFee(keyValueProvider.getString(MAX_PRECLOSURE_FEE));
+		
 		return loanPlan;
+	}
+
+	@Override
+	public String getCode() {
+		// TODO Auto-generated method stub
+		return loanPlanCode;
+	}
+
+	@Override
+	public String getDescription() {
+		// TODO Auto-generated method stub
+		return loanDescription;
 	}
 	
 }

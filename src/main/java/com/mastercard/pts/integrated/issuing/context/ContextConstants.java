@@ -81,7 +81,7 @@ public class ContextConstants {
 	public static final String PRIMARY_DEVICE_PLAN = "PRIMARY_DEVICE_PLAN";
 	
 	public static final String INSTITUTION_DATE = "INSTITUTION_DATE";
-	
+
 	public static final String STATEMENT_FROM_DATE = "FROM_DATE";
 	
 	public static final String STATEMENT_TO_DATE = "TO_DATE";
@@ -103,6 +103,8 @@ public class ContextConstants {
 	public static final String INTEREST = "Interest";
 	
 	public static final String LOAN_INTEREST = "Loan Interest";
+	
+	public static final String LOAN_INSTALLMENT_OUTSTANDING = "Loan Installment Outstanding";
 	
 	public static final String LOAN = "Loan";
 	
@@ -134,6 +136,18 @@ public class ContextConstants {
 	
 	public static final String LOAD_BALANCE_REQUEST = "LOAD_BALANCE_REQUEST";
 
+	public static final String LOAN_PLAN = "LOAN_PLAN";
+	
+	public static final String TRANSACTION_SEARCH_DETAILS = "TRANSACTION_SEARCH_DETAILS";
+	
+	public static final String LOAN_SACTION_DETAILS = "LOAN_SACTIONED_DETAILS";
+	
+	public static final String ZERO_LOAN_INSTALLMENT_OUTSTANDING = "0.00";
+	
+	public static final String LOAN_PROCESS_DATE = "LOAN_PROCESS_DATE";
+	
+	public static final String PROCESSED_BATCHES = "PROCESSED_BATCHES";
+	
 	private ContextConstants() {
 	}
 
