@@ -22,6 +22,5 @@ And user processes deviceGeneration batch for new Application for FileUpload
 And user searches for created application for fileUpload
 And credit processes pre-production batch using new Application for fileUpload in Bulk
 And All processes credit device production batch for fileUpload in Bulk
-And All processes credit pin production batch for fileUpload in Bulk
 And For fileUpload when user search for new application on search screen for credit and validates the status as NORMAL
 Then user logouts from customer portal
