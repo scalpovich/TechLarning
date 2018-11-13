@@ -25,6 +25,7 @@ Then user notes down max loyalty points for plan
 And user notes down promotion plan details for PROMO2
 And user has loyalty points details for Credit device
 Then verify loyalty points are credited on issuance for promotion plan code PROMO1
+Then select blocked MCG for loyalty as -
 And user raises an authorization request
 Then calculate loyalty points
 Then status of request is "approved"
@@ -38,8 +39,10 @@ When user is logged in institution
 And pre-clearing and Loyalty Calc batches are run
 Then verify available loyalty points should be within loyalty plan limit
 And user verifies loyalty details for Credit device
+And user sign out from customer portal
 
 Scenario:3 Verify loyalty points after manual reversal of transaction
+When user is logged in institution
 Then user add transaction reversal with reason Manual Reversal [1]
 And pre-clearing and Loyalty Calc batches are run
 And user verifies loyalty details for Credit device
