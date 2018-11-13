@@ -30,7 +30,7 @@ public class CashPaymentSteps {
 	@Autowired
 	private CreditCardPaymentWorkFlows creditPaymentFlow;
 
-	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
+	private static final Logger logger = LoggerFactory.getLogger(CashPaymentSteps.class);
 	
 	@When("user initiates cash payment")
 	@Then("user initiates cash payment")

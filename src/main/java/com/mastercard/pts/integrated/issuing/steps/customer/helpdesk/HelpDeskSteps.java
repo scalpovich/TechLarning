@@ -373,6 +373,7 @@ public class HelpDeskSteps {
 	}
 
 	@When("currency setup for $type device is done correctly and updated in wallet details tab")
+	@Then("currency setup for $type device is done correctly and updated in wallet details tab")
 	public void thenCurrencySetupForDeviceIsDoneCorrectlyAndUpdatedInWalletDetailsTab(String type) {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
@@ -574,6 +575,7 @@ public class HelpDeskSteps {
 	
 	@Given("user notes down available $type limit for card")
 	@When("user notes down available $type limit for card")
+	@Then("user notes down available $type limit for card")
 	public void whenUserNotesDownLimitThroughHelpDesk(String type) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.noteDownAvailableLimit(type));
@@ -906,7 +908,7 @@ public class HelpDeskSteps {
 			logger.info("No of diff between Txn date and institution date ->" + noOfDays);
 			Double interest = ((Double.valueOf(device.getTransactionAmount())
 					+ Double.valueOf(context.get(ConstantData.TOTAL_FEE_OF_BILLING)) * noOfDays
-							* Double.valueOf(device.getInterestOnPurcahse()))
+							* Double.valueOf(device.getInterestOnPurchase()))
 					/ 100) / DateUtils.noOfDaysInYear(context.get(ContextConstants.INSTITUTION_DATE));
 			logger.info("Interest Occured on unpaid1 ->" + interest);
 			interest = (interest * 100D) / 100D;
@@ -924,7 +926,7 @@ public class HelpDeskSteps {
 			transactionAmount = context.get(ContextConstants.MINIMUM_PAYMENT_DUE);
 			context.put(ConstantData.UNPAID2_AMOUNT, context.get(ContextConstants.MINIMUM_PAYMENT_DUE));
 		}else if(device.getCategory().equalsIgnoreCase("Loan Installment") ) {
-			LoanDetails loanDetails = context.get(ContextConstants.LOAN_SACTION_DETAILS);	
+			LoanDetails loanDetails = context.get(ContextConstants.LOAN_SANCTION_DETAILS);	
 			transactionAmount = loanDetails.getLoanEMI().replaceAll(",", "");
 			context.put(ConstantData.LOAN_INSTALLMENT_OUTSTANDING, transactionAmount);
 		}
@@ -1001,7 +1003,7 @@ public class HelpDeskSteps {
 		helpdeskGeneral.setServiceCode(serviceCode);
 		LoanPlan loanPlan = context.get(ContextConstants.LOAN_PLAN);			
 		TransactionSearchDetails transactionDetails = context.get(ContextConstants.TRANSACTION_SEARCH_DETAILS);
-		context.put(ContextConstants.LOAN_SACTION_DETAILS, helpdeskWorkflow.raiseRetailToLoanRequest(helpdeskGeneral,loanPlan,transactionDetails).get(0));
+		context.put(ContextConstants.LOAN_SANCTION_DETAILS, helpdeskWorkflow.raiseRetailToLoanRequest(helpdeskGeneral,loanPlan,transactionDetails).get(0));
 
 		
 	}

@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TransactionSearchDetails {
-	private String ARN;
+	private String arn;
 	private String sequenceNumber;
 	private String deviceNumber;
 	private String transaction;
@@ -17,10 +17,10 @@ public class TransactionSearchDetails {
 	private String Reversal;
 	
 	public String getARN() {
-		return ARN;
+		return arn;
 	}
-	public void setARN(String aRN) {
-		ARN = aRN;
+	public void setARN(String arn) {
+		arn = arn;
 	}
 	public String getSequenceNumber() {
 		return sequenceNumber;

@@ -138,7 +138,7 @@ public class ContextConstants {
 	
 	public static final String TRANSACTION_SEARCH_DETAILS = "TRANSACTION_SEARCH_DETAILS";
 	
-	public static final String LOAN_SACTION_DETAILS = "LOAN_SACTIONED_DETAILS";
+	public static final String LOAN_SANCTION_DETAILS = "LOAN_SANCTION_DETAILS";
 	
 	public static final String ZERO_LOAN_INSTALLMENT_OUTSTANDING = "0.00";
 	
