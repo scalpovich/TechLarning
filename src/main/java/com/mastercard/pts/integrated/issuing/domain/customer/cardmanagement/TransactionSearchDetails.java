@@ -13,14 +13,14 @@ public class TransactionSearchDetails {
 	private String description;
 	private String billingAmount;
 	private String billingCurrency;
-	private String DR_CR;
-	private String Reversal;
+	private String cr_dr;
+	private String reversal;
 	
 	public String getARN() {
 		return arn;
 	}
 	public void setARN(String arn) {
-		arn = arn;
+		this.arn = arn;
 	}
 	public String getSequenceNumber() {
 		return sequenceNumber;
@@ -71,16 +71,16 @@ public class TransactionSearchDetails {
 		this.billingCurrency = billingCurrency;
 	}
 	public String getDR_CR() {
-		return DR_CR;
+		return cr_dr;
 	}
 	public void setDR_CR(String dR_CR) {
-		DR_CR = dR_CR;
+		cr_dr = dR_CR;
 	}
 	public String getReversal() {
-		return Reversal;
+		return reversal;
 	}
 	public void setReversal(String reversal) {
-		Reversal = reversal;
+		this.reversal = reversal;
 	}
 	
 
