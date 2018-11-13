@@ -38,8 +38,10 @@ When user is logged in institution
 And pre-clearing and Loyalty Calc batches are run
 Then verify available loyalty points should be within loyalty plan limit
 And user verifies loyalty details for Prepaid device
+And user sign out from customer portal
 
 Scenario:3 Verify loyalty points after manual reversal of transaction
+When user is logged in institution
 Then user add transaction reversal with reason Manual Reversal [1]
 And pre-clearing and Loyalty Calc batches are run
 And user verifies loyalty details for Prepaid device
