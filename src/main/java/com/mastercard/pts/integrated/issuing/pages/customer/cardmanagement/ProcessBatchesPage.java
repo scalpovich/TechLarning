@@ -14,6 +14,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -495,12 +496,20 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	public void submitAndVerifyBatch() {
 		submitBtn.click();
-		statusBtn.click();
+		//statusBtn.click();
+		clickWhenClickable(statusBtn);
 		runWithinPopup("View Batch Details", () -> {
 			logger.info("Retrieving batch status");
 			waitForBatchStatus();
 			batchStatus = batchStatusTxt.getText();
+			jobID = processBatchjobIDTxt.getText();
+			try{
 			clickCloseButton();
+			}
+			catch(StaleElementReferenceException ex)
+			{
+				clickCloseButton();
+			}
 		});
 	}
 	
