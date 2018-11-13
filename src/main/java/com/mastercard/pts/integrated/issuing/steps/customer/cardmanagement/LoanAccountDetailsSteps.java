@@ -43,7 +43,7 @@ public class LoanAccountDetailsSteps extends AbstractBaseSteps {
 		for (Map<String, String> map : loanAccountDetails) {
 			if(map.get("Transaction Type").contains("Loan Installment"))
 			{
-				BigDecimal txnAmt = new BigDecimal(map.get(ConstantData.TRANSACTION_AMOUNT));
+				BigDecimal txnAmt = new BigDecimal(map.get(ConstantData.LOAN_TRANSACTION_AMOUNT));
 				BigDecimal PncpAmt = new BigDecimal(map.get(ConstantData.PRINCIPAL_AMOUNT));
 				BigDecimal intAmt = new BigDecimal(map.get(ConstantData.INTEREST_AMOUNT));
 				assertThat("EMI Amount Verified", txnAmt.toString(), equalTo(loanDetails.getLoanEMI().replaceAll(",", "")));
