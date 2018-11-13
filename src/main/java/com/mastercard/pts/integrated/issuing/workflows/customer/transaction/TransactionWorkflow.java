@@ -2138,10 +2138,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		case "2" :
 			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_019, midtidBlocking.getAcquiringCountryCode());
 			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
-			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_022_01, ConstantData.POS_TERMIAL_VALUE);
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_022_01, ConstantData.POS_TERMINAL_VALUE);
 			break;
 		case "3" :
-			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_022_01, ConstantData.POS_TERMIAL_VALUE);
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_022_01, ConstantData.POS_TERMINAL_VALUE);
 			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
 			break;
 		case "4": case "6" : 
