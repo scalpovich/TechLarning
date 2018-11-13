@@ -34,4 +34,5 @@ Scenario:2 verify loyalty points are not accrued post transaction
 When user is logged in institution
 And pre-clearing and Loyalty Calc batches are run
 Then user verifies loyalty details for Credit device
-
+Then activate loyalty plan
+And user sign out from customer portal

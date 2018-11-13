@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.InstitutionData;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DatabaseFlows;
 
@@ -43,5 +45,12 @@ public class DatabaseSteps {
 	public void addAdjustmentTransaction(String amount) {
 		Device device = context.get(ContextConstants.DEVICE);
 		dbFlow.addAdjustmentTransaction(device.getDeviceNumber(), context.get("USER_INSTITUTION_SELECTED"), amount);
+	}
+	
+	@Then("activate loyalty plan")
+	public void activateLoyaltyPlan() {
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+		String plan = data.getLoyaltyPlan();
+		dbFlow.activateLoyaltyPlan(plan.substring(plan.indexOf("[")+1, plan.indexOf("]")), context.get("USER_INSTITUTION_SELECTED"));
 	}
 }

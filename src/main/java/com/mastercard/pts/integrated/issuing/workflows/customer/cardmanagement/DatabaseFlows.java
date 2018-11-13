@@ -72,4 +72,9 @@ public class DatabaseFlows {
 		String queryString = "update wallet set balance='" + amnt + "' where bank_code='" + bankCode + "' and wallet_number=(select wallet_number from DEVICE_WALLET_LINK where device_number='" + deviceNo + "' and bank_code='" + bankCode + "')";
 		dbUtil.executeUpdate(queryString);
 	}
+	
+	public void activateLoyaltyPlan(String planCode, String bankCode) {
+		String queryString = "update LYT_PLAN_DEF set LYT_EXPIRY_FLG='A' where BANK_CODE='" + bankCode + "' and LYT_PLAN_CODE='" + planCode + "';";
+		dbUtil.executeUpdate(queryString);
+	}
 }
