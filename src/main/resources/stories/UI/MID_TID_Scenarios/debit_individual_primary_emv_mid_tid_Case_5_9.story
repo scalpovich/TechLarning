@@ -5,6 +5,7 @@ I want to perform Transaction
 
 Meta:
 @StoryName d_emv_corp
+@mid_tid_debit
 
 Scenario: 1.0 Set up program for debit EMV corporate debit card
 Given setting json values in excel for Debit
@@ -47,19 +48,19 @@ And user sign out from customer portal
 
 Scenario: 1.4 Verify Decline Code on Helpdesk Page
 Given user is logged in institution
-Then verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Debit
-And user sign out from customer portal
+When verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Debit
+Then user sign out from customer portal
 
 Scenario: 1.5 Delete Fifth Combination of MID_TID Blocking rule
 Given user is logged in institution
 When user deletes MID TID Blocking for Combination 5
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario: 1.6 Perform EMV_PURCHASE Authorization transaction
-When perform an EMV_PURCHASE MAS transaction on the same card
-Then MAS test results are verified
+Given perform an EMV_PURCHASE MAS transaction on the same card
+When MAS test results are verified
 And user is logged in institution
-And search Purchase authorization and verify 000-Successful status
+Then search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: 1.7 Create MID_TID Blocking Rule
@@ -77,19 +78,19 @@ And user sign out from customer portal
 
 Scenario: 1.9 Verify Decline Code on Helpdesk Page
 Given user is logged in institution
-Then verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Debit
-And user sign out from customer portal
+When verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Debit
+Then user sign out from customer portal
 
 Scenario: 2.0 Delete Seventh Combination of MID_TID Blocking rule
 Given user is logged in institution
 When user deletes MID TID Blocking for Combination 7
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario: 2.1 Perform EMV_PURCHASE Authorization transaction
-When perform an EMV_PURCHASE MAS transaction on the same card
-Then MAS test results are verified
+Given perform an EMV_PURCHASE MAS transaction on the same card
+When MAS test results are verified
 And user is logged in institution
-And search Purchase authorization and verify 000-Successful status
+Then search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: 2.2 Create MID_TID Blocking Rule
@@ -107,19 +108,19 @@ And user sign out from customer portal
 
 Scenario: 2.4 Verify Decline Code on Helpdesk Page
 Given user is logged in institution
-Then verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Debit
-And user sign out from customer portal
+When verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Debit
+Then user sign out from customer portal
 
 Scenario: 2.5 Delete Eight Combination of MID_TID Blocking rule
 Given user is logged in institution
 When user deletes MID TID Blocking for Combination 8
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario: 2.6 Perform EMV_PURCHASE Authorization transaction
-When perform an EMV_PURCHASE MAS transaction on the same card
-Then MAS test results are verified
+Given perform an EMV_PURCHASE MAS transaction on the same card
+When MAS test results are verified
 And user is logged in institution
-And search Purchase authorization and verify 000-Successful status
+Then search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: 2.7 Create MID_TID Blocking Rule
@@ -137,18 +138,18 @@ And user sign out from customer portal
 
 Scenario: 2.9 Verify Decline Code on Helpdesk Page
 Given user is logged in institution
-Then verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Debit
-And user sign out from customer portal
+When verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Debit
+Then user sign out from customer portal
 
 Scenario: 3.0 Delete Ninth Combination of MID_TID Blocking rule
 Given user is logged in institution
 When user deletes MID TID Blocking for Combination 9
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario: 3.1 Perform EMV_PURCHASE Authorization transaction
-When perform an EMV_PURCHASE MAS transaction on the same card
-Then MAS test results are verified
+Given perform an EMV_PURCHASE MAS transaction on the same card
+When MAS test results are verified
 And user is logged in institution
-And search Purchase authorization and verify 000-Successful status
+Then search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 And MAS simulator is closed

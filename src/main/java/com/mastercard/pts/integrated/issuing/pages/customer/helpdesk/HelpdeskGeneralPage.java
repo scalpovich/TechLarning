@@ -1389,35 +1389,45 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public String getDeclineCodeForTransaction(Device device, String rrnNumber){
-		List<String> lst = new ArrayList<String>();
 		logger.info("Fetching information for : {}", device.getDeviceNumber());
-		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
-		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
-		clickSearchButton();
+		searchByDeviceNumber(device);
 		SimulatorUtilities.wait(5000);
 		clickWhenClickable(editDeviceLink);
 		clickWhenClickable(btnAuthorization);
+		serachAuthorizationRecord(rrnNumber);
+		runWithinPopup(AUTHORIZATION, () -> {
+			Element("//span[contains(text(),'"+rrnNumber+"')]/..").click();
+		});
+		String getDeclineCode = getTransactionStatus();
+		runWithinPopup(AUTHORIZATION, () -> {
+			clickCloseButton();
+		});
+		SimulatorUtilities.wait(2000);
+		clickEndCall();
+		SimulatorUtilities.wait(2000);
+		return getDeclineCode;
+	}
 
+	private String getTransactionStatus() {
+		List<String> lst = new ArrayList<String>();
+		runWithinPopup(VIEW_AUTHORIZATION, () -> {
+			lst.add(getTextFromPage(labelDeclineReason));
+			clickCloseButton();
+		});
+		return lst.get(0);
+	}
+
+	/***
+	 * This method is used to search authorization record without closing view authorization frame
+	 * @param rrnNumber : RRN for  transaction
+	 * */
+	private void serachAuthorizationRecord(String rrnNumber) {
 		runWithinPopup(AUTHORIZATION, () -> {
 			WebElementUtils.pickDate(txtAuthorizationDateFrom, LocalDate.now());
 			WebElementUtils.pickDate(txtAuthorizationDateTo, LocalDate.now());
 			clickSearchButton();
 			SimulatorUtilities.wait(3000);
-			Element("//span[contains(text(),'"+rrnNumber+"')]/..").click();
+			//Element("//span[contains(text(),'"+rrnNumber+"')]/..").click();
 		});
-
-		runWithinPopup(VIEW_AUTHORIZATION, () -> {
-			lst.add(getTextFromPage(labelDeclineReason));
-			clickCloseButton();
-		});
-
-		runWithinPopup(AUTHORIZATION, () -> {
-			clickCloseButton();
-		});
-
-		SimulatorUtilities.wait(2000);
-		clickEndCall();
-		SimulatorUtilities.wait(2000);
-		return lst.get(0);
 	}
 }

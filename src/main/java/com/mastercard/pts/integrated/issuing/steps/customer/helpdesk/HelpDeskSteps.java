@@ -920,6 +920,7 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.compareBalancesAfterPayment(payment);
 	}
 	
+	@When("verify Decline code for Transaction $declineCode on helpdesk page for product $product")
 	@Then("verify Decline code for Transaction $declineCode on helpdesk page for product $product")
 	public void verifyDeclineCodeOnTransactiOnHelpdeskPage(String declineCode,String product){
 		Device device = context.get(ContextConstants.DEVICE);

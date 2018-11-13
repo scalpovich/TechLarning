@@ -5,6 +5,7 @@ I want to perform Transaction
 
 Meta:
 @StoryName d_emv_corp
+@mid_tid_debit
 
 Scenario: 1.0 Set up program for debit EMV corporate debit card
 Given setting json values in excel for Debit
@@ -47,19 +48,19 @@ And user sign out from customer portal
 
 Scenario: 1.5 Verify Decline Code on Helpdesk Page
 Given user is logged in institution
-Then verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Debit
-And user sign out from customer portal
+When verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Debit
+Then user sign out from customer portal
 
 Scenario: 1.6 Delete Tenth Combination of MID_TID Blocking rule
 Given user is logged in institution
 When user deletes MID TID Blocking for Combination 10
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario: 1.7 Perform EMV_PURCHASE Authorization transaction
-When perform an EMV_PURCHASE MAS transaction on the same card
-Then MAS test results are verified
+Given perform an EMV_PURCHASE MAS transaction on the same card
+When MAS test results are verified
 And user is logged in institution
-And search Purchase authorization and verify 000-Successful status
+Then search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: 1.8 Create MID_TID Blocking Rule
@@ -77,18 +78,18 @@ And user sign out from customer portal
 
 Scenario: 2.0 Verify Decline Code on Helpdesk Page
 Given user is logged in institution
-Then verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Debit
-And user sign out from customer portal
+When verify Decline code for Transaction MID-TID Blocked on helpdesk page for product Debit
+Then user sign out from customer portal
 
 Scenario: 2.1 Delete Eleventh Combination of MID_TID Blocking rule
 Given user is logged in institution
 When user deletes MID TID Blocking for Combination 11
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario: 2.2 Perform EMV_PURCHASE Authorization transaction
-When perform an EMV_PURCHASE MAS transaction on the same card
-Then MAS test results are verified
+Given perform an EMV_PURCHASE MAS transaction on the same card
+When MAS test results are verified
 And user is logged in institution
-And search Purchase authorization and verify 000-Successful status
+Then search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 And MAS simulator is closed
