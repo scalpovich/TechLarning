@@ -201,6 +201,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	private final String failStatus = "FAILED [3]";
 	
 	private final String successStatus = "SUCCESS [2]";
+	
+	private static final String  POST_MAINTENANCE_FEE_BATCH = "Post Maintence Fee Batch [POST_MAINTENANCE_FEE]";
 
 	public void selectBatchType(String option) {
 		selectByVisibleText(batchTypeDDwn, option);
@@ -427,6 +429,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		
 		else if("Billing Process - Credit".equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Billing Process - Credit [BILLING]"); 
+		
+		else if(POST_MAINTENANCE_FEE_BATCH.equalsIgnoreCase(batchName))
+			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Post Maintence Fee Batch [POST_MAINTENANCE_FEE]"); 
 	}
 
 	public String processDownloadBatch(ProcessBatches batch) {
@@ -681,7 +686,27 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		selectInternalBatchType(batch.getBatchName());
 		if(batch.getBatchName().equalsIgnoreCase("Pre-clearing"))
 			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-	
 	}
-	
+
+	public String processSystemInternalProcessingBatchPostMaintenance(ProcessBatches batch) {
+		logger.info("Process System Internal Processing Batch: {}", batch.getBatchName());
+		Date todayDate;
+		Date dateFromUI;
+		batchStatus = null;
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, "SYSTEM INTERNAL PROCESSING [B]");
+		SimulatorUtilities.wait(2000);
+		selectInternalBatchType(batch.getBatchName());
+		SimulatorUtilities.wait(2000);
+
+		try {
+			todayDate = dateFormatter.parse(dateFormatter.format(new Date()));
+			dateFromUI = getDateFromUI(dateFormatter, batch);
+		} catch (ParseException e) {
+			throw MiscUtils.propagate(e);
+		}
+
+		submitAndVerifyBatch();
+		return batchStatus;
+	}
 }

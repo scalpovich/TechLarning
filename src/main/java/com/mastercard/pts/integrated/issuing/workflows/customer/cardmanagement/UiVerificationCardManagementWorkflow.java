@@ -1021,4 +1021,19 @@ public class UiVerificationCardManagementWorkflow {
 		page.verifyUiOperationStatus();
 	}
 	
+	public void verifyLocalChequePage() {
+		LocalChequePage page = navigator.navigateToPage(LocalChequePage.class);
+		page.verifyUiOperationStatus();
+	}	
+	
+	public void verifyOutstationChequeProcessingPage() {
+		OutstationChequeProcessingPage page = navigator.navigateToPage(OutstationChequeProcessingPage.class);
+		page.verifyUiOperationStatus();
 	}
+	
+	public void verifyOutstationChequeCollectionPage() {
+		OutstationChequeCollectionPage page = navigator.navigateToPage(OutstationChequeCollectionPage.class);
+		page.verifyUiOperationStatus();
+	}
+	
+}

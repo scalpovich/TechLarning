@@ -1471,6 +1471,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
 		return page.searchTransactionWithDeviceAndGetStatus(device, ts);
 	}
+	public List<String> searchTransactionWithDeviceAndGetFees(Device device, TransactionSearch ts, Boolean membershipFlag) {
+		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
+		return page.searchTransactionWithDeviceAndGetJoiningAndMemberShipFees(device, ts, membershipFlag);
+	}
 
 	public TransactionSearchDetails searchTransactionWithDeviceAndGetDetails(Device device, TransactionSearch ts) {
 		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
