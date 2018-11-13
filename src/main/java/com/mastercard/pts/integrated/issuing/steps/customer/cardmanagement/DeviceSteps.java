@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ApplicationType;
@@ -48,6 +50,8 @@ public class DeviceSteps {
 	private static final String CREDIT_LIMIT_GREATER_THEN_MAXIMUM_EXP = "Entered Credit Limit is greater than Primary Card Credit Limit.";
 
 	private static final String CORPORATE_CLIENT_CODE_DEVICE2 = "CORPORATE_CLIENT_CODE_DEVICE2";
+	
+	private static final String PROMOTION_FEE_PLAN = "PROMOTION_FEE_PLAN";
 
 	@When("user creates new device of $type type for new client")
 	@Then("user creates new device of $type type for new client")
@@ -159,7 +163,11 @@ public class DeviceSteps {
 		device.setApplicationType(applicationType);
 		device.setSubApplicationType(subApplicationType);
 		device.setDeviceType1(deviceType);
-
+		
+		Map<String, Object> storyTestData = context.get(TestContext.KEY_STORY_DATA);
+		if (storyTestData.containsKey(PROMOTION_FEE_PLAN)) {
+			device.setPromotionPlanCode(provider.getString(PROMOTION_FEE_PLAN));
+		}
 		Program program = context.get(ContextConstants.PROGRAM);
 		device.setProgramCode(program.buildDescriptionAndCode());
 		

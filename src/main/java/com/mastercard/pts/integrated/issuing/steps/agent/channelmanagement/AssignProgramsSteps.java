@@ -102,8 +102,9 @@ public class AssignProgramsSteps {
 		assignProgramsWorkflow.assignProgramAgency(details);
 	}
 
-	@Then("program assigned to agency successfully")
 	@Given("program assigned to agency successfully")
+	@When("program assigned to agency successfully")
+	@Then("program assigned to agency successfully")
 	public void thenProgramAssignedToAgencySuccessfully() {
 		assertThat("Assigning Program to Agency Failed", assignProgramsWorkflow.getAgencyProgramAssignedMessage(),
 				containsString(PROGRAM_ASSIGNED_MESSAGE));
@@ -128,6 +129,7 @@ public class AssignProgramsSteps {
 		assignProgramsWorkflow.assignProgramBranch(details);
 	}
 
+	@When("program assigned to branch successfully")
 	@Then("program assigned to branch successfully")
 	public void thenProgramAssignedToBranchSuccessfully() {
 		assertThat("Assigning Program to Branch Failed", assignProgramsWorkflow.getBranchProgramAssignedMessage(),
@@ -152,7 +154,8 @@ public class AssignProgramsSteps {
 		details.setProgramCode(program.buildDescriptionAndCode());
 		assignProgramsWorkflow.assignProgramAgent(details);
 	}
-
+	
+	@When("program assigned to agent successfully")
 	@Then("program assigned to agent successfully")
 	public void thenProgramAssignedToAgentSuccessfully() {
 		assertThat("Assigning Program to Agent Failed", assignProgramsWorkflow.getAgentProgramAssignedMessage(),

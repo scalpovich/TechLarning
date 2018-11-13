@@ -41,6 +41,8 @@ public class Device {
 	private static final String CREDIT_LIMIT = "CREDIT_LIMIT";
 	private static final String TRANSACTION_PASSWORD = "TRANSACTION_PASSWORD";
 	private static final String CURRENCY_OF_TRANSFER = "CURRENCY_OF_TRANSFER";
+	private static final String JOINING_FEES = "JOINING_FEES";
+	private static final String MEMBERSHIP_FEES = "MEMBERSHIP_FEES";
 	
 	private String currencyofTransfer;
 	private String currentTransPassword;
@@ -110,6 +112,10 @@ public class Device {
   	private static double deviceAmountUsage = 0.00;
   	private static double deviceVelocity = 0;
   	private String dedupe;
+	private String joiningFees;
+	private String membershipFees;
+	private String promotionPlanCode;
+  	
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
 		device.setApplicationType(provider.getString(APPLICATION_TYPE));
@@ -727,5 +733,29 @@ public class Device {
 
 	public void setDedupe(String dedupe) {
 		this.dedupe = dedupe;
+	}
+	
+	public String getJoiningFees() {
+		return joiningFees;
+	}
+
+	public void setJoiningFees(String joiningFees) {
+		this.joiningFees = joiningFees;
+	}
+
+	public String getMembershipFees() {
+		return membershipFees;
+	}
+
+	public void setMemberShipFees(String membershipFees) {
+		this.membershipFees = membershipFees;
+	}
+
+	public String getPromotionPlanCode() {
+		return promotionPlanCode;
+	}
+
+	public void setPromotionPlanCode(String promotionPlanCode) {
+		this.promotionPlanCode = promotionPlanCode;
 	}
 }
