@@ -4,9 +4,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -25,9 +22,7 @@ import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_SEARCH, CardManagementNav.L2_TRANSACTION, CardManagementNav.L3_TRANSACTION_SEARCH })
@@ -86,7 +81,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 	private MCWebElement transactionDateOrderByLink;
 	
 	private String authorizationStatus;
-	private String authorizationStatus;	
+
 	List<String> joiningAndMembershipFees = new ArrayList();
 	
 	public void selectFromDate(LocalDate date)
