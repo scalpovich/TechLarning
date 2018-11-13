@@ -20,7 +20,7 @@ And Prepaid device is created using new device screen for Individual and Primary
 And Prepaid processes pre-production batch using new Device
 And Prepaid processes deviceproduction batch using new Device for Supplementary
 And device has "normal" status
-Then add adjustment transaction of 50000 at backend
+Then add adjustment transaction of 10000 at backend
 Then select blocked MCG for loyalty as MCG
 Then user notes down max loyalty points for plan
 And user notes down promotion plan details for PROMO2

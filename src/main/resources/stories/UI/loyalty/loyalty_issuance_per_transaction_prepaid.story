@@ -19,7 +19,7 @@ And for Primary Device and New Client user fills Device Range section for Prepai
 And Prepaid device is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
 And Prepaid processes pre-production batch using new Device
 And Prepaid processes deviceproduction batch using new Device for Supplementary
-When user performs adjustment transaction
+Then add adjustment transaction of 10000 at backend
 Then select loyalty plan period unit as Month[M]/Year[Y] - Y
 Then user notes down max loyalty points for plan
 And user notes down promotion plan details for PROMO2

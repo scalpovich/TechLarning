@@ -21,7 +21,7 @@ And prepaid device is created using new device screen for Individual and Primary
 And prepaid processes pre-production batch using new Device
 And prepaid processes deviceproduction batch using new Device for Supplementary
 And prepaid processes pingeneration batch using new Device for Supplementary
-When user performs adjustment transaction
+Then add adjustment transaction of 10000 at backend
 When user has current wallet balance amount information for prepaid device
 And device has "normal" status
 Then user sign out from customer portal
