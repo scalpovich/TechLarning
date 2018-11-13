@@ -23,5 +23,10 @@ public class DeviceDetailsFlows {
 		DeviceDetailsPage deviceDetailsPage = navigator.navigateToPage(DeviceDetailsPage.class);
 		deviceDetailsPage.retriveDeviceApplicationNumber();
 	}
+	
+	public void getClientCode() {
+		DeviceDetailsPage deviceDetailsPage = navigator.navigateToPage(DeviceDetailsPage.class);
+		Assert.assertFalse(deviceDetailsPage.getClientCode().isEmpty());
+	}
 
 }

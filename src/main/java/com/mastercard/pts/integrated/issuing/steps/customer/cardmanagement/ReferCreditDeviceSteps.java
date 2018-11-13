@@ -17,15 +17,16 @@ public class ReferCreditDeviceSteps {
 
 	@Autowired
 	ReferCreditApplicationFlows referCreditApplicationFlows;
-
+	
 	@Given("user refer the credit application device")
-	@Then("user refer the credit application device")
 	@When("user refer the credit application device")
+	@Then("user refer the credit application device")
 	public void referCreditDeviceAfterApplicaionCreation() {
 		referCreditApplicationFlows.referCreditApplication();
 	}
 
 	@When("user refer the credit application device for fileUpload")
+	@Then("user refer the credit application device for fileUpload")
 	public void referCreditDeviceAfterApplicaionCreationFileUpload() {
 		referCreditApplicationFlows.referCreditApplicationFileUpload();
 	}

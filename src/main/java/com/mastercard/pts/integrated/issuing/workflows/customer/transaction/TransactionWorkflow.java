@@ -112,6 +112,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private static final String RESULT_IDENTIFIER = "Refresh";
 	private static final String VISA_FAILURE_MESSAGE = "Visa Incomming Message for transaction did not come :: {}";
 	private static final String SIMULATOR_LICENSE_TYPE_17 = "17";
+	public static String STAGE_KEYS="00998 - Example ETEC1 - 0213";
 	private static final String SIMULATOR_LICENSE_TYPE_18 = "18";
 	private static final String REVERSAL="Reversal";
 	private static final String STIP="STIP";
@@ -1208,7 +1209,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void fillEmvChipKeySetDetails() {
 		if ("stagesa".equalsIgnoreCase(getEnv()))
-			selectMChipKeySet("00998 - Example ETEC1 - 0213");
+			selectMChipKeySet(STAGE_KEYS);
 		else if ("automation".equalsIgnoreCase(getEnv()) || "demo".equalsIgnoreCase(getEnv()))
 			if (SimulatorConstantsData.MAS_LICENSE_TYPE.contains("18") || SimulatorConstantsData.MAS_LICENSE_TYPE.contains("16"))
 				selectMChipKeySet("00999 - Example ETEC1 - 0213");
@@ -1469,6 +1470,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	public String searchTransactionWithDeviceAndGetStatus(Device device, TransactionSearch ts) {
 		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
 		return page.searchTransactionWithDeviceAndGetStatus(device, ts);
+	}
+	public List<String> searchTransactionWithDeviceAndGetFees(Device device, TransactionSearch ts, Boolean membershipFlag) {
+		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
+		return page.searchTransactionWithDeviceAndGetJoiningAndMemberShipFees(device, ts, membershipFlag);
 	}
 
 	public String getDecimalisationTableValue(String text) {

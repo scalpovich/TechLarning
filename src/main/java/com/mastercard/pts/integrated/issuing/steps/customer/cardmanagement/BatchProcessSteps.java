@@ -41,6 +41,7 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoadFromFileUploadWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ReportVerificationWorkflow;
@@ -161,14 +162,16 @@ public class BatchProcessSteps {
 	}
 	
 	@When("new Application processes pin generation batch for $type")
+	@Then("new Application processes pin generation batch for $type")
 	public void whenProcessesPinGenerationBatchUsingNewApplication(String type){
 		PinGenerationBatch batch = new PinGenerationBatch();
 		batch.setProductType(ProductType.fromShortName(type));
-		String batchNumber=context.get(CreditConstants.NEW_APPLICATION_BATCH);
+		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);
 		batch.setBatchNumber(batchNumber);
 		MiscUtils.reportToConsole("pin generation Batch: {}", batchNumber);
 		jobId = batchProcessWorkflow.processPinGenerationBatch(batch);
 		MiscUtils.reportToConsole("pin generation Job Id: {}", jobId);
+		SimulatorUtilities.wait(2000);
 	}
 	
 	@When("user processes pin generation batch for $type")	

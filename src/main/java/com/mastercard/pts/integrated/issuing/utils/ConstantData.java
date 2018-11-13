@@ -37,7 +37,6 @@ public class ConstantData {
 	public static final String POSTAL_CODE = "411006";
 	public static final String ARN_NUMBER = "ARN_NUMBER";
 	public static final String PROCESSING_INSTITUTION = "BNK [000000]";
-	public static final String POS_TERMIAL_VALUE = "05";
 
 	public static final String EXCEPTION = "Exception occurred :: {}";
 
@@ -88,6 +87,7 @@ public class ConstantData {
 	public static final String PIN_REQUIRED_FALSE = "false";
 	public static final String JSON_DATA_DRIVEN_EXECUTION = "dataDrivenExecution";
 	public static final String VIRTUAL_DEVICE_TYPE = "virtual";
+	public static final String RESPONSE_CODE_DESCRIPTION = "Capture";
 
 
 	public static final String INVALID_CVV = "123";	
@@ -136,12 +136,15 @@ public class ConstantData {
 	public static final String PRE_AUTH = "Pre-Auth Completion";
 	public static final String LIMIT_VALIDATION_PARAMETER = "Daily Velocity Utilized;Daily Amount Utilized;Periodic Velocity Utilized;Periodic Amount Utilized;Yearly Velocity Utilized;Yearly Amount Utilized";
 	
+	public static final String PDF_FORMAT = "PDF Format [pdf]";
+	public static final String DEVICE_ACTIVITY_REPORT_FILE_NAME = "Device Activity.pdf";
+	
 	public static final String DE_041 = "041";
 	public static final String DE_032 = "032";
 	public static final String DE_019 = "019";
 	public static final String DE_042 = "042";
 	public static final String DE_022_01 = "022.01";
-	
+	public static final String POS_TERMIAL_VALUE = "05";
 	
 	private ConstantData() {
 	}

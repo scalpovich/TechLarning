@@ -31,7 +31,7 @@ And processes pin generation batch for prepaid
 And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
-And device has "normal" status
+And device has "Not Activated" status
 And user activates device through helpdesk
 Then user sign out from customer portal
 

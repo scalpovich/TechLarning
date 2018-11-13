@@ -10,7 +10,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
+import org.junit.Assert;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -21,14 +22,17 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
 import com.google.common.base.CharMatcher;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -37,8 +41,8 @@ import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
+import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
-import com.mastercard.pts.integrated.issuing.domain.ProductType;
 @Component
 @Navigation(tabTitle = HelpdeskNav.TAB_HELPDESK, treeMenuItems = { HelpdeskNav.L1_ACTIVITY, HelpdeskNav.L2_GENERAL })
 public class HelpdeskGeneralPage extends AbstractBasePage {
@@ -68,7 +72,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final String PRIORITY_REQUEST = "Priority Request:";
 
 	private static String ERROR_MESSAGE = "This field is required.";
-
+	
 	public final String AUTHORIZATION = "Authorizations";
 	public final String VIEW_AUTHORIZATION = "View Authorizations";
 
@@ -85,6 +89,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
+	
+	@Autowired
+	TestContext context;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[text()='Product Type']/following-sibling::td[2]/select")
 	private MCWebElement productTypeSearchDDwn;
@@ -115,7 +122,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='udf4:input:inputTextField']")
 	private MCWebElement timeInHourTxt;
-
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Save']")
 	private MCWebElement saveBtn;
 
@@ -124,6 +131,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value = 'OK']")
 	private MCWebElement okBtn;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody a img")
+	private MCWebElement editDeviceLink;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value = 'Cancel']")
 	private MCWebElement cancelBtn;
@@ -232,74 +242,84 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Current Status and Limits']")
 	private MCWebElement currentStatusAndLimitTab;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@name='udf23:radioComponent' and @value='0']")
 	private MCWebElement eccomDeactivate;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@name='udf23:radioComponent' and @value='1']")
 	private MCWebElement eccomActivate;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Card :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement availCardCreditLimitLabel;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Card :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement cardCreditLimitLabel;
 
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//a[.='Current Status and Limits']")
+	private MCWebElement currentStatusLimits;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//div[@id='tab4']//table[1]//td//span[@class='labeltextr']")
+	private MCWebElements txtbxCreditLimitParamter;	
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//div[@id='tab4']//table[1]//td//span[@class='labeltextr']/preceding::span[1]")
+	private MCWebElements txtBxCreditLimitParamterLabels;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//td[contains(.,'Payment :')]/..//span[@class='labeltextr']")
+	private MCWebElements txtBxPaymentComponents;
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Account :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement availAccountCreditLimitLabel;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Account :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement accountCreditLimitLabel;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Client :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement clientCreditLimitLabel;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Client :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement availClientCreditLimitLabel;	
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='PDD :']/../../following-sibling::td[1]/span/span/span")
 	private MCWebElement paymentDueDateLabel;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='MAD :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement minimumAmountDueLabel;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='TAD :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement totalAmountDueLabel;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Closing Balance :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement closingBalanceLabel;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Interest :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement interestLabel;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement loanLabel;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Interest :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement loanInterestLabel;
-
-	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody a img")
-	private MCWebElement editDeviceLink;
-
+	
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
-
+	
 	private final String RESET_PIN_RETRY_COUNTER= "109 - Reset Pin Retry Counter";
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Balance Details']")
 	private MCWebElement balanceDetailsTab;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//th[text()='New Credit Limit']/../following-sibling::tr[1]/td[4]/input")
 	private MCWebElement creditClientLimitTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//th[text()='New Credit Limit']/../following-sibling::tr[2]/td[4]/input")
 	private MCWebElement creditAccountLimitTxt;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='newCreditLimit']")
 	private MCWebElement newCreditLimitTxt;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Type :']/../following-sibling::td[1]/select")
 	private MCWebElement selectLimitTypeDdwn;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Authorization']")
 	private MCWebElement btnAuthorization;
 
@@ -311,7 +331,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(text(),'Authorization Date From')]/..//td[7]//span")
 	private MCWebElement txtAuthorizationDateTo;
-
 
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
@@ -464,11 +483,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public void selectLimitType(String type) {
 		WebElementUtils.selectDropDownByVisibleText(selectLimitTypeDdwn, type);
 	}
-
+	
 	public void clickCurrentStatusAndLimitsTab(){
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(currentStatusAndLimitTab)).click();
 	}
-
+	
 	public void setActiveDeviceNumberByCardPackId(HelpdeskGeneral helpdeskGeneral, String registeredType) {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, helpdeskGeneral.getProductType());
 		WebElementUtils.enterText(cardPackIdTxt, helpdeskGeneral.getCardPackId());
@@ -511,7 +530,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			clickSearchButton();
 			firstRow = getFirstColumnValueFromTable();
 			clickCloseButton();
-
+			
 		});
 		clickEndCall();
 		return firstRow.isEmpty();
@@ -585,9 +604,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			WebElement activationType = driver().findElement(
 					By.xpath("//select[@name='udf2:input:dropdowncomponent']"));
 			WebElementUtils.retryUntilNoErrors(() -> new Select(operation)
-			.selectByValue("1"));
+					.selectByValue("1"));
 			WebElementUtils.retryUntilNoErrors(() -> new Select(activationType)
-			.selectByVisibleText(ConstantData.GENERIC_DESCRIPTION));
+					.selectByVisibleText(ConstantData.GENERIC_DESCRIPTION));
 			WebElementUtils.enterText(timeInHourTxt, "1");
 		} else {
 			SimulatorUtilities.wait(1000);
@@ -603,7 +622,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			WebElementUtils.enterText(timeInHourTxt, "1");
 		}
 	}
-
+	
 	public void setupInternationalAllowDisallowCheck(String status) {
 		selectServiceCode(ConstantData.INTERNATIONAL_ALLOW_DISALLOW);
 		clickGoButton();
@@ -619,7 +638,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(5000);
 		clickEndCall();
 	}
-
+	
 	public void setupEccomerceDisallowCheck(String status) {
 		selectServiceCode(ConstantData.ECCOMERCE_ALLOW_DISALLOW);
 		clickGoButton();
@@ -635,19 +654,19 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(5000);
 		clickEndCall();
 	}
-
+	
 	public void allowTransactionForOneHour(String status) {
 		if (status.equalsIgnoreCase(ConstantData.INTERNATIONAL_ALLOW_DISALLOW))
 		{
-			selectServiceCode(ConstantData.INTERNATIONAL_ALLOW_DISALLOW);
-			clickGoButton();
-			runWithinPopup("400 - International Use Allow/Disallow", () -> {
-				chooseOperationActivate(status);
-				enterNotes(ConstantData.GENERIC_DESCRIPTION);
-				clickSaveButton();
-				verifyOperationStatus();
-				clickOKButtonPopup();			
-			});
+		selectServiceCode(ConstantData.INTERNATIONAL_ALLOW_DISALLOW);
+		clickGoButton();
+		runWithinPopup("400 - International Use Allow/Disallow", () -> {
+			chooseOperationActivate(status);
+			enterNotes(ConstantData.GENERIC_DESCRIPTION);
+			clickSaveButton();
+			verifyOperationStatus();
+			clickOKButtonPopup();			
+		});
 		}
 		else
 		{
@@ -661,12 +680,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				clickOKButtonPopup();			
 			});
 		}
-
+	
 		//There is a delay in page rendering
 		SimulatorUtilities.wait(5000);
 		clickEndCall();
 	}
-
+	
 	public boolean verifyCurrencySetupDoneCorrectly(HelpdeskGeneral helpdeskGeneral, Device device) {
 		logger.info("verify added currecy for device number: {}", device.getDeviceNumber());
 		int count = 0;
@@ -1134,7 +1153,71 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 		return serviceStatus;
 	}
+	
+	public Map<String, String> checkCreditBalances(Device device) {
+		Map<String, String> balanceMapBeforePayments;
+		List<String> list;
+		logger.info("get Credit balances");
+		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getProductType());
+		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
+		clickSearchButton();
+		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
+		editDeviceLink.click();
+		clickCurrentStatusLimitTab();
+		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
+		balanceMapBeforePayments = getCreditLimitComponents();
+		clickBalanceDetailsTab();
+		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
+		list = getCreditCardBalance();
+		balanceMapBeforePayments.put("Unbilled̥̥Payments", list.get(1));
+		balanceMapBeforePayments.put("OutstandingPayments", list.get(2));
+		return balanceMapBeforePayments;
+	}
 
+	public void clickCurrentStatusLimitTab() {
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(currentStatusLimits)).click();
+	}
+
+	public Map<String, String> getCreditLimitComponents() {
+		Map<String, String> map = new HashMap<>();
+		for (int i = 0; i <= txtbxCreditLimitParamter.getElements().size() - 2; i += 2) {
+			map.put(txtBxCreditLimitParamterLabels.getElements().get(i).getText(), txtbxCreditLimitParamter.getElements().get(i).getText());
+		}
+		return map;
+	}
+
+	public void clickBalanceDetailsTab() {
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(balanceDetailsTab)).click();
+	}
+
+	public List<String> getCreditCardBalance() {
+		ArrayList<String> list = new ArrayList<>();
+		clickWhenClickableDoNotWaitForWicket(balanceDetailsTab);
+		for (MCWebElement element : txtBxPaymentComponents.getElements()) {
+			list.add(element.getText());
+		}
+		return list;
+	}
+
+	public void checkAndCompareBalancePostPayment(Payment payment) {
+		Map<String, String> mapA = context.get(ContextConstants.BALANCE_BEFORE_PAYMENT);
+		Map<String, String> mapB = context.get(ContextConstants.BALANCE_AFTER_PAYMENT);
+		if (mapA != null && mapB != null && mapA.size() == mapB.size()) {
+			for (Map.Entry m : mapA.entrySet()) {
+				String keyFromFirstMap = (String) m.getKey();
+				String valueFromFirstMap = (String) m.getValue();
+				String valueFromSecondMap = mapB.get(keyFromFirstMap);
+				if (keyFromFirstMap.equals("UnbllledPayments")) {
+					if (!valueFromSecondMap.equals((valueFromFirstMap + payment.getAmount()))) {
+						Assert.assertEquals("Payment has been done successfully", keyFromFirstMap + "::::" + valueFromSecondMap, keyFromFirstMap + "::::" + Integer.valueOf(valueFromFirstMap + 500));
+					}
+				}
+			}
+
+		}
+
+	}
+	
 	public boolean validateRequiredFields(HelpdeskGeneral general) {
 		logger.info("Validate required fields in change Registered Email ID Screen");
 
@@ -1164,7 +1247,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 		return creditLimit;
 	}
-
+	
 	public HashMap<String,BigDecimal> noteDownCreditLimit(String type) {
 		HashMap<String,BigDecimal> creditLimit=new HashMap<>();
 		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
@@ -1172,7 +1255,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		logger.info("Credit limit noted down : {} ", creditLimit);		
 		creditLimit.put(ConstantData.CLIENT_LIMIT,new BigDecimal(clientCreditLimitLabel.getText()));
 		creditLimit.put(ConstantData.AVAIL_CLIENT_LIMIT,new BigDecimal(availClientCreditLimitLabel.getText()));
-
+		
 		creditLimit.put(ConstantData.ACCOUNT_LIMIT,new BigDecimal(accountCreditLimitLabel.getText()));
 		creditLimit.put(ConstantData.AVAIL_ACCOUNT_LIMIT,new BigDecimal(availAccountCreditLimitLabel.getText()));
 
@@ -1181,7 +1264,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();		
 		return creditLimit;
 	}
-
+	
 	public void resetPinRetryCounter(HelpdeskGeneral helpdeskGeneral) {
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
@@ -1194,7 +1277,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(3000);
 		clickEndCall();
 	}
-
+	
 	public HashMap<String, String> noteDownRequiredValues(String deviceNumber) {
 		HashMap<String, String> helpDeskValues = new HashMap<>();		
 		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);		
@@ -1213,7 +1296,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 		return helpDeskValues;
 	}
-
+	
 	public String verifyBillingDetails(Device device){
 		List<String> lst = new ArrayList<String>();
 		SimulatorUtilities.wait(5000);
@@ -1238,7 +1321,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		}
 		return 0;
 	}
-
+	
 	public HashMap<String,BigDecimal> activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
 		logger.info("credit limit change request: {}",helpdeskGeneral.getCardPackId());
 		selectServiceCode(helpdeskGeneral.getServiceCode());
@@ -1248,11 +1331,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			return creditLimitChangeRequestIndividual(helpdeskGeneral,crediLimit);
 		else if(ProductType.CORPORATE.contains(helpdeskGeneral.getCustomerType()))
 			return creditLimitChangeRequestCorporate(helpdeskGeneral,crediLimit);
-
+		
 		return new HashMap<String,BigDecimal>();
 	}
-
-
+	
+	
 	public HashMap<String,BigDecimal> creditLimitChangeRequestCorporate(HelpdeskGeneral helpdeskGeneral,HashMap<String,BigDecimal> creditLimit){
 		runWithinPopup(ConstantData.CREDIT_LIMIT_CHANGE_COMMERCIAL_CARDS, ()->{
 			selectLimitType(helpdeskGeneral.getLimitType());
@@ -1269,14 +1352,14 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 		return creditLimit;
 	}
-
+	
 	public HashMap<String,BigDecimal> creditLimitChangeRequestIndividual(HelpdeskGeneral helpdeskGeneral,HashMap<String,BigDecimal> creditLimit){
 		runWithinPopup(ConstantData.CREDIT_LIMIT_CHANGE_REQUEST, ()->{
 			selectLimitType(helpdeskGeneral.getLimitType());			
 			enterClientCreditLimit(new BigDecimal(helpdeskGeneral.getClientCreditLimit()).stripTrailingZeros().toPlainString());
 			enterAccountCreditLimit(new BigDecimal(helpdeskGeneral.getAccountCreditLimit()).stripTrailingZeros().toPlainString());			
 			enterNewCreditLimit(new BigDecimal(helpdeskGeneral.getNewCreditLimit()).stripTrailingZeros().toPlainString());	
-
+			
 			if(helpdeskGeneral.getLimitType().equalsIgnoreCase(ConstantData.TEMPORARY_LIMIT))
 			{
 				WebElementUtils.pickDate(effectiveDateTxt, LocalDate.now());
@@ -1304,7 +1387,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 		return creditLimit;
 	}
-
+	
 	public String getDeclineCodeForTransaction(Device device, String rrnNumber){
 		List<String> lst = new ArrayList<String>();
 		logger.info("Fetching information for : {}", device.getDeviceNumber());
@@ -1337,5 +1420,4 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(2000);
 		return lst.get(0);
 	}
-
 }
