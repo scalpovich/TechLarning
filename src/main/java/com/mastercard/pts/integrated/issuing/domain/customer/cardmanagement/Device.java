@@ -109,7 +109,8 @@ public class Device {
   	private String walletCurrency;
  	private String category;
   	private String amountType;
-	private String interestOnPurcahse;
+  	private String exchangeRate;
+	private String interestOnPurchase;
 	private String latePaymentFee;
   	private String updatedATCValue;
   	private static double deviceAmountUsage = 0.00;
@@ -179,7 +180,7 @@ public class Device {
 
 	public static Device createProviderForLatePaymentAndInterestOnPurchase(KeyValueProvider provider,Device device){
 		device.setLatePaymentFee(provider.getString(LATE_PAYMENT_FEE));
-		device.setInterestOnPurcahse(provider.getString(INTEREST_ON_PURCHASE));
+		device.setInterestOnPurchase(provider.getString(INTEREST_ON_PURCHASE));
 		return device;
 	}
 	
@@ -712,6 +713,14 @@ public class Device {
 	public void setAmountType(String amountType) {
 		this.amountType = amountType;
 	}
+
+	public String getExchangeRate() {
+		return exchangeRate;
+	}
+
+	public void setExchangeRate(String exchangeRate) {
+		this.exchangeRate = exchangeRate;
+	}
 	
 	public String getLatePaymentFee() {
 		return latePaymentFee;
@@ -721,12 +730,12 @@ public class Device {
 		this.latePaymentFee = latePaymentFee;
 	}
 
-	public String getInterestOnPurcahse() {
-		return interestOnPurcahse;
+	public String getInterestOnPurchase() {
+		return interestOnPurchase;
 	}
 
-	public void setInterestOnPurcahse(String interestOnPurcahse) {
-		this.interestOnPurcahse = interestOnPurcahse;
+	public void setInterestOnPurchase(String interestOnPurchase) {
+		this.interestOnPurchase = interestOnPurchase;
 	}
 	
 	public double getDeviceAmountUsage() {
@@ -744,7 +753,7 @@ public class Device {
 	public void setDeviceVelocity() {
 		++deviceVelocity;
 	}
-
+	
 	public String getDedupe() {
 		return dedupe;
 	}

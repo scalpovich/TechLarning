@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.jayway.restassured.internal.http.ContentTypeExtractor;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
@@ -53,7 +52,6 @@ import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.Proce
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
-import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
@@ -373,6 +371,7 @@ public class HelpDeskSteps {
 	}
 
 	@When("currency setup for $type device is done correctly and updated in wallet details tab")
+	@Then("currency setup for $type device is done correctly and updated in wallet details tab")
 	public void thenCurrencySetupForDeviceIsDoneCorrectlyAndUpdatedInWalletDetailsTab(String type) {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
@@ -574,6 +573,7 @@ public class HelpDeskSteps {
 	
 	@Given("user notes down available $type limit for card")
 	@When("user notes down available $type limit for card")
+	@Then("user notes down available $type limit for card")
 	public void whenUserNotesDownLimitThroughHelpDesk(String type) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.noteDownAvailableLimit(type));
@@ -906,7 +906,7 @@ public class HelpDeskSteps {
 			logger.info("No of diff between Txn date and institution date ->" + noOfDays);
 			Double interest = ((Double.valueOf(device.getTransactionAmount())
 					+ Double.valueOf(context.get(ConstantData.TOTAL_FEE_OF_BILLING)) * noOfDays
-							* Double.valueOf(device.getInterestOnPurcahse()))
+							* Double.valueOf(device.getInterestOnPurchase()))
 					/ 100) / DateUtils.noOfDaysInYear(context.get(ContextConstants.INSTITUTION_DATE));
 			logger.info("Interest Occured on unpaid1 ->" + interest);
 			interest = (interest * 100D) / 100D;
@@ -924,7 +924,7 @@ public class HelpDeskSteps {
 			transactionAmount = context.get(ContextConstants.MINIMUM_PAYMENT_DUE);
 			context.put(ConstantData.UNPAID2_AMOUNT, context.get(ContextConstants.MINIMUM_PAYMENT_DUE));
 		}else if(device.getCategory().equalsIgnoreCase("Loan Installment") ) {
-			LoanDetails loanDetails = context.get(ContextConstants.LOAN_SACTION_DETAILS);	
+			LoanDetails loanDetails = context.get(ContextConstants.LOAN_SANCTION_DETAILS);	
 			transactionAmount = loanDetails.getLoanEMI().replaceAll(",", "");
 			context.put(ConstantData.LOAN_INSTALLMENT_OUTSTANDING, transactionAmount);
 		}
@@ -953,7 +953,7 @@ public class HelpDeskSteps {
 				equalTo(value));
 	}
 	
-	@Then("user raises $limittype credit limit change request for $customerType")
+
 	@Given("user raises $limittype credit limit change request for $customerType")
 	@When("user raises $limittype credit limit change request for $customerType")
 	public void userRaisesCreditLimitChangeRequestThroughHelpdesk(String limitType,String customerType) {
@@ -1034,4 +1034,13 @@ public class HelpDeskSteps {
 	
 	
 
+	
+	@When("verify Decline code for Transaction $declineCode on helpdesk page for product $product")
+	@Then("verify Decline code for Transaction $declineCode on helpdesk page for product $product")
+	public void verifyDeclineCodeOnTransactiOnHelpdeskPage(String declineCode,String product){
+		Device device = context.get(ContextConstants.DEVICE);
+		String rrnNumber = context.get(ConstantData.RRN_NUMBER);
+		device.setAppliedForProduct(ProductType.fromShortName(product));
+		assertThat("Verify Decline Code for Transaction", declineCode, equalTo(helpdeskWorkflow.getDeclineCode(device, rrnNumber)));
+	}
 }

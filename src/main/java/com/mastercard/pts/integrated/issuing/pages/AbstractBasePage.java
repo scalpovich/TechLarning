@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.xerces.dom3.as.ASElementDeclaration;
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -645,7 +644,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	// fetching any message that may appear in the Label Panel
-	protected String getMessageFromFeedbackPanel() {
+	public String getMessageFromFeedbackPanel() {
 		List<WebElement> messages = driver().findElements(By.cssSelector(".feedbackPanel li"));
 
 		if (messages.isEmpty()) {
@@ -1254,27 +1253,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		ele.getSelect().selectByVisibleText(optionalVisibleText);
 	}
 
-	protected String verifyReportDownloaded(String reportName) {
-		StringBuffer path= new StringBuffer();
-		WebDriverWait wait = new WebDriverWait(driver(), TIMEOUT);
-		wait.until(new ExpectedCondition<Boolean>() {
-			@Override
-			public Boolean apply(WebDriver driver) {
-				Boolean exists = false;
-				for (File file: new File(PDFUtils.getuserDownloadPath()).listFiles()) {
-				 if(file.isFile()&& file.getName().startsWith(reportName)&&FilenameUtils.getExtension(file.getName()).equalsIgnoreCase("pdf")){
-					exists = true;
-				    path.append(file.getAbsolutePath());
-				    logger.info("File Path:"+path.toString());
-					 break;
-				 }
-			}
-				return exists;
-			}
-		});
-		return path.toString();
-	}
-	
 	public void selectByVisibleText(MCWebElement ele, String optionName) {
 		try {
 			doSelectByVisibleText(ele, optionName);
@@ -1294,6 +1272,27 @@ public abstract class AbstractBasePage extends AbstractPage {
 				return ele.getSelect().getOptions().size() > 1;
 			}
 		});
+	}
+	
+	protected String verifyReportDownloaded(String reportName) {
+		StringBuffer path= new StringBuffer();
+		WebDriverWait wait = new WebDriverWait(driver(), TIMEOUT);
+		wait.until(new ExpectedCondition<Boolean>() {
+			@Override
+			public Boolean apply(WebDriver driver) {
+				Boolean exists = false;
+				for (File file: new File(PDFUtils.getuserDownloadPath()).listFiles()) {
+				 if(file.isFile()&& file.getName().startsWith(reportName)&&FilenameUtils.getExtension(file.getName()).equalsIgnoreCase("pdf")){
+					exists = true;
+				    path.append(file.getAbsolutePath());
+				    logger.info("File Path:"+path.toString());
+					 break;
+				 }
+			}
+				return exists;
+			}
+		});
+		return path.toString();
 	}
 
 	protected void selectByText(MCWebElement ele, String optionName) {

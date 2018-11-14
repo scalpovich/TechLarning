@@ -74,10 +74,13 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:billingCycleCode:input:dropdowncomponent")
 	private MCWebElement billingCycleCodeDDwn;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "whiteListedMcgCode:input:dropdowncomponent")
 	private MCWebElement editWhiteListedMCGDdwn;
-
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:mcgLimitPlan:input:dropdowncomponent")
+	private MCWebElement mcgLimitPlanDDwn;
+	
 	private int reservedAmount = 0; // MiscUtils.randomNumber(5);
 
 	public void inputWalletPlanCode(String walletPlanCodeString) {
@@ -143,6 +146,16 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	public void selectWhiteListMSG(String msgCode) {
 		WebElementUtils.selectDropDownByVisibleText(whiteListedMsg, msgCode);
 	}
+	
+	public void selectMCGLimitPlan(String mcgLimitPlan) {
+		if(mcgLimitPlan != null){
+		selectByVisibleText(mcgLimitPlanDDwn, mcgLimitPlan);
+		}
+		else{
+			logger.info("No MCG Limit plan to be attached");
+		}
+			
+	}
 
 	@Override
 	public void clickNextButton() {
@@ -169,19 +182,18 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			waitForPageToLoad(driver());
 			SimulatorUtilities.wait(2000);
 			selectProductType(productType);
-			SimulatorUtilities.wait(2000);
 			waitForPageToLoad(driver());
 			SimulatorUtilities.wait(2000);
 			selectProgramType(walletPlan.getProgramType());
 			waitForPageToLoad(driver());
 			SimulatorUtilities.wait(2000);
-			SimulatorUtilities.wait(3000);
 			selectCurrency(walletPlan.getCurrency());
 			waitForPageToLoad(driver());
-			SimulatorUtilities.wait(3000);
+			SimulatorUtilities.wait(2000);
 			selectUsage(walletPlan.getUsage());
 			waitForPageToLoad(driver());
-			SimulatorUtilities.wait(3000);
+			SimulatorUtilities.wait(2000);
+			selectMCGLimitPlan(walletPlan.getMcgLimitPlan());
 			waitForPageToLoad(driver());
 			fillDetailsBasedOnCardType(walletPlan, productType);
 			waitForPageToLoad(driver());
@@ -207,14 +219,14 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			SimulatorUtilities.wait(2000);
 			waitForPageToLoad(driver());
 			selectCurrency(walletPlan.getCurrency());
-			SimulatorUtilities.wait(3000);
+			SimulatorUtilities.wait(2000);
 			waitForPageToLoad(driver());
 			selectUsage(walletPlan.getUsage());
-			SimulatorUtilities.wait(3000);
-			selectCurrency(walletPlan.getCurrency());
+			SimulatorUtilities.wait(2000);
 			waitForPageToLoad(driver());
+			selectMCGLimitPlan(walletPlan.getMcgLimitPlan());
 			fillDetailsBasedOnCardType(walletPlan, productType);
-			SimulatorUtilities.wait(3000);
+			SimulatorUtilities.wait(2000);
 			clickNextButton(); // Click on next button
 				clickFinishButton(); // click on finish button
 			});
@@ -247,7 +259,7 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	public void setReservedAmount(int reservedAmount){
 		this.reservedAmount=reservedAmount; 
 	}
-	
+
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(walletPlanCodeSearchTxt));

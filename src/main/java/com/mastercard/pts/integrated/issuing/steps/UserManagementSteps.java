@@ -337,9 +337,9 @@ public class UserManagementSteps {
 	{
 		SimulatorUtilities.wait(1260000);
 	}
-	@When("user wait for $time to perform certain activity")
-	public void whenUserWaitForSomeMinutesToPerformCertainActivity(String time)
+	@When("user wait for $time min to perform certain activity")
+	public void whenUserWaitForSomeMinutesToPerformCertainActivity(int time)
 	{
-		SimulatorUtilities.wait(324000);
+		SimulatorUtilities.wait(time*60000);
 	}
 }

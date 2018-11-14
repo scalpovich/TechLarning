@@ -84,7 +84,7 @@ public class LoanAccountDetailsPage extends AbstractBasePage {
 			for(int i = 1; i <= getRowCountFromTable() ;i++){
 			Map <String,String> loanAccountDetails = new HashMap<>();
 			loanAccountDetails.put(ConstantData.TRANSACTION_TYPE,getCellTextByColumnName(i,ConstantData.TRANSACTION_TYPE));
-			loanAccountDetails.put(ConstantData.TRANSACTION_AMOUNT,getCellTextByColumnName(i,ConstantData.TRANSACTION_AMOUNT));
+			loanAccountDetails.put(ConstantData.LOAN_TRANSACTION_AMOUNT,getCellTextByColumnName(i,ConstantData.LOAN_TRANSACTION_AMOUNT));
 			loanAccountDetails.put(ConstantData.PRINCIPAL_AMOUNT,getCellTextByColumnName(i,ConstantData.PRINCIPAL_AMOUNT));
 			loanAccountDetails.put(ConstantData.INTEREST_AMOUNT,getCellTextByColumnName(i,ConstantData.INTEREST_AMOUNT));
 			loanAccountDetails.put(ConstantData.PROCESSING_DATE,getCellTextByColumnName(i,ConstantData.PROCESSING_DATE));

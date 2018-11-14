@@ -4,9 +4,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -25,9 +22,7 @@ import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_SEARCH, CardManagementNav.L2_TRANSACTION, CardManagementNav.L3_TRANSACTION_SEARCH })
@@ -82,12 +77,12 @@ public class TransactionSearchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/tbody/tr//span[contains(.,'FEE(Joining Fees)')]/../preceding-sibling::td[@class='rightalign']")
 	private MCWebElement joiningFees;
 
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Transaction Date']/ancestor::a")
+	private MCWebElement transactionDateOrderByLink;
+	
 	private String authorizationStatus;
 	
 	List<String> joiningAndMembershipFees = new ArrayList();
-	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Transaction Date']/ancestor::a")
-	private MCWebElement transactionDateOrderByLink;
 
 	public void selectFromDate(LocalDate date)
 	{

@@ -56,6 +56,7 @@ public class ConstantData {
 	public static final String AUTHORIZATION_REPORT_FILE_KEY = "Auto";
 	public static final String AUTHORIZATION_CODE = "authCode";
 	public static final String TRANSACTION_AMOUNT = "transactionAmount";
+	public static final String BILLING_AMOUNT = "billingAmount";
 	public static final String TRANSACTION_AMOUNT_BD = "transactionAmountbd";
 	public static final String INTERNATIONAL_ALLOW_DISALLOW = "International Use Allow/Disallow [400]";
 	public static final String ECCOMERCE_ALLOW_DISALLOW= "E-commerce Activation/Deactivation [304]";
@@ -153,6 +154,13 @@ public class ConstantData {
 	public static final String INTEREST_AMOUNT  = "Interest Amount" ;
 	public static final String PROCESSING_DATE  = "Processing Date" ;
 	public static final String DUE_DATE  = "Due Date" ;
+	
+	public static final String DE_041 = "041";
+	public static final String DE_032 = "032";
+	public static final String DE_019 = "019";
+	public static final String DE_042 = "042";
+	public static final String DE_022_01 = "022.01";
+	public static final String POS_TERMINAL_VALUE = "05";
 	
 	private ConstantData() {
 	}

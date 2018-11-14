@@ -24,7 +24,7 @@ public class LoanPlan implements HasCodeAndDescription {
 	private static final String MAX_INTEREST_RATE ="MAX_INTEREST_RATE";
 	private static final String MAX_MORATORIUM_PERIOD ="MAX_MORATORIUM_PERIOD";
 	private static final String PROCESSING_FIXED_FEE_AMOUNT ="PROCESSING_FIXED_FEE_AMOUNT";
-	private static final String PROCESSING__FEE_PERCENT_OF_LOAN_AMOUNT ="PROCESSING__FEE_PERCENT_OF_LOAN_AMOUNT";
+	private static final String PROCESSING_FEE_PERCENT_OF_LOAN_AMOUNT ="PROCESSING_FEE_PERCENT_OF_LOAN_AMOUNT";
 	private static final String MIN_PROCESSING_FEE ="MIN_PROCESSING_FEE";
 	private static final String MAX_PROCESSING_FEE ="MIN_PROCESSING_FEE";
 	private static final String CANCELLATION_FIXED_FEE_AMOUNT ="CANCELLATION_FIXED_FEE_AMOUNT";
@@ -403,7 +403,7 @@ public class LoanPlan implements HasCodeAndDescription {
 		loanPlan.setMaximumInterestRate(keyValueProvider.getString(MAX_INTEREST_RATE));
 		
 		loanPlan.setProcessingFixedFeeAmount(keyValueProvider.getString(PROCESSING_FIXED_FEE_AMOUNT));
-		loanPlan.setProcessingFeePercentOfLoanAmount(keyValueProvider.getString(PROCESSING__FEE_PERCENT_OF_LOAN_AMOUNT));
+		loanPlan.setProcessingFeePercentOfLoanAmount(keyValueProvider.getString(PROCESSING_FEE_PERCENT_OF_LOAN_AMOUNT));
 		loanPlan.setMinimumProcessingFee(keyValueProvider.getString(MIN_PROCESSING_FEE));
 		loanPlan.setMaximumProcessingFee(keyValueProvider.getString(MAX_PROCESSING_FEE));
 		
