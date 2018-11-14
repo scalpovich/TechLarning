@@ -23,7 +23,7 @@ public class DatabaseFlows {
 	@Autowired
 	private DBUtility dbUtil;	
 	
-	@Value("${institution}")
+	//@Value("${institution}")
 	private String institution;
 
 	private static int daysDifference;
