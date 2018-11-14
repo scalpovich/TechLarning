@@ -10,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 import java.awt.AWTException;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.Matcher;
@@ -36,6 +37,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MID_TID_Blocking;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.AuthorizationTransactionFactory;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ClearingTestCase;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ReversalTransaction;
@@ -642,6 +644,19 @@ public class TransactionSteps {
 		device.setPinNumberForTransaction(ConstantData.INVALID_PIN);
 		context.put(ContextConstants.DEVICE, device);
 	}
+	
+	@Given("set the transaction amount to $amount in program currency")
+	public void setTransactionAmountFromStep(String amount){
+		Device device = context.get(ContextConstants.DEVICE);
+		if(device.getExchangeRate()==null){
+			device.setTransactionAmount(Integer.toString((Integer.parseInt(amount)*100)));
+		}
+		else{
+			Double moderatedAmount = (Double.parseDouble(amount))/(Double.parseDouble(device.getExchangeRate()));
+			device.setTransactionAmount(Long.toString(Math.round(moderatedAmount*100.0)));
+		}
+		context.put(ContextConstants.DEVICE, device);
+	}
 
 	@Given("User set MID_TID flag $type and MID_TID Combination $type")
 	@When("User set MID_TID flag $type and MID_TID Combination $type")
@@ -673,4 +688,14 @@ public class TransactionSteps {
 		givenOptimizedTransactionIsExecuted(transaction);
 	}
 
+	@When("search transaction with device number on transaction search screen")
+	@Then("search transaction with device number on transaction search screen")
+	public void thenSearchWithDeviceInTransactionScreenAndVerify() {
+		TransactionSearch ts = TransactionSearch.getProviderData(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		TransactionSearchDetails transactionSearch = transactionWorkflow.searchTransactionWithDeviceAndGetDetails(device, ts);
+		Assert.assertTrue("Successfully transaction search",transactionSearch.getDeviceNumber().equalsIgnoreCase(device.getDeviceNumber()));
+		context.put(ContextConstants.TRANSACTION_SEARCH_DETAILS, transactionSearch);
+		context.put(ContextConstants.DEVICE, device);
+	}
 }
