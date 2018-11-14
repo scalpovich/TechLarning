@@ -73,11 +73,3 @@ public class DatabaseFlows {
 
 	}
 }
-
-		logger.info("Diffrence Days : " + daysDifference);
-		String queryString = "update system_codes set short_name='-" + daysDifference
-				+ "'  WHERE TYPE_ID = 'SYS_PARAM' AND code = 'BACK_DAY' AND bank_code = '" + getInstitutionCode() + "'";
-		dbUtil.executeUpdate(queryString);
-
-	}
-}
