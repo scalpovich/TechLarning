@@ -1023,7 +1023,7 @@ public class HelpDeskSteps {
 	public void userVerifiesLoanCancellationFee(){
 		LoanPlan loanPlan = context.get(ContextConstants.LOAN_PLAN);
 		String expectedFee = String.format("%.2f",
-				(Double.valueOf(loanPlan.getPreclosureFixedFeeAmount())
+				(Integer.parseInt(loanPlan.getPreclosureFixedFeeAmount())
 						+ Double.valueOf(loanPlan.getPreclosureFeePercentOfAmount())
 								* Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT)))
 						/ 100);
