@@ -118,6 +118,7 @@ public class Device {
 	private String joiningFees;
 	private String membershipFees;
 	private String promotionPlanCode;
+	private String loanAccountNumber;
   	
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
@@ -774,5 +775,13 @@ public class Device {
 
 	public void setPromotionPlanCode(String promotionPlanCode) {
 		this.promotionPlanCode = promotionPlanCode;
+	}
+
+	public String getLoanAccountNumber() {
+		return loanAccountNumber;
+	}
+
+	public void setLoanAccountNumber(String loanAccountNumber) {
+		this.loanAccountNumber = loanAccountNumber;
 	}
 }

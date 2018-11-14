@@ -49,6 +49,9 @@ public class LoanAccountDetailsPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=toDate]")
 	private MCWebElement toDate;	
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Loan Account Number')]/../../../../following::tbody/tr/td/span/a")
+	private MCWebElement loanAccNumber;
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Loan Account Details");
 		verifySearchButton("Search");
@@ -71,6 +74,8 @@ public class LoanAccountDetailsPage extends AbstractBasePage {
 	{
 		WebElementUtils.enterText(cardNumber, device.getDeviceNumber());
 		clickSearchButton();
+		logger.info("Loan Account Number : "+loanAccNumber.getText());
+		device.setLoanAccountNumber(loanAccNumber.getText());
 		viewFirstRecord();		
 		List<Map<String,String>> records = new ArrayList<Map<String, String>>();	
 		runWithinPopup("View Loan Details", () -> {

@@ -361,6 +361,19 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.ID, valueToFind = "callReferenceNumber")
 	private MCWebElement callRefNumberLbl;
 	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Process']")
+	private MCWebElement processBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Pre-Closure Fee :']/../following-sibling::td/input")
+	private MCWebElement preclosureFeeTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Pre-Close Loan']")
+	private MCWebElement preCloseLoanBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Account Number :']/../following-sibling::td[1]//span/select")
+	private MCWebElement selectLoanAccountNumberDdwn;
+	
+	private String preclosureFee;
 	
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
@@ -521,6 +534,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public void selectLoanPlan(String type) {
 		WebElementUtils.selectDropDownByVisibleText(selectLoanPlanDdwn, type);
 	}
+	
+	public void selectLoanAccountNumber(String type) {
+		WebElementUtils.selectDropDownByVisibleText(selectLoanAccountNumberDdwn, type);
+	}
+	
 	
 	public void clickCurrentStatusAndLimitsTab(){
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(currentStatusAndLimitTab)).click();
@@ -1609,6 +1627,35 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return loanDetails;
 	}
 	
+	public String raiseLoanPreclosureRequest(HelpdeskGeneral helpdeskGeneral, LoanPlan loanPlan, Device device) {
+		selectServiceCode(helpdeskGeneral.getServiceCode());
+		clickGoButton();
+		runWithinPopup("242 - Loan Preclosure", ()->{	
+			selectLoanPlan(loanPlan.getLoanPlanDescription() + " " + "[" + loanPlan.getLoanPlanCode() + "]");
+			selectLoanAccountNumber(device.getLoanAccountNumber());
+			clickWhenClickable(preCloseLoanBtn);	
+			preclosureFee=processLoanPreClosure();
+			clickWhenClickable(cancelBtn);
+		});			
+
+		clickEndCall();	
+		return preclosureFee;
+	}
+
+	private String processLoanPreClosure() {
+		SimulatorUtilities.wait(500);
+		runWithinPopup("Process Loan Pre-Closure", ()->{	
+			SimulatorUtilities.wait(500);
+			preclosureFee=preclosureFeeTxt.getAttribute("value");
+			enterNote("Automation");
+			SimulatorUtilities.wait(3000);	
+			clickWhenClickable(processBtn);	
+			waitForElementVisible(okBtn);
+			elementToBeClickable(okBtn);
+			clickWhenClickable(okBtn);	
+		});	
+		return preclosureFee;
+	}
 	
 	
 	

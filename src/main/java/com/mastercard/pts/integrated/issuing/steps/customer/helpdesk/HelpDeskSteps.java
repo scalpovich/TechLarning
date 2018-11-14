@@ -999,10 +999,14 @@ public class HelpDeskSteps {
 		helpdeskGeneral = HelpdeskGeneral.createWithProviderWithCreditCardLimits(provider);
 		helpdeskWorkflow.clickCustomerCareEditLink();		
 		helpdeskGeneral.setServiceCode(serviceCode);
+		Device device = context.get(ContextConstants.DEVICE);
 		LoanPlan loanPlan = context.get(ContextConstants.LOAN_PLAN);			
-		TransactionSearchDetails transactionDetails = context.get(ContextConstants.TRANSACTION_SEARCH_DETAILS);
-		context.put(ContextConstants.LOAN_SANCTION_DETAILS, helpdeskWorkflow.raiseRetailToLoanRequest(helpdeskGeneral,loanPlan,transactionDetails).get(0));
-
+		TransactionSearchDetails transactionDetails = context.get(ContextConstants.TRANSACTION_SEARCH_DETAILS);		
+		if (serviceCode.equalsIgnoreCase("Retail Transaction to Loan [215]")) {
+			context.put(ContextConstants.LOAN_SANCTION_DETAILS, helpdeskWorkflow.raiseRetailToLoanRequest(helpdeskGeneral,loanPlan,transactionDetails).get(0));
+		}else if(serviceCode.equalsIgnoreCase("Loan Preclosure [242]")){
+			context.put("Loan PreClosure Fee",helpdeskWorkflow.raiseLoanPreClosureRequest(helpdeskGeneral,loanPlan,device));			
+		}
 		
 	}
 	
@@ -1013,5 +1017,17 @@ public class HelpDeskSteps {
 		assertThat("Oustanding amount", helpDeskValues.get(oustandingOf),
 				equalTo(ContextConstants.ZERO_LOAN_INSTALLMENT_OUTSTANDING));
 	}
-
+	
+	@When("user verifies loan preclosure fee")
+	@Then("user verifies loan preclosure fee")
+	public void userVerifiesLoanCancellationFee(){
+		LoanPlan loanPlan = context.get(ContextConstants.LOAN_PLAN);
+		String expectedFee = String.format("%.2f",
+				(Double.valueOf(loanPlan.getPreclosureFixedFeeAmount())
+						+ Double.valueOf(loanPlan.getPreclosureFeePercentOfAmount())
+								* Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT)))
+						/ 100);
+		String actualFee = context.get("Loan PreClosure Fee");
+		assertThat("Loan Preclosure Fee is not same", actualFee, equalTo(expectedFee));
+	}
 }
