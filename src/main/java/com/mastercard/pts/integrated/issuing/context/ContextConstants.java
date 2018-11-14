@@ -21,6 +21,8 @@ public class ContextConstants {
 	public static final String WALLET = "WALLET";
 
 	public static final String MCG = "MCG";
+	
+	public static final String MCG_LIMIT_PLAN = "MCG_LIMIT_PLAN";
 
 	public static final String OPEN_WALLET = "OPEN WALLET";
 

@@ -10,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 import java.awt.AWTException;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.Matcher;
@@ -632,6 +633,19 @@ public class TransactionSteps {
 	public void userSetInvalidPin(){
 		Device device = context.get(ContextConstants.DEVICE);
 		device.setPinNumberForTransaction(ConstantData.INVALID_PIN);
+		context.put(ContextConstants.DEVICE, device);
+	}
+	
+	@Given("set the transaction amount to $amount in program currency")
+	public void setTransactionAmountFromStep(String amount){
+		Device device = context.get(ContextConstants.DEVICE);
+		if(device.getExchangeRate()==null){
+			device.setTransactionAmount(Integer.toString((Integer.parseInt(amount)*100)));
+		}
+		else{
+			Double moderatedAmount = (Double.parseDouble(amount))/(Double.parseDouble(device.getExchangeRate()));
+			device.setTransactionAmount(Long.toString(Math.round(moderatedAmount*100.0)));
+		}
 		context.put(ContextConstants.DEVICE, device);
 	}
 

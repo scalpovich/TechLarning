@@ -3,8 +3,10 @@ package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import com.mastercard.pts.integrated.issuing.steps.customer.transaction.TransactionSteps;
 
 import org.jbehave.core.annotations.Composite;
@@ -41,6 +43,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCCRulePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCG;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCGLimitPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MarketingMessageDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MarketingMessagePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PrepaidStatementPlan;
@@ -132,6 +135,8 @@ public class ProgramSetupSteps {
 	private PrepaidStatementPlan prepaidStatementPlan;
 	
 	private TransactionFeeWaiverPlan transactionFeeWaiverPlan;
+	
+	private MCGLimitPlan mcgLimitPlan;
 	
 	private static final String TRANSACTION_FEE_WAIVER_PLAN = "TRANSACTION_FEE_WAIVER_PLAN";
 
@@ -1031,6 +1036,7 @@ public class ProgramSetupSteps {
 	public void whenUserFillsWalletPlan(String type) {
 		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
 		walletPlan.setProductType(ProductType.fromShortName(type));
+		setMCGLimitPlan();
 		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			walletPlan.setCreditPlan(context.get(CreditConstants.CREDIT_PLAN));
 			walletPlan.setBillingCyleCode(context.get(CreditConstants.BILLING_CYCLE));
@@ -1045,6 +1051,7 @@ public class ProgramSetupSteps {
 		Map<String, Object> csvData = context.get(TestContext.KEY_STORY_DATA);
 		walletPlan.setProductType(ProductType.fromShortName(type));
 		walletPlan.setProgramType(programtype);
+		setMCGLimitPlan();
 		context.put(ContextConstants.WALLET, walletPlan);
 		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			if (Objects.nonNull(context.get(CreditConstants.CREDIT_PLAN))) {
@@ -1296,8 +1303,8 @@ public class ProgramSetupSteps {
 	@When("user fills Merchant Category Group")
 	public void fillsCreatesMCG() {
 		context.put(ContextConstants.MCG, mcg);
-		String msg = mcgflows.addNewMCG();
-		mcg.setMCG(msg);
+		mcg = MCG.getMCGDetails(provider);
+		mcgflows.addNewMCG(mcg);
 	}
 
 	@When("create wallet Plan for \"$type\" product and program \"$programtype\" with usage \"$usageType\"")
@@ -1668,6 +1675,18 @@ public class ProgramSetupSteps {
 	public void userAlreadyCreatedTransactionLimitPlan(String limitType){
 		transactionLimitPlan = TransactionLimitPlan.createWithProvider(dataProvider);
 		transactionLimitPlan.setTransactionLimitPlanCode(provider.getString(limitType));
+	}
+	
+	public void setMCGLimitPlan(){
+		if (context.get(ContextConstants.MCG_LIMIT_PLAN) != null) {
+			mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
+			walletPlan.setMcgLimitPlan(mcgLimitPlan.getMcgLimitPlanCode());
+		} else {
+			mcgLimitPlan =  MCGLimitPlan.getMCGLimitPlanData(provider);
+            mcgLimitPlan.setMcgLimitPlanCode(walletPlan.getMcgLimitPlan());
+            mcgLimitPlan.setMcgCode(walletPlan.getMCG());
+            context.put(ContextConstants.MCG_LIMIT_PLAN, mcgLimitPlan);
+		}
 	}
 
 
