@@ -33,6 +33,7 @@ Scenario:1.3 Retail Credit card authorization and Pre-clearing & EOD-Credit and 
 Given user is logged in institution
 When user raises an authorization request
 Then status of request is "approved"
+And search Purchase authorization and verify 000-Successful status
 When user sign out from customer portal
 When user wait for 7 min to perform certain activity
 And user is logged in institution
