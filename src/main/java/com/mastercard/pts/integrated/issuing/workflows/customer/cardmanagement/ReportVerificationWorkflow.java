@@ -7,12 +7,10 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.codoid.products.exception.FilloException;
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
@@ -26,9 +24,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.Repor
 import com.mastercard.pts.integrated.issuing.pages.customer.loyalty.LoyaltyPointsPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
-import com.mastercard.pts.integrated.issuing.utils.ExcelUtils;
 import com.mastercard.pts.integrated.issuing.utils.PDFUtils;
-import com.mastercard.pts.integrated.issuing.utils.ZipUnzipUtils;
 
 @Workflow
 public class ReportVerificationWorkflow {
