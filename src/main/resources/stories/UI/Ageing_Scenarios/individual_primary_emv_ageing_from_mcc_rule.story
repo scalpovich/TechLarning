@@ -49,7 +49,7 @@ Then user sign out from customer portal
 Scenario:1.4 Login & Logout to wait for date to be updated 
 Meta:
 @TestId 
-When update institution date to four days
+When update institution date to 4 days
 Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
