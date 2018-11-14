@@ -35,18 +35,18 @@ Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
-And FINSim simulator is closed
+Then FINSim simulator is closed
 
 Scenario:1.3 Perform EMV_PURCHASE Authorization transaction and Generate Auth File for Clearing
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
-Then MAS test results are verified
-When Auth file is generated after transaction
+And MAS test results are verified
+And Auth file is generated after transaction
 And MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
-When user verifies available balance after transaction
-Then verify fixed transaction fee applied on purchase transaction
+Then user verifies available balance after transaction
+And verify fixed transaction fee applied on purchase transaction
 And device has "normal" status
 When user verifies available Card limit for card after transaction
 Then user sign out from customer portal
@@ -54,13 +54,13 @@ Then user sign out from customer portal
 Scenario:1.4 Login & Logout to wait for date to be updated 
 Meta:
 @TestId 
-When update institution date to 4 days
-Given user is logged in institution
-When user sign out from customer portal
-And user is logged in institution
+Given update institution date to 4 days
+When user is logged in institution
 And user sign out from customer portal
 And user is logged in institution
 And user sign out from customer portal
+And user is logged in institution
+Then user sign out from customer portal
 
 Scenario:1.5 Run Ageing Batch and verify reconciliation status
 Given user is logged in institution
@@ -76,7 +76,7 @@ Given connection to MCPS is established
 When Auth file is generated
 And Auth file is loaded into MCPS and processed
 And NOT file is successfully generated
-When MCPS simulator is closed
+Then MCPS simulator is closed
 
 Scenario:1.7 Upload ipm file from customer portal and process it
 Meta:
