@@ -1024,7 +1024,7 @@ public class HelpDeskSteps {
 		LoanPlan loanPlan = context.get(ContextConstants.LOAN_PLAN);
 		String expectedFee = String.format("%.2f",
 				(Integer.parseInt(loanPlan.getPreclosureFixedFeeAmount())
-						+ Double.valueOf(loanPlan.getPreclosureFeePercentOfAmount())
+						+ Integer.parseInt(loanPlan.getPreclosureFeePercentOfAmount())
 								* Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT)))
 						/ 100);
 		String actualFee = context.get("Loan PreClosure Fee");
