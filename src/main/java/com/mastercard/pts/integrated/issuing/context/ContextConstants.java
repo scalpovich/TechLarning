@@ -137,6 +137,8 @@ public class ContextConstants {
 	public static final String BALANCE_AFTER_PAYMENT = "BALANCE_AFTER_PAYMENT";
 	
 	public static final String LOAD_BALANCE_REQUEST = "LOAD_BALANCE_REQUEST";
+	
+	public static final String MID_TID_BLOCKING = "MID_TID_BLOCKING";
 
 	public static final String LOAN_PLAN = "LOAN_PLAN";
 	

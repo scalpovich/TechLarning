@@ -1013,5 +1013,13 @@ public class HelpDeskSteps {
 		assertThat("Oustanding amount", helpDeskValues.get(oustandingOf),
 				equalTo(ContextConstants.ZERO_LOAN_INSTALLMENT_OUTSTANDING));
 	}
-
+	
+	@When("verify Decline code for Transaction $declineCode on helpdesk page for product $product")
+	@Then("verify Decline code for Transaction $declineCode on helpdesk page for product $product")
+	public void verifyDeclineCodeOnTransactiOnHelpdeskPage(String declineCode,String product){
+		Device device = context.get(ContextConstants.DEVICE);
+		String rrnNumber = context.get(ConstantData.RRN_NUMBER);
+		device.setAppliedForProduct(ProductType.fromShortName(product));
+		assertThat("Verify Decline Code for Transaction", declineCode, equalTo(helpdeskWorkflow.getDeclineCode(device, rrnNumber)));
+	}
 }

@@ -265,5 +265,8 @@ public class HelpdeskWorkflow {
 	public List<LoanDetails> raiseRetailToLoanRequest(HelpdeskGeneral helpdeskGeneral,LoanPlan loanPlan,TransactionSearchDetails transactionDetails){
 		return helpDeskPage.retailTransactionToLoan(helpdeskGeneral,loanPlan,transactionDetails);
 	}
-
+	public String getDeclineCode(Device device, String rrnNumber){
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		return helpDeskPage.getDeclineCodeForTransaction(device, rrnNumber);
+	}
 }

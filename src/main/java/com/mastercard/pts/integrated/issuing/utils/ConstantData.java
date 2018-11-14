@@ -155,6 +155,13 @@ public class ConstantData {
 	public static final String PROCESSING_DATE  = "Processing Date" ;
 	public static final String DUE_DATE  = "Due Date" ;
 	
+	public static final String DE_041 = "041";
+	public static final String DE_032 = "032";
+	public static final String DE_019 = "019";
+	public static final String DE_042 = "042";
+	public static final String DE_022_01 = "022.01";
+	public static final String POS_TERMINAL_VALUE = "05";
+	
 	private ConstantData() {
 	}
 
