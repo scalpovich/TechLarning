@@ -7,7 +7,7 @@ public class AuthorizationRequest {
 
 	private static final String CURRENCY = "CURRENCY";
 
-	private static final String MCC_CODE = "MCC_CODE";
+	private static final String MCC_CODE = "CODE_MCC";
 	
 	public static final String TRANSACTION_AMOUNT = "TRANSACTION_AMOUNT";
 	
