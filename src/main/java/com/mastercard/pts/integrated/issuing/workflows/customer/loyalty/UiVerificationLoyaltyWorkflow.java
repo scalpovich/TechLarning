@@ -3,7 +3,6 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.loyalty;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
-import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.LoyaltyPromotionMapping;
 import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.PromotionPlan;
 import com.mastercard.pts.integrated.issuing.pages.customer.loyalty.EventBasedLoyaltyPointsPage;
@@ -23,9 +22,6 @@ public class UiVerificationLoyaltyWorkflow {
 
 	@Autowired
 	private Navigator navigator;
-	
-	@Autowired
-	private TestContext context;
 	
 	public void verifyEventBasedLoyaltyPointsPage() {
 		EventBasedLoyaltyPointsPage page = navigator.navigateToPage(EventBasedLoyaltyPointsPage.class);
@@ -117,4 +113,5 @@ public class UiVerificationLoyaltyWorkflow {
 		page.searchByPlanCode(plan.substring(plan.indexOf("[")+1, plan.indexOf("]")));
 		page.selectBlockedMCG(value);
 	}
+
 }

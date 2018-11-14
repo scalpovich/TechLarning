@@ -13,6 +13,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -344,5 +345,12 @@ public class DateUtils {
 	
 	public static LocalDate convertInstitutionCurrentDateInLocalDateFormat(String institutionDate){
 		return LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+	}
+
+	public String getDateDDMMFormat(String currentDate) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
+		LocalDateTime dateTime = LocalDateTime.parse(currentDate, formatter);
+		DateTimeFormatter formatterddMM = DateTimeFormatter.ofPattern("ddMM");
+		return dateTime.format(formatterddMM);
 	}
 }

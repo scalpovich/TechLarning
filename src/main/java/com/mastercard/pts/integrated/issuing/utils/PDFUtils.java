@@ -168,7 +168,10 @@ public class PDFUtils {
 					pdfFileInText = tStripper.getText(pd);
 					row = pdfFileInText.split("(<EOL>)+");
 					for (int j = 0; j < row.length; j = j + 2) {
-						if (!row[j].contains("Opening Balance"))
+						if(genericReports.getLoyaltyPromotionPlan() != null && row[j].startsWith(genericReports.getLoyaltyPromotionPlan())) {
+							map.put(Constants.AVAILABLE_LOYALTY_POINTS, row[j + 2]);
+							return map;
+						} else if (!row[j].contains("Opening Balance"))
 							map.put(row[j], row[j + 1]);
 						else
 							map = resolvePDFLine(map, row[j], row[j + 1]);

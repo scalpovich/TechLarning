@@ -142,13 +142,6 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 		});
 	}
 	
-	public void enableLoyaltyPlan() {
-		runWithinPopup(EDIT_LOYALTY_PLAN, () -> {
-			WebElementUtils.selectRadioBtn(radioBtnActive);
-			saveOrDetailsOrSearchClick();
-		});
-	}
-	
 	public void selectPeriodUnitByIndex(String value) {
 		runWithinPopup(EDIT_LOYALTY_PLAN, () -> {
 			WebElementUtils.selectDropDownByValue(periodUnitDDwn, value);
