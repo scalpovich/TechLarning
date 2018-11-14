@@ -17,7 +17,7 @@ public class MID_TID_Blocking {
 	private final static String MCC_CODE_VALUE = "MCC_CODE_VALUE";
 	private final static String ACQUIRING_COUNTRY_CODE = "ACQUIRING_COUNTRY_CODE";
 	private final static String ACQUIRER_ID = "ACQUIRER_ID";
-	private final static String TRANSACTION_CURRENCY = "TRANSACTION_CURRENCY";
+	private final static String TRANSACTION_CURRENCY_MIDTID = "TRANSACTION_CURRENCY_MIDTID";
 	private final static String CARD_HOLDER_PRESENCE_INDICATOR = "CARD_HOLDER_PRESENCE_INDICATOR";
 	private final static String CARD_PRESENCE_INDICATOR = "CARD_PRESENCE_INDICATOR";
 	private final static String POS_ENTRY_MODE = "POS_ENTRY_MODE";
@@ -44,7 +44,7 @@ public class MID_TID_Blocking {
 		plan.setMcc(provider.getString(MCC_CODE_VALUE));
 		plan.setAcquiringCountryCode(provider.getString(ACQUIRING_COUNTRY_CODE));
 		plan.setAcquirerID(provider.getString(ACQUIRER_ID));
-		plan.setTransactionCurrency(provider.getString(TRANSACTION_CURRENCY));
+		plan.setTransactionCurrency(provider.getString(TRANSACTION_CURRENCY_MIDTID));
 		plan.setCardholderPresenceIndicator(provider.getString(CARD_HOLDER_PRESENCE_INDICATOR));
 		plan.setCardPresenceIndicator(provider.getString(CARD_PRESENCE_INDICATOR));
 		plan.setPosEntryMode(provider.getString(POS_ENTRY_MODE));

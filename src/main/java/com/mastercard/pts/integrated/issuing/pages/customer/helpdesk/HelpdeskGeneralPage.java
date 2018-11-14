@@ -1427,7 +1427,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			WebElementUtils.pickDate(txtAuthorizationDateTo, LocalDate.now());
 			clickSearchButton();
 			SimulatorUtilities.wait(3000);
-			//Element("//span[contains(text(),'"+rrnNumber+"')]/..").click();
 		});
 	}
 }
