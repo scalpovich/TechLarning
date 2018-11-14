@@ -1024,10 +1024,10 @@ public class HelpDeskSteps {
 	public void userVerifiesLoanCancellationFee(){
 		LoanPlan loanPlan = context.get(ContextConstants.LOAN_PLAN);
 		String expectedFee = String.format("%.2f",
-				(Double.valueOf(loanPlan.getCancellationFixedFeeAmount())
+				(Integer.parseInt(loanPlan.getCancellationFixedFeeAmount())
 						+ Double.valueOf(loanPlan.getCancellationFeePercentOfLoanAmount())
 								* Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT)))
-						/ 100);
+						/ 100); 
 		String actualFee = context.get("Loan Cancellation Fee");
 		assertThat("Loan Cancellation Fee is not same", actualFee, equalTo(expectedFee));
 	}
