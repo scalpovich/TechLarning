@@ -32,7 +32,7 @@ Given user is logged in institution
 When user raises an authorization request
 Then status of request is "approved"
 When user sign out from customer portal
-When user wait for seven minutes to perform certain activity
+When user wait for 7 min to perform certain activity
 And user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
