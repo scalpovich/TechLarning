@@ -20,6 +20,7 @@ public class DatabaseSteps {
 	private TestContext context;
 	
 	@When("update institution date to first of next month")
+	@Given("update institution date to first of next month")
 	public void updateInstituteDate(){
 			dbFlow.updateInstituteDateToFirstOfNextMonth(context.get(ContextConstants.INSTITUTION_DATE));
 	}
@@ -34,6 +35,7 @@ public class DatabaseSteps {
 	
 	@Given("update institution date to $noOfDays days")
 	@When("update institution date to $noOfDays days")
+	@Then("update institution date to $noOfDays days")
 	public void updateInstitutionDateToNextDay(String noOfDays)
 	{
 		dbFlow.updateInstituteDateToGivenDays(context.get(ContextConstants.INSTITUTION_DATE),noOfDays);

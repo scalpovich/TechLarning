@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ProductType;
@@ -86,7 +89,9 @@ public class ReconciliationSteps {
 		ProcessBatches batch = new ProcessBatches();
 		batch.setProductType(ProductType.fromShortName(productType));
 		batch.setBatchName(batchName);
-		reconciliationWorkFlow.runCreditBillingBatch(batch);
+		ProcessBatches batches = reconciliationWorkFlow.runCreditBillingBatch(batch);
+		assertEquals("SUCCESS [2]", batches.getStatus());
+		context.put(ContextConstants.PROCESSED_BATCHES, batches);
 	}
 	
 	@When("user run $batchName system internal batch")

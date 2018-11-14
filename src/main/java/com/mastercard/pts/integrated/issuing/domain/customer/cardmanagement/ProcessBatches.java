@@ -20,9 +20,7 @@ public class ProcessBatches {
 	private String extractType;
 	private String methodToGenerateFile;
 	private LocalDate businessDate;
-
-	
-	
+	private String status;
 
 	private static final String BATCH_TYPE = "UPLOAD [U]";
 	
@@ -137,6 +135,14 @@ public class ProcessBatches {
 	
 	public LocalDate getBusinessDate() {
 		return businessDate;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }
