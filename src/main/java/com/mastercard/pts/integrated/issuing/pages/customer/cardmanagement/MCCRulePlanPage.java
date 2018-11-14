@@ -9,7 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCCRulePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -50,7 +52,10 @@ public class MCCRulePlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=selectAllInt]")
 	private MCWebElement selectAllIntCheckBox;
 	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=presentmentTimeLimit]")
+	private MCWebElement txtPresentmentTimeLimit;
 	
+	public static int clearPresentment=0;
 	public void verifyUiOperationStatus() {
 		logger.info("MCC Rule");
 		verifySearchButton("Search");
@@ -109,6 +114,31 @@ public class MCCRulePlanPage extends AbstractBasePage {
 			clickWhenClickable(selectAllIntCheckBox);
 		else
 			clickWhenClickable(selectAllDomCheckBox);
+	}
+
+	public void editMCCRulePlan(DevicePlan device, Program program) {
+		logger.info("Edit MCC Rule Plan {}", program.getMccRulePlan().substring(12, 21));
+		WebElementUtils.enterText(planCodeSearchTxt, program.getMccRulePlan().substring(12, 21));
+		clickSearchButton();
+		editFirstRecord();
+		runWithinPopup("Edit MCC Rule Plan", () -> {
+			SimulatorUtilities.wait(1500);
+			WebElementUtils.elementToBeClickable(fromMccCodeTxt);
+			WebElementUtils.enterText(fromMccCodeTxt, device.getMerchantCode());
+			SimulatorUtilities.wait(100);
+			WebElementUtils.enterText(toMccCodeTxt,  device.getMerchantCode());
+			clickSearchButton();
+			waitForPageToLoad(driver());
+          	SimulatorUtilities.wait(4000);
+          	txtPresentmentTimeLimit.clearField();
+			if (clearPresentment == 0) {
+				enterValueinTextBox(txtPresentmentTimeLimit, device.getTransSetPresentmentTimeLimit());
+			}
+			clickSaveButton();
+			SimulatorUtilities.wait(4000);
+		});
+		verifyOperationStatus();
+		clearPresentment++;
 	}
 	
 

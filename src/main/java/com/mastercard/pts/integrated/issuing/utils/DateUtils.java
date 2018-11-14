@@ -338,4 +338,12 @@ public class DateUtils {
 		return (int) (ChronoUnit.DAYS.between(localDate, monthLastDate) + 1);
 	}	
 	
+	public static int getNextDate(String institutionDate) {
+		LocalDate localDate = LocalDate.now();
+		logger.info("localDate date : {}", localDate);
+		LocalDate convertedDate = LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
+		logger.info("Coverted Institution date : {} ", convertedDate);
+		logger.info("Diffrence Days : {}", ChronoUnit.DAYS.between(localDate, convertedDate));
+		return (int) (ChronoUnit.DAYS.between(localDate, convertedDate));
+	}
 }

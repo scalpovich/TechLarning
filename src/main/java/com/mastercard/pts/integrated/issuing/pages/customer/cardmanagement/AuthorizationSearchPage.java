@@ -19,6 +19,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Avai
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -96,8 +97,11 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	
 	private String amountTypes = "Billing Amount:Transaction Fee:Service Tax:Markup Fee:Markup Service Tax";
 	
-	private BigDecimal availableBalanceAfterReversal;
+	@PageElement(findBy=FindBy.X_PATH, valueToFind = "//td/span[contains(text(),'Reconcilation Status')]/following::tr[1]/td[2]/span/span")
+	private MCWebElement txtReconcilationStatus;
 	
+	private BigDecimal availableBalanceAfterReversal;
+	private String reconcilationStatus;
 	public void verifyUiOperationStatus() {
 		logger.info("Authorization Search");
 		verifySearchButton("Search");
@@ -214,5 +218,23 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 		});
 		return availableBalanceAfterReversal;
 	}
-
+	public String verifyReconciliationStatus(String deviceNumber) {
+		inputDeviceNumber(deviceNumber);
+		LocalDate date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(4);
+		WebElementUtils.pickDate(fromDate, date);
+		SimulatorUtilities.wait(500);
+		WebElementUtils.pickDate(toDate, date);
+		waitAndSearchForRecordToAppear();
+		viewDeviceDetails();
+		SimulatorUtilities.wait(500);
+		runWithinPopup("View Authorization", () -> {
+			SimulatorUtilities.wait(1000);
+			logger.info("reconcilationStatus->"+txtReconcilationStatus.getText());
+			reconcilationStatus=txtReconcilationStatus.getText();
+			SimulatorUtilities.wait(500);
+			clickCloseButton();
+		});
+		SimulatorUtilities.wait(500);
+		return reconcilationStatus;
+	}
 }

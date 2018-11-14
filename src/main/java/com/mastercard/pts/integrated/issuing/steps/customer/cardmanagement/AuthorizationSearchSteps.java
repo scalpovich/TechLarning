@@ -180,4 +180,11 @@ public class AuthorizationSearchSteps {
 		assertThat(INCORRECT_BALANCE_AFTER_REVERSAL, authorizationSearchWorkflow.noteDownAvailableBalanceAfterReversal(device.getDeviceNumber()),
 				equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
 	}
+	
+	@When("user verifies reconciliation status $status in auth search")
+	public void userVerifyReconciliationStatus(String status){
+		Device device = context.get(ContextConstants.DEVICE);
+		assertThat("Reconciliation Status Doesnot match with Authoraization Report content",
+				authorizationSearchWorkflow.verifyReconciliationStatus(device),equalTo(status));
+	}
 }
