@@ -53,7 +53,6 @@ And user sign out from customer portal
 
 Scenario:1.5 Raise Loan SR and Verify Loan Account Details then update institution date to 1st of next month
 Given user is logged in institution
-When device has "normal" status
 When user raises Loan request from loan approval screen
 When user verifies loan account details
 When user processes Pre-clearing system internal batch for Credit
