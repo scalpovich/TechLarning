@@ -1,7 +1,7 @@
 Narrative:
-In order to a create a Credit Device under customer portal cardmanagement tab
+In order to check ageing functionality
 As a user
-I want to age the trx and verify the status in transaction details
+I want to age the transaction by editing presentment time limit in Network Membership plan and verify the status in transaction details
 
 Meta:
 @CreditRegression
@@ -47,8 +47,6 @@ When user verifies available Card limit for card after transaction
 Then user sign out from customer portal
 
 Scenario:1.4 Login & Logout to wait for date to be updated 
-Meta:
-@TestId 
 Given update institution date to 4 days
 When user is logged in institution
 And user sign out from customer portal
@@ -65,8 +63,6 @@ Then user sign out from customer portal
 
 
 Scenario:1.6 Clearing: Load auth file in MCPS and create NOT file of IPM extension
-Meta:
-@TestId 
 Given connection to MCPS is established
 When Auth file is generated
 And Auth file is loaded into MCPS and processed
@@ -74,16 +70,12 @@ And NOT file is successfully generated
 Then MCPS simulator is closed
 
 Scenario:1.7 Upload ipm file from customer portal and process it
-Meta:
-@TestId
 Given user is logged in institution
 When User uploads the NOT file
 And user processes batch for credit
 Then user sign out from customer portal
 
 Scenario:1.8 Matching & Posting to Cardholders account
-Meta:
-@TestId 
 Given user is logged in institution
 When transaction status is "Matching Pending"
 And "Matching" batch for credit is successful

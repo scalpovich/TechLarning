@@ -189,7 +189,7 @@ public class AuthorizationSearchSteps {
 	@When("user verifies reconciliation status $status in auth search")
 	public void userVerifyReconciliationStatus(String status){
 		Device device = context.get(ContextConstants.DEVICE);
-		assertThat("Reconciliation Status Doesnot match with Authoraization Report content",
+		assertThat("Reconciliation Status doesn't match with Authoraization Report content",
 				authorizationSearchWorkflow.verifyReconciliationStatus(device),equalTo(status));
 	}
 }
