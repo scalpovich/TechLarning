@@ -6,6 +6,7 @@ import java.util.Map;
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 
 public class GenericReport implements HasCodeAndDescription{
 
@@ -19,7 +20,8 @@ public class GenericReport implements HasCodeAndDescription{
 	private String reportType;
 	private String reportUrl;
 	private String password;
-	
+	private String clientCode;
+
 	public String getPassword() {
 		return password;
 	}
@@ -106,6 +108,8 @@ public class GenericReport implements HasCodeAndDescription{
 	public void setReportRegEx(){
 		reportRegEx = new HashMap<>();
 		reportRegEx.put("RAMP", "\\d\\d-\\d\\d-\\d\\d\\d\\d");
+		reportRegEx.put("Application Reject Report", "\\d\\d-\\d\\d-\\d\\d\\d\\d");
+		reportRegEx.put(ConstantData.DEVICE_ACTIVITY_REPORT_FILE_NAME, "\\D\\d\\d\\d\\d\\D");
 	}
 	
 	@Override
@@ -124,4 +128,13 @@ public class GenericReport implements HasCodeAndDescription{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public String getClientCode() {
+		return clientCode;
+	}
+
+	public void setClientCode(String clientCode) {
+		this.clientCode = clientCode;
+	}
+	
 }

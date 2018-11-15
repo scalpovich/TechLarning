@@ -1,12 +1,14 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
 
 import junit.framework.Assert;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BatchJobHistory;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
@@ -113,6 +116,28 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 	public void verifyUiOperationStatus() {
 		logger.info("Batch Job History");
 		verifySearchButton("Search");
+	}
+	
+	public ProcessBatches searchRecord(ProcessBatches batches) {
+		WebElementUtils.pickDate(fromJobStartDttmDPkr, LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")));
+		WebElementUtils.pickDate(toJobStartDttmDPkr, LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")));
+		WebElementUtils.enterText(jobIdTxt, batches.getJoBID());
+		clickSearchButton();
+		viewFirstRecord();		
+		runWithinPopup("View Batch Details", () -> {
+			logger.info("Retrieving batch status");
+			waitForBatchStatus();
+			batches.setStatus(batchStatus.getText());
+			try{
+				clickCloseButton();
+			}
+				catch(StaleElementReferenceException ex)
+			{
+					clickCloseButton();
+			}
+		});		
+		
+		return batches;	
 	}
 
 	public String[] findRecord() {

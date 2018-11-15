@@ -2,11 +2,11 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.mastercard.pts.integrated.issuing.annotation.Workflow;
+import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ApplicationScoringPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
-@Workflow
+@Component
 public class ApplicationScoringBatchFlow {
 
 	@Autowired

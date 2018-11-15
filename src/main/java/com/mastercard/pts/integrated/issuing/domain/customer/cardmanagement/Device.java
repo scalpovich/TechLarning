@@ -41,6 +41,10 @@ public class Device {
 	private static final String CREDIT_LIMIT = "CREDIT_LIMIT";
 	private static final String TRANSACTION_PASSWORD = "TRANSACTION_PASSWORD";
 	private static final String CURRENCY_OF_TRANSFER = "CURRENCY_OF_TRANSFER";
+	private static final String JOINING_FEES = "JOINING_FEES";
+	private static final String MEMBERSHIP_FEES = "MEMBERSHIP_FEES";
+	private static final String LATE_PAYMENT_FEE = "LATE_PAYMENT_FEE";
+	private static final String INTEREST_ON_PURCHASE = "INTEREST_ON_PURCHASE";
 	
 	private String currencyofTransfer;
 	private String currentTransPassword;
@@ -105,8 +109,16 @@ public class Device {
   	private String walletCurrency;
  	private String category;
   	private String amountType;
+  	private String exchangeRate;
+	private String interestOnPurchase;
+	private String latePaymentFee;
+  	private String updatedATCValue;
   	private static double deviceAmountUsage = 0.00;
   	private static double deviceVelocity = 0;
+  	private String dedupe;
+	private String joiningFees;
+	private String membershipFees;
+	private String promotionPlanCode;
   	
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
@@ -116,7 +128,7 @@ public class Device {
 		device.setCreateOpenBatch(provider.getString(CREATE_OPEN_BATCH));
 		device.setCustomerType(provider.getString(DEVICE_CUSTOMER_TYPE));
 		device.setDeviceType1(provider.getString(DEVICE_TYPE));
-		device.setClientDetails(ClientDetails.generateClient());
+		device.setClientDetails(ClientDetails.generateClient(provider));
 		device.setCurrentAddress(Address.generateAddress());
 		device.setBranchCode(provider.getString(BRANCH));
 		device.setAccountNumber(RandomStringUtils.randomNumeric(16));
@@ -132,7 +144,7 @@ public class Device {
 		device.setConfirmNewTransPassword(provider.getString(CHP_NEW_PASSWORD));	
 		device.setProductType(provider.getString(PRODUCT_TYPE));
 		device.setTransactionDateType(provider.getString(DATE_TYPE));
-      	device.setLegalID(RandomStringUtils.randomAlphabetic(1) + RandomStringUtils.randomAlphanumeric(7));	
+      	device.setLegalID(RandomStringUtils.randomAlphabetic(1).toUpperCase()+ RandomStringUtils.randomNumeric(7));	
 		device.setProgramCode(provider.getString(PROGRAM_CODE));
 		device.setDevicePlan1(provider.getString(DEVICE_PLAN));     
 		device.setTransactionPassword(provider.getString(TRANSACTION_PASSWORD));		
@@ -165,6 +177,12 @@ public class Device {
 		return device;
 	}
 
+	public static Device createProviderForLatePaymentAndInterestOnPurchase(KeyValueProvider provider,Device device){
+		device.setLatePaymentFee(provider.getString(LATE_PAYMENT_FEE));
+		device.setInterestOnPurchase(provider.getString(INTEREST_ON_PURCHASE));
+		return device;
+	}
+	
 	public String getWalletCurrency() {
 		return walletCurrency;
 	}
@@ -630,6 +648,15 @@ public class Device {
 		this.vip = vip;
 	}
 	
+	public String getUpdatedATCValue() {
+
+		return updatedATCValue;
+	}
+
+	public void setUpdatedATCValue(String updatedATCValue) {
+		this.updatedATCValue = updatedATCValue;
+	}
+	
 	public String getServiceCode() {
 		return serviceCode;
 	}
@@ -685,6 +712,30 @@ public class Device {
 	public void setAmountType(String amountType) {
 		this.amountType = amountType;
 	}
+
+	public String getExchangeRate() {
+		return exchangeRate;
+	}
+
+	public void setExchangeRate(String exchangeRate) {
+		this.exchangeRate = exchangeRate;
+	}
+	
+	public String getLatePaymentFee() {
+		return latePaymentFee;
+	}
+
+	public void setLatePaymentFee(String latePaymentFee) {
+		this.latePaymentFee = latePaymentFee;
+	}
+
+	public String getInterestOnPurchase() {
+		return interestOnPurchase;
+	}
+
+	public void setInterestOnPurchase(String interestOnPurchase) {
+		this.interestOnPurchase = interestOnPurchase;
+	}
 	
 	public double getDeviceAmountUsage() {
 		return deviceAmountUsage;
@@ -700,5 +751,37 @@ public class Device {
 
 	public void setDeviceVelocity() {
 		++deviceVelocity;
+	}
+	
+	public String getDedupe() {
+		return dedupe;
+	}
+
+	public void setDedupe(String dedupe) {
+		this.dedupe = dedupe;
+	}
+	
+	public String getJoiningFees() {
+		return joiningFees;
+	}
+
+	public void setJoiningFees(String joiningFees) {
+		this.joiningFees = joiningFees;
+	}
+
+	public String getMembershipFees() {
+		return membershipFees;
+	}
+
+	public void setMemberShipFees(String membershipFees) {
+		this.membershipFees = membershipFees;
+	}
+
+	public String getPromotionPlanCode() {
+		return promotionPlanCode;
+	}
+
+	public void setPromotionPlanCode(String promotionPlanCode) {
+		this.promotionPlanCode = promotionPlanCode;
 	}
 }

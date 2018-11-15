@@ -21,12 +21,11 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_OPERATION, CardManagementNav.L2_OPERATION_APPLICATION, CardManagementNav.L3_OPERATION_APPLICATION_CREDIT, CardManagementNav.L4_APPLICATION_SCORING })
 public class ApplicationScoringPage extends AbstractBasePage {
-
+	  @Autowired
+	  TestContext context;
+	  
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Batch No')]")
 	private MCWebElement batchNoColumn;
-
-	@Autowired
-	TestContext context;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Process All']")
 	private MCWebElement btnProcessAll;
@@ -37,6 +36,11 @@ public class ApplicationScoringPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview")
 	private MCWebElement searchTable;
 
+	@Override
+	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
+		return Arrays.asList(WebElementUtils.elementToBeClickable(batchNoColumn));
+	}
+
 	public void processAllApplicationScoring() {
 		if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER))) {
 			clickWhenClickable(btnApplicationScoring);
@@ -46,11 +50,7 @@ public class ApplicationScoringPage extends AbstractBasePage {
 	}
 	
 	public void clickProcessALL() {
-		clickWhenClickable(btnProcessAll);
-	}
-
-	@Override
-	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.elementToBeClickable(batchNoColumn));
+		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
+		clickProcessSelectedButton();
 	}
 }
