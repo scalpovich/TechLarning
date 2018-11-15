@@ -1001,9 +1001,7 @@ public class HelpDeskSteps {
 		helpdeskGeneral.setServiceCode(serviceCode);
 		LoanPlan loanPlan = context.get(ContextConstants.LOAN_PLAN);			
 		TransactionSearchDetails transactionDetails = context.get(ContextConstants.TRANSACTION_SEARCH_DETAILS);
-		context.put(ContextConstants.LOAN_SACTION_DETAILS, helpdeskWorkflow.raiseRetailToLoanRequest(helpdeskGeneral,loanPlan,transactionDetails).get(0));
-
-		
+		context.put(ContextConstants.LOAN_SACTION_DETAILS, helpdeskWorkflow.raiseRetailToLoanRequest(helpdeskGeneral,loanPlan,transactionDetails).get(0));	
 	}
 	
 	@When("user verifies no $oustandingOf after payment")
