@@ -35,5 +35,5 @@ Scenario:2 Validate loyalty points in loyalty report
 When user is logged in institution
 And pre-clearing and Loyalty Calc batches are run
 Then verify available loyalty points should be within loyalty plan limit
-And verify loyalty points in loyalty report against AUTO-Automation Test for Credit device
+And verify loyalty points in loyalty report against AUTO - Automation Test for Credit device
 And user sign out from customer portal
