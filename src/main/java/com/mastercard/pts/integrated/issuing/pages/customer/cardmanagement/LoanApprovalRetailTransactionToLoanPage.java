@@ -58,7 +58,8 @@ public class LoanApprovalRetailTransactionToLoanPage extends AbstractBasePage {
 
 	public LoanDetails retailTransactionToLoanFromLoanScreen(LoanPlan loanPlan, Device device, String arn) {
 		WebElementUtils.enterText(cardNumber, device.getDeviceNumber());
-		WebElementUtils.selectDropDownByVisibleText(loanPlanDdwn, loanPlan.getLoanPlanCode());
+		logger.info(loanPlan.getLoanPlanCode());
+		WebElementUtils.selectDropDownByVisibleText(loanPlanDdwn, loanPlan.getLoanPlanDescription() + " " + "[" + loanPlan.getLoanPlanCode() + "]");
 		clickSearchButton();
 		return sanctionLoanFromLoanScreen(arn);
 
