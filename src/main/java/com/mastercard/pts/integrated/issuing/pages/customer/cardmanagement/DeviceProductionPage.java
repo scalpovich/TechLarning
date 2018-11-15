@@ -228,8 +228,6 @@ public class DeviceProductionPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		WebElementUtils.enterText(batchNumberTxt,batchNumber);
 		waitAndSearchForRecordToExist();
-		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-		waitForRecordAndAssignDevice();
 		verifyOperationStatus();
 	}
 

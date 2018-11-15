@@ -1,7 +1,11 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -10,7 +14,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -48,6 +54,7 @@ public class LoanAccountDetailsPage extends AbstractBasePage {
 		verifySearchButton("Search");
 	}
 
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
@@ -59,4 +66,30 @@ public class LoanAccountDetailsPage extends AbstractBasePage {
 				WebElementUtils.elementToBeClickable(toDate)
 				);
 	}
+	
+	public List<Map<String,String>> searchLoanAccountDetails(Device device)
+	{
+		WebElementUtils.enterText(cardNumber, device.getDeviceNumber());
+		clickSearchButton();
+		viewFirstRecord();		
+		List<Map<String,String>> records = new ArrayList<Map<String, String>>();	
+		runWithinPopup("View Loan Details", () -> {
+			for(int i = 1; i <= getRowCountFromTable() ;i++){
+			Map <String,String> loanAccountDetails = new HashMap<>();
+			loanAccountDetails.put(ConstantData.TRANSACTION_TYPE,getCellTextByColumnName(i,ConstantData.TRANSACTION_TYPE));
+			loanAccountDetails.put(ConstantData.LOAN_TRANSACTION_AMOUNT,getCellTextByColumnName(i,ConstantData.LOAN_TRANSACTION_AMOUNT));
+			loanAccountDetails.put(ConstantData.PRINCIPAL_AMOUNT,getCellTextByColumnName(i,ConstantData.PRINCIPAL_AMOUNT));
+			loanAccountDetails.put(ConstantData.INTEREST_AMOUNT,getCellTextByColumnName(i,ConstantData.INTEREST_AMOUNT));
+			loanAccountDetails.put(ConstantData.PROCESSING_DATE,getCellTextByColumnName(i,ConstantData.PROCESSING_DATE));
+			loanAccountDetails.put(ConstantData.DUE_DATE,getCellTextByColumnName(i,ConstantData.DUE_DATE));		
+			records.add(loanAccountDetails);
+			}
+			clickCloseButton();
+		});	
+
+		return records;
+	}
+	
+	
+	
 }

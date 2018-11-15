@@ -7,9 +7,7 @@ import java.util.Objects;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -318,7 +316,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			waitForWicket(driver());
 			SimulatorUtilities.wait(10000);
 		}else{
-			selectByVisibleText(customerTypeDDwn, device.getCustomerType());          
+			selectByVisibleText(customerTypeDDwn, device.getCustomerType());  
 			SimulatorUtilities.wait(8000);
 			waitForWicket(driver());
 			selectByVisibleText(programCodeDDwn, device.getProgramCode());
@@ -326,7 +324,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		}
 		SimulatorUtilities.wait(1000);
 		clickNextButton();
-		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());		
+		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());
 		WebElementUtils.selectDropDownByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
 		WebElementUtils.selectDropDownByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
 	}
@@ -422,15 +420,17 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		
 		ClientDetails client = device.getClientDetails();
 		WebElementUtils.selectDropDownByVisibleText(titleDDwn, client.getTitle());
-		if (device.getDedupe().equals("dedupe")) {			
+		if (Objects.nonNull(device.getDedupe())){	
 			WebElementUtils.enterText(firstNameTxt, client.getDedupeFirstName());
 			WebElementUtils.enterText(lastNameTxt, client.getDedupeLastName());
 			WebElementUtils.pickDate(birthDateDPkr, client.getDedupeBirthDate());
+			WebElementUtils.enterText(registeredMailIdTxt, client.getDedupeEmailId());
 		}
 		else{
 			WebElementUtils.enterText(firstNameTxt, client.getFirstName());
 			WebElementUtils.enterText(lastNameTxt, client.getLastName());
 			WebElementUtils.pickDate(birthDateDPkr, client.getBirthDate());
+			WebElementUtils.enterText(registeredMailIdTxt, client.getEmailId());
 		}
 		
 		if (client.getMiddleName1() != null) {
@@ -449,7 +449,6 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByVisibleText(accountTypeDDwn, device.getAccountType());
 		}
 		
-		WebElementUtils.enterText(registeredMailIdTxt, client.getEmailId());
 		WebElementUtils.selectDropDownByVisibleText(languagePreferencesDDwn, client.getLanguagePreference());
 		WebElementUtils.selectDropDownByVisibleText(vipDDwn, device.getVip());
 		WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn,1);

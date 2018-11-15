@@ -10,6 +10,11 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 public class ClientDetails {
+	
+	private static final String DEDUPE_TITLE = "TITLE";
+	private static final String DEDUPE_FIRST_NAME = "DEDUPE_FIRST_NAME";
+	private static final String DEDUPE_LAST_NAME = "DEDUPE_LAST_NAME";
+	private static final String DEDUPE_EMAIL = "DEDUPE_EMAIL";
 
 	private String title;	
 	private String firstName;	
@@ -26,7 +31,16 @@ public class ClientDetails {
 	private LocalDate dedupeBirthDate;
 	private String dedupeFirstName;
 	private String dedupeLastName;
+	private String dedupeEmailId;
 	
+	public String getDedupeEmailId() {
+		return dedupeEmailId;
+	}
+
+	public void setDedupeEmailId(String dedupeEmailId) {
+		this.dedupeEmailId = dedupeEmailId;
+	}
+
 	public String getDedupeFirstName() {
 		return dedupeFirstName;
 	}
@@ -42,7 +56,7 @@ public class ClientDetails {
 	public void setDedupeLastName(String dedupeLastName) {
 		this.dedupeLastName = dedupeLastName;
 	}
-	
+
 	public LocalDate getDedupeBirthDate() {
 		return dedupeBirthDate;
 	}
@@ -51,13 +65,14 @@ public class ClientDetails {
 		this.dedupeBirthDate = dedupeBirthDate;
 	}
 
-	public static ClientDetails generateClient() {
+	public static ClientDetails generateClient(KeyValueProvider provider) {
 		ClientDetails client = new ClientDetails();
 		client.setTitle("Mr. [1]");
 		client.setBirthDate(LocalDate.now().minusYears(RandomUtils.nextLong(20, 50)));
 		client.setDedupeFirstName("John");
 		client.setDedupeLastName("Ted");
 		client.setDedupeBirthDate(LocalDate.now().minusYears(29));
+		client.setDedupeEmailId("amanullah.pathan@mastercard.com");
 		client.setNationality("INDIA [356]");
 		client.setMaritialStatus("Married [1]");
 		client.setLanguagePreference("English [en]");

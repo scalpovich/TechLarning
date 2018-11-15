@@ -44,7 +44,7 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "memo:input:textAreaComponent")
 	private MCWebElement memoTxt;
-
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cvv2:input:inputTextField")
 	private MCWebElement cvv2Txt;
 

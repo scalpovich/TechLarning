@@ -35,7 +35,7 @@ public class CloseBatchFlows extends AbstractBaseFlows {
 	
     public void closeBatchExecutionForFileUpload(){
 		closeBatchPage=navigator.navigateToPage(CloseBatchPage.class);
-		closeBatchPage.processAllBatch();
+		closeBatchPage.processAllClick();
 	}
     
 	public void closeAllBatchExecution(){
