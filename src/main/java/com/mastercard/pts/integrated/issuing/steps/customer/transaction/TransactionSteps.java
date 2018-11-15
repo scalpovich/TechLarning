@@ -580,6 +580,7 @@ public class TransactionSteps {
 		context.put(ContextConstants.DEVICE, device);
 	}
 	
+	@Given("user perform reversal transaction of type $type")
 	@Then("user perform reversal transaction of type $type")
 	public void reverseTransaction(String type){
 		String transaction = context.get(ConstantData.TRANSACTION_NAME);

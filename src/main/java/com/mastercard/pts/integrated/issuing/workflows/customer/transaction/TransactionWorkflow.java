@@ -2113,7 +2113,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 	
 	public void reverseTransaction(String transaction, String reversalType) {
-		//launchWinSCP();
 		activateMas(transaction);
 		MiscUtils.reportToConsole("******************** Reversal Transaction Started ******************");
 		clickTestPreparations(transaction);

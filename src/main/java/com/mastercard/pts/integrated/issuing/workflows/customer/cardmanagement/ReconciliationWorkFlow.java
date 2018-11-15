@@ -58,7 +58,7 @@ public class ReconciliationWorkFlow {
 		TransactionReportsPage page = navigator.navigateToPage(TransactionReportsPage.class);
 		int fileCountBeforeReportGeneration = checkDownLoadedFilesCount();
 		deleteExistingAuthorizationFilesFromSystem(fileName);
-		page.generateTransactionAuthReport();
+		page.generateTransactionAuthReport(transactionReports);
 		int fileCountAfterReportGeneration = waitForReportToDownLoad(fileCountBeforeReportGeneration);
 		return getReportContent(fileName,transactionReports);
 		//return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;

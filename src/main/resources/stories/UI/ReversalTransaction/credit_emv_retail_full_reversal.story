@@ -28,13 +28,32 @@ And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: 1.3 Perform EMV_PURCHASE Authorization transaction to check fixed fee applied
+Scenario: 1.3 Perform EMV_CASH_WITHDRAWAL Authorization transaction
 Given connection to MAS is established
-When user updates transaction amount to 10
-And perform an EMV_PURCHASE MAS transaction
-Then user is logged in institution
-And search Purchase authorization and verify 000-Successful status
+And perform an EMV_CASH_WITHDRAWAL MAS transaction
+When user is logged in institution
+Then search CWD authorization and verify 000-Successful status
+And validate auth report
 And user sign out from customer portal
 
-Scenario: 1.4 Perform Reversal Transaction
-Then user perform reversal transaction of type 17 
+Scenario: 1.4 Perform Cash withdral Reversal Transaction
+Given user perform reversal transaction of type 17
+When user is logged in institution
+Then search CWD - Full Reversal authorization and verify 000-Successful status
+And validate auth report
+And user sign out from customer portal
+
+Scenario: 1.5 Perform EMV_PURCHASE Authorization transaction
+Given user updates transaction amount to 10
+When perform an EMV_PURCHASE MAS transaction
+Then user is logged in institution
+And search Purchase authorization and verify 000-Successful status
+And validate auth report
+And user sign out from customer portal
+
+Scenario: 1.6 Perform Purchase Reversal Transaction
+Given user perform reversal transaction of type 17
+When user is logged in institution
+Then search Purchase - Full Reversal authorization and verify 000-Successful status
+And validate auth report
+And user sign out from customer portal

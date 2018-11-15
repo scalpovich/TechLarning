@@ -78,18 +78,17 @@ public class PDFUtils {
 				pageContent = PdfTextExtractor.getTextFromPage(pdfReader, i);
 				if (pageContent.contains(code) && pageContent.contains(rrn)) {
 					fullRow = pageContent.split("\n");
-					break;
-				}
-			}
-			for (int j = 0; j < fullRow.length; j++) {
-				if (fullRow[j].contains(code)) {
-					programWiseContent.add(Arrays.toString(fullRow[j-5].split(" ")).trim());
-					programWiseContent.add(Arrays.toString(fullRow[j-4].split(" ")).trim());
-					programWiseContent.add(Arrays.toString(fullRow[j-3].split(" ")).trim());
-					programWiseContent.add(Arrays.toString(fullRow[j-2].split(" ")).trim());
-					programWiseContent.add(Arrays.toString(fullRow[j-1].split(" ")).trim());
-					programWiseContent.add(Arrays.toString(fullRow[j].split(" ")).trim());
-					break;
+					for (int j = 0; j < fullRow.length; j++) {
+						if (fullRow[j].contains(code)) {
+							programWiseContent.add(Arrays.toString(fullRow[j-5].split(" ")).trim());
+							programWiseContent.add(Arrays.toString(fullRow[j-4].split(" ")).trim());
+							programWiseContent.add(Arrays.toString(fullRow[j-3].split(" ")).trim());
+							programWiseContent.add(Arrays.toString(fullRow[j-2].split(" ")).trim());
+							programWiseContent.add(Arrays.toString(fullRow[j-1].split(" ")).trim());
+							programWiseContent.add(Arrays.toString(fullRow[j].split(" ")).trim());
+							break;
+						}
+					}
 				}
 			}
 			if (pdfReader != null)

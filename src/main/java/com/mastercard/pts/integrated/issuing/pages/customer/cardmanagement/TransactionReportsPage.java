@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionReports;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WebAPIReports;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -89,6 +90,9 @@ public class TransactionReportsPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:5:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement dateTypeDDwn;
+	
+	@PageElement(findBy =FindBy.CSS, valueToFind = "span#P_Device_id>input")
+	private MCWebElement txtdeviceNumber;
 
 	public String calelement = "//td[2]";
 
@@ -115,21 +119,16 @@ public class TransactionReportsPage extends AbstractBasePage {
 		SimulatorUtilities.wait(10000);
 		generateReportBtn.click();
 	}
-
+	
 	public void generateTransactionAuthReport() {
-		WebElementUtils.selectDropDownByVisibleText(selectReportDDwn,
-				provider.getString("PROGRAM_TRANSACTION_SUMMARY"));
-		clicksearchButtonElement();
-		WebElementUtils.selectDropDownByVisibleText(productTypeAuthReportDDwn, ALL);
-		WebElementUtils.selectDropDownByVisibleText(programNameAuthReportDDwn, ALL);
-		WebElementUtils.selectDropDownByVisibleText(authTypeDDwn, ALL);
-		WebElementUtils.selectDropDownByVisibleText(channelDDwn, ALL);
-		WebElementUtils.selectDropDownByVisibleText(transactionTypeDDwn, ALL);
-		WebElementUtils.selectDropDownByVisibleText(transactionStatusDDwn, ALL);
-		WebElementUtils.selectDropDownByVisibleText(transactionOriginDDwn, BOTH);
-		WebElementUtils.selectDropDownByVisibleText(deviceTypeDDwn, ALL);
-		WebElementUtils.selectDropDownByVisibleText(programNameAuthReportDDwn, ALL);
-		WebElementUtils.selectDropDownByVisibleText(fileTypeAuthReportDDwn, provider.getString(FILE_TYPE_REPORT));
+		generateAuthReport();
+		generateReportBtn.click();
+		CustomUtils.ThreadDotSleep(20000);
+	}
+
+	public void generateTransactionAuthReport(TransactionReports transactionReports) {
+		generateAuthReport();
+		WebElementUtils.enterText(txtdeviceNumber, transactionReports.getDeviceNumber());
 		generateReportBtn.click();
 		CustomUtils.ThreadDotSleep(20000);
 	}
@@ -173,6 +172,21 @@ public class TransactionReportsPage extends AbstractBasePage {
 		}
 		generateReportBtn.click();
 		SimulatorUtilities.wait(10000);
+	}
+	
+	private void generateAuthReport() {
+		WebElementUtils.selectDropDownByVisibleText(selectReportDDwn,provider.getString("PROGRAM_TRANSACTION_SUMMARY"));
+		clicksearchButtonElement();
+		WebElementUtils.selectDropDownByVisibleText(productTypeAuthReportDDwn, ALL);
+		WebElementUtils.selectDropDownByVisibleText(programNameAuthReportDDwn, ALL);
+		WebElementUtils.selectDropDownByVisibleText(authTypeDDwn, ALL);
+		WebElementUtils.selectDropDownByVisibleText(channelDDwn, ALL);
+		WebElementUtils.selectDropDownByVisibleText(transactionTypeDDwn, ALL);
+		WebElementUtils.selectDropDownByVisibleText(transactionStatusDDwn, ALL);
+		WebElementUtils.selectDropDownByVisibleText(transactionOriginDDwn, BOTH);
+		WebElementUtils.selectDropDownByVisibleText(deviceTypeDDwn, ALL);
+		WebElementUtils.selectDropDownByVisibleText(programNameAuthReportDDwn, ALL);
+		WebElementUtils.selectDropDownByVisibleText(fileTypeAuthReportDDwn, provider.getString(FILE_TYPE_REPORT));
 	}
 
 
