@@ -10,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 import java.awt.AWTException;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.Matcher;
@@ -33,6 +34,7 @@ import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalan
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MID_TID_Blocking;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
@@ -98,6 +100,10 @@ public class TransactionSteps {
 	private String arnNumber;
 
 	private String transactionAmount = "20.00";
+
+	private boolean midTidFlag=false;
+
+	private String midTidCombination="";
 
 	private static String PASS_MESSAGE = "Transaction is succcessful!  - Expected Result : ";
 
@@ -267,6 +273,10 @@ public class TransactionSteps {
 			transactionData.setDeKeyValuePairDynamic("004", "000000000000");
 		}
 
+		if (midTidFlag){
+			MID_TID_Blocking midtidBlocking = context.get(ContextConstants.MID_TID_BLOCKING);
+			transactionData = transactionWorkflow.setDEElementsForMIDTID(transactionData,midtidBlocking,midTidCombination);
+		}
 		// changed ECOMMERCE to ECOM
 		if (transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE") || transactionWorkflow.isContains(transaction, "ASI_") || transactionWorkflow.isContains(transaction, "MMSR")
 				|| transactionWorkflow.isContains(transaction, ConstantData.THREE_D_SECURE_TRANSACTION)) {
@@ -634,7 +644,27 @@ public class TransactionSteps {
 		device.setPinNumberForTransaction(ConstantData.INVALID_PIN);
 		context.put(ContextConstants.DEVICE, device);
 	}
+	
+	@Given("set the transaction amount to $amount in program currency")
+	public void setTransactionAmountFromStep(String amount){
+		Device device = context.get(ContextConstants.DEVICE);
+		if(device.getExchangeRate()==null){
+			device.setTransactionAmount(Integer.toString((Integer.parseInt(amount)*100)));
+		}
+		else{
+			Double moderatedAmount = (Double.parseDouble(amount))/(Double.parseDouble(device.getExchangeRate()));
+			device.setTransactionAmount(Long.toString(Math.round(moderatedAmount*100.0)));
+		}
+		context.put(ContextConstants.DEVICE, device);
+	}
 
+	@Given("User set MID_TID flag $type and MID_TID Combination $type")
+	@When("User set MID_TID flag $type and MID_TID Combination $type")
+	public void userSetMIDTIDFlagAndCaseValue(boolean midTidFlag, String midTidCombination) {
+		this.midTidFlag = midTidFlag;
+		this.midTidCombination = midTidCombination;
+	}
+	
 	/***
 	 * This method is implemented to change transaction amount for transaction
 	 * @param amount : Decimal representation for amount

@@ -109,6 +109,7 @@ public class Device {
   	private String walletCurrency;
  	private String category;
   	private String amountType;
+  	private String exchangeRate;
 	private String interestOnPurchase;
 	private String latePaymentFee;
   	private String updatedATCValue;
@@ -711,6 +712,14 @@ public class Device {
 
 	public void setAmountType(String amountType) {
 		this.amountType = amountType;
+	}
+	
+	public String getExchangeRate() {
+		return exchangeRate;
+	}
+
+	public void setExchangeRate(String exchangeRate) {
+		this.exchangeRate = exchangeRate;
 	}
 	
 	public String getLatePaymentFee() {

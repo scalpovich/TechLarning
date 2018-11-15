@@ -361,6 +361,22 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.ID, valueToFind = "callReferenceNumber")
 	private MCWebElement callRefNumberLbl;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Authorization']")
+	private MCWebElement btnAuthorization;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Decline Reason')]/../following-sibling::td/span/span")
+	private MCWebElement labelDeclineReason;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(text(),'Authorization Date From')]/..//span")
+	private MCWebElement txtAuthorizationDateFrom;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(text(),'Authorization Date From')]/..//td[7]//span")
+	private MCWebElement txtAuthorizationDateTo;
+
+	public final String AUTHORIZATION = "Authorizations";
+	public final String VIEW_AUTHORIZATION = "View Authorizations";
+
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Process']")
 	private MCWebElement processBtn;
 	
@@ -1627,6 +1643,51 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return loanDetails;
 	}
 	
+	public String getDeclineCodeForTransaction(Device device, String rrnNumber){
+		logger.info("Fetching information for : {}", device.getDeviceNumber());
+		searchByDeviceNumber(device);
+		SimulatorUtilities.wait(5000);
+		clickWhenClickable(editDeviceLink);
+		clickWhenClickable(btnAuthorization);
+		serachAuthorizationRecord(rrnNumber);
+		runWithinPopup(AUTHORIZATION, () -> {
+			Element("//span[contains(text(),'"+rrnNumber+"')]/..").click();
+		});
+		String getDeclineCode = getTransactionStatus();
+		runWithinPopup(AUTHORIZATION, () -> {
+			clickCloseButton();
+		});
+		SimulatorUtilities.wait(2000);
+		clickEndCall();
+		SimulatorUtilities.wait(2000);
+		return getDeclineCode;
+	}
+
+	private String getTransactionStatus() {
+		List<String> lst = new ArrayList<String>();
+		runWithinPopup(VIEW_AUTHORIZATION, () -> {
+			lst.add(getTextFromPage(labelDeclineReason));
+			clickCloseButton();
+		});
+		return lst.get(0);
+	}
+
+	/***
+	 * This method is used to search authorization record without closing view authorization frame
+	 * @param rrnNumber : RRN for  transaction
+	 * */
+	private void serachAuthorizationRecord(String rrnNumber) {
+		runWithinPopup(AUTHORIZATION, () -> {
+			WebElementUtils.pickDate(txtAuthorizationDateFrom, LocalDate.now());
+			WebElementUtils.pickDate(txtAuthorizationDateTo, LocalDate.now());
+			clickSearchButton();
+			SimulatorUtilities.wait(3000);
+		});
+	}
+
+
+
+
 	public String raiseLoanPreclosureRequest(HelpdeskGeneral helpdeskGeneral, LoanPlan loanPlan, Device device) {
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
