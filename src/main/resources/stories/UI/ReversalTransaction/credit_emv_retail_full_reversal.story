@@ -45,7 +45,7 @@ And user sign out from customer portal
 
 Scenario: 1.5 Perform EMV_PURCHASE Authorization transaction
 Given user updates transaction amount to 10
-When perform an EMV_PURCHASE MAS transaction
+When perform an EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And validate auth report
