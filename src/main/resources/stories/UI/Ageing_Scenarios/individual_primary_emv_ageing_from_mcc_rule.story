@@ -1,7 +1,7 @@
 Narrative:
-In order to a create a Credit Device under customer portal cardmanagement tab
+In order to check ageing functionality
 As a user
-I want to age the trx and verify the status in transaction details
+I want to age the transaction by editing presentment time limit in MCC plan and verify the status in transaction details
 
 Meta:
 @CreditRegression

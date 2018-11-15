@@ -158,9 +158,9 @@ public class ProgramSetupSteps {
 
 	private static final String JOINING_FEE_PLAN = "JOINING_FEE_PLAN";
 
-	private static final String defaultPresentmentTimeLimit = "3";
+	private static final String DEFAULT_PRESENTMENT_TIME_LIMIT = "3";
 	
-	private static final String merchantCode = "5999";
+	private static final String MERCHANT_CODE = "5999";
 	@When("prepaid $deviceType device is available with balance amount")
 	@Given("prepaid $deviceType device is available with balance amount")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
@@ -1682,8 +1682,8 @@ public class ProgramSetupSteps {
 	@When("user edits Presentment Time Limit in $plan")
 	public void userEditsPresentmentTimeLimit(String plan) {
 		DevicePlan device = context.get(ContextConstants.DEVICE_PLAN);
-		device.setTransSetPresentmentTimeLimit(defaultPresentmentTimeLimit);
-		device.setMerchantCode(merchantCode);
+		device.setTransSetPresentmentTimeLimit(DEFAULT_PRESENTMENT_TIME_LIMIT);
+		device.setMerchantCode(MERCHANT_CODE);
 		programSetupWorkflow.editPlan(plan,device,program);
 	}
 	

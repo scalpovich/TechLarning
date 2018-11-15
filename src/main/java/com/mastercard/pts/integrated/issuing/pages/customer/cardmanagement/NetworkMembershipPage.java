@@ -277,7 +277,7 @@ public class NetworkMembershipPage extends AbstractBasePage {
 	}
 	
 	public void editNetworkMembershipPlan(DevicePlan device) {
-		logger.info("Interchange->"+device.getAssociation());
+		logger.info("Interchange:{}",device.getAssociation());
 		selectByVisibleText(interchangeDwn, device.getAssociation());
 		clickSearchButton();
 		SimulatorUtilities.wait(500);

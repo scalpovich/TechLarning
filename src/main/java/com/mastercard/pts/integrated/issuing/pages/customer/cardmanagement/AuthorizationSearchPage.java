@@ -102,6 +102,7 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	
 	private BigDecimal availableBalanceAfterReversal;
 	private String reconcilationStatus;
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Authorization Search");
 		verifySearchButton("Search");
