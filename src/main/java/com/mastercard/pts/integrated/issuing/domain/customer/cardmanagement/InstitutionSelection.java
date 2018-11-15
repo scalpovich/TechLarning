@@ -1,6 +1,7 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.springframework.beans.factory.annotation.Value;
+import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 
 
 public class InstitutionSelection {

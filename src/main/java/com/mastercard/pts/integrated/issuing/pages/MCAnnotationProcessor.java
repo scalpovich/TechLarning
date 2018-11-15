@@ -33,21 +33,21 @@ public class MCAnnotationProcessor {
 				
 				Object valueToInject = null;
 				if (f.getType().equals(MCWebElement.class)) {
-					valueToInject = Proxy.newProxyInstance(MCWebElement.class.getClassLoader(),
+					valueToInject = (MCWebElement) Proxy.newProxyInstance(MCWebElement.class.getClassLoader(),
 							new Class[] { MCWebElement.class }, 
 							new ElementProxyHandler(f, pageElement, instance, finderProvider));
 					
 				} else if (f.getType().equals(MCWebElements.class)) {
-					valueToInject = Proxy.newProxyInstance(MCWebElements.class.getClassLoader(),
+					valueToInject = (MCWebElements) Proxy.newProxyInstance(MCWebElements.class.getClassLoader(),
 							new Class[] { MCWebElements.class }, 
 							new ElementProxyHandler(f, pageElement, instance, finderProvider));
 					
 				} else if (f.getType().equals(MCTableElement.class)) {
-					valueToInject = Proxy.newProxyInstance(MCTableElement.class.getClassLoader(),
+					valueToInject = (MCTableElement) Proxy.newProxyInstance(MCTableElement.class.getClassLoader(),
 							new Class[] { MCTableElement.class }, 
 							new ElementProxyHandler(f, pageElement, instance, finderProvider));
 				} else if (f.getType().equals(MCEditableTwoColumnsTable.class)) {
-					valueToInject = Proxy.newProxyInstance(MCEditableTwoColumnsTable.class.getClassLoader(),
+					valueToInject = (MCEditableTwoColumnsTable) Proxy.newProxyInstance(MCEditableTwoColumnsTable.class.getClassLoader(),
 							new Class[] { MCEditableTwoColumnsTable.class }, 
 							new ElementProxyHandler(f, pageElement, instance, finderProvider));
 				}

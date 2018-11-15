@@ -67,8 +67,6 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:programCode:input:dropdowncomponent")
 	private MCWebElement programCodeDDwn;
-	
-	private String programCodeDDwnBy = "view:programCode:input:dropdowncomponent";
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:deviceType1:input:dropdowncomponent")
 	private MCWebElement deviceType1DDwn;
@@ -335,7 +333,6 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
 		SimulatorUtilities.wait(1000);
-		String programCodeDDwnBy = "view:programCode:input:dropdowncomponent";
 		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)
 				|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)) {
 			enterText(existingDeviceNumberTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));
