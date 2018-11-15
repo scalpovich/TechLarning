@@ -98,10 +98,10 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	private String amountTypes = "Billing Amount:Transaction Fee:Service Tax:Markup Fee:Markup Service Tax";
 	
 	@PageElement(findBy=FindBy.X_PATH, valueToFind = "//td/span[contains(text(),'Reconcilation Status')]/following::tr[1]/td[2]/span/span")
-	private MCWebElement txtReconcilationStatus;
+	private MCWebElement txtReconciliationStatus;
 	
 	private BigDecimal availableBalanceAfterReversal;
-	private String reconcilationStatus;
+	private String reconciliationStatus;
 	
 	public void verifyUiOperationStatus() {
 		logger.info("Authorization Search");
@@ -230,12 +230,12 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 		SimulatorUtilities.wait(500);
 		runWithinPopup("View Authorization", () -> {
 			SimulatorUtilities.wait(1000);
-			logger.info("reconcilationStatus->"+txtReconcilationStatus.getText());
-			reconcilationStatus=txtReconcilationStatus.getText();
+			logger.info("reconcilationStatus->"+txtReconciliationStatus.getText());
+			reconciliationStatus=txtReconciliationStatus.getText();
 			SimulatorUtilities.wait(500);
 			clickCloseButton();
 		});
 		SimulatorUtilities.wait(500);
-		return reconcilationStatus;
+		return reconciliationStatus;
 	}
 }
