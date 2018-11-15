@@ -280,9 +280,9 @@ public class NetworkMembershipPage extends AbstractBasePage {
 		logger.info("Interchange->"+device.getAssociation());
 		selectByVisibleText(interchangeDwn, device.getAssociation());
 		clickSearchButton();
-		SimulatorUtilities.wait(1500);
+		SimulatorUtilities.wait(500);
 		editFirstRecord();
-		SimulatorUtilities.wait(1500);
+		SimulatorUtilities.wait(500);
 		runWithinPopup("Edit Network Membership", () -> {
 			SimulatorUtilities.wait(1500);
 			presentmentTimeLimitTxt.clearField();
