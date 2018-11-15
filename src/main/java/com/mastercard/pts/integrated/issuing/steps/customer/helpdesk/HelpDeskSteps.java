@@ -1031,9 +1031,9 @@ public class HelpDeskSteps {
 	public void userVerifiesLoanCancellationFee(){
 		LoanPlan loanPlan = context.get(ContextConstants.LOAN_PLAN);
 		String expectedFee = String.format("%.2f",
-				(Integer.parseInt(loanPlan.getPreclosureFixedFeeAmount())
-						+ Integer.parseInt(loanPlan.getPreclosureFeePercentOfAmount())
-								* Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT)))
+				Double.valueOf(loanPlan.getPreclosureFixedFeeAmount())
+						+ Double.valueOf(loanPlan.getPreclosureFeePercentOfAmount())
+								* Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))
 						/ 100);
 		String actualFee = context.get("Loan PreClosure Fee");
 		assertThat("Loan Preclosure Fee is not same", actualFee, equalTo(expectedFee));
