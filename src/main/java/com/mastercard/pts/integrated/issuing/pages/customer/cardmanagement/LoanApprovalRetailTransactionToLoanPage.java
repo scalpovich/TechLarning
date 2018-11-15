@@ -48,7 +48,7 @@ public class LoanApprovalRetailTransactionToLoanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td/span[text()='Processing Fee :']/../following-sibling::td[1]/span/input")
 	private MCWebElement processingFeeLbl;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td/span[text()='Moratorium Loan :']/../following-sibling::td[1]/span/input")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "moratoriamPeriod:input:inputTextField")
 	private MCWebElement moratoriumLoanLbl;
 	
 	public void verifyUiOperationStatus() {
@@ -58,6 +58,7 @@ public class LoanApprovalRetailTransactionToLoanPage extends AbstractBasePage {
 
 	public LoanDetails retailTransactionToLoanFromLoanScreen(LoanPlan loanPlan, Device device, String arn) {
 		WebElementUtils.enterText(cardNumber, device.getDeviceNumber());
+		SimulatorUtilities.wait(3000);
 		logger.info(loanPlan.getLoanPlanCode());
 		WebElementUtils.selectDropDownByVisibleText(loanPlanDdwn, loanPlan.getLoanPlanDescription() + " " + "[" + loanPlan.getLoanPlanCode() + "]");
 		clickSearchButton();
