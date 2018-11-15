@@ -9,7 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCCRulePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -19,12 +21,11 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_MCC_RULES })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_PROGRAM_SETUP,
+		CardManagementNav.L2_MCC_RULES })
 public class MCCRulePlanPage extends AbstractBasePage {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(MCCRulePlanPage.class);
+	private static final Logger logger = LoggerFactory.getLogger(MCCRulePlanPage.class);
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=mccRulePlanCode]")
 	private MCWebElement planCodeSearchTxt;
@@ -37,20 +38,24 @@ public class MCCRulePlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "#productType select")
 	private MCWebElement productTypeDDwn;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=fromMccCode]")
 	private MCWebElement fromMccCodeTxt;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=toMccCode]")
 	private MCWebElement toMccCodeTxt;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=selectAllDom]")
 	private MCWebElement selectAllDomCheckBox;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=selectAllInt]")
 	private MCWebElement selectAllIntCheckBox;
-	
-	
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=presentmentTimeLimit]")
+	private MCWebElement txtPresentmentTimeLimit;
+
+	public static int clearPresentment = 0;
+
 	public void verifyUiOperationStatus() {
 		logger.info("MCC Rule");
 		verifySearchButton("Search");
@@ -64,7 +69,7 @@ public class MCCRulePlanPage extends AbstractBasePage {
 	public void createMCCRulePlanPage(MCCRulePlan plan) {
 		logger.info("Create MCC Rule Plan {}", plan.getMccRulePlanCode());
 		clickAddNewButton();
-	
+
 		runWithinPopup("Add MCC Rule Plan", () -> {
 			SimulatorUtilities.wait(1500);
 			WebElementUtils.elementToBeClickable(planCodeTxt);
@@ -73,43 +78,65 @@ public class MCCRulePlanPage extends AbstractBasePage {
 			WebElementUtils.elementToBeClickable(descriptionTxt);
 			WebElementUtils.enterText(descriptionTxt, plan.getDescription());
 			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, plan.getProductType());
-			WebElementUtils.scrollDown(driver(),0,250);
+			WebElementUtils.scrollDown(driver(), 0, 250);
 			clickSaveButton();
 			verifyNoErrors();
 			SimulatorUtilities.wait(4000);
 		});
 		verifyOperationStatus();
 	}
-	
+
 	public void editMCCRulePlanPage(MCCRulePlan plan) {
 		logger.info("Edit MCC Rule Plan {}", plan.getMccRulePlanCode());
 		WebElementUtils.enterText(planCodeSearchTxt, plan.getMccRulePlanCode());
 		clickSearchButton();
 		editFirstRecord();
-		
+
 		runWithinPopup("Edit MCC Rule Plan", () -> {
-			SimulatorUtilities.wait(1500);
-			WebElementUtils.elementToBeClickable(fromMccCodeTxt);
-			WebElementUtils.enterText(fromMccCodeTxt, plan.getFromMccCode());
-			SimulatorUtilities.wait(100);
-			WebElementUtils.enterText(toMccCodeTxt, plan.getToMccCode());
-			clickSearchButton();
-			waitForPageToLoad(driver());
-			clickApproveCheckBox(plan.getOrigin());			
-			WebElementUtils.scrollDown(driver(),0,250);
+			fillMCCRulePlan(plan.getFromMccCode(), plan.getToMccCode());
+			clickApproveCheckBox(plan.getOrigin());
+			WebElementUtils.scrollDown(driver(), 0, 250);
 			clickSaveButton();
 			verifyNoErrors();
 			SimulatorUtilities.wait(4000);
 		});
 		verifyOperationStatus();
 	}
-	
+
 	private void clickApproveCheckBox(String origin) {
-		if(origin.equalsIgnoreCase(ContextConstants.INTERNATIONAL))
+		if (origin.equalsIgnoreCase(ContextConstants.INTERNATIONAL))
 			clickWhenClickable(selectAllIntCheckBox);
 		else
 			clickWhenClickable(selectAllDomCheckBox);
 	}
-	
 
+	public void editPresentmentTimeLimitInMCCRulePlan(DevicePlan device, Program program) {
+		logger.info("Edit MCC Rule Plan {}", program.getMccRulePlan().substring(12, 21));
+		WebElementUtils.enterText(planCodeSearchTxt, program.getMccRulePlan().substring(12, 21));
+		clickSearchButton();
+		editFirstRecord();
+		runWithinPopup("Edit MCC Rule Plan", () -> {
+			fillMCCRulePlan(device.getMerchantCode(), device.getMerchantCode());
+			txtPresentmentTimeLimit.clearField();
+			if (clearPresentment == 0) {
+				enterValueinTextBox(txtPresentmentTimeLimit, device.getTransSetPresentmentTimeLimit());
+			}
+			clickSaveButton();
+			SimulatorUtilities.wait(4000);
+		});
+		verifyOperationStatus();
+		clearPresentment++;
+	}
+
+	private void fillMCCRulePlan(String fromMcc, String toMcc) {
+		SimulatorUtilities.wait(1500);
+		WebElementUtils.elementToBeClickable(fromMccCodeTxt);
+		WebElementUtils.enterText(fromMccCodeTxt, fromMcc);
+		SimulatorUtilities.wait(100);
+		WebElementUtils.enterText(toMccCodeTxt, toMcc);
+		clickSearchButton();
+		waitForPageToLoad(driver());
+		SimulatorUtilities.wait(4000);
+
+	}
 }

@@ -138,6 +138,8 @@ public class TransactionSteps {
 		}
 		performOperationOnSamecard(false);
 		givenOptimizedTransactionIsExecuted(temp);
+		String txnDate=context.get(ContextConstants.INSTITUTION_DATE);
+		context.put(ContextConstants.TRANSACTION_DATE,txnDate);
 	}
 
 	@When("perform an $transaction MAS transaction on the same card")
@@ -355,6 +357,9 @@ public class TransactionSteps {
 
 	@When("Auth file is loaded into MCPS and processed")
 	public void loadAuthFileToMCPS() {
+		logger.info("TXN Date "+context.get("transaction_date"));
+		String txnDate=context.get(ContextConstants.TRANSACTION_DATE);
+		context.put(ContextConstants.INSTITUTION_DATE,txnDate);
 		arnNumber = transactionWorkflow.loadAuthFileToMCPS(authFilePath);
 		if (arnNumber.isEmpty()) {
 			logger.error("*********ARN number is empty");
