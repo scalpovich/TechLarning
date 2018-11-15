@@ -85,6 +85,6 @@ public class ReportVerificationSteps {
 		report.setReportName(ConstantData.LOYALTY_POINTS_REPORT_FILENAME);
 		report.setLoyaltyPromotionPlan(promoPlan);
 		String loyaltyPoints = reportVerificationWorkflow.downloadAndVerifyLoyaltyReport(report);
-		Assert.assertEquals(context.get(Constants.AVAILABLE_LOYALTY_POINTS), loyaltyPoints);
+		Assert.assertEquals(context.get(Constants.AVAILABLE_LOYALTY_POINTS), Double.parseDouble(loyaltyPoints));
 	}
 }
