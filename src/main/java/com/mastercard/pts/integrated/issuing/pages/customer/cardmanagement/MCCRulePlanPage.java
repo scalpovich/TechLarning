@@ -110,7 +110,7 @@ public class MCCRulePlanPage extends AbstractBasePage {
 			clickWhenClickable(selectAllDomCheckBox);
 	}
 
-	public void editMCCRulePlan(DevicePlan device, Program program) {
+	public void editPresentmentTimeLimitInMCCRulePlan(DevicePlan device, Program program) {
 		logger.info("Edit MCC Rule Plan {}", program.getMccRulePlan().substring(12, 21));
 		WebElementUtils.enterText(planCodeSearchTxt, program.getMccRulePlan().substring(12, 21));
 		clickSearchButton();

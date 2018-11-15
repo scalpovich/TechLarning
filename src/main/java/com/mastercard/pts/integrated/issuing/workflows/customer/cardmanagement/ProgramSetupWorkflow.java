@@ -287,7 +287,7 @@ public class ProgramSetupWorkflow {
 		}
 		if (plan.contains("mcc")) {
 			MCCRulePlanPage page = navigator.navigateToPage(MCCRulePlanPage.class);
-			page.editMCCRulePlan(device,program);
+			page.editPresentmentTimeLimitInMCCRulePlan(device,program);
 		}
 		if (plan.contains("network")) {
 			NetworkMembershipPage page=navigator.navigateToPage(NetworkMembershipPage.class);
