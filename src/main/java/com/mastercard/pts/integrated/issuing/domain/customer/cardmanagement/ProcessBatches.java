@@ -19,6 +19,7 @@ public class ProcessBatches {
 	private String methodToGenerateFile;
 	private String vendorName;
 	private LocalDate businessDate;
+	private String status;	
 	
 	private static final String BATCH_TYPE = "UPLOAD [U]";
 //	private static final String BATCH_NAME = "Transaction Upload [TRANSACTION_UPLOAD]";
@@ -147,5 +148,13 @@ public class ProcessBatches {
 
 	public LocalDate getBusinessDate() {
 		return businessDate;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }

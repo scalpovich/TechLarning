@@ -10,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 import java.awt.AWTException;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.Matcher;
@@ -33,8 +34,10 @@ import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalan
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MID_TID_Blocking;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.AuthorizationTransactionFactory;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ClearingTestCase;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ReversalTransaction;
@@ -98,6 +101,10 @@ public class TransactionSteps {
 
 	private String transactionAmount = "20.00";
 
+	private boolean midTidFlag=false;
+
+	private String midTidCombination="";
+
 	private static String PASS_MESSAGE = "Transaction is succcessful!  - Expected Result : ";
 
 	private static String FAILED = "Transaction failed! ";
@@ -105,6 +112,8 @@ public class TransactionSteps {
 	private static String FAIL_MESSAGE = FAILED + " -  Result : ";
 	
 	private static String INVALID_KEYS = "(default) - M/Chip Key Set from the related BIN range will be used";
+	
+	public boolean membershipFlag = false;
 
 	public String getTransactionAmount() {
 		return transactionAmount;
@@ -264,6 +273,10 @@ public class TransactionSteps {
 			transactionData.setDeKeyValuePairDynamic("004", "000000000000");
 		}
 
+		if (midTidFlag){
+			MID_TID_Blocking midtidBlocking = context.get(ContextConstants.MID_TID_BLOCKING);
+			transactionData = transactionWorkflow.setDEElementsForMIDTID(transactionData,midtidBlocking,midTidCombination);
+		}
 		// changed ECOMMERCE to ECOM
 		if (transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE") || transactionWorkflow.isContains(transaction, "ASI_") || transactionWorkflow.isContains(transaction, "MMSR")
 				|| transactionWorkflow.isContains(transaction, ConstantData.THREE_D_SECURE_TRANSACTION)) {
@@ -483,25 +496,26 @@ public class TransactionSteps {
 	}
 	
 	
-	@When("search with device in transaction screen and status for Joining and Membership Fees")
-	@Then("search with device in transaction screen and status for Joining and Membership Fees")
-	public void thenSearchWithDeviceInTransactionScreenAndStatusForJoiningandMembershipFees() {
+	@When("search with device in transaction screen and Verify Joining and Membership Fees")
+	@Then("search with device in transaction screen and Verify Joining and Membership Fees")
+	public void verifyJoiningAndMembershipFeesOnTransactionSearch() {
 		
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		Device device = context.get(ContextConstants.DEVICE);
 		device.setJoiningFees(provider.getString("JOINING_FEES"));
 		device.setMemberShipFees(provider.getString("MEMBERSHIP_FEES"));
-		assertThat(transactionWorkflow.searchTransactionWithDeviceAndGetFees(device, ts), Matchers.hasItems(device.getJoiningFees(), device.getMembershipFees()));
+		membershipFlag = true;
+		assertThat(transactionWorkflow.searchTransactionWithDeviceAndGetFees(device, ts, membershipFlag), Matchers.hasItems(device.getJoiningFees(), device.getMembershipFees()));
 	}
 	
-	@When("search with device in transaction screen and status for Joining Fee")
-	@Then("search with device in transaction screen and status for Joining Fee")
-	public void thenSearchWithDeviceInTransactionScreenAndStatusForJoiningFee() {
+	@When("search with device in transaction screen and Verify Joining Fee")
+	@Then("search with device in transaction screen and Verify Joining Fee")
+	public void verifyJoiningFeeOnTransactionSearch() {
 		
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		Device device = context.get(ContextConstants.DEVICE);
 		device.setJoiningFees(provider.getString("JOINING_FEES"));
-		assertEquals(transactionWorkflow.searchTransactionWithDeviceAndGetJoiningFee(device, ts), device.getJoiningFees());
+		assertEquals(transactionWorkflow.searchTransactionWithDeviceAndGetFees(device, ts, membershipFlag), device.getJoiningFees());
 	}
 
 	@When("user performs load balance request")
@@ -510,7 +524,7 @@ public class TransactionSteps {
 		LoadBalanceRequest lbr = LoadBalanceRequest.getProviderData(provider);
 		String loadRequestReferenceNumber = transactionWorkflow.performLoadBalanceRequestAndGetRequestReferenceNumber(device, lbr);
 		lbr.setLoadRequestReferenceNumber(loadRequestReferenceNumber);
-		context.put("LOADBALANCEREQUEST", lbr);
+		context.put(ContextConstants.LOAD_BALANCE_REQUEST, lbr);
 	}
 	
 	@When("user performs load balance request for Joining and Membership plan")
@@ -520,7 +534,7 @@ public class TransactionSteps {
 		LoadBalanceRequest lbr = LoadBalanceRequest.getProviderData(provider);
 		String loadRequestReferenceNumber = transactionWorkflow.performLoadBalanceRequestAndGetRequestReferenceNumber(device, lbr);
 		lbr.setLoadRequestReferenceNumber(loadRequestReferenceNumber);
-		context.put("LOADBALANCEREQUEST", lbr);
+		context.put(ContextConstants.LOAD_BALANCE_REQUEST, lbr);
 	}
 
 	@When("load balance request is successful")
@@ -532,7 +546,7 @@ public class TransactionSteps {
 	@When("user performs load balance approve")
 	public void whenUserPerformsLoadBalanceApprove() {
 		Device device = context.get(ContextConstants.DEVICE);
-		LoadBalanceRequest lbr = context.get("LOADBALANCEREQUEST");
+		LoadBalanceRequest lbr = context.get(ContextConstants.LOAD_BALANCE_REQUEST);
 		transactionWorkflow.performLoadBalanceApprove(device, lbr);
 	}
 
@@ -630,7 +644,27 @@ public class TransactionSteps {
 		device.setPinNumberForTransaction(ConstantData.INVALID_PIN);
 		context.put(ContextConstants.DEVICE, device);
 	}
+	
+	@Given("set the transaction amount to $amount in program currency")
+	public void setTransactionAmountFromStep(String amount){
+		Device device = context.get(ContextConstants.DEVICE);
+		if(device.getExchangeRate()==null){
+			device.setTransactionAmount(Integer.toString((Integer.parseInt(amount)*100)));
+		}
+		else{
+			Double moderatedAmount = (Double.parseDouble(amount))/(Double.parseDouble(device.getExchangeRate()));
+			device.setTransactionAmount(Long.toString(Math.round(moderatedAmount*100.0)));
+		}
+		context.put(ContextConstants.DEVICE, device);
+	}
 
+	@Given("User set MID_TID flag $type and MID_TID Combination $type")
+	@When("User set MID_TID flag $type and MID_TID Combination $type")
+	public void userSetMIDTIDFlagAndCaseValue(boolean midTidFlag, String midTidCombination) {
+		this.midTidFlag = midTidFlag;
+		this.midTidCombination = midTidCombination;
+	}
+	
 	/***
 	 * This method is implemented to change transaction amount for transaction
 	 * @param amount : Decimal representation for amount
@@ -654,4 +688,14 @@ public class TransactionSteps {
 		givenOptimizedTransactionIsExecuted(transaction);
 	}
 
+	@When("search transaction with device number on transaction search screen")
+	@Then("search transaction with device number on transaction search screen")
+	public void thenSearchWithDeviceInTransactionScreenAndVerify() {
+		TransactionSearch ts = TransactionSearch.getProviderData(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		TransactionSearchDetails transactionSearch = transactionWorkflow.searchTransactionWithDeviceAndGetDetails(device, ts);
+		Assert.assertTrue("Successfully transaction search",transactionSearch.getDeviceNumber().equalsIgnoreCase(device.getDeviceNumber()));
+		context.put(ContextConstants.TRANSACTION_SEARCH_DETAILS, transactionSearch);
+		context.put(ContextConstants.DEVICE, device);
+	}
 }

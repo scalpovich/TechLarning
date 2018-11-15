@@ -14,6 +14,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -136,6 +137,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	private MCWebElement jobId;
 
 	private String batchStatus;
+	
+	private String jobID;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "batchType:input:dropdowncomponent")
 	private MCWebElement batchTypeDdwn;
 
@@ -186,7 +190,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
 	private MCWebElement institutionDateTxt;
-
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanel:inputPanel:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement fileTypeDDwn;
 	
@@ -195,7 +199,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='processFileName']//span[@class='labeltextf']")
 	private MCWebElement processFileNameTxt;
-	
+
 	public final String SYSTEM_INTERNAL_PROCESSING = "SYSTEM INTERNAL PROCESSING [B]";
 	
 	private static final int NUMBER_OF_ATTEMPTS_TO_CHECK_SUCCESS_STATE=100;
@@ -207,6 +211,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	private final String failStatus = "FAILED [3]";
 	
 	private final String successStatus = "SUCCESS [2]";
+	
+	private static final String  POST_MAINTENANCE_FEE_BATCH = "Post Maintence Fee Batch [POST_MAINTENANCE_FEE]";
 
 	public void selectBatchType(String option) {
 		selectByVisibleText(batchTypeDDwn, option);
@@ -434,7 +440,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		else if("Billing Process - Credit".equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Billing Process - Credit [BILLING]"); 
 		
-		else if("Post Maintence Fee Batch [POST_MAINTENANCE_FEE]".equalsIgnoreCase(batchName))
+		else if(POST_MAINTENANCE_FEE_BATCH.equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Post Maintence Fee Batch [POST_MAINTENANCE_FEE]"); 
 	}
 
@@ -498,15 +504,23 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	}
 
 	public void submitAndVerifyBatch() {
-	submitBtn.click();	
-	statusBtn.click();
-	runWithinPopup("View Batch Details", () -> {
-		logger.info("Retrieving batch status");
-		waitForBatchStatus();
-		batchStatus = batchStatusTxt.getText();
-		context.put(ContextConstants.DAT_FILE_NAME, processFileNameTxt.getText());
-		clickCloseButton();
-	});
+		submitBtn.click();
+		//statusBtn.click();
+		clickWhenClickable(statusBtn);
+		runWithinPopup("View Batch Details", () -> {
+			logger.info("Retrieving batch status");
+			waitForBatchStatus();
+			batchStatus = batchStatusTxt.getText();
+			jobID = processBatchjobIDTxt.getText();
+			context.put(ContextConstants.DAT_FILE_NAME, processFileNameTxt.getText());
+			try{
+			clickCloseButton();
+			}
+			catch(StaleElementReferenceException ex)
+			{
+				clickCloseButton();
+			}
+		});
 	}
 	
 	public void submitAndVerifyBaseIIBatch() {
@@ -656,11 +670,14 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	 * @param batch 
 	 * @return status of batch e.g pass, fail
 	 */
-	public String processCreditBillingBatch(ProcessBatches batch) {
+	public ProcessBatches processCreditBillingBatch(ProcessBatches batch) {
+		ProcessBatches batches = new ProcessBatches();
 		selectBatchTypeAndName(batch);
 		WebElementUtils.pickDate(bussinessDateTxt, DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt)));
 		submitAndVerifyBatch();
-		return batchStatus;
+		batches.setJoBID(jobID);
+		batches.setStatus(batchStatus);
+		return batches;
 	}
 
 	/**
@@ -700,16 +717,15 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		SimulatorUtilities.wait(2000);
 		selectInternalBatchType(batch.getBatchName());
 		SimulatorUtilities.wait(2000);
-		
+
 		try {
 			todayDate = dateFormatter.parse(dateFormatter.format(new Date()));
 			dateFromUI = getDateFromUI(dateFormatter, batch);
 		} catch (ParseException e) {
-			throw new RuntimeException(e);
+			throw MiscUtils.propagate(e);
 		}
 
 		submitAndVerifyBatch();
-
 		return batchStatus;
 	}
 	

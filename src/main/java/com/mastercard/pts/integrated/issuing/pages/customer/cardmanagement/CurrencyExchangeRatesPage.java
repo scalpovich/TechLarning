@@ -11,9 +11,13 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.server.handler.FindElements;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +25,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CurrencyExchangeRate;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
+import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
@@ -85,6 +90,9 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "midRate:input:inputAmountField")
 	private MCWebElement midRateTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "table.modelFormClass tr:nth-of-type(3) > td +td >span>span")
+	private MCWebElement midRateLbl;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "sellRate:input:inputAmountField")
 	private MCWebElement sellRateTxt;
@@ -109,6 +117,10 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cancel")
 	private MCWebElement cancelBtn;
+	
+	private final String editLink = ".dataview tbody img[alt='Edit Record']"; 
+	
+	private final String VIEW_CURRENCY_EXCHANGE_RATE = "View Currency Exchange Rate";
 
 	@Autowired
 	ReadTestDataFromExcel dataReader;
@@ -361,10 +373,35 @@ public class CurrencyExchangeRatesPage extends AbstractBasePage {
 			String filepath) {
 		fileCreation.createCERUploadFileBank(isInvalid, filepath);
 	}
+	
+	public String fetchSourceToDestinationCurrency(CurrencyExchangeRate domainObj) {
+		searchCurrencyExchangeRates(
+				domainObj.getSourceCurrency(),
+				domainObj.getDestinationCurrency(),
+				domainObj.getRateOrigin().split(" ")[0],
+				domainObj.getProgram());
+		try{
+			clickOnFirstRowEditLink();
+		}
+		catch(StaleElementReferenceException e ){
+			e.printStackTrace();
+			clickOnFirstRowEditLink();
+		}
+		switchToIframe(VIEW_CURRENCY_EXCHANGE_RATE);
+		String rate = getTextFromPage(midRateLbl);
+		clickCloseButton();
+		switchToDefaultFrame();
+		return rate;
+	}
 
 	public void verifyUiOperationStatus() {
 		logger.info("Currency Exchange Rate");
 		verifyUiOperationNoEdit("Add Currency Exchange Rate");
+	}
+	
+	private void clickOnFirstRowEditLink(){
+		SimulatorUtilities.wait(3000);
+		(driver().findElements(By.cssSelector(editLink))).get(0).click();
 	}
 
 	@Override

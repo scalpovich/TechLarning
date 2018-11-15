@@ -67,12 +67,12 @@ public class ClientDetails {
 
 	public static ClientDetails generateClient(KeyValueProvider provider) {
 		ClientDetails client = new ClientDetails();
-		client.setTitle(provider.getString(DEDUPE_TITLE));
+		client.setTitle("Mr. [1]");
 		client.setBirthDate(LocalDate.now().minusYears(RandomUtils.nextLong(20, 50)));
-		client.setDedupeFirstName(provider.getString(DEDUPE_FIRST_NAME));
-		client.setDedupeLastName(provider.getString(DEDUPE_LAST_NAME));
+		client.setDedupeFirstName("John");
+		client.setDedupeLastName("Ted");
 		client.setDedupeBirthDate(LocalDate.now().minusYears(29));
-		client.setDedupeEmailId(provider.getString(DEDUPE_EMAIL));
+		client.setDedupeEmailId("amanullah.pathan@mastercard.com");
 		client.setNationality("INDIA [356]");
 		client.setMaritialStatus("Married [1]");
 		client.setLanguagePreference("English [en]");

@@ -344,26 +344,24 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			JavascriptExecutor jse = (JavascriptExecutor) getFinder().getWebDriver();
 			jse.executeScript("el = document.elementFromPoint(400, 400); el.click();");
 
-		} else {
+		}else{
 			selectByVisibleText(customerTypeDDwn, device.getCustomerType());
 			SimulatorUtilities.wait(10000);
 			waitForWicket(driver());
 			selectByVisibleText(programCodeDDwn, device.getProgramCode());
 			SimulatorUtilities.wait(10000);
-			waitForWicket(driver());
 			selectByVisibleText(programCodeDDwn, device.getProgramCode());
-
+			
 		}
-		SimulatorUtilities.wait(1000);
 		SimulatorUtilities.wait(10000);
 		clickNextButton();
 
 		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());
-		WebElementUtils.selectDropDownByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
+		selectByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
 		if (Objects.nonNull(device.getPromotionPlanCode())) {
-			WebElementUtils.selectDropDownByVisibleText(promotionPlanDDwn, device.getPromotionPlanCode());
+			selectByVisibleText(promotionPlanDDwn, device.getPromotionPlanCode());
 		}
-		WebElementUtils.selectDropDownByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
+		selectByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
 	}
 
 	private void fillProfileAndAddressDetailsAndClickNext(Device device) {

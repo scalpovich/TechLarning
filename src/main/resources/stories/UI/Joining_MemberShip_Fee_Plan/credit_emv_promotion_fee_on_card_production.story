@@ -9,7 +9,7 @@ Meta:
 @StoryName credit_emv_retail_promotion
 @JMFCreditPlans
 
-Scenario: Set up credit emv retail general purpose card device production
+Scenario: 1.1 Set up credit emv retail general purpose card device production
 Given setting json values in excel for Credit
 When user is logged in institution
 And for EMV Card User fills without pin Device Plan for credit product for Mastercard
@@ -21,17 +21,15 @@ And credit device is created using new device screen for Individual and Primary 
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And device has "normal" status
-Then user sign out from customer portal
+And user sign out from customer portal
 
-
-Scenario: Post maintenance batch and pre-clearing batch is run 
+Scenario: 1.2 Post maintenance batch and pre-clearing batch is run 
 Given user is logged in institution
 When post maintenance batch is run
 And user processes Pre-clearing system internal batch for Credit
-Then user sign out from customer portal
+And user sign out from customer portal
 
-Scenario: Promotion Fee is been Deducted
+Scenario: 1.3 Promotion Fee is been Deducted
 Given user is logged in institution
-When search with device in transaction screen and status for Joining Fee
-Then user signs out from customer portal
-
+When search with device in transaction screen and Verify Joining Fee
+And user signs out from customer portal
