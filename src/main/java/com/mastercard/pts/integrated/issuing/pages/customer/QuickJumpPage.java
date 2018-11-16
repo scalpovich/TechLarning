@@ -2,7 +2,6 @@ package com.mastercard.pts.integrated.issuing.pages.customer;
 
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,12 +23,14 @@ public class QuickJumpPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.ID, valueToFind = "txtgoto")
 	private MCWebElement quickJumpTxt;
-
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "img[src*='btn-qj.png']")
+	private MCWebElement searchBtn;
+	
 	public void quickJump(String pageCode) {
 		WebElementUtils.enterText(quickJumpTxt, pageCode);
-		WebElementUtils.asWebElement(quickJumpTxt).sendKeys(Keys.ENTER);
-		Assert.assertFalse("Page does not exist!", isAlertPresent());
-		WebElementUtils.asWebElement(quickJumpTxt).sendKeys(Keys.ENTER);
+		searchBtn.click();
+		Assert.assertFalse("Page does not exist!", isAlertPresent());		
 	}
 
 	public String getPageName() {
