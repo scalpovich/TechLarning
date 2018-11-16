@@ -178,15 +178,18 @@ public class TransactionReportsPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(selectReportDDwn,provider.getString("PROGRAM_TRANSACTION_SUMMARY"));
 		clicksearchButtonElement();
 		WebElementUtils.selectDropDownByVisibleText(productTypeAuthReportDDwn, ALL);
-		WebElementUtils.selectDropDownByVisibleText(programNameAuthReportDDwn, ALL);
 		WebElementUtils.selectDropDownByVisibleText(authTypeDDwn, ALL);
+		WebElementUtils.selectDropDownByVisibleText(programNameAuthReportDDwn, ALL);
 		WebElementUtils.selectDropDownByVisibleText(channelDDwn, ALL);
 		WebElementUtils.selectDropDownByVisibleText(transactionTypeDDwn, ALL);
 		WebElementUtils.selectDropDownByVisibleText(transactionStatusDDwn, ALL);
 		WebElementUtils.selectDropDownByVisibleText(transactionOriginDDwn, BOTH);
 		WebElementUtils.selectDropDownByVisibleText(deviceTypeDDwn, ALL);
-		WebElementUtils.selectDropDownByVisibleText(programNameAuthReportDDwn, ALL);
 		WebElementUtils.selectDropDownByVisibleText(fileTypeAuthReportDDwn, provider.getString(FILE_TYPE_REPORT));
+		
+		WebElementUtils.selectDropDownByVisibleText(transactionStatusDDwn, ALL);
+		WebElementUtils.selectDropDownByVisibleText(transactionTypeDDwn, ALL);
+		WebElementUtils.selectDropDownByVisibleText(programNameAuthReportDDwn, ALL);
 	}
 
 

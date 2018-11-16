@@ -138,7 +138,7 @@ public class AuthorizationSearchSteps {
 	@Then("validate auth report")
 	public void validateAuthReport() {
 		if(!System.getProperty("env").equalsIgnoreCase("automation2")){
-			Device device = context.get(ContextConstants.DEVICE);
+			Device device =  context.get(ContextConstants.DEVICE);
 			authorizationSearchWorkflow.verifyAuthTransactionSearchReport(device);
 		} 
 	}
