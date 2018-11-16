@@ -130,7 +130,7 @@ public class TransactionReportsPage extends AbstractBasePage {
 		generateAuthReport();
 		WebElementUtils.enterText(txtdeviceNumber, transactionReports.getDeviceNumber());
 		generateReportBtn.click();
-		CustomUtils.ThreadDotSleep(20000);
+		CustomUtils.ThreadDotSleep(30000);
 	}
 
 	public void generateTransactionClearingReport() {

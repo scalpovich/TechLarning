@@ -31,8 +31,9 @@ Then FINSim simulator is closed
 Scenario: 1.3 Perform EMV_CASH_WITHDRAWAL Authorization transaction
 Given connection to MAS is established
 And perform an EMV_CASH_WITHDRAWAL MAS transaction
-When user is logged in institution
-Then search CWD authorization and verify 000-Successful status
+Then MAS test results are verified
+And user is logged in institution
+And search CWD authorization and verify 000-Successful status
 And validate auth report
 And user sign out from customer portal
 
@@ -46,7 +47,8 @@ And user sign out from customer portal
 Scenario: 1.5 Perform EMV_PURCHASE Authorization transaction
 Given user updates transaction amount to 10
 When perform an EMV_PURCHASE MAS transaction on the same card
-Then user is logged in institution
+Then MAS test results are verified
+And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And validate auth report
 And user sign out from customer portal
