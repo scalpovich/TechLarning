@@ -1,6 +1,9 @@
 package com.mastercard.pts.integrated.issuing.pages.customer;
 
+import org.junit.Assert;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoAlertPresentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -25,10 +28,25 @@ public class QuickJumpPage extends AbstractBasePage {
 	public void quickJump(String pageCode) {
 		WebElementUtils.enterText(quickJumpTxt, pageCode);
 		WebElementUtils.asWebElement(quickJumpTxt).sendKeys(Keys.ENTER);
+		Assert.assertFalse("Page does not exist!", isAlertPresent());
+		WebElementUtils.asWebElement(quickJumpTxt).sendKeys(Keys.ENTER);
 	}
 
 	public String getPageName() {
 		return pageNameLbl.getText();
+	}
+
+	public boolean isAlertPresent() {
+		try {
+			Alert alert = driver().switchTo().alert();
+			if (alert != null) {
+				alert.accept();
+				return true;
+			}
+		} catch (NoAlertPresentException e) {
+			return false;
+		}
+		return false;
 	}
 
 }
