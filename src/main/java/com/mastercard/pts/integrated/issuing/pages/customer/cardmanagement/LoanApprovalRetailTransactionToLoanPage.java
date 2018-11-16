@@ -33,7 +33,7 @@ public class LoanApprovalRetailTransactionToLoanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=cardNumber]")
 	private MCWebElement cardNumber;
 	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:1:componentPanel:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table/tbody/tr/td/select")
 	private MCWebElement loanPlanDdwn;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Calculate EMI']")
@@ -59,8 +59,9 @@ public class LoanApprovalRetailTransactionToLoanPage extends AbstractBasePage {
 	public LoanDetails retailTransactionToLoanFromLoanScreen(LoanPlan loanPlan, Device device, String arn) {
 		WebElementUtils.enterText(cardNumber, device.getDeviceNumber());
 		SimulatorUtilities.wait(3000);
-		logger.info(loanPlan.getLoanPlanCode());
 		WebElementUtils.selectDropDownByVisibleText(loanPlanDdwn, loanPlan.getLoanPlanDescription() + " " + "[" + loanPlan.getLoanPlanCode() + "]");
+		WebElementUtils.selectDropDownByVisibleText(loanPlanDdwn, loanPlan.getLoanPlanDescription() + " " + "[" + loanPlan.getLoanPlanCode() + "]");
+		SimulatorUtilities.wait(2000);
 		clickSearchButton();
 		return sanctionLoanFromLoanScreen(arn);
 
