@@ -6,7 +6,7 @@ Meta:
 @StoryName prepaid_msr_retail_loyalty
 @migration_loyalty
 
-Scenario:1 Create credit device and perform manual auth on blocked MCC
+Scenario:1 Create prepaid device and perform manual auth on blocked MCC
 Given setting json values in excel for Prepaid
 Then use loyalty plan AUTOMATION [LP1]
 When user is logged in institution
