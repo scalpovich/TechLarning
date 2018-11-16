@@ -4,15 +4,11 @@ As a user
 I want to validate boarded card
 
 Meta:
-@CreditRegression
 @StoryName IRP_EMV_VISA					 
 Scenario:User creates visa credit card and validate it
-Meta:
-@UserCreatesNewCreditDevice
-
-Given setting json values in excel
-Given user is logged in institution
-When User fills Dedupe Plan
+Given setting json values in excel for Credit
+When user is logged in institution
+And User fills Dedupe Plan
 And User fills Statement Message Plan for credit product
 And User fills Marketing Message Plan for credit product
 And User fills Transaction Plan for credit product
@@ -41,3 +37,4 @@ When credit processes pre-production batch using new Application
 When credit processes deviceproduction batch using new Application
 When new Application processes pin generation batch for credit
 Then User search for new application on search screen for credit and validates the status as NORMAL
+And user sign out from customer portal

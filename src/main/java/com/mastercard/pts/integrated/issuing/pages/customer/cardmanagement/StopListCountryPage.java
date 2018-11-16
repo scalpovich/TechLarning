@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.StopListCountry;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -35,6 +37,24 @@ public class StopListCountryPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:2:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement country;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "stopCountryContainer:minCardRange:input:dropdowncomponent")
+	private MCWebElement startRangeDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "stopCountryContainer:maxCardRange:input:dropdowncomponent")
+	private MCWebElement endRangeDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "stopCountryContainer:countryCode:input:dropdowncomponent")
+	private MCWebElement countryDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "stopCountryContainer:search")
+	private MCWebElement btnSearch;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "stopCountryDetailContainer:responseCode:input:dropdowncomponent")
+	private MCWebElement responseCodeDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "stopCountryDetailContainer:abrevName:input:textAreaComponent")
+	private MCWebElement txtDescription;
 
 	public void verifyUiOperationStatus() {
 		logger.info("Stop List Country");
@@ -49,4 +69,56 @@ public class StopListCountryPage extends AbstractBasePage {
 				WebElementUtils.elementToBeClickable(country)
 				);
 	}
+	
+	public  void stopListCountry(StopListCountry stopListCountry,DeviceRange deviceRange){
+		clickAddNewButton();
+		runWithinPopup("Add Stop List Country", ()->{
+			String startRange=null;
+			String endRange=null;
+			if(!deviceRange.getIssuerBin().contains("[")){
+				startRange=deviceRange.getIssuerBin()+""+deviceRange.getFromDeviceNumber();
+				endRange=deviceRange.getIssuerBin()+""+deviceRange.getToDeviceNumber();
+			}
+			else{
+				startRange=deviceRange.getIssuerBinCode(deviceRange.getIssuerBin())+""+deviceRange.getFromDeviceNumber();
+				endRange=deviceRange.getIssuerBinCode(deviceRange.getIssuerBin())+""+deviceRange.getToDeviceNumber();
+			}
+			waitForElementVisible(startRangeDDwn);
+			selectStartRange(String.format("%s [%s]", startRange, startRange));
+			selectEndtRange(String.format("%s [%s]", endRange, endRange));
+			selectCountry(stopListCountry.getStoplistCountry());
+			clickSearch();
+			waitForElementVisible(responseCodeDDwn);
+			selectResponseCode(stopListCountry.getStopListReason());
+			enterDescription(stopListCountry.getStopListReasonDescription());
+			clickSaveButton();
+		});
+		verifyOperationStatus();
+	}
+	
+	public void selectStartRange(String startRange){
+		selectDropDownByText(startRangeDDwn, startRange);
+	}
+	
+	public void selectEndtRange(String endRange){
+		selectDropDownByText(endRangeDDwn, endRange);
+	}
+
+	public void selectCountry(String country){
+		selectDropDownByText(countryDDwn, country);
+    }
+	
+	public void clickSearch(){
+		ClickButton(btnSearch);	
+	}
+	
+	public void selectResponseCode(String responseCode){
+		selectDropDownByText(responseCodeDDwn, responseCode);
+	}
+	
+	public void enterDescription(String description){
+		enterText(txtDescription, description);
+	}
+	
+	
 }

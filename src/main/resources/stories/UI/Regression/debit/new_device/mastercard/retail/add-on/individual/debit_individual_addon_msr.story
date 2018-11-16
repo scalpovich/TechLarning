@@ -1,4 +1,3 @@
-!-- author: e076168
 Narrative:
 As a user
 I want to login into customer portal 
@@ -7,9 +6,8 @@ In order to create add-on debit card
 
 Meta:
 @StoryName debit_card
-@DebitRegression
 
-Scenario: To verify functionality of prepaid card boarding
+Scenario: To verify functionality of Debit card boarding
 Given setting json values in excel for Debit
 When user is logged in institution
 And User fills MCC Rules for debit product
@@ -30,3 +28,4 @@ And debit device is created using new device screen for Individual [0] and Add-o
 And debit processes pre-production batch using new Device
 And debit processes deviceproduction batch using new Device for Supplementary
 Then User search for new device Supplementary on search screen for debit and validates the status as NORMAL
+And user sign out from customer portal

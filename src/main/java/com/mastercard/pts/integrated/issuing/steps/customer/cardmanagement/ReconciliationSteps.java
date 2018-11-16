@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,16 +11,17 @@ import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
-import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
+import com.mastercard.pts.integrated.issuing.domain.helpdesk.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ReconciliationWorkFlow;
 
 @Component
 public class ReconciliationSteps {
 	private static final String BATCH_TYPE = "BATCH_TYPE";
-
+	private static final String BATCH_NAME_POST_MAINTENANCE = "BATCH_NAME_POST_MAINTENANCE";
 	@Autowired
 	private TestContext context;
 
@@ -53,6 +56,14 @@ public class ReconciliationSteps {
 		reconciliationWorkFlow.runPreClearingAndPrepaidEodBatch(processBatches);
 	}
 
+	@When("post maintenance batch is run")
+	public void whenPostMaintenanceBatchIsRun() {
+
+		ProcessBatches postMaintenanceBatch = new ProcessBatches();
+		postMaintenanceBatch.setBatchName(provider.getString(BATCH_NAME_POST_MAINTENANCE));
+		reconciliationWorkFlow.runPostMaintenanceBatch(postMaintenanceBatch);
+	}
+	
 	@When("pre-clearing and Loyalty Calc batches are run")
 	public void whenPreclearingAndLoyaltyBatchesAreRun() {
 
@@ -78,7 +89,9 @@ public class ReconciliationSteps {
 		ProcessBatches batch = new ProcessBatches();
 		batch.setProductType(ProductType.fromShortName(productType));
 		batch.setBatchName(batchName);
-		reconciliationWorkFlow.runCreditBillingBatch(batch);
+		ProcessBatches batches = reconciliationWorkFlow.runCreditBillingBatch(batch);
+		assertEquals("SUCCESS [2]", batches.getStatus());
+		context.put(ContextConstants.PROCESSED_BATCHES, batches);
 	}
 	
 	@When("user run $batchName system internal batch")

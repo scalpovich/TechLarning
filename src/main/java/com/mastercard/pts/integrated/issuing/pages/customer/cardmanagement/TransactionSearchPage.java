@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -13,12 +12,17 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_SEARCH, CardManagementNav.L2_TRANSACTION, CardManagementNav.L3_TRANSACTION_SEARCH })
@@ -57,31 +61,32 @@ public class TransactionSearchPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement productTypeSelect;
-
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn=cardNumber]")
 	private MCWebElement cardNumberTxt;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[1]/td/span[contains(text(),'DR')]/../../td[1]/span/a/span")
 	private MCWebElement retrieveARNLabel;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
 	private MCWebElement institutionDateTxt;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Sequence Number')]")
-	private MCWebElement sequenceNumberText;
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/tbody/tr//span[contains(.,'FEE(Annual Fees)')]/../preceding-sibling::td[@class='rightalign']")
+	private MCWebElement membershipFees;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/tbody/tr//span[contains(.,'FEE(Joining Fees)')]/../preceding-sibling::td[@class='rightalign']")
+	private MCWebElement joiningFees;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Transaction Date']/ancestor::a")
+	private MCWebElement transactionDateOrderByLink;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Reconciliation Status')]//following-sibling::td[2]/select")
-	private MCWebElement reconciliationStatusDD;
-	
-	private final String DUPLICATE_PRESENTMENT = "Duplicate presentment";
-	private final String UNMATCH_PRESENTMENT = "Unmatched Presentment";
-	private final String RECONCILIATION_STATUS_OPTIONS = "//*[contains(text(),'Reconciliation Status')]//following-sibling::td[2]/select/option";
-	
-	private String authorizationStatus;	
+	private String authorizationStatus;
+
+	List<String> joiningAndMembershipFees = new ArrayList();
 	
 	public void selectFromDate(LocalDate date)
 	{
-		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(1);
+		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(4);
 		WebElementUtils.pickDate(fromDateTxt, date);		
 	}
 	
@@ -104,29 +109,19 @@ public class TransactionSearchPage extends AbstractBasePage {
 		return retrieveARN;
 	}
 
-	public String searchTransactionWithARN(String arnNumber, TransactionSearch ts, String type) {
-		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn,ts.getProductType());
+	public String searchTransactionWithARN(String arnNumber, TransactionSearch ts) {
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, ts.getProductType());
 		WebElementUtils.enterText(searchARNTxt, arnNumber);
 		WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
-		WebElementUtils.pickDate(fromDateTxt, LocalDate.now().minusDays(10));
+		selectFromDate(LocalDate.now());
 		selectToDate(LocalDate.now());
-		//selectFromDate(LocalDate.now());
-		
-		if(type.equalsIgnoreCase(DUPLICATE_PRESENTMENT) || type.equalsIgnoreCase(UNMATCH_PRESENTMENT)){
-			String st = Elements(RECONCILIATION_STATUS_OPTIONS).stream().filter(x -> x.getText().contains(type)).findFirst().get().getText();
-			selectByText(reconciliationStatusDD, st);
-		}
-		
-		
 		clickSearchButton();
 		viewFirstRecord();
-		
 		runWithinPopup("View Transactions", () -> {
 			logger.info("Retrieving authorization status : " + authorizationStatusTxt.getText());
 			authorizationStatus = authorizationStatusTxt.getText();
 			clickCloseButton();
 		});
-
 		return authorizationStatus;
 	}
 
@@ -180,6 +175,27 @@ public class TransactionSearchPage extends AbstractBasePage {
 		return getCellTextByColumnName(i, "Description");
 	}
 
+	public List<String> searchTransactionWithDeviceAndGetJoiningAndMemberShipFees(Device device, TransactionSearch ts, Boolean membershipFlag) {
+		logger.info("Select product {}", device.getProductType());
+		WebElementUtils.selectDropDownByVisibleText(productTypeSelect, device.getProductType());
+		logger.info("Search transaction for device {}", device.getDeviceNumber());
+		WebElementUtils.enterText(searchDeviceTxt, device.getDeviceNumber());
+		WebElementUtils.pickDate(fromDateTxt, DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt)));
+		WebElementUtils.pickDate(toDateTxt, DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt)));
+		waitForWicket();
+		WebElementUtils.elementToBeClickable(tranDateDDwn);
+		WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, "Transaction Date [T]");
+		waitAndSearchForRecordToAppear();
+		
+		if (membershipFlag) {
+			joiningAndMembershipFees.add(joiningFees.getText());
+			joiningAndMembershipFees.add(membershipFees.getText());
+		} else {
+			joiningAndMembershipFees.add(joiningFees.getText());
+		}
+		return joiningAndMembershipFees;
+	}
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Transaction Search");
 		verifySearchButton("Search");
@@ -188,6 +204,42 @@ public class TransactionSearchPage extends AbstractBasePage {
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(searchARNTxt));
+	}
+	public TransactionSearchDetails searchTransactionWithDeviceAndGetDetails(Device device, TransactionSearch ts) {
+		TransactionSearchDetails transactionDetails= new TransactionSearchDetails();
+		int i;
+		logger.info("Select product {}", device.getProductType());
+		WebElementUtils.selectDropDownByVisibleText(productTypeSelect, device.getProductType());
+		logger.info("Search transaction for device {}", device.getDeviceNumber());
+		WebElementUtils.enterText(searchDeviceTxt, device.getDeviceNumber());
+		selectFromDate(LocalDate.now());
+		selectToDate(LocalDate.now());
+		waitForWicket();
+		WebElementUtils.elementToBeClickable(tranDateDDwn);
+		WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, "Transaction Date [T]");
+		clickSearchButton();
+		SimulatorUtilities.wait(5000);
+		clickWhenClickable(transactionDateOrderByLink);	
+		SimulatorUtilities.wait(1000);
+		clickWhenClickable(transactionDateOrderByLink);	
+		SimulatorUtilities.wait(5000);
+		for (i = 1; i < 4; i++) {
+			if ("1".equals(getCellTextByColumnName(i, "Sequence Number")))
+				break;
+		}
+		
+		transactionDetails.setARN(getCellTextByColumnName(i, "ARN"));		
+		transactionDetails.setSequenceNumber(getCellTextByColumnName(i, "Sequence Number"));		
+		transactionDetails.setDeviceNumber(getCellTextByColumnName(i, "Device Number"));
+		transactionDetails.setTransaction(getCellTextByColumnName(i, "Transaction"));
+		transactionDetails.setTransactionDate(getCellTextByColumnName(i, "Transaction Date"));
+		transactionDetails.setProcessingDate(getCellTextByColumnName(i, "Processing Date"));
+		transactionDetails.setDescription(getCellTextByColumnName(i, "Description"));
+		transactionDetails.setBillingAmount(getCellTextByColumnName(i, "Billing Amount"));
+		transactionDetails.setBillingCurrency(getCellTextByColumnName(i, "Billing Currency"));
+		transactionDetails.setDR_CR(getCellTextByColumnName(i, "DR / CR"));
+		transactionDetails.setReversal(getCellTextByColumnName(i, "Reversal"));		
+		return transactionDetails;			
 	}
 
 }
