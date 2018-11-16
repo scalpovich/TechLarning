@@ -74,7 +74,7 @@ public class DatabaseFlows {
 	}
 	
 	public void activateLoyaltyPlan(String planCode, String bankCode) {
-		String queryString = "update LYT_PLAN_DEF set LYT_EXPIRY_FLG='A' where BANK_CODE='" + bankCode + "' and LYT_PLAN_CODE='" + planCode + "';";
+		String queryString = "update LYT_PLAN_DEF set LYT_EXPIRY_FLG='A' where BANK_CODE='" + bankCode + "' and LYT_PLAN_CODE='" + planCode + "'";
 		dbUtil.executeUpdate(queryString);
 	}
 }
