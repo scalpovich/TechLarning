@@ -12,7 +12,6 @@ Meta:
 Scenario:1.1 creation of mastercard_individual_primary_emv Card credit device
 Given setting json values in excel for Credit
 When user is logged in institution
-Then update institution date to 5 days
 And for EMV Card User fills Device Plan for credit product for Mastercard
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
@@ -42,7 +41,7 @@ When search transaction with device number on transaction search screen
 Then update institution date to 5 days
 And user sign out from customer portal
 
-Scenario:1.4 Update institution date then Login & Logout to wait for date to be updated foe next billing
+Scenario:1.4 Update institution date then Login & Logout to wait for date to be updated for next billing
 Meta:
 @TestId 
 Given user is logged in institution
@@ -88,7 +87,7 @@ And user verifies batch job history with job id
 Then update institution date to 5 days
 And user sign out from customer portal
 
-Scenario:1.9 Update institution date then Login & Logout to wait for date to be updated foe next billing
+Scenario:1.9 Update institution date then Login & Logout to wait for date to be updated for next billing
 Meta:
 @TestId 
 Given user is logged in institution

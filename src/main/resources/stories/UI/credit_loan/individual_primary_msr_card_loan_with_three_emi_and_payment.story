@@ -44,7 +44,7 @@ And user sign out from customer portal
 !-- And device has "normal" status
 !-- And user notes down required values from helpdesk for credit
 
-Scenario:1.4 Update institution date then Login & Logout to wait for date to be updated foe next billing
+Scenario:1.4 Update institution date then Login & Logout to wait for date to be updated for next billing
 Meta:
 @TestId 
 Given user is logged in institution
@@ -85,7 +85,7 @@ And user sign out from customer portal
 !-- And device has "normal" status
 !-- And user notes down required values from helpdesk for credit
 
-Scenario:1.8 Update institution date then Login & Logout to wait for date to be updated foe next billing
+Scenario:1.8 Update institution date then Login & Logout to wait for date to be updated for next billing
 Meta:
 @TestId 
 Given user is logged in institution
@@ -106,7 +106,7 @@ When user check balance details through helpdesk after payment
 When update institution date to first of next month
 And user sign out from customer portal
 
-Scenario:2.0 Update institution date then Login & Logout to wait for date to be updated foe next billing
+Scenario:2.0 Update institution date then Login & Logout to wait for date to be updated for next billing
 Meta:
 @TestId 
 Given user is logged in institution
@@ -127,7 +127,7 @@ And user verify Outstanding amount for Loan Installment category
 Then update institution date to 5 days
 And user sign out from customer portal
 
-Scenario:2.2 Update institution date then Login & Logout to wait for date to be updated foe next billing
+Scenario:2.2 Update institution date then Login & Logout to wait for date to be updated for next billing
 Meta:
 @TestId 
 Given user is logged in institution
@@ -149,7 +149,7 @@ And update institution date to first of next month
 And user sign out from customer portal
 
 
-Scenario:2.4 Update institution date then Login & Logout to wait for date to be updated foe next billing
+Scenario:2.4 Update institution date then Login & Logout to wait for date to be updated for next billing
 Meta:
 @TestId 
 Given user is logged in institution
@@ -170,7 +170,7 @@ And user verify Outstanding amount for Loan Installment category
 Then update institution date to next days
 And user sign out from customer portal
 
-Scenario:2.6 Update institution date then Login & Logout to wait for date to be updated foe next billing
+Scenario:2.6 Update institution date then Login & Logout to wait for date to be updated for next billing
 Meta:
 @TestId 
 Given user is logged in institution
@@ -192,7 +192,7 @@ When update institution date to first of next month
 And user sign out from customer portal
 
 
-Scenario:2.8 Update institution date then Login & Logout to wait for date to be updated foe next billing
+Scenario:2.8 Update institution date then Login & Logout to wait for date to be updated for next billing
 Meta:
 @TestId
 Given user is logged in institution
@@ -210,7 +210,7 @@ And user verifies batch job history with job id
 Then update institution date to 5 days
 And user sign out from customer portal
 
-Scenario:3.0 Update institution date then Login & Logout to wait for date to be updated foe next billing
+Scenario:3.0 Update institution date then Login & Logout to wait for date to be updated for next billing
 Meta:
 @TestId 
 Given user is logged in institution
