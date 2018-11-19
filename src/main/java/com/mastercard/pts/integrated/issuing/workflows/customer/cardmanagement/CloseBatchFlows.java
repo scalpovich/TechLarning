@@ -21,7 +21,7 @@ public class CloseBatchFlows extends AbstractBaseFlows {
 	protected  static final Logger logger = LoggerFactory.getLogger(CloseBatchFlows.class);
 	
 	public void closeBatchExecution(){
-		closeBatchPage = navigator.navigateToPage(CloseBatchPage.class);
+		closeBatchPage=navigator.navigateToPage(CloseBatchPage.class);
 		closeBatchPage.allBatchNumberRetrieval();
 		SimulatorUtilities.wait(5000);
 		closeBatchPage.identifyBatchNumberToProcess();
@@ -32,9 +32,15 @@ public class CloseBatchFlows extends AbstractBaseFlows {
 		closeBatchPage=navigator.navigateToPage(CloseBatchPage.class);
 		closeBatchPage.processFirstBatch();
 	}
-
+	
     public void closeBatchExecutionForFileUpload(){
 		closeBatchPage=navigator.navigateToPage(CloseBatchPage.class);
 		closeBatchPage.processAllClick();
 	}
+    
+	public void closeAllBatchExecution(){
+		closeBatchPage=navigator.navigateToPage(CloseBatchPage.class);
+		closeBatchPage.processAllBatch();
+	}
+
 }

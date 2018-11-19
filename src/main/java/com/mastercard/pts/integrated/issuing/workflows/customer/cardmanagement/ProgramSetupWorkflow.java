@@ -45,6 +45,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.Devic
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceRangePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.MCCRulePlanPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.MarketingMessagePlanPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.NetworkMembershipPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.PrepaidStatementPlanPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProgramPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.StatementMessagePlanPage;
@@ -277,5 +278,21 @@ public class ProgramSetupWorkflow {
 	public void createTransactionLimitPlan(TransactionLimitPlan transactionLimitPlan, String limitType) {
 		TransactionLimitPlanPage page = navigator.navigateToPage(TransactionLimitPlanPage.class);
 		page.createTransactionLimitPlan(transactionLimitPlan,limitType);
+	}
+	
+	public void editPlan(String plan, DevicePlan device, Program program) {
+		if (plan.contains("device")) {
+			DevicePlanPage page = navigator.navigateToPage(DevicePlanPage.class);
+			page.editDevicePlan(device);
+		}
+		if (plan.contains("mcc")) {
+			MCCRulePlanPage page = navigator.navigateToPage(MCCRulePlanPage.class);
+			page.editPresentmentTimeLimitInMCCRulePlan(device,program);
+		}
+		if (plan.contains("network")) {
+			NetworkMembershipPage page=navigator.navigateToPage(NetworkMembershipPage.class);
+			page.editNetworkMembershipPlan(device);
+		}
+		
 	}
 }

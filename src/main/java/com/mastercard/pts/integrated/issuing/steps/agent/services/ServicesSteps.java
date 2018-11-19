@@ -211,6 +211,7 @@ public class ServicesSteps {
 		servicesWorkflow.deviceSaleThroughCustomerRegistration(deviceSale);
 	}
 
+	@When("registration is successful")
 	@Then("registration is successful")
 	public void thenRegistrationIsSuccessful() {
 		assertThat("Registration Failed", servicesWorkflow.getApplicationCreatedMessage(),
@@ -231,6 +232,7 @@ public class ServicesSteps {
 		servicesWorkflow.cardSaleChecker(checker);
 	}
 
+	@When("approval is successful")
 	@Then("approval is successful")
 	public void thenApprovalIsSuccessful() {
 		assertThat("Approval Failed", servicesWorkflow.getApprovalMessage(), containsString(APPROVAL_MESSAGE));

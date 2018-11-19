@@ -21,8 +21,10 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.collect.administration.AdministrationHomePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.AuthorizationSearchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.GenerateReversalPage;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
+import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpdeskWorkflow;
 
 @Workflow
 public class AuthorizationSearchWorkflow {
@@ -42,6 +44,9 @@ public class AuthorizationSearchWorkflow {
 	@Autowired
 	AuthorizationSearchPage authorizationSearchPage;
 
+	@Autowired
+	HelpdeskWorkflow helpDeskWorkFlow;
+	
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
 	public static final int BILL_AMOUNT_INDEX_VALUE = 3;
@@ -98,13 +103,25 @@ public class AuthorizationSearchWorkflow {
 			condition = actualCodeAction.contains(type) && actualDescription.contains(state);
 
 		// Device Usage Code
-		String billingAmountValue = authSearchPage.getCellTextByColumnName(1, "Billing Amount");
+		 String billingAmountValue = authSearchPage.getCellTextByColumnName(1, "Billing Amount");
+		 context.put(ConstantData.BILLING_AMOUNT, billingAmountValue);
 		if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && !ConstantData.PRE_AUTH.equalsIgnoreCase(type)){
 			device.setDeviceVelocity();
 			device.setDeviceAmountUsage(Double.parseDouble(billingAmountValue));
 		}
 
 		assertTrue("Latest (Row) Description and Code Action does not match on Authorization Search Screen", condition);
+	}
+	
+	public void generateReversalForTransaction(String deviceNumber)
+	{
+		GenerateReversalPage page = navigator.navigateToPage(GenerateReversalPage.class);
+		authorizationSearchPage.inputDeviceNumber(deviceNumber);
+		authorizationSearchPage.inputFromDate(LocalDate.now().minusDays(1));
+		authorizationSearchPage.inputToDate(LocalDate.now());
+		authorizationSearchPage.waitAndSearchForRecordToAppear();
+		helpDeskWorkFlow.clickCustomerCareEditLink();
+		page.createReversalForTransaction();
 	}
 
 	public List<String> checkTransactionFixedFee(String deviceNumber) {
@@ -183,6 +200,16 @@ public class AuthorizationSearchWorkflow {
 		logger.info("Sum of all applicable fee and amounts = {}" , availBal.getSum());
 		logger.info("Available balance after transaction amount = {}", availBal.getAvailableBal());
 		return availBal;
+	}
+	
+	public BigDecimal noteDownAvailableBalanceAfterReversal(String deviceNumber) {
+		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
+		return page.viewAvailableBalanceAfterReversalTransaction(deviceNumber);
+		
+	}
+	public String verifyReconciliationStatus(Device device) {
+		authorizationSearchPage = navigator.navigateToPage(AuthorizationSearchPage.class);
+		return authorizationSearchPage.verifyReconciliationStatus(device.getDeviceNumber());
 	}
 	
 	public String getTransactionFee(){

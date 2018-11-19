@@ -37,6 +37,12 @@ public class DeviceUsageWorkflow extends MenuFlows {
 
 	private static final String TRANSACTION = "transaction";
 
+
+	public DeviceUsage getWalletMCGUsage(DeviceUsage deviceUsage) {
+		DeviceUsagePage page = navigator.navigateToPage(DeviceUsagePage.class);
+		return page.getWalletMCGUsage(deviceUsage);
+	}
+
 	public void deviceUsageVerification(String cardNumber, String tab, DeviceUsage deviceUsage) {
 		DeviceUsagePage page = navigator.navigateToPage(DeviceUsagePage.class);
 		List<String> list = new ArrayList<>();

@@ -13,13 +13,13 @@ public class DeviceGenerationBatchFlows {
 
 	@Autowired
 	Navigator navigator;
-
+	
 	private DeviceGenerationBatchPage deviceGenerationBatchPage;
-
-	protected static final Logger logger = LoggerFactory.getLogger(DeviceGenerationBatchFlows.class);
-
-	public void deviceGenerationBatchExecution() {
-		deviceGenerationBatchPage = navigator.navigateToPage(DeviceGenerationBatchPage.class);
+	
+	protected  static final Logger logger = LoggerFactory.getLogger(DeviceGenerationBatchFlows.class);
+	
+	public void deviceGenerationBatchExecution(){
+		deviceGenerationBatchPage = navigator.navigateToPage(DeviceGenerationBatchPage.class);		
 		deviceGenerationBatchPage.allBatchNumberRetrieval();
 		SimulatorUtilities.wait(5000);
 		deviceGenerationBatchPage.identifyBatchNumberToProcess();
@@ -31,13 +31,14 @@ public class DeviceGenerationBatchFlows {
 		deviceGenerationBatchPage.processFirstBatch();
 	}
 
-	public void deviceGenerationBatchExecutionForFileUpload() {
-		deviceGenerationBatchPage = navigator.navigateToPage(DeviceGenerationBatchPage.class);
+     public void deviceGenerationBatchExecutionForFileUpload(){
+		deviceGenerationBatchPage=navigator.navigateToPage(DeviceGenerationBatchPage.class);
 		deviceGenerationBatchPage.processAllClick();
 	}
 
-	public void deviceGenerationAllBatchExecution() {
-		deviceGenerationBatchPage = navigator.navigateToPage(DeviceGenerationBatchPage.class);
-		deviceGenerationBatchPage.processAllBatch();
+     public void deviceGenerationAllBatchExecution() {
+ 		deviceGenerationBatchPage = navigator.navigateToPage(DeviceGenerationBatchPage.class);
+ 		deviceGenerationBatchPage.processAllBatch();
+ 		deviceGenerationBatchPage.clickProcessAll();
 	}
 }
