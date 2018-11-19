@@ -46,7 +46,7 @@ public class ReportVerificationWorkflow {
 	Boolean verificationStatus;
 	
     public void verifyGenericReport(GenericReport report) {
-		page = (ReportVerificationPage)getInstance(report.getReportName());
+		//page = (ReportVerificationPage)getInstance(report.getReportName());
 		Map<Object, String> reportContent = getGenericReport(report);
 		if(report.getReportRegEx()==null&&report.getReportRegEx().isEmpty()){
 			reportContent.forEach((k,v)->{
@@ -123,7 +123,7 @@ public class ReportVerificationWorkflow {
     
     public Map<Object, String> getGenericReport(GenericReport report) {
     	deleteExistingReportsFromSystem(report.getReportName());
-    	page = navigator.navigateToPage(page.getClass().getSimpleName());
+    	page = navigator.navigateToPage(report.getReportName()+"Report");
 		String reportUrl = page.generateReport(report);
 		report.setReportUrl(reportUrl);
 		report.setPassword(((String)context.get(UserManagementSteps.USERNAME)).substring(0,4)+(new DateUtils()).getDateDDMMFormat());
