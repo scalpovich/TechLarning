@@ -12,6 +12,7 @@ Meta:
 Scenario:1.1 creation of mastercard_individual_primary_emv Card credit device
 Given setting json values in excel for Credit
 When user is logged in institution
+Then update institution date to 5 days
 And for EMV Card User fills Device Plan for credit product for Mastercard
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
@@ -69,7 +70,7 @@ When user processes EOD-Credit system internal batch for Credit
 When update institution date to first of next month
 And user sign out from customer portal
 
-Scenario:3.0 Update institution date then Login & Logout to wait for date to be updated foe next billing
+Scenario:1.7 Update institution date then Login & Logout to wait for date to be updated for next billing
 Meta:
 @TestId 
 Given user is logged in institution
@@ -78,7 +79,7 @@ And user is logged in institution
 And user sign out from customer portal
 
 
-Scenario:2.9 Process Batches for billing and validated values on helpdesk
+Scenario:1.8 Process Batches for billing and validated values on helpdesk
 Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
@@ -87,7 +88,7 @@ And user verifies batch job history with job id
 Then update institution date to 5 days
 And user sign out from customer portal
 
-Scenario:3.0 Update institution date then Login & Logout to wait for date to be updated foe next billing
+Scenario:1.9 Update institution date then Login & Logout to wait for date to be updated foe next billing
 Meta:
 @TestId 
 Given user is logged in institution
@@ -96,7 +97,7 @@ And user is logged in institution
 And user sign out from customer portal
 
 
-Scenario:3.1 Process Batches for billing and validated values on helpdesk
+Scenario:2.0 Process Batches for billing and validated values on helpdesk
 Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit

@@ -43,7 +43,7 @@ And user sign out from customer portal
 !-- And device has "normal" status
 !-- And user notes down required values from helpdesk for credit
 
-Scenario:1.4 Update institution date then Login & Logout to wait for date to be updated foe next billing
+Scenario:1.4 Update institution date then Login & Logout to wait for date to be updated for next billing
 Meta:
 @TestId 
 Given user is logged in institution

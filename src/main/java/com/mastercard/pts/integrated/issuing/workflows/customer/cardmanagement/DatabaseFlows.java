@@ -23,7 +23,7 @@ public class DatabaseFlows {
 	@Autowired
 	private DBUtility dbUtil;	
 	
-	@Value("${institution}")
+	//@Value("${institution}")
 	private String institution;
 
 	private static int daysDifference;
@@ -58,6 +58,7 @@ public class DatabaseFlows {
 	}
 
 	public String getInstitutionCode() {
+		institution = System.getProperty("institution").toString();
 		return institution.substring(institution.indexOf('[') + 1, institution.indexOf(']'));
 	}
 
