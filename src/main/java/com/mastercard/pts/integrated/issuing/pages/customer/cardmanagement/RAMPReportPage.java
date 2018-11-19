@@ -103,6 +103,7 @@ public class RAMPReportPage extends AbstractBasePage implements ReportVerificati
 		WebElementUtils.pickDate(fromDatePkr, LocalDate.now());
 		WebElementUtils.pickDate(toDateDPkr, LocalDate.now());
 		selectByVisibleText(selectFileTypeDDwn, fileType);
+		selectTransactionType();
 		clickWhenClickable(generateReportBtn);
 		verifyNoErrors();
 		return verifyReportDownloaded(report.getReportName());
