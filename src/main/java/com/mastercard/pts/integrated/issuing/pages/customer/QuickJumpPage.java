@@ -23,14 +23,17 @@ public class QuickJumpPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.ID, valueToFind = "txtgoto")
 	private MCWebElement quickJumpTxt;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "img[src*='btn-qj.png']")
 	private MCWebElement searchBtn;
-	
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "div[class='clientLogo']")
+	private MCWebElement clientLogoImg;
+
 	public void quickJump(String pageCode) {
 		WebElementUtils.enterText(quickJumpTxt, pageCode);
-		searchBtn.click();
-		Assert.assertFalse("Page does not exist!", isAlertPresent());		
+		clickWhenClickable(searchBtn);
+		Assert.assertFalse("Page does not exist!", isAlertPresent());
 	}
 
 	public String getPageName() {
@@ -40,14 +43,11 @@ public class QuickJumpPage extends AbstractBasePage {
 	public boolean isAlertPresent() {
 		try {
 			Alert alert = driver().switchTo().alert();
-			if (alert != null) {
-				alert.accept();
-				return true;
-			}
+			alert.accept();
+			return true;
 		} catch (NoAlertPresentException e) {
 			return false;
 		}
-		return false;
 	}
 
 }
