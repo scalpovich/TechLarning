@@ -40,7 +40,7 @@ And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario:4 validate the High Risk MCC Report
+Scenario:4 validate the High Risk MCC/MCG Report
 Given user is logged in institution
 Then validate the MCC in RAMP-REP05 report
 And user sign out from customer portal

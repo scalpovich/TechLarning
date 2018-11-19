@@ -57,7 +57,7 @@ public class ReportVerificationWorkflow {
 					else{
 						assertTrue("Field not present in the Report"+report.getDeviceNumber(),false);
 					}
-					logger.info("{field} is present in the report",fieldValue);
+					logger.info("{} is present in the report",fieldValue);
 				});
 				
 			});
@@ -66,8 +66,8 @@ public class ReportVerificationWorkflow {
 		reportContent.forEach((k,v)-> {
 			if(v.contains(report.getDeviceNumber())){
 			report.getFieldToValidate().forEach((field,fieldValue) ->{
-				assertTrue(field+" did not match with Authoraization Report content", v.contains(fieldValue));
-				logger.info("{field} is present in the report",fieldValue);
+				assertTrue(field+" did not match with Report content", v.contains(fieldValue));
+				logger.info("{} is present in the report",fieldValue);
 			});
 			toggle();
 			}
@@ -87,7 +87,7 @@ public class ReportVerificationWorkflow {
 			reports.getFieldToValidate().forEach((field, fieldValue) -> {
 				if (v.contains(fieldValue)) {
 					toggle();
-					logger.info("{field} is present in the report", fieldValue);
+					logger.info("{} is present in the report", fieldValue);
 				}
 			});
 		});
