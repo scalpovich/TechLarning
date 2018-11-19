@@ -17,6 +17,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -76,7 +77,6 @@ import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKey
 @Workflow
 public class TransactionWorkflow extends SimulatorUtilities {
 	private static final Logger logger = LoggerFactory.getLogger(TransactionWorkflow.class);
-	private static final String EDIT_SUBFIELD_VALUE = "Edit Subfield Value - Format: n(6) [YYMMDD] ";
 	private static final String EDIT_DE_VALUE = "Edit DE Value";
 	private static final String SELECT_DE_VALUE = "Drop Down Button";
 	private static final String BILLING_CURRENCY_VALUE = "356 - Indian Rupee";
@@ -116,6 +116,23 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private static final String SIMULATOR_LICENSE_TYPE_17 = "17";
 	public static String STAGE_KEYS="00998 - Example ETEC1 - 0213";
 	private static final String SIMULATOR_LICENSE_TYPE_18 = "18";
+	private static final String EDIT_SUBFIELD_VALUE = "Edit Subfield Value - Format: n(6) [YYMMDD] ";
+	private final String ELEMENTS_CODE = "004;005;006;049;050;051;0301" ;
+	private final String DIFFERENTIAL_CURRENCY_PRESENTMENT = "Differential currency presentment";
+	private final String UNMATCH = "UNMATCH";
+	private final String FILE_TRAILER = "1644/695 File Trailer";
+
+	private HashMap<String, String> hm = new HashMap<String, String>();
+	private void initialiseHashmap(){
+		hm.put("004", "004 - Amount, Transaction");
+		hm.put("005", "005 - Amount, Reconciliation");
+		hm.put("006", "006 - Amount, Cardholder Billing");
+		hm.put("049", "049 - Currency Code, Transaction");
+		hm.put("050", "050 - Currency Code, Reconciliation");
+		hm.put("051", "051 - Currency Code, Cardholder Billing");
+		hm.put("0301", "0301 - File Amount, Checksum");
+		hm.put("012","012 - Date And Time, Local Transaction");
+	}
 	private static final String REVERSAL="Reversal";
 	private static final String STIP="STIP";
 	private static final int MAX_RETRY = 30;
@@ -255,7 +272,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 	
 	private void captureSaveScreenShot(String methodName) {
-		SimulatorUtilities.takeScreenShot(winiumDriver, methodName + "_" + new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
+		//SimulatorUtilities.takeScreenShot(winiumDriver, methodName + "_" + new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 	}
 
 	public void performOptimizedMasTransaction(String transaction, Transaction transactionData, Boolean sameCard) {
@@ -863,13 +880,17 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	public void assignUniqueFileId() throws AWTException {
 		activateMcps();
-		Actions action = new Actions(winiumDriver);
 		String fileId = RandomStringUtils.randomNumeric(5);
 		performClickOperation(MESSAGE_TYPE_INDICATOR); // selecting the table
 		winiumClickOperation("1644/697 File Header");
 		fillFileId(fileId);
 		winiumClickOperation("1644/695 File Trailer");
 		fillFileId(fileId);
+		saveIPMFile();
+	}
+
+	private void saveIPMFile() {
+		Actions action = new Actions(winiumDriver);
 		activateMcps();
 		action.moveToElement(winiumDriver.findElementByName("toolStripSplitButton1")).moveByOffset(35, 0).click().build().perform();
 		wait(1000);
@@ -903,11 +924,13 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	public String getFileData(String filePath) throws IOException {
-		try (FileInputStream fis = new FileInputStream(getTempDirectoryLocationForSimulatorResults() + "//" + filePath);) {
+		//String test = "C:\\Users\\E079917\\Desktop\\20180827_IssuingTests_Simulator"; //getTempDirectoryLocationForSimulatorResults()
+		try (FileInputStream fis = new FileInputStream(getTempDirectoryLocationForSimulatorResults()+ "//" + filePath);) {
 			BufferedReader br = new BufferedReader(new InputStreamReader(fis));
 			String fileName = br.readLine();
 			fis.close();
 			return fileName;
+
 		}
 	}
 
@@ -1454,9 +1477,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		return winiumDriver.findElementByName(clickOn).isDisplayed();
 	}
 
-	public String getAuthorizationStatus(String arnNumber, TransactionSearch ts) {
+	public String getAuthorizationStatus(String arnNumber, TransactionSearch ts, String type) {
 		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
-		return page.searchTransactionWithARN(arnNumber, ts);
+		return page.searchTransactionWithARN(arnNumber, ts, type);
 	}
 
 	public String getFeePostingStatus(String arnNumber, TransactionSearch ts) {
@@ -2122,7 +2145,119 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation("Close");
 		wait(2000);
 		winiumClickOperation("OK");
+	}
 
+	public void manipulateIPMData(String status,Transaction transactionData){
+		//startWiniumDriverWithSimulator("MCPS");
+		activateMcps();
+		try{
+			if(UNMATCH.equalsIgnoreCase(status)){
+				updateTransactionDate(LocalDate.now().minusDays(9).format(DateTimeFormatter.ofPattern("yyMMdd")),"012");
+			}
+			else if(DIFFERENTIAL_CURRENCY_PRESENTMENT.equalsIgnoreCase(status)){
+				updateIPMFileForDifferentialPresentment(transactionData);
+			}
+
+			if(!DIFFERENTIAL_CURRENCY_PRESENTMENT.equalsIgnoreCase(status)){
+				assignUniqueFileId();
+			}
+
+		}catch(Exception e){
+			logger.debug("Exception occurred while editing fields :: {}", e);
+			throw MiscUtils.propagate(e);
+		}
+	}
+
+	private void updateTransactionDate(String date,String key) throws AWTException {
+		initialiseHashmap();
+		Actions action = new Actions(winiumDriver);
+		activateMcps();
+		clickMiddlePresentmentAndMessageTypeIndicator();
+		action.moveToElement(winiumDriver.findElementByName(getElementValueFromMap(key))).doubleClick().build().perform();
+		wait(1000);
+		activateEditField();
+		action.moveToElement(winiumDriver.findElementByName(EDIT_SUBFIELD_VALUE)).moveByOffset(0, 15).doubleClick().build().perform();
+		setText("");
+		setText(date);
+		wait(1000);
+		winiumClickOperation(OK);
+		wait(1000);
+		activateEditField();
+		winiumClickOperation(SET_VALUE);
+		wait(1000);
+		winiumClickOperation(CLOSE);
+	}
+
+	private void updateAmount(String key,Transaction transactiondata) throws AWTException {
+		String amount = "" +  transactiondata.getDiffentialAmount(); //getTransactionAmount();
+		Actions action = new Actions(winiumDriver);
+		activateMcps();
+		clickMiddlePresentmentAndMessageTypeIndicator();
+		action.moveToElement(winiumDriver.findElementByName(getElementValueFromMap(key))).doubleClick().build().perform();
+		activateEditField();
+		winiumDriver.findElementByName(EDIT_DE_VALUE).getText();
+		setText("");
+		setText(amount.toString());
+		wait(2000);
+		winiumClickOperation(SET_VALUE);
+		wait(2000);
+		winiumClickOperation(CLOSE);
+	}
+
+	private String getElementValueFromMap(String key){
+		return hm.get(key);
+	}
+
+	private void updateCurrencyCode(String key,Transaction transactiondata) throws AWTException {
+		Actions action = new Actions(winiumDriver);
+		activateMcps();
+		clickMiddlePresentmentAndMessageTypeIndicator();
+		pressPageDown();
+		pressPageDown();
+		action.moveToElement(winiumDriver.findElementByName(getElementValueFromMap(key))).doubleClick().build().perform();
+		activateEditField();
+		wait(2000);
+		winiumDriver.findElementByName(SELECT_DE_VALUE).click();
+		wait(2000);
+		pressPageDown(3);
+		wait(2000);
+		winiumDriver.findElementByName(transactiondata.getDiffentialCurrency()).click();
+		winiumClickOperation(SET_VALUE);
+		wait(2000);
+		winiumClickOperation(CLOSE);
+	}
+
+	private void fillChecksumAmount(String key,Transaction transactionData) throws AWTException {
+		activateMcps();
+		Actions action = new Actions(winiumDriver);
+		performClickOperation(MESSAGE_TYPE_INDICATOR);
+		winiumClickOperation(FILE_TRAILER);
+		action.moveToElement(winiumDriver.findElementByName(getElementValueFromMap(key))).doubleClick().build().perform();
+		activateEditField();
+		setText("");
+		setText("0000"+transactionData.getDiffentialAmount());
+		wait(2000);
+		winiumClickOperation(SET_VALUE);
+		wait(2000);
+		winiumClickOperation(CLOSE);
+	}
+
+	private void updateIPMFileForDifferentialPresentment(Transaction transactionData){
+		initialiseHashmap();
+		String[] st = ELEMENTS_CODE.split(";");
+		try{
+			updateAmount(st[0],transactionData);		//Transaction Amount 
+			updateAmount(st[1],transactionData);		//Reconciliation Amount
+			updateAmount(st[2],transactionData);		//Billing Amount
+			updateCurrencyCode(st[3],transactionData);	//Transaction Currency Code
+			updateCurrencyCode(st[4],transactionData);	//Reconciliation Currency Code
+			updateCurrencyCode(st[5],transactionData);	//Billing Currency Code
+			fillChecksumAmount(st[6],transactionData);	//Transaction amount in Trailer
+			saveIPMFile();
+		}catch(Exception e){
+			logger.debug("Exception occurred while editing fields :: {}", e);
+			throw MiscUtils.propagate(e);
+		}
 	}
 
 	public void addMID_TID_Blocking(String combination, MID_TID_Blocking details) {

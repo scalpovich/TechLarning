@@ -465,7 +465,7 @@ public class TransactionSteps {
 	@Then("transaction status is \"$type\"")
 	public void thenTransactionStatusIsPresentmentMatched(String type) {
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
-		assertEquals(type, transactionWorkflow.getAuthorizationStatus(arnNumber, ts));
+		assertEquals(type, transactionWorkflow.getAuthorizationStatus(arnNumber, ts, type));
 	}
 
 	@Then("transaction fee is correctly posted")
@@ -702,5 +702,12 @@ public class TransactionSteps {
 		Assert.assertTrue("Successfully transaction search",transactionSearch.getDeviceNumber().equalsIgnoreCase(device.getDeviceNumber()));
 		context.put(ContextConstants.TRANSACTION_SEARCH_DETAILS, transactionSearch);
 		context.put(ContextConstants.DEVICE, device);
+	}
+	
+	@When("user update IPM file to get status $status")
+	public void userUpdateIPMForDuplicateRecordCheck(String status){
+		Transaction trasactiondata = Transaction.createWithProvider(provider);
+		transactionWorkflow.manipulateIPMData(status,trasactiondata);
+
 	}
 }

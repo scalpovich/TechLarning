@@ -80,6 +80,16 @@ public class TransactionSearchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Transaction Date']/ancestor::a")
 	private MCWebElement transactionDateOrderByLink;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Sequence Number')]")
+	private MCWebElement sequenceNumberText;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Reconciliation Status')]//following-sibling::td[2]/select")
+	private MCWebElement reconciliationStatusDD;
+	
+	private final String DUPLICATE_PRESENTMENT = "Duplicate presentment";
+	private final String UNMATCH_PRESENTMENT = "Unmatched Presentment";
+	private final String RECONCILIATION_STATUS_OPTIONS = "//*[contains(text(),'Reconciliation Status')]//following-sibling::td[2]/select/option";
+	
 	private String authorizationStatus;
 
 	List<String> joiningAndMembershipFees = new ArrayList();
@@ -109,12 +119,18 @@ public class TransactionSearchPage extends AbstractBasePage {
 		return retrieveARN;
 	}
 
-	public String searchTransactionWithARN(String arnNumber, TransactionSearch ts) {
-		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, ts.getProductType());
+	public String searchTransactionWithARN(String arnNumber, TransactionSearch ts, String type) {
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn,ts.getProductType());
 		WebElementUtils.enterText(searchARNTxt, arnNumber);
 		WebElementUtils.selectDropDownByVisibleText(dateDDwn, ts.getDateType());
-		selectFromDate(LocalDate.now());
+		//selectFromDate(LocalDate.now());
+		WebElementUtils.pickDate(fromDateTxt, LocalDate.now().minusDays(10));
 		selectToDate(LocalDate.now());
+		//selectFromDate(LocalDate.now());
+		if(type.equalsIgnoreCase(DUPLICATE_PRESENTMENT) || type.equalsIgnoreCase(UNMATCH_PRESENTMENT)){
+			String st = Elements(RECONCILIATION_STATUS_OPTIONS).stream().filter(x -> x.getText().contains(type)).findFirst().get().getText();
+			selectByText(reconciliationStatusDD, st);
+		}
 		clickSearchButton();
 		viewFirstRecord();
 		runWithinPopup("View Transactions", () -> {
