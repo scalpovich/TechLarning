@@ -56,6 +56,6 @@ And user sign out from customer portal
 Scenario: 1.6 Perform Purchase Reversal Transaction
 Given user perform reversal transaction of type 17
 When user is logged in institution
-Then search Purchase - Full Reversal authorization and verify 000-Successful status
+Then search Purchase Reversal authorization and verify 000-Successful status
 And validate auth report
 And user sign out from customer portal

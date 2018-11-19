@@ -1,7 +1,7 @@
 Narrative:
-In order to validate reversal functionality
+In order to validate Device Promotion Plan Priority
 As an issuer
-I want to perform reversal transaction
+I want to perform transaction
 
 Meta:
 @StoryName credit_emv_retail_Limits
@@ -28,10 +28,34 @@ And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: 1.3 Perform EMV_CASH_WITHDRAWAL Authorization transaction 
+Scenario: 1.3 Perform MSR_CASH_WITHDRAWAL Authorization transaction
 Given connection to MAS is established
-When user updates transaction amount to 10
-And perform an EMV_CASH_WITHDRAWAL MAS transaction
-Then user is logged in institution
+And perform an MSR_CASH_WITHDRAWAL MAS transaction
+Then MAS test results are verified
+And user is logged in institution
 And search CWD authorization and verify 000-Successful status
+And validate auth report
+And user sign out from customer portal
+
+Scenario: 1.4 Perform Cash withdral Reversal Transaction
+Given user perform reversal transaction of type 17
+When user is logged in institution
+Then search CWD - Full Reversal authorization and verify 000-Successful status
+And validate auth report
+And user sign out from customer portal
+
+Scenario: 1.5 Perform MSR_PURCHASE Authorization transaction
+Given user updates transaction amount to 10
+When perform an MSR_PURCHASE MAS transaction on the same card
+Then MAS test results are verified
+And user is logged in institution
+And search Purchase authorization and verify 000-Successful status
+And validate auth report
+And user sign out from customer portal
+
+Scenario: 1.6 Perform Purchase Reversal Transaction
+Given user perform reversal transaction of type 17
+When user is logged in institution
+Then search Purchase Reversal authorization and verify 000-Successful status
+And validate auth report
 And user sign out from customer portal
