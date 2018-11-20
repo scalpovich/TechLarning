@@ -73,6 +73,8 @@ public class DatabaseSteps {
 			dateTime = dateTime.plusYears(10);
 	    DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd-MM-yy");
 	    expiryDate = dateTime.format(formatter1);
+	    System.out.println("current date = " + currentDateString);
+	    System.out.println("expiry date = " + expiryDate);
 		dbFlow.updatePromotionExpiryDate(expiryDate, plan, context.get(Constants.USER_INSTITUTION_SELECTED));
 	}
 }
