@@ -4,7 +4,7 @@ As a user
 I want to assert unbilled and billed amount on helpdesk and validate statement generated
 
 Meta:
-@StoryName credit_msr_retail_billing			 
+@StoryName credit_emv_retail			 
 
 Scenario:1.0 creation of mastercard_individual_primary_msr Card credit device
 Meta:
@@ -40,6 +40,9 @@ Meta:
 @TestId 
 Given user is logged in institution
 When search Purchase authorization and verify 000-Successful status
+And user verifies available balance after transaction
+And device has "normal" status
+And user verifies available Card limit for card after transaction
 Then validate auth report
 And user sign out from customer portal
 
@@ -47,5 +50,8 @@ Scenario: 1.5 Perform Recurring Purchase Transactionn Reversal
 Given user perform reversal transaction of type 17
 When user is logged in institution
 Then search Purchase Reversal authorization and verify 000-Successful status
+And user verifies available balance after reversals transaction
+And device has "normal" status
+And user verifies available Card limit for card after transaction
 And validate auth report
 And user sign out from customer portal

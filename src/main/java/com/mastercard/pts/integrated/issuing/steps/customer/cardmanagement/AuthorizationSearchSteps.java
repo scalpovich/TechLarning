@@ -165,6 +165,7 @@ public class AuthorizationSearchSteps {
 		AvailableBalance availBal = authorizationSearchWorkflow.getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(availableBalanceBeforeTransaction);
 		assertThat("Verify Available Balance", availableBalanceBeforeTransaction.subtract(availBal.getSum()), equalTo(availBal.getAvailableBal()));
 		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, availBal.getAvailableBal());
+		context.put(ContextConstants.TRANSACTION_AMT_DIFFERENCE, availBal.getSum());
 	}
 
 	@When("verify available balance after completion transaction")
@@ -185,6 +186,14 @@ public class AuthorizationSearchSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		assertThat(INCORRECT_BALANCE_AFTER_REVERSAL, authorizationSearchWorkflow.noteDownAvailableBalanceAfterReversal(device.getDeviceNumber()),
 				equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
+	}
+	
+	@Then("user verifies available balance after reversals transaction")
+	public void userVerifyAvailableBalanceAfterReversals() {
+		BigDecimal availableBalanceBeforeTransaction = context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT);
+		AvailableBalance availBal = authorizationSearchWorkflow.getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(availableBalanceBeforeTransaction);
+		assertThat("Verify Available Balance", availableBalanceBeforeTransaction.add(context.get(ContextConstants.TRANSACTION_AMT_DIFFERENCE)), equalTo(availBal.getAvailableBal()));
+		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, availBal.getAvailableBal());
 	}
 	
 	@When("user verifies reconciliation status $status in auth search")
