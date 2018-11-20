@@ -84,6 +84,11 @@ public class LoyaltyPlanSteps {
 		assertEquals(context.get(Constants.AVAILABLE_LOYALTY_POINTS), pointsEarned);
 	}
 	
+	@Then ("verify loyalty points are not credited on issuance for promotion plan code $plan")
+	public void verifyLPNotCreditedOnIssuance() {
+		assertEquals(context.get(Constants.AVAILABLE_LOYALTY_POINTS), (Double)0.0);
+	}
+
 	@Then("calculate loyalty points")
 	public void calculateLoyaltyPoints() {
 		AuthorizationRequest request = AuthorizationRequest.createWithProvider(provider);
@@ -104,4 +109,5 @@ public class LoyaltyPlanSteps {
 		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
 		uiVerificationLoyaltyWorkflow.selectBlockedMCG(data.getLoyaltyPlan(), value);
 	}
+
 }

@@ -1211,7 +1211,7 @@ public class DevicePlanPage extends AbstractBasePage {
 				{
 					if(!DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType()))
 					{
-						String currentDateString = dbUtils.getCurrentDateForInstitution(context.get("USER_INSTITUTION_SELECTED"));
+						String currentDateString = dbUtils.getCurrentDateForInstitution(context.get(Constants.USER_INSTITUTION_SELECTED));
 						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
 					    LocalDateTime dateTime = LocalDateTime.parse(currentDateString, formatter);
 					    dateTime = dateTime.plusYears(10);

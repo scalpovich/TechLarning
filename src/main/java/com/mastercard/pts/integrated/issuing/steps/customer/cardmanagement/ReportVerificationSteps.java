@@ -76,8 +76,8 @@ public class ReportVerificationSteps {
 	public void verifyLoyaltyReport(String promoPlan, String type) {
 		Device device = context.get(ContextConstants.DEVICE);
 		GenericReport report = GenericReport.createWithProvider(provider);
-		String date = dbUtils.getCurrentDateForInstitution(context.get("USER_INSTITUTION_SELECTED"));
-		report.setPassword(((String)context.get(UserManagementSteps.USERNAME)).substring(0,4)+(new DateUtils()).getDateDDMMFormat(dbUtils.getCurrentDateForInstitution(context.get("USER_INSTITUTION_SELECTED"))));
+		String date = dbUtils.getCurrentDateForInstitution(context.get(Constants.USER_INSTITUTION_SELECTED));
+		report.setPassword(((String)context.get(UserManagementSteps.USERNAME)).substring(0,4)+(new DateUtils()).getDateDDMMFormat(dbUtils.getCurrentDateForInstitution(context.get(Constants.USER_INSTITUTION_SELECTED))));
 		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
 		report.setDeviceType(type);
 		report.setLoyaltyPlan(data.getLoyaltyPlan().substring(0, data.getLoyaltyPlan().indexOf('[')-1));

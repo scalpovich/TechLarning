@@ -79,8 +79,8 @@ public class AuthorizationSearchWorkflow {
         SimulatorUtilities.wait(5000);
 		AuthorizationSearchPage authSearchPage = navigator.navigateToPage(AuthorizationSearchPage.class);
 		authSearchPage.inputDeviceNumber(device.getDeviceNumber());
-		String query = Constants.INSTITUTION_NUMBER_QUERY_START + context.get("USER_INSTITUTION_SELECTED") + Constants.INSTITUTION_NUMBER_QUERY_END;
-		String colName = Constants.INSTITUTION_DATE + "('"+ context.get("USER_INSTITUTION_SELECTED") + "')";
+		String query = Constants.INSTITUTION_NUMBER_QUERY_START + context.get(Constants.USER_INSTITUTION_SELECTED) + Constants.INSTITUTION_NUMBER_QUERY_END;
+		String colName = Constants.INSTITUTION_DATE + "('"+ context.get(Constants.USER_INSTITUTION_SELECTED) + "')";
 		LocalDate date = DateUtils.convertInstitutionCurrentDateInLocalDateFormat(dbUtils.getSingleRecordColumnValueFromDB(query, colName));
 		authSearchPage.inputFromDate(date);
 		authSearchPage.inputToDate(date);

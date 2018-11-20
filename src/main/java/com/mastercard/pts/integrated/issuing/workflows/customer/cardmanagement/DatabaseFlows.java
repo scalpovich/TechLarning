@@ -77,4 +77,9 @@ public class DatabaseFlows {
 		String queryString = "update LYT_PLAN_DEF set LYT_EXPIRY_FLG='A' where BANK_CODE='" + bankCode + "' and LYT_PLAN_CODE='" + planCode + "'";
 		dbUtil.executeUpdate(queryString);
 	}
+
+	public void updatePromotionExpiryDate(String expiryDate, String promoCode, String instiCode) {
+		String queryString = "update Lyt_Promotion_Def set LYP_EXPIRY_DTTM='" + expiryDate + "' where LYP_PROMOTION_CODE='" + promoCode + "' and bank_code='" + instiCode + "'";
+		dbUtil.executeUpdate(queryString);
+	}
 }

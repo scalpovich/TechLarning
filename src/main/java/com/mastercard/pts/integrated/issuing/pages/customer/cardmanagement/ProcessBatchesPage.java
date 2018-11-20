@@ -407,8 +407,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			}
 			try {
 				if ((batch.getProductType().equalsIgnoreCase(ProductType.CREDIT)) || (batch.getBatchName().equalsIgnoreCase("End Of Day - Credit [DAILY]"))) {
-					String query = Constants.INSTITUTION_NUMBER_QUERY_START + context.get("USER_INSTITUTION_SELECTED") + Constants.INSTITUTION_NUMBER_QUERY_END;
-					String colName = Constants.INSTITUTION_DATE+"('"+ context.get("USER_INSTITUTION_SELECTED") +"')";
+					String query = Constants.INSTITUTION_NUMBER_QUERY_START + context.get(Constants.USER_INSTITUTION_SELECTED) + Constants.INSTITUTION_NUMBER_QUERY_END;
+					String colName = Constants.INSTITUTION_DATE+"('"+ context.get(Constants.USER_INSTITUTION_SELECTED) +"')";
 					inputToDate(DateUtils.convertInstitutionCurrentDateInLocalDateFormat(dbUtils.getSingleRecordColumnValueFromDB(query, colName)));
 					submitAndVerifyBatch();
 				} else {

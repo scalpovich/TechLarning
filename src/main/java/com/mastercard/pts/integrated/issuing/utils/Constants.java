@@ -480,4 +480,5 @@ public class Constants {
 	public static final String INSTITUTION_NUMBER_QUERY_START = "SELECT INSTITUTION_DATE('";
 	public static final String INSTITUTION_NUMBER_QUERY_END = "') from dual";
 	public static final String INSTITUTION_DATE = "INSTITUTION_DATE";
+	public static final String USER_INSTITUTION_SELECTED = "USER_INSTITUTION_SELECTED";
 }
