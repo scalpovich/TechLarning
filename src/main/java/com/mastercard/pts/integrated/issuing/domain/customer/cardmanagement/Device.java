@@ -793,7 +793,6 @@ public class Device {
 	public void setLoanAccountNumber(String loanAccountNumber) {
 		this.loanAccountNumber = loanAccountNumber;
 	}
-}
 	
 	public String getMandatoryFieldValue() {
 		return mandatoryFieldValue;
