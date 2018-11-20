@@ -627,7 +627,7 @@ public class HelpDeskSteps {
 	public void thenDeviceHasStatus(String deviceStatus) {
 		String expectedStatus = DeviceStatus.fromShortName(deviceStatus);
 		Device device = context.get(ContextConstants.DEVICE);
-		device.setAppliedForProduct(device.getProductType());
+		//device.setAppliedForProduct(device.getProductType());
 		String actualStatus = helpdeskWorkflow.getDeviceStatus(device);
 		assertThat(STATUS_INCORRECT_INFO_MSG, actualStatus, equalTo(expectedStatus));
 		context.put(ContextConstants.DEVICE, device);
