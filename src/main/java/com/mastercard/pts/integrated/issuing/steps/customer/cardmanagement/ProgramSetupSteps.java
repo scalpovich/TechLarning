@@ -1057,6 +1057,10 @@ public class ProgramSetupSteps {
 					context.put(ConstantData.JSON_DATA_DRIVEN_EXECUTION, true);
 					walletPlan.setCreditPlan(data.getCreditPlan());
 					walletPlan.setBillingCyleCode(data.getBillingCycle());
+					if(csvData.get("SURCHARGE_PLAN") != null && !csvData.get("SURCHARGE_PLAN").toString().isEmpty())
+						walletPlan.setSurchargePlan(csvData.get("SURCHARGE_PLAN").toString());
+					if(csvData.get("SURCHARGE_WAIVER_PLAN") != null && !csvData.get("SURCHARGE_WAIVER_PLAN").toString().isEmpty())
+						walletPlan.setSurchargeWaiverPlan(csvData.get("SURCHARGE_WAIVER_PLAN").toString());
 				}
 			}
 		}
