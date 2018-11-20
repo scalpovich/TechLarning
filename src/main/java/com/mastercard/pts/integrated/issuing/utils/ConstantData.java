@@ -146,6 +146,10 @@ public class ConstantData {
 	public static final String PDF_FORMAT = "PDF Format [pdf]";
 	public static final String DEVICE_ACTIVITY_REPORT_FILE_NAME = "Device Activity.pdf";
 	public static final String RETAIL_TO_LOAN = 	"215 - Retail Transaction to Loan";	
+	public static final String RETAIL_TO_LOAN_SR = "Retail Transaction to Loan [215]";
+	public static final String LOAN_PRE_CLOSURE_SR = "Loan Preclosure [242]";	
+	public static final String LOAN_PRE_CLOSURE_FEE = "Loan PreClosure Fee";
+	
 	
 	public static final String APPLIED_ON_LOAN_AMOUNT= 	"Loan Amount [LA]";		
 	public static final String LOAN_INSTALLMENT_OUTSTANDING= 	"LOAN_INSTALLMENT_OUTSTANDING";	
