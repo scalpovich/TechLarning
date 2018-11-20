@@ -97,7 +97,7 @@ public class ApplicationBusinessMandatoryFieldsPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByValue(customerTypeDDwn, applicationBusinessMandatoryFields.getCustomerType());
 			SimulatorUtilities.wait(3000);
 			WebElementUtils.selectDropDownByVisibleText(programCodeDDwn, applicationBusinessMandatoryFields.getProgramCode());
-			clickOnElementWhenClickable(searchBtn);
+			clickSearchButton();
 			SimulatorUtilities.wait(2000);
 			selectMandatoryFields(applicationBusinessMandatoryFields.getMandatoryFields());
 			clickSaveButton();

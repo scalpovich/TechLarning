@@ -102,7 +102,8 @@ public class AuthorizationSearchWorkflow {
 			condition = actualCodeAction.contains(type) && actualDescription.contains(state);
 
 		// Device Usage Code
-		String billingAmountValue = authSearchPage.getCellTextByColumnName(1, "Billing Amount");
+		 String billingAmountValue = authSearchPage.getCellTextByColumnName(1, "Billing Amount");
+		 context.put(ConstantData.BILLING_AMOUNT, billingAmountValue);
 		if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && !ConstantData.PRE_AUTH.equalsIgnoreCase(type)){
 			device.setDeviceVelocity();
 			device.setDeviceAmountUsage(Double.parseDouble(billingAmountValue));
@@ -206,5 +207,9 @@ public class AuthorizationSearchWorkflow {
 		return page.viewAvailableBalanceAfterReversalTransaction(deviceNumber);
 		
 	}
-
+	public String verifyReconciliationStatus(Device device) {
+		authorizationSearchPage = navigator.navigateToPage(AuthorizationSearchPage.class);
+		return authorizationSearchPage.verifyReconciliationStatus(device.getDeviceNumber());
+		
+	}
 }

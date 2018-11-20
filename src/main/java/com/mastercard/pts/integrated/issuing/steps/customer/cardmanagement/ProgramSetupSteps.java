@@ -2,6 +2,12 @@ package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.mastercard.pts.integrated.issuing.steps.customer.transaction.TransactionSteps;
 
 import org.jbehave.core.annotations.Composite;
 import org.jbehave.core.annotations.Given;
@@ -37,6 +43,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCCRulePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCG;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCGLimitPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MarketingMessageDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MarketingMessagePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PrepaidStatementPlan;
@@ -129,6 +136,8 @@ public class ProgramSetupSteps {
 	
 	private TransactionFeeWaiverPlan transactionFeeWaiverPlan;
 	
+	private MCGLimitPlan mcgLimitPlan;
+	
 	private static final String TRANSACTION_FEE_WAIVER_PLAN = "TRANSACTION_FEE_WAIVER_PLAN";
 
 	private static final String CARD_PACKID_GENERATION_TEMPLATE_FOR_DEVICE2 = "CARD_PACKID_GENERATION_TEMPLATE_FOR_DEVICE2";
@@ -144,7 +153,14 @@ public class ProgramSetupSteps {
 	private static final String PICTURE_CODE_FOR_DEVICE2 = "PICTURE_CODE_FOR_DEVICE2";
 
 	private static final String EMBOSSING_VENDOR_FOR_DEVICE2 = "EMBOSSING_VENDOR_FOR_DEVICE2";
+	
+	private static final Logger logger = LoggerFactory.getLogger(ProgramSetupSteps.class);
 
+	private static final String JOINING_FEE_PLAN = "JOINING_FEE_PLAN";
+
+	private static final String DEFAULT_PRESENTMENT_TIME_LIMIT = "3";
+	
+	private static final String MERCHANT_CODE = "5999";
 	@When("prepaid $deviceType device is available with balance amount")
 	@Given("prepaid $deviceType device is available with balance amount")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
@@ -604,29 +620,33 @@ public class ProgramSetupSteps {
 	}
 	
 	@When("for $deviceType User fills Device Plan for $type product for $interchange")
-	public void whenUserFillsDevicePlanForInterchangeAndDeviceType(String deviceType,String type,String interchange) {
+	public void whenUserFillsDevicePlanForInterchangeAndDeviceType(String deviceType, String type, String interchange) {
 		devicePlan = DevicePlan.createProviderForCredit(provider);
-		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
 		devicePlan.setProductType(ProductType.fromShortName(type));
 		if (Objects.nonNull(deviceJoiningAndMemberShipFeePlan)) {
-		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+			devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
 		} else {
 			devicePlan.setBaseDeviceJoiningMemberShipPlan(data.getDeviceJoiningAndMemberShipFeePlan());
 		}
+		Map<String, Object> storyTestData = context.get(TestContext.KEY_STORY_DATA);
+		if (storyTestData.containsKey(JOINING_FEE_PLAN)) {
+			devicePlan.setBaseDeviceJoiningMemberShipPlan(provider.getString(JOINING_FEE_PLAN));
+		}
 		if (Objects.nonNull(deviceEventBasedFeePlan)) {
-		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+			devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
 		} else {
 			devicePlan.setBaseDeviceEventBasedPlan(data.getDeviceEventBasedFeePlan());
 		}
 		devicePlan.setAssociation(interchange);
 		if (Objects.nonNull(transactionLimitPlan)) {
-		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+			devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
 		} else {
 			devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());
 		}
 		if (Objects.nonNull(transactionPlan)) {
-		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
-		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+			devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+			devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
 		} else {
 			setPinRequiredToDefaultState();
 			devicePlan.setAfterKYC(data.getTransactionPlan());
@@ -639,28 +659,33 @@ public class ProgramSetupSteps {
 	}
 	
 	@When("for $deviceType User fills without pin Device Plan for $type product for $interchange")
-	public void whenUserFillsDevicePlanForInterchangeAndDeviceTypeWithoutPin(String deviceType,String type,String interchange) {
+	public void whenUserFillsDevicePlanForInterchangeAndDeviceTypeWithoutPin(String deviceType, String type,
+			String interchange) {
 		setPinRequiredToFalse();
 		devicePlan = DevicePlan.createProviderForCredit(provider);
-		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
 		if ("false".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString()))
 			devicePlan.setIsPinLess("YES");
 		devicePlan.setProductType(ProductType.fromShortName(type));
 		if (Objects.nonNull(deviceJoiningAndMemberShipFeePlan) && Objects.nonNull(deviceEventBasedFeePlan)) {
-		devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
-		devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
+			devicePlan.setBaseDeviceJoiningMemberShipPlan(deviceJoiningAndMemberShipFeePlan.buildDescriptionAndCode());
+			devicePlan.setBaseDeviceEventBasedPlan(deviceEventBasedFeePlan.buildDescriptionAndCode());
 		} else {
 			devicePlan.setBaseDeviceJoiningMemberShipPlan(data.getDeviceJoiningAndMemberShipFeePlan());
 			devicePlan.setBaseDeviceEventBasedPlan(data.getDeviceEventBasedFeePlan());
 		}
+		Map<String, Object> storyTestData = context.get(TestContext.KEY_STORY_DATA);
+		if (storyTestData.containsKey(JOINING_FEE_PLAN)) {
+			devicePlan.setBaseDeviceJoiningMemberShipPlan(provider.getString(JOINING_FEE_PLAN));
+		}
 		devicePlan.setAssociation(interchange);
 		if (Objects.nonNull(transactionLimitPlan) && Objects.nonNull(transactionPlan)) {
-		devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
-		devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
-		devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
+			devicePlan.setTransactionLimitPlan(transactionLimitPlan.buildDescriptionAndCode());
+			devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
+			devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
 		} else {
 			devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());
-         	devicePlan.setTransactionFeePlan(data.getTransactionFeePlan()); 
+			devicePlan.setTransactionFeePlan(data.getTransactionFeePlan());
 			devicePlan.setAfterKYC(data.getTransactionPlan());
 			devicePlan.setBeforeKYC(data.getTransactionPlan());
 		}
@@ -1022,6 +1047,7 @@ public class ProgramSetupSteps {
 	public void whenUserFillsWalletPlan(String type) {
 		walletPlan = WalletPlan.createWithProvider(dataProvider, provider);
 		walletPlan.setProductType(ProductType.fromShortName(type));
+		setMCGLimitPlan();
 		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			walletPlan.setCreditPlan(context.get(CreditConstants.CREDIT_PLAN));
 			walletPlan.setBillingCyleCode(context.get(CreditConstants.BILLING_CYCLE));
@@ -1036,6 +1062,7 @@ public class ProgramSetupSteps {
 		Map<String, Object> csvData = context.get(TestContext.KEY_STORY_DATA);
 		walletPlan.setProductType(ProductType.fromShortName(type));
 		walletPlan.setProgramType(programtype);
+		setMCGLimitPlan();
 		context.put(ContextConstants.WALLET, walletPlan);
 		if (walletPlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)) {
 			if (Objects.nonNull(context.get(CreditConstants.CREDIT_PLAN))) {
@@ -1287,8 +1314,8 @@ public class ProgramSetupSteps {
 	@When("user fills Merchant Category Group")
 	public void fillsCreatesMCG() {
 		context.put(ContextConstants.MCG, mcg);
-		String msg = mcgflows.addNewMCG();
-		mcg.setMCG(msg);
+		mcg = MCG.getMCGDetails(provider);
+		mcgflows.addNewMCG(mcg);
 	}
 
 	@When("create wallet Plan for \"$type\" product and program \"$programtype\" with usage \"$usageType\"")
@@ -1660,7 +1687,25 @@ public class ProgramSetupSteps {
 		transactionLimitPlan = TransactionLimitPlan.createWithProvider(dataProvider);
 		transactionLimitPlan.setTransactionLimitPlanCode(provider.getString(limitType));
 	}
-
+	@When("user edits Presentment Time Limit in $plan")
+	public void userEditsPresentmentTimeLimit(String plan) {
+		DevicePlan device = context.get(ContextConstants.DEVICE_PLAN);
+		device.setTransSetPresentmentTimeLimit(DEFAULT_PRESENTMENT_TIME_LIMIT);
+		device.setMerchantCode(MERCHANT_CODE);
+		programSetupWorkflow.editPlan(plan,device,program);
+	}
+	
+	public void setMCGLimitPlan(){
+		if (context.get(ContextConstants.MCG_LIMIT_PLAN) != null) {
+			mcgLimitPlan = context.get(ContextConstants.MCG_LIMIT_PLAN);
+			walletPlan.setMcgLimitPlan(mcgLimitPlan.getMcgLimitPlanCode());
+		} else {
+			mcgLimitPlan =  MCGLimitPlan.getMCGLimitPlanData(provider);
+            mcgLimitPlan.setMcgLimitPlanCode(walletPlan.getMcgLimitPlan());
+            mcgLimitPlan.setMcgCode(walletPlan.getMCG());
+            context.put(ContextConstants.MCG_LIMIT_PLAN, mcgLimitPlan);
+		}
+	}
 
 
 }

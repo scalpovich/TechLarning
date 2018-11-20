@@ -113,7 +113,6 @@ public class WebElementUtils {
 			Select sel = new Select(asWebElement(element));
 			sel.selectByVisibleText(visibleText);
 		}
-
 	}
 
 	public static void selectDDByVisibleText(MCWebElement element, String visibleText) {
