@@ -44,6 +44,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGe
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -1708,7 +1709,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		runWithinPopup("Process Loan Pre-Closure", ()->{	
 			SimulatorUtilities.wait(500);
 			preclosureFee=preclosureFeeTxt.getAttribute("value");
-			enterNote("Automation");
+			enterNote(MiscUtils.randomAlphabet(10));
 			SimulatorUtilities.wait(3000);	
 			clickWhenClickable(processBtn);	
 			waitForElementVisible(okBtn);
