@@ -10,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 import java.awt.AWTException;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.text.DecimalFormat;
 
 import org.apache.commons.lang3.StringUtils;
@@ -130,11 +131,13 @@ public class TransactionSteps {
 
 		String temp = transaction;
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
-		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));
+		if(!Objects.isNull(context.get(ConstantData.IS_PIN_REQUIRED))){
+			MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));				
 		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
 			// ECOMM are pinless tranasactions
 			if (!transaction.toLowerCase().contains("ecom"))
 				temp = transaction + "_PIN";
+		}
 		}
 		performOperationOnSamecard(false);
 		givenOptimizedTransactionIsExecuted(temp);
@@ -281,7 +284,7 @@ public class TransactionSteps {
 		}
 		// changed ECOMMERCE to ECOM
 		if (transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE") || transactionWorkflow.isContains(transaction, "ASI_") || transactionWorkflow.isContains(transaction, "MMSR")
-				|| transactionWorkflow.isContains(transaction, ConstantData.THREE_D_SECURE_TRANSACTION)) {
+				|| transactionWorkflow.isContains(transaction, ConstantData.THREE_D_SECURE_TRANSACTION) || transactionWorkflow.isContains(transaction, "3D_SECURE_SCENARIO")) {
 			// for pinless card, we are not performing CVV validation as we do not know the CVV as this is fetched from embosing file on LInuxbox
 			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data()); // Transaction currency code
 		}
