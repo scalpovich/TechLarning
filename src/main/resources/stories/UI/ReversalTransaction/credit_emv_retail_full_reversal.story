@@ -67,3 +67,26 @@ When user is logged in institution
 Then search Purchase Reversal authorization and verify 000-Successful status
 And validate auth report
 And user sign out from customer portal
+
+
+Scenario:1.6 Perform Unique transaction
+Meta:
+TestID TC831213
+Given user updates transaction amount to 10
+When perform an EMV_PURCHASE_T_E_UNIQUE MAS transaction on the same card
+Then MAS test results are verified
+And MAS simulator is closed
+And user is logged in institution
+And search Purchase authorization and verify 000-Successful status
+And validate auth report
+And user sign out from customer portal
+
+Scenario: 1.6 Perform Unique Transactionn Reversal
+Meta:
+TestID TC831213
+Given user perform reversal transaction of type 17
+When user is logged in institution
+Then search Purchase Reversal authorization and verify 000-Successful status
+And validate auth report
+And user sign out from customer portal
+
