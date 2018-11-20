@@ -1,5 +1,5 @@
 Narrative:
-In order to verify unique transaction on Credit EMV card
+In order to verify T&E Unique transaction on Credit EMV card
 As an issuer
 I want to authorize transactions for EMV Credit card
 
@@ -23,7 +23,7 @@ And user notes down available Card limit for card
 Then user sign out from customer portal
 And embossing file batch was generated in correct format
 
-Scenario:2 Perform EMV-RetailGeneralPurposeCard Purchase 1st transaction
+Scenario:2 Perform EMV-Retail Card Travel & Expense Unique 1st transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE_T_E_UNIQUE MAS transaction
 Then MAS test results are verified
