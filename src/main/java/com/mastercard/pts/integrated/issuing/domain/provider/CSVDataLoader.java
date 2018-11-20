@@ -1,10 +1,14 @@
 package com.mastercard.pts.integrated.issuing.domain.provider;
 
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -12,10 +16,13 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 
 @Component("defaultDataLoader")
 public class CSVDataLoader implements DataLoader {
@@ -25,7 +32,12 @@ public class CSVDataLoader implements DataLoader {
 
 	@Value("./src/main/resources/config/${env}/Data/")
 	private String csvPath;
-
+	
+	@Autowired
+	private TestContext context;
+	
+	public static int CSV_Mandatory_Fix_Position = 174;
+	
 	@Override
 	public Optional<Map<String, String>> loadData(String storyName) {
 		if (!storyName.isEmpty()) {
@@ -78,6 +90,36 @@ public class CSVDataLoader implements DataLoader {
 			}
 		}
 		return Optional.empty();
+	}
+	
+	public List loadRecordDataFromCSV(int columnId,String columnValue){
+		String filePath = "./src/main/resources/config/stageSA/CHD110088C161118121629000001.csv";
+		ArrayList<String> list = new ArrayList<String>();
+		try (FileReader is = new FileReader(filePath)) {
+			LOGGER.info("Starting to read test data from csv file...");
+			Iterable<CSVRecord> records = CSVFormat.EXCEL.parse(is);
+			for (CSVRecord record : records) {
+				System.out.println("record.get(columnId) :" + record.get(columnId));
+				if (record.get(columnId).equals(columnValue)) {
+					Iterator<String> itr = record.iterator();
+					while (itr.hasNext()) {
+						list.add(itr.next());
+					}
+					return list;
+				}
+			}
+		} catch (IOException e) {
+			LOGGER.error("Fail to load data from CSV", e);
+			MiscUtils.propagate(e);
+		}
+		return list;
+	}
+	
+	
+	
+	public void compareValueFromCSV(int positionInCSV){
+		loadRecordDataFromCSV(CSV_Mandatory_Fix_Position, context.get(ContextConstants.APPLICATION_NUMBER)).get(positionInCSV).equals(context.get(ContextConstants.DEVICE_NUMBER));
+		//loadRecordDataFromCSV(174, "537716T3445U0000011942").get(178).equals("T3445U");
 	}
 
 }

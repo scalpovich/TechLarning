@@ -82,6 +82,10 @@ public class CreditConstants {
 	public static final String CREDIT_LIMIT_GREATER_THAN_MAXIMUM = "CREDIT_LIMIT_GREATER_THAN_MAXIMUM";
 
 	public static final String EXISTING_BATCH="EXISTING_BATCH";
+	
+	public static final String LOCAL_DESTINATION_PATH = "LOCAL_DESTINATION_PATH";
+	
+	public static final String CSV_FILE_NAME = "CSV_FILE_NAME";
 
 	private CreditConstants() {
 	}

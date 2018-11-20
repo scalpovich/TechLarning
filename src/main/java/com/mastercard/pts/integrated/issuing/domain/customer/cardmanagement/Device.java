@@ -109,6 +109,7 @@ public class Device {
   	private static double deviceAmountUsage = 0.00;
   	private static double deviceVelocity = 0;
   	private String dedupe;
+  	private String mandatoryFieldValue;
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
 		device.setApplicationType(provider.getString(APPLICATION_TYPE));
@@ -718,5 +719,13 @@ public class Device {
 
 	public void setDedupe(String dedupe) {
 		this.dedupe = dedupe;
+	}
+	
+	public String getMandatoryFieldValue() {
+		return mandatoryFieldValue;
+	}
+
+	public void setMandatoryFieldValue(String mandatoryFieldValue) {
+		this.mandatoryFieldValue = mandatoryFieldValue;
 	}
 }
