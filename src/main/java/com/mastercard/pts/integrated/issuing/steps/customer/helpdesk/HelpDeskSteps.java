@@ -926,7 +926,7 @@ public class HelpDeskSteps {
 		@Then("user verifies loyalty details for $type device")
 	public void verifyLoyaltyDetails(String type) {
 		Double availablePts, accumulatedPts;
-		Map<String, String> points = givenUserHasLoyaltyPointsDetails(type);
+		Map<String, String> points = getLoyaltyDetails();
 		if(points.get(Constants.AVAILABLE_LOYALTY_POINTS).trim().equals("-"))
 			availablePts = 0.0;
 		else
@@ -943,9 +943,7 @@ public class HelpDeskSteps {
 	@Then("user has loyalty points details for $type device")
 	public Map<String, String> givenUserHasLoyaltyPointsDetails(String type) {
 		Double zero = 0.0;
-		Device device = context.get(ContextConstants.DEVICE);
-		helpdeskWorkflow.navigateToLoyaltyDetails(device);
-		Map<String, String> points = helpdeskWorkflow.getLoyaltyDetails();
+		Map<String, String> points = getLoyaltyDetails();
 		
 		if(points.get(Constants.ACCUMULATED_REVERSED_POINTS).trim().equals("-"))
 			context.put(Constants.ACCUMULATED_REVERSED_POINTS, zero);
@@ -960,6 +958,13 @@ public class HelpDeskSteps {
 		return points;
 	}
 	
+	public Map<String, String> getLoyaltyDetails() {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskWorkflow.navigateToLoyaltyDetails(device);
+		Map<String, String> points = helpdeskWorkflow.getLoyaltyDetails();
+		return points;
+	}
+
 	@Then("user waits for $mins minutes")
 	public void waitFor(int mins) {
 		SimulatorUtilities.wait(mins*60000);

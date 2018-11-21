@@ -175,4 +175,11 @@ public class PromotionPlanPage extends AbstractBasePage {
 		});
 		return pointsEarned;
 	}
+
+	public void selectPromoRulesMCG(String value) {
+		runWithinPopup(EDIT_PROMOTION_PLAN, () -> {
+			WebElementUtils.selectDropDownByValue(mcgRuleDdwn, value);
+			saveOrDetailsOrSearchClick();
+		});
+	}
 }

@@ -51,4 +51,10 @@ public class PromotionPlanSteps {
 		context.put(ContextConstants.PROMOTION_PLAN_AMT_SPENT, amtSpent);
 		context.put(ContextConstants.PROMOTION_PLAN_POINTS_EARNED, ptsEarned);
 	}
+
+	@Then("select promotion rules MCG as $mcg for promotion plan $plan")
+	public void selectBlockedMCG(String mcg, String plan) {
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+		uiVerificationLoyaltyWorkflow.selectPromoRulesMCG(plan, mcg);
+	}
 }

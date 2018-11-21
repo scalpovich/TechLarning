@@ -25,6 +25,7 @@ When user notes down available Card limit for card
 Then user notes down max loyalty points for plan
 And user notes down promotion plan details for AUTO
 Then user has loyalty points details for Credit device
+Then select promotion rules MCG as AUT for promotion plan AUTO
 And user raises an authorization request
 And status of request is "approved"
 Then calculate loyalty points

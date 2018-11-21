@@ -114,4 +114,9 @@ public class UiVerificationLoyaltyWorkflow {
 		page.selectBlockedMCG(value);
 	}
 
+	public void selectPromoRulesMCG(String plan, String value) {
+		PromotionPlanPage page = navigator.navigateToPage(PromotionPlanPage.class);
+		page.searchByPlanCode(plan.substring(plan.indexOf("[")+1, plan.indexOf("]")));
+		page.selectPromoRulesMCG(value);
+	}
 }
