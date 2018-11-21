@@ -149,6 +149,7 @@ public class ConstantData {
 	public static final String RETAIL_TO_LOAN_SR = "Retail Transaction to Loan [215]";
 	public static final String LOAN_PRE_CLOSURE_SR = "Loan Preclosure [242]";	
 	public static final String LOAN_PRE_CLOSURE_FEE = "Loan PreClosure Fee";
+	public static final String LOAN_CANCELLATION_FEE = "Loan Cancellation Fee";
 	
 	
 	public static final String APPLIED_ON_LOAN_AMOUNT= 	"Loan Amount [LA]";		

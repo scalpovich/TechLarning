@@ -1008,7 +1008,7 @@ public class HelpDeskSteps {
 		}else if(serviceCode.equalsIgnoreCase(ConstantData.LOAN_PRE_CLOSURE_SR)){
 			context.put(ConstantData.LOAN_PRE_CLOSURE_FEE,helpdeskWorkflow.raiseLoanPreClosureRequest(helpdeskGeneral,loanPlan,device));			
 		}else if(serviceCode.equalsIgnoreCase("Loan Cancellation")){
-			context.put("Loan Cancellation Fee",helpdeskWorkflow.raiseLoanCancellationRequest(loanPlan,device,helpdeskGeneral));
+			context.put(ConstantData.LOAN_CANCELLATION_FEE,helpdeskWorkflow.raiseLoanCancellationRequest(loanPlan,device,helpdeskGeneral));
 			
 		}
 		
@@ -1050,7 +1050,7 @@ public class HelpDeskSteps {
 							+ Double.valueOf(loanPlan.getCancellationFeePercentOfLoanAmount())
 									* Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT)))
 							/ 100);
-			actualFee = context.get("Loan Cancellation Fee");
+			actualFee = context.get(ConstantData.LOAN_CANCELLATION_FEE);
 		}
 		assertThat("Loan Preclosure Fee is not same", actualFee, equalTo(expectedFee));
 	}
