@@ -1,7 +1,7 @@
 Narrative:
-In order to validate billing with statemnt create device with billing cycle 1 perform authorization with clearing along with billing batches  
-As a user
-I want to assert unbilled and billed amount on helpdesk and validate statement generated
+In order to validate Reversal Funcationality
+As an issuer
+I want to perform reversal transaction
 
 Meta:
 @StoryName credit_emv_retail			 
@@ -24,6 +24,7 @@ When credit device is created using new device screen for Individual and Primary
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And device has "normal" status
+And user notes down available Card limit for card
 Then user sign out from customer portal
 And embossing file batch was generated in correct format
 
@@ -35,7 +36,7 @@ When perform an MSR_RECURRING_PUR_TXN MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
 
-Scenario: 1.4 Generate Auth File for Clearing
+Scenario: 1.4 Validate Auth in CSR
 Meta:
 @TestId 
 Given user is logged in institution

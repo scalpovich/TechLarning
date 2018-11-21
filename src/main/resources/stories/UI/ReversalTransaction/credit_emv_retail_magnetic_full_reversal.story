@@ -1,7 +1,7 @@
 Narrative:
-In order to validate Device Promotion Plan Priority
+In order to validate Reversal Funcationality
 As an issuer
-I want to perform transaction
+I want to perform reversal transaction
 
 Meta:
 @StoryName credit_emv_retail_Limits
