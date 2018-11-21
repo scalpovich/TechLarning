@@ -261,6 +261,8 @@ public class DevicePlan implements HasCodeAndDescription {
 	private String emvPlanPinUnblockPriority;
 	private String emvIssuerScriptingNegative;
 	
+	private String merchantCode;
+	
 	public String getEmvIssuerScriptingNegative() {
 		return emvIssuerScriptingNegative;
 	}
@@ -1436,5 +1438,15 @@ public class DevicePlan implements HasCodeAndDescription {
 	public void setTransactionFeeWaiverPlan(String transactionFeeWaiverPlan) {
 		this.transactionFeeWaiverPlan = transactionFeeWaiverPlan;
 	}
+
+	public String getMerchantCode() {
+		return merchantCode;
+	}
+
+	public void setMerchantCode(String merchantcode) {
+		this.merchantCode = merchantCode;
+	}
+
+	
 
 }

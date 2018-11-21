@@ -4,24 +4,24 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
-import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanPlan;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
-import com.mastercard.pts.integrated.issuing.utils.ConnectionUtils;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
+import com.mastercard.pts.integrated.issuing.utils.ConnectionUtils;
+import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 
 @Workflow
 public class HelpdeskWorkflow {
@@ -288,4 +288,9 @@ public class HelpdeskWorkflow {
 		helpDeskPage.withdrawDeviceFromStoplist(general);
 
 	}
+
+	public String raiseLoanPreClosureRequest(HelpdeskGeneral helpdeskGeneral,LoanPlan loanPlan,Device device){
+		return helpDeskPage.raiseLoanPreclosureRequest(helpdeskGeneral,loanPlan,device);
+	}
 }
+

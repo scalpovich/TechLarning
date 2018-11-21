@@ -207,5 +207,9 @@ public class AuthorizationSearchWorkflow {
 		return page.viewAvailableBalanceAfterReversalTransaction(deviceNumber);
 		
 	}
-
+	public String verifyReconciliationStatus(Device device) {
+		authorizationSearchPage = navigator.navigateToPage(AuthorizationSearchPage.class);
+		return authorizationSearchPage.verifyReconciliationStatus(device.getDeviceNumber());
+		
+	}
 }
