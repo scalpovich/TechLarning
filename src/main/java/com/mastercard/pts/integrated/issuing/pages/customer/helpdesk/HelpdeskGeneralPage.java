@@ -1314,7 +1314,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		HashMap<String,BigDecimal> creditLimit=new HashMap<>();
 		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
 		clickWhenClickable(currentStatusAndLimitTab);	
-		logger.info("Credit limit noted down : {} ", creditLimit);		
 		creditLimit.put(ConstantData.CLIENT_LIMIT,new BigDecimal(clientCreditLimitLabel.getText()));
 		creditLimit.put(ConstantData.AVAIL_CLIENT_LIMIT,new BigDecimal(availClientCreditLimitLabel.getText()));
 
@@ -1323,6 +1322,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 		creditLimit.put(ConstantData.CARD_LIMIT,new BigDecimal(cardCreditLimitLabel.getText()));	
 		creditLimit.put(ConstantData.AVAIL_CARD_LIMIT,new BigDecimal(availCardCreditLimitLabel.getText()));	
+		logger.info("Credit limit noted down : {} ", creditLimit);	
 		clickEndCall();		
 		return creditLimit;
 	}

@@ -34,7 +34,6 @@ Meta:
 Given connection to MAS is established
 When perform an MSR_RECURRING_PUR_TXN MAS transaction
 Then MAS test results are verified
-And MAS simulator is closed
 
 Scenario: 1.4 Validate Auth in CSR
 Meta:
