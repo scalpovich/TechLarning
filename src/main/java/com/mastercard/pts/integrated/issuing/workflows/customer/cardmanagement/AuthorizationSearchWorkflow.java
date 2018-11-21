@@ -194,6 +194,7 @@ public class AuthorizationSearchWorkflow {
 	}
 
 	public AvailableBalance getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(BigDecimal availableBalance){
+		SimulatorUtilities.wait(2000);
 		authorizationSearchPage.viewDeviceDetails();
 		AvailableBalance availBal = authorizationSearchPage.getAvailableBalance();
 		logger.info("Available balance before transaction amount = {}", availableBalance);
