@@ -70,6 +70,7 @@ public class AdjustmentTransactionPage extends AbstractBasePage {
 		logger.info("Create Adjustment Transaction: {}",
 				transaction.getVoucherNumber());
 		clickAddNewButton();
+		
 		runWithinPopup(
 				"Add Adjustment Transaction",
 				() -> {
@@ -99,16 +100,13 @@ public class AdjustmentTransactionPage extends AbstractBasePage {
 			SimulatorUtilities.wait(500);
 			logger.info("Wallet Details: {}",transactionDetails.getWalletNumber());
 			WebElementUtils.selectDropDownByVisibleText(walletNumberDDwn, transactionDetails.getWalletNumber());
-			SimulatorUtilities.wait(500);
 			WebElementUtils.enterText(adjustmentAmountTxt, transactionDetails.getAdjustmentAmount());
-			SimulatorUtilities.wait(500);
 			pickTransactionDate(transactionDetails.getTransactionDate());
 			WebElementUtils.enterText(transactionDateHoursTxt, transactionDetails.getTransactionDateHours());
 			WebElementUtils.enterText(transactionDateMinutesTxt, transactionDetails.getTransactionDateMinutes());
 			WebElementUtils.enterText(memoTxt, transactionDetails.getMemo());
 			clickSaveButton();
 		});
-
 	}
 	
 	public void verifyUiOperationStatus() {
