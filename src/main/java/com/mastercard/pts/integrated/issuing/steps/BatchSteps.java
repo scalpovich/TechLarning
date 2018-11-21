@@ -171,7 +171,7 @@ public class BatchSteps {
 			ackIndicator = "N";
 		
 		String wholeDataToAppend = "\t" + ackIndicator + StringUtils.rightPad(DateUtils.getDateddMMyyyy(), 208, "0");
-		fileCreation.appendContentsToFile(batchFile,wholeDataToAppend);
+		fileCreation.updatePinOffsetFileWithAcknowledgement(batchFile,wholeDataToAppend);
 	}
 	
 	@When("User updates the new pin offset file with $acknowledgementType pin acknowledgement")
@@ -190,7 +190,7 @@ public class BatchSteps {
 		context.put(ContextConstants.PIN_OFFSET_FILE, batchFile);
 		MiscUtils.renamePinFile(batchFile.toString());
 		
-		fileCreation.appendContentsToFile(batchFile+"_PinFile", wholeDataToAppend);
+		fileCreation.updatePinOffsetFileWithAcknowledgement(batchFile+"_PinFile", wholeDataToAppend);
 	}
 	
 	@When("User deletes existing pin offset files")

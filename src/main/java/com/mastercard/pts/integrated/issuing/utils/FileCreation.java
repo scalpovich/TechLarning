@@ -71,6 +71,7 @@ public class FileCreation {
 	@Value("${linux.folder.path}")
 	private String linuxFolderPath;
 
+	
 	@Autowired
 	private DataProvider provider;
 
@@ -128,10 +129,8 @@ public class FileCreation {
 	}
 
 	public static String createTransactionLine(String deviceNumber, String walletNumber, KeyValueProvider provider) {
-		return deviceNumber + "|" + walletNumber + "|0|" + DateUtils.getDateddMMyyyy() + "|"
-				+ provider.getString(TRANSACTION_CODE) + "|" + provider.getString(TRANSACTION_AMOUNT) + "|"
-				+ provider.getString(TRANSACTION_CURRENCY) + "||" + DateUtils.getDateddMMyyyy() + "|"
-				+ provider.getString(BILLING_AMOUNT) + "|" + provider.getString(BILLING_CURRENCY) + "|"
+		return deviceNumber + "|" + walletNumber + "|0|" + DateUtils.getDateddMMyyyy() + "|" + provider.getString(TRANSACTION_CODE) + "|" + provider.getString(TRANSACTION_AMOUNT) + "|"
+				+ provider.getString(TRANSACTION_CURRENCY) + "||" + DateUtils.getDateddMMyyyy() + "|" + provider.getString(BILLING_AMOUNT) + "|" + provider.getString(BILLING_CURRENCY) + "|" 
 				+ ConstantData.GENERIC_DESCRIPTION + "|||" + "00000000";
 	}
 
@@ -151,7 +150,7 @@ public class FileCreation {
 		return content;
 	}
 
-	public void appendContentsToFile(String filename, String contents) throws IOException {
+	public void updatePinOffsetFileWithAcknowledgement(String filename, String contents) throws IOException {
 		logger.info("***** File Updation Started : {} ******", filename);
 
 		BufferedWriter writer = null;
