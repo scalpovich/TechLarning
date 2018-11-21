@@ -86,7 +86,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 	
 	public void selectFromDate(LocalDate date)
 	{
-		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(3);
+		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(4);
 		WebElementUtils.pickDate(fromDateTxt, date);		
 	}
 	

@@ -176,6 +176,10 @@ public class ProgramSetupSteps {
 	private static final Logger logger = LoggerFactory.getLogger(ProgramSetupSteps.class);
 
 	private static final String JOINING_FEE_PLAN = "JOINING_FEE_PLAN";
+	
+private static final String DEFAULT_PRESENTMENT_TIME_LIMIT = "3";
+	
+	private static final String MERCHANT_CODE = "5999";
 
 	@When("prepaid $deviceType device is available with balance amount")
 	@Given("prepaid $deviceType device is available with balance amount")
@@ -1734,5 +1738,13 @@ public class ProgramSetupSteps {
 
 		Device device = context.get(ContextConstants.DEVICE);
 		assertEquals(deviceTrackingWorkflow.searchInDeviceTrackingWithDeviceAndCarrierStatus(device), provider.getString("CARRIER_STATUS"));
+	}
+	
+	@When("user edits Presentment Time Limit in $plan")
+	public void userEditsPresentmentTimeLimit(String plan) {
+		DevicePlan device = context.get(ContextConstants.DEVICE_PLAN);
+		device.setTransSetPresentmentTimeLimit(DEFAULT_PRESENTMENT_TIME_LIMIT);
+		device.setMerchantCode(MERCHANT_CODE);
+		programSetupWorkflow.editPlan(plan,device,program);
 	}
 }

@@ -10,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 import java.awt.AWTException;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.text.DecimalFormat;
 
 import org.apache.commons.lang3.StringUtils;
@@ -130,14 +131,18 @@ public class TransactionSteps {
 
 		String temp = transaction;
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
-		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));
+		if(!Objects.isNull(context.get(ConstantData.IS_PIN_REQUIRED))){
+			MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));				
 		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
 			// ECOMM are pinless tranasactions
 			if (!transaction.toLowerCase().contains("ecom"))
 				temp = transaction + "_PIN";
 		}
+		}
 		performOperationOnSamecard(false);
 		givenOptimizedTransactionIsExecuted(temp);
+		String txnDate=context.get(ContextConstants.INSTITUTION_DATE);
+		context.put(ContextConstants.TRANSACTION_DATE,txnDate);
 	}
 
 	@When("perform an $transaction MAS transaction on the same card")
@@ -279,7 +284,7 @@ public class TransactionSteps {
 		}
 		// changed ECOMMERCE to ECOM
 		if (transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE") || transactionWorkflow.isContains(transaction, "ASI_") || transactionWorkflow.isContains(transaction, "MMSR")
-				|| transactionWorkflow.isContains(transaction, ConstantData.THREE_D_SECURE_TRANSACTION)) {
+				|| transactionWorkflow.isContains(transaction, ConstantData.THREE_D_SECURE_TRANSACTION) || transactionWorkflow.isContains(transaction, "3D_SECURE_SCENARIO")) {
 			// for pinless card, we are not performing CVV validation as we do not know the CVV as this is fetched from embosing file on LInuxbox
 			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data()); // Transaction currency code
 		}
@@ -355,6 +360,9 @@ public class TransactionSteps {
 
 	@When("Auth file is loaded into MCPS and processed")
 	public void loadAuthFileToMCPS() {
+		logger.info("TXN Date "+context.get("transaction_date"));
+		String txnDate=context.get(ContextConstants.TRANSACTION_DATE);
+		context.put(ContextConstants.INSTITUTION_DATE,txnDate);
 		arnNumber = transactionWorkflow.loadAuthFileToMCPS(authFilePath);
 		if (arnNumber.isEmpty()) {
 			logger.error("*********ARN number is empty");

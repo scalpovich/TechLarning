@@ -152,6 +152,8 @@ public class ContextConstants {
 	
 	public static final String PROCESSED_BATCHES = "PROCESSED_BATCHES";
 	
+	public static final String TRANSACTION_DATE = "TRANSACTION_DATE";
+	
 	public static final String PIN_OFFSET_FILE = "PIN_OFFSET_FILE";
 	
 	public static final String DAT_FILE_NAME = "DAT_FILE_NAME";
