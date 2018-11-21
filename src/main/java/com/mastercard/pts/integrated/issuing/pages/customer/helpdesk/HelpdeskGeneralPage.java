@@ -1681,7 +1681,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 
 	private void selectLoanAccountNumber(String loanAccountNumber) {
-		WebElementUtils.selectDropDownByVisibleText(selectLoanPlanDdwn, loanAccountNumber);
+		WebElementUtils.selectDropDownByVisibleText(selectLoanAccountNumberDdwn, loanAccountNumber);
 	}
 
 	public String getDeclineCodeForTransaction(Device device, String rrnNumber){
