@@ -1,13 +1,12 @@
 Narrative:
-As a(n)  Customer portal user 
-I want to configure the LoyaltyProgram
-In order to manually reverse transaction
-So that reversed accrued loyalty points can be verified on credit device
+As a(n) Customer portal user 
+I want to configure the LoyaltyProgram with promotion rules MCG set
+In order to verify that loyalty points are not credited for transactions on excluded MCC
 Meta:
-@StoryName credit_msr_retail_loyalty
+@StoryName credit_msr_retail_loyalty_excluded_mcc
 @migration_loyalty
 
-Scenario:1 Create credit device and perform manual auth
+Scenario:1 Create credit device and perform manual auth on excluded MCC
 Given setting json values in excel for Credit
 When user is logged in institution
 And for Magnetic Stripe Card [1] User fills Device Plan for Credit product for Mastercard
@@ -25,6 +24,7 @@ When user notes down available Card limit for card
 Then user notes down max loyalty points for plan
 And user notes down promotion plan details for AUTO
 Then user has loyalty points details for Credit device
+Then select promotion rules MCG as AUT for promotion plan AUTO
 And user raises an authorization request
 And status of request is "approved"
 Then calculate loyalty points
@@ -32,18 +32,9 @@ And search Purchase authorization and verify Successful status
 Then user waits for 5 minutes
 And user sign out from customer portal
 
-Scenario:2 Verify loyalty points after manual reversal of transaction
+Scenario:2 Verify that loyalty points are not credited
 When user is logged in institution
 And pre-clearing and Loyalty Calc batches are run
 Then verify available loyalty points should be within loyalty plan limit
-Then user add transaction reversal with reason Manual Reversal [1]
-And pre-clearing and Loyalty Calc batches are run
 And user verifies loyalty details for Credit device
-!-- When loyalty plan expiry date is updated to 31/07/2022
 And user sign out from customer portal
-
-!-- Scenario:2 verify loyalty redemption is unavailable when loyalty plan expires
-!-- When user is logged in institution
-!-- And user processes Loyalty-Calc system internal batch for Credit
-!-- Then verify expired loyalty points on redemption screen
-!-- And user verifies rewards and redemption screen
