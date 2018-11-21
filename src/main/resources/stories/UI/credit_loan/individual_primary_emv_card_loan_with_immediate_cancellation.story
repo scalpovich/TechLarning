@@ -54,7 +54,7 @@ Scenario:1.5 Raise Loan SR and Verify Loan Account Details then update instituti
 Given user is logged in institution
 When device has "normal" status
 And user raises Retail Transaction to Loan [215] request for Credit
-And user verifies loan account details
+When user verifies loan account details
 And user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
 Then user sign out from customer portal

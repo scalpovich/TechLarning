@@ -1002,12 +1002,12 @@ public class HelpDeskSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		LoanPlan loanPlan = context.get(ContextConstants.LOAN_PLAN);			
 		TransactionSearchDetails transactionDetails = context.get(ContextConstants.TRANSACTION_SEARCH_DETAILS);
-		if (serviceCode.equalsIgnoreCase("Retail Transaction to Loan")) {
+		if (serviceCode.equalsIgnoreCase("Retail Transaction to Loan [215]")) {
 			context.put(ContextConstants.LOAN_SACTION_DETAILS,
 					helpdeskWorkflow.raiseRetailToLoanRequest(helpdeskGeneral, loanPlan, transactionDetails).get(0));
 		}else if(serviceCode.equalsIgnoreCase(ConstantData.LOAN_PRE_CLOSURE_SR)){
 			context.put(ConstantData.LOAN_PRE_CLOSURE_FEE,helpdeskWorkflow.raiseLoanPreClosureRequest(helpdeskGeneral,loanPlan,device));			
-		}else if(serviceCode.equalsIgnoreCase("Loan Cancellation")){
+		}else if(serviceCode.equalsIgnoreCase("Loan Cancellation [243]")){
 			context.put(ConstantData.LOAN_CANCELLATION_FEE,helpdeskWorkflow.raiseLoanCancellationRequest(loanPlan,device,helpdeskGeneral));
 			
 		}
@@ -1032,13 +1032,13 @@ public class HelpDeskSteps {
 		assertThat("Verify Decline Code for Transaction", declineCode, equalTo(helpdeskWorkflow.getDeclineCode(device, rrnNumber)));
 	}
 	
-	@When("user verifies loan $fee")
-	@Then("user verifies loan $fee")
+	@When("user verifies loan $fee fee")
+	@Then("user verifies loan $fee fee")
 	public void userVerifiesLoanFeeCharged(String feeType){
 		LoanPlan loanPlan = context.get(ContextConstants.LOAN_PLAN);
 		String expectedFee;
 		String actualFee;
-		if (feeType.equalsIgnoreCase("preclosure fee")) {
+		if (feeType.equalsIgnoreCase("preclosure")) {
 			expectedFee = String.format("%.2f",
 					Double.valueOf(loanPlan.getPreclosureFixedFeeAmount())
 							+ Double.valueOf(loanPlan.getPreclosureFeePercentOfAmount())
@@ -1052,6 +1052,6 @@ public class HelpDeskSteps {
 							/ 100);
 			actualFee = context.get(ConstantData.LOAN_CANCELLATION_FEE);
 		}
-		assertThat("Loan Preclosure Fee is not same", actualFee, equalTo(expectedFee));
+		assertThat("Loan "+feeType+" fee is not same", actualFee, equalTo(expectedFee));
 	}
 }
