@@ -92,7 +92,7 @@ public class LoanAccountDetailsPage extends AbstractBasePage {
 			}
 			clickCloseButton();
 		});	
-
+		SimulatorUtilities.wait(500);
 		return records;
 	}
 	
