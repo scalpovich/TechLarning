@@ -362,10 +362,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.ID, valueToFind = "callReferenceNumber")
 	private MCWebElement callRefNumberLbl;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Account Number :']/../following-sibling::td[1]//span/select")
-	private MCWebElement selectLoanAccountNumberDdwn;
-	
-
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Authorization']")
 	private MCWebElement btnAuthorization;
 
@@ -391,10 +387,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Process']")
 	private MCWebElement processBtn;
 	
-	private String cancellationFee;
-	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Process']")
-	private MCWebElement processBtn;
-	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Pre-Closure Fee :']/../following-sibling::td/input")
 	private MCWebElement preclosureFeeTxt;
 	
@@ -405,6 +397,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private MCWebElement selectLoanAccountNumberDdwn;
 	
 	private String preclosureFee;
+	private String cancellationFee;
 	
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
@@ -565,11 +558,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public void selectLoanPlan(String type) {
 		WebElementUtils.selectDropDownByVisibleText(selectLoanPlanDdwn, type);
 	}
-	
-	public void selectLoanAccountNumber(String type) {
-		WebElementUtils.selectDropDownByVisibleText(selectLoanAccountNumberDdwn, type);
-	}
-	
 	
 	public void clickCurrentStatusAndLimitsTab(){
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(currentStatusAndLimitTab)).click();
