@@ -713,7 +713,7 @@ public class Device {
 	public void setAmountType(String amountType) {
 		this.amountType = amountType;
 	}
-
+	
 	public String getExchangeRate() {
 		return exchangeRate;
 	}
@@ -753,7 +753,7 @@ public class Device {
 	public void setDeviceVelocity() {
 		++deviceVelocity;
 	}
-	
+
 	public String getDedupe() {
 		return dedupe;
 	}

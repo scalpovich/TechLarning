@@ -1009,6 +1009,12 @@ public class HelpDeskSteps {
 			context.put("Loan Cancellation Fee",helpdeskWorkflow.raiseLoanCancellationRequest(loanPlan,device,helpdeskGeneral));
 			
 		}
+		TransactionSearchDetails transactionDetails = context.get(ContextConstants.TRANSACTION_SEARCH_DETAILS);		
+		if (serviceCode.equalsIgnoreCase(ConstantData.RETAIL_TO_LOAN_SR)) {
+			context.put(ContextConstants.LOAN_SANCTION_DETAILS, helpdeskWorkflow.raiseRetailToLoanRequest(helpdeskGeneral,loanPlan,transactionDetails).get(0));
+		}else if(serviceCode.equalsIgnoreCase(ConstantData.LOAN_PRE_CLOSURE_SR)){
+			context.put(ConstantData.LOAN_PRE_CLOSURE_FEE,helpdeskWorkflow.raiseLoanPreClosureRequest(helpdeskGeneral,loanPlan,device));			
+		}
 		
 	}
 	
@@ -1042,5 +1048,17 @@ public class HelpDeskSteps {
 		String rrnNumber = context.get(ConstantData.RRN_NUMBER);
 		device.setAppliedForProduct(ProductType.fromShortName(product));
 		assertThat("Verify Decline Code for Transaction", declineCode, equalTo(helpdeskWorkflow.getDeclineCode(device, rrnNumber)));
+	}
+	@When("user verifies loan preclosure fee")
+	@Then("user verifies loan preclosure fee")
+	public void userVerifiesLoanCancellationFee(){
+		LoanPlan loanPlan = context.get(ContextConstants.LOAN_PLAN);
+		String expectedFee = String.format("%.2f",
+				Double.valueOf(loanPlan.getPreclosureFixedFeeAmount())
+						+ Double.valueOf(loanPlan.getPreclosureFeePercentOfAmount())
+								* Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))
+						/ 100);
+		String actualFee = context.get(ConstantData.LOAN_PRE_CLOSURE_FEE);
+		assertThat("Loan Preclosure Fee is not same", actualFee, equalTo(expectedFee));
 	}
 }

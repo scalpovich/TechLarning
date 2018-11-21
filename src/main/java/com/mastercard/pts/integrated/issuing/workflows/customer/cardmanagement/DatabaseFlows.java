@@ -58,6 +58,7 @@ public class DatabaseFlows {
 	}
 
 	public String getInstitutionCode() {
+		institution = System.getProperty("institution").toString();
 		return institution.substring(institution.indexOf('[') + 1, institution.indexOf(']'));
 	}
 

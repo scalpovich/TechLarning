@@ -78,6 +78,8 @@ public class ConstantData {
 	
 	public static final String THREE_D_SECURE_NO_CVV2 = "3D_SECURE_NO_CVV2";
 	public static final String THREE_D_SECURE_TRANSACTION = "3D_SECURE_CAVV";
+	public static final String THREE_D_SECURE_SCENARIO_1 = "3D_SECURE_SCENARIO_1";
+	public static final String THREE_D_SECURE_SCENARIO_2 = "3D_SECURE_SCENARIO_2";
 	public static final String DATA_ELEMENT_CAVV = "048.TLV.43";
 	
 	public static final String DEVICE_RANGE_DATA = "DeviceRangeData";
@@ -144,6 +146,10 @@ public class ConstantData {
 	public static final String PDF_FORMAT = "PDF Format [pdf]";
 	public static final String DEVICE_ACTIVITY_REPORT_FILE_NAME = "Device Activity.pdf";
 	public static final String RETAIL_TO_LOAN = 	"215 - Retail Transaction to Loan";	
+	public static final String RETAIL_TO_LOAN_SR = "Retail Transaction to Loan [215]";
+	public static final String LOAN_PRE_CLOSURE_SR = "Loan Preclosure [242]";	
+	public static final String LOAN_PRE_CLOSURE_FEE = "Loan PreClosure Fee";
+	
 	
 	public static final String APPLIED_ON_LOAN_AMOUNT= 	"Loan Amount [LA]";		
 	public static final String LOAN_INSTALLMENT_OUTSTANDING= 	"LOAN_INSTALLMENT_OUTSTANDING";	

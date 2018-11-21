@@ -75,8 +75,7 @@ public class LoanAccountDetailsPage extends AbstractBasePage {
 	{
 		WebElementUtils.enterText(cardNumber, device.getDeviceNumber());
 		clickSearchButton();
-		SimulatorUtilities.wait(500);
-		logger.info("Loan Account Number : "+loanAccNumber.getText());
+		logger.info("Loan Account Number : {} ",loanAccNumber.getText());
 		device.setLoanAccountNumber(loanAccNumber.getText());
 		viewFirstRecord();		
 		List<Map<String,String>> records = new ArrayList<Map<String, String>>();	
