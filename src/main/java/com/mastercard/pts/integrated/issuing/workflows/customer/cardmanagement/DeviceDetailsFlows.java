@@ -18,5 +18,15 @@ public class DeviceDetailsFlows {
 		Assert.assertTrue(deviceDetailsPage.verifyLastExecutedScriptStatusFromDeviceDetails()
 				.equalsIgnoreCase(lastExecutedScriptStatus));
 	}
+	
+	public void findAndPutDeviceApplicationNumberInContext() {
+		DeviceDetailsPage deviceDetailsPage = navigator.navigateToPage(DeviceDetailsPage.class);
+		deviceDetailsPage.retriveDeviceApplicationNumber();
+	}
+	
+	public void getClientCode() {
+		DeviceDetailsPage deviceDetailsPage = navigator.navigateToPage(DeviceDetailsPage.class);
+		Assert.assertFalse(deviceDetailsPage.getClientCode().isEmpty());
+	}
 
 }

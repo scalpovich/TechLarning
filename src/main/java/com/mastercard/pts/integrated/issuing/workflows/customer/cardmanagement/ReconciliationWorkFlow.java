@@ -43,7 +43,7 @@ public class ReconciliationWorkFlow {
 			processBatch.processSystemInternalProcessingBatch(batch.get(1));
 		}
 	}
-
+	
 	public void runPreClearingAndLoyaltyCalcBatch(List<ProcessBatches> batch) {
 		ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
 		processBatch.processSystemInternalProcessingBatch(batch.get(1));
@@ -53,7 +53,11 @@ public class ReconciliationWorkFlow {
 		ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
 		return processBatch.processSystemInternalProcessingBatch(batch);
 	}
-
+	
+	public String runPostMaintenanceBatch(ProcessBatches batch) {
+		ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
+		return processBatch.processSystemInternalProcessingBatchPostMaintenance(batch);
+	}
 	public boolean verifyReportGeneration() {
 		TransactionReportsPage page = navigator.navigateToPage(TransactionReportsPage.class);
 		int fileCountBeforeReportGeneration = checkDownLoadedFilesCount();
@@ -148,6 +152,16 @@ public class ReconciliationWorkFlow {
 			if (!file.isDirectory()&& file.getName().startsWith(ConstantData.AUTHORIZATION_REPORT_NAME))   	
 				file.delete();
 		}
+	}
+	
+	public ProcessBatches runCreditBillingBatch(ProcessBatches batch) {
+		ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
+		return processBatch.processCreditBillingBatch(batch);
+	}
+	
+	public String processStatementExtractBatch(ProcessBatches batch) {
+		ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
+		return processBatch.processStatementExtractBatch(batch);
 	}
 	
 	public void verifyPhotoReferenceNumber() {

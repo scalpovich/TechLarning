@@ -3,15 +3,22 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanDetails;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanPlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
 import com.mastercard.pts.integrated.issuing.utils.ConnectionUtils;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 
@@ -179,6 +186,16 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.noteDownAvailableLimit(type);
 	}
 	
+	public HashMap<String,BigDecimal>  noteDownCreditLimit(String type) {
+		clickCustomerCareEditLink();
+		return helpDeskPage.noteDownCreditLimit(type);
+	}
+	
+	public HashMap<String, String> noteDownRequiredValues(String deviceNumber) {
+		clickCustomerCareEditLink();
+		return helpDeskPage.noteDownRequiredValues(deviceNumber);
+	}
+	
 	public BigDecimal verifyAvailableLimit(String type) {
 		clickCustomerCareEditLink();
 		return helpDeskPage.noteDownAvailableLimit(type);
@@ -204,4 +221,58 @@ public class HelpdeskWorkflow {
 		helpDeskPage.validateRequiredFields(general);
 		helpDeskPage.validateMandatoryFields(3);
 	}
+	
+	public String verifyBillingAmounts(Device device){
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		helpDeskPage.getDeviceStatus(device);
+		return helpDeskPage.verifyBillingDetails(device);
+	}
+	
+	public HashMap<String,BigDecimal> activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
+		return helpDeskPage.activateCreditLimitChangeRequest(helpdeskGeneral);
+	}
+	
+	public Map<String,String> fetchCardBalanceAndCloseHelpdesk(Device device) {
+		Map<String, String> balanceMapBeforePayments;	
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);	
+		balanceMapBeforePayments = helpDeskPage.checkCreditBalances(device);
+		helpDeskPage.clickEndCall();
+		return balanceMapBeforePayments;		
+	}
+	
+	public void compareBalancesAfterPayment(Payment payment){
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);	
+		helpDeskPage.checkAndCompareBalancePostPayment(payment);
+	}
+
+	public void checkBalanceDetailsThroughHelpdesk(Device device, String payment) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);	
+		helpDeskPage.checkBalancesDetails(device,payment);
+		helpDeskPage.clickEndCall();
+	}
+	
+	public void compareBalanceDetailsPostPayments(String payment){
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);	
+		helpDeskPage.compareBalanceDetailsPostPayments(payment);
+	}
+
+	public String verifyUnpaidAndAuthFlag(Device device, String label) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		helpDeskPage.getDeviceStatus(device);
+		return helpDeskPage.verifyUnpaidAndAuthFlag(device,label);
+	}
+	
+	public List<LoanDetails> raiseRetailToLoanRequest(HelpdeskGeneral helpdeskGeneral,LoanPlan loanPlan,TransactionSearchDetails transactionDetails){
+		return helpDeskPage.retailTransactionToLoan(helpdeskGeneral,loanPlan,transactionDetails);
+	}
+	public String getDeclineCode(Device device, String rrnNumber){
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		return helpDeskPage.getDeclineCodeForTransaction(device, rrnNumber);
+		
+	}
+	public String raiseLoanPreClosureRequest(HelpdeskGeneral helpdeskGeneral,LoanPlan loanPlan,Device device){
+		return helpDeskPage.raiseLoanPreclosureRequest(helpdeskGeneral,loanPlan,device);
+	}
 }
+
+

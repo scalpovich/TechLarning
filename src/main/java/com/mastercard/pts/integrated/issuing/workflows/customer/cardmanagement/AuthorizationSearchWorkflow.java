@@ -20,7 +20,10 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.collect.administration.AdministrationHomePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.AuthorizationSearchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.GenerateReversalPage;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
+import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpdeskWorkflow;
 
 @Workflow
 public class AuthorizationSearchWorkflow {
@@ -36,17 +39,20 @@ public class AuthorizationSearchWorkflow {
 
 	@Autowired
 	KeyValueProvider provider;
-	
+
 	@Autowired
 	AuthorizationSearchPage authorizationSearchPage;
 
+	@Autowired
+	HelpdeskWorkflow helpDeskWorkFlow;
+	
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
 	public static final int BILL_AMOUNT_INDEX_VALUE = 3;
 
 	private static final String USERNAME = "USERNAME";
 
-	public void verifyAuthTransactionSearch(String type, String state, String deviceNumber) {
+	public void verifyAuthTransactionSearch(String type, String state, Device device) {
 		String varType = type;
 		// state value sent from stroy file is different from what appears on
 		// the screen hence setting to the correct value if it is
@@ -54,18 +60,18 @@ public class AuthorizationSearchWorkflow {
 		if ("Rvmt_Receiving".equalsIgnoreCase(varType))
 			varType = "RVMT - Receiving";
 
-		authSearchAndVerification(deviceNumber, varType, state, "Code Action", "Description");
+		authSearchAndVerification(device, varType, state, "Code Action", "Description");
 	}
 
-	public void verifyTransactionAndBillingCurrency(String transactionCurrency, String billingCurrency, String deviceNumber) {
-		authSearchAndVerification(deviceNumber, transactionCurrency, billingCurrency, "Transaction Currency", "Billing Currency");
+	public void verifyTransactionAndBillingCurrency(String transactionCurrency, String billingCurrency, Device device) {
+		authSearchAndVerification(device, transactionCurrency, billingCurrency, "Transaction Currency", "Billing Currency");
 	}
 
-	private void authSearchAndVerification(String deviceNumber, String type, String state, String codeColumnName, String descriptionColumnName) {
+	private void authSearchAndVerification(Device device, String type, String state, String codeColumnName, String descriptionColumnName) {
 		boolean condition;
-
+        SimulatorUtilities.wait(5000);
 		AuthorizationSearchPage authSearchPage = navigator.navigateToPage(AuthorizationSearchPage.class);
-		authSearchPage.inputDeviceNumber(deviceNumber);
+		authSearchPage.inputDeviceNumber(device.getDeviceNumber());
 		authSearchPage.inputFromDate(LocalDate.now().minusDays(1));
 		authSearchPage.inputToDate(LocalDate.now());
 		// using waitAndSearchForRecordToAppear instead of
@@ -83,7 +89,6 @@ public class AuthorizationSearchWorkflow {
 		context.put(ConstantData.TRANSACTION_AMOUNT, transactionAmountValue);
 		logger.info("CodeAction on Authorization Search Page : {} ", actualCodeAction);
 		logger.info("Description on Authorization Search Page : {} ", actualDescription);
-
 		logger.info("type on Authorization Search Page : {} ", type);
 		logger.info("state on Authorization Search Page : {} ", state);
 		logger.info("auth code on Authorization Search Page : {} ", authCodeValue);
@@ -96,7 +101,26 @@ public class AuthorizationSearchWorkflow {
 			// to handle "Transaction Currency", "Billing Currency"
 			condition = actualCodeAction.contains(type) && actualDescription.contains(state);
 
+		// Device Usage Code
+		 String billingAmountValue = authSearchPage.getCellTextByColumnName(1, "Billing Amount");
+		 context.put(ConstantData.BILLING_AMOUNT, billingAmountValue);
+		if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && !ConstantData.PRE_AUTH.equalsIgnoreCase(type)){
+			device.setDeviceVelocity();
+			device.setDeviceAmountUsage(Double.parseDouble(billingAmountValue));
+		}
+
 		assertTrue("Latest (Row) Description and Code Action does not match on Authorization Search Screen", condition);
+	}
+	
+	public void generateReversalForTransaction(String deviceNumber)
+	{
+		GenerateReversalPage page = navigator.navigateToPage(GenerateReversalPage.class);
+		authorizationSearchPage.inputDeviceNumber(deviceNumber);
+		authorizationSearchPage.inputFromDate(LocalDate.now().minusDays(1));
+		authorizationSearchPage.inputToDate(LocalDate.now());
+		authorizationSearchPage.waitAndSearchForRecordToAppear();
+		helpDeskWorkFlow.clickCustomerCareEditLink();
+		page.createReversalForTransaction();
 	}
 
 	public List<String> checkTransactionFixedFee(String deviceNumber) {
@@ -145,19 +169,19 @@ public class AuthorizationSearchWorkflow {
 	}
 
 	public void verifyAuthTransactionSearchReport(Device device) {
-		
+
 		TransactionReports transactionReport = new TransactionReports();
 		transactionReport.setAuthorizationCode(context.get(ConstantData.AUTHORIZATION_CODE));
 		transactionReport.setDeviceNumber(device.getDeviceNumber());
 		transactionReport.setRrnNumber(context.get(ConstantData.RRN_NUMBER));
 		transactionReport.setUsername(context.get(USERNAME));
-		
+
 		List<String> reportContent = reconciliationWorkFlow.verifyAuthReport(ConstantData.AUTHORIZATION_REPORT_FILE_NAME,transactionReport);
 		String authFileData = "";
 		for (int i = 0; i < reportContent.size(); i++) {
 			authFileData += reportContent.get(i) + " ";
 		}
-		
+
 		boolean condition = authFileData.contains(context.get(ConstantData.AUTHORIZATION_CODE)) && authFileData.contains(device.getDeviceNumber()) 
 				&& authFileData.contains(context.get(ConstantData.TRANSACTION_AMOUNT)) && authFileData.contains(context.get(ConstantData.RRN_NUMBER));
 		assertTrue("Auth Code Doesnot match with Authoraization Report content", condition);
@@ -168,7 +192,7 @@ public class AuthorizationSearchWorkflow {
 		List<String> actualAuthStatus = page.verifyState(deviceNumber);
 		assertTrue(String.format("Response, Auth Code and Auth Description does not match. Expecting %s. Actual %s", authStatus, actualAuthStatus), actualAuthStatus.containsAll(authStatus));
 	}
-	
+
 	public AvailableBalance getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(BigDecimal availableBalance){
 		authorizationSearchPage.viewDeviceDetails();
 		AvailableBalance availBal = authorizationSearchPage.getAvailableBalance();
@@ -176,5 +200,16 @@ public class AuthorizationSearchWorkflow {
 		logger.info("Sum of all applicable fee and amounts = {}" , availBal.getSum());
 		logger.info("Available balance after transaction amount = {}", availBal.getAvailableBal());
 		return availBal;
+	}
+	
+	public BigDecimal noteDownAvailableBalanceAfterReversal(String deviceNumber) {
+		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
+		return page.viewAvailableBalanceAfterReversalTransaction(deviceNumber);
+		
+	}
+	public String verifyReconciliationStatus(Device device) {
+		authorizationSearchPage = navigator.navigateToPage(AuthorizationSearchPage.class);
+		return authorizationSearchPage.verifyReconciliationStatus(device.getDeviceNumber());
+		
 	}
 }

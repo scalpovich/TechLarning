@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.steps;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 import org.jbehave.core.annotations.Then;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.configuration.LinuxBox;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.DeviceType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
@@ -24,6 +26,7 @@ import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceDetailsFlows;
 
 @Component
 public class BatchSteps {
@@ -31,6 +34,8 @@ public class BatchSteps {
 	private static final String DEFAULT_TRAILER = "TR\\d{8}";
 
 	private static final String DEFAULT_HEADER = "[\\w ]{32}\\d{6}";
+	
+	private static final int PHOTO_REFERENCE_NUMBER_POSITION = 29;
 	
 	private static final Logger logger = LoggerFactory.getLogger(BatchSteps.class);
 
@@ -40,6 +45,8 @@ public class BatchSteps {
 	@Autowired
 	private Path tempDirectory;
 
+	@Autowired
+	DeviceDetailsFlows flow; 
 	@Autowired
 	private LinuxBox linuxBox;
 
@@ -52,11 +59,11 @@ public class BatchSteps {
 		MiscUtils.reportToConsole("******** Embossing File Start ***** " );
 		DevicePlan tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		try {
-			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "DEVICE");		
+			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "DEVICE","proc");		
 			String[] fileData = LinuxUtils.getCardNumberAndExpiryDate(batchFile);
 			MiscUtils.reportToConsole("File Data : " + fileData);
 			Device device = context.get(ContextConstants.DEVICE);
-			if(device.getDeviceType1().toLowerCase().contains(ConstantData.MSR_CARD))
+			if(device.getDeviceType1().toLowerCase().contains(ConstantData.MSR_CARD)||device.getDeviceType1().toLowerCase().contains(ConstantData.NFC_MSR_CARD))
 			{
 				device.setDeviceNumber(fileData[0]);
 				device.setCvv2Data(fileData[2]);
@@ -84,8 +91,8 @@ public class BatchSteps {
 			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
 			throw MiscUtils.propagate(e);
 		}
-	}
-	
+	}	
+		
 	@When("user sets invalid cvv/ccv2/icvv to device")
 	@Then("user sets invalid cvv/ccv2/icvv to device")
 	public void  userSetInvaliCVVCVV2ICVV() {
@@ -104,8 +111,7 @@ public class BatchSteps {
 			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
 			throw MiscUtils.propagate(e);
 		}
-	}
-	
+	}	
 	
 	@When("Pin Offset file batch was generated successfully")
 	@Then("Pin Offset file batch was generated successfully")
@@ -113,8 +119,7 @@ public class BatchSteps {
 		MiscUtils.reportToConsole("******** Pin Offset Start ***** ");
 		String[] values = null;
 		DevicePlan tempdevice = context.get(ContextConstants.DEVICE_PLAN);
-		File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(tempdevice.getDevicePlanCode(),
-				tempDirectory.toString(), "PIN_PROD");
+		File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(tempdevice.getDevicePlanCode(),tempDirectory.toString(), "PIN_PROD","proc");
 		Device device = context.get(ContextConstants.DEVICE);
 		try (Scanner scanner = new Scanner(batchFile)) {
 			while (scanner.hasNext()) {
@@ -139,13 +144,13 @@ public class BatchSteps {
 			throw MiscUtils.propagate(e);
 		}
 	}
-	
+		
 	@When("to verify photo reference number is present in embossing file")
 	public void  embossingFileWasGeneratedSuccessfullyForPhotoCard() {
 		MiscUtils.reportToConsole("******** Embossing File Start ***** " );
 		DevicePlan tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		try {
-			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "DEVICE");
+			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "DEVICE","proc");
 			Device device = context.get(CreditConstants.APPLICATION);
 			String photoReferenceNumber = LinuxUtils.getPhotoReferenceNumber(batchFile);
 			logger.info("Photo Reference Number in Embossing File:", photoReferenceNumber);			
@@ -164,7 +169,7 @@ public class BatchSteps {
 		MiscUtils.reportToConsole("******** Embossing File Start ***** " );
 		try {
 			String CSVno = context.get("CSVno");
-			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(CSVno, tempDirectory.toString(), "CARDHOLDER_DUMP");
+			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(CSVno, tempDirectory.toString(), "CARDHOLDER_DUMP","proc");
 			Device device = context.get(CreditConstants.APPLICATION);
 			boolean flg= LinuxUtils.getPhotoReferenceNumberinDumpFile(batchFile,device.getApplicationNumber());
 			Assert.assertTrue("Photo Reference Number is present in Card Holder Dump File",flg);
@@ -197,7 +202,7 @@ public class BatchSteps {
 		try {
 			MiscUtils.reportToConsole("Flat file path name :  " + partialFileName);
 			MiscUtils.reportToConsole("Photo file name :  " + photoFileName );		
-			photoJpegFile = linuxBox.downloadFileThroughSCPByPartialFileName(photoFileName, tempDirectory.toString(), "CLIENT_PHOTO_BATCH");		
+			photoJpegFile = linuxBox.downloadFileThroughSCPByPartialFileName(photoFileName, tempDirectory.toString(), "CLIENT_PHOTO_BATCH","proc");		
 			MiscUtils.reportToConsole("******** Photo Flat File Completed ***** " );
 
 		} catch (Exception e) {
@@ -224,7 +229,7 @@ public class BatchSteps {
 		try {
 			MiscUtils.reportToConsole("Flat file path name :  " + partialFileName);
 			
-			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(partialFileName, tempDirectory.toString(), "CLIENT_PHOTO_BATCH");		
+			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(partialFileName, tempDirectory.toString(), "CLIENT_PHOTO_BATCH","proc");		
 			isPhotoReferencePresentInFlatFile = LinuxUtils.isPhotoReferenceNumberPresentFlatFile(batchFile,deviceApplicationNumber);
 			MiscUtils.reportToConsole("Device Application number :  " + deviceApplicationNumber );
 			MiscUtils.reportToConsole("******** Photo Flat File Completed ***** " );

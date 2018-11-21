@@ -1,6 +1,7 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -10,6 +11,7 @@ import java.util.Collection;
 import junit.framework.Assert;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -17,9 +19,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BatchJobHistory;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
@@ -78,9 +81,10 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 	private MCWebElement CSVno;
 	
 	public String calelement = "//td[7]";
-
+	
 	@Autowired
 	DatePicker date;
+
 
 	public void switchToViewBatchDetailsFrame() {
 		switchToIframe(Constants.VIEW_BATCH_DETAILS_FRAME);
@@ -101,8 +105,9 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 		date22[1] = String.valueOf(i);
 		String date11 = date22[0] + "/" + date22[1] + "/" + date22[2];
 		date.setDate(date11);
-		// date.setDate(date11);
+		date.setDate(date11);
 		waitForPageToLoad(getFinder().getWebDriver());
+		SimulatorUtilities.wait(2000);
 		date.setDateCalendar2(DateUtils.getDateinDDMMYYYY(), calelement);
 		waitForPageToLoad(getFinder().getWebDriver());
 	}
@@ -121,6 +126,28 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 	public void verifyUiOperationStatus() {
 		logger.info("Batch Job History");
 		verifySearchButton("Search");
+	}
+	
+	public ProcessBatches searchRecord(ProcessBatches batches) {
+		WebElementUtils.pickDate(fromJobStartDttmDPkr, LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")));
+		WebElementUtils.pickDate(toJobStartDttmDPkr, LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")));
+		WebElementUtils.enterText(jobIdTxt, batches.getJoBID());
+		clickSearchButton();
+		viewFirstRecord();		
+		runWithinPopup("View Batch Details", () -> {
+			logger.info("Retrieving batch status");
+			waitForBatchStatus();
+			batches.setStatus(batchStatus.getText());
+			try{
+				clickCloseButton();
+			}
+				catch(StaleElementReferenceException ex)
+			{
+					clickCloseButton();
+			}
+		});		
+		
+		return batches;	
 	}
 
 	public String[] findRecord() {
@@ -160,7 +187,6 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 		Assert.assertEquals(statusString, statuslabelTxt);
 		clickWhenClickable(closeBtn);
 		switchToDefaultFrame();
-
 	}
 
 	@Override

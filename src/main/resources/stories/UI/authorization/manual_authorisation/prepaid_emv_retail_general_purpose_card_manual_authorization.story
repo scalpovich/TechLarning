@@ -7,7 +7,7 @@ I want to create an emv prepaid card for client and perform manual authorization
 
 Meta:
 @StoryName prepaid_rgpc_manual_auth
-@CRCardsWithAuthorization
+@CRCardsWithAuthorizationS
 
 Scenario: Set up emv corporate general purpose prepaid card
 Meta:
@@ -23,10 +23,10 @@ Meta:
 Given user is logged in institution
 And a new device was created
 When processes pre-production batch for prepaid
-When processes device production batch for prepaid
-When user has wallet number information for prepaid device
-When user performs adjustment transaction
-When user has current wallet balance amount information for prepaid device
+And processes device production batch for prepaid
+And user has wallet number information for prepaid device
+And user performs adjustment transaction
+And user has current wallet balance amount information for prepaid device
 Then device has "normal" status
 And user activates device through helpdesk
 

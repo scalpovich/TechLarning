@@ -77,7 +77,7 @@ public class BatchProcessWorkflow extends MenuFlows{
 		BatchTraceHistoryPage page = navigator.navigateToPage(BatchTraceHistoryPage.class);
 		return page.searchJob(jobId);
 	}
-
+	
 	public boolean searchBatchJobHistory(String jobId){
 		BatchJobHistoryPage page = navigator.navigateToPage(BatchJobHistoryPage.class);
 		return page.searchJob(jobId);
@@ -88,29 +88,27 @@ public class BatchProcessWorkflow extends MenuFlows{
 		return page.processSystemInternalProcessingBatch(batch);
 		
 	}
-public void processDownloadBatch(ProcessBatches batch){
+
+	public void processDownloadBatch(ProcessBatches batch) {
 		ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
 		page.processDownloadBatch(batch);
-		
 	}
-
 
 	public String processSystemInternalProcessingBatchWithoutDateCheck(ProcessBatches batch){
 		ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
 		return page.processSystemInternalProcessingBatchWithoutDateCheck(batch);
-		
 	}
 
 	public String processSystemInternalProcessingMatchingBatch(ProcessBatches batch){
 		ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
 		return page.processSystemInternalProcessingBatchMatchingBatch(batch);
-		
 	}
 
 	public String processIpmDownloadBatch(ProcessBatches batch){
 		ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
 		return page.ipmDownloadBatch(batch);
 	}
+	
 	public String processVisaOutgoingBatch(ProcessBatches batch){
 		ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
 		return page.visaOutgoingDownloadBatch(batch);

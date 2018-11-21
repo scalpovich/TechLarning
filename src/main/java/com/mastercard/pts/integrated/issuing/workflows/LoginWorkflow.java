@@ -45,8 +45,9 @@ public class LoginWorkflow {
 		String institution = System.getProperty("institution");
 		if (institution != null && !institution.trim().isEmpty())
 			institutionSelector=institution;
+		SimulatorUtilities.wait(500);
 		page.selectInstitution(institutionSelector);
-		SimulatorUtilities.wait(5000);
+		SimulatorUtilities.wait(500);
 		page.clickConfirm();
 		return page.checkSessionExpired();
 	}
@@ -86,5 +87,11 @@ public class LoginWorkflow {
 	public void signOutAgent(){
 		HeaderPage page = pageFactory.getPage(HeaderPage.class);
 		page.signOutAgent();
+	}
+	
+	public String getInstitutionDateLogin()
+	{
+		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
+		return loginPage.getInstitutionDateLogin();
 	}
 }

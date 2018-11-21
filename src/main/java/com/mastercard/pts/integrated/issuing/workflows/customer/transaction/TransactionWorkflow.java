@@ -3,18 +3,23 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.transaction;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.awt.AWTException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.URL;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.jbehave.web.selenium.WebDriverProvider;
@@ -46,13 +51,16 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalanceRequest;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MID_TID_Blocking;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ReversalTransaction;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.Transaction;
 import com.mastercard.pts.integrated.issuing.pages.ValidationException;
 import com.mastercard.pts.integrated.issuing.pages.agent.settlement.InitiateSettlementPage;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceApprovePage;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceRequestPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.MID_TID_BlockingPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReversalTransactionPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionSearchPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
@@ -68,6 +76,7 @@ import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKey
 @Workflow
 public class TransactionWorkflow extends SimulatorUtilities {
 	private static final Logger logger = LoggerFactory.getLogger(TransactionWorkflow.class);
+	private static final String EDIT_SUBFIELD_VALUE = "Edit Subfield Value - Format: n(6) [YYMMDD] ";
 	private static final String EDIT_DE_VALUE = "Edit DE Value";
 	private static final String SELECT_DE_VALUE = "Drop Down Button";
 	private static final String BILLING_CURRENCY_VALUE = "356 - Indian Rupee";
@@ -105,7 +114,12 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	private static final String RESULT_IDENTIFIER = "Refresh";
 	private static final String VISA_FAILURE_MESSAGE = "Visa Incomming Message for transaction did not come :: {}";
 	private static final String SIMULATOR_LICENSE_TYPE_17 = "17";
+	public static String STAGE_KEYS="00998 - Example ETEC1 - 0213";
 	private static final String SIMULATOR_LICENSE_TYPE_18 = "18";
+	private static final String REVERSAL="Reversal";
+	private static final String STIP="STIP";
+	private static final int MAX_RETRY = 30;
+	private static final String CVV2_PREFIX_VALUE = "11";
 
 	@Autowired
 	private WebDriverProvider webProvider;
@@ -239,7 +253,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			throw MiscUtils.propagate(e);
 		}
 	}
-
+	
 	private void captureSaveScreenShot(String methodName) {
 		SimulatorUtilities.takeScreenShot(winiumDriver, methodName + "_" + new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 	}
@@ -250,7 +264,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		activateMas(transaction);
 		if (!sameCard) {
 			importAndLoadCardProfile(transactionData.getCardProfile(), transaction);
-			if (isContains(transaction, "emv")) {
+			if (isContains(transaction, "emv")){
 				activateMas(transaction);
 				performClickOperationOnImages("AUTOMATION CARD");
 				performRightClickOperation("AUTOMATION CARD_Selected");
@@ -260,6 +274,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 				fillEmvChipKeySetDetails();
 			}
 		}
+		selectCVC3KeySet(transaction);
 		importAndLoadTestCase(transactionData.getTestCase(), transaction);
 		performExecution(transaction);
 	}
@@ -608,6 +623,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			updatePanNumber(device.getDeviceNumber());
 			updateAmountCardHolderBilling();
 			updateBillingCurrencyCode();
+			updateTransactionDate(resolveDate());
 			assignUniqueFileId();
 		} catch (Exception e) {
 			logger.debug("Exception occurred while editing fields :: {}", e);
@@ -616,6 +632,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		return aRN;
 	}
 
+	public String resolveDate()
+	{
+		LocalDate date = LocalDate.parse(context.get(ContextConstants.INSTITUTION_DATE), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
+		return date.toString().replaceAll("-","").substring(2, date.toString().replaceAll("-","").length());
+	}
 	private void updateAuthCode() throws AWTException {
 		activateMcps();
 		Actions action = new Actions(winiumDriver);
@@ -629,6 +650,25 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(2000);
 		winiumClickOperation(SET_VALUE);
 		wait(2000);
+		winiumClickOperation(CLOSE);
+	}
+
+	private void updateTransactionDate(String date) throws AWTException {
+		Actions action = new Actions(winiumDriver);
+		activateMcps();
+		clickMiddlePresentmentAndMessageTypeIndicator();
+		action.moveToElement(winiumDriver.findElementByName("012 - Date And Time, Local Transaction")).doubleClick().build().perform();
+		wait(1000);
+		activateEditField();
+		action.moveToElement(winiumDriver.findElementByName(EDIT_SUBFIELD_VALUE)).moveByOffset(0, 15).doubleClick().build().perform();
+		setText("");
+		setText(date);
+		wait(1000);
+		winiumClickOperation(OK);
+		wait(1000);
+		activateEditField();
+		winiumClickOperation(SET_VALUE);
+		wait(1000);
 		winiumClickOperation(CLOSE);
 	}
 
@@ -1171,7 +1211,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void fillEmvChipKeySetDetails() {
 		if ("stagesa".equalsIgnoreCase(getEnv()))
-			selectMChipKeySet("00998 - Example ETEC1 - 0213");
+			selectMChipKeySet(STAGE_KEYS);
 		else if ("automation".equalsIgnoreCase(getEnv()) || "demo".equalsIgnoreCase(getEnv()))
 			if (SimulatorConstantsData.MAS_LICENSE_TYPE.contains("18") || SimulatorConstantsData.MAS_LICENSE_TYPE.contains("16"))
 				selectMChipKeySet("00999 - Example ETEC1 - 0213");
@@ -1197,6 +1237,47 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		winiumClickOperation("OK");
 		wait(1000);
 		captureSaveScreenShot(methodName);
+
+	}
+
+	public void selectCVC3KeySet(String transaction) {
+		if (transaction.equalsIgnoreCase(ConstantData.MSR_NFC_PURCHASE)) {
+			activateMas(transaction);
+			performClickOperationOnImages("AUTOMATION CARD");
+			performRightClickOperation("AUTOMATION CARD_Selected");
+			wait(1000);
+			performClickOperation("Edit Node");
+			wait(4000);
+
+
+			executeAutoITExe("ActivateEditCardProfile.exe");
+			String methodName = new Object() {
+			}.getClass().getEnclosingMethod().getName();
+			captureSaveScreenShot(methodName);
+			winiumClickOperation("CVC3 Data");
+			wait(2000);
+			captureSaveScreenShot(methodName);
+			winiumClickOperation("No");
+			wait(1000);
+			WebElement DynamicDdwn = winiumDriver.findElementByName("Not Specified");
+			wait(1000);
+			DynamicDdwn.findElement(By.name("Drop Down Button")).click();
+			wait(2000);
+			DynamicDdwn.findElement(By.name("Yes")).click();
+			wait(1000);
+			captureSaveScreenShot(methodName);
+			WebElement keySetDdwn = winiumDriver.findElementByName("CVC3 Key Set");
+			wait(1000);
+			keySetDdwn.findElement(By.name("Drop Down Button")).click();
+			wait(2000);
+			keySetDdwn.findElements(By.name("00123 - CVC3 Test Key Example 1"))
+			.get(0).click();
+			wait(2000);
+			captureSaveScreenShot(methodName);
+			winiumClickOperation("OK");
+			wait(1000);
+			captureSaveScreenShot(methodName);
+		}
 	}
 
 	public String getEnv() {
@@ -1392,7 +1473,16 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
 		return page.searchTransactionWithDeviceAndGetStatus(device, ts);
 	}
+	public List<String> searchTransactionWithDeviceAndGetFees(Device device, TransactionSearch ts, Boolean membershipFlag) {
+		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
+		return page.searchTransactionWithDeviceAndGetJoiningAndMemberShipFees(device, ts, membershipFlag);
+	}
 
+	public TransactionSearchDetails searchTransactionWithDeviceAndGetDetails(Device device, TransactionSearch ts) {
+		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
+		return page.searchTransactionWithDeviceAndGetDetails(device, ts);
+	}
+	
 	public String getDecimalisationTableValue(String text) {
 		return text.toUpperCase().replace("A", "0").replace("B", "1").replace("C", "2").replace("D", "3").replace("E", "4").replace("F", "5").replace("G", "6").replace("H", "7").replace("I", "8")
 				.replace("J", "9");
@@ -1427,6 +1517,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 
 	private void winiumClickOperation(String locator) {
 		logger.info(WINIUM_LOG_COMMENT, locator);
+		SimulatorUtilities.wait(8000);
 		winiumDriver.findElementByName(locator).click();
 	}
 
@@ -1716,8 +1807,13 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		captureSaveScreenShot(methodName);
 		selectVisaTestCaseToMakeDataElementChange(transactionName);
 		Device device = context.get(ContextConstants.DEVICE);
-		if (transaction.toLowerCase().contains("pin"))
+		if (transaction.toLowerCase().contains("pin")) {
+			setValueInMessageEditorForTransction("F35.05", transactionName, (MiscUtils.randomNumber(2) + device.getCvvData()));	
 			setValueInMessageEditorForTransction("F52", transactionName, device.getPinNumberForTransaction());
+		}
+		else if(transaction.contains("ECOM")) {
+			setValueInMessageEditorForTransction("F126.10", transactionName, (CVV2_PREFIX_VALUE + " " + device.getCvv2Data()));	
+		}
 		captureSaveScreenShot(methodName);
 		executeVisaTest(transactionName);
 	}
@@ -1807,6 +1903,25 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		return tempValue;
 	}
 
+	private void waitForReturnButtonToGetEnable() {
+		boolean flag = false;
+		int retry = 0;
+		WebElement returnButton = null;
+		try {
+			while (!flag && retry <= MAX_RETRY) {
+				returnButton = winiumDriver.findElementByName("Return");
+				flag = returnButton.isEnabled();
+				wait(500);
+				retry ++;
+			}
+
+		} catch (NoSuchElementException ex) {
+			logMessage("Waiting for elemnt to get enabled", ex.getMessage());
+		}
+		returnButton.click();
+		wait(3000);
+	}
+
 	public void executeVisaTest(String transaction) {
 		MiscUtils.reportToConsole(" ******* executeVisaTest ******");
 		String methodName = new Object() {
@@ -1820,13 +1935,15 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		captureSaveScreenShot(methodName);
 		winiumClickOperation("Execute Test");
 		wait(5000);
+		waitForReturnButtonToGetEnable();
 		captureSaveScreenShot(methodName);
-		executeAutoITExe("visaTestExeution.exe");
+		//		executeAutoITExe("visaTestExecution.exe");
 		captureSaveScreenShot(methodName);
 	}
 
 	public String verifyVisaOutput(String transaction) {
 		String results;
+		List<WebElement> lst;
 		MiscUtils.reportToConsole(" ******* verifyVisaOutput ******");
 		winiumClickOperation(transaction);
 		pressEnter();
@@ -1838,7 +1955,13 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(1000);
 		winiumClickOperation(RESULT_IDENTIFIER);
 		Actions action = new Actions(winiumDriver);
-		List<WebElement> lst = winiumDriver.findElements(By.name("0110 ISO Message, INCOMING. Match found"));
+		if (transaction.contains(REVERSAL)){
+			lst = winiumDriver.findElements(By.name("0410 ISO Message, INCOMING. Match found"));
+		} else if(transaction.contains(STIP)){
+			lst = winiumDriver.findElements(By.name("0130 ISO Message, INCOMING. Match found"));
+		} else{
+			lst = winiumDriver.findElements(By.name("0110 ISO Message, INCOMING. Match found"));
+		}
 		if (lst.isEmpty()) {
 			logMessage(VISA_FAILURE_MESSAGE, "");
 			return VISA_FAILURE_MESSAGE;
@@ -2000,5 +2123,62 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(2000);
 		winiumClickOperation("OK");
 
+	}
+
+	public void addMID_TID_Blocking(String combination, MID_TID_Blocking details) {
+		MID_TID_BlockingPage page = navigator.navigateToPage(MID_TID_BlockingPage.class);
+		page.addBlockingMID_TID(combination, details);
+	}
+
+	public void deleteMID_TID_Blocking(String combination, MID_TID_Blocking details) {
+		MID_TID_BlockingPage page = navigator.navigateToPage(MID_TID_BlockingPage.class);
+		page.deleteRecord(combination,details);
+	}
+
+	public Transaction setDEElementsForMIDTID (Transaction transactionData, MID_TID_Blocking midtidBlocking, String midTidCombination)
+	{
+		switch(midTidCombination){
+		case "1" :
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_041, midtidBlocking.getTerminalID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_032, midtidBlocking.getAcquirerID());
+			break;
+		case "2" :
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_019, midtidBlocking.getAcquiringCountryCode());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_022_01, ConstantData.POS_TERMINAL_VALUE);
+			break;
+		case "3" :
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_022_01, ConstantData.POS_TERMINAL_VALUE);
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
+			break;
+		case "4": case "6" : 
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_032, midtidBlocking.getAcquirerID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_041, midtidBlocking.getTerminalID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
+			break;
+		case "5" :
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
+			break;
+		case "7" :
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_041, midtidBlocking.getTerminalID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
+			break;
+		case "9" :
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_032, midtidBlocking.getAcquirerID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
+			break;
+		case "10" :
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_019, midtidBlocking.getAcquiringCountryCode());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_032, midtidBlocking.getAcquirerID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_041, midtidBlocking.getTerminalID());
+			break;
+		case "11" : 
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_032, midtidBlocking.getAcquirerID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_041, midtidBlocking.getTerminalID());
+			break;
+		default:
+			logger.info("Invalid Combination Provided {}", midTidCombination);
+		}
+		return transactionData;
 	}
 }

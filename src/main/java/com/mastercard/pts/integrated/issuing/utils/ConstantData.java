@@ -56,6 +56,8 @@ public class ConstantData {
 	public static final String AUTHORIZATION_REPORT_FILE_KEY = "Auto";
 	public static final String AUTHORIZATION_CODE = "authCode";
 	public static final String TRANSACTION_AMOUNT = "transactionAmount";
+	public static final String BILLING_AMOUNT = "billingAmount";
+	public static final String TRANSACTION_AMOUNT_BD = "transactionAmountbd";
 	public static final String INTERNATIONAL_ALLOW_DISALLOW = "International Use Allow/Disallow [400]";
 	public static final String ECCOMERCE_ALLOW_DISALLOW= "E-commerce Activation/Deactivation [304]";
 	public static final String DEVICE_PRODUCTION_REPORT_FILE_NAME = "Device Production.pdf";
@@ -64,6 +66,8 @@ public class ConstantData {
 
 	public static final String API_NAME = "API_NAME";
 	public static final String MSR_CARD = "magnetic stripe card";
+	public static final String NFC_MSR_CARD = "mag stripe";
+	public static final String MSR_NFC_PURCHASE = "MSR_NFC_PURCHASE";
 	public static final String DEBIT_DEVICE = "Debitdevice";
 	public static final String PREPAID_DEVICE = "Prepaiddevice";
 	
@@ -73,9 +77,13 @@ public class ConstantData {
 	public static final String END_RANGE_DIGITS = "9999999999";
 	public static final String RRN_NUMBER = "rrnumber";
 	
+	public static final String THREE_D_SECURE_NO_CVV2 = "3D_SECURE_NO_CVV2";
 	public static final String THREE_D_SECURE_TRANSACTION = "3D_SECURE_CAVV";
+	public static final String THREE_D_SECURE_SCENARIO_1 = "3D_SECURE_SCENARIO_1";
+	public static final String THREE_D_SECURE_SCENARIO_2 = "3D_SECURE_SCENARIO_2";
 	public static final String DATA_ELEMENT_CAVV = "048.TLV.43";
 	
+	public static final String DEVICE_RANGE_DATA = "DeviceRangeData";
 	public static final String INSTITUTION_KEY = "institution";
 	public static final String PRODUCT_IDENTITY = "productIdentity";
 	public static final String INSTITUTION_CODE_KEY = "code";
@@ -83,6 +91,7 @@ public class ConstantData {
 	public static final String PIN_REQUIRED_FALSE = "false";
 	public static final String JSON_DATA_DRIVEN_EXECUTION = "dataDrivenExecution";
 	public static final String VIRTUAL_DEVICE_TYPE = "virtual";
+	public static final String RESPONSE_CODE_DESCRIPTION = "Capture";
 
 
 	public static final String INVALID_CVV = "123";	
@@ -104,7 +113,66 @@ public class ConstantData {
 	
 	public static final String ZERO_ZERO = "00";
 	public static final String NINE_NINE = "99";
+	
+	public static final String TOTAL_FEE_OF_BILLING = "0.00";
+	public static final String BILLED_INTEREST = "0.00";
+	public static final String UNPAID1_AMOUNT = "0.00";
+	public static final String UNPAID2_AMOUNT = "0.00";
 
+	public static final String CLIENT_LIMIT = "Client";
+	public static final String AVAIL_CLIENT_LIMIT = "Avail Client";
+	
+	
+	public static final String ACCOUNT_LIMIT = "Account";
+	public static final String AVAIL_ACCOUNT_LIMIT = "Avail Account";
+	
+	public static final String CARD_LIMIT = "Card";
+	public static final String AVAIL_CARD_LIMIT = "Avail Card";	
+	
+	public static final String TEMPORARY_LIMIT = "Temporary [T]";
+	public static final String PERMANENT_LIMIT = "Permanent [P]";	
+	
+	public static final String CREDIT_LIMIT_CHANGE_REQUEST = "226 - Credit limit Change Request";
+	public static final String CREDIT_LIMIT_CHANGE_COMMERCIAL_CARDS = 	"227 - Credit limit Change Commercial Cards";
+	
+	public static final String DAILY = "Daily";
+	public static final String PERIODIC = "Periodic";
+	public static final String YEARLY = "Yearly";
+	public static final String PERIODICITY = "Month [9]";
+	public static final String PERIODICITY_MONTH = "12";
+	public static final String TX_SUCESSFUL_MESSAGE = "000-Successful";
+	public static final String PRE_AUTH = "Pre-Auth Completion";
+	public static final String LIMIT_VALIDATION_PARAMETER = "Daily Velocity Utilized;Daily Amount Utilized;Periodic Velocity Utilized;Periodic Amount Utilized;Yearly Velocity Utilized;Yearly Amount Utilized";
+	
+	public static final String PDF_FORMAT = "PDF Format [pdf]";
+	public static final String DEVICE_ACTIVITY_REPORT_FILE_NAME = "Device Activity.pdf";
+	public static final String RETAIL_TO_LOAN = 	"215 - Retail Transaction to Loan";	
+	public static final String RETAIL_TO_LOAN_SR = "Retail Transaction to Loan [215]";
+	public static final String LOAN_PRE_CLOSURE_SR = "Loan Preclosure [242]";	
+	public static final String LOAN_PRE_CLOSURE_FEE = "Loan PreClosure Fee";
+	
+	
+	public static final String APPLIED_ON_LOAN_AMOUNT= 	"Loan Amount [LA]";		
+	public static final String LOAN_INSTALLMENT_OUTSTANDING= 	"LOAN_INSTALLMENT_OUTSTANDING";	
+	
+	public static final String TRANSACTION_TYPE = "Transaction Type" ;
+	public static final String LOAN_TRANSACTION_AMOUNT = "Transaction Amount" ;
+	public static final String PRINCIPAL_AMOUNT  = "Principal Amount";
+	public static final String INTEREST_AMOUNT  = "Interest Amount" ;
+	public static final String PROCESSING_DATE  = "Processing Date" ;
+	public static final String DUE_DATE  = "Due Date" ;
+	
+	public static final String DE_041 = "041";
+	public static final String DE_032 = "032";
+	public static final String DE_019 = "019";
+	public static final String DE_042 = "042";
+	public static final String DE_022_01 = "022.01";
+	public static final String POS_TERMINAL_VALUE = "05";
+	
 	private ConstantData() {
+	}
+
+	public static String fromShortName(String name) {
+		return MiscUtils.getConstantStringFromClassByPefixMatch(ConstantData.class, name);
 	}
 }

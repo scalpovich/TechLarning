@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.steps;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +68,9 @@ public class UserManagementSteps {
 
 	private static final String USER_INSTITUTION_NON_DEFAULT = "USER_INSTITUTION_NON_DEFAULT";
 	
-	private static final String USERNAME = "USERNAME";
+	public static final String USERNAME = "USERNAME";
+	
+	
 
 	@Autowired
 	private AppEnvironment environment;
@@ -90,8 +94,8 @@ public class UserManagementSteps {
 
 	private String userDefaultInstitution;
 
-	@When("user sign out from $type portal")
-	@Given("user sign out from $type portal")
+	@When("user {sign|signs} out from $type portal")
+	@Given("user {sign|signs} out from $type portal")
 	public void givenUserSignOutFromPortal(String type) {
 		if (CUSTOMER.equalsIgnoreCase(type))
 			loginWorkflow.signOutCustomer();
@@ -124,7 +128,8 @@ public class UserManagementSteps {
 		context.put(USER_INSTITUTION_SELECTED, institution.getCode());
 		loginWorkflow.logInInstitution(loginPortal, userDefaultInstitution);
 		context.put(USERNAME, loginPortal.getUserName());
-	}
+		context.put(ContextConstants.INSTITUTION_DATE, loginWorkflow.getInstitutionDateLogin());	
+		}
 
 	@Given("user is logged in non-default institution")
 	public void givenUserIsLoggedInNonDefaultInstitution() {
@@ -150,6 +155,15 @@ public class UserManagementSteps {
 		userDefaultInstitution = ConstantData.PROCESSING_INSTITUTION;
 		loginWorkflow.logInInstitutionAsAdmin(csrPortal, userDefaultInstitution);
 	}
+	
+	@Given("user is logged in customer portal as admin user in default institution")
+	@When("user is logged in customer portal as admin user in default institution")
+	public void givenUserIsLoggedInCustomerPortalInDefaultInstitution() {
+		Portal csrPortal = environment.getPortalByType(Portal.TYPE_CUSTOMER);
+		String institution = Institution.createWithProvider(provider).buildAbbreviationAndCode();
+		loginWorkflow.logInInstitutionAsAdmin(csrPortal, institution);
+	}
+	
     @Given("user logs in with valid credentials")
 	@When("user logs in with valid credentials")
 	public void whenUserLogsInWithValidCredentials() {
@@ -322,5 +336,10 @@ public class UserManagementSteps {
 	public void whenUserWaitToPerformCrossBorderTransaction()
 	{
 		SimulatorUtilities.wait(1260000);
+	}
+	@When("user wait for $time min to perform certain activity")
+	public void whenUserWaitForSomeMinutesToPerformCertainActivity(int time)
+	{
+		SimulatorUtilities.wait(time*60000);
 	}
 }

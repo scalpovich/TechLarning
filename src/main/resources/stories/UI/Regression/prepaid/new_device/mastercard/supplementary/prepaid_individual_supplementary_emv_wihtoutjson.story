@@ -1,4 +1,3 @@
-!-- author: e076168
 Narrative:
 As a user
 I want to login into customer portal 
@@ -7,9 +6,8 @@ In order to create supplementary prepaid card
 
 Meta:
 @StoryName prepaid_card
-@SanityCards
 
-Scenario: To verify functionality of prepaid card boarding
+Scenario: To verify functionality of EMV prepaid card boarding
 Given user is logged in institution
 When User fills Statement Message Plan for prepaid product
 And User fills Marketing Message Plan for prepaid product

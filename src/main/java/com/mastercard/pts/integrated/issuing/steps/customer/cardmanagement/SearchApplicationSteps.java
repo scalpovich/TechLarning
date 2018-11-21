@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ public class SearchApplicationSteps {
 	SearchApplicationDetailsFlows searchApplicationDetailsFlows;
 
 	@When("user searches for created application")
+	@Then("user searches for created application")
 	public void searchApplicationDetails(){
 		searchApplicationDetailsFlows.searchApplicationDetails();
 	}

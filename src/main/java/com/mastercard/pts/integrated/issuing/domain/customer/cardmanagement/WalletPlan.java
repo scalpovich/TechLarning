@@ -37,6 +37,8 @@ public class WalletPlan implements HasCodeAndDescription {
 	private static final String WP_WALLET_INACTVITY_RULES_CLOSURE_WALLET_AFTER_DAYS = "WP_WALLET_INACTVITY_RULES_CLOSURE_WALLET_AFTER_DAYS";
 	private static final String WP_WALLET_RESERVERD_AMOUNT = "WP_WALLET_RESERVERD_AMOUNT";
 	private static final String WHITE_LISTED_MCG_PLAN="WHITE_LISTED_MCG_PLAN";
+	private static final String WP_MCG_LIMIT_PLAN = "WP_MCG_LIMIT_PLAN";
+	private static final String WP_MCG = "WP_MCG";
 
 	private String walletReserveAmount;
 	private String description;
@@ -76,6 +78,16 @@ public class WalletPlan implements HasCodeAndDescription {
 	private String secondWallet;
 	private String whiteMcgCode;
 	private String whiteListedMCGPlan;
+	private String mcgLimitPlan;
+	private String mcg;
+
+	public String getMCG() {
+		return mcg;
+	}
+
+	public void setMCG(String mcg) {
+		this.mcg = mcg;
+	}
 
 	public String getWhiteListedMCGPlan() {
 		return whiteListedMCGPlan;
@@ -156,6 +168,14 @@ public class WalletPlan implements HasCodeAndDescription {
 	public void setWalletFeePlan(String walletFeePlan) {
 		this.walletFeePlan = walletFeePlan;
 	}
+	
+	public String getMcgLimitPlan() {
+		return mcgLimitPlan;
+	}
+
+	public void setMcgLimitPlan(String mcgLimitPlan) {
+		this.mcgLimitPlan = mcgLimitPlan;
+	}
 
 	private static void setGenericData(WalletPlan plan) {
 		plan.setWalletPlanCode(MiscUtils.generate10CharAlphaNumeric());
@@ -193,6 +213,8 @@ public class WalletPlan implements HasCodeAndDescription {
 		plan.setProgramType(keyValueProvider.getString(PROGRAM_TYPE));
 		plan.setReservedAmount(keyValueProvider.getString(WP_WALLET_RESERVERD_AMOUNT));
 		plan.setDummyAccountNumber(RandomStringUtils.randomNumeric(6));
+		plan.setMcgLimitPlan(keyValueProvider.getString(WP_MCG_LIMIT_PLAN));
+		plan.setMCG(keyValueProvider.getString(WP_MCG));
 		return plan;
 	}
 

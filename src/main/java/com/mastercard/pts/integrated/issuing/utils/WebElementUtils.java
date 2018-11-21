@@ -17,6 +17,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -104,11 +105,14 @@ public class WebElementUtils {
 		retryUntilNoErrors(() -> new Select(asWebElement(element)).selectByIndex(value));
 	}
 
-	@SuppressWarnings("deprecation")
 	public static void selectDropDownByVisibleText(MCWebElement element, String visibleText) {
-		retryUntilNoErrors(() -> new Select(asWebElement(element)).selectByVisibleText(visibleText));
-		SimulatorUtilities.wait(1000);
-		//waitForWicket(TestContext.getDriver());
+		try {
+			retryUntilNoErrors(() -> new Select(asWebElement(element)).selectByVisibleText(visibleText));
+			SimulatorUtilities.wait(1000);
+		} catch (StaleElementReferenceException e) {
+			Select sel = new Select(asWebElement(element));
+			sel.selectByVisibleText(visibleText);
+		}
 	}
 
 	public static void selectDDByVisibleText(MCWebElement element, String visibleText) {
@@ -199,12 +203,15 @@ public class WebElementUtils {
 
 	public static void pickDate(MCWebElement datePicker, LocalDate date) {
 		WebElement monthYear = fluentWait(() -> asWebElement(datePicker).findElement(By.cssSelector("a.calnav")));
-
 		asWebElement(datePicker).findElement(By.cssSelector("img")).click();
-
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
-		YearMonth currentYearMonth = YearMonth.parse(monthYear.getText(), formatter);
-
+		YearMonth currentYearMonth;
+		try {
+			currentYearMonth = YearMonth.parse(monthYear.getText(), formatter);
+		} catch (StaleElementReferenceException ex) {
+			monthYear = fluentWait(() -> asWebElement(datePicker).findElement(By.cssSelector("a.calnav")));
+			currentYearMonth = YearMonth.parse(monthYear.getText(), formatter);
+		} 
 		if (date.getYear() != currentYearMonth.getYear() || date.getMonthValue() != currentYearMonth.getMonthValue()) {
 			monthYear.click();
 

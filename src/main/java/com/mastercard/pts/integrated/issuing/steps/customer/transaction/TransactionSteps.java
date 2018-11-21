@@ -10,8 +10,12 @@ import static org.junit.Assert.assertTrue;
 import java.awt.AWTException;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Objects;
+import java.text.DecimalFormat;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Aliases;
 import org.jbehave.core.annotations.Given;
@@ -28,10 +32,13 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.agent.channelmanagement.AssignPrograms;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalanceRequest;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MID_TID_Blocking;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.AuthorizationTransactionFactory;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ClearingTestCase;
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ReversalTransaction;
@@ -45,6 +52,7 @@ import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKeyValuePair;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceUsageWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
 
 @Component
@@ -58,6 +66,8 @@ public class TransactionSteps {
 	private static final String PIN_PRODUCTION = "pin production";
 	private static final String IPMINCOMING = "ipm incoming";
 	private static Boolean sameCard = false;
+	private static final String ATC = "ATC" ;
+	public boolean atcCounterFlag = false;
 
 	@Autowired
 	private TestContext context;
@@ -76,6 +86,9 @@ public class TransactionSteps {
 
 	@Autowired
 	private TransactionProvider transactionProvider;
+	
+	@Autowired
+	private DeviceUsageWorkflow deviceUsageWorkflow;
 
 	@Autowired
 	private ClearingTestCaseProvider clearingTestCaseProvider;
@@ -89,11 +102,19 @@ public class TransactionSteps {
 
 	private String transactionAmount = "20.00";
 
+	private boolean midTidFlag=false;
+
+	private String midTidCombination="";
+
 	private static String PASS_MESSAGE = "Transaction is succcessful!  - Expected Result : ";
 
 	private static String FAILED = "Transaction failed! ";
 
 	private static String FAIL_MESSAGE = FAILED + " -  Result : ";
+	
+	private static String INVALID_KEYS = "(default) - M/Chip Key Set from the related BIN range will be used";
+	
+	public boolean membershipFlag = false;
 
 	public String getTransactionAmount() {
 		return transactionAmount;
@@ -110,19 +131,23 @@ public class TransactionSteps {
 
 		String temp = transaction;
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
-		MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));
+		if(!Objects.isNull(context.get(ConstantData.IS_PIN_REQUIRED))){
+			MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));				
 		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
 			// ECOMM are pinless tranasactions
 			if (!transaction.toLowerCase().contains("ecom"))
 				temp = transaction + "_PIN";
 		}
+		}
 		performOperationOnSamecard(false);
 		givenOptimizedTransactionIsExecuted(temp);
+		String txnDate=context.get(ContextConstants.INSTITUTION_DATE);
+		context.put(ContextConstants.TRANSACTION_DATE,txnDate);
 	}
 
 	@When("perform an $transaction MAS transaction on the same card")
 	@Aliases(values={"a sample simulator \"$transaction\" is executed on the same card",
-    "user performs an \"$transaction\" MAS transaction on the same card"})
+	"user performs an \"$transaction\" MAS transaction on the same card"})
 	@Given("perform an $transaction MAS transaction on the same card")
 	public void givenTransactionIsExecutedOnTheSameCard(String transaction) {
 		String temp = transaction;
@@ -154,8 +179,13 @@ public class TransactionSteps {
 		// operation of MAS/MDFS ... Storing transaction name in context to use it at runtime
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		Transaction transactionData = generateMasTestDataForTransaction(transaction);
-
 		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData, sameCard);
+	}
+	
+	@When("perform an $type MAS transaction with wrong keys")
+	public void performTransactionWithWrongKeys(String transaction) {
+		TransactionWorkflow.STAGE_KEYS = INVALID_KEYS;
+		givenTransactionIsExecuted(transaction);
 	}
 
 	@When("user performs generate TestData for an optimized $transaction MAS transaction")
@@ -164,6 +194,15 @@ public class TransactionSteps {
 		// Storing transaction name in context to use it at runtime
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		generateMasTestDataForTransaction(transaction);
+	}
+
+	@Given("user updates ATC value as $type and value as $ATCValue")
+	@Then("user updates ATC value as $type and value as $ATCValue")
+	public void userUpdateATCValueAsRequired(String flag, String atcvalue) {
+		atcCounterFlag = true;
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setUpdatedATCValue(atcvalue);
+		context.put(ContextConstants.DEVICE, device);
 	}
 
 	private Transaction generateMasTestDataForTransaction(String transaction) {
@@ -239,9 +278,13 @@ public class TransactionSteps {
 			transactionData.setDeKeyValuePairDynamic("004", "000000000000");
 		}
 
+		if (midTidFlag){
+			MID_TID_Blocking midtidBlocking = context.get(ContextConstants.MID_TID_BLOCKING);
+			transactionData = transactionWorkflow.setDEElementsForMIDTID(transactionData,midtidBlocking,midTidCombination);
+		}
 		// changed ECOMMERCE to ECOM
 		if (transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE") || transactionWorkflow.isContains(transaction, "ASI_") || transactionWorkflow.isContains(transaction, "MMSR")
-				|| transactionWorkflow.isContains(transaction, ConstantData.THREE_D_SECURE_TRANSACTION)) {
+				|| transactionWorkflow.isContains(transaction, ConstantData.THREE_D_SECURE_TRANSACTION) || transactionWorkflow.isContains(transaction, "3D_SECURE_SCENARIO")) {
 			// for pinless card, we are not performing CVV validation as we do not know the CVV as this is fetched from embosing file on LInuxbox
 			transactionData.setDeKeyValuePairDynamic("048.TLV.92", device.getCvv2Data()); // Transaction currency code
 		}
@@ -274,10 +317,17 @@ public class TransactionSteps {
 		transactionData.setCardDataElementsDynamic("045.02", device.getDeviceNumber());
 		transactionData.setCardDataElementsDynamic("045.06", device.getExpirationDate());
 		transactionData.setCardDataElementsDynamic("035.04", device.getServiceCode());
+		if (atcCounterFlag)
+		{
+			transactionData.setCardDataElementsDynamic("055.9F36", device.getUpdatedATCValue());
+		}
 		if (transactionWorkflow.isContains(transaction, "EMV")) {
 			transactionData.setCardDataElementsDynamic("035.05", "000" + device.getIcvvData());
 		} else if (transactionWorkflow.isContains(transaction, "MSR") || transactionWorkflow.isContains(transaction, "FALLBACK") ) {
 			transactionData.setCardDataElementsDynamic("035.05", "000" + device.getCvvData());
+		}
+		if(transaction.contains(ConstantData.MSR_NFC_PURCHASE)){
+			transactionData.setCardDataElementsDynamic("035.05", "*************");
 		}
 	}
 
@@ -310,6 +360,9 @@ public class TransactionSteps {
 
 	@When("Auth file is loaded into MCPS and processed")
 	public void loadAuthFileToMCPS() {
+		logger.info("TXN Date "+context.get("transaction_date"));
+		String txnDate=context.get(ContextConstants.TRANSACTION_DATE);
+		context.put(ContextConstants.INSTITUTION_DATE,txnDate);
 		arnNumber = transactionWorkflow.loadAuthFileToMCPS(authFilePath);
 		if (arnNumber.isEmpty()) {
 			logger.error("*********ARN number is empty");
@@ -391,10 +444,10 @@ public class TransactionSteps {
 		Transaction transactionData = Transaction.generateFinSimPinTestData(device, finSimConfig, provider);
 		String pinNumber = transactionWorkflow.getPinNumber(transactionData);
 		logger.info("FINSim PIN Number generated : {} ", pinNumber);
-      	Assert.assertTrue("INVALID PIN", !pinNumber.isEmpty());
+		Assert.assertTrue("INVALID PIN", !pinNumber.isEmpty());
 		device.setPinNumberForTransaction(pinNumber);
 	}
-	
+
 	@When("PIN is created for Pin Change First Transaction")
 	@Then("PIN is created for Pin Change First Transaction")
 	public void thenPINIsCreatedForPinChangeFirstTransaction() {
@@ -449,6 +502,29 @@ public class TransactionSteps {
 		Assert.assertTrue("successfully completed the wallet to wallet fund transfer",
 				transactionWorkflow.searchTransactionWithDeviceAndGetStatus(device, ts).contains(" Wallet to Wallet Transfer(Credit)"));
 	}
+	
+	
+	@When("search with device in transaction screen and Verify Joining and Membership Fees")
+	@Then("search with device in transaction screen and Verify Joining and Membership Fees")
+	public void verifyJoiningAndMembershipFeesOnTransactionSearch() {
+		
+		TransactionSearch ts = TransactionSearch.getProviderData(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setJoiningFees(provider.getString("JOINING_FEES"));
+		device.setMemberShipFees(provider.getString("MEMBERSHIP_FEES"));
+		membershipFlag = true;
+		assertThat(transactionWorkflow.searchTransactionWithDeviceAndGetFees(device, ts, membershipFlag), Matchers.hasItems(device.getJoiningFees(), device.getMembershipFees()));
+	}
+	
+	@When("search with device in transaction screen and Verify Joining Fee")
+	@Then("search with device in transaction screen and Verify Joining Fee")
+	public void verifyJoiningFeeOnTransactionSearch() {
+		
+		TransactionSearch ts = TransactionSearch.getProviderData(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setJoiningFees(provider.getString("JOINING_FEES"));
+		assertEquals(transactionWorkflow.searchTransactionWithDeviceAndGetFees(device, ts, membershipFlag), device.getJoiningFees());
+	}
 
 	@When("user performs load balance request")
 	public void whenUserPerformsLoadBalanceRequest() {
@@ -456,9 +532,20 @@ public class TransactionSteps {
 		LoadBalanceRequest lbr = LoadBalanceRequest.getProviderData(provider);
 		String loadRequestReferenceNumber = transactionWorkflow.performLoadBalanceRequestAndGetRequestReferenceNumber(device, lbr);
 		lbr.setLoadRequestReferenceNumber(loadRequestReferenceNumber);
-		context.put("LOADBALANCEREQUEST", lbr);
+		context.put(ContextConstants.LOAD_BALANCE_REQUEST, lbr);
+	}
+	
+	@When("user performs load balance request for Joining and Membership plan")
+	public void whenUserPerformsLoadBalanceRequestforJoiningandMemberShipPlan() {
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
+		LoadBalanceRequest lbr = LoadBalanceRequest.getProviderData(provider);
+		String loadRequestReferenceNumber = transactionWorkflow.performLoadBalanceRequestAndGetRequestReferenceNumber(device, lbr);
+		lbr.setLoadRequestReferenceNumber(loadRequestReferenceNumber);
+		context.put(ContextConstants.LOAD_BALANCE_REQUEST, lbr);
 	}
 
+	@When("load balance request is successful")
 	@Then("load balance request is successful")
 	public void thenLoadBalanceRequestIsSuccessful() {
 		assertThat("Load Balance Request Failed", transactionWorkflow.getLoadBalanceRequestSuccessMessage(), containsString("Load balance request forwarded for approval with request number :"));
@@ -467,10 +554,11 @@ public class TransactionSteps {
 	@When("user performs load balance approve")
 	public void whenUserPerformsLoadBalanceApprove() {
 		Device device = context.get(ContextConstants.DEVICE);
-		LoadBalanceRequest lbr = context.get("LOADBALANCEREQUEST");
+		LoadBalanceRequest lbr = context.get(ContextConstants.LOAD_BALANCE_REQUEST);
 		transactionWorkflow.performLoadBalanceApprove(device, lbr);
 	}
 
+	@When("load balance approve is successful")
 	@Then("load balance approve is successful")
 	public void thenLoadBalanceApproveIsSuccessful() {
 		assertThat("Load Balance Approve Failed", transactionWorkflow.getLoadBalanceApproveSuccessMessage(), containsString("approved successfully."));
@@ -502,6 +590,7 @@ public class TransactionSteps {
 
 	@When("$tool test results are verified for $transaction")
 	@Then("$tool test results are verified for $transaction")
+	@Given("$tool test results are verified for $transaction")
 	public void thenVisaTestResultsAreReported(String tool, String transaction) {
 		String testResults = null;
 		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseToSelect(transaction);
@@ -555,12 +644,66 @@ public class TransactionSteps {
 			transactionWorkflow.setFolderPermisson(provider.getString(IPM_INCOMING));
 		transactionWorkflow.closeWinSCP();
 	}
-	
+
 	@Then("user sets invalid pin")
 	@When("user sets invalid pin")
 	public void userSetInvalidPin(){
 		Device device = context.get(ContextConstants.DEVICE);
 		device.setPinNumberForTransaction(ConstantData.INVALID_PIN);
+		context.put(ContextConstants.DEVICE, device);
+	}
+	
+	@Given("set the transaction amount to $amount in program currency")
+	public void setTransactionAmountFromStep(String amount){
+		Device device = context.get(ContextConstants.DEVICE);
+		if(device.getExchangeRate()==null){
+			device.setTransactionAmount(Integer.toString((Integer.parseInt(amount)*100)));
+		}
+		else{
+			Double moderatedAmount = (Double.parseDouble(amount))/(Double.parseDouble(device.getExchangeRate()));
+			device.setTransactionAmount(Long.toString(Math.round(moderatedAmount*100.0)));
+		}
+		context.put(ContextConstants.DEVICE, device);
+	}
+
+	@Given("User set MID_TID flag $type and MID_TID Combination $type")
+	@When("User set MID_TID flag $type and MID_TID Combination $type")
+	public void userSetMIDTIDFlagAndCaseValue(boolean midTidFlag, String midTidCombination) {
+		this.midTidFlag = midTidFlag;
+		this.midTidCombination = midTidCombination;
+	}
+	
+	/***
+	 * This method is implemented to change transaction amount for transaction
+	 * @param amount : Decimal representation for amount
+	 * */
+	@When("user updates transaction amount to $amount")
+	@Given("user updates transaction amount to $amount")
+	public void userSetTransactionAmount(Double amount){
+		int i = new Double(amount * 100).intValue(); 
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setTransactionAmount(Integer.toString(i));
+		context.put(ContextConstants.DEVICE, device);
+	}
+
+	@When("perform an $transaction MAS transaction with amount $amount")
+	public void givenGenerateTestDataForOptimizedTransactionWithDifferentAmountIsExecuted(String transaction, String amount) {
+		// Storing transaction name in context to use it at runtime
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setTransactionAmount(amount);
+		context.put(ConstantData.TRANSACTION_NAME, transaction);
+		performOperationOnSamecard(false);
+		givenOptimizedTransactionIsExecuted(transaction);
+	}
+
+	@When("search transaction with device number on transaction search screen")
+	@Then("search transaction with device number on transaction search screen")
+	public void thenSearchWithDeviceInTransactionScreenAndVerify() {
+		TransactionSearch ts = TransactionSearch.getProviderData(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		TransactionSearchDetails transactionSearch = transactionWorkflow.searchTransactionWithDeviceAndGetDetails(device, ts);
+		Assert.assertTrue("Successfully transaction search",transactionSearch.getDeviceNumber().equalsIgnoreCase(device.getDeviceNumber()));
+		context.put(ContextConstants.TRANSACTION_SEARCH_DETAILS, transactionSearch);
 		context.put(ContextConstants.DEVICE, device);
 	}
 }

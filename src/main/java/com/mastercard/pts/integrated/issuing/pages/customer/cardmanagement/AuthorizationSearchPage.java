@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -30,9 +31,7 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory.getLogger(AuthorizationSearchPage.class);
 
 	List<String> txnFeesFields = new ArrayList<>();
-
-	private String billingAmountForMarkUpFee;
-
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=cardNumber]")
 	private MCWebElement cardNumber;
 
@@ -93,8 +92,17 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	@PageElement(findBy=FindBy.X_PATH, valueToFind = "//td[contains(text(),'Available Balance')]/following-sibling::td[1]/span/span")
 	private MCWebElement availableBalanceTxt;
 	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
+	private MCWebElement institutionDateTxt;
+	
 	private String amountTypes = "Billing Amount:Transaction Fee:Service Tax:Markup Fee:Markup Service Tax";
-
+	
+	@PageElement(findBy=FindBy.X_PATH, valueToFind = "//td/span[contains(text(),'Reconcilation Status')]/following::tr[1]/td[2]/span/span")
+	private MCWebElement txtReconciliationStatus;
+	
+	private BigDecimal availableBalanceAfterReversal;
+	private String reconciliationStatus;
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Authorization Search");
 		verifySearchButton("Search");
@@ -105,10 +113,12 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	}
 
 	public void inputFromDate(LocalDate date) {
+		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(1);
 		WebElementUtils.pickDate(fromDate, date);
 	}
 
 	public void inputToDate(LocalDate date) {
+		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
 		WebElementUtils.pickDate(toDate, date);
 	}
 
@@ -187,12 +197,45 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 			for(String str : amountType){
 				String value = Element("//span[contains(text(),'"+str+"')]/../span[2]/span").getText();
 				logger.info("value of " + str + " = "+  value);
-				sum = sum.add(new BigDecimal(value),  new MathContext(5));
+				sum = sum.add(new BigDecimal(value),  new MathContext(6));
 			}
 			availBal.setSum(sum);
 			availBal.setAvailableBal(new BigDecimal(getTextFromPage(availableBalanceTxt)));			
 			clickCloseButton();
 		});
 		return availBal;
+	}
+
+	public BigDecimal viewAvailableBalanceAfterReversalTransaction(String deviceNumber) {
+		inputDeviceNumber(deviceNumber);
+		inputFromDate(LocalDate.now().minusDays(1));
+		inputToDate(LocalDate.now());
+		clickSearchButton();
+		viewFirstRecord();
+
+		runWithinPopup("View Authorization", () -> {
+			availableBalanceAfterReversal = new BigDecimal(availableBalanceTxt.getText());
+			clickCloseButton();
+		});
+		return availableBalanceAfterReversal;
+	}
+	public String verifyReconciliationStatus(String deviceNumber) {
+		inputDeviceNumber(deviceNumber);
+		LocalDate date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(4);
+		WebElementUtils.pickDate(fromDate, date);
+		SimulatorUtilities.wait(500);
+		WebElementUtils.pickDate(toDate, date);
+		waitAndSearchForRecordToAppear();
+		viewDeviceDetails();
+		SimulatorUtilities.wait(500);
+		runWithinPopup("View Authorization", () -> {
+			SimulatorUtilities.wait(1000);
+			logger.info("reconcilationStatus->"+txtReconciliationStatus.getText());
+			reconciliationStatus=txtReconciliationStatus.getText();
+			SimulatorUtilities.wait(500);
+			clickCloseButton();
+		});
+		SimulatorUtilities.wait(500);
+		return reconciliationStatus;
 	}
 }

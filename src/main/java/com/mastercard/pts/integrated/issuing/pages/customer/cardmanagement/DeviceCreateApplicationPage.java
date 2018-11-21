@@ -4,11 +4,11 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -176,6 +176,12 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
   	@PageElement(findBy = FindBy.NAME, valueToFind = "view:applicationBatch.openedBatches:input:dropdowncomponent")  													  
 	private MCWebElement openBatchDDwn;
   	
+  	@PageElement(findBy = FindBy.NAME, valueToFind = "view:existingDeviceNumber:input:inputTextField")
+ 	private MCWebElement existingDeviceNumberTxt;
+ 	 	
+ 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Existing Client Code')]")
+ 	private MCWebElement existingClientLabel;
+  	
   	@PageElement(findBy = FindBy.NAME, valueToFind = "view:uploadPhoto")  													  
 	private MCWebElement uploadBtn;
   	
@@ -184,7 +190,6 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
   	
   	private static final String PHOTO_FILE_PATH = "src//main/resources//InstitutionLogo//CreditLogo.png";
   	
-  	//String photoPath = "C:\\Users\\E084343\\Downloads";
   	
 	public void selectAppliedForProduct(String product) {
 		WebElementUtils.selectDropDownByVisibleText(appliedForProdutDDwn, product);
@@ -276,7 +281,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		device.setApplicationNumber(getCodeFromInfoMessage("Application Number"));
 		logger.info("Application Number: {}",device.getApplicationNumber());
 		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)
-				&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)) {
+				/*&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)*/) {
 			context.put(ContextConstants.DEVICE_SUPPLEMENTARY_ADDON_EXISTING,device);
 		} else {
 			context.put(ContextConstants.DEVICE, device);
@@ -288,13 +293,19 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 	}
 
 	private void fillBatchDetails(Device device) {		
-		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
-		clickWhenClickable(generateDeviceBatchBtn);
-		waitForWicket();
-		SimulatorUtilities.wait(10000);
-		context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());		
-		device.setBatchNumber(batchNumberTxt.getText());
-		logger.info(" *********** Batch number *********** : {}",device.getBatchNumber());		
+		if(Objects.nonNull(context.get(CreditConstants.EXISTING_BATCH))){
+			WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn,"Open [O]");			
+			selectByVisibleText(openBatchDDwn, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
+			device.setBatchNumber(context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
+		}else{
+			WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
+			clickWhenClickable(generateDeviceBatchBtn);
+			waitForWicket();
+			SimulatorUtilities.wait(30000);
+			context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());		
+			device.setBatchNumber(batchNumberTxt.getText());
+			logger.info(" *********** Batch number *********** : {}",device.getBatchNumber());		
+		}
 		clickNextButton();
 	}
 
@@ -310,16 +321,17 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){				
 			enterText(existingDeviceTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));
 			SimulatorUtilities.wait(8000);
-			Actions action = new Actions(driver());		
-			action.moveToElement(asWebElement(existingDeviceTxt), 50, 50).click().build().perform();
+			moveToElementAndClick(existingDeviceTxt, 50, 50);			
 			waitForWicket(driver());
 			SimulatorUtilities.wait(10000);
 		}else{
-			selectByVisibleText(customerTypeDDwn, device.getCustomerType());
+			selectByVisibleText(customerTypeDDwn, device.getCustomerType());  
+			SimulatorUtilities.wait(8000);
 			waitForWicket(driver());
-			WebElementUtils.selectDropDownByVisibleText(programCodeDDwn, device.getProgramCode());	
+			selectByVisibleText(programCodeDDwn, device.getProgramCode());
+			SimulatorUtilities.wait(5000);			
 		}
-		
+		SimulatorUtilities.wait(1000);
 		clickNextButton();
 		waitForWicket(driver());
 		waitForElementVisible(deviceType1DDwn);
@@ -375,13 +387,15 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			clickNextButton();	
 		}	
 	}
-	private void fillAddOnProfileAndClickNext(Device device){
+
+	private void fillAddOnProfileAndClickNext(Device device) {
 		ClientDetails client = device.getClientDetails();
 		WebElementUtils.selectDropDownByVisibleText(addOnTitleOpt, client.getTitle());
 		WebElementUtils.enterText(addOnFirstNameTxt, client.getFirstName());
 		WebElementUtils.enterText(addOnLastNameTxt, client.getLastName());
-		WebElementUtils.selectDropDownByVisibleText(addOnGenderTxt, client.getGender());	
+		WebElementUtils.selectDropDownByVisibleText(addOnGenderTxt, client.getGender());
 		WebElementUtils.pickDate(addOnBirthCountryDate, client.getBirthDate());
+
 		clickNextButton();
 	}
 
@@ -389,16 +403,10 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		Address currentAddress = device.getCurrentAddress();
 		WebElementUtils.enterText(currentAddressLine1Txt, currentAddress.getAddressLine1());
 		WebElementUtils.selectDropDownByVisibleText(currentCountryCodeDDwn, currentAddress.getCountry());
-		WebElementUtils.enterText(currentAddressPostalCode, currentAddress.getPostalCode());
-
-		try {
-			Thread.sleep(5000); // added some sleep as the page does not repond after adding zip code
-		} catch (InterruptedException e) {
-			logger.error("Error" + e);
-			Thread.currentThread().interrupt();
-		}
+		WebElementUtils.enterText(currentAddressPostalCode, currentAddress.getPostalCode());		
+		SimulatorUtilities.wait(5000);		
 		pageScrollDown();
-		clickNextButton();
+		clickNextButton();		
 	}
 
 	private void fillProfile(Device device) {
@@ -424,18 +432,28 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		
 		ClientDetails client = device.getClientDetails();
 		WebElementUtils.selectDropDownByVisibleText(titleDDwn, client.getTitle());
-		WebElementUtils.enterText(firstNameTxt, client.getFirstName());
+		if (Objects.nonNull(device.getDedupe())){	
+			WebElementUtils.enterText(firstNameTxt, client.getDedupeFirstName());
+			WebElementUtils.enterText(lastNameTxt, client.getDedupeLastName());
+			WebElementUtils.pickDate(birthDateDPkr, client.getDedupeBirthDate());
+			WebElementUtils.enterText(registeredMailIdTxt, client.getDedupeEmailId());
+		}
+		else{
+			WebElementUtils.enterText(firstNameTxt, client.getFirstName());
+			WebElementUtils.enterText(lastNameTxt, client.getLastName());
+			WebElementUtils.pickDate(birthDateDPkr, client.getBirthDate());
+			WebElementUtils.enterText(registeredMailIdTxt, client.getEmailId());
+		}
 		
 		if (client.getMiddleName1() != null) {
 			WebElementUtils.enterText(middleName1Txt, client.getMiddleName1());
 		}
 		
-		WebElementUtils.enterText(lastNameTxt, client.getLastName());
 		WebElementUtils.enterText(middleName2Txt, device.getMiddleName2());
 		WebElementUtils.enterText(encodedNameTxt, device.getEncodedName());
 		WebElementUtils.selectDropDownByVisibleText(genderDDwn, client.getGender());
 		WebElementUtils.selectDropDownByVisibleText(nationalityDDwn, client.getNationality());
-		WebElementUtils.pickDate(birthDateDPkr, client.getBirthDate());
+		
 		WebElementUtils.selectDropDownByVisibleText(maritalStatusDDwn, client.getMaritialStatus());
 		
 		if (device.getAppliedForProduct().equalsIgnoreCase(ProductType.DEBIT)) {
@@ -443,7 +461,6 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByVisibleText(accountTypeDDwn, device.getAccountType());
 		}
 		
-		WebElementUtils.enterText(registeredMailIdTxt, client.getEmailId());
 		WebElementUtils.selectDropDownByVisibleText(languagePreferencesDDwn, client.getLanguagePreference());
 		WebElementUtils.selectDropDownByVisibleText(vipDDwn, device.getVip());
 		WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn,1);

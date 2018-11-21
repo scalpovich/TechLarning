@@ -4,13 +4,9 @@ As a user
 I want to validate boarded card
 
 Meta:
-@CreditRegression
 @StoryName IRP_NFC_PAYPASS_VISA
 Scenario:User creates visa credit card and validate it
-Meta:
-@UserCreatesNewCreditDevice
-
-Given setting json values in excel
+Given setting json values in excel for Credit
 Given user is logged in institution
 When User fills Dedupe Plan
 And User fills Statement Message Plan for credit product
