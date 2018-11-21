@@ -203,7 +203,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	
 	private final String successStatus = "SUCCESS [2]";
 	
-	private static final String  POST_MAINTENANCE_FEE_BATCH = "Post Maintence Fee Batch [POST_MAINTENANCE_FEE]";
+	private static final String  POST_MAINTENANCE_FEE_BATCH = "Post Maintenance Fee Batch [POST_MAINTENANCE_FEE]";
 
 	public void selectBatchType(String option) {
 		selectByVisibleText(batchTypeDDwn, option);
@@ -432,7 +432,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Billing Process - Credit [BILLING]"); 
 		
 		else if(POST_MAINTENANCE_FEE_BATCH.equalsIgnoreCase(batchName))
-			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Post Maintence Fee Batch [POST_MAINTENANCE_FEE]"); 
+			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, POST_MAINTENANCE_FEE_BATCH); 
 		
 		else if("Ageing".equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Ageing Batch [AGEING_BATCH]"); 
