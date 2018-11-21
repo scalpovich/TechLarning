@@ -30,7 +30,7 @@ When perform an EMV_PURCHASE_T_E_UNIQUE MAS transaction
 Then MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
-And user verifies available Card limit for card after transaction
+And user verifies available balance after transaction
 And validate auth report
 And device has "normal" status
 And user verifies available Card limit for card after transaction
@@ -42,8 +42,8 @@ TestID TC831213
 Given user perform reversal transaction of type 17
 When user is logged in institution
 Then search Purchase Reversal authorization and verify 000-Successful status
-And validate auth report
 And user verifies available balance after reversals transaction
+And validate auth report
 And device has "normal" status
 And user verifies available Card limit for card after transaction
 And user sign out from customer portal
