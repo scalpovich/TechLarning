@@ -629,7 +629,7 @@ public class TransactionSteps {
 			Double availableLP = context.get(Constants.AVAILABLE_LOYALTY_POINTS);
 			if(availableLP != 0.0)
 				availablePoints = (Double)context.get(Constants.AVAILABLE_LOYALTY_POINTS) - ((Double.parseDouble(rt.getAmount()) * (Double)context.get(ContextConstants.PROMOTION_PLAN_POINTS_EARNED)) / (Double)context.get(ContextConstants.PROMOTION_PLAN_AMT_SPENT));
-			context.put(Constants.AVAILABLE_LOYALTY_POINTS, availablePoints);
+			context.put(Constants.AVAILABLE_LOYALTY_POINTS, Math.floor(availablePoints));
 			context.put(Constants.ACCUMULATED_REVERSED_POINTS, Math.floor((Double.parseDouble(rt.getAmount()) * (Double)context.get(ContextConstants.PROMOTION_PLAN_POINTS_EARNED)) / (Double)context.get(ContextConstants.PROMOTION_PLAN_AMT_SPENT)));
 		}
 	}
