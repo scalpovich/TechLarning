@@ -32,7 +32,7 @@ import com.mastercard.testing.mtaf.jbehave.serenity.SerenitySupport;
 import com.mastercard.testing.mtaf.serenity.configuration.SerenityStoryBuilder;
 
 public abstract class CustomJBehaveStories extends JUnitStories {
-	private final Integer DEFAULT_STORY_TIMEOUT_SECS = Integer.valueOf(7200);
+	private final Integer DEFAULT_STORY_TIMEOUT_SECS = Integer.valueOf(72000);
 
 	private final Logger log = Logger.getLogger(super.getClass());
 	private ApplicationContext applicationContext;

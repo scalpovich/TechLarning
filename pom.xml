@@ -388,7 +388,6 @@
                                                       <value>true</value>
                                                 </property>
                                           </systemProperties>
-                                          <storyTimeoutInSecs>${story.timout.secs}</storyTimeoutInSecs>
                                           <ignoreFailureInStories>${ignore.failure.in.stories}</ignoreFailureInStories>
                                           <ignoreFailureInView>${ignore.failure.in.view}</ignoreFailureInView>
                                           <generateViewAfterStories>${generate.view.after.story}</generateViewAfterStories>
