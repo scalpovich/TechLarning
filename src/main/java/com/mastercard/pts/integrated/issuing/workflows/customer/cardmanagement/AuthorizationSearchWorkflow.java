@@ -110,14 +110,16 @@ public class AuthorizationSearchWorkflow {
 			device.setDeviceVelocity(1);
 			device.setDeviceAmountUsage(Double.parseDouble(billingAmountValue));
 			logger.info("Transaction Limit Utilise");
-		}else if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && actualDescription.contains("Partial Reversal") && actualDescription.contains(state)){
+			
+		}else if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && actualDescription.contains("Partial Reversal")){
 			//device.setDeviceVelocity(-1);
 			device.setDeviceAmountUsage(-Double.parseDouble(context.get(ContextConstants.PARTIAL_REVERSAL_AMOUNT)));
-			logger.info("Transaction Limit Partial Release");
-		}else if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && actualDescription.contains("Reversal") && actualDescription.contains(state)){
+			logger.info("Partial Release");
+			
+		}else if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && actualDescription.contains("Reversal")){
 			device.setDeviceVelocity(-1);
 			device.setDeviceAmountUsage(-Double.parseDouble(billingAmountValue));
-			logger.info("Transaction Limit Release");
+			logger.info("Full Reversal");
 		}
 		assertTrue("Latest (Row) Description and Code Action does not match on Authorization Search Screen", condition);
 	}
