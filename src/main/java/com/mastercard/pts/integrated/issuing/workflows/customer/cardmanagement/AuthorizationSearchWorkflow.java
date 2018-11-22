@@ -46,7 +46,7 @@ public class AuthorizationSearchWorkflow {
 
 	@Autowired
 	HelpdeskWorkflow helpDeskWorkFlow;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
 	public static final int BILL_AMOUNT_INDEX_VALUE = 3;
@@ -70,7 +70,7 @@ public class AuthorizationSearchWorkflow {
 
 	private void authSearchAndVerification(Device device, String type, String state, String codeColumnName, String descriptionColumnName) {
 		boolean condition;
-        SimulatorUtilities.wait(5000);
+		SimulatorUtilities.wait(5000);
 		AuthorizationSearchPage authSearchPage = navigator.navigateToPage(AuthorizationSearchPage.class);
 		authSearchPage.inputDeviceNumber(device.getDeviceNumber());
 		authSearchPage.inputFromDate(LocalDate.now().minusDays(1));
@@ -103,16 +103,20 @@ public class AuthorizationSearchWorkflow {
 			condition = actualCodeAction.contains(type) && actualDescription.contains(state);
 
 		// Device Usage Code
-		 String billingAmountValue = authSearchPage.getCellTextByColumnName(1, "Billing Amount");
-		 context.put(ConstantData.BILLING_AMOUNT, billingAmountValue);
-		if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && !ConstantData.PRE_AUTH.equalsIgnoreCase(type)){
-			device.setDeviceVelocity();
+		String billingAmountValue = authSearchPage.getCellTextByColumnName(1, "Billing Amount");
+		context.put(ConstantData.BILLING_AMOUNT, billingAmountValue);
+		if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && !ConstantData.PRE_AUTH.equalsIgnoreCase(type) && !actualDescription.contains("Reversal")){
+			device.setDeviceVelocity(1);
 			device.setDeviceAmountUsage(Double.parseDouble(billingAmountValue));
+			logger.info("Transaction Limit Utilise");
+		}else if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && actualDescription.contains("Reversal") && actualDescription.contains(state)){
+			device.setDeviceVelocity(-1);
+			device.setDeviceAmountUsage(-Double.parseDouble(billingAmountValue));
+			logger.info("Transaction Limit Release");
 		}
-
 		assertTrue("Latest (Row) Description and Code Action does not match on Authorization Search Screen", condition);
 	}
-	
+
 	public void generateReversalForTransaction(String deviceNumber)
 	{
 		GenerateReversalPage page = navigator.navigateToPage(GenerateReversalPage.class);
@@ -145,7 +149,7 @@ public class AuthorizationSearchWorkflow {
 		myList.add(txnRateFeeString);
 		return myList;
 	}
-	
+
 	public List<String> checkTransactionMaxFee(String deviceNumber) {
 
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
@@ -202,23 +206,23 @@ public class AuthorizationSearchWorkflow {
 		logger.info("Available balance after transaction amount = {}", availBal.getAvailableBal());
 		return availBal;
 	}
-	
+
 	public BigDecimal noteDownAvailableBalanceAfterReversal(String deviceNumber) {
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
 		return page.viewAvailableBalanceAfterReversalTransaction(deviceNumber);
-		
+
 	}
 	public String verifyReconciliationStatus(Device device) {
 		authorizationSearchPage = navigator.navigateToPage(AuthorizationSearchPage.class);
 		return authorizationSearchPage.verifyReconciliationStatus(device.getDeviceNumber());
 	}
-	
+
 	public String getTransactionFee(){
 		String appliedTransactionFee = authorizationSearchPage.getTransactionFee();
 		logger.info("Applied Trasaction Fee on screen: {} ", appliedTransactionFee);
 		return appliedTransactionFee;
 	}
-	
+
 	public String calculateTransactionFee(TransactionFeePlan txnFeePlan) {
 		DecimalFormat df2 = new DecimalFormat("0.00");
 		double txnRateFee;
@@ -229,7 +233,7 @@ public class AuthorizationSearchWorkflow {
 		double minFee = Double.parseDouble(txnFeePlan.getMinTxnRate());
 		double maxFee = Double.parseDouble(txnFeePlan.getMaxTxnRate());
 		logger.info("Calculated Trasaction Fee: {} ", df2.format(txnRateFee));
-		
+
 		if(txnRateFee > maxFee){
 			txnRateFee = maxFee;
 		}else if(txnRateFee < minFee){

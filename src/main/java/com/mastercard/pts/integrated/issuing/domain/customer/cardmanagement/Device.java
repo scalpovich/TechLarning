@@ -750,8 +750,8 @@ public class Device {
 		return deviceVelocity;
 	}
 
-	public void setDeviceVelocity() {
-		++deviceVelocity;
+	public void setDeviceVelocity(int value) {
+		deviceVelocity = deviceVelocity + value;
 	}
 	
 	public String getDevicePromotionPlan() {
