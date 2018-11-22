@@ -1666,12 +1666,14 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(500);
 		runWithinPopup("Process Loan Cancel", ()->{	
 			SimulatorUtilities.wait(500);
-			cancellationFee=txtCancellationFee.getText();
-			enterNote("Automation");
+			preclosureFee=preclosureFeeTxt.getAttribute("value");
+			enterNote(MiscUtils.randomAlphabet(10));
 			SimulatorUtilities.wait(3000);	
+			clickWhenClickable(processBtn);	
 			waitForElementVisible(okBtn);
 			elementToBeClickable(okBtn);
 			clickWhenClickable(okBtn);	
+		
 		});	
 		return null;
 	}
@@ -1758,8 +1760,4 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		});	
 		return preclosureFee;
 	}
-	
-	
-	
-	
 }
