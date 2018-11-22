@@ -56,4 +56,27 @@ And device has "normal" status
 And user verifies available Card limit for card after transaction
 And user validates device usage for Daily Velocity Utilized and Daily Amount Utilized
 And user sign out from customer portal
-And MAS simulator is closed
+
+Scenario: 1.6 Perform EMV Cash Withdrawal
+Given user updates transaction amount to 100
+And perform an EMV_CASH_WITHDRAWAL MAS transaction on the same card
+Then MAS test results are verified
+And user is logged in institution
+And search CWD authorization and verify 000-Successful status
+And user verifies available balance after transaction
+And device has "normal" status
+And user verifies available Card limit for card after transaction
+And user validates device usage for Daily Velocity Utilized and Daily Amount Utilized
+And user sign out from customer portal
+
+Scenario: 1.7 Perform Reversal Transaction 
+Meta:
+TestID TC831258
+Given user perform partial reversal transaction of type 32 with reversal amount 1000
+When user is logged in institution
+Then search CWD - Partial Reversal authorization and verify 000-Successful status
+And user verifies available balance after reversals transaction
+And device has "normal" status
+And user verifies available Card limit for card after transaction
+And user validates device usage for Daily Velocity Utilized and Daily Amount Utilized
+And user sign out from customer portal
