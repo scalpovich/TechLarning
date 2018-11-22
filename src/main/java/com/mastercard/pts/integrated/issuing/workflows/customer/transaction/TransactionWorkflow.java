@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -2187,14 +2188,23 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		MiscUtils.reportToConsole("******************** Reversal Transaction Started ******************");
 		clickTestPreparations(transaction);
 		selectTestCaseFromImportedCases(transaction);
-		winiumClickOperation("Transaction Profiles");
-		SimulatorUtilities.wait(1000);
-		performClickOperationOnImages("TrxProfiles_Ref");
-		pressRightArrow();
-		performClickOperation("0400_Folder");
-		pressRightArrow(3);
-		performClickOperationOnImages("TrxProfiles_Ref");
-		performDoubleClickOperation("LinkedTransaction");
+		importLinkedTransaction();
+		addDE39ToTransactionProfile(reversalType);
+		performExecution(transaction);
+	}
+	
+	public void partialReverseTransaction(String transaction, String reversalType,String amount) {
+		activateMas(transaction);
+		MiscUtils.reportToConsole("******************** Partial Reversal Transaction Started ******************");
+		clickTestPreparations(transaction);
+		selectTestCaseFromImportedCases(transaction);
+		importLinkedTransaction();
+		addDE39ToTransactionProfile(reversalType);
+		addReversalAmount(amount);
+		performExecution(transaction);
+	}
+
+	private void addDE39ToTransactionProfile(String reversalType) {
 		winiumClickOperation("Data Elements");
 		performClickOperation("FullName");
 		pressRightArrow(2);
@@ -2211,6 +2221,41 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			logger.error(e.getMessage(), e);
 		}
 		winiumClickOperation("OK");
-		performExecution(transaction);
+	}
+
+	private void importLinkedTransaction() {
+		winiumClickOperation("Transaction Profiles");
+		SimulatorUtilities.wait(1000);
+		performClickOperationOnImages("TrxProfiles_Ref");
+		pressRightArrow();
+		performClickOperation("0400_Folder");
+		pressRightArrow(3);
+		performClickOperationOnImages("TrxProfiles_Ref");
+		performDoubleClickOperation("LinkedTransaction");
+	}
+	
+	public void addReversalAmount(String amount){
+		winiumClickOperation("Data Elements");
+		performClickOperation("FullName");
+		pressRightArrow(2);
+		pressPageUp(5);
+		pressPageDown(4);
+		SimulatorUtilities.wait(500);
+		performClickOperation("95_ReplacementAmount");
+		pressRightArrow();
+		performDoubleClickOperation("95_01");
+		SimulatorUtilities.wait(500);
+		performDoubleClickOperation("default");
+		winiumClickOperation("Enter value");
+		pressTab();
+		try {
+			setText(StringUtils.leftPad(amount, 12, "0"));
+		} catch (AWTException e) {
+			logger.error(e.getMessage(), e);
+		}
+		winiumClickOperation("OK");
+		
+		
+		
 	}
 }

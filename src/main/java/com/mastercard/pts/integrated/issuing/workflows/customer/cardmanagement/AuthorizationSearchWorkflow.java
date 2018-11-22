@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AvailableBalance;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
@@ -109,6 +110,10 @@ public class AuthorizationSearchWorkflow {
 			device.setDeviceVelocity(1);
 			device.setDeviceAmountUsage(Double.parseDouble(billingAmountValue));
 			logger.info("Transaction Limit Utilise");
+		}else if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && actualDescription.contains("Partial Reversal") && actualDescription.contains(state)){
+			//device.setDeviceVelocity(-1);
+			device.setDeviceAmountUsage(-Double.parseDouble(context.get(ContextConstants.PARTIAL_REVERSAL_AMOUNT)));
+			logger.info("Transaction Limit Partial Release");
 		}else if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && actualDescription.contains("Reversal") && actualDescription.contains(state)){
 			device.setDeviceVelocity(-1);
 			device.setDeviceAmountUsage(-Double.parseDouble(billingAmountValue));

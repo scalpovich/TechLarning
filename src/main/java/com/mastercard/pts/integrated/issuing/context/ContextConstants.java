@@ -156,6 +156,8 @@ public class ContextConstants {
 	
 	public static final String TRANSACTION_AMT_DIFFERENCE = "TRANSACTION_AMT_DIFFERENCE";
 	
+	public static final String PARTIAL_REVERSAL_AMOUNT = "PARTIAL_REVERSAL_AMOUNT";
+	
 	private ContextConstants() {
 	}
 

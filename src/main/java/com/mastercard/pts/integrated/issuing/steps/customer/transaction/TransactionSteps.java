@@ -713,4 +713,13 @@ public class TransactionSteps {
 		String transaction = context.get(ConstantData.TRANSACTION_NAME);
 		transactionWorkflow.reverseTransaction(transaction,type);
 	}
+	
+	@Given("user perform partial reversal transaction of type $type with reversal amount $amount")
+	@Then("user perform partial reversal transaction of type $type with reversal amount $amount")
+	public void partialReverseTransaction(String type, String amount ){
+		String transaction = context.get(ConstantData.TRANSACTION_NAME);
+		context.put(ContextConstants.PARTIAL_REVERSAL_AMOUNT, amount);
+		transactionWorkflow.partialReverseTransaction(transaction, type,amount);
+		context.put(ContextConstants.TRANSACTION_AMT_DIFFERENCE, new BigDecimal(amount));
+	}
 }
