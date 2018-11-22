@@ -720,6 +720,6 @@ public class TransactionSteps {
 		String transaction = context.get(ConstantData.TRANSACTION_NAME);
 		context.put(ContextConstants.PARTIAL_REVERSAL_AMOUNT, amount);
 		transactionWorkflow.partialReverseTransaction(transaction, type,amount);
-		context.put(ContextConstants.TRANSACTION_AMT_DIFFERENCE, new BigDecimal(amount));
+		context.put(ContextConstants.TRANSACTION_AMT_DIFFERENCE, new BigDecimal(amount).divide(new BigDecimal(100)));
 	}
 }
