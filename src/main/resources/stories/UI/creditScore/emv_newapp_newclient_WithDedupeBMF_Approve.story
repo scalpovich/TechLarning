@@ -5,7 +5,7 @@ I want to caught duplicate application and then approve application
 
 Meta:
 @StoryName credit_emv_retail
-Scenario: verify user is not able to board a duplicate application when dedupe/SDN plan is configured
+Scenario: verify user is not able to board a duplicate application when dedupe/SDN plan is configured.
 Given setting json values in excel for Credit
 When user is logged in institution
 And for EMV Card User fills Device Plan for credit product for Mastercard
