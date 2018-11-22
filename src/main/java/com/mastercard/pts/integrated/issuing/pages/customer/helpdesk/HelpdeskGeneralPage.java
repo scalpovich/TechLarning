@@ -1654,7 +1654,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			selectLoanAccountNumber(device.getLoanAccountNumber());
 			clickCancelLoanButton();
 			cancellationFee=processLoanCancel();
-			clickWhenClickable(processBtn);	
 			clickWhenClickable(cancelBtn);
 		});			
 
@@ -1666,7 +1665,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(500);
 		runWithinPopup("Process Loan Cancel", ()->{	
 			SimulatorUtilities.wait(500);
-			preclosureFee=preclosureFeeTxt.getAttribute("value");
+			cancellationFee=txtCancellationFee.getAttribute("value");
 			enterNote(MiscUtils.randomAlphabet(10));
 			SimulatorUtilities.wait(3000);	
 			clickWhenClickable(processBtn);	
