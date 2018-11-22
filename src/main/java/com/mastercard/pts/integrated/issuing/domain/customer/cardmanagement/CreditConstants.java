@@ -83,9 +83,9 @@ public class CreditConstants {
 
 	public static final String EXISTING_BATCH="EXISTING_BATCH";
 	
-	public static final String LOCAL_DESTINATION_PATH = "LOCAL_DESTINATION_PATH";
-	
 	public static final String CSV_FILE_NAME = "CSV_FILE_NAME";
+	
+	public static final String CLIENT_CUSTOMER_ID = "CLIENT_CUSTOMER_ID";
 
 	private CreditConstants() {
 	}

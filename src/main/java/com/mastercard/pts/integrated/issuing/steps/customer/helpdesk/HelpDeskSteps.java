@@ -720,6 +720,15 @@ public class HelpDeskSteps {
 		}
 	}
 	
+	@Then("User search for new device on helpdesk screen for $productType and validates the mandatory field")
+	@When("User search for new device on helpdesk screen for $productType and validates the mandatory field")
+	public void thenUserSearchForClientCustomerIDOnHelpdeskScreen(String productType) {		
+		Device device = context.get(ContextConstants.DEVICE);
+		helpDeskGetterSetter.setDeviceNumber(device.getDeviceNumber());	
+		helpDeskGetterSetter.setProductType(ProductType.fromShortName(productType));
+		Assert.assertNotNull("Client Customer ID is Null", helpdeskFlows.searchForClientCustomerIDForNewDevice(helpDeskGetterSetter));
+	}
+	
 	@Then("User search for new device Supplementary on search screen for $productType and validates the status as $NORMAL")
 	@When("User search for new device Supplementary on search screen for $productType and validates the status as $NORMAL")
 	public void thenUserSearchForDeviceOnSearchScreenForSupplementary(String productType, String status) {

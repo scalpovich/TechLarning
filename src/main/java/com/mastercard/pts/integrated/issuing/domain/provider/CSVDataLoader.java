@@ -23,6 +23,9 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 
 @Component("defaultDataLoader")
 public class CSVDataLoader implements DataLoader {
@@ -36,7 +39,10 @@ public class CSVDataLoader implements DataLoader {
 	@Autowired
 	private TestContext context;
 	
-	public static int CSV_Mandatory_Fix_Position = 174;
+	@Autowired
+	private KeyValueProvider provider;
+	
+	public static int CSV_Mandatory_Fix_Position = 179;
 	
 	@Override
 	public Optional<Map<String, String>> loadData(String storyName) {
@@ -93,13 +99,14 @@ public class CSVDataLoader implements DataLoader {
 	}
 	
 	public List loadRecordDataFromCSV(int columnId,String columnValue){
-		String filePath = "./src/main/resources/config/stageSA/CHD110088C161118121629000001.csv";
+		String filePath = context.get(CreditConstants.CSV_FILE_NAME);
+		LOGGER.info(filePath);
 		ArrayList<String> list = new ArrayList<String>();
 		try (FileReader is = new FileReader(filePath)) {
 			LOGGER.info("Starting to read test data from csv file...");
 			Iterable<CSVRecord> records = CSVFormat.EXCEL.parse(is);
 			for (CSVRecord record : records) {
-				System.out.println("record.get(columnId) :" + record.get(columnId));
+				LOGGER.info("Searching for Device Plan Code :" + record.get(columnId));
 				if (record.get(columnId).equals(columnValue)) {
 					Iterator<String> itr = record.iterator();
 					while (itr.hasNext()) {
@@ -115,11 +122,12 @@ public class CSVDataLoader implements DataLoader {
 		return list;
 	}
 	
-	
-	
-	public void compareValueFromCSV(int positionInCSV){
-		loadRecordDataFromCSV(CSV_Mandatory_Fix_Position, context.get(ContextConstants.APPLICATION_NUMBER)).get(positionInCSV).equals(context.get(ContextConstants.DEVICE_NUMBER));
-		//loadRecordDataFromCSV(174, "537716T3445U0000011942").get(178).equals("T3445U");
+	public boolean compareValueFromCSV(int positionInCSV){
+		Device device = context.get(ContextConstants.DEVICE);
+ 		DevicePlan plan = context.get(ContextConstants.DEVICE_PLAN);
+ 		String mandatoryFieldValue = device.getMandatoryFieldValue();
+ 		LOGGER.info("Mandatory Field Value is : {}", mandatoryFieldValue);
+		return loadRecordDataFromCSV(CSV_Mandatory_Fix_Position, plan.getDevicePlanCode()).get(positionInCSV).equals(mandatoryFieldValue);
 	}
 
 }

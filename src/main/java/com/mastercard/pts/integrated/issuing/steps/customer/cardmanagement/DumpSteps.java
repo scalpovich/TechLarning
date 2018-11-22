@@ -7,13 +7,13 @@ import java.nio.file.Path;
 
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.configuration.LinuxBox;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.provider.CSVDataLoader;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
@@ -67,7 +67,7 @@ public class DumpSteps {
 	@When("user compares mandatory field with a position $positionNumber in downloaded file")
 	@Then("user compares mandatory field with a position $positionNumber in downloaded file")
 	public void userComparesMandatoryValue(int position) {
-		csvDataLoader.compareValueFromCSV(position);
+		Assert.assertTrue("Field Value is not Present in Downloaded CSV File ", csvDataLoader.compareValueFromCSV(position));
 	}
 
 }
