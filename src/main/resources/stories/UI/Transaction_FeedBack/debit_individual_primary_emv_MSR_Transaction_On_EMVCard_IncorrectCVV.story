@@ -26,7 +26,7 @@ And user performs adjustment transaction
 And user has current wallet balance amount information for debit device
 Then user sign out from customer portal
 
-Scenario:1.3 Pin Generation
+Scenario:1.2 Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 And embossing file batch was generated in correct format
@@ -34,7 +34,7 @@ And user sets invalid cvv/ccv2/icvv to device
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario:1.4 Perform EMV_PURCHASE Authorization transaction
+Scenario:1.3 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an MSR_PURCHASE MAS transaction
 And user is logged in institution

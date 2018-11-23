@@ -17,6 +17,8 @@ public class GenericReport {
 	private String reportType;
 	private String reportUrl;
 	private String password;
+	private String cvv2;
+	private String expiryDate;
 	
 	public String getPassword() {
 		return password;
@@ -89,6 +91,22 @@ public class GenericReport {
 		this.deviceNumber = deviceNumber;
 	}
 
+	public String getCVV2() {
+		return cvv2;
+	}
+
+	public void setCVV2(String cvv2) {
+		this.cvv2 = cvv2;
+	}
+	
+	public String getExpiryDate() {
+		return expiryDate;
+	}
+
+	public void setExpiryDate(String expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+	
 	public String getRrnNumber() {
 		return rrnNumber;
 	}
@@ -104,6 +122,7 @@ public class GenericReport {
 	public void setReportRegEx(){
 		reportRegEx = new HashMap<>();
 		reportRegEx.put("RAMP", "\\d\\d-\\d\\d-\\d\\d\\d\\d");
+		reportRegEx.put("LVC", "\\R");
 	}
 	
 	

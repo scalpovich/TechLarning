@@ -166,6 +166,22 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Existing Client Code')]")
 	private MCWebElement existingClientLabel;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:isdCode:input:dropdowncomponent")
+	private MCWebElement registertedMobileNumberCodeDdwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:registeredMobileNumber:input:inputTextField")
+	private MCWebElement registertedMobileNumber;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:emailAlertList:checkBoxComponent")
+	private MCWebElement emailAlertRequiredChBx;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:smsAlertList:checkBoxComponent")
+	private MCWebElement smsAlertRequiredChxBx;
+	
+	
+	
+	
 
 	public String getWalletsFromPage(){
 		return getTextFromPage(createdWalletList);
@@ -332,29 +348,32 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
 		SimulatorUtilities.wait(1000);
 		String programCodeDDwnBy = "view:programCode:input:dropdowncomponent";
-		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)) {
+		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE) || device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)) {
 			enterText(existingDeviceNumberTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));
-			SimulatorUtilities.wait(8000);
+			SimulatorUtilities.wait(6000);
 			moveToElementAndClick(existingClientLabel, 50, 50);
 			waitForWicket(driver());
-			SimulatorUtilities.wait(10000);
-			JavascriptExecutor jse = (JavascriptExecutor) getFinder().getWebDriver();
-			jse.executeScript("el = document.elementFromPoint(400, 400); el.click();");
-
-		}else{
+			SimulatorUtilities.wait(15000);
+		} else {
 			selectByVisibleText(customerTypeDDwn, device.getCustomerType());
-			SimulatorUtilities.wait(10000);
-			waitForWicket(driver());
-			selectByVisibleText(programCodeDDwn, device.getProgramCode());		
+			SimulatorUtilities.wait(4000);
+			try {
+				selectByVisibleText(programCodeDDwn, device.getProgramCode());
+				SimulatorUtilities.wait(10000);
+				selectByVisibleText(programCodeDDwn, device.getProgramCode());
+			} catch (StaleElementReferenceException e) {
+				MCWebElement element = getMCWebElementFromWebElement(FindBy.NAME, programCodeDDwnBy);
+				selectByVisibleText(element, device.getProgramCode());
+			}
+			SimulatorUtilities.wait(2000);
 		}
 		SimulatorUtilities.wait(10000);
 		clickNextButton();
-		
-		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());		
+
+		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());
 		WebElementUtils.selectDropDownByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
 		WebElementUtils.selectDropDownByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
 	}
-
 	private void fillProfileAndAddressDetailsAndClickNext(Device device) {
 		if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) && device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)){
 			if(!System.getProperty("env").equalsIgnoreCase(Constants.ENVIRONMENT)){
@@ -436,8 +455,11 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 				WebElementUtils.selectDropDownByVisibleText(accountTypeDDwn, device.getAccountType());
 			}	
 		}
-		
-		WebElementUtils.enterText(registeredMailIdTxt, client.getEmailId());
+		WebElementUtils.checkCheckbox(emailAlertRequiredChBx, true);
+		WebElementUtils.checkCheckbox(smsAlertRequiredChxBx, true);
+		WebElementUtils.enterText(registeredMailIdTxt, "abhishek.sharma@mastercard.com");
+		WebElementUtils.selectDropDownByVisibleText(registertedMobileNumberCodeDdwn, "IND [+91]");
+		WebElementUtils.enterText(registertedMobileNumber, "9003291152");
 		WebElementUtils.selectDropDownByVisibleText(languagePreferencesDDwn, client.getLanguagePreference());
 		WebElementUtils.selectDropDownByVisibleText(vipDDwn, device.getVip());
 

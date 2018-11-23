@@ -167,6 +167,7 @@ public class PDFUtils {
 				tStripper.setLineSeparator("<EOL>");
 				pdfFileInText = tStripper.getText(pd);
 				row  = pdfFileInText.split("(<EOL>)+");
+				System.out.println(row);
 				for(int j = 0; j<row.length;j=j+2 ){
 					if(!row[j].contains("Opening Balance"))
 						map.put(row[j],row[j+1]);

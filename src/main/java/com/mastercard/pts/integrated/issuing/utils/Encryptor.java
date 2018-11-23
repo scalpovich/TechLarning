@@ -1,6 +1,9 @@
 package com.mastercard.pts.integrated.issuing.utils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
 
@@ -19,6 +22,10 @@ public class Encryptor {
 
 	private static String encrypt(String text) {
 		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+			Date date = new Date();
+			String localDate= dateFormat.format(date).toString();
+			System.out.println(localDate.subSequence(0, 6));
 			return EncryptUtils.encrypt(text);
 			
 		} catch (Exception e) {

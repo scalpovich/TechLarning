@@ -32,7 +32,7 @@ Given user is logged in institution
 When user edits 3D ecommerce security parameters to Decline Merchant Risk Based Decisioning Transaction for product Prepaid and interchange Mastercard as check
 Then user sign out from customer portal
 
-Scenario:1.4 Perform EMV_PURCHASE Authorization transaction
+Scenario:1.3 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 Given User set Decline Merchant Risk Based Decisioning Transaction flag true
 When perform an 3D_SECURE_CAVV MAS transaction
@@ -42,7 +42,7 @@ And assert Decline response with 80040 AuthDecline Code and Merchant Risk Based 
 And user sign out from customer portal
 Then MAS simulator is closed
 
-Scenario:1.5 Uncheck Decline All Non Secured Transaction Check
+Scenario:1.4 Uncheck Decline All Non Secured Transaction Check
 Given user is logged in institution
 When user edits 3D ecommerce security parameters to Decline Merchant Risk Based Decisioning Transaction for product Prepaid and interchange Mastercard as uncheck
 Then user sign out from customer portal

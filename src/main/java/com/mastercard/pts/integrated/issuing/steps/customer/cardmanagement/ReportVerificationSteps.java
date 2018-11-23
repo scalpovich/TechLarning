@@ -50,7 +50,5 @@ public class ReportVerificationSteps {
 		}
 		reportVerificationWorkflow.verifyGenericReport(report);		
 	}
-	
-	
 
 }

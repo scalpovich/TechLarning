@@ -3,9 +3,16 @@ package com.mastercard.pts.integrated.issuing.steps;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.Scanner;
 
+import org.apache.commons.io.comparator.LastModifiedFileComparator;
+import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.junit.Assert;
@@ -26,6 +33,7 @@ import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceDetailsFlows;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ReportVerificationWorkflow;
 
 @Component
 public class BatchSteps {
@@ -43,6 +51,11 @@ public class BatchSteps {
 
 	@Autowired
 	private Path tempDirectory;
+	
+	private File batchFile;
+	
+	@Autowired
+	private ReportVerificationWorkflow reportVerificationWorkFlow;
 
 	@Autowired
 	DeviceDetailsFlows flow; 
@@ -90,7 +103,38 @@ public class BatchSteps {
 			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
 			throw MiscUtils.propagate(e);
 		}
-	}	
+	}
+
+	@Given("User Download and Verify PDF File for LVC Card")
+	@Then("User Download and Verify PDF File for LVC Card")
+	public void pdfFileGetsDownloadedForLVCCard() {
+		MiscUtils.reportToConsole("******** PDF File Download Start ***** ");
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+			DateFormat dateFromatNew = new SimpleDateFormat("ddMMyyyy");
+			Date date = new Date();
+			String localDate = dateFormat.format(date).toString();
+			String pdfPassword = dateFromatNew.format(date).toString().substring(0, 4);
+			batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(localDate.substring(0, 6), tempDirectory.toString(), "VIRTUAL_DEVICE_PRODUCTION", "proc");
+			logger.info("Local Path of Folder: {}"+tempDirectory.toString());
+			File[] newPDFfILE = getLastFileName(tempDirectory.toString());
+			String absolutePathofPDF = tempDirectory.toString()+"\\"+newPDFfILE[0].getName();
+			logger.info("Absolute Path of PDF File: {}"+absolutePathofPDF);
+			reportVerificationWorkFlow.verificationOfPDFFileForLVCCard(absolutePathofPDF, pdfPassword);
+
+		} catch (Exception e) {
+			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
+			throw MiscUtils.propagate(e);
+		}
+	}
+
+	public static File[] getLastFileName(String filePath) {		
+		File f = new File(filePath);
+		File[] files = f.listFiles();
+		Arrays.sort(files,LastModifiedFileComparator.LASTMODIFIED_REVERSE);
+		logger.info("Latest Downloaded File Name " + files[0].getName());
+		return files;
+	} 
 		
 	@When("user sets invalid cvv/ccv2/icvv to device")
 	@Then("user sets invalid cvv/ccv2/icvv to device")
