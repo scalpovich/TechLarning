@@ -40,14 +40,4 @@ public class QuickJumpPage extends AbstractBasePage {
 		return pageNameLbl.getText();
 	}
 
-	public boolean isAlertPresent() {
-		try {
-			Alert alert = driver().switchTo().alert();
-			alert.accept();
-			return true;
-		} catch (NoAlertPresentException e) {
-			return false;
-		}
-	}
-
 }
