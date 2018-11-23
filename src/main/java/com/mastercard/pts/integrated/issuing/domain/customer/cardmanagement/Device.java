@@ -129,7 +129,7 @@ public class Device {
 		device.setConfirmNewTransPassword(provider.getString(CHP_NEW_PASSWORD));	
 		device.setProductType(provider.getString(PRODUCT_TYPE));
 		device.setTransactionDateType(provider.getString(DATE_TYPE));
-      	device.setLegalID(RandomStringUtils.randomAlphanumeric(9));	
+      	device.setLegalID(RandomStringUtils.randomAlphabetic(1).toUpperCase()+ RandomStringUtils.randomNumeric(7));
 		device.setProgramCode(provider.getString(PROGRAM_CODE));
 		device.setDevicePlan1(provider.getString(DEVICE_PLAN));     
 		device.setTransactionPassword(provider.getString(TRANSACTION_PASSWORD));		

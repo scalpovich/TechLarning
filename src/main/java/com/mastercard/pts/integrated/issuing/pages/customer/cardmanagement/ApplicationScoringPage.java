@@ -45,7 +45,6 @@ public class ApplicationScoringPage extends AbstractBasePage {
 		//clickWhenClickable(processAllBtn);
 		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
 		clickProcessSelectedButton();
-		SimulatorUtilities.wait(5000);
 		verifyOperationStatus();
 	}
 }
