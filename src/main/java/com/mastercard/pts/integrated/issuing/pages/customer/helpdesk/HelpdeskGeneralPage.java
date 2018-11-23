@@ -381,7 +381,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Cancel Loan']")
 	private MCWebElement cancelLoanBtn;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Cancellation Fee :']/../following-sibling::td[1]/input")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Cancellation Fee :']/../following-sibling::td/span/input")
 	private MCWebElement txtCancellationFee;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Process']")
