@@ -310,7 +310,7 @@ public class LoanPlanPage extends AbstractBasePage {
 	}
     
     public void enterMaxCancellationFee(String cancellationFee){
-    	enterText(maxCancellationFeeTxt, cancellationFee);
+    	enterText(maxCancellationFeeTxt, String.format("%.2f", Double.valueOf(cancellationFee)*100));
 	}
     
     public void selectProgram(String programCode){
@@ -392,8 +392,8 @@ public class LoanPlanPage extends AbstractBasePage {
 			enterCancellationFixedFeeAmount(loanPlan.getCancellationFixedFeeAmount());	
 			enterCancellationFeePercent(loanPlan.getCancellationFeePercentOfLoanAmount());
 			util.pressTab();
-			enterMinCancellationFee(loanPlan.getMinimumProcessingFee());
-			enterMaxCancellationFee(loanPlan.getMaximumProcessingFee());
+			enterMinCancellationFee(loanPlan.getMinimumCancellationFee());
+			enterMaxCancellationFee(loanPlan.getMaximumCancellationFee();
 			WebElementUtils.scrollDown(driver(), 0, 300);
 			clickSaveButton();
 		});
