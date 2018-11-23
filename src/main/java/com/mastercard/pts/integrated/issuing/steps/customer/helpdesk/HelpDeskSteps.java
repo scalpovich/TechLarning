@@ -1047,9 +1047,9 @@ public class HelpDeskSteps {
 		} else {
 			expectedFee = String.format("%.2f",
 					(Double.valueOf(loanPlan.getCancellationFixedFeeAmount())
-							+ Double.valueOf(loanPlan.getCancellationFeePercentOfLoanAmount())
+							+ ((Double.valueOf(loanPlan.getCancellationFeePercentOfLoanAmount())
 									* Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT)))
-							/ 100);
+							/ 100)));
 			actualFee = context.get(ConstantData.LOAN_CANCELLATION_FEE);
 		}
 		assertThat("Loan "+feeType+" fee is not same", actualFee, equalTo(expectedFee));
