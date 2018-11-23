@@ -32,7 +32,7 @@ public class RAMPReportPage extends AbstractBasePage implements ReportVerificati
 	private MCWebElement selectReportDDwn;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span[class=btn_or_span]")
-	protected MCWebElement searchButtonElement;
+	protected MCWebElement searchBtn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "p_report_type:input:dropdowncomponent")
 	private MCWebElement selectReportTypeDDwn;
@@ -83,7 +83,7 @@ public class RAMPReportPage extends AbstractBasePage implements ReportVerificati
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(searchButtonElement)
+				WebElementUtils.elementToBeClickable(searchBtn)
 				);
 	}
 

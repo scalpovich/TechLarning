@@ -165,10 +165,7 @@ public class ConstantData {
 	
 	private ConstantData() {
 	}
-	/*
-	 return parameter name for paasing value
 	
-	*/
 	public static String fromShortName(String name) {
 		return MiscUtils.getConstantStringFromClassByPefixMatch(ConstantData.class, name);
 	}
