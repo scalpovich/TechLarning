@@ -381,7 +381,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Cancel Loan']")
 	private MCWebElement cancelLoanBtn;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Cancellation Fee :']/../following-sibling::td[1]//span/input")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Cancellation Fee :']/../following-sibling::td[1]/input")
 	private MCWebElement txtCancellationFee;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Process']")
@@ -1665,6 +1665,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(500);
 		runWithinPopup("Process Loan Cancel", ()->{	
 			SimulatorUtilities.wait(500);
+			logger.info("Loan Cancellation fee:{}",txtCancellationFee.getAttribute("value"));
 			cancellationFee=txtCancellationFee.getAttribute("value");
 			enterNote(MiscUtils.randomAlphabet(10));
 			SimulatorUtilities.wait(3000);	
@@ -1674,7 +1675,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			clickWhenClickable(okBtn);	
 		
 		});	
-		return null;
+		return cancellationFee;
 	}
 
 	private void clickCancelLoanButton() {
