@@ -393,7 +393,7 @@ public class LoanPlanPage extends AbstractBasePage {
 			enterCancellationFeePercent(loanPlan.getCancellationFeePercentOfLoanAmount());
 			util.pressTab();
 			enterMinCancellationFee(loanPlan.getMinimumCancellationFee());
-			enterMaxCancellationFee(loanPlan.getMaximumCancellationFee();
+			enterMaxCancellationFee(loanPlan.getMaximumCancellationFee());
 			WebElementUtils.scrollDown(driver(), 0, 300);
 			clickSaveButton();
 		});
