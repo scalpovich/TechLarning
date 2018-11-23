@@ -32,9 +32,6 @@ import com.mastercard.testing.mtaf.jbehave.serenity.SerenitySupport;
 import com.mastercard.testing.mtaf.serenity.configuration.SerenityStoryBuilder;
 
 public abstract class CustomJBehaveStories extends JUnitStories {
-	private final Integer DEFAULT_STORY_TIMEOUT_SECS = Integer.valueOf(72000);
-
-	private final Logger log = Logger.getLogger(super.getClass());
 	private ApplicationContext applicationContext;
 	protected static Logger LOGER = Logger.getLogger(CustomJBehaveStories.class);
 	protected ApplicationContext context;
@@ -43,7 +40,7 @@ public abstract class CustomJBehaveStories extends JUnitStories {
 		this.context = getContextInstance();
 
 		Embedder embedder = configuredEmbedder();
-		embedder.embedderControls().doIgnoreFailureInStories(true).useStoryTimeoutInSecs(getStoryTimeOutInSecs()).doFailOnStoryTimeout(false).doGenerateViewAfterStories(true)
+		embedder.embedderControls().doIgnoreFailureInStories(true).doFailOnStoryTimeout(false).doGenerateViewAfterStories(true)
 				.doIgnoreFailureInView(false).doVerboseFailures(true);
 	}
 
@@ -172,15 +169,6 @@ public abstract class CustomJBehaveStories extends JUnitStories {
 		}
 
 		return new StoryReporterBuilder().withFormats(storyFormat()).withReporters(getReporters()).withFailureTraceCompression(true);
-	}
-
-	public long getStoryTimeOutInSecs() {
-		try {
-			return (System.getProperty("jbehave.story.timeout") == null) ? this.DEFAULT_STORY_TIMEOUT_SECS.intValue() : Integer.parseInt(System.getProperty("jbehave.story.timeout"));
-		} catch (NumberFormatException ex) {
-			this.log.error("Invalid format for 'jbehave.story.timeout' parameter.", ex);
-		}
-		return this.DEFAULT_STORY_TIMEOUT_SECS.intValue();
 	}
 
 	protected ApplicationContext getContextInstance() {

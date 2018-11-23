@@ -386,6 +386,7 @@
                                                       <value>true</value>
                                                 </property>
                                           </systemProperties>
+                                          <storyTimeoutInSecs>60000</storyTimeoutInSecs>
                                           <ignoreFailureInStories>${ignore.failure.in.stories}</ignoreFailureInStories>
                                           <ignoreFailureInView>${ignore.failure.in.view}</ignoreFailureInView>
                                           <generateViewAfterStories>${generate.view.after.story}</generateViewAfterStories>
