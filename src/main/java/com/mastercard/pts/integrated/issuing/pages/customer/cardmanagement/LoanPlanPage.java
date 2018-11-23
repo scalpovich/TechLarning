@@ -392,10 +392,8 @@ public class LoanPlanPage extends AbstractBasePage {
 			enterCancellationFixedFeeAmount(loanPlan.getCancellationFixedFeeAmount());	
 			enterCancellationFeePercent(loanPlan.getCancellationFeePercentOfLoanAmount());
 			util.pressTab();
-			logger.info("MinimumCancellationFee:{}",loanPlan.getMinimumCancellationFee());
-			logger.info("MaximumCancellationFee:{}",loanPlan.getMaximumCancellationFee());
-			enterMinCancellationFee(loanPlan.getMinimumCancellationFee());
-			enterMaxCancellationFee(loanPlan.getMaximumCancellationFee());
+			enterMinCancellationFee(loanPlan.getMinimumProcessingFee());
+			enterMaxCancellationFee(loanPlan.getMaximumProcessingFee());
 			WebElementUtils.scrollDown(driver(), 0, 300);
 			clickSaveButton();
 		});
