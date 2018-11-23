@@ -14,6 +14,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -141,6 +142,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	private MCWebElement jobId;
 
 	private String batchStatus;
+	
+	private String jobID;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "batchType:input:dropdowncomponent")
 	private MCWebElement batchTypeDdwn;
 
@@ -206,6 +210,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	private final String failStatus = "FAILED [3]";
 	
 	private final String successStatus = "SUCCESS [2]";
+	
+	private static final String  POST_MAINTENANCE_FEE_BATCH = "Post Maintenance Fee Batch [POST_MAINTENANCE_FEE]";
 
 	public void selectBatchType(String option) {
 		selectByVisibleText(batchTypeDDwn, option);
@@ -450,6 +456,12 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		
 		else if("Billing Process - Credit".equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Billing Process - Credit [BILLING]"); 
+		
+		else if(POST_MAINTENANCE_FEE_BATCH.equalsIgnoreCase(batchName))
+			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, POST_MAINTENANCE_FEE_BATCH); 
+		
+		else if("Ageing".equalsIgnoreCase(batchName))
+			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Ageing Batch [AGEING_BATCH]");
 		else
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, batchName);
 	}
@@ -515,12 +527,20 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	public void submitAndVerifyBatch() {
 		submitBtn.click();
-		statusBtn.click();
+		//statusBtn.click();
+		clickWhenClickable(statusBtn);
 		runWithinPopup("View Batch Details", () -> {
 			logger.info("Retrieving batch status");
 			waitForBatchStatus();
 			batchStatus = batchStatusTxt.getText();
+			jobID = processBatchjobIDTxt.getText();
+			try{
 			clickCloseButton();
+			}
+			catch(StaleElementReferenceException ex)
+			{
+				clickCloseButton();
+			}
 		});
 	}
 	
@@ -671,11 +691,14 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	 * @param batch 
 	 * @return status of batch e.g pass, fail
 	 */
-	public String processCreditBillingBatch(ProcessBatches batch) {
+	public ProcessBatches processCreditBillingBatch(ProcessBatches batch) {
+		ProcessBatches batches = new ProcessBatches();
 		selectBatchTypeAndName(batch);
 		WebElementUtils.pickDate(bussinessDateTxt, DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt)));
 		submitAndVerifyBatch();
-		return batchStatus;
+		batches.setJoBID(jobID);
+		batches.setStatus(batchStatus);
+		return batches;
 	}
 
 	/**
@@ -703,7 +726,27 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		selectInternalBatchType(batch.getBatchName());
 		if(batch.getBatchName().equalsIgnoreCase("Pre-clearing"))
 			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-	
 	}
-	
+
+	public String processSystemInternalProcessingBatchPostMaintenance(ProcessBatches batch) {
+		logger.info("Process System Internal Processing Batch: {}", batch.getBatchName());
+		Date todayDate;
+		Date dateFromUI;
+		batchStatus = null;
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, "SYSTEM INTERNAL PROCESSING [B]");
+		SimulatorUtilities.wait(2000);
+		selectInternalBatchType(batch.getBatchName());
+		SimulatorUtilities.wait(2000);
+
+		try {
+			todayDate = dateFormatter.parse(dateFormatter.format(new Date()));
+			dateFromUI = getDateFromUI(dateFormatter, batch);
+		} catch (ParseException e) {
+			throw MiscUtils.propagate(e);
+		}
+
+		submitAndVerifyBatch();
+		return batchStatus;
+	}
 }

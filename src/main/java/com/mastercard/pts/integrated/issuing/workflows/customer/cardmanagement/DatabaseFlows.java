@@ -14,8 +14,6 @@ import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGen
 import com.mastercard.pts.integrated.issuing.utils.DBUtility;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 
-
-
 @Component
 public class DatabaseFlows {
 	private static final Logger logger = LoggerFactory.getLogger(DatabaseFlows.class);
@@ -30,10 +28,13 @@ public class DatabaseFlows {
 	//@Value("${institution}")
 	private String institution;
 
-	public void updateInstituteDateToFirstOfNextMonth(String date)
-	{		
-		
-		String queryString = "update system_codes set short_name='-" + DateUtils.getNextMonthFirstDayDifference(date) + "'  WHERE TYPE_ID = 'SYS_PARAM' AND code = 'BACK_DAY' AND bank_code = '"+ getInstitutionCode() +"'";
+	private static int daysDifference;
+	public void updateInstituteDateToFirstOfNextMonth(String date) {
+
+		daysDifference=DateUtils.getNextMonthFirstDayDifference(date);
+		logger.info("Difference Days : "+daysDifference);
+		String queryString = "update system_codes set short_name='-" + daysDifference
+				+ "'  WHERE TYPE_ID = 'SYS_PARAM' AND code = 'BACK_DAY' AND bank_code = '" + getInstitutionCode() + "'";
 		dbUtil.executeUpdate(queryString);
 	}
 
@@ -58,9 +59,21 @@ public class DatabaseFlows {
 
 	}
 
-	public String getInstitutionCode()
-	{
-		return institution.substring(institution.indexOf('[')+1, institution.indexOf(']'));
+	public String getInstitutionCode() {
+		institution = System.getProperty("institution").toString();
+		return institution.substring(institution.indexOf('[') + 1, institution.indexOf(']'));
+	}
+
+	public void updateInstituteDateToGivenDays(String date, String noOfDays) {
+		daysDifference = DateUtils.getNextDate(date);
+		logger.info("Diffrence Days : " + daysDifference);
+		
+		daysDifference=daysDifference+Integer.parseInt(noOfDays);
+		logger.info("Diffrence Days : " + daysDifference);
+		String queryString = "update system_codes set short_name='-" + daysDifference
+				+ "'  WHERE TYPE_ID = 'SYS_PARAM' AND code = 'BACK_DAY' AND bank_code = '" + getInstitutionCode() + "'";
+		dbUtil.executeUpdate(queryString);
+
 	}
 	
 	public void updateLoyaltyExpiryDate(String expiryDate, String cardNumber) {

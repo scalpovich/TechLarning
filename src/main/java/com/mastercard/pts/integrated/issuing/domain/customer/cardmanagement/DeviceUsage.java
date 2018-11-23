@@ -17,9 +17,6 @@ public class DeviceUsage {
 	private static final String YEARLY_DEBIT_AMOUNT = "EXP_YEARLY_DEBIT_AMOUNT";
 	private static final String YEARLY_DEBIT_VELOCITY = "EXP_YEARLY_DEBIT_VELOCITY";
 
-	private DeviceUsage() {
-	}
-
 	private String dailyDebitVelocity;
 	private String dailyCreditVelocity;
 	private String dailyDebitAmount;
@@ -34,6 +31,30 @@ public class DeviceUsage {
 	private String yearlyCreditVelocity;
 	private String yearlyDebitAmount;
 	private String yearlyCreditAmount;
+
+	private String walletMCGCode;
+	private static int velocity =1;
+	private static double previousAmountUtilized =0.00;
+	private String deviceNumber;
+	private int previousVelocityValue;
+	
+	private String periodAmountDomesticUtilized;
+	private String periodVelocityDomesticUtilized;
+	private String periodAmountInternationalUtilized;
+	private String periodVelocityInternationalUtilized;
+	private String dailyAmountDomesticUtilized;
+	private String dailyVelocityDomesticUtilized;
+	private String dailyVelocityInternationalUtilized;
+	private String dailyAmountInternationalUtilized;
+	private String recordedMCG;
+
+	public String getPreviousVelocityValue() {
+		return String.valueOf(previousVelocityValue);
+	}
+
+	public void setPreviousVelocityValue(String previousVelocityValue) {
+		this.previousVelocityValue = Integer.parseInt(previousVelocityValue);
+	}
 
 	public String getDailyDebitVelocity() {
 		return dailyDebitVelocity;
@@ -147,4 +168,120 @@ public class DeviceUsage {
 		deviceUsage.setYearlyDebitVelocity(provider.getString(YEARLY_DEBIT_VELOCITY));
 		return deviceUsage;
 	}
+
+	public static DeviceUsage getDeviceUsageDetails(KeyValueProvider provider) {
+		DeviceUsage plan = new DeviceUsage();
+		return plan;
+	}
+
+	public static double getPreviousAmountUtilized() {
+		return previousAmountUtilized;
+	}
+
+	public static void setPreviousAmountUtilized(double previousAmountUtilized) {
+		DeviceUsage.previousAmountUtilized = previousAmountUtilized;
+	}
+
+	public String getWalletMCGCode() {
+		return walletMCGCode;
+	}
+
+	public void setWalletMCGCode(String walletMCGCode) {
+		this.walletMCGCode = walletMCGCode;
+	}
+
+	public String getVelocity() {
+		return String.valueOf(velocity);
+	}
+
+	public static void setVelocity() {
+		++velocity;
+	}
+
+	public String getDeviceNumber() {
+		return deviceNumber;
+	}
+
+	public void setDeviceNumber(String deviceNumber) {
+		this.deviceNumber = deviceNumber;
+	}
+	
+	public String getPeriodAmountDomesticUtilized() {
+		return periodAmountDomesticUtilized;
+	}
+
+	public void setPeriodAmountDomesticUtilized(String periodAmountDomesticUtilized) {
+		this.periodAmountDomesticUtilized = periodAmountDomesticUtilized;
+	}
+
+	public String getPeriodVelocityDomesticUtilized() {
+		return periodVelocityDomesticUtilized;
+	}
+
+	public void setPeriodVelocityDomesticUtilized(
+			String periodVelocityDomesticUtilized) {
+		this.periodVelocityDomesticUtilized = periodVelocityDomesticUtilized;
+	}
+
+	public String getPeriodAmountInternationalUtilized() {
+		return periodAmountInternationalUtilized;
+	}
+
+	public void setPeriodAmountInternationalUtilized(
+			String periodAmountInternationalUtilized) {
+		this.periodAmountInternationalUtilized = periodAmountInternationalUtilized;
+	}
+
+	public String getPeriodVelocityInternationalUtilized() {
+		return periodVelocityInternationalUtilized;
+	}
+
+	public void setPeriodVelocityInternationalUtilized(
+			String periodVelocityInternationalUtilized) {
+		this.periodVelocityInternationalUtilized = periodVelocityInternationalUtilized;
+	}
+
+	public String getDailyAmountDomesticUtilized() {
+		return dailyAmountDomesticUtilized;
+	}
+
+	public void setDailyAmountDomesticUtilized(String dailyAmountDomesticUtilized) {
+		this.dailyAmountDomesticUtilized = dailyAmountDomesticUtilized;
+	}
+
+	public String getDailyVelocityDomesticUtilized() {
+		return dailyVelocityDomesticUtilized;
+	}
+
+	public void setDailyVelocityDomesticUtilized(
+			String dailyVelocityDomesticUtilized) {
+		this.dailyVelocityDomesticUtilized = dailyVelocityDomesticUtilized;
+	}
+
+	public String getDailyVelocityInternationalUtilized() {
+		return dailyVelocityInternationalUtilized;
+	}
+
+	public void setDailyVelocityInternationalUtilized(
+			String dailyVelocityInternationalUtilized) {
+		this.dailyVelocityInternationalUtilized = dailyVelocityInternationalUtilized;
+	}
+
+	public String getDailyAmountInternationalUtilized() {
+		return dailyAmountInternationalUtilized;
+	}
+
+	public void setDailyAmountInternationalUtilized(
+			String dailyAmountInternationalUtilized) {
+		this.dailyAmountInternationalUtilized = dailyAmountInternationalUtilized;
+	}
+	
+	public String getRecordedMCG() {
+		return recordedMCG;
+	}
+
+	public void setRecordedMCG(String recordedMCG) {
+		this.recordedMCG = recordedMCG;
+	}
+
 }

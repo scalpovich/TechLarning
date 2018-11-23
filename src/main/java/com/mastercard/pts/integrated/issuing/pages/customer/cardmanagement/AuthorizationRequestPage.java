@@ -44,7 +44,7 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 	private MCWebElement memoTxt;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cvv2:input:inputTextField")
-	private MCWebElement cvv2;
+	private MCWebElement cvv2Txt;
 
 	private String successMessage = null;
 	
@@ -53,11 +53,12 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 		clickAddNewButton();
 		runWithinPopup("Add Request", () -> {
 			WebElementUtils.enterText(deviceNumberTxt, request.getDeviceNumber());
+			WebElementUtils.enterText(cvv2Txt, request.getCvv2());
 			WebElementUtils.selectDropDownByVisibleText(transactionCurrencyDDwn, request.getTransactionCurrency());
 			WebElementUtils.enterText(transactionAmountTxt, request.getTransactionAmount());
 			WebElementUtils.selectDropDownByVisibleText(mccDDwn, request.getMcc());
+			WebElementUtils.enterText(transactionAmountTxt, request.getTransactionAmount());
 			WebElementUtils.enterText(memoTxt, request.getMemo());
-			WebElementUtils.enterText(cvv2, request.getCvv2());
 			clickSaveButton();
 			successMessage = getSuccessMessage();
 			logger.info("Success Meesage: " + successMessage);

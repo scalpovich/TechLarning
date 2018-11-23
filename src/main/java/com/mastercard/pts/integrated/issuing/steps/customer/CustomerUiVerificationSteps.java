@@ -1351,6 +1351,21 @@ public class CustomerUiVerificationSteps {
 	public void thenDeviceStatusPageOfCardManagementTabIsRenderedCorrectly() {
 		uiVerificationCardManagementWorkflow.verifyDeviceStatusPage();
 	}
+	
+	@Then("LocalCheque page of card management tab is rendered correctly")
+	public void verifyLocalChequePage() {
+		uiVerificationCardManagementWorkflow.verifyLocalChequePage();
+	}
+	
+	@Then("OutstationChequeProcessing page of card management tab is rendered correctly")
+	public void verifyOutstationChequeProcessingPage() {
+		uiVerificationCardManagementWorkflow.verifyOutstationChequeProcessingPage();
+	}
+	
+	@Then("OutstationChequeCollection page of card management tab is rendered correctly")
+	public void verifyOutstationChequeCollectionPage() {
+		uiVerificationCardManagementWorkflow.verifyOutstationChequeCollectionPage();
+	}
 
 	@Then("user signs out from customer portal")
 	public void signOutFromPortal() {
