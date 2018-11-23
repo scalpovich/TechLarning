@@ -20,5 +20,5 @@ And user creates Application Upload prepaid batch file and upload it on server f
 And processes prepaid pre-production batch
 And processes prepaid device production batch
 And processes prepaid pin production batch
-And For fileUpload when user search for new application on search screen for prepaid and validates the status as NORMAL
+Then For fileUpload when user search for new application on search screen for prepaid and validates the status as NORMAL
 And user logouts from customer portal
