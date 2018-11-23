@@ -103,6 +103,8 @@ public class AuthorizationSearchWorkflow {
 			// to handle "Transaction Currency", "Billing Currency"
 			condition = actualCodeAction.contains(type) && actualDescription.contains(state);
 
+		assertTrue("Latest (Row) Description and Code Action does not match on Authorization Search Screen", condition);
+		
 		// Device Usage Code
 		String billingAmountValue = authSearchPage.getCellTextByColumnName(1, "Billing Amount");
 		context.put(ConstantData.BILLING_AMOUNT, billingAmountValue);
@@ -110,18 +112,16 @@ public class AuthorizationSearchWorkflow {
 			device.setDeviceVelocity(1);
 			device.setDeviceAmountUsage(Double.parseDouble(billingAmountValue));
 			logger.info("Transaction Limit Utilise");
-			
 		}else if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && actualDescription.contains("Partial Reversal")){
 			//device.setDeviceVelocity(-1);
 			device.setDeviceAmountUsage(-Double.parseDouble(context.get(ContextConstants.PARTIAL_REVERSAL_AMOUNT)));
 			logger.info("Partial Release");
-			
 		}else if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && actualDescription.contains("Reversal")){
 			device.setDeviceVelocity(-1);
 			device.setDeviceAmountUsage(-Double.parseDouble(billingAmountValue));
 			logger.info("Full Reversal");
 		}
-		assertTrue("Latest (Row) Description and Code Action does not match on Authorization Search Screen", condition);
+		
 	}
 
 	public void generateReversalForTransaction(String deviceNumber)

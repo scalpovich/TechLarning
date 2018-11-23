@@ -2194,6 +2194,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 	
 	public void partialReverseTransaction(String transaction, String reversalType,String amount) {
+		//startWiniumDriverWithSimulator("FINSIM");
 		activateMas(transaction);
 		MiscUtils.reportToConsole("******************** Partial Reversal Transaction Started ******************");
 		clickTestPreparations(transaction);
@@ -2242,9 +2243,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		pressPageDown(4);
 		SimulatorUtilities.wait(500);
 		performClickOperation("95_ReplacementAmount");
-		pressRightArrow();
-		performDoubleClickOperation("95_01");
-		SimulatorUtilities.wait(500);
+		pressRightArrow(3);
+		pressCtrlShiftF10Key();
+		SimulatorUtilities.wait(1000);
+		performClickOperation("AddElementToRequest");
 		performDoubleClickOperation("default");
 		winiumClickOperation("Enter value");
 		pressTab();
