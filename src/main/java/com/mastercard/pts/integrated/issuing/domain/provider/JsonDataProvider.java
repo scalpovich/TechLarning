@@ -130,6 +130,8 @@ public class JsonDataProvider implements DataProvider {
 				.<Function<JsonNode, JsonNode>>map(path -> target -> loadAndApplyData(target, path,institutionCode))
 				.reduce(Function.identity(), Function::andThen)
 				.apply(null);
+		
+		
 		return node;
 	}
 	
@@ -177,35 +179,51 @@ public class JsonDataProvider implements DataProvider {
 	
 	private JsonNode buildJsonNodeInstitute(JsonNode target, String path,String institutionCode)
 			throws Exception {
-		String product=context.get(ConstantData.PRODUCT_IDENTITY);
+		String product = context.get(ConstantData.PRODUCT_IDENTITY);
 		InputStream inputStream = getResource(path);
+		JsonNode nodeArray = null;
+		JsonNode node = null;
 		if (inputStream == null) {
 			return target;
 		}
-		
-		JsonNode node = mapper.readTree(inputStream).get("institute");
-		JsonNode nodeArray=null;
-		if (node.isArray()) {
-			for (JsonNode objNode : node) {
-				if (objNode.get(ConstantData.INSTITUTION_CODE_KEY).asText().equals(institutionCode) && objNode.get(ConstantData.PRODUCT_IDENTITY).asText().equals(product)) {
-					nodeArray=objNode;
-					return objNode;
+		if (path.contains("PaymentUpload")) {
+			node = mapper.readTree(inputStream).get("paymentUpload");
+			if (node.isArray()) {
+				for (JsonNode objNode : node) {
+					if (objNode.get(ConstantData.PAYMENT_UPLOAD_METHOD).asText().equals(institutionCode)) {
+						nodeArray = objNode;
+						return objNode;
+					}
 				}
-			}
 
+			}
+		}
+
+		else if (path.contains("InstitutionData")) {
+			node = mapper.readTree(inputStream).get("institute");
+			if (node.isArray()) {
+				for (JsonNode objNode : node) {
+					if (objNode.get(ConstantData.INSTITUTION_CODE_KEY).asText().equals(institutionCode) && objNode.get(ConstantData.PRODUCT_IDENTITY).asText().equals(product)) {
+						nodeArray = objNode;
+						return objNode;
+					}
+				}
+
+			}
 		}
 
 		else if (target == null) {
 			logger.info("Load data from {}", path);
 			return node;
 		}
-		
+
 		try {
 			JsonPatch patch = JsonPatch.fromJson(nodeArray);
 			logger.info("Patch data from {}", path);
 			return patch.apply(target);
 		} catch (IOException e) {
-			//NO SONAR. It is based on the exception, we are performing other operations so cannot throw this as an error hence Info message
+			// NO SONAR. It is based on the exception, we are performing other operations so
+			// cannot throw this as an error hence Info message
 			JsonMergePatch merge = JsonMergePatch.fromJson(nodeArray);
 			logger.info("Merge data from {}", path);
 			return merge.apply(target);

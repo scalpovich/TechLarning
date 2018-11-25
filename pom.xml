@@ -36,7 +36,7 @@
             <winium-webdriver.version>0.1.0-1</winium-webdriver.version>
             <winium-elements-desktop.version>0.2.0-1</winium-elements-desktop.version>
             <oracle-ojdbc.version>11.2.0</oracle-ojdbc.version>
-            <jackson-databind.version>2.8.9</jackson-databind.version>
+            <jackson-databind.version>2.9.0</jackson-databind.version>
             <json-patch.version>1.9</json-patch.version>
 	    <commons-csv.version>1.5</commons-csv.version>
 
@@ -317,6 +317,11 @@
                   <groupId>org.springframework</groupId>
                   <artifactId>spring-jdbc</artifactId>
                   <version>4.2.5.RELEASE</version>
+            </dependency>
+             <dependency>
+                  <groupId>com.opencsv</groupId>
+                  <artifactId>opencsv</artifactId>
+                  <version>4.1</version>
             </dependency>
 	      </dependencies>
       <build>
