@@ -113,8 +113,7 @@ public class AuthorizationSearchWorkflow {
 			device.setDeviceAmountUsage(Double.parseDouble(billingAmountValue));
 			logger.info("Transaction Limit Utilise");
 		}else if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && actualDescription.contains("Partial Reversal")){
-			//device.setDeviceVelocity(-1);
-			device.setDeviceAmountUsage(-Double.parseDouble(context.get(ContextConstants.PARTIAL_REVERSAL_AMOUNT)));
+			device.setDeviceAmountUsage(-Double.parseDouble(billingAmountValue));
 			logger.info("Partial Release");
 		}else if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && actualDescription.contains("Reversal")){
 			device.setDeviceVelocity(-1);
