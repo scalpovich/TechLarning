@@ -317,6 +317,11 @@
                   <artifactId>spring-jdbc</artifactId>
                   <version>4.2.5.RELEASE</version>
             </dependency>
+             <dependency>
+                  <groupId>com.opencsv</groupId>
+                  <artifactId>opencsv</artifactId>
+                  <version>4.1</version>
+            </dependency>
 	      </dependencies>
       <build>
             <plugins>
