@@ -1,12 +1,12 @@
 Narrative:
-In order to a create a Credit Device under customer portal cardmanagement tab
+In order to a create a Payment Upload CSV from the set of input parameters(Device Creation)
 As a user
 I want to assert pages
 
 Meta:
 @CreditRegression
 @StoryName credit_emv_retail				 
-Scenario:creation of mastercard_bankstaff_addon_primary_emv credit device
+Scenario:Payment Upload Csv creation based on input parameters
 Meta:
 @UserCreatesNewCreditDevice
 
