@@ -19,7 +19,6 @@ And credit device is created using new device screen for Individual and Primary 
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pinProduction batch using new Device for Supplementary
-And user attachs device promotion plan PROMOTION_PLAN
 And device has "normal" status
 Then user sign out from customer portal
 
@@ -40,7 +39,7 @@ And search CWD authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: 1.4 Perform EMV Cash Withdrawal
-Given user updates transaction amount to 10
+Given user updates transaction amount to 100
 When perform an EMV_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
 And user is logged in institution
