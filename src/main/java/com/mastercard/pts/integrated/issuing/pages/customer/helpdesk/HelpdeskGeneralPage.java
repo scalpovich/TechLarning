@@ -378,6 +378,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public final String VIEW_AUTHORIZATION = "View Authorizations";
 
 
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Cancel Loan']")
+	private MCWebElement cancelLoanBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Cancellation Fee :']/../following-sibling::td/span/input")
+	private MCWebElement txtCancellationFee;
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Process']")
 	private MCWebElement processBtn;
 	
@@ -391,6 +397,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private MCWebElement selectLoanAccountNumberDdwn;
 	
 	private String preclosureFee;
+	private String cancellationFee;
 	
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
@@ -551,11 +558,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public void selectLoanPlan(String type) {
 		WebElementUtils.selectDropDownByVisibleText(selectLoanPlanDdwn, type);
 	}
-	
-	public void selectLoanAccountNumber(String type) {
-		WebElementUtils.selectDropDownByVisibleText(selectLoanAccountNumberDdwn, type);
-	}
-	
 	
 	public void clickCurrentStatusAndLimitsTab(){
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(currentStatusAndLimitTab)).click();
@@ -1635,7 +1637,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			loanDetails.setProcessingFee(processingFeeLbl.getAttribute("value"));
 			loanDetails.setMoratoriumLoan(moratoriumLoanLbl.getAttribute("value"));			
 			clickWhenClickable(sanctionBtn);			
-			SimulatorUtilities.wait(3000);	
+			SimulatorUtilities.wait(10000);	
 			waitForElementVisible(okBtn);
 			elementToBeClickable(okBtn);
 			clickWhenClickable(okBtn);			
@@ -1644,6 +1646,46 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return loanDetails;
 	}
 	
+	public String raiseLoanCancellationRequest(HelpdeskGeneral helpdeskGeneral, LoanPlan loanPlan, Device device) {
+		selectServiceCode(helpdeskGeneral.getServiceCode());
+		clickGoButton();
+		runWithinPopup("243 - Loan Cancellation", ()->{	
+			selectLoanPlan(loanPlan.getLoanPlanDescription() + " " + "[" + loanPlan.getLoanPlanCode() + "]");
+			selectLoanAccountNumber(device.getLoanAccountNumber());
+			clickCancelLoanButton();
+			cancellationFee=processLoanCancel();
+			clickWhenClickable(cancelBtn);
+		});			
+
+		clickEndCall();	
+		return cancellationFee;
+	}
+
+	private String processLoanCancel() {
+		SimulatorUtilities.wait(500);
+		runWithinPopup("Process Loan Cancel", ()->{	
+			SimulatorUtilities.wait(500);
+			logger.info("Loan Cancellation fee:{}",txtCancellationFee.getAttribute("value"));
+			cancellationFee=txtCancellationFee.getAttribute("value");
+			enterNote(MiscUtils.randomAlphabet(10));
+			SimulatorUtilities.wait(3000);	
+			clickWhenClickable(processBtn);	
+			waitForElementVisible(okBtn);
+			elementToBeClickable(okBtn);
+			clickWhenClickable(okBtn);	
+		
+		});	
+		return cancellationFee;
+	}
+
+	private void clickCancelLoanButton() {
+		clickWhenClickable(cancelLoanBtn);
+	}
+
+	private void selectLoanAccountNumber(String loanAccountNumber) {
+		WebElementUtils.selectDropDownByVisibleText(selectLoanAccountNumberDdwn, loanAccountNumber);
+	}
+
 	public String getDeclineCodeForTransaction(Device device, String rrnNumber){
 		logger.info("Fetching information for : {}", device.getDeviceNumber());
 		searchByDeviceNumber(device);
@@ -1718,8 +1760,4 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		});	
 		return preclosureFee;
 	}
-	
-	
-	
-	
 }

@@ -270,6 +270,11 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.getDeclineCodeForTransaction(device, rrnNumber);
 		
 	}
+	public String raiseLoanCancellationRequest(LoanPlan loanPlan, Device device, HelpdeskGeneral helpdeskGeneral) {
+		return helpDeskPage.raiseLoanCancellationRequest(helpdeskGeneral,loanPlan,device);
+		
+	}
+
 	public String raiseLoanPreClosureRequest(HelpdeskGeneral helpdeskGeneral,LoanPlan loanPlan,Device device){
 		return helpDeskPage.raiseLoanPreclosureRequest(helpdeskGeneral,loanPlan,device);
 	}
