@@ -9,9 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanDetails;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanPlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -27,10 +32,58 @@ public class LoanApprovalRetailTransactionToLoanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=cardNumber]")
 	private MCWebElement cardNumber;
-
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table/tbody/tr/td/select")
+	private MCWebElement loanPlanDdwn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Calculate EMI']")
+	private MCWebElement calculateEMIBtn;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Sanction']")
+	private MCWebElement sanctionBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td/span[text()='EMI :']/../following-sibling::td[1]/span/input")
+	private MCWebElement emiLbl;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td/span[text()='Processing Fee :']/../following-sibling::td[1]/span/input")
+	private MCWebElement processingFeeLbl;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "moratoriamPeriod:input:inputTextField")
+	private MCWebElement moratoriumLoanLbl;
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Loan Approval Retail Transaction to Loan");
 		verifySearchButton("Search");
+	}
+
+	public LoanDetails retailTransactionToLoanFromLoanScreen(LoanPlan loanPlan, Device device, String arn) {
+		WebElementUtils.enterText(cardNumber, device.getDeviceNumber());
+		SimulatorUtilities.wait(3000);
+		WebElementUtils.selectDropDownByVisibleText(loanPlanDdwn, loanPlan.getLoanPlanDescription() + " " + "[" + loanPlan.getLoanPlanCode() + "]");
+		WebElementUtils.selectDropDownByVisibleText(loanPlanDdwn, loanPlan.getLoanPlanDescription() + " " + "[" + loanPlan.getLoanPlanCode() + "]");
+		SimulatorUtilities.wait(2000);
+		clickSearchButton();
+		return sanctionLoanFromLoanScreen(arn);
+
+	}
+
+	public LoanDetails sanctionLoanFromLoanScreen(String arn) {
+		LoanDetails loanDetails = new LoanDetails();
+		clickAddNewButton();
+		runWithinPopup("Retail Transaction To Loan ", () -> {
+			String checkBox = String.format("//td//span[text()='%s']/../../following-sibling::td[7]", arn);
+			String tranAmountLbl = String.format("//td//span[text()='%s']/../../following-sibling::td[6]/span/span", arn);
+			Element(checkBox).click();
+			loanDetails.setTransactionAmount(Element(tranAmountLbl).getText());
+			ClickButton(calculateEMIBtn);
+			SimulatorUtilities.wait(1000);
+			loanDetails.setLoanEMI(emiLbl.getAttribute("value"));
+			loanDetails.setProcessingFee(processingFeeLbl.getAttribute("value"));
+			loanDetails.setMoratoriumLoan(moratoriumLoanLbl.getAttribute("value"));
+			clickWhenClickable(sanctionBtn);
+
+		});
+		return loanDetails;
 	}
 
 	@Override

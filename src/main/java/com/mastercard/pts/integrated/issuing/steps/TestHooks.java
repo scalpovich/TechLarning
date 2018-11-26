@@ -69,15 +69,6 @@ public class TestHooks {
 		}
 	}
 
-	@AfterScenario
-	public void clearCookies() {
-		if (System.getProperty("storyType") == null) {
-			driverProvider.get().manage().deleteAllCookies();
-		} else {
-			logger.info("driverProvider no required for API  story");
-		}
-	}
-
 	@AfterStory
 	public void disposeStoryContext() {
 		testContext.dispose();
