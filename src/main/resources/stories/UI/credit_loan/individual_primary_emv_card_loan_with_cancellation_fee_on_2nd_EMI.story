@@ -30,10 +30,10 @@ Then user sign out from customer portal
 Scenario:1.3 Retail Credit card authorization and Pre-clearing & EOD-Credit and update institution date to next day
 Given user is logged in institution
 When user raises an authorization request
-And status of request is "approved"
+Then status of request is "approved"
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
-And user wait for 5 min to perform certain activity
+When user wait for 5 min to perform certain activity
 And user is logged in institution
 And user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
