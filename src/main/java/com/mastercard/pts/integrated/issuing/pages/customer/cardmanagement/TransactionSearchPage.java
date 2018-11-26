@@ -81,9 +81,9 @@ public class TransactionSearchPage extends AbstractBasePage {
 	private MCWebElement transactionDateOrderByLink;
 	
 	private String authorizationStatus;
-	
-	List<String> joiningAndMembershipFees = new ArrayList();
 
+	List<String> joiningAndMembershipFees = new ArrayList();
+	
 	public void selectFromDate(LocalDate date)
 	{
 		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(4);
