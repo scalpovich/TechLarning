@@ -15,7 +15,6 @@ public class TransactionFeeWaiverPlan {
 	private static final String TFWP_APPLICABLE_FOR_CYCLES = "TFWP_APPLICABLE_FOR_CYCLES";
 	private static final String TFWP_TRANSACTIONS_WAIVED_PER_CYCLE  = "TFWP_TRANSACTIONS_WAIVED_PER_CYCLE";
 	private static final String TFWP_CLUB_TRANSACTION_OF_ADD_ON_CARDS = "TFWP_CLUB_TRANSACTION_OF_ADD_ON_CARDS";
-	private static final String TRANSACTION_FEE_WAIVER_PLAN="TRANSACTION_FEE_WAIVER_PLAN";
 	
 	private String transactionFeeWaiverPlanCode;  
 	
@@ -139,11 +138,7 @@ public class TransactionFeeWaiverPlan {
 	
 	public static TransactionFeeWaiverPlan createWithProvider(KeyValueProvider provider) {
 		TransactionFeeWaiverPlan plan = new TransactionFeeWaiverPlan();
-		if (provider.getString(TRANSACTION_FEE_WAIVER_PLAN) == null) {
-			plan.setTransactionFeeWaiverPlanCode(CustomUtils.randomNumbers(4));
-		}else{
-			plan.setTransactionFeeWaiverPlanCode(provider.getString(TRANSACTION_FEE_WAIVER_PLAN));
-		}
+		plan.setTransactionFeeWaiverPlanCode(CustomUtils.randomNumbers(4));
 		plan.setDescription(Constants.GENERIC_DESCRIPTION);
 		plan.setEffectiveDate(LocalDate.now().plusDays(1));
 		plan.setEndDate(plan.getEffectiveDate().plusDays(60));

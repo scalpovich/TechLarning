@@ -10,7 +10,7 @@ public class LoanDetails {
 	private String loanAmount;
 	private String loanEMI;
 	private String processingFee;
-	private String principleAmout;
+	private String principalAmount;
 	private String interestAmount;
 	private String moratoriumLoan;
 	private String transactionAmount;
@@ -47,10 +47,10 @@ public class LoanDetails {
 		this.processingFee = processingFee;
 	}
 	public String getPrincipleAmout() {
-		return principleAmout;
+		return principalAmount;
 	}
 	public void setPrincipleAmout(String principleAmout) {
-		this.principleAmout = principleAmout;
+		this.principalAmount = principleAmout;
 	}
 	public String getInterestAmount() {
 		return interestAmount;

@@ -49,6 +49,9 @@ public class LoanAccountDetailsPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=toDate]")
 	private MCWebElement toDate;	
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Loan Account Number')]/../../../../following::tbody/tr/td/span/a")
+	private MCWebElement loanAccNumber;
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Loan Account Details");
 		verifySearchButton("Search");
@@ -71,13 +74,15 @@ public class LoanAccountDetailsPage extends AbstractBasePage {
 	{
 		WebElementUtils.enterText(cardNumber, device.getDeviceNumber());
 		clickSearchButton();
+		logger.info("Loan Account Number : {} ",loanAccNumber.getText());
+		device.setLoanAccountNumber(loanAccNumber.getText());
 		viewFirstRecord();		
 		List<Map<String,String>> records = new ArrayList<Map<String, String>>();	
 		runWithinPopup("View Loan Details", () -> {
 			for(int i = 1; i <= getRowCountFromTable() ;i++){
 			Map <String,String> loanAccountDetails = new HashMap<>();
 			loanAccountDetails.put(ConstantData.TRANSACTION_TYPE,getCellTextByColumnName(i,ConstantData.TRANSACTION_TYPE));
-			loanAccountDetails.put(ConstantData.TRANSACTION_AMOUNT,getCellTextByColumnName(i,ConstantData.TRANSACTION_AMOUNT));
+			loanAccountDetails.put(ConstantData.LOAN_TRANSACTION_AMOUNT,getCellTextByColumnName(i,ConstantData.LOAN_TRANSACTION_AMOUNT));
 			loanAccountDetails.put(ConstantData.PRINCIPAL_AMOUNT,getCellTextByColumnName(i,ConstantData.PRINCIPAL_AMOUNT));
 			loanAccountDetails.put(ConstantData.INTEREST_AMOUNT,getCellTextByColumnName(i,ConstantData.INTEREST_AMOUNT));
 			loanAccountDetails.put(ConstantData.PROCESSING_DATE,getCellTextByColumnName(i,ConstantData.PROCESSING_DATE));

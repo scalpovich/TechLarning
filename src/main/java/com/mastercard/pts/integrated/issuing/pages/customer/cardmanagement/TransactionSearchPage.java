@@ -4,9 +4,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -18,11 +15,14 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Tran
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_SEARCH, CardManagementNav.L2_TRANSACTION, CardManagementNav.L3_TRANSACTION_SEARCH })
@@ -71,14 +71,22 @@ public class TransactionSearchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
 	private MCWebElement institutionDateTxt;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/tbody/tr//span[contains(.,'FEE(Annual Fees)')]/../preceding-sibling::td[@class='rightalign']")
+	private MCWebElement membershipFees;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/tbody/tr//span[contains(.,'FEE(Joining Fees)')]/../preceding-sibling::td[@class='rightalign']")
+	private MCWebElement joiningFees;
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Transaction Date']/ancestor::a")
 	private MCWebElement transactionDateOrderByLink;
 	
-	private String authorizationStatus;	
+	private String authorizationStatus;
+
+	List<String> joiningAndMembershipFees = new ArrayList();
 	
 	public void selectFromDate(LocalDate date)
 	{
-		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(3);
+		date = LocalDate.parse(getTextFromPage(institutionDateTxt), DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")).minusDays(4);
 		WebElementUtils.pickDate(fromDateTxt, date);		
 	}
 	
@@ -167,6 +175,27 @@ public class TransactionSearchPage extends AbstractBasePage {
 		return getCellTextByColumnName(i, "Description");
 	}
 
+	public List<String> searchTransactionWithDeviceAndGetJoiningAndMemberShipFees(Device device, TransactionSearch ts, Boolean membershipFlag) {
+		logger.info("Select product {}", device.getProductType());
+		WebElementUtils.selectDropDownByVisibleText(productTypeSelect, device.getProductType());
+		logger.info("Search transaction for device {}", device.getDeviceNumber());
+		WebElementUtils.enterText(searchDeviceTxt, device.getDeviceNumber());
+		WebElementUtils.pickDate(fromDateTxt, DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt)));
+		WebElementUtils.pickDate(toDateTxt, DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt)));
+		waitForWicket();
+		WebElementUtils.elementToBeClickable(tranDateDDwn);
+		WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, "Transaction Date [T]");
+		waitAndSearchForRecordToAppear();
+		
+		if (membershipFlag) {
+			joiningAndMembershipFees.add(joiningFees.getText());
+			joiningAndMembershipFees.add(membershipFees.getText());
+		} else {
+			joiningAndMembershipFees.add(joiningFees.getText());
+		}
+		return joiningAndMembershipFees;
+	}
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Transaction Search");
 		verifySearchButton("Search");
@@ -176,7 +205,6 @@ public class TransactionSearchPage extends AbstractBasePage {
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(searchARNTxt));
 	}
-
 	public TransactionSearchDetails searchTransactionWithDeviceAndGetDetails(Device device, TransactionSearch ts) {
 		TransactionSearchDetails transactionDetails= new TransactionSearchDetails();
 		int i;

@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -33,24 +33,24 @@ import com.google.common.base.CharMatcher;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.DeviceStatus;
+import com.mastercard.pts.integrated.issuing.domain.ProductType;
+import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanPlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
-import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
-import com.mastercard.pts.integrated.issuing.domain.ProductType;
-import junit.framework.Assert;
 
 @Component
 @Navigation(tabTitle = HelpdeskNav.TAB_HELPDESK, treeMenuItems = { HelpdeskNav.L1_ACTIVITY, HelpdeskNav.L2_GENERAL })
@@ -262,7 +262,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private MCWebElement currentStatusLimits;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//div[@id='tab4']//table[1]//td//span[@class='labeltextr']")
-	private MCWebElements creditLimitParamter;	
+	private MCWebElements creditLimitParameter;	
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//div[@id='tab4']//table[1]//td//span[@class='labeltextr']/preceding::span[1]")
 	private MCWebElements creditLimitParamterLabels;
@@ -322,6 +322,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	TestContext context;
 	
 	private final String DEFAULT_BALANCE="0.00";
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//th[text()='New Credit Limit']/../following-sibling::tr[1]/td[4]/input")
 	private MCWebElement creditClientLimitTxt;
 
@@ -361,6 +362,35 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.ID, valueToFind = "callReferenceNumber")
 	private MCWebElement callRefNumberLbl;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Authorization']")
+	private MCWebElement btnAuthorization;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Decline Reason')]/../following-sibling::td/span/span")
+	private MCWebElement labelDeclineReason;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(text(),'Authorization Date From')]/..//span")
+	private MCWebElement txtAuthorizationDateFrom;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(text(),'Authorization Date From')]/..//td[7]//span")
+	private MCWebElement txtAuthorizationDateTo;
+
+	public final String AUTHORIZATION = "Authorizations";
+	public final String VIEW_AUTHORIZATION = "View Authorizations";
+
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Process']")
+	private MCWebElement processBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Pre-Closure Fee :']/../following-sibling::td/input")
+	private MCWebElement preclosureFeeTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Pre-Close Loan']")
+	private MCWebElement preCloseLoanBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Account Number :']/../following-sibling::td[1]//span/select")
+	private MCWebElement selectLoanAccountNumberDdwn;
+	
+	private String preclosureFee;
 	
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
@@ -521,6 +551,11 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public void selectLoanPlan(String type) {
 		WebElementUtils.selectDropDownByVisibleText(selectLoanPlanDdwn, type);
 	}
+	
+	public void selectLoanAccountNumber(String type) {
+		WebElementUtils.selectDropDownByVisibleText(selectLoanAccountNumberDdwn, type);
+	}
+	
 	
 	public void clickCurrentStatusAndLimitsTab(){
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(currentStatusAndLimitTab)).click();
@@ -1135,57 +1170,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return verifyFieldPresence(LOGGED_BY);
 	}
 
-	public List<String> getCreditCardBallance(){	
-		ArrayList<String> list = new ArrayList<>();		
-		clickWhenClickableDoNotWaitForWicket(balanceDetailsTab);
-		for (MCWebElement element: purchaseComponents.getElements()){
-			logger.info("Elemnent Text-> " + element.getText());
-			list.add(element.getText());
-		}
-		for (MCWebElement element: paymentComponents.getElements()){
-			list.add(element.getText());
-			logger.info("Elemnent Text-> " + element.getText());
-		}		
-		return list;		
-	}
-	
-	public Map<String,String> checkCreditBalances(Device device){
-		Map<String, String> balanceMapBeforePayments;	
-		List<String> list;
-		logger.info("get Credit balances");
-		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getProductType());
-		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
-		clickSearchButton();
-		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
-		editDeviceLink.click();
-		clickCurrentStatusLimitTab();
-		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
-		balanceMapBeforePayments = getCreditLimitComponents();
-			clickBalanceDetailsTab();
-			SimulatorUtilities.wait(5000);//this to wait till the table gets loaded	
-			list=getCreditCardBallance();
-			balanceMapBeforePayments.put("UnbllledPayments", list.get(1));
-			balanceMapBeforePayments.put("OutstandingPayments", list.get(2));			
-			return balanceMapBeforePayments;
-	}
-	
-	public void checkAndCompareBalancePostPayment(Payment payment){		
-		Map<String, String> mapA= context.get("balanceBeforePayment");
-		Map<String, String> mapB =context.get("balanceAfterPayment");
-		    if (mapA != null && mapB != null && mapA.size() == mapB.size()) {
-		        for (Map.Entry m : mapA.entrySet()) {
-		            String keyFromFirstMap = (String) m.getKey();		           
-		            String valueFromFirstMap = (String) m.getValue();
-		            String valueFromSecondMap = mapB.get(keyFromFirstMap);
-		            if(keyFromFirstMap.equals("UnbllledPayments")){
-		            if (!valueFromSecondMap.equals(Integer.valueOf(valueFromFirstMap + payment.getAmount()))) {
-		               Assert.assertEquals("Payment has been done successfully", keyFromFirstMap + "::::" + valueFromSecondMap,  keyFromFirstMap + "::::" + Integer.valueOf(valueFromFirstMap + 500));
-		            }
-		        } }
-		        
-		    } 
-		    
-		}
 	
 	public boolean verifyEstimatedClosurePeriod() {
 		return verifyFieldPresence(CLOSURE_PERIOD);
@@ -1245,6 +1229,77 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return serviceStatus;
 	}
 
+	public Map<String,String> checkCreditBalances(Device device){
+		Map<String, String> balanceMapBeforePayments;	
+		List<String> list;
+		logger.info("get Credit balances");
+		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getProductType());
+		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
+		clickSearchButton();
+		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
+		editDeviceLink.click();
+		clickCurrentStatusLimitTab();
+		SimulatorUtilities.wait(5000);//this to wait till the table gets loaded
+		balanceMapBeforePayments = getCreditLimitComponents();
+			clickBalanceDetailsTab();
+			SimulatorUtilities.wait(5000);//this to wait till the table gets loaded	
+			list=getCreditCardBalance();
+			balanceMapBeforePayments.put("UnbllledPayments", list.get(1));
+			balanceMapBeforePayments.put("OutstandingPayments", list.get(2));			
+			return balanceMapBeforePayments;
+	}
+	
+	public void clickCurrentStatusLimitTab() {
+		new WebDriverWait(driver(), timeoutInSec)
+		.until(WebElementUtils.visibilityOf(currentStatusLimits)).click();
+	}
+	
+	public Map<String,String> getCreditLimitComponents(){
+		Map<String, String> map= new HashMap<>();
+		for(int i=0 ; i<=creditLimitParameter.getElements().size()-2; i +=2){
+			map.put(creditLimitParamterLabels.getElements().get(i).getText(), creditLimitParameter.getElements().get(i).getText());
+		}
+		return map;
+	}
+	
+	public void clickBalanceDetailsTab() {
+		new WebDriverWait(driver(), timeoutInSec)
+		.until(WebElementUtils.visibilityOf(balanceDetailsTab)).click();
+	}
+	
+	public List<String> getCreditCardBalance(){	
+		ArrayList<String> list = new ArrayList<>();		
+		clickWhenClickableDoNotWaitForWicket(balanceDetailsTab);
+		for (MCWebElement element: purchaseComponents.getElements()){
+			logger.info("Elemnent Text-> " + element.getText());
+			list.add(element.getText());
+		}
+		for (MCWebElement element: paymentComponents.getElements()){
+			list.add(element.getText());
+			logger.info("Elemnent Text-> " + element.getText());
+		}		
+		return list;		
+	}
+	
+	
+	public void checkAndCompareBalancePostPayment(Payment payment){		
+		Map<String, String> mapA= context.get("balanceBeforePayment");
+		Map<String, String> mapB =context.get("balanceAfterPayment");
+		    if (mapA != null && mapB != null && mapA.size() == mapB.size()) {
+		        for (Map.Entry m : mapA.entrySet()) {
+		            String keyFromFirstMap = (String) m.getKey();		           
+		            String valueFromFirstMap = (String) m.getValue();
+		            String valueFromSecondMap = mapB.get(keyFromFirstMap);
+		            if(keyFromFirstMap.equals("UnbllledPayments")){
+		            if (!valueFromSecondMap.equals(Integer.valueOf(valueFromFirstMap + payment.getAmount()))) {
+		               Assert.assertEquals("Payment has been done successfully", keyFromFirstMap + "::::" + valueFromSecondMap,  keyFromFirstMap + "::::" + Integer.valueOf(valueFromFirstMap + 500));
+		            }
+		        } }
+		        
+		    } 
+		    
+		}
+	
 	public boolean validateRequiredFields(HelpdeskGeneral general) {
 		logger.info("Validate required fields in change Registered Email ID Screen");
 
@@ -1359,23 +1414,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return 0;
 	}
 	
-	public void clickCurrentStatusLimitTab() {
-		new WebDriverWait(driver(), timeoutInSec)
-		.until(WebElementUtils.visibilityOf(currentStatusLimits)).click();
-	}
 	
-	public void clickBalanceDetailsTab() {
-		new WebDriverWait(driver(), timeoutInSec)
-		.until(WebElementUtils.visibilityOf(balanceDetailsTab)).click();
-	}
-	
-	public Map<String,String> getCreditLimitComponents(){
-		Map<String, String> map= new HashMap<>();
-		for(int i=0 ; i<=creditLimitParamter.getElements().size()-2; i +=2){
-			map.put(creditLimitParamterLabels.getElements().get(i).getText(), creditLimitParamter.getElements().get(i).getText());
-		}
-		return map;
-	}
 	
 	public void checkBalancesDetails(Device device, String payment) {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getProductType());
@@ -1605,6 +1644,80 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return loanDetails;
 	}
 	
+	public String getDeclineCodeForTransaction(Device device, String rrnNumber){
+		logger.info("Fetching information for : {}", device.getDeviceNumber());
+		searchByDeviceNumber(device);
+		SimulatorUtilities.wait(5000);
+		clickWhenClickable(editDeviceLink);
+		clickWhenClickable(btnAuthorization);
+		serachAuthorizationRecord(rrnNumber);
+		runWithinPopup(AUTHORIZATION, () -> {
+			Element("//span[contains(text(),'"+rrnNumber+"')]/..").click();
+		});
+		String getDeclineCode = getTransactionStatus();
+		runWithinPopup(AUTHORIZATION, () -> {
+			clickCloseButton();
+		});
+		SimulatorUtilities.wait(2000);
+		clickEndCall();
+		SimulatorUtilities.wait(2000);
+		return getDeclineCode;
+	}
+
+	private String getTransactionStatus() {
+		List<String> lst = new ArrayList<String>();
+		runWithinPopup(VIEW_AUTHORIZATION, () -> {
+			lst.add(getTextFromPage(labelDeclineReason));
+			clickCloseButton();
+		});
+		return lst.get(0);
+	}
+
+	/***
+	 * This method is used to search authorization record without closing view authorization frame
+	 * @param rrnNumber : RRN for  transaction
+	 * */
+	private void serachAuthorizationRecord(String rrnNumber) {
+		runWithinPopup(AUTHORIZATION, () -> {
+			WebElementUtils.pickDate(txtAuthorizationDateFrom, LocalDate.now());
+			WebElementUtils.pickDate(txtAuthorizationDateTo, LocalDate.now());
+			clickSearchButton();
+			SimulatorUtilities.wait(3000);
+		});
+	}
+
+
+
+
+	public String raiseLoanPreclosureRequest(HelpdeskGeneral helpdeskGeneral, LoanPlan loanPlan, Device device) {
+		selectServiceCode(helpdeskGeneral.getServiceCode());
+		clickGoButton();
+		runWithinPopup("242 - Loan Preclosure", ()->{	
+			selectLoanPlan(loanPlan.getLoanPlanDescription() + " " + "[" + loanPlan.getLoanPlanCode() + "]");
+			selectLoanAccountNumber(device.getLoanAccountNumber());
+			clickWhenClickable(preCloseLoanBtn);	
+			preclosureFee=processLoanPreClosure();
+			clickWhenClickable(cancelBtn);
+		});			
+
+		clickEndCall();	
+		return preclosureFee;
+	}
+
+	private String processLoanPreClosure() {
+		SimulatorUtilities.wait(500);
+		runWithinPopup("Process Loan Pre-Closure", ()->{	
+			SimulatorUtilities.wait(500);
+			preclosureFee=preclosureFeeTxt.getAttribute("value");
+			enterNote(MiscUtils.randomAlphabet(10));
+			SimulatorUtilities.wait(3000);	
+			clickWhenClickable(processBtn);	
+			waitForElementVisible(okBtn);
+			elementToBeClickable(okBtn);
+			clickWhenClickable(okBtn);	
+		});	
+		return preclosureFee;
+	}
 	
 	
 	

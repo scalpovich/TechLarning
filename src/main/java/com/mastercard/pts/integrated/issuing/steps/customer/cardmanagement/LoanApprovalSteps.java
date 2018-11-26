@@ -43,7 +43,7 @@ public class LoanApprovalSteps extends AbstractBaseSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		LoanPlan loanPlan = context.get(ContextConstants.LOAN_PLAN);
 		TransactionSearchDetails transactionDetails = context.get(ContextConstants.TRANSACTION_SEARCH_DETAILS);
-		context.put(ContextConstants.LOAN_SACTION_DETAILS, loanApprovalWorkFlow.raiseLoanApprovalRetailTransactionToLoan(loanPlan, device, transactionDetails.getARN()));
+		context.put(ContextConstants.LOAN_SANCTION_DETAILS, loanApprovalWorkFlow.raiseLoanApprovalRetailTransactionToLoan(loanPlan, device, transactionDetails.getARN()));
 	}
 
 }
