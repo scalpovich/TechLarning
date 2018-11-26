@@ -130,8 +130,6 @@ public class JsonDataProvider implements DataProvider {
 				.<Function<JsonNode, JsonNode>>map(path -> target -> loadAndApplyData(target, path,institutionCode))
 				.reduce(Function.identity(), Function::andThen)
 				.apply(null);
-		
-		
 		return node;
 	}
 	
