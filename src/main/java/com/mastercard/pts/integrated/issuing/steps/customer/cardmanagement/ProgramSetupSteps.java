@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -160,7 +161,6 @@ public class ProgramSetupSteps {
 	private static final String DEFAULT_PRESENTMENT_TIME_LIMIT = "3";
 	
 	private static final String MERCHANT_CODE = "5999";
-	
 	@When("prepaid $deviceType device is available with balance amount")
 	@Given("prepaid $deviceType device is available with balance amount")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
@@ -1679,7 +1679,6 @@ public class ProgramSetupSteps {
 		transactionLimitPlan = TransactionLimitPlan.createWithProvider(dataProvider);
 		transactionLimitPlan.setTransactionLimitPlanCode(provider.getString(limitType));
 	}
-	
 	@When("user edits Presentment Time Limit in $plan")
 	public void userEditsPresentmentTimeLimit(String plan) {
 		DevicePlan device = context.get(ContextConstants.DEVICE_PLAN);
@@ -1699,7 +1698,6 @@ public class ProgramSetupSteps {
             context.put(ContextConstants.MCG_LIMIT_PLAN, mcgLimitPlan);
 		}
 	}
-
 
 
 }
