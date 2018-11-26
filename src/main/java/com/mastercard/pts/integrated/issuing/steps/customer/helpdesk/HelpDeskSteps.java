@@ -934,6 +934,7 @@ public class HelpDeskSteps {
 	}
 	
 	@When("user check balance details through helpdesk $payment")
+	@Then("user check balance details through helpdesk $payment")
 	public void userCheckBalanceDetailsThroughHelpdesk(String payment){
 		Device device = context.get(ContextConstants.DEVICE);	
 		context.put(ContextConstants.DEVICE,device);
