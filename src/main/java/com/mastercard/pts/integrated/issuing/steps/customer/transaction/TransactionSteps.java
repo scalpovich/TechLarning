@@ -721,6 +721,6 @@ public class TransactionSteps {
 		String billingAmount = context.get(ConstantData.BILLING_AMOUNT);
 		//context.put(ContextConstants.PARTIAL_REVERSAL_AMOUNT, String.valueOf(amount));
 		transactionWorkflow.partialReverseTransaction(transaction, type,String.valueOf(amount*100));
-		context.put(ContextConstants.TRANSACTION_AMT_DIFFERENCE, new BigDecimal(billingAmount));
+		
 	}
 }

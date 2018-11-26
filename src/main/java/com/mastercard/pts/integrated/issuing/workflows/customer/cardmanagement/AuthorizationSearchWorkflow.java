@@ -111,14 +111,12 @@ public class AuthorizationSearchWorkflow {
 		if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && !ConstantData.PRE_AUTH.equalsIgnoreCase(type) && !actualDescription.contains("Reversal")){
 			device.setDeviceVelocity(1);
 			device.setDeviceAmountUsage(Double.parseDouble(billingAmountValue));
-			logger.info("Transaction Limit Utilise");
 		}else if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && actualDescription.contains("Partial Reversal")){
 			device.setDeviceAmountUsage(-Double.parseDouble(billingAmountValue));
-			logger.info("Partial Release");
+			context.put(ContextConstants.TRANSACTION_AMT_DIFFERENCE, new BigDecimal(billingAmountValue));
 		}else if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && actualDescription.contains("Reversal")){
 			device.setDeviceVelocity(-1);
 			device.setDeviceAmountUsage(-Double.parseDouble(billingAmountValue));
-			logger.info("Full Reversal");
 		}
 		
 	}
