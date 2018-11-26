@@ -60,7 +60,6 @@ public class PaymentUploadFeature {
 		}
 		
 		context.put(ConstantData.TRANSACTION_AMOUNT, tranactionAmount);
-		System.out.println("Amount:"+context.get(ConstantData.TRANSACTION_AMOUNT));
 		String[] header = { getDateForFile(), String.valueOf(transactionCodesSplit.length), String.valueOf(tranactionAmount) };
 		writer.writeNext(header);
 		for (Map.Entry<Integer, List<String>> map : mapForCSV.entrySet()) {
