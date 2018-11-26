@@ -23,7 +23,7 @@ public class LoanApprovalWorkFlow {
 	private Navigator navigator;
 
 	public LoanDetails raiseLoanApprovalRetailTransactionToLoan(LoanPlan loanPlan, Device device, String arn) {
-		LoanApprovalRetailTransactionToLoanPage loanApprovalRetailTransactionLoanPage = new LoanApprovalRetailTransactionToLoanPage();
+		LoanApprovalRetailTransactionToLoanPage loanApprovalRetailTransactionLoanPage;
 		loanApprovalRetailTransactionLoanPage = navigator.navigateToPage(LoanApprovalRetailTransactionToLoanPage.class);
 		return loanApprovalRetailTransactionLoanPage.retailTransactionToLoanFromLoanScreen(loanPlan, device, arn);
 	}
