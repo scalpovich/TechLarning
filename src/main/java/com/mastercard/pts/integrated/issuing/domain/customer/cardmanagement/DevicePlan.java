@@ -138,6 +138,7 @@ public class DevicePlan implements HasCodeAndDescription {
 	private static final String DP_EMV_PLAN_PUT_DATA_PRIORITY="DP_EMV_PLAN_PUT_DATA_PRIORITY";	 		 
 	private static final String DP_EMV_PLAN_PIN_CHANGE_PRIORITY="DP_EMV_PLAN_PIN_CHANGE_PRIORITY";	 		 
 	private static final String DP_EMV_PLAN_PIN_UNBLOCK_PRIORITY="DP_EMV_PLAN_PIN_UNBLOCK_PRIORITY";
+	private static final String DP_EMV_ISSUERSCRIPTING_NEGATIVE="DP_EMV_ISSUERSCRIPTING_NEGATIVE";
 
 	
 	public String association;
@@ -258,6 +259,18 @@ public class DevicePlan implements HasCodeAndDescription {
 	private String emvPlanPutDataPriority;
 	private String emvPlanPinChangePriority;
 	private String emvPlanPinUnblockPriority;
+	private String emvIssuerScriptingNegative;
+	
+	private String merchantCode;
+	
+	public String getEmvIssuerScriptingNegative() {
+		return emvIssuerScriptingNegative;
+	}
+
+	public void setEmvIssuerScriptingNegative(String emvIssuerScriptingNegative) {
+		this.emvIssuerScriptingNegative = emvIssuerScriptingNegative;
+	}
+
 	public String getEmvPlanApplicationBlockPriority() {
 		return emvPlanApplicationBlockPriority;
 	}
@@ -411,6 +424,7 @@ public class DevicePlan implements HasCodeAndDescription {
 		plan.setEmvPlanPutDataPriority(provider.getString(DP_EMV_PLAN_PUT_DATA_PRIORITY));
 		plan.setEmvPlanPinChangePriority(provider.getString(DP_EMV_PLAN_PIN_CHANGE_PRIORITY));
 		plan.setEmvPlanPinUnblockPriority(provider.getString(DP_EMV_PLAN_PIN_UNBLOCK_PRIORITY));
+		plan.setEmvIssuerScriptingNegative(provider.getString(DP_EMV_ISSUERSCRIPTING_NEGATIVE));
 		createWithProviderForCredit(plan,productType,provider);
 		return plan;
 	}
@@ -1424,5 +1438,15 @@ public class DevicePlan implements HasCodeAndDescription {
 	public void setTransactionFeeWaiverPlan(String transactionFeeWaiverPlan) {
 		this.transactionFeeWaiverPlan = transactionFeeWaiverPlan;
 	}
+
+	public String getMerchantCode() {
+		return merchantCode;
+	}
+
+	public void setMerchantCode(String merchantcode) {
+		this.merchantCode = merchantCode;
+	}
+
+	
 
 }

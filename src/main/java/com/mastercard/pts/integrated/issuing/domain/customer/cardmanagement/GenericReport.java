@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 
 public class GenericReport {
 
@@ -17,9 +18,10 @@ public class GenericReport {
 	private String reportType;
 	private String reportUrl;
 	private String password;
+	private String clientCode;
 	private String cvv2;
 	private String expiryDate;
-	
+
 	public String getPassword() {
 		return password;
 	}
@@ -90,7 +92,7 @@ public class GenericReport {
 	public void setDeviceNumber(String deviceNumber) {
 		this.deviceNumber = deviceNumber;
 	}
-
+	
 	public String getCVV2() {
 		return cvv2;
 	}
@@ -107,6 +109,7 @@ public class GenericReport {
 		this.expiryDate = expiryDate;
 	}
 	
+
 	public String getRrnNumber() {
 		return rrnNumber;
 	}
@@ -122,8 +125,16 @@ public class GenericReport {
 	public void setReportRegEx(){
 		reportRegEx = new HashMap<>();
 		reportRegEx.put("RAMP", "\\d\\d-\\d\\d-\\d\\d\\d\\d");
-		reportRegEx.put("LVC", "\\R");
+		reportRegEx.put("Application Reject Report", "\\d\\d-\\d\\d-\\d\\d\\d\\d");
+		reportRegEx.put(ConstantData.DEVICE_ACTIVITY_REPORT_FILE_NAME, "\\D\\d\\d\\d\\d\\D");
 	}
 	
+	public String getClientCode() {
+		return clientCode;
+	}
+
+	public void setClientCode(String clientCode) {
+		this.clientCode = clientCode;
+	}
 	
 }

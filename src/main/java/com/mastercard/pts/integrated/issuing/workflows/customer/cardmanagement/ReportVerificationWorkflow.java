@@ -2,31 +2,27 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
 import static org.junit.Assert.assertTrue;
 
-
-
-
 import java.io.File;
 import java.util.Map;
-
-
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-
-
-
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.GenericReport;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.collect.administration.AdministrationHomePage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ApplicationPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceActivityPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReportVerificationPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.PDFUtils;
 
@@ -47,7 +43,9 @@ public class ReportVerificationWorkflow {
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
 	public static final int BILL_AMOUNT_INDEX_VALUE = 3;
-
+	
+	Boolean verificationStatus;
+	
     public void verifyGenericReport(GenericReport report) {
 		page = (ReportVerificationPage)getInstance(report.getReportName());
 		Map<Object, String> reportContent = getGenericReport(report);
@@ -78,6 +76,43 @@ public class ReportVerificationWorkflow {
 			}
 		});
 		}
+	}
+    
+	public void verifyReportGenerationAppRejectReport(GenericReport reports) {
+		reports.setReportName(Constants.APP_REJECT_REPORT);
+		deleteExistingReportsFromSystem(reports.getReportName());
+		ApplicationPage page = navigator.navigateToPage(ApplicationPage.class);
+		String reportUrl = page.generateApplicationRejectReport(reports.getReportName());
+		reports.setReportUrl(reportUrl);
+		Map<Object, String> reportContent = getReportContent(reports);
+		reportContent.forEach((k, v) -> {
+			reports.getFieldToValidate().forEach((field, fieldValue) -> {
+				if (v.contains(fieldValue)) {
+					toggle();
+					logger.info("{field} is present in the report", fieldValue);
+				}
+			});
+		});
+		assertTrue("Application Number is not present in the System", verificationStatus);
+	}
+	
+	public void generateDeviceActivityReport(Device device,GenericReport report,Program program) {
+    	DeviceActivityPage page = navigator.navigateToPage(DeviceActivityPage.class);
+		deleteExistingReportsFromSystem(report.getReportName());
+		String reportUrl = page.generateDeviceActivityReport(device,report,program);
+		report.setReportUrl(reportUrl);
+		Map<Object, String> reportContent= getReportContent(report);
+		logger.info("Client Code:" +report.getClientCode());
+		reportContent.forEach((k,v)-> {
+			if(v.contains(report.getClientCode())){
+				toggle();
+			}
+		});		
+		assertTrue("Client Code is not present",verificationStatus);
+	}
+	
+	private void toggle(){
+		verificationStatus = true;
 	}
     
     public void verifyStatement(GenericReport report) {		
@@ -120,7 +155,6 @@ public class ReportVerificationWorkflow {
 				return null;
 			} 	
     }
-
 	public void verificationOfPDFFileForLVCCard(String reportURL, String password) {
 		PDFUtils pdfutils = new PDFUtils();
 		GenericReport report = new GenericReport();

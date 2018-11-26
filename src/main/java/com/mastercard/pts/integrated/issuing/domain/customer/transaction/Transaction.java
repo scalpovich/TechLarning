@@ -41,6 +41,8 @@ public class Transaction {
 	private String cvvData2;
 
 	private Map<String, String> cardDataElements = new LinkedHashMap<>();
+	
+	private Map <String, String> cardDataElementsUpdatedATC = new LinkedHashMap<>();
 
 	//TestCasesAndCardAndDataElementsData
 	private String testCaseToSelect; 
@@ -260,9 +262,17 @@ public class Transaction {
 	public Map<String, String> getCardDataElements() {
 		return cardDataElements;
 	}
-
+	
 	public void setCardDataElements(Map<String, String> cardDataElements) {
 		this.cardDataElements = cardDataElements;
+	}
+	
+	public Map<String, String> getCardDataElemetsUpdatedATC(){
+		return cardDataElementsUpdatedATC;
+	}
+	
+	public void setCardDataElementsUpdatedATC(Map<String, String> cardDataElementsUpdatedATC) {
+		this.cardDataElementsUpdatedATC = cardDataElementsUpdatedATC;
 	}
 
 	public void setCardDataElementsDynamic(String s1, String s2) {

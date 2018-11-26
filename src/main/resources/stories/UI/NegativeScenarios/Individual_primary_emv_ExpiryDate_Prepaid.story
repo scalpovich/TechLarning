@@ -36,12 +36,12 @@ When Pin Offset file batch was generated successfully
 When embossing file batch was generated in correct format
 When PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
-!-- And User enters incorrect Expiry Date
+And User enters incorrect Expiry Date
 
 Scenario: Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 And user is logged in institution
-!-- Then search Purchase authorization and verify 101-EXPIRED CARD status
-!-- Then assert Decline response with 20005 AuthDecline Code and Device is expired. as description
+Then search Purchase authorization and verify 101-EXPIRED CARD status
+Then assert Decline response with 20005 AuthDecline Code and Device is expired. as description
 And user sign out from customer portal

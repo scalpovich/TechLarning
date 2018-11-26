@@ -56,5 +56,10 @@ public class CurrencyExchangeRatesFlows {
 		currencyExchangeRatesPage.uploadInvalidCurrencyExchangeRateFile(
 				isInvalid, filePath);
 	}
+	
+	public String fetchSourceToDestinationCurrency(CurrencyExchangeRate object){
+		navigator.navigateToPage(CurrencyExchangeRatesPage.class);
+		return currencyExchangeRatesPage.fetchSourceToDestinationCurrency(object);
+	}
 
 }
