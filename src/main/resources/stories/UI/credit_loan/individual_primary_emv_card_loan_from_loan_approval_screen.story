@@ -31,16 +31,14 @@ Scenario:1.3 Retail Credit card authorization and Pre-clearing & EOD-Credit and 
 Given user is logged in institution
 When user raises an authorization request
 Then status of request is "approved"
-When user sign out from customer portal
-When user wait for seven minutes to perform certain activity
+And user sign out from customer portal
+When user wait for 7 min to perform certain activity
 And user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 When user processes EOD-Credit system internal batch for Credit
 When search transaction with device number on transaction search screen
 Then update institution date to 5 days
 And user sign out from customer portal
-!-- And device has "normal" status
-!-- And user notes down required values from helpdesk for credit
 
 Scenario:1.4 Update institution date then Login & Logout to wait for date to be updated foe next billing
 Meta:
@@ -54,8 +52,8 @@ And user sign out from customer portal
 Scenario:1.5 Raise Loan SR and Verify Loan Account Details then update institution date to 1st of next month
 Given user is logged in institution
 When user raises Loan request from loan approval screen
-When user verifies loan account details
-When user processes Pre-clearing system internal batch for Credit
+And user verifies loan account details
+And user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
 And update institution date to first of next month
 And user sign out from customer portal
