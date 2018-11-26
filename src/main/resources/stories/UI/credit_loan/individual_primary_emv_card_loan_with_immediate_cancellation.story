@@ -1,7 +1,7 @@
 Narrative:
 In order to validate cancellation fee on loan
 As a user
-I want to assert cancellation fee on loan  after geting loan
+I want to assert cancellation fee on loan  after getting loan
 
 Meta:
 @StoryName credit_emv_retail_loan
