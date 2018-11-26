@@ -1003,12 +1003,12 @@ public class HelpDeskSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		LoanPlan loanPlan = context.get(ContextConstants.LOAN_PLAN);			
 		TransactionSearchDetails transactionDetails = context.get(ContextConstants.TRANSACTION_SEARCH_DETAILS);
-		if (serviceCode.equalsIgnoreCase("Retail Transaction to Loan [215]")) {
+		if (serviceCode.equalsIgnoreCase(ConstantData.RETAIL_TO_LOAN_SR)) {
 			context.put(ContextConstants.LOAN_SANCTION_DETAILS,
 					helpdeskWorkflow.raiseRetailToLoanRequest(helpdeskGeneral, loanPlan, transactionDetails).get(0));
 		}else if(serviceCode.equalsIgnoreCase(ConstantData.LOAN_PRE_CLOSURE_SR)){
 			context.put(ConstantData.LOAN_PRE_CLOSURE_FEE,helpdeskWorkflow.raiseLoanPreClosureRequest(helpdeskGeneral,loanPlan,device));			
-		}else if(serviceCode.equalsIgnoreCase("Loan Cancellation [243]")){
+		}else if(serviceCode.equalsIgnoreCase(ConstantData.LOAN_CANCELLATION_SR)){
 			context.put(ConstantData.LOAN_CANCELLATION_FEE,helpdeskWorkflow.raiseLoanCancellationRequest(loanPlan,device,helpdeskGeneral));
 			
 		}

@@ -168,6 +168,7 @@ public class ConstantData {
 	public static final String DE_042 = "042";
 	public static final String DE_022_01 = "022.01";
 	public static final String POS_TERMINAL_VALUE = "05";
+	public static final String LOAN_CANCELLATION_SR = "Loan Cancellation [243]";
 	
 	private ConstantData() {
 	}
