@@ -70,7 +70,7 @@ And user is logged in institution
 Then user sign out from customer portal
 
 
-Scenario:1.8 Process Batches for billing and validated values on helpdesk
+Scenario:1.8 Process Batches for billing and validates values on helpdesk
 Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
@@ -85,7 +85,7 @@ When user sign out from customer portal
 And user is logged in institution
 Then user sign out from customer portal
 
-Scenario:2.0 Process Batches for billing and validated values on helpdesk
+Scenario:2.0 Process Batches for billing and validates values on helpdesk
 Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
