@@ -21,6 +21,7 @@ public class DatabaseSteps {
 	
 	@When("update institution date to first of next month")
 	@Given("update institution date to first of next month")
+	@Then("update institution date to first of next month")
 	public void updateInstituteDate(){
 			dbFlow.updateInstituteDateToFirstOfNextMonth(context.get(ContextConstants.INSTITUTION_DATE));
 	}

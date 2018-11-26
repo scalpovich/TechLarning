@@ -18,16 +18,14 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
 @Component
 public class LoanApprovalWorkFlow {
-	
+
 	@Autowired
 	private Navigator navigator;
-	
-	@Autowired
-	private LoanApprovalRetailTransactionToLoanPage loanApprovalRetailTransactionLoanPage;
-	
-	public LoanDetails raiseLoanApprovalRetailTransactionToLoan(LoanPlan loanPlan,Device device,String arn){
+
+	public LoanDetails raiseLoanApprovalRetailTransactionToLoan(LoanPlan loanPlan, Device device, String arn) {
+		LoanApprovalRetailTransactionToLoanPage loanApprovalRetailTransactionLoanPage = new LoanApprovalRetailTransactionToLoanPage();
 		loanApprovalRetailTransactionLoanPage = navigator.navigateToPage(LoanApprovalRetailTransactionToLoanPage.class);
-		return loanApprovalRetailTransactionLoanPage.retailTransactionToLoanFromLoanScreen(loanPlan,device,arn);
+		return loanApprovalRetailTransactionLoanPage.retailTransactionToLoanFromLoanScreen(loanPlan, device, arn);
 	}
 
 }
