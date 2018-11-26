@@ -11,4 +11,4 @@ Meta:
 @UserCreatesNewCreditDevice
 
 Given setting json values in excel for Credit
-Given paymentUpload for Outstation_Cheque|Cash_Payment|Outstation_Cheque_return
+And paymentUpload for Outstation_Cheque|Cash_Payment|Outstation_Cheque_return
