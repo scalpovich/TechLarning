@@ -4,7 +4,6 @@ import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertThat;
 
 import org.jbehave.core.annotations.Composite;
-import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.slf4j.Logger;
@@ -58,6 +57,8 @@ public class ManualAuthorizationSteps {
 	public void manualAuthComposite(){
 		
 	}
+	
+	@When("status of request is \"approved\"")
 	@Then("status of request is \"approved\"")
 	public void thenStatusOfRequestIsapproved(){
 		 assertThat("Authorization is successful", successMessage, containsString("Authorization is successful"));

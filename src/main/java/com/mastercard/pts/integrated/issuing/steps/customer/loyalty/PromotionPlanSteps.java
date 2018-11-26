@@ -44,6 +44,7 @@ public class PromotionPlanSteps {
 		uiVerificationLoyaltyWorkflow.verifyPromotionPlanwithMCG(promotionPlan);
 	}
 	
+	@When("user notes down promotion plan details for $plan")
 	@Then("user notes down promotion plan details for $plan")
 	public void notePromoPlanDetails(String plan) {
 		Double amtSpent = Double.parseDouble(uiVerificationLoyaltyWorkflow.getAmtSpentOnPromotionPlan(plan));
@@ -54,7 +55,6 @@ public class PromotionPlanSteps {
 
 	@Then("select promotion rules MCG as $mcg for promotion plan $plan")
 	public void selectBlockedMCG(String mcg, String plan) {
-		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
 		uiVerificationLoyaltyWorkflow.selectPromoRulesMCG(plan, mcg);
 	}
 }

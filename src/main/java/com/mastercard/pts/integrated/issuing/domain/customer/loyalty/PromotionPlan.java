@@ -14,15 +14,17 @@ public class PromotionPlan implements HasCodeAndDescription {
 
 	private String promotionPlanCode;
 	private String promotionDescription;
-
 	private String promotionCurrency;
 	private String promotionamountSpent;
 	private String promotionpointsEarned;
 	private String promotionloyaltyBatchDate;
 	private String promotionthresholdAmount;
-	private String floortransactionAmount;
+	private String promotionNoOfTransactions;
+	private String promotion;
+	private String floorTransactionAmount;
 	private String mccCode;
 	private String mcgCode;
+	private String promotionLoyaltyPlan;
 
 	public String getMcgCode() {
 		return mcgCode;
@@ -32,14 +34,12 @@ public class PromotionPlan implements HasCodeAndDescription {
 		this.mcgCode = mcgCode;
 	}
 
-	private String promotionloyaltyPlan;
-
 	public String getPromotionloyaltyPlan() {
-		return promotionloyaltyPlan;
+		return promotionLoyaltyPlan;
 	}
 
-	public void setPromotionloyaltyPlan(String promotionloyaltyPlan) {
-		this.promotionloyaltyPlan = promotionloyaltyPlan;
+	public void setPromotionloyaltyPlan(String promotionLoyaltyPlan) {
+		this.promotionLoyaltyPlan = promotionLoyaltyPlan;
 	}
 
 	public String getMccCode() {
@@ -51,15 +51,12 @@ public class PromotionPlan implements HasCodeAndDescription {
 	}
 
 	public String getFloortransactionAmount() {
-		return floortransactionAmount;
+		return floorTransactionAmount;
 	}
 
-	public void setFloortransactionAmount(String floortransactionAmount) {
-		this.floortransactionAmount = floortransactionAmount;
+	public void setFloortransactionAmount(String floorTransactionAmount) {
+		this.floorTransactionAmount = floorTransactionAmount;
 	}
-
-	private String promotionNoOfTransactions;
-	private String promotion;
 
 	public String getPromotionPlanCode() {
 		return promotionPlanCode;

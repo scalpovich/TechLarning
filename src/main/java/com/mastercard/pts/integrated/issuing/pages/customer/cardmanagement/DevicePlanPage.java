@@ -1,6 +1,5 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -31,8 +30,6 @@ import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.DBUtility;
-import com.mastercard.pts.integrated.issuing.utils.DatePicker;
-import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -1220,8 +1217,6 @@ public class DevicePlanPage extends AbstractBasePage {
 					    dateTime = dateTime.plusYears(10);
 					    DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("MM-yyyy");
 					    String tenYearsPlus = dateTime.format(formatter1);
-					    System.out.println(tenYearsPlus);
-						
 						enterIframeExpiryDateTxt(tenYearsPlus);
 						String dateInYYMM = getValueInYYMMFormatForExpiryDate(tenYearsPlus);
 						devicePlan.setExpiryDate(dateInYYMM);

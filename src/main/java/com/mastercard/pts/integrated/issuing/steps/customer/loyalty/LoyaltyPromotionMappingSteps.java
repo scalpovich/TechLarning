@@ -33,7 +33,6 @@ public class LoyaltyPromotionMappingSteps {
 	@When("user maps promotion Plan with loyalty Plan")
 	public void loyaltyPromotionMappingAdd() {
 		PromotionPlan promotionPlan = context.get(ContextConstants.PROMOTION_PLAN);
-		// promotionPlan = PromotionPlan.createWithProvider(Provider);
 		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
 		loyaltyPromotionMapping.setMappingLoyaltyPlanddwn(data.getLoyaltyPlan());
 		loyaltyPromotionMapping.setMappingPromotionPlanddwn(promotionPlan.buildDescriptionAndCode());

@@ -8,7 +8,7 @@ Meta:
 
 Scenario:1 create Credit device without loyalty plan and perform manual auth
 Given setting json values in excel for Credit
-Then use loyalty plan none
+And use loyalty plan none
 When user is logged in institution
 And for Magnetic Stripe Card [1] User fills Device Plan for Credit product for Mastercard
 And User fills Wallet Fee Plan for Credit product
@@ -21,15 +21,15 @@ And Credit processes deviceproduction batch using new Device for Supplementary
 And device has "normal" status
 Then user has loyalty points details for Credit device
 And user raises an authorization request
-Then status of request is "approved"
+And status of request is "approved"
 And search Purchase authorization and verify Successful status
 And device has "normal" status
-Then user waits for 5 minutes
+And user wait for 5 min to perform certain activity
 And user sign out from customer portal
 
 Scenario:2 verify loyalty points are not accrued post transaction
-When user is logged in institution
-And pre-clearing and Loyalty Calc batches are run
+Given user is logged in institution
+When pre-clearing and Loyalty Calc batches are run
 Then user verifies loyalty details for Credit device
 And user sign out from customer portal
 

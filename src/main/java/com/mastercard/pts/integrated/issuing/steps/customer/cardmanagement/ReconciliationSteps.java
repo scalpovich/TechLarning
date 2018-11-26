@@ -96,6 +96,7 @@ public class ReconciliationSteps {
 	}
 	
 	@When("user processes $batchName system internal batch for $productType")
+	@Then("user processes $batchName system internal batch for $productType")
 	public void processBillingBatchForCredit(String batchName,String productType){
 		ProcessBatches batch = new ProcessBatches();
 		batch.setProductType(ProductType.fromShortName(productType));

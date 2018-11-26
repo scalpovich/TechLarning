@@ -56,7 +56,6 @@ import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
-import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpDeskFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk.HelpdeskWorkflow;
 
@@ -1059,6 +1058,7 @@ public class HelpDeskSteps {
 	}
 	
 	@Then("user has loyalty points details for $type device")
+	@When("user has loyalty points details for $type device")
 	public Map<String, String> givenUserHasLoyaltyPointsDetails(String type) {
 		Double zero = 0.0;
 		Map<String, String> points = getLoyaltyDetails();
@@ -1081,10 +1081,5 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.navigateToLoyaltyDetails(device);
 		Map<String, String> points = helpdeskWorkflow.getLoyaltyDetails();
 		return points;
-	}
-
-	@Then("user waits for $mins minutes")
-	public void waitFor(int mins) {
-		SimulatorUtilities.wait(mins*60000);
 	}
 }

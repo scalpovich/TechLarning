@@ -16,11 +16,11 @@ public class RewardsRedemption {
 
 	private String pointsToRedeem;
 
-	public String getpointsToRedeem() {
+	public String getPointsToRedeem() {
 		return pointsToRedeem;
 	}
 
-	public void setpointsToRedeem(String pointsToRedeem) {
+	public void setPointsToRedeem(String pointsToRedeem) {
 		this.pointsToRedeem = pointsToRedeem;
 	}
 
@@ -43,7 +43,7 @@ public class RewardsRedemption {
 	public static RewardsRedemption createWithProvider(KeyValueProvider provider) {
 		RewardsRedemption rewardsRedemption = new RewardsRedemption();
 		rewardsRedemption.setLoyaltyPlan(provider.getString(LOYALTY_PLAN));
-		rewardsRedemption.setpointsToRedeem(provider.getString(POINTS_TO_REDEEM));
+		rewardsRedemption.setPointsToRedeem(provider.getString(POINTS_TO_REDEEM));
 		return rewardsRedemption;
 	}
 

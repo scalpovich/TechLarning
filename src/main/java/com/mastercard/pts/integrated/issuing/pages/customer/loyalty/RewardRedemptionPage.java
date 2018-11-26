@@ -58,15 +58,12 @@ public class RewardRedemptionPage extends AbstractBasePage {
 	public void redeemScreen(RewardsRedemption rewards) {
 		redeemBtn.click();
 		runWithinPopup("Redemption", () -> {
-			WebElementUtils.enterText(pointsredeemedtxt, rewards.getpointsToRedeem());
+			WebElementUtils.enterText(pointsredeemedtxt, rewards.getPointsToRedeem());
 			clickSaveButton();
 		});
 	}
 
 	public void verifyLoyaltyPointsNotRedeemed() {
-		// assertFalse("Loyalty points shouldnot be available for redemption",
-		// isElementPresent(redeemBtn));
-
 		try {
 			if (isElementPresent(redeemBtn)) {
 				Assert.fail("Loyalty points shouldnot be available for redemption");

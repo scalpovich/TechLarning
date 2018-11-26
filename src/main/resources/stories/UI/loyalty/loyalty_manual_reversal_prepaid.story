@@ -9,8 +9,8 @@ Meta:
 		 
 Scenario:1.1 creation of mastercard_corporate_primary_EMV Card credit device
 Given setting json values in excel for Prepaid
-And user is logged in institution
-When for EMV Card User fills Device Plan for prepaid product for Mastercard
+When user is logged in institution
+And for EMV Card User fills Device Plan for prepaid product for Mastercard
 And User fills Wallet Fee Plan for prepaid product
 And User fills Wallet Plan for prepaid product and program Retail General Purpose Card
 And User fills MCC Rules for prepaid product
@@ -22,9 +22,9 @@ And prepaid processes pre-production batch using new Device
 And prepaid processes deviceproduction batch using new Device for Supplementary
 And prepaid processes pingeneration batch using new Device for Supplementary
 Then add adjustment transaction of 10000 at backend
-When user has current wallet balance amount information for prepaid device
+And user has current wallet balance amount information for prepaid device
 And device has "normal" status
-Then user sign out from customer portal
+And user sign out from customer portal
 
 Scenario:1.2 Pin Generation
 Given connection to FINSim is established
@@ -44,12 +44,12 @@ And user sign out from customer portal
 
 Scenario:1.4 Verify loyalty points when user perform Reversal of Purchase Transaction
 Given user is logged in institution
-Then user notes down max loyalty points for plan
+When user notes down max loyalty points for plan
 And user notes down promotion plan details for AUTO
 Then calculate loyalty points
-When pre-clearing and Loyalty Calc batches are run
-Then verify available loyalty points should be within loyalty plan limit
-Then user add transaction reversal with reason Manual Reversal [1]
+And pre-clearing and Loyalty Calc batches are run
+And verify available loyalty points should be within loyalty plan limit
+And user add transaction reversal with reason Manual Reversal [1]
 And pre-clearing and Loyalty Calc batches are run
 And user verifies loyalty details for Prepaid device
 And MAS simulator is closed

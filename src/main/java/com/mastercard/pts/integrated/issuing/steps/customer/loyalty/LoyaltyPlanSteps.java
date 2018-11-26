@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.steps.customer.loyalty;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class LoyaltyPlanSteps {
 		uiVerificationLoyaltyWorkflow.verifyLoyaltyPlanPage();
 	}
 	
+	@When("user notes down max loyalty points for plan")
 	@Then("user notes down max loyalty points for plan")
 	public void noteMaxLoyaltyPoints() {
 		Double maxPts = 0.0;
@@ -63,6 +65,7 @@ public class LoyaltyPlanSteps {
 		uiVerificationLoyaltyWorkflow.selectPeriodUnitByIndex(data.getLoyaltyPlan(), value);
 	}
 	
+	@Given("use loyalty plan $plan")
 	@Then("use loyalty plan $plan")
 	public void useLoyaltyPlan(String plan) {
 		InstitutionData data = context.get(CreditConstants.JSON_VALUES);

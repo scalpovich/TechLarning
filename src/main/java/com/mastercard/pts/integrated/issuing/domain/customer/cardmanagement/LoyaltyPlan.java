@@ -52,14 +52,12 @@ public class LoyaltyPlan implements HasCodeAndDescription {
 
 	@Override
 	public String getCode() {
-		// TODO Auto-generated method stub
-		return null;
+		return getLoyaltyPlanCode();
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return description;
 	}
 
 }

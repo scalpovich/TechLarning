@@ -52,7 +52,7 @@ public class DatabaseSteps {
 		dbFlow.updateInstituteDateToGivenDays(context.get(ContextConstants.INSTITUTION_DATE),noOfDays);
 	}
 	
-	@When("loyalty plan expiry date is updated to $expiryDate")
+	@Then("loyalty plan expiry date is updated to $expiryDate")
 	public void updateLoyaltyExpiryDateTo(String expiryDate) {
 		Device device = context.get(ContextConstants.DEVICE);
 		dbFlow.updateLoyaltyExpiryDate(expiryDate, device.getDeviceNumber());
@@ -71,6 +71,7 @@ public class DatabaseSteps {
 		dbFlow.activateLoyaltyPlan(plan.substring(plan.indexOf("[")+1, plan.indexOf("]")), context.get(Constants.USER_INSTITUTION_SELECTED));
 	}
 
+	@When("promotion plan $plan expiry date is updated to $expiryDate")
 	@Then("promotion plan $plan expiry date is updated to $expiryDate")
 	public void updatePromotionExpiryDateTo(String plan, String expiryDate) {
 		String currentDateString = dbUtils.getCurrentDateForInstitution(context.get(Constants.USER_INSTITUTION_SELECTED));
@@ -82,8 +83,6 @@ public class DatabaseSteps {
 			dateTime = dateTime.plusYears(10);
 	    DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd-MM-yy");
 	    expiryDate = dateTime.format(formatter1);
-	    System.out.println("current date = " + currentDateString);
-	    System.out.println("expiry date = " + expiryDate);
 		dbFlow.updatePromotionExpiryDate(expiryDate, plan, context.get(Constants.USER_INSTITUTION_SELECTED));
 	}
 }

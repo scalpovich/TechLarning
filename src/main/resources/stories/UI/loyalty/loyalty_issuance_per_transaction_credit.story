@@ -8,7 +8,7 @@ Meta:
 
 Scenario:1 Create credit device
 Given setting json values in excel for Credit
-Then use loyalty plan AUTOMATION [LP1]
+And use loyalty plan AUTOMATION [LP1]
 When user is logged in institution
 And for Magnetic Stripe Card [1] User fills Device Plan for Credit product for Mastercard
 And User fills Wallet Fee Plan for Credit product
@@ -21,29 +21,29 @@ And Credit processes pre-production batch using new Device
 And Credit processes deviceproduction batch using new Device for Supplementary
 And device has "normal" status
 Then select loyalty plan period unit as Month[M]/Year[Y] - Y
-Then user notes down max loyalty points for plan
+And user notes down max loyalty points for plan
 And user notes down promotion plan details for PROMO2
 And user has loyalty points details for Credit device
-Then verify loyalty points are credited on issuance for promotion plan code PROMO1
-Then select blocked MCG for loyalty as -
+And verify loyalty points are credited on issuance for promotion plan code PROMO1
+And select blocked MCG for loyalty as -
 And user raises an authorization request
-Then calculate loyalty points
-Then status of request is "approved"
+And calculate loyalty points
+And status of request is "approved"
 And search Purchase authorization and verify Successful status
 And device has "normal" status
-Then user waits for 5 minutes
+And user wait for 5 min to perform certain activity
 And user sign out from customer portal
 
 Scenario:2 Verify loyalty points after manual auth
-When user is logged in institution
-And pre-clearing and Loyalty Calc batches are run
+Given user is logged in institution
+When pre-clearing and Loyalty Calc batches are run
 Then verify available loyalty points should be within loyalty plan limit
 And user verifies loyalty details for Credit device
 And user sign out from customer portal
 
 Scenario:3 Verify loyalty points after manual reversal of transaction
-When user is logged in institution
-Then user add transaction reversal with reason Manual Reversal [1]
+Given user is logged in institution
+When user add transaction reversal with reason Manual Reversal [1]
 And pre-clearing and Loyalty Calc batches are run
-And user verifies loyalty details for Credit device
+Then user verifies loyalty details for Credit device
 And user sign out from customer portal

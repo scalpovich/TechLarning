@@ -1,4 +1,4 @@
-package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
+package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.RewardsRedemption;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
@@ -45,7 +47,6 @@ public class RewardsRedemptionSteps {
 	public void thenUserVerifiesRewardsAndRedemptionScreen() {
 		Device device = context.get(ContextConstants.DEVICE);
 		rewardsRedemption = RewardsRedemption.createWithProvider(provider);
-		// rewardsRedemption.setDeviceNumber(device);
 		rewardflows.verifyRewardsPointsNotAvb(device, rewardsRedemption);
 	}
 

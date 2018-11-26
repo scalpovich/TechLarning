@@ -11,10 +11,8 @@ import java.awt.AWTException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Objects;
-import java.text.DecimalFormat;
 
 import org.apache.commons.lang3.StringUtils;
-import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Aliases;
@@ -32,7 +30,6 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.agent.channelmanagement.AssignPrograms;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalanceRequest;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AuthorizationRequest;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
@@ -708,6 +705,7 @@ public class TransactionSteps {
 		context.put(ContextConstants.DEVICE, device);
 	}
 	
+	@When("user add transaction reversal with reason $reversalReason")
 	@Then("user add transaction reversal with reason $reversalReason")
 	public void addTransactionReversal(String reversalReason) {
 		Device device = context.get(ContextConstants.DEVICE);

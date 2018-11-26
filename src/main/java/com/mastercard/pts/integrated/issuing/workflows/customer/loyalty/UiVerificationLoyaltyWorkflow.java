@@ -105,7 +105,7 @@ public class UiVerificationLoyaltyWorkflow {
 	public String getAmtSpentOnPromotionPlan(String plan) {
 		PromotionPlanPage page = navigator.navigateToPage(PromotionPlanPage.class);
 		page.searchByPlanCode(plan);
-		return page.getAmntSpent();
+		return page.getAmountSpent();
 	}
 
 	public void selectBlockedMCG(String plan, String value) {

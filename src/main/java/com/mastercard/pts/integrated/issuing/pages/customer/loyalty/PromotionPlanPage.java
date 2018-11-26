@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.PromotionPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
-import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
-import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -168,7 +166,7 @@ public class PromotionPlanPage extends AbstractBasePage {
 		editFirstRecord();
 	}
 	
-	public String getAmntSpent() {
+	public String getAmountSpent() {
 		runWithinPopup(EDIT_PROMOTION_PLAN, () -> {
 			pointsEarned = lypAmtSpentTxt.getAttribute("value");
 			clickCancelButton();

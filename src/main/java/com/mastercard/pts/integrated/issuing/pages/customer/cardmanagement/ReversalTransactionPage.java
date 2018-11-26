@@ -10,11 +10,10 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ReversalTransaction;
 import com.mastercard.pts.integrated.issuing.pages.customer.dispute.AbstractDisputePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
-import com.mastercard.pts.integrated.issuing.utils.ConstantData;
-import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -46,7 +45,7 @@ public class ReversalTransactionPage extends AbstractDisputePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=cancelAmount]")
 	private MCWebElement cancelAmount;
 	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:2:rows:6:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='cancelReasonCode']/select")
 	private MCWebElement reason;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = ".//*[@alt='Edit Record']")
