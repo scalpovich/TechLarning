@@ -78,62 +78,10 @@ And user processes Billing Process - Credit system internal batch for Credit
 And user verifies batch job history with job id
 And user verify Billed amount for Loan Installment category
 And user verify Outstanding amount for Loan Installment category
-And update institution date to 5 days
-Then user sign out from customer portal
-!-- And device has "normal" status
-!-- And user notes down required values from helpdesk for credit
-
-Scenario:1.8 Update institution date then Login & Logout to wait for date to be updated for next billing
-Meta:
-@TestId 
-Given user is logged in institution
-When user sign out from customer portal
-And user is logged in institution
+And update institution date to 1 days
 Then user sign out from customer portal
 
-
-Scenario:1.9 Verify User is able to make Payment of credit card through cash mode after billing cycle
-Meta:
-@PaymentCash
-Given user is logged in institution
-When user check balance details through helpdesk before payment
-And user makes EMI bill payment through cash
-And user processes Pre-clearing system internal batch for Credit
-And user processes EOD-Credit system internal batch for Credit
-And user check balance details through helpdesk after payment
-And update institution date to first of next month
-Then user sign out from customer portal
-
-Scenario:2.0 Update institution date then Login & Logout to wait for date to be updated for next billing
-Meta:
-@TestId 
-Given user is logged in institution
-When user sign out from customer portal
-And user is logged in institution
-Then user sign out from customer portal
-
-
-Scenario:2.1 Process Batches for billing and validated values on helpdesk 
-Given user is logged in institution
-When user processes Pre-clearing system internal batch for Credit
-And user processes EOD-Credit system internal batch for Credit
-And user verify Unbilled amount for Loan Installment category
-And user processes Billing Process - Credit system internal batch for Credit
-And user verifies batch job history with job id
-!-- And user verify Billed amount for Loan Installment category
-And user verify Outstanding amount for Loan Installment category
-And update institution date to 5 days
-Then user sign out from customer portal
-
-Scenario:2.2 Update institution date then Login & Logout to wait for date to be updated for next billing
-Meta:
-@TestId 
-Given user is logged in institution
-When user sign out from customer portal
-And user is logged in institution
-Then user sign out from customer portal
-
-Scenario:2.3 Verify User is able to cancel the loan from helpdesk
+Scenario:1.8 Verify User is able to cancel the loan from helpdesk
 Meta:
 @PaymentCash
 Given user is logged in institution
@@ -142,11 +90,11 @@ And user raises Loan Cancellation [243] request for Credit
 Then user verifies loan cancellation fee
 When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
-And update institution date to first of next month
+And update institution date to 4 days
 Then user sign out from customer portal
 
 
-Scenario:2.4 Update institution date then Login & Logout to wait for date to be updated for next billing
+Scenario:1.9 Update institution date then Login & Logout to wait for date to be updated for next billing
 Meta:
 @TestId 
 Given user is logged in institution
@@ -154,26 +102,7 @@ When user sign out from customer portal
 And user is logged in institution
 Then user sign out from customer portal
 
-
-Scenario:2.5 Process Batches for billing and validated values on helpdesk
-Given user is logged in institution
-When user processes Pre-clearing system internal batch for Credit
-And user processes EOD-Credit system internal batch for Credit
-And user processes Billing Process - Credit system internal batch for Credit
-And user verifies batch job history with job id
-And update institution date to 5 days
-Then user sign out from customer portal
-
-Scenario:2.6 Update institution date then Login & Logout to wait for date to be updated for next billing
-Meta:
-@TestId 
-Given user is logged in institution
-When user sign out from customer portal
-And user is logged in institution
-Then user sign out from customer portal
-
-
-Scenario:2.7 Process Batches for billing and validated values on helpdesk
+Scenario:2.0 Process Batches for billing and validated values on helpdesk
 Given user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
