@@ -90,7 +90,7 @@ And user raises Loan Cancellation [243] request for Credit
 Then user verifies loan cancellation fee
 When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
-And update institution date to 4 days
+And update institution date to 3 days
 Then user sign out from customer portal
 
 
