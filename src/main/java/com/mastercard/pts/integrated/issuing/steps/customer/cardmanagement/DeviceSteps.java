@@ -432,8 +432,6 @@ public class DeviceSteps {
 	@When("user attachs device promotion plan $promotionPlan")
 	public void userAttachDevicePromotionalPlan(String promotionPlan){
 		Device device = context.get(ContextConstants.DEVICE);
-		/*Device device = new Device();
-		device.setDeviceNumber("5383166913621814");*/
 		device.setDevicePromotionPlan(provider.getString(promotionPlan));
 		updateDeviceWorkflow.updateDevicePlanForDevice(device);
 		context.put(ContextConstants.DEVICE, device);

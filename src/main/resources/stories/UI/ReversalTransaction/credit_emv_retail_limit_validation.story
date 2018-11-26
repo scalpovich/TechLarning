@@ -72,7 +72,7 @@ And user sign out from customer portal
 Scenario: 1.6 Perform Reversal Transaction 
 Meta:
 TestID TC831258
-Given user perform partial reversal transaction of type 32 with reversal amount 1000
+Given user perform partial reversal transaction of type 32 with reversal amount 10
 When user is logged in institution
 Then search CWD - Partial Reversal authorization and verify 000-Successful status
 And user verifies available balance after reversals transaction
