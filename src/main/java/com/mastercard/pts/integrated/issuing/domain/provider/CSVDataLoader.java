@@ -30,7 +30,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 @Component("defaultDataLoader")
 public class CSVDataLoader implements DataLoader {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(CSVDataLoader.class);
+	private static final Logger logger = LoggerFactory.getLogger(CSVDataLoader.class);
 	private static final String FILE_EXTN = ".csv";
 
 	@Value("./src/main/resources/config/${env}/Data/")
@@ -49,14 +49,14 @@ public class CSVDataLoader implements DataLoader {
 		if (!storyName.isEmpty()) {
 			String filePath = csvPath + storyName + FILE_EXTN;
 			try (InputStream is = new FileInputStream(filePath)) {
-				LOGGER.info("Starting to read test data from csv file...");
+				logger.info("Starting to read test data from csv file...");
 				return readData(new InputStreamReader(is));
 			} catch (IOException e) {
-				LOGGER.error("Fail to load data from CSV", e);
+				logger.error("Fail to load data from CSV", e);
 				MiscUtils.propagate(e);
 			}
 		} else {
-			LOGGER.warn("`StoryName` meta info was not found, possibly `sheetName` meta info is being used here.");
+			logger.warn("`StoryName` meta info was not found, possibly `sheetName` meta info is being used here.");
 		}
 		return Optional.empty();
 	}
@@ -66,14 +66,14 @@ public class CSVDataLoader implements DataLoader {
 		if (!storyName.isEmpty()) {
 			String filePath = csvPath + storyName + FILE_EXTN;
 			try (InputStream is = new FileInputStream(filePath)) {
-				LOGGER.info("Starting to read test data from csv file...");
+				logger.info("Starting to read test data from csv file...");
 				return readDataByKey(new InputStreamReader(is), keyName, keyValue);
 			} catch (IOException e) {
-				LOGGER.error("Fail to load data from CSV", e);
+				logger.error("Fail to load data from CSV", e);
 				MiscUtils.propagate(e);
 			}
 		} else {
-			LOGGER.info("`StoryName` meta info was not found, possibly `sheetName` meta info is being used here.");
+			logger.info("`StoryName` meta info was not found, possibly `sheetName` meta info is being used here.");
 		}
 		return Optional.empty();
 	}
@@ -89,7 +89,7 @@ public class CSVDataLoader implements DataLoader {
 	private Optional<Map<String, String>> readDataByKey(Reader reader, String keyName, String keyVal)
 			throws IOException {
 		Iterable<CSVRecord> records = CSVFormat.EXCEL.withFirstRecordAsHeader().parse(reader);
-		LOGGER.info("Searching for test data by key {}", keyVal);
+		logger.info("Searching for test data by key {}", keyVal);
 		for (CSVRecord record : records) {
 			if (record.get(keyName).equals(keyVal)) {
 				return Optional.of(record.toMap());
@@ -100,13 +100,13 @@ public class CSVDataLoader implements DataLoader {
 	
 	public List loadRecordDataFromCSV(int columnId,String columnValue){
 		String filePath = context.get(CreditConstants.CSV_FILE_NAME);
-		LOGGER.info(filePath);
+		logger.info(filePath);
 		ArrayList<String> list = new ArrayList<String>();
 		try (FileReader is = new FileReader(filePath)) {
-			LOGGER.info("Starting to read test data from csv file...");
+			logger.info("Starting to read test data from csv file...");
 			Iterable<CSVRecord> records = CSVFormat.EXCEL.parse(is);
 			for (CSVRecord record : records) {
-				LOGGER.info("Searching for Device Plan Code :" + record.get(columnId));
+				logger.info("Searching for Device Plan Code :" + record.get(columnId));
 				if (record.get(columnId).equals(columnValue)) {
 					Iterator<String> itr = record.iterator();
 					while (itr.hasNext()) {
@@ -116,7 +116,7 @@ public class CSVDataLoader implements DataLoader {
 				}
 			}
 		} catch (IOException e) {
-			LOGGER.error("Fail to load data from CSV", e);
+			logger.error("Fail to load data from CSV", e);
 			MiscUtils.propagate(e);
 		}
 		return list;
@@ -126,7 +126,7 @@ public class CSVDataLoader implements DataLoader {
 		Device device = context.get(ContextConstants.DEVICE);
  		DevicePlan plan = context.get(ContextConstants.DEVICE_PLAN);
  		String mandatoryFieldValue = device.getMandatoryFieldValue();
- 		LOGGER.info("Mandatory Field Value is : {}", mandatoryFieldValue);
+ 		logger.info("Mandatory Field Value is : {}", mandatoryFieldValue);
 		return loadRecordDataFromCSV(CSV_Mandatory_Fix_Position, plan.getDevicePlanCode()).get(positionInCSV).equals(mandatoryFieldValue);
 	}
 
