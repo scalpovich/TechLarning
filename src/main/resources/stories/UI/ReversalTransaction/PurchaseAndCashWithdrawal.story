@@ -47,3 +47,18 @@ And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 And validate auth report
 And user sign out from customer portal
+
+Scenario: Generate Auth File for Clearing
+Meta:
+@TestId 
+When Auth file is generated after transaction
+When MAS simulator is closed
+
+Scenario: Clearing: Load auth file in MCPS and create NOT file of IPM extension
+Meta:
+@TestId 
+Given connection to MCPS is established
+When Auth file is generated
+When Auth file is loaded into MCPS and processed
+Then NOT file is successfully generated
+When MCPS simulator is closed
