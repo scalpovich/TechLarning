@@ -4,11 +4,7 @@ As a user
 I want to assert cancellation fee on loan  after geting loan
 
 Meta:
-@CreditRegression
 @StoryName credit_emv_retail_loan
-@Individual
-@Primary	 
-
 Scenario:1.1 creation of mastercard_individual_primary_emv Card credit device
 Given setting json values in excel for Credit
 When user is logged in institution
@@ -32,19 +28,17 @@ Given user is logged in institution
 When user raises an authorization request
 Then status of request is "approved"
 And search Purchase authorization and verify 000-Successful status
-When user sign out from customer portal
+And user sign out from customer portal
 When user wait for 5 min to perform certain activity
 And user is logged in institution
-When user processes Pre-clearing system internal batch for Credit
-When user processes EOD-Credit system internal batch for Credit
-When search transaction with device number on transaction search screen
+And user processes Pre-clearing system internal batch for Credit
+And user processes EOD-Credit system internal batch for Credit
+And search transaction with device number on transaction search screen
 Then update institution date to 2 days
 And user sign out from customer portal
 
 
 Scenario:1.4 Update institution date then Login & Logout to wait for date to be updated for next billing
-Meta:
-@TestId 
 Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
@@ -54,14 +48,12 @@ Scenario:1.5 Raise Loan SR and Verify Loan Account Details then update instituti
 Given user is logged in institution
 When device has "normal" status
 And user raises Retail Transaction to Loan [215] request for Credit
-When user verifies loan account details
+And user verifies loan account details
 And user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
 Then user sign out from customer portal
 
 Scenario:1.6 Verify User is able to cancel the loan from helpdesk
-Meta:
-@PaymentCash
 Given user is logged in institution
 When device has "normal" status
 And user raises Loan Cancellation [243] request for Credit
@@ -72,8 +64,6 @@ And update institution date to first of next month
 Then user sign out from customer portal
 
 Scenario:1.7 Update institution date then Login & Logout to wait for date to be updated for next billing
-Meta:
-@TestId 
 Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
@@ -90,8 +80,6 @@ And update institution date to 2 days
 Then user sign out from customer portal
 
 Scenario:1.9 Update institution date then Login & Logout to wait for date to be updated for next billing
-Meta:
-@TestId 
 Given user is logged in institution
 When user sign out from customer portal
 And user is logged in institution
