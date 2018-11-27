@@ -480,4 +480,6 @@ public class Constants {
 	
 	public static final String PRODUCT_TYPE_CREDIT = "Credit [C]";
 	public static final String EXTRACT_TYPE_FULL = "FULL [F]";
+	
+	public static final String SUCCESS_STATUS = "SUCCESS [2]";
 }

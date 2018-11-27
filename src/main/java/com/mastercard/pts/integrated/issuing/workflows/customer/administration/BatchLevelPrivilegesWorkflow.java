@@ -74,10 +74,10 @@ public class BatchLevelPrivilegesWorkflow extends AbstractBaseFlows {
 		selectEntityTypeAsRole();
 		batch.supplyAccessToSystemInternalBatches();
 	}
-	public void verifyPhotoFileDownloadBatchPresent() {
+	public boolean verifyPhotoFileDownloadBatchPresent() {
 		searchBatchLevelAccessesForEntity();
 		batch.clickBatchDownloadTab();
-		batch.verifyClientPhotoBatchPresent();
+		return batch.verifyClientPhotoBatchPresent();
 	}
 	
 	public void provideAccessToDownloadPhotoFileDownloadBatch() {
