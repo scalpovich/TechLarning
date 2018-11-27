@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.hamcrest.Matchers;
@@ -27,6 +28,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
@@ -338,6 +340,10 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		
 		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());
 		WebElementUtils.selectDropDownByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
+		Map<String,String> map = context.get(TestContext.KEY_STORY_DATA);
+		if(map.containsKey("PHOTO_INDICATOR")) {
+			device.setPhotoIndicator(map.get("PHOTO_INDICATOR"));
+		}
 		WebElementUtils.selectDropDownByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
 	}
 
@@ -468,7 +474,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			WebElementUtils.enterText(creditLimitTxt,String.valueOf(Integer.parseInt(program.getCreditLimit())+1));		
 		}
 		
-		if(device.getPhotoIndicator().equals("Photo [1]")) {
+		if(device.getPhotoIndicator().equals(ConstantData.PHOTO_CARD)) {
 			String filePath = new File(PHOTO_FILE_PATH).getAbsolutePath();
 			logger.info("upload file path : {}",filePath);
 			chooseFileBtn.sendKeys(filePath);

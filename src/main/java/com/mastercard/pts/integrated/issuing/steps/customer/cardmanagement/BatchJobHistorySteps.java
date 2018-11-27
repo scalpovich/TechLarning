@@ -70,23 +70,21 @@ public class BatchJobHistorySteps {
 	}
 	
 	@When("check status in batch job history for $batchType batch and $batchName")
-	public boolean checkStatusInBatchJobHistory(String batchType,String batchName)
-	{
-		if(batchType.equalsIgnoreCase("DOWNLOAD"))
-		batchjobhistory.setBatchType("DOWNLOAD [D]");
-		SimulatorUtilities.wait(3000);
-		if(batchName.equalsIgnoreCase("CLIENT_PHOTO_BATCH"))
-			batchjobhistory.setBatch("Client Photo/Flat File Download Batch [CLIENT_PHOTO_DOWNLOAD]");
-		else
-		{
-			if(batchName.equalsIgnoreCase("CardholderDump"))
-				batchjobhistory.setBatch("Cardholder Dump [CARDHOLDER_DUMP]");
+	public boolean checkStatusInBatchJobHistory(String batchType, String batchName) {
+		if (batchType.equalsIgnoreCase("DOWNLOAD")) {
+			batchjobhistory.setBatchType("DOWNLOAD [D]");
 		}
-		batchjobhistory.setJobIdBatchJobHistory(context.get("jobID"));
+		SimulatorUtilities.wait(3000);
+		if (batchName.equalsIgnoreCase("CLIENT_PHOTO_BATCH")) {
+			batchjobhistory.setBatch("Client Photo/Flat File Download Batch [CLIENT_PHOTO_DOWNLOAD]");
+		} else {
+			if (batchName.equalsIgnoreCase("CardholderDump")) {
+				batchjobhistory.setBatch("Cardholder Dump [CARDHOLDER_DUMP]");
+			}
+		}
+		batchjobhistory.setJobIdBatchJobHistory(context.get("JOB_ID"));
 		batchjobhistory.setFromdate(DateUtils.currentDateddMMyyyy());
 		batchjobhistory.setToDate(DateUtils.currentDateddMMyyyy());
-		batchjobhistoryflows.checkBatchStatusInBatchJobHistory(batchjobhistory);
-	
-		return true;
+		return batchjobhistoryflows.checkBatchStatusInBatchJobHistory(batchjobhistory);
 	}
 }

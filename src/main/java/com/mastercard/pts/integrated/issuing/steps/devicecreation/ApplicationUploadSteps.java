@@ -275,7 +275,7 @@ public class ApplicationUploadSteps {
 	}
 	
 	@When("process batch for $batchType type and Batch name $batchName")
-	public void submitJobforProcessing(String batchType, String batchName)
+	public void submitJobForProcessing(String batchType, String batchName)
 	{
 		processBatchesFlows.processDownloadBatches(batchType,batchName);
 	}

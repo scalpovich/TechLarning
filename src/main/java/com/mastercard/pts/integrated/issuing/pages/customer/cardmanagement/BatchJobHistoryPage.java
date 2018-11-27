@@ -43,6 +43,10 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 	@Autowired
 	TestContext context;
 	private static final Logger logger = LoggerFactory.getLogger(BatchJobHistoryPage.class);
+	
+	private static final String FILE_NAME ="File Name";
+	
+	private static final String STATUS ="Status";
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement batchTypeDDwn;
@@ -73,14 +77,8 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@class = 'searchButton']//input[@type= 'submit'][@value ='Search']")
 	private MCWebElement searchBtn;
-
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr/td[6]")
-	private MCWebElement status;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr/td[8]")
-	private MCWebElement CSVno;
-	
-	public String calelement = "//td[7]";
+	public String calElement = "//td[7]";
 	
 	@Autowired
 	DatePicker date;
@@ -105,10 +103,9 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 		date22[1] = String.valueOf(i);
 		String date11 = date22[0] + "/" + date22[1] + "/" + date22[2];
 		date.setDate(date11);
-		date.setDate(date11);
 		waitForPageToLoad(getFinder().getWebDriver());
 		SimulatorUtilities.wait(2000);
-		date.setDateCalendar2(DateUtils.getDateinDDMMYYYY(), calelement);
+		date.setDateCalendar2(DateUtils.getDateinDDMMYYYY(), calElement);
 		waitForPageToLoad(getFinder().getWebDriver());
 	}
 
@@ -225,21 +222,24 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 	}
 	
 	
-	public boolean checkBatchStatus(BatchJobHistory batchjobhistory) {
+	public boolean checkBatchStatus(BatchJobHistory batchJobHistory) {
 		
-		selectByVisibleText(batchTypeDDwn, batchjobhistory.getBatchType());
+		selectByVisibleText(batchTypeDDwn, batchJobHistory.getBatchType());
 		SimulatorUtilities.wait(1000);
 		WebElementUtils.pickDate(fromJobStartDttmDPkr, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toJobStartDttmDPkr, LocalDate.now());
-		enterValueinTextBox(jobIdTxt, batchjobhistory.getJobIdBatchJobHistory());
-		selectByVisibleText(batchDDwn,batchjobhistory.getBatch());
+		enterValueinTextBox(jobIdTxt, batchJobHistory.getJobIdBatchJobHistory());
+		selectByVisibleText(batchDDwn,batchJobHistory.getBatch());
 		clickSearchButton();
-		waitForBatchStatus(status);
-		context.put("CSVno",CSVno.getText());
+		WebElement SelectJob = getFinder().getWebDriver()
+				.findElement(By.xpath("//td[contains(.,'" + batchJobHistory.getJobIdBatchJobHistory() + "')]"));
+		clickWhenClickable(SelectJob);
+		waitForSucces();
+		context.put(ContextConstants.CSV_NO,getFirstRecordCellTextByColumnName(FILE_NAME));
 		SimulatorUtilities.wait(20000);
-		if(status.getText().equals("SUCCESS [2]"))
+		if(getFirstRecordCellTextByColumnName(STATUS).equals("SUCCESS [2]"))
 		{	
-			String timeStamp = LocalDateTime.now(ZoneId.of("GMT-5")).format(DateTimeFormatter.ofPattern("ddMMyyyyHHmm")); //CDT time when batch download is done. 
+			String timeStamp = LocalDateTime.now(ZoneId.of("GMT-6")).format(DateTimeFormatter.ofPattern("ddMMyyyyHHmm")); //CDT time when batch download is done. 
             context.put(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME,timeStamp);
             logger.info("timestamp of processing",timeStamp);
 			return true;

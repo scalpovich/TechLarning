@@ -282,15 +282,15 @@ public class BatchProcessSteps {
 	
 	@When("verify new batch named as photo reference number is present under download batch")
 	public void verifyBatchNameIsPresentInDownLoadBatch() {
-		boolean[] a = clientPhotoDownloadBatchWorkflow.verifyBatchNameIsPresentInDownloadBatchFlows();
-		Assert.assertTrue("No Batch is Present in Table for Given Application Number", a[0]);
-		Assert.assertTrue("No Details are present for given job", a[1]);
-		Assert.assertTrue(" Job ID is not generated", a[2]);
+		boolean[] downloadBatchDetails = clientPhotoDownloadBatchWorkflow.verifyBatchNameIsPresentInDownloadBatchFlows();
+		Assert.assertTrue("No Batch is Present in Table for Given Application Number", downloadBatchDetails[0]);
+		Assert.assertTrue("No Details are present for given job", downloadBatchDetails[1]);
+		Assert.assertTrue(" Job ID is not generated", downloadBatchDetails[2]);
 	}
 	
 	@When("user checks for the client photo/flat file batch trace for $batchType batch")
     public void checkBatchTraceForClientPhotoFlatFile(@Named("batchType") String batchType) {                  
-                    batchProcessWorkflow.verifyBatchTraceAvailability(context.get("jobID"));    
+                    batchProcessWorkflow.verifyBatchTraceAvailability(context.get("JOB_ID"));    
                     
     }
 	

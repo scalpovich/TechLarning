@@ -742,7 +742,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 				selectByVisibleText(batchNameDdwn, "Cardholder Dump [CARDHOLDER_DUMP]");
 		}
 		SimulatorUtilities.wait(2000);
-		selectByVisibleText(productTypeDDwn, "Credit [C]");
+		selectByVisibleText(productTypeDDwn, context.get(ConstantData.PRODUCT_IDENTITY));
 		selectByVisibleText(extractTypeDrpDwn, "FULL [F]");
 		WebElementUtils.pickDate(fromDate, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toDate, LocalDate.now());
@@ -751,7 +751,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		WebElementUtils.enterText(cardHolderKycToDateHHTxtBx, "23");
 		WebElementUtils.enterText(cardHolderKycToDateMMTxtBx, "00");
 		clickSubmitBtn();
-		context.put("jobID", jobIDNumber.getText());
+		context.put("JOB_ID", jobIDNumber.getText());
 		SimulatorUtilities.wait(3000);
 		
 		

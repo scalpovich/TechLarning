@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 @Component
 public class Device {
-
+   
 	private static final String BRANCH = "BRANCH";
 	private static final String APPLICATION_TYPE = "APPLICATION_TYPE";
 	private static final String SUB_APPLICATION_TYPE = "SUB_APPLICATION_TYPE";
@@ -135,7 +135,7 @@ public class Device {
 		device.setBranchCode(provider.getString(BRANCH));
 		device.setAccountNumber(RandomStringUtils.randomNumeric(16));
 		device.setAccountType(provider.getString(ACCOUNT_TYPE));
-		device.setPhotoIndicator(provider.getString(PHOTO_INDICATOR));
+		device.setPhotoIndicator("Normal [0]");
 		device.setTransactionAmount(provider.getString(TRANSACTION_AMOUNT));
 		device.setVip(provider.getString(ND_VIP));
 		device.setMiddleName2(provider.getString(ND_MIDDLE_NAME_2));

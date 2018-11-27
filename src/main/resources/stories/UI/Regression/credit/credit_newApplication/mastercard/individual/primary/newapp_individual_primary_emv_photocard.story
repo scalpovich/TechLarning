@@ -6,6 +6,7 @@ I want to assert card creation
 Meta:
 @CreditRegression
 @StoryName credit_card_photocard
+
 Scenario:To verify photo reference number is present in Device production detail report for the credit device for which application is submitted with photo indicator and embossing file is generated
 Meta:
 @TC857981
@@ -25,8 +26,8 @@ And user searches for created application
 And credit processes pre-production batch using new Application
 And credit processes deviceproduction batch using new Application
 And new Application processes pin generation batch for credit
-And verify photo reference number is present in application production detail report
-When to verify photo reference number is present in embossing file
+And verify photo reference number is present in application production detail report in PDF format for Credit
+When verify photo reference number is present in embossing file
 And user sign out from customer portal
 
 
@@ -67,7 +68,7 @@ Given setting json values in excel for Credit
 When user is logged in institution
 When process batch for DOWNLOAD type and Batch name CardholderDump
 And check status in batch job history for DOWNLOAD batch and CardholderDump
-And to verify photo reference number is present in card holder dump file
+And verify photo reference number is present in card holder dump file
 And user sign out from customer portal
 
 

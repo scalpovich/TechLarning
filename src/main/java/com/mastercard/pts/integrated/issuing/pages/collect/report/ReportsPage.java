@@ -29,16 +29,6 @@ public class ReportsPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "componentPanel")
 	private MCWebElement selectReportDDwn;
 	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:2:cols:colspanMarkup:inputField:input:dropdowncomponent")
-	private MCWebElement productTypeDDwn;
-	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "//*[@class='mandatoryFlag selectf']//following::input[1]")
-	private MCWebElement applicationNumberText;
-
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:3:rows:2:cols:colspanMarkup:inputField:input:dropdowncomponent")
-	private MCWebElement fileTypeDDwn;
-	
-	
 	public void verifyUiOperationStatus() {
 		logger.info("Reports");
 		verifySearchButton("Go");

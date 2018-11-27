@@ -1,7 +1,5 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
-import javax.validation.constraints.AssertTrue;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,12 +20,8 @@ public class BatchJobHistoryFlows extends MenuFlows {
 		batchjobhistorypage.clickBatchjob(batchjobhist);
 	}
 	
-	public void checkBatchStatusInBatchJobHistory(BatchJobHistory batchjobhistory) {
+	public boolean checkBatchStatusInBatchJobHistory(BatchJobHistory batchJobHistory) {
 		BatchJobHistoryPage batchJobHistoryPage = navigator.navigateToPage(BatchJobHistoryPage.class);
-		boolean flg = batchJobHistoryPage.checkBatchStatus(batchjobhistory);
-		System.out.print("Batch Status Success?:");
-		System.out.println(flg);
-	}
-	
-	
+		return batchJobHistoryPage.checkBatchStatus(batchJobHistory);
+	}	
 }

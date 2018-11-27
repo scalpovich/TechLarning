@@ -111,10 +111,9 @@ public class ReportGenerationSteps {
 		reportVerificationWorkflow.generateDeviceActivityReport(device,report,program);
 	}
 	
-	@When("verify photo reference number is present in application production detail report")
-	public void verifyPhotoReferenceNumberinApplicationDetailReport() {
-		System.out.println("verifyPhotoReferenceNumberinApplicationDetailReport");
-		reconciliationWorkFlow.verifyPhotoReferenceNumber();
+	@When("verify photo reference number is present in application production detail report in $reportFormatType format for $productType")
+	public void verifyPhotoReferenceNumberinApplicationDetailReport(String reportFormatType, String productType ) {
+		reconciliationWorkFlow.verifyPhotoReferenceNumberIsPresent(reportFormatType,productType);
 	
 	}
 }

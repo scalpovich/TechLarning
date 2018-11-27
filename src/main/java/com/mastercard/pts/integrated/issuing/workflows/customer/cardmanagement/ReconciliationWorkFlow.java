@@ -17,7 +17,6 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionReports;
 import com.mastercard.pts.integrated.issuing.pages.collect.report.ReportCardManagementPage;
-import com.mastercard.pts.integrated.issuing.pages.collect.report.ReportsPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionReportsPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
@@ -76,13 +75,13 @@ public class ReconciliationWorkFlow {
 		//return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
 	}
 	
-	public boolean verifyDeviceDetailProductionReport(String fileName,BatchProcessingReports batchProcessingReports) {
+	public boolean isPhotoReferenceNumberPresentInReport(String fileName,BatchProcessingReports batchProcessingReports) {
 		ReportCardManagementPage page = navigator.navigateToPage(ReportCardManagementPage.class);
 		int fileCountBeforeReportGeneration = checkDownLoadedFilesCount();
 		System.out.println(fileCountBeforeReportGeneration);
 		int fileCountAfterReportGeneration = waitForReportToDownLoad(fileCountBeforeReportGeneration);
 		System.out.println(fileCountAfterReportGeneration);
-		return getReportContent(fileName,batchProcessingReports);
+		return isNumberPresentInReportContent(fileName,batchProcessingReports);
 	}
 	public boolean verifyReportGenerationClearing() {
 		TransactionReportsPage page = navigator.navigateToPage(TransactionReportsPage.class);
@@ -140,10 +139,10 @@ public class ReconciliationWorkFlow {
 		return records;
 	}
 	
-	public boolean getReportContent(String fileName,BatchProcessingReports batchProcessingReports) {
+	public boolean isNumberPresentInReportContent(String fileName,BatchProcessingReports batchProcessingReports) {
 		PDFUtils pdfutils=new PDFUtils();
-		boolean flag = pdfutils.getContentRow(PDFUtils.getuserDownloadPath() + "\\"+fileName, batchProcessingReports);
-		System.out.println(flag);
+		boolean flag = pdfutils.isNumberPresentInContentRow(PDFUtils.getuserDownloadPath() + "\\"+fileName, batchProcessingReports);
+		logger.info("Flag:",flag);
 		return flag;
 	}
 	public void deleteExistingAuthorizationFilesFromSystem(String authFileName)
@@ -164,19 +163,14 @@ public class ReconciliationWorkFlow {
 		return processBatch.processStatementExtractBatch(batch);
 	}
 	
-	public void verifyPhotoReferenceNumber() {
-		System.out.println("verifyPhotoReferenceNumber");
+	public void verifyPhotoReferenceNumberIsPresent(String reportFormatType,String productType) {
 		ReportCardManagementPage reportpage = navigator.navigateToPage(ReportCardManagementPage.class);
-		deleteExistingAuthorizationFilesFromSystem(ConstantData.DEVICE_PRODUCTION_REPORT_FILE_NAME);
+		deleteExistingAuthorizationFilesFromSystem(ConstantData.DEVICE_PRODUCTION_REPORT_PDF_FILE_NAME);
 		Device device = context.get(CreditConstants.APPLICATION);
 		BatchProcessingReports batchProcessingReports = new BatchProcessingReports();
 		batchProcessingReports.setApplicationNumber(device.getApplicationNumber());
 		batchProcessingReports.setPassword(context.get(USERNAME));
-		boolean flg = reportpage.verifyPhotoReferenceNumberisPresent(batchProcessingReports);
-		if(flg)
-			Assert.assertTrue("Photo Reference Number is Present in Device Production Report", true);
-		else
-			Assert.assertTrue("Photo Reference Number is not Present in Device Production Report", false);
+		Assert.assertTrue("Photo Reference Number is not Present in Device Production Report",reportpage.verifyPhotoReferenceNumberIsPresent(batchProcessingReports,reportFormatType,productType));
 	}
 
 }

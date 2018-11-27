@@ -100,12 +100,12 @@ public class PDFUtils {
 		return programWiseContent;
 	}
 	
-	public boolean getContentRow(String pdfPath, BatchProcessingReports batchProcessingReports) {
+	public boolean isNumberPresentInContentRow(String pdfPath, BatchProcessingReports batchProcessingReports) {
 		String pageContent = "";
 		int pages = 0;
-		int flg=0;
+		boolean flag = false;
 		String applicationNumber = batchProcessingReports.getApplicationNumber();
-		System.out.println(applicationNumber);
+		logger.info("Application Number:{}", applicationNumber);
 		try {
 			File file = new File(pdfPath);
 			file.getParentFile().mkdirs();
@@ -114,21 +114,18 @@ public class PDFUtils {
 				pages = pdfReader.getNumberOfPages();
 			for (int i = 1; i <= pages; i++) {
 				pageContent = PdfTextExtractor.getTextFromPage(pdfReader, i);
-				System.out.println(pageContent);
-				if (pageContent.contains(applicationNumber)){
-					 flg=1;
-					}
-				
+				logger.info("pageContent:{}", pageContent);
+				if (pageContent.contains(applicationNumber)) {
+					flag = true;
+				}
+
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			logger.info("Failed to read pdf file ", e);
-		
+
 		}
-		System.out.println("flag:"+flg);
-		if(flg==1)
-			return true;
-		else 
-			return false;
+		logger.info("Flag:{}", flag);
+		return flag;
 	}
 
 	public PdfReader manipulatePdf(String src, String username) {

@@ -5,18 +5,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BatchProcessingReports;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ReconciliationWorkFlow;
-import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
+import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
@@ -41,24 +38,21 @@ public class ReportCardManagementPage extends AbstractBasePage{
 	private MCWebElement fileTypeDDwn;
 	
 	
-	public boolean verifyPhotoReferenceNumberisPresent(BatchProcessingReports batchProcessingReports){
-		System.out.println("Report Download");
+	public boolean verifyPhotoReferenceNumberIsPresent(BatchProcessingReports batchProcessingReports,String reportFormatType,String productType){
 		selectDropDownByText(selectReportDDwn, "Device Production Detail Report");
 		clickWhenClickable(goBtn);
 		SimulatorUtilities.wait(500);
-		selectDropDownByText(productTypeDDwn, "Credit");
-		selectDropDownByText(fileTypeDDwn, "PDF Format [pdf]");
+		selectByVisibleText(productTypeDDwn,productType);
+		selectByVisibleText(fileTypeDDwn, reportFormatType);
 		clickSubmitButton();
 		SimulatorUtilities.wait(1500);
-		if(checkPhotoNumberisPresent(batchProcessingReports))
-			return true;
-		else
-			return false;
+		return checkPhotoReferenceNumberIsPresent(batchProcessingReports);
+	
 	}
 	
-	public boolean checkPhotoNumberisPresent(BatchProcessingReports batchProcessingReports) {
+	public boolean checkPhotoReferenceNumberIsPresent(BatchProcessingReports batchProcessingReports) {
 		
-		return reconciliationWorkFlow.verifyDeviceDetailProductionReport(ConstantData.DEVICE_PRODUCTION_REPORT_FILE_NAME,batchProcessingReports);
+		return reconciliationWorkFlow.isPhotoReferenceNumberPresentInReport(ConstantData.DEVICE_PRODUCTION_REPORT_PDF_FILE_NAME,batchProcessingReports);
 		
 	}
 	

@@ -60,7 +60,7 @@ public class ConstantData {
 	public static final String TRANSACTION_AMOUNT_BD = "transactionAmountbd";
 	public static final String INTERNATIONAL_ALLOW_DISALLOW = "International Use Allow/Disallow [400]";
 	public static final String ECCOMERCE_ALLOW_DISALLOW= "E-commerce Activation/Deactivation [304]";
-	public static final String DEVICE_PRODUCTION_REPORT_FILE_NAME = "Device Production.pdf";
+	public static final String DEVICE_PRODUCTION_REPORT_PDF_FILE_NAME = "Device Production.pdf";
 
 	public static final String OPTION_SELECT_ONE = "Select One";
 
@@ -168,6 +168,7 @@ public class ConstantData {
 	public static final String DE_042 = "042";
 	public static final String DE_022_01 = "022.01";
 	public static final String POS_TERMINAL_VALUE = "05";
+	public static final String PHOTO_CARD = "Photo [1]";
 	
 	private ConstantData() {
 	}

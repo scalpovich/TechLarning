@@ -26,8 +26,6 @@ public class ClientPhotoDownloadBatchPage extends AbstractBasePage {
 	@Autowired
 	private TestContext context;
 	
-	
-	
 	private static final Logger logger = LoggerFactory.getLogger(ClientPhotoDownloadBatchPage.class);
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
@@ -37,14 +35,14 @@ public class ClientPhotoDownloadBatchPage extends AbstractBasePage {
 	private MCWebElement applicationNumberTxt;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/..//td[13]")
-	private MCWebElement checkBox;
+	private MCWebElement processBatchCheckBox;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "processSelected")
 	private MCWebElement processSelectedBtn;
 	
 	public boolean[] verifyBatchNameIsPresentInDownloadBatch()
 	{
-		boolean []a= new boolean[] {true,true,true};
+		boolean []downloadBatchDetails= new boolean[] {true,true,true};
 		Device device = context.get(CreditConstants.APPLICATION);
 		selectByVisibleText(productTypeDDwn,context.get(ConstantData.PRODUCT_IDENTITY));
 		enterValueinTextBox(applicationNumberTxt,device.getApplicationNumber());
@@ -52,17 +50,17 @@ public class ClientPhotoDownloadBatchPage extends AbstractBasePage {
 		SimulatorUtilities.wait(2000);
 		waitAndSearchForRecordToAppear();
 		if(isNoRecordsFoundInTable())
-		{a[0]=false; a[1]=false;}
+		{downloadBatchDetails[0]=false; downloadBatchDetails[1]=false;}
 		else
 		{
-			ClickCheckBox(checkBox, true);
+			ClickCheckBox(processBatchCheckBox, true);
 			SimulatorUtilities.wait(500);
 			ClickButton(processSelectedBtn);
 			
 		}
-		if(verifyOperationStatusandgetJobID().isEmpty())
-			a[2]=false;
-		return a;
+		if(verifyOperationStatusAndgetJobID().isEmpty())
+			downloadBatchDetails[2]=false;
+		return downloadBatchDetails;
 	}
 	
 

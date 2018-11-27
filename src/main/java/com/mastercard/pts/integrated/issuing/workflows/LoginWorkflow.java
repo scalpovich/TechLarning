@@ -55,7 +55,6 @@ public class LoginWorkflow {
 	public void logInInstitution(Portal portal, String institution) {
 		openLoginPageForPortal(portal);
 		login(portal.getUserName(), portal.getPassword());
-		SimulatorUtilities.wait(5000);
 		boolean flag = confirmInstitutionSelection(institution);
 		if(flag){
 			logInInstitution(portal,institution);
