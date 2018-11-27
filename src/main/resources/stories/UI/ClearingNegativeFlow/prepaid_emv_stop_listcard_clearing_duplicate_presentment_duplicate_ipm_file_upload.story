@@ -53,6 +53,13 @@ And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal
 
+Scenario: 2.5 To Verify that the user can stoplist credit device from stoplist screen
+Given user is logged in institution
+When user stoplists a card from stoplist device screen
+And user edits deviceplan and enables stoplist flag
+And device has "lost" status
+Then user sign out from customer portal
+
 Scenario: 1.5 Clearing: Load auth file in MCPS and create NOT file of IPM extension
 Meta:
 @TestId 
