@@ -721,7 +721,6 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		submitAndVerifyBatch();
 		return batchStatus;
 	}
-}
 	
 	public void processDownloadBatch(String batchType, String batchName) {
 		selectByVisibleText(batchTypeDdwn, Constants.BATCH_TYPE_DOWNLOAD);
