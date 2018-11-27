@@ -5,7 +5,7 @@ As a user
 I want to perform card setup of photo credit msr card device
 
 Meta:
-@StoryName credit_emv_retail		
+@StoryName credit_msr_retail		
 	 
 Scenario: 1.1 To verify Photo Reference number is present in embossing file generated when new Primary credit device has been boarded through New device screen when card type is selected as photo card
 Meta:
@@ -17,7 +17,7 @@ And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
 And User Primary Device fills New Program Retail Credit Card section for credit product for Mastercard
 And for Primary Device and New Client user fills Device Range section for credit product
-And credit device with photoIndicator as photo is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
+And credit device is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device
 Then photo reference number is present at given position in embossing file

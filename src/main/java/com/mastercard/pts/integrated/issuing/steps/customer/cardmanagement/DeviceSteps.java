@@ -52,6 +52,9 @@ public class DeviceSteps {
 	private static final String CORPORATE_CLIENT_CODE_DEVICE2 = "CORPORATE_CLIENT_CODE_DEVICE2";
 	
 	private static final String PROMOTION_FEE_PLAN = "PROMOTION_FEE_PLAN";
+	
+	private static final String PHOTO_INDICATOR = "PHOTO_INDICATOR";
+	
 
 	@When("user creates new device of $type type for new client")
 	@Then("user creates new device of $type type for new client")
@@ -168,6 +171,11 @@ public class DeviceSteps {
 		if (storyTestData.containsKey(PROMOTION_FEE_PLAN)) {
 			device.setPromotionPlanCode(provider.getString(PROMOTION_FEE_PLAN));
 		}
+		Map<String,String>map=context.get(TestContext.KEY_STORY_DATA);
+		if(map.containsKey(PHOTO_INDICATOR)){
+			device.setPhotoIndicator(map.get(PHOTO_INDICATOR));			
+		}
+		
 		Program program = context.get(ContextConstants.PROGRAM);
 		device.setProgramCode(program.buildDescriptionAndCode());
 		
@@ -422,39 +430,5 @@ public class DeviceSteps {
 		Device device = context.get(ContextConstants.DEVICE_SUPPLEMENTARY_ADDON_EXISTING);
 		context.put(ContextConstants.DEVICE_PLAN, deviceplan);
 		context.put(ContextConstants.DEVICE, device);
-	}
-	
-	@Given("$type device with photoIndicator as $photoIndicator is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
-	@When("$type device with photoIndicator as $photoIndicator is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
-	@Then("$type device with photoIndicator as $photoIndicator is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
-	public void thenNewPhotoDeviceIsCreated(
-			String type, String photoIndicator, String customerType, String applicationType,
-			String subApplicationType, String deviceType) {
-		Device device = Device.createWithProviderForOtherDetails(provider);
-		if("photo".equalsIgnoreCase(photoIndicator)){
-			device.setPhotoIndicator("Photo [1]");
-		} else if("picture".equalsIgnoreCase(photoIndicator)){
-			device.setPhotoIndicator("Picture [2]");
-		}
-		device.setAppliedForProduct(ProductType.fromShortName(type));
-		device.setCustomerType(customerType);
-		device.setApplicationType(applicationType);
-		device.setSubApplicationType(subApplicationType);
-		device.setDeviceType1(deviceType);
-
-		Program program = context.get(ContextConstants.PROGRAM);
-		device.setProgramCode(program.buildDescriptionAndCode());
-		DevicePlan devicePlan;
-		if (device.getApplicationType().contains(
-				ApplicationType.SUPPLEMENTARY_DEVICE)
-				|| device.getApplicationType().contains(
-						ApplicationType.ADD_ON_DEVICE)) {
-			devicePlan = context
-					.get(ContextConstants.DEVICE_PLAN_SUPPLEMENTARY);
-		} else {
-			devicePlan = context.get(ContextConstants.DEVICE_PLAN);
-		}
-		device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
-		deviceWorkflow.createDevice(device);
 	}
 }
