@@ -178,7 +178,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.ID, valueToFind = "uploadPhoto")
 	private MCWebElement uploadPhotoBtn;
 
-	@Value("./InstitutionLogo/CreditLogo.png")
+	@Value("src/main/resources/InstitutionLogo/CreditLogo.png")
 	private  String photoFilePath;
 
 	public String getWalletsFromPage(){
