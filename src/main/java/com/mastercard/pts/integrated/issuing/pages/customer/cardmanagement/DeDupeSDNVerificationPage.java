@@ -1,8 +1,12 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -15,7 +19,9 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -34,6 +40,9 @@ public class DeDupeSDNVerificationPage extends AbstractCardManagementPage {
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=applicationNumber]")
 	private MCWebElement applicationNumberTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=formNumber]")
+	private MCWebElement formNumberTxt;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='fromDate']/../..")
 	private MCWebElement fromDatePicker;
@@ -65,7 +74,12 @@ public class DeDupeSDNVerificationPage extends AbstractCardManagementPage {
 	
 	private static final String REJECT = "reject";
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[1]/td[1]/span//span")
+	private MCWebElement applicationNumberFileUploadTxt;
+	
 	private String inputApplicationNumber;
+	
+	private String inputFormNumber;
 	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
@@ -74,6 +88,14 @@ public class DeDupeSDNVerificationPage extends AbstractCardManagementPage {
 
 	public void verifyDuplicateApplication(String inputApplicationNum) {
 		WebElementUtils.enterText(applicationNumberTxt, inputApplicationNum);
+		WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
+		WebElementUtils.pickDate(toDatePicker, LocalDate.now());
+		clickSearchButton();
+		SimulatorUtilities.wait(1000);
+	}
+	
+	public void verifyDuplicateFormNumber(String formNumber) {
+		WebElementUtils.enterText(formNumberTxt, formNumber);
 		WebElementUtils.pickDate(fromDatePicker, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toDatePicker, LocalDate.now());
 		clickSearchButton();
@@ -108,5 +130,36 @@ public class DeDupeSDNVerificationPage extends AbstractCardManagementPage {
 		WebElementUtils.isTextAvailableinTable(searchTable, inputApplicationNumber);
 		logger.info("Application Number From Table Records :{}",getFirstRecordCellTextByColumnName(ContextConstants.APPLICATION_NUMBER));
 		return getFirstRecordCellTextByColumnName(ContextConstants.APPLICATION_NUMBER);
+	}
+	
+	public Boolean approveRejectApplicationForUpload(String operation) throws IOException {
+		Map<Integer, Object> map = context.get(CreditConstants.FILEUPLOAD_IN_BULK);
+		List<String> allFormNumbers = new LinkedList<>();
+		List<String> allApplicationNumbers = new LinkedList<>();
+		Boolean value = false;
+		for (Map.Entry<Integer, Object> mapPerIteration : map.entrySet()) {
+			HelpDeskGeneral helpDesk = (HelpDeskGeneral) mapPerIteration.getValue();
+			inputFormNumber = helpDesk.getFormNumber();
+			allFormNumbers.add(inputFormNumber);
+			logger.info(inputFormNumber);
+			verifyDuplicateFormNumber(inputFormNumber);
+			value = WebElementUtils.isTextAvailableinTable(searchTable, inputFormNumber);
+			clickWhenClickable(editRecord);
+			SimulatorUtilities.wait(1000);
+			runWithinPopup("Edit Application", () -> {
+				allApplicationNumbers.add(applicationNumberFileUploadTxt.getText());
+				if (operation.contains(APPROVES)) {
+					clickWhenClickable(approveBtn);
+				} else if (operation.contains(REJECT)) {
+					WebElementUtils.selectDropDownByVisibleText(rejectReasonDDwn, REJECTED_REASON);
+					clickWhenClickable(rejectBtn);
+				}
+			});
+			verifyOperationStatus();
+			value = true;
+		}
+		context.put(CreditConstants.ALL_APPLICATION_NUMBERS, allApplicationNumbers);
+		context.put(CreditConstants.ALL_FORM_NUMBERS, allFormNumbers);
+		return value;
 	}
 }

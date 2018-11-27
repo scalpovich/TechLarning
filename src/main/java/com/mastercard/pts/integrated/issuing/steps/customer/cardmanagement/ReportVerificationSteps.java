@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+import java.util.List;
+
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.GenericReport;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
@@ -61,6 +64,19 @@ public class ReportVerificationSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		report.setFieldToValidate("application number", device.getApplicationNumber());
 		reportVerificationWorkflow.verifyReportGenerationAppRejectReport(report);
+	}
+	
+	@When("verify duplicate applications in application reject report for upload")
+	@Then("verify duplicate applications in application reject report for upload")
+	public void verifyFieldInApplicationRejectReportForUpload() {
+		GenericReport report = GenericReport.createWithProvider(provider);
+		report.setPassword(((String)context.get(UserManagementSteps.USERNAME)).substring(0,4)+(new DateUtils()).getDateDDMMFormat());
+		List<String> allFormNumbers = context.get(CreditConstants.ALL_FORM_NUMBERS);
+		allFormNumbers.forEach( formNumber -> {
+			report.setFieldToValidate("form number", formNumber);
+			reportVerificationWorkflow.verifyDuplicateAppInAppRejectReport(report);
+		});
+		
 	}
 
 }

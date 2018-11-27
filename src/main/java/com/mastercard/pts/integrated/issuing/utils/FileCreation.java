@@ -676,7 +676,7 @@ public class FileCreation {
 							deviceType = "8";
 						}
 						if (customerType.equals(CustomerType.INDIVIDUAL)) {
-							writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", INSTITUTION_CODE).replace("%F%", "FORM").replace("%t%", "0").replace("%P%", program.getProgramCode()).replace("%q%", deviceType).replace("%D%", devicePlan.getDevicePlanCode()).replace("%b%", branchCode).replace("%Z%", "").replace("%N%", "Aman").replace("%I%", "Khan").replace("%K%", "9966223863").replace("%X%",  "amanullah.pathan@master.com"));
+							writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", INSTITUTION_CODE).replace("%F%", "FORM"+CustomUtils.randomAlphaNumeric(4)).replace("%t%", "0").replace("%P%", program.getProgramCode()).replace("%q%", deviceType).replace("%D%", devicePlan.getDevicePlanCode()).replace("%b%", branchCode).replace("%Z%", "").replace("%N%", "Aman").replace("%I%", "Khan").replace("%K%", "9966223863").replace("%X%",  "amanullah.pathan@master.com"));
 						} else if (customerType.equals(CustomerType.CORPORATE) && cardType.equalsIgnoreCase(ProductType.Prepaid)) {
 							writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", INSTITUTION_CODE).replace("%F%", "FORM").replace("%t%", "1").replace("%P%", program.getProgramCode()).replace("%q%", deviceType).replace("%D%", devicePlan.getDevicePlanCode()).replace("%b%", branchCode).replace("%Z%", Institution.createWithProvider(provider).getCorporateClientCodePrepaid()).replace("%N%", "Aman").replace("%I%", "Khan").replace("%K%", "9966223863").replace("%X%", "amanullah.pathan@master.com" ));
 						} else if (customerType.equals(CustomerType.CORPORATE) && cardType.equalsIgnoreCase(ProductType.Credit)) {
@@ -710,9 +710,9 @@ public class FileCreation {
 		return filename;
 	}
 
-	public Map<String, Object> readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(String fileName, String cardType) throws IOException {
+	public Map<Integer, Object> readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(String fileName, String cardType) throws IOException {
 		List<Integer> indexRequiredToSeachDeviceOnHelpdesk = new LinkedList<Integer>();
-		Map<String, Object> mapFileUpload = new HashMap<>();
+		Map<Integer, Object> mapFileUpload = new HashMap<>();
 		if (cardType.equalsIgnoreCase("credit")) {
 			indexRequiredToSeachDeviceOnHelpdesk = dataReader.dataProviderFileUploadHelpDesk("AllUploadTestData", "Credit Card File");
 			logger.info("Values :{}", indexRequiredToSeachDeviceOnHelpdesk);
@@ -751,7 +751,7 @@ public class FileCreation {
 					helpDeskGeneral.setEmail(email);
 					helpDeskGeneral.setMobileNumber(mobileNumber);
 					context.put(CreditConstants.HELPDESK_FILEUPLOAD, helpDeskGeneral);
-					mapFileUpload.put(CustomUtils.randomAlphaNumeric(8), context.get(CreditConstants.HELPDESK_FILEUPLOAD));
+					mapFileUpload.put(counter, context.get(CreditConstants.HELPDESK_FILEUPLOAD));
 				}
 
 			}

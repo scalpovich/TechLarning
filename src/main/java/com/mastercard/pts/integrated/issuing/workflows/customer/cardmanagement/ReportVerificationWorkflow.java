@@ -41,6 +41,8 @@ public class ReportVerificationWorkflow {
 
 	public static final int BILL_AMOUNT_INDEX_VALUE = 3;
 	
+	public static final String APPLICATION_REJECTED_IN_DEDUPE = "Application Rejected in Dedupe.";
+	
 	Boolean verificationStatus;
 	
     public void verifyGenericReport(GenericReport report) {
@@ -87,6 +89,26 @@ public class ReportVerificationWorkflow {
 				if (v.contains(fieldValue)) {
 					toggle();
 					logger.info("{field} is present in the report", fieldValue);
+				}
+			});
+		});
+		assertTrue("Application Number is not present in the System", verificationStatus);
+	}
+	
+	public void verifyDuplicateAppInAppRejectReport(GenericReport reports) {
+		reports.setReportName(Constants.APP_REJECT_REPORT);
+		deleteExistingReportsFromSystem(reports.getReportName());
+		ApplicationPage page = navigator.navigateToPage(ApplicationPage.class);
+		String reportUrl = page.generateApplicationRejectReportForUpload(reports.getReportName());
+		reports.setReportUrl(reportUrl);
+		Map<Object, String> reportContent = getReportContent(reports);
+		reportContent.forEach((k, v) -> {
+			reports.getFieldToValidate().forEach((field, fieldValue) -> {
+				if (v.contains(fieldValue)) {
+					if (v.contains(APPLICATION_REJECTED_IN_DEDUPE)) {
+						toggle();
+						logger.info("Application is Rejected in DeDupe/SDN");
+					}
 				}
 			});
 		});

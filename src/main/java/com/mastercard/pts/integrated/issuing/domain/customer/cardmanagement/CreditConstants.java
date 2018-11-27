@@ -86,7 +86,11 @@ public class CreditConstants {
 	public static final String CSV_FILE_NAME = "CSV_FILE_NAME";
 	
 	public static final String CLIENT_CUSTOMER_ID = "CLIENT_CUSTOMER_ID";
-
+	
+	public static final String ALL_CLIENT_CODES = "ALL_CLIENT_CODES";
+	
+	public static final String ALL_FORM_NUMBERS = "ALL_FORM_NUMBERS";
+	
 	private CreditConstants() {
 	}
 	
