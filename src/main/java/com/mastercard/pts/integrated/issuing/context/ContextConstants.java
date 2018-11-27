@@ -156,6 +156,8 @@ public class ContextConstants {
 	
 	public static final String TRANSACTION_DATE = "TRANSACTION_DATE";
 	
+	public static final String PAYMENT_UPLOAD = "PAYMENT_UPLOAD";
+
 	public static final String TRANSACTION_PLAN = "TRANSACTIONPLAN";
 		
 	public static final String PROMOTION_PLAN = "PROMOTION_PLAN";
