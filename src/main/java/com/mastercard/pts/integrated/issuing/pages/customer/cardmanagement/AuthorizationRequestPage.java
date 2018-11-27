@@ -48,7 +48,7 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cvv2:input:inputTextField")
 	private MCWebElement cvv2Txt;
 
-	private String statusMessage = "";
+	private String statusMessage = null;
 	
 	public String addAuthorizationRequest(AuthorizationRequest request){
 		logger.info("Authorization Request: {}", request.getDeviceNumber());
@@ -84,7 +84,7 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 
 	public String getDeclineReasonMessage(String declineReasonCode) {
 		String declineMessage = "";
-		switch (declineReasonCode) {
+		switch (declineReasonCode.toUpperCase()) {
 		case "LOST":
 			declineMessage = Constants.REPLACE_DECLINE_MESSAGE_LOST;
 			break;
@@ -97,6 +97,8 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 			declineMessage = Constants.REPLACE_DECLINE_MESSAGE_NOT_DELIVERED;
 			break;
 		default:
+			logger.info("Did not match to any of the cases mentioned - ",
+					declineReasonCode);
 			break;
 		}
 		return declineMessage;

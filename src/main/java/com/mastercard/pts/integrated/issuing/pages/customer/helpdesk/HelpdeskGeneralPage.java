@@ -1842,7 +1842,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		selectServiceCode(Constants.DEVICE_WITHDRAW_STOPLIST_REQ);
 		clickGoButton();
 		runWithinPopup("221 - Withdraw Device from Stop-list", () -> {
-			selectWithdrawlReason(helpdeskGeneral.getReason());
+			selectWithdrawalReason(helpdeskGeneral.getReason());
 			selectApplyFeesChkBx(false);
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();
@@ -1853,7 +1853,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 	}
 
-	public void selectWithdrawlReason(String reason) {
+	public void selectWithdrawalReason(String reason) {
 		WebElementUtils.selectDropDownByVisibleText(withdrawStoplistReasonDDwn,
 				reason);
 	}
