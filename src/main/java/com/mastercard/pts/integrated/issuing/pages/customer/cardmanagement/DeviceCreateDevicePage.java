@@ -1,9 +1,9 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -166,6 +166,10 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Existing Client Code')]")
 	private MCWebElement existingClientLabel;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePlanPromoCode1:input:dropdowncomponent")
+	private MCWebElement promotionPlanDDwn;
+		
 	
 	@PageElement(findBy = FindBy.ID, valueToFind = "card_type_photo")
 	private MCWebElement photoFileInput;
@@ -341,7 +345,8 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
 		SimulatorUtilities.wait(1000);
 		String programCodeDDwnBy = "view:programCode:input:dropdowncomponent";
-		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)) {
+		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)
+				|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)) {
 			enterText(existingDeviceNumberTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));
 			SimulatorUtilities.wait(8000);
 			moveToElementAndClick(existingClientLabel, 50, 50);
@@ -354,14 +359,20 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			selectByVisibleText(customerTypeDDwn, device.getCustomerType());
 			SimulatorUtilities.wait(10000);
 			waitForWicket(driver());
-			selectByVisibleText(programCodeDDwn, device.getProgramCode());		
+			selectByVisibleText(programCodeDDwn, device.getProgramCode());
+			SimulatorUtilities.wait(10000);
+			selectByVisibleText(programCodeDDwn, device.getProgramCode());
+			
 		}
 		SimulatorUtilities.wait(10000);
 		clickNextButton();
-		
-		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());		
-		WebElementUtils.selectDropDownByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
-		WebElementUtils.selectDropDownByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
+
+		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());
+		selectByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
+		if (Objects.nonNull(device.getPromotionPlanCode())) {
+			selectByVisibleText(promotionPlanDDwn, device.getPromotionPlanCode());
+	}
+		selectByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
 	}
 
 	private void fillProfileAndAddressDetailsAndClickNext(Device device) {
@@ -454,6 +465,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn,1);
 			WebElementUtils.enterText(creditLimitTxt,String.valueOf(Integer.parseInt(program.getCreditLimit())+1));
 		}
+		
 		if(device.getPhotoIndicator().contains("Photo")) {
 			String filePath = new File(photoFilePath).getAbsolutePath();
 			logger.info("upload file path : {}",filePath);

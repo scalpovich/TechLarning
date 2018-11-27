@@ -17,27 +17,26 @@ public class ProcessBatchesFlows {
 
 	@Autowired
 	private ProcessBatchesPage processBatchesPage;
+	
 	@Autowired
 	private Navigator navigator;
 
-
 	public void runProcessBatchFlows(ProcessBatches processBatchesDomainPage) {
-		processBatchesPage.processBatch(FileCreation.filenameStatic,
-				processBatchesDomainPage);
+		processBatchesPage.processBatch(FileCreation.filenameStatic, processBatchesDomainPage);
 	}
 
-	public boolean verifyFileProcessFlows(
-			ProcessBatches processBatchesDomainPage) {
+	public boolean verifyFileProcessFlows(ProcessBatches processBatchesDomainPage) {
 		return processBatchesPage.verifyFileProcess(processBatchesDomainPage);
 	}
-	public boolean verifyFileProcessFlowsUpload(
-			ProcessBatches processBatchesDomainPage, String FileName) {
+	
+	public boolean verifyFileProcessFlowsUpload(ProcessBatches processBatchesDomainPage, String FileName) {
 		return processBatchesPage.verifyFileProcessUpload(processBatchesDomainPage, FileName);
 	}
-	public boolean verifyProcessUploadBatch(
-			ProcessBatches processBatchesDomainPage, String FileName) {
+	
+	public boolean verifyProcessUploadBatch(ProcessBatches processBatchesDomainPage, String FileName) {
 		return processBatchesPage.processBatchUpload(processBatchesDomainPage, FileName);
 	}
+	
 	public boolean verifyErrorMessageFlows(String errorType) {
 		return processBatchesPage.verifyErrorMessage(errorType);
 	}

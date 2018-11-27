@@ -10,8 +10,8 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 public class ApprovalScoreWorkFlow {
 	@Autowired
 	private Navigator navigator;
-
-	private ApprovalScorePage approvalScorePage;
+	
+    private ApprovalScorePage approvalScorePage;
 
 	public boolean userAddsNewApprovalScore() {
 		approvalScorePage = navigator.navigateToPage(ApprovalScorePage.class);
@@ -30,4 +30,21 @@ public class ApprovalScoreWorkFlow {
 		approvalScorePage.verifyUiOperationStatus();
 	}
 	
+	public boolean userAddsNewApprovalScore(String type) {
+		approvalScorePage = navigator.navigateToPage(ApprovalScorePage.class);
+		approvalScorePage.addApproverScorePlan();
+		approvalScorePage.addMandatoryLabelsAndFields();
+		approvalScorePage.selectProgram();
+		if (type.equalsIgnoreCase("Refer"))
+			approvalScorePage.selectAction(3);
+		else if (type.equalsIgnoreCase("Approve"))
+			approvalScorePage.selectAction(1);
+		else if (type.equalsIgnoreCase("Reject"))
+			approvalScorePage.selectAction(2);
+		approvalScorePage.enterStartRangeValue();
+		approvalScorePage.enterEndRangeValue();
+		approvalScorePage.settingMandatoryValuesWithLabels();
+		approvalScorePage.saveButtonClick();
+		return approvalScorePage.successMessageDisplay();
+	}
 }

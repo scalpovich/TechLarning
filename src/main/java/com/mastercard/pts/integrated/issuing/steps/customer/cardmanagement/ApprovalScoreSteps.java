@@ -14,14 +14,20 @@ public class ApprovalScoreSteps {
 	@Autowired
 	ApprovalScoreWorkFlow approvalScoreWorkFlow;
 	
-	@When("User adds Approval Score on program")
-	@Then("User adds Approval Score on program")
+    @When("User adds Approval Score on program")
+    @Then("User adds Approval Score on program")
 	public void userAddsAApprovalScore() {
-		Assert.assertTrue("ApprovalScore is added successfully", approvalScoreWorkFlow.userAddsNewApprovalScore());
-	}
+		Assert.assertTrue("Approval Score is added successfully", approvalScoreWorkFlow.userAddsNewApprovalScore());
+		}
 
 	@When("user verifies and edits Approval Score")
 	public void userVerifiesAndEditsApprovalScore() {
-		approvalScoreWorkFlow.userVerifiesAndEditsNewApprovalScore();
+    	approvalScoreWorkFlow.userVerifiesAndEditsNewApprovalScore();
+    }
+   
+	@When("User adds Approval Score on program As $type")
+	@Then("User adds Approval Score on program As $type")
+	public void userAddsAApprovalScore(String type) {
+		Assert.assertTrue("Approval Score is added successfully", approvalScoreWorkFlow.userAddsNewApprovalScore(type));
 	}
 }

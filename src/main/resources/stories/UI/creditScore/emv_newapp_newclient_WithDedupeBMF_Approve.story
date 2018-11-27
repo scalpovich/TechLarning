@@ -33,7 +33,7 @@ And User Primary fills new Program Retail Credit Card section for credit product
 And User fills Business Mandatory Fields Screen for Credit product
 And User fills Device Range section for credit product
 Then "credit" is created with "Primary Device" as application type with application sub-type as "New" and customer of type "Individual" with "EMV" with dedupe
-And approves duplicate application caught on dedupeSDN
+And approves duplicate application caught in dedupe / SDN
 And user approves the credit application device
 And user processesAll close batch for new Application
 And user processesAll deviceGeneration batch for new Application

@@ -151,6 +151,7 @@ public class InventorySteps {
 		context.put(ContextConstants.ORDER, order);
 	}
 
+	@When("order is successful")
 	@Then("order is successful")
 	public void thenOrderIsSuccessful() {
 		assertThat("Order Creation Failed", inventoryWorkflow.getOrderCreationMessage(),
@@ -165,6 +166,7 @@ public class InventorySteps {
 		inventoryWorkflow.acceptDispatch(acceptance);
 	}
 
+	@When("order acceptance is successful")
 	@Then("order acceptance is successful")
 	public void thenOrderAcceptanceIsSuccessful() {
 		assertThat("Dispatch Acceptance Failed", inventoryWorkflow.getDispatchAcceptanceMessage(),
@@ -179,6 +181,7 @@ public class InventorySteps {
 		inventoryWorkflow.statusInfo(status);
 	}
 
+	@When("status column updates with type of order accepted")
 	@Then("status column updates with type of order accepted")
 	public void thenStatusColumnUpdatesWithTypeOfOrderAccepted() {
 		assertThat("Status update Failed", inventoryWorkflow.getStatusMessage(), containsString(STATUS_MESSAGE));
