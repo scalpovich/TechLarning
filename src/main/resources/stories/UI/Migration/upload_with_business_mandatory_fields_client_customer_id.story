@@ -4,7 +4,7 @@ As a(n)  Customer portal user
 I want to accommodate new field (Business Mandatory) as ""Client Customer ID"" in application upload credit 
 
 Meta:
-@StoryName greater_limit_credit_emv_retail
+@StoryName client_customer_id_credit_emv_retail
 Scenario:  To verify that there is provision to accommodate new field (Business Mandatory) as ""Client Customer ID"" in application upload credit
 Given setting json values in excel for Credit
 When user is logged in institution
