@@ -46,10 +46,10 @@ public class ReversalTransactionPage extends AbstractDisputePage {
 	private MCWebElement cancelAmount;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='cancelReasonCode']/select")
-	private MCWebElement reason;
+	private MCWebElement reasonDDwn;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = ".//*[@alt='Edit Record']")
-	private MCWebElement editBtn;
+	private MCWebElement btnEdit;
 
 	public void verifyUiOperationStatus() {
 		logger.info("Reversal Transaction");
@@ -77,12 +77,12 @@ public class ReversalTransactionPage extends AbstractDisputePage {
 	}
 	
 	public String addTransactionReversal(String amount, String reversalReason) {
-		waitForElementVisible(editBtn);
-		editBtn.click();
+		waitForElementVisible(btnEdit);
+		btnEdit.click();
 		SimulatorUtilities.wait(5000);
 		runWithinPopup("Add Transaction Reversal", () -> {
 			WebElementUtils.enterText(cancelAmount, amount);
-			WebElementUtils.selectDropDownByVisibleText(reason, reversalReason);
+			WebElementUtils.selectDropDownByVisibleText(reasonDDwn, reversalReason);
 			clickSaveButton();
 			verifyNoErrors();
 		});
