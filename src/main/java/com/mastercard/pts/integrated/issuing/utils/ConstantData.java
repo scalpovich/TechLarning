@@ -168,6 +168,7 @@ public class ConstantData {
 	public static final String DE_022_01 = "022.01";
 	public static final String POS_TERMINAL_VALUE = "05";
 	public static final String PAYMENT_UPLOAD_METHOD = "paymentMethod";
+	public static final String PAYMENT_UPLOAD_FILE_NAME = "PAYMENT_UPLOAD_FILE_NAME";
 	
 	private ConstantData() {
 	}
