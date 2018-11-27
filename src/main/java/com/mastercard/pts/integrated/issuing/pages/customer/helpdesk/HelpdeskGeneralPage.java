@@ -312,6 +312,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Installment :']/../../following-sibling::td[3]/span/span")
 	private MCWebElement loanInstallmentOutStandingLabel;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Payment :']/../../following-sibling::td[2]/span/span")
+	private MCWebElement paymentUnbilledLabel;
+	
     @PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody a img")
 	private MCWebElement editDeviceLink;
 	
@@ -1380,7 +1383,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		helpDeskValues.put(ContextConstants.INTEREST, interestLabel.getText());	
 		helpDeskValues.put(ContextConstants.LOAN, loanLabel.getText());	
 		helpDeskValues.put(ContextConstants.LOAN_INTEREST, loanInterestLabel.getText());	
-		helpDeskValues.put(ContextConstants.LOAN_INSTALLMENT_OUTSTANDING, loanInstallmentOutStandingLabel.getText());			
+		helpDeskValues.put(ContextConstants.LOAN_INSTALLMENT_OUTSTANDING, loanInstallmentOutStandingLabel.getText());
+		helpDeskValues.put(ContextConstants.PAYMENT_UNBILLED, paymentUnbilledLabel.getText());
 		clickEndCall();
 		return helpDeskValues;
 	}

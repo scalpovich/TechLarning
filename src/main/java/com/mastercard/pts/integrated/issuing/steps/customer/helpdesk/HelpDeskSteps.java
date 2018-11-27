@@ -1038,4 +1038,12 @@ public class HelpDeskSteps {
 		String actualFee = context.get(ConstantData.LOAN_PRE_CLOSURE_FEE);
 		assertThat("Loan Preclosure Fee is not same", actualFee, equalTo(expectedFee));
 	}
+	
+	@When("user verifies $amountType after payment reversal")
+	public void verifyUnbilledPaymentAfterReversal(String amountType)
+	{
+		Device device = context.get(ContextConstants.DEVICE);
+		HashMap<String, String> helpdeskValues = helpdeskWorkflow.noteDownRequiredValues(device.getDeviceNumber());
+		assertThat("Invalid Unbilled amount", helpdeskValues.get(amountType), equalTo(ContextConstants.ZERO_UNBILLED_PAYMENT));
+	}
 }
