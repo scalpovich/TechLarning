@@ -158,6 +158,8 @@ public class ContextConstants {
 	
 	public static final String ZERO_UNBILLED_PAYMENT = "0.00";
 	
+	public static final String PAYMENT_UPLOAD = "PAYMENT_UPLOAD";
+	
 	private ContextConstants() {
 	}
 
