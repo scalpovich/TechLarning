@@ -501,6 +501,12 @@ public class ProgramPage extends AbstractBasePage {
 		enterNoOfCurrencyAllowed(numberOfCurrencyAllowed);
 	}
 
+	public void selectIframeLoyaltyPlan(String loyaltyPlan) {
+		if (loyaltyPlan != null)
+			selectByVisibleText(loyaltyPlanDDwn, loyaltyPlan);
+
+	}
+
 	private void fillExtraSections(Program program, String productType) {
 		
 		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
@@ -534,7 +540,10 @@ public class ProgramPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByOptionalVisibleText(markupFeePlanDDwn, program.getMarkUpFeePlan());
 			WebElementUtils.selectDropDownByOptionalVisibleText(stmtPlanCodeDDwn, program.getPrepaidStatementPlan());
 		}
-		
+		if (loyaltyPlanDDwn != null && !program.getLoyaltyPlan().isEmpty()) {
+			WebElementUtils.selectDropDownByOptionalVisibleText(loyaltyPlanDDwn, program.getLoyaltyPlan());
+		}
+
 		waitForLoaderToDisappear();
 		clickNextButton();
 		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {

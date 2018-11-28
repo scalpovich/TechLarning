@@ -54,6 +54,14 @@ public class ManualAuthorizationSteps {
 		statusMessage = manualAuthorizationWorkflow.authorizeDevice(request);
 	}
 	
+	@Then("user raises an authorization request")
+	@When("user raises an authorization request")
+	@Composite(steps = {"When embossing file batch was generated in correct format","When user raises an authorization request only"})
+	public void manualAuthComposite(){
+		
+	}
+	
+	@When("status of request is \"approved\"")
 	@Then("status of request is \"approved\"")
 	public void thenStatusOfRequestIsapproved(){
 		assertThat("Authorization is successful", statusMessage,

@@ -93,6 +93,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private String[] values;
 	private String walletBalanceInformation;
 	public boolean serviceStatus = false;
+	private Map<String,String> points;
 
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -397,6 +398,20 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Account Number :']/../following-sibling::td[1]//span/select")
 	private MCWebElement selectLoanAccountNumberDdwn;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value = 'Loyalty']")
+	private MCWebElement loyaltyBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Points Earned:']/following::span/span")
+	private MCWebElement pointsEarned;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Available Loyalty Points:']/following::span/span")
+	private MCWebElement availableLoyaltyPoints;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Accumulated Reversed Points:']/following::span/span")
+	private MCWebElement accumulatedReversedPoints;
+	
+	private final String LOYALTY_DETAILS = "Loyalty Details";
 	
 	private String preclosureFee;
 	private String cancellationFee;
@@ -896,6 +911,32 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			}
 		}
 		clickEndCall();
+		return walletBalanceInformation;
+	}
+
+	public String getWalletBalanceInformationAfterLoyaltyRedemption(Device device) {
+		logger.info("Get Wallet Balance Information for Device: {}", device.getDeviceNumber());
+		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, "Prepaid [P]");
+		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
+		clickSearchButton();
+		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
+		editDeviceLink.click();
+		clickWalletDetailsTab();
+		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
+		int rowCount = driver()
+				.findElements(By.xpath("//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr"))
+				.size();
+		DecimalFormat dec = new DecimalFormat("#0.00");
+		for (int j = 1; j <= rowCount; j++) {
+			logger.info("Current Available Balance {} Unsettled Debit {} ",
+					getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance"));
+			Double balance = Double.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance"));
+
+			logger.info("Current Available Balance + Settled Credit : " + dec.format(balance));
+			walletBalanceInformation = walletBalanceInformation + ","
+					+ getCellTextByColumnNameInEmbeddedTab(j, "Wallet Currency") + ":" + dec.format(balance) + ":"
+					+ getCellTextByColumnNameInEmbeddedTab(j, "WALLET_NUMBER");
+		}
 		return walletBalanceInformation;
 	}
 
@@ -1860,5 +1901,27 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	public void selectApplyFeesChkBx(boolean value) {
 		ClickCheckBox(chkBxApplyFees, value);
+	}
+	
+	public void clickLoyaltyBtn() {
+		WebElementUtils.scrollDown(driver(), 0, 250);
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(loyaltyBtn)).click();
+	}
+	
+	public void clickEditDeviceLink() {
+		editDeviceLink.click();
+	}
+	
+	public Map<String, String> getLoyaltyDetails() {
+		points = new HashMap<String, String>();
+		runWithinPopup(LOYALTY_DETAILS, () -> {
+			points.put(Constants.POINTS_EARNED, pointsEarned.getText());
+			points.put(Constants.AVAILABLE_LOYALTY_POINTS, availableLoyaltyPoints.getText());
+			points.put(Constants.ACCUMULATED_REVERSED_POINTS, accumulatedReversedPoints.getText());
+			clickCloseButton();
+		});
+		SimulatorUtilities.wait(3000);
+		clickEndCall();
+		return points;
 	}
 }
