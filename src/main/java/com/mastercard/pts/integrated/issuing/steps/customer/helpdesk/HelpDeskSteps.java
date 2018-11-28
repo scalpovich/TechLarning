@@ -1039,8 +1039,8 @@ public class HelpDeskSteps {
 		assertThat("Loan Preclosure Fee is not same", actualFee, equalTo(expectedFee));
 	}
 	
-	@When("user verifies $amountType after payment reversal")
-	public void verifyUnbilledPaymentAfterReversal(String amountType)
+	@When("user verifies $amountType after payment $reversalOrReturn")
+	public void verifyUnbilledPaymentAfterReversal(String amountType, String reversalOrReturn)
 	{
 		Device device = context.get(ContextConstants.DEVICE);
 		HashMap<String, String> helpdeskValues = helpdeskWorkflow.noteDownRequiredValues(device.getDeviceNumber());

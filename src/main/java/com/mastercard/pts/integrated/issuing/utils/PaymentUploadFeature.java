@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.utils;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -20,8 +21,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.configuration.LinuxBox;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.PaymentUpload;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.opencsv.CSVWriter;
 
@@ -34,22 +38,37 @@ public class PaymentUploadFeature {
 	@Autowired
 	private DataProvider dataProvider;
 
+	@Autowired
+	public LinuxBox linuxBox;
+	
+	@Autowired
+	private Path tempDirectory;
+
 	private PaymentUpload upload;
 
 	@Value("./src/main/resources/")
 	private String csvPath;
+	
+	@Value("${linux.folder.path}")
+	private String folderPath;
+	
+	@Value("${linux.payment_upload.path}")
+	private String paymentFileUploadPath;
 
-	@Given("create Payment Upload CSV for $transactionCode")
-	@When("create Payment Upload CSV for $transactionCode")
-	public void DD_Payment(String transactionCode) throws IOException {
+	@Given("create Payment Upload CSV for $transactionCode and upload it on server")
+	@When("create Payment Upload CSV for $transactionCode and upload it on server")
+	public void uploadPaymentFileToServer(String transactionCode) throws IOException {
 
+	
 		String paymentUploadFileName = "PAY" + getDateForFileName() + CustomUtils.randomNumbers(3) + ".csv";
 		context.put(ConstantData.PAYMENT_UPLOAD_FILE_NAME, paymentUploadFileName);
 
-		File file = new File(csvPath + paymentUploadFileName);
+		Device device = context.get(ContextConstants.DEVICE);
+		
+		File file = new File(tempDirectory.toString() + "/" + paymentUploadFileName);
 
 		FileWriter outputfile = new FileWriter(file);
-		CSVWriter writer = new CSVWriter(outputfile);
+		CSVWriter writer = new CSVWriter(outputfile, ',', CSVWriter.NO_QUOTE_CHARACTER);
 		String transactionCodes = transactionCode;
 		String[] transactionCodesSplit = transactionCodes.split("\\|");
 		int tranactionAmount = 0;
@@ -66,16 +85,20 @@ public class PaymentUploadFeature {
 			tranactionAmount += Integer.parseInt(upload.getTransactionCurrencyAmount());
 		}
 
-		context.put(ConstantData.TRANSACTION_AMOUNT, tranactionAmount);
+		context.put(ConstantData.TRANSACTION_AMOUNT, String.valueOf(tranactionAmount));
 		String[] header = { getDateForFile(), String.valueOf(transactionCodesSplit.length),
 				String.valueOf(tranactionAmount) };
 		writer.writeNext(header);
 		for (Map.Entry<Integer, List<String>> map : mapForCSV.entrySet()) {
-			String[] data = { "MUM3", String.valueOf(map.getKey() + 1), map.getValue().get(1), "5177000000001400", "", map.getValue().get(2), getDateForFile(), getDateForFile(), getDateForFile(), getDateForFile(), String.valueOf(chequeNumber), "", "", "", "", "", "", "", "", map.getValue().get(0) };
+			String[] data = { "MUM3", String.valueOf(map.getKey() + 1), map.getValue().get(1), device.getDeviceNumber(), "", map.getValue().get(2), getDateForFile(), getDateForFile(), getDateForFile(), getDateForFile(), String.valueOf(chequeNumber), "", "", "", "", "", "", "", "", map.getValue().get(0), "" };
 			writer.writeNext(data);
 			chequeNumber += 1;
 		}
+		
 		writer.close();
+		
+		String remoteDir = folderPath+paymentFileUploadPath;
+		linuxBox.upload(file.getPath(), remoteDir);
 	}
 
 	public String getDateForFileName() {

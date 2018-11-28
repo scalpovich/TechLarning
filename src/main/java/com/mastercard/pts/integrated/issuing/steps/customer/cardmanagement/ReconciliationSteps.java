@@ -16,6 +16,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProcessBatchesFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ReconciliationWorkFlow;
@@ -112,7 +113,7 @@ public class ReconciliationSteps {
 	@When("user processes $batchName batch for credit")
 	public void processPaymentUploadBatchForCredit(String batchName)
 	{
-		String fileName = "";
+		String fileName = context.get(ConstantData.PAYMENT_UPLOAD_FILE_NAME);
 		processBatch.setJoBID(processBatchesFlows.processUploadBatches(batchName, fileName));
 		SimulatorUtilities.wait(5000);
 		Assert.assertTrue(processBatchesFlows.verifyFileProcessFlowsUpload(processBatch, fileName));

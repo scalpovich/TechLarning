@@ -50,7 +50,7 @@
     },
     {
       "paymentMethod": "Outstation_Cheque_reversal",
-      "transactionCode": "572",
+      "transactionCode": "571",
       "transactionCurrency": "356",
       "transactionCurrencyAmount": "100"
     },
