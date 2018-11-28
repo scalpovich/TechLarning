@@ -21,6 +21,8 @@ public class ContextConstants {
 	public static final String WALLET = "WALLET";
 
 	public static final String MCG = "MCG";
+	
+	public static final String MCG_LIMIT_PLAN = "MCG_LIMIT_PLAN";
 
 	public static final String OPEN_WALLET = "OPEN WALLET";
 
@@ -52,6 +54,8 @@ public class ContextConstants {
 	
 	public static final String AVAILABLE_BALANCE_OR_CREDIT_LIMIT = "AVAILABLE_BALANCE_OR_CREDIT_LIMIT";
 	
+	public static final String AVAILABLE_BALANCE_AFTER_LOYALTY_REDEMPTION = "AVAILABLE_BALANCE_AFTER_LOYALTY_REDEMPTION";
+
 	public static final String BILLING_AMOUNT = "BILLING_AMOUNT";
 
 	public static final String AVAILABLE_ACCOUNT_OR_CREDIT_LIMIT = "AVAILABLE_ACCOUNT_OR_CREDIT_LIMIT";
@@ -81,7 +85,7 @@ public class ContextConstants {
 	public static final String PRIMARY_DEVICE_PLAN = "PRIMARY_DEVICE_PLAN";
 	
 	public static final String INSTITUTION_DATE = "INSTITUTION_DATE";
-	
+
 	public static final String STATEMENT_FROM_DATE = "FROM_DATE";
 	
 	public static final String STATEMENT_TO_DATE = "TO_DATE";
@@ -103,6 +107,8 @@ public class ContextConstants {
 	public static final String INTEREST = "Interest";
 	
 	public static final String LOAN_INTEREST = "Loan Interest";
+	
+	public static final String LOAN_INSTALLMENT_OUTSTANDING = "Loan Installment Outstanding";
 	
 	public static final String LOAN = "Loan";
 	
@@ -127,11 +133,39 @@ public class ContextConstants {
 	public static final String JOB_ID = "JOB_ID";
 	
 	public static final String CLIENT_PHOTO_BATCH_PROCESS_TIME = "CLIENT_PHOTO_BATCH_PROCESS_TIME";
-	
+			
 	public static final String BALANCE_BEFORE_PAYMENT = "BALANCE_BEFORE_PAYMENT";
 	
 	public static final String BALANCE_AFTER_PAYMENT = "BALANCE_AFTER_PAYMENT";
+	
+	public static final String LOAD_BALANCE_REQUEST = "LOAD_BALANCE_REQUEST";
+	
+	public static final String MID_TID_BLOCKING = "MID_TID_BLOCKING";
 
+	public static final String LOAN_PLAN = "LOAN_PLAN";
+	
+	public static final String TRANSACTION_SEARCH_DETAILS = "TRANSACTION_SEARCH_DETAILS";
+	
+	public static final String LOAN_SANCTION_DETAILS = "LOAN_SANCTION_DETAILS";
+	
+	public static final String ZERO_LOAN_INSTALLMENT_OUTSTANDING = "0.00";
+	
+	public static final String LOAN_PROCESS_DATE = "LOAN_PROCESS_DATE";
+	
+	public static final String PROCESSED_BATCHES = "PROCESSED_BATCHES";
+	
+	public static final String TRANSACTION_DATE = "TRANSACTION_DATE";
+	
+	public static final String PAYMENT_UPLOAD = "PAYMENT_UPLOAD";
+
+	public static final String TRANSACTION_PLAN = "TRANSACTIONPLAN";
+		
+	public static final String PROMOTION_PLAN = "PROMOTION_PLAN";
+	
+	public static final String PROMOTION_PLAN_AMT_SPENT = "PROMOTION_PLAN_AMT_SPENT";
+	
+	public static final String PROMOTION_PLAN_POINTS_EARNED = "PROMOTION_PLAN_POINTS_EARNED";
+	
 	private ContextConstants() {
 	}
 

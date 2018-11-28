@@ -128,8 +128,11 @@ public class UserManagementSteps {
 		context.put(USER_INSTITUTION_SELECTED, institution.getCode());
 		loginWorkflow.logInInstitution(loginPortal, userDefaultInstitution);
 		context.put(USERNAME, loginPortal.getUserName());
-		context.put(ContextConstants.INSTITUTION_DATE, loginWorkflow.getInstitutionDateLogin());		
-	}
+		context.put(ContextConstants.INSTITUTION_DATE, loginWorkflow.getInstitutionDateLogin());
+		String institutionEnvVar = System.getProperty("institution");
+		if (institutionEnvVar != null && !institutionEnvVar.trim().isEmpty())
+			context.put(USER_INSTITUTION_SELECTED, institutionEnvVar.substring(institutionEnvVar.indexOf("[")+1, institutionEnvVar.indexOf("]")));
+		}
 
 	@Given("user is logged in non-default institution")
 	public void givenUserIsLoggedInNonDefaultInstitution() {
@@ -336,5 +339,11 @@ public class UserManagementSteps {
 	public void whenUserWaitToPerformCrossBorderTransaction()
 	{
 		SimulatorUtilities.wait(1260000);
+	}
+	@When("user wait for $time min to perform certain activity")
+	@Then("user wait for $time min to perform certain activity")
+	public void whenUserWaitForSomeMinutesToPerformCertainActivity(int time)
+	{
+		SimulatorUtilities.wait(time*60000);
 	}
 }
