@@ -1672,7 +1672,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			clickWhenClickable(processBtn);	
 			SimulatorUtilities.wait(1000);
 			if (getSuccessMessage() != null) {
-				cancellationFee = getSuccessMessage();
+				cancellationFee = getErrorMessage() ;
+				clickCancelButton();
 				logger.info("Loan Cancellation Message :{}", getSuccessMessage());
 			} else {
 				waitForElementVisible(okBtn);
@@ -1776,7 +1777,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			selectLoanAccountNumber(device.getLoanAccountNumber());
 			clickCancelLoanButton();
 			loanCancellationStatus=processLoanCancel();
+			clickWhenClickable(cancelBtn);
 		});			
+
+		clickEndCall();		
 		return loanCancellationStatus;
 	}
 }

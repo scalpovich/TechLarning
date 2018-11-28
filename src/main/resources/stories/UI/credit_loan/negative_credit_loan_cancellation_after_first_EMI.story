@@ -54,9 +54,8 @@ And user raises Retail Transaction to Loan [215] request for Credit
 And user verifies loan account details
 And user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
-And update institution date to first of next month
 Then user sign out from customer portal
-
+And update institution date to first of next month
 
 Scenario:1.6 Login & Logout to wait for date to be updated 
 Given user is logged in institution
@@ -78,8 +77,6 @@ And update institution date to 1 days
 Then user sign out from customer portal
 
 Scenario:1.8 Verify User is not able to cancel the loan from helpdesk and verify the error
-Meta:
-@PaymentCash
 Given user is logged in institution
 When device has "normal" status
 Then verifies Loan Cancellation request is "declined"
