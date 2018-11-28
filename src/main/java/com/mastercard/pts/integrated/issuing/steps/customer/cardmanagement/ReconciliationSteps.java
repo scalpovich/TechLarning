@@ -36,6 +36,7 @@ public class ReconciliationSteps {
 		Assert.assertTrue(reconciliationWorkFlow.verifyReportGenerationRecon());
 	}
 
+	@Then("pre-clearing and Pre-EOD batches are run")
 	@When("pre-clearing and Pre-EOD batches are run")
 	public void whenPreclearingAndPreEODBatchesAreRun() {
 
@@ -64,22 +65,32 @@ public class ReconciliationSteps {
 		reconciliationWorkFlow.runPostMaintenanceBatch(postMaintenanceBatch);
 	}
 	
+	@Then("pre-clearing and Loyalty Calc batches are run")
 	@When("pre-clearing and Loyalty Calc batches are run")
 	public void whenPreclearingAndLoyaltyBatchesAreRun() {
 
 		List<ProcessBatches> processBatches = new ArrayList<>();
-		ProcessBatches prepaidEodProcessBatch = new ProcessBatches();
-		prepaidEodProcessBatch.setProductType(provider.getString(BATCH_TYPE));
-		prepaidEodProcessBatch.setBatchName(provider.getString("BATCH_NAME_LOYALTY"));
-		prepaidEodProcessBatch.setProductType("");
-
 		ProcessBatches preClearingBatch = new ProcessBatches();
 		preClearingBatch.setProductType(provider.getString(BATCH_TYPE));
 		preClearingBatch.setBatchName(provider.getString("BATCH_NAME_PRE_CLEARING"));
 		preClearingBatch.setProductType(provider.getString("PREPAID_PRODUCT_TYPE"));
 
+		ProcessBatches prepaidEodProcessBatch = new ProcessBatches();
+		prepaidEodProcessBatch.setProductType(provider.getString(BATCH_TYPE));
+		prepaidEodProcessBatch.setBatchName(provider.getString("BATCH_NAME_LOYALTY"));
+		prepaidEodProcessBatch.setProductType("");
+
 		processBatches.add(preClearingBatch);
 		processBatches.add(prepaidEodProcessBatch);
+		
+		if(provider.getString("BATCH_NAME_EOD") != null && provider.getString("BATCH_NAME_EOD").equalsIgnoreCase("End Of Day - Credit [DAILY]")) {
+			prepaidEodProcessBatch = null;
+			prepaidEodProcessBatch = new ProcessBatches();
+			prepaidEodProcessBatch.setProductType(provider.getString(BATCH_TYPE));
+			prepaidEodProcessBatch.setBatchName(provider.getString("BATCH_NAME_EOD"));
+			prepaidEodProcessBatch.setProductType("");
+			processBatches.add(prepaidEodProcessBatch);
+		}
 
 		reconciliationWorkFlow.runPreClearingAndLoyaltyCalcBatch(processBatches);
 	}

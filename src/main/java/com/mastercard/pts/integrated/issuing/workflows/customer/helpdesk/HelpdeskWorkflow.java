@@ -20,6 +20,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGen
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
 import com.mastercard.pts.integrated.issuing.utils.ConnectionUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 
 @Workflow
@@ -145,6 +146,10 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.getWalletBalanceInformationForRemittance(device, cardToCash);
 	}
 
+	public String getWalletBalanceAfterLoyaltyRedemption(Device device) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		return helpDeskPage.getWalletBalanceInformationAfterLoyaltyRedemption(device);
+	}
 	public boolean verifyBalanceUpdatedCorreclty(String beforeLoadBalanceInformation, String transactionDetailsFromExcel, String afterLoadBalanceInformation) {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		return helpDeskPage.verifyBalanceUpdatedCorreclty(beforeLoadBalanceInformation, transactionDetailsFromExcel, afterLoadBalanceInformation);
@@ -277,6 +282,19 @@ public class HelpdeskWorkflow {
 
 	public String raiseLoanPreClosureRequest(HelpdeskGeneral helpdeskGeneral,LoanPlan loanPlan,Device device){
 		return helpDeskPage.raiseLoanPreclosureRequest(helpdeskGeneral,loanPlan,device);
+	}
+	
+	public void navigateToLoyaltyDetails(Device device) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		helpDeskPage.searchByDeviceNumber(device);
+		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
+		helpDeskPage.clickEditDeviceLink();
+		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
+		helpDeskPage.clickLoyaltyBtn();
+	}
+	
+	public Map<String, String> getLoyaltyDetails() {
+		return helpDeskPage.getLoyaltyDetails();
 	}
 }
 
