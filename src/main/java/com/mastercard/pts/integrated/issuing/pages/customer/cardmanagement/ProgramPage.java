@@ -413,7 +413,7 @@ public class ProgramPage extends AbstractBasePage {
 				if ("Reference Currency [R]".equalsIgnoreCase(program.getWalletToWalletTransferType()))
 					selectReferenceCurrency(program.getReferenceCurrency());
 			}
-			if (!productType.equalsIgnoreCase(ProductType.DEBIT)){
+			if (productType.equalsIgnoreCase(ProductType.PREPAID)){
 				selectCurrencyConversionBy(program.getCurrencyConversionBy());
 			}				
 			selectCalendarStartMonth(program.getCalendarStartMonth());
