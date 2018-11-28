@@ -268,5 +268,16 @@ public class HelpdeskWorkflow {
 	public String getDeclineCode(Device device, String rrnNumber){
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		return helpDeskPage.getDeclineCodeForTransaction(device, rrnNumber);
+		
+	}
+	public String raiseLoanCancellationRequest(LoanPlan loanPlan, Device device, HelpdeskGeneral helpdeskGeneral) {
+		return helpDeskPage.raiseLoanCancellationRequest(helpdeskGeneral,loanPlan,device);
+		
+	}
+
+	public String raiseLoanPreClosureRequest(HelpdeskGeneral helpdeskGeneral,LoanPlan loanPlan,Device device){
+		return helpDeskPage.raiseLoanPreclosureRequest(helpdeskGeneral,loanPlan,device);
 	}
 }
+
+
