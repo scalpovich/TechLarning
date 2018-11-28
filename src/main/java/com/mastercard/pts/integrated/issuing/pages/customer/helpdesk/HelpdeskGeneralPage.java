@@ -1675,12 +1675,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 		
 		return loanDetails;
-
 	}
-
 	
-	public LoanDetails sanctionLoan(TransactionSearchDetails transactionDetails)
-	{		
+	public LoanDetails sanctionLoan(TransactionSearchDetails transactionDetails) {		
 		LoanDetails loanDetails= new LoanDetails();
 		runWithinPopup("Add Retail To Loan Sanction", ()->{	
 			String checkBox = String.format("//td//span[text()='%s']/../../following-sibling::td[7]",transactionDetails.getARN());

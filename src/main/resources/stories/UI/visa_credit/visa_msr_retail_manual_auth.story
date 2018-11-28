@@ -29,8 +29,8 @@ And user notes down available Card limit for card
 Then user sign out from customer portal
 
 Scenario:3 Perform Authorization transaction
-When user is logged in institution
-And user raises an authorization request
+Given user is logged in institution
+When user raises an authorization request
 Then status of request is "approved"
 And search Purchase authorization and verify 000-Successful status
 When user verifies available balance after transaction
@@ -41,7 +41,7 @@ Then user sign out from customer portal
 
 Scenario:4 Run Pre-clearing and EOD-Credit
 Given user is logged in institution
-When user wait for seven minutes to perform certain activity
+When user wait for 7 min to perform certain activity
 And user sign out from customer portal
 And user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
