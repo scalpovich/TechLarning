@@ -278,6 +278,12 @@ public class HelpdeskWorkflow {
 	public String raiseLoanPreClosureRequest(HelpdeskGeneral helpdeskGeneral,LoanPlan loanPlan,Device device){
 		return helpDeskPage.raiseLoanPreclosureRequest(helpdeskGeneral,loanPlan,device);
 	}
+
+	public String raiseLoanCancellationRequestToVerifyErroMessage(LoanPlan loanPlan, Device device,
+			HelpdeskGeneral helpdeskGeneral) {
+		return helpDeskPage.raiseLoanCancellationRequestToVerifyErroMessage(helpdeskGeneral,loanPlan,device);
+		
+	}
 }
 
 

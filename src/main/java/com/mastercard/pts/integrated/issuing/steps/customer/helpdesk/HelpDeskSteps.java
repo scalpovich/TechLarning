@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.helpdesk;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -1054,5 +1055,20 @@ public class HelpDeskSteps {
 			actualFee = context.get(ConstantData.LOAN_CANCELLATION_FEE);
 		}
 		assertThat("Loan "+feeType+" fee is not same", actualFee, equalTo(expectedFee));
+	}
+	
+	@Then("verifies Loan Cancellation request is \"declined\"")
+	public void thenLoanCancellationRequestIsDeclined() {
+		helpdeskGeneral = HelpdeskGeneral.createWithProviderWithCreditCardLimits(provider);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskGeneral.setServiceCode(ConstantData.LOAN_CANCELLATION_SR);
+		Device device = context.get(ContextConstants.DEVICE);
+		LoanPlan loanPlan = context.get(ContextConstants.LOAN_PLAN);
+
+		helpdeskWorkflow.raiseLoanCancellationRequestToVerifyErroMessage(loanPlan, device, helpdeskGeneral);
+		assertThat("Loan Cancellation request is approved",
+				helpdeskWorkflow.raiseLoanCancellationRequestToVerifyErroMessage(loanPlan, device, helpdeskGeneral),
+				containsString("Loan cancellation not allowed"));
+
 	}
 }

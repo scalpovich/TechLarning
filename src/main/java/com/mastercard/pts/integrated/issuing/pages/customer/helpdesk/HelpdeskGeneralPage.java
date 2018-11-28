@@ -398,7 +398,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	private String preclosureFee;
 	private String cancellationFee;
-	
+	private String loanCancellationStatus;
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
 		logger.info(WALLET_NUMBER, CharMatcher.DIGIT.retainFrom(walletNumber.getText()));
@@ -1670,9 +1670,15 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			enterNote(MiscUtils.randomAlphabet(10));
 			SimulatorUtilities.wait(3000);	
 			clickWhenClickable(processBtn);	
-			waitForElementVisible(okBtn);
-			elementToBeClickable(okBtn);
-			clickWhenClickable(okBtn);	
+			SimulatorUtilities.wait(1000);
+			if (getSuccessMessage() != null) {
+				cancellationFee = getSuccessMessage();
+				logger.info("Loan Cancellation Message :{}", getSuccessMessage());
+			} else {
+				waitForElementVisible(okBtn);
+				elementToBeClickable(okBtn);
+				clickWhenClickable(okBtn);
+			}
 		
 		});	
 		return cancellationFee;
@@ -1759,5 +1765,18 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			clickWhenClickable(okBtn);	
 		});	
 		return preclosureFee;
+	}
+
+	public String raiseLoanCancellationRequestToVerifyErroMessage(HelpdeskGeneral helpdeskGeneral, LoanPlan loanPlan,
+		Device device) {
+		selectServiceCode(helpdeskGeneral.getServiceCode());
+		clickGoButton();
+		runWithinPopup("243 - Loan Cancellation", ()->{	
+			selectLoanPlan(loanPlan.getLoanPlanDescription() + " " + "[" + loanPlan.getLoanPlanCode() + "]");
+			selectLoanAccountNumber(device.getLoanAccountNumber());
+			clickCancelLoanButton();
+			loanCancellationStatus=processLoanCancel();
+		});			
+		return loanCancellationStatus;
 	}
 }
