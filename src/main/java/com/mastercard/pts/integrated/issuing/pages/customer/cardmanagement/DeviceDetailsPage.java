@@ -46,6 +46,8 @@ public class DeviceDetailsPage extends AbstractCardManagementPage {
 
 	@PageElement(findBy = FindBy.ID, valueToFind = "lastExecutedScriptStatus")
 	private MCWebElement lastExecutedScriptStatus;
+	
+	private static final String APPLICATION_NUMBER_COLUMN_NAME = "Application Number";
 
 	@Override
 	public void verifyUiOperationStatus() {
@@ -77,7 +79,7 @@ public class DeviceDetailsPage extends AbstractCardManagementPage {
 		viewFirstRecord();
 		runWithinPopup("View Device Details", () -> {
 			clickWhenClickable(clientAndWalletInfoTab);
-			device.setApplicationNumber(applicationNumberTxt.getText());
+			device.setApplicationNumber(getFirstRecordCellTextByColumnName(APPLICATION_NUMBER_COLUMN_NAME));
 			clickCloseButton();
 		});
 		logger.info("device application number :{}",device.getApplicationNumber());
