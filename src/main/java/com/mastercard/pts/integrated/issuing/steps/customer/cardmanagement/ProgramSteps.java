@@ -63,9 +63,7 @@ public class ProgramSteps {
 			@Named("interchange") String interchange, @Named("product") String product,
 			@Named("programType") String programType) {
 		program.ProgramDataProvider();
-
 		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
-
 		program.setInterchange(interchange);
 		program.setProduct(ProductType.fromShortName(product));
 		program.setProgramType(programType);

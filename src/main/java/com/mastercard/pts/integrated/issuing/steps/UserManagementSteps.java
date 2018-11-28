@@ -133,8 +133,7 @@ public class UserManagementSteps {
 		String institutionEnvVar = System.getProperty("institution");
 		if (institutionEnvVar != null && !institutionEnvVar.trim().isEmpty())
 			context.put(USER_INSTITUTION_SELECTED, institutionEnvVar.substring(institutionEnvVar.indexOf("[")+1, institutionEnvVar.indexOf("]")));
-		
-	}
+		}
 
 	@Given("user is logged in non-default institution")
 	public void givenUserIsLoggedInNonDefaultInstitution() {
@@ -343,5 +342,11 @@ public class UserManagementSteps {
 	@When("user wait for one 21 mins to perform transaction")
 	public void whenUserWaitToPerformCrossBorderTransaction() {
 		SimulatorUtilities.wait(1260000);
+	}
+	@When("user wait for $time min to perform certain activity")
+	@Then("user wait for $time min to perform certain activity")
+	public void whenUserWaitForSomeMinutesToPerformCertainActivity(int time)
+	{
+		SimulatorUtilities.wait(time*60000);
 	}
 }

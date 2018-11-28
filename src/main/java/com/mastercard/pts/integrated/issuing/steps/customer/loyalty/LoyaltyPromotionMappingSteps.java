@@ -50,5 +50,8 @@ public class LoyaltyPromotionMappingSteps {
 		loyaltyPromotionMapping.setMappingLoyaltyPlanddwn(data.getLoyaltyPlan());
 		loyaltyPromotionMapping.setMappingPromotionPlanddwn(promotionPlan.buildDescriptionAndCode());
 		uiVerificationLoyaltyWorkflow.deleteLoyaltyPlanPromotionMappingPage(loyaltyPromotionMapping);
+		loyaltyPromotionMapping.setPriority(provider.getString("MAPPING_PRIORITY"));
+		uiVerificationLoyaltyWorkflow.verifyLoyaltyPlanPromotionMappingPage(loyaltyPromotionMapping);
+
 	}
 }

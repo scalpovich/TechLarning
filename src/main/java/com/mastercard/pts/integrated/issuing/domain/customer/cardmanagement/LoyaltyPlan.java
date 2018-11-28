@@ -94,7 +94,8 @@ public class LoyaltyPlan implements HasCodeAndDescription {
 
 	@Override
 	public String getCode() {
-		return loyaltyPlanCode;
+		return getLoyaltyPlanCode();
+
 	}
 
 	@Override

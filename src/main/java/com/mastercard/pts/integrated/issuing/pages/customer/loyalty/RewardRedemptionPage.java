@@ -2,8 +2,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.loyalty;
 
 import java.util.Arrays;
 import java.util.Collection;
-
-import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -61,21 +60,16 @@ public class RewardRedemptionPage extends AbstractBasePage {
 	public void redeemScreen(RewardsRedemption rewards) {
 		redeemBtn.click();
 		runWithinPopup("Redemption", () -> {
-			WebElementUtils.enterText(pointsredeemedtxt, rewards.getpointsToRedeem());
+			WebElementUtils.enterText(pointsredeemedtxt, rewards.getPointsToRedeem());
 			SimulatorUtilities.wait(2000);
 			clickSaveButton();
 			SimulatorUtilities.wait(5000);
 			while (checkButton(saveBtn)) {
 				saveBtn.click();
-				// driver.switchTo().alert().accept();
-
 				SimulatorUtilities.wait(2000);
 
 			}
-
-			// waitForElementInVisible(saveBtn);
-			// retryUntilNoErrors(clickSaveButton);
-		});
+	});
 
 	}
 
@@ -89,7 +83,7 @@ public class RewardRedemptionPage extends AbstractBasePage {
 		}
 		return b;
 
-	}
+}
 
 	public void verifyLoyaltyPointsNotRedeemed() {
 		try {
@@ -97,8 +91,9 @@ public class RewardRedemptionPage extends AbstractBasePage {
 				Assert.fail("Loyalty points shouldnot be available for redemption");
 			}
 
-		} catch (NoSuchElementException e) {
-			logger.info("Redeem button is not displayed as loyalty points not available for redemption");
+
+		} catch (ElementNotVisibleException e) {
+		logger.info("Redeem button is not displayed as loyalty points not available for redemption");
 		}
 	}
 
@@ -113,9 +108,10 @@ public class RewardRedemptionPage extends AbstractBasePage {
 	public void verifyLoyaltyPointsRedeemedforCumulative(KeyValueProvider provider, RewardsRedemption rewards) {
 		Assert.assertEquals(getCellTextByColumnName(1, "Total Loyalty Points Earned"),
 				provider.getString("MAX_AMT_EACH_PERIOD"));
-		Assert.assertEquals(getCellTextByColumnName(1, "Redeemed"), rewards.getpointsToRedeem());
+		Assert.assertEquals(getCellTextByColumnName(1, "Redeemed"), rewards.getPointsToRedeem());
 		Assert.assertEquals(getCellTextByColumnName(1, "Available for Redemption"), "0");
 	}
+
 
 	public void verifyUiOperationStatus() {
 		logger.info("Reward Redemption");
@@ -125,5 +121,9 @@ public class RewardRedemptionPage extends AbstractBasePage {
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(deviceNumberTxt));
+	}
+	
+	public String getExpiredLoyaltyPoints() {
+		return getFirstRowColValueFor(6);
 	}
 }

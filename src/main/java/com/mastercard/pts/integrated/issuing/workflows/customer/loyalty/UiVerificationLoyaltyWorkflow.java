@@ -64,14 +64,17 @@ public class UiVerificationLoyaltyWorkflow {
 		page.editLoyaltyPlan(loyaltyplan);
 	}
 
+
 	public void verifyLoyaltyPlanPromotionMappingPage(LoyaltyPromotionMapping loyaltyPromotionMapping) {
 		LoyaltyPlanPromotionMappingPage page = navigator.navigateToPage(LoyaltyPlanPromotionMappingPage.class);
 		page.verifyUiOperationStatus(loyaltyPromotionMapping);
+
 	}
 
 	public void deleteLoyaltyPlanPromotionMappingPage(LoyaltyPromotionMapping loyaltyPromotionMapping) {
 		LoyaltyPlanPromotionMappingPage page = navigator.navigateToPage(LoyaltyPlanPromotionMappingPage.class);
 		page.deleteLoyaltyPromotionMapping(loyaltyPromotionMapping);
+
 	}
 
 	public void verifyLoyaltyPointsPage() {
@@ -92,6 +95,7 @@ public class UiVerificationLoyaltyWorkflow {
 	public void verifyPromotionPlanwithMCG(PromotionPlan plan) {
 		PromotionPlanPage page = navigator.navigateToPage(PromotionPlanPage.class);
 		page.verifyUiOperationStatuswithMCG(plan);
+
 	}
 
 	public void addPromotionPlanwithCumulative(PromotionPlan plan) {
@@ -107,6 +111,7 @@ public class UiVerificationLoyaltyWorkflow {
 	public void editPromotionPlanDate(PromotionPlan plan) {
 		PromotionPlanPage page = navigator.navigateToPage(PromotionPlanPage.class);
 		page.editpromotionPlanStartDate(plan);
+
 	}
 
 	public void verifyRedemptionPage() {
@@ -144,4 +149,40 @@ public class UiVerificationLoyaltyWorkflow {
 	}
 	
 	
+	public void disableLoyaltyPlan(String plan) {
+		LoyaltyPlanPage page = navigator.navigateToPage(LoyaltyPlanPage.class);
+		page.searchByPlanCode(plan.substring(plan.indexOf("[")+1, plan.indexOf("]")));
+		page.disableLoyaltyPlan();
+	}
+	
+	public void selectPeriodUnitByIndex(String plan, String value) {
+		LoyaltyPlanPage page = navigator.navigateToPage(LoyaltyPlanPage.class);
+		page.searchByPlanCode(plan.substring(plan.indexOf("[")+1, plan.indexOf("]")));
+		page.selectPeriodUnitByIndex(value);
+	}
+	
+	public String getPointsEarnedOnPromotionPlan(String plan) {
+		PromotionPlanPage page = navigator.navigateToPage(PromotionPlanPage.class);
+		page.searchByPlanCode(plan);
+		return page.getPointsEarned();
+	}
+	
+	public String getAmtSpentOnPromotionPlan(String plan) {
+		PromotionPlanPage page = navigator.navigateToPage(PromotionPlanPage.class);
+		page.searchByPlanCode(plan);
+		return page.getAmountSpent();
+	}
+
+	public void selectBlockedMCG(String plan, String value) {
+		LoyaltyPlanPage page = navigator.navigateToPage(LoyaltyPlanPage.class);
+		page.searchByPlanCode(plan.substring(plan.indexOf("[")+1, plan.indexOf("]")));
+		page.selectBlockedMCG(value);
+	}
+
+	public void selectPromoRulesMCG(String plan, String mcg) {
+		PromotionPlanPage page = navigator.navigateToPage(PromotionPlanPage.class);
+		page.searchByPlanCode(plan);
+		page.selectPromoRulesMCG(mcg);
+	}
+
 }

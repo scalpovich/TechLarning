@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 {
@@ -113,6 +114,8 @@
    }
   ]
 =======
+=======
+>>>>>>> c9ad8c62296fde73ab47bac488a829ac2c8800de
 {
   "institute": [
    {
@@ -123,12 +126,21 @@
    "cardPackIdGenerationTemplate":"AUTOMATION [PAN042]",
    "deviceIdGenerationTemplate":"AUTOMATION [PAN019]",
    "embossingVendor":"AUTOMATION PERS BUREAU [AUTOB1]",
+<<<<<<< HEAD
    "mastercardPrepaidIssuerBin":"automation prepaid card [588765]",
    "mastercardDebitIssuerBin":"automation debit card [587765]",
    "mastercardCreditIssuerBin":"489765 [489765]",
    "visaPrepaidIssuerBin":"488765",
    "visaDebitIssuerBin":"488765",
    "visaCreditIssuerBin":"488765",
+=======
+   "mastercardPrepaidIssuerBin":"532560",
+   "mastercardDebitIssuerBin":"543870",
+   "mastercardCreditIssuerBin":"589765",
+   "visaPrepaidIssuerBin":"443823",
+   "visaDebitIssuerBin":"418233",
+   "visaCreditIssuerBin":"489765",
+>>>>>>> c9ad8c62296fde73ab47bac488a829ac2c8800de
    "plasticId":"AUTOMATION PLASTIC CODE [AUT]",
    "pictureCode":"AUTOMATION PICTURE CODE [AUT]",
    "corporateClientCode":"Test Auto [12121217222000001]",
@@ -142,6 +154,7 @@
    "deviceEventBasedFeePlan":"AUTOMATION [TA7820EY]",
    "transactionLimitPlan":"AUTOMATION [TA7329LAEI]",
    "transactionPlan":"AUTOMATION [T9995H]",
+<<<<<<< HEAD
    "transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
    "creditPlan":"TA5931RPHJ [101]",
    "billingCycle":"AUTOMATION [128]",
@@ -178,6 +191,46 @@
 			"creditPlan": "TA5931RPHJ [101]",
 			"billingCycle": "AUTOMATION [128]",
 			"walletPlan": "AUTOMATION [TA6164QTOL]"
+=======
+   "creditPlan":"TA5931RPHJ [101]",
+   "billingCycle":"AUTOMATION [128]",
+   "walletPlan":"AUTOMATION [TA6164QTOL]",
+   "loyaltyPlan" : "Automation Test [AUTO]"
+   },
+   {
+   "productIdentity":"Credit",
+   "code":"121212",
+   "abbreviation":"AUTO",
+   "branch":"auto branch [1000]",
+   "cardPackIdGenerationTemplate":"AUTOMATION [PAN042]",
+   "deviceIdGenerationTemplate":"AUTOMATION [PAN019]",
+   "embossingVendor":"AUTOMATION PERS BUREAU [AUTOB1]",
+   "mastercardPrepaidIssuerBin":"532560",
+   "mastercardDebitIssuerBin":"543870",
+   "mastercardCreditIssuerBin":"589765",
+   "visaPrepaidIssuerBin":"443823",
+   "visaDebitIssuerBin":"418233",
+   "visaCreditIssuerBin":"489765",
+   "plasticId":"AUTOMATION PLASTIC CODE [AUT]",
+   "pictureCode":"AUTOMATION PICTURE CODE [AUT]",
+   "corporateClientCode":"Credit [12121218003000051]",
+   "dedupePlanCode":"TA5214BJPY [TA5214BJPY]",
+   "prepaidStatementPlan":"AUTOMATION [TA2771PDXN]",
+   "statementMessagePlan": "AUTOMATION [TA7040ERWW]",
+   "marketingMessagePlan": "AUTOMATION [TA3108PAKC]",
+   "documentCheckListPlan":"AUTOMATION [TA7468JFEU]",
+   "mccRulePlan":"AUTOMATION [TA9261NC4]",
+   "deviceJoiningAndMemberShipFeePlan":"DEV [DEV]",
+   "transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
+   "deviceEventBasedFeePlan":"DEV [DEV]",
+   "transactionLimitPlan":"AUTOMATION [TA1370YJAB]",
+   "transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
+   "transactionPlan":"AUTOMATION [T1157Z]",
+   "creditPlan":"TA5931RPHJ [101]",
+   "billingCycle":"AUTOMATION [128]",
+   "walletPlan": "AUTOMATION [TA1387LADE]"
+   "loyaltyPlan" : "Automation Test [AUTO]"
+>>>>>>> c9ad8c62296fde73ab47bac488a829ac2c8800de
    },
    {
    "productIdentity":"Prepaid",
@@ -202,6 +255,7 @@
    "marketingMessagePlan":"AUTOMATION [TA6508TNRG]",
    "documentCheckListPlan":"AUTOMATION [TA3988DCBJ]",
    "mccRulePlan":"AUTOMATION [TA8840AT5]",
+<<<<<<< HEAD
    "deviceJoiningAndMemberShipFeePlan":"AUTOMATION [TA6622TO]",
    "deviceEventBasedFeePlan":"AUTOMATION [TA6417MO]",
    "transactionLimitPlan":"AUTOMATION [TA4488ZYRO]",
@@ -261,4 +315,18 @@
    }
   ]
 >>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
+=======
+   "deviceJoiningAndMemberShipFeePlan":"DEV [DEV]",
+   "transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
+   "deviceEventBasedFeePlan":"DEV [DEV]",
+   "transactionLimitPlan":"AUTOMATION [TA1370YJAB]",
+   "transactionPlan":"AUTOMATION [T2847S]",
+   "creditPlan":"TA5931RPHJ [101]",
+   "billingCycle":"AUTOMATION [128]",
+   "transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
+   "walletPlan": "AUTOMATION [TA6164QTOL]",
+   "loyaltyPlan" : "Automation Test [AUTO]"
+   }
+  ]
+>>>>>>> c9ad8c62296fde73ab47bac488a829ac2c8800de
 }

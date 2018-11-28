@@ -5,12 +5,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanDetails;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanPlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
@@ -142,6 +146,16 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.getWalletBalanceInformationForRemittance(device, cardToCash);
 	}
 
+	public String getWalletBalanceAfterLoyaltyRedemption(Device device) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		return helpDeskPage.getWalletBalanceInformationAfterLoyaltyRedemption(device);
+	}
+	
+	public HashMap<String, BigDecimal> getWalletBalanceAfterLoyaltyRedemptionCredit() {
+		// helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		return helpDeskPage.noteDownCreditLimit("Card");
+	}
+		
 	public boolean verifyBalanceUpdatedCorreclty(String beforeLoadBalanceInformation, String transactionDetailsFromExcel, String afterLoadBalanceInformation) {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		return helpDeskPage.verifyBalanceUpdatedCorreclty(beforeLoadBalanceInformation, transactionDetailsFromExcel, afterLoadBalanceInformation);
@@ -193,16 +207,6 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.noteDownRequiredValues(deviceNumber);
 	}
 	
-	public String getWalletBalanceAfterLoyaltyRedemption(Device device) {
-		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
-		return helpDeskPage.getWalletBalanceInformationAfterLoyaltyRedemption(device);
-	}
-
-	public HashMap<String, BigDecimal> getWalletBalanceAfterLoyaltyRedemptionCredit() {
-		// helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
-		return helpDeskPage.noteDownCreditLimit("Card");
-	}
-	
 	public BigDecimal verifyAvailableLimit(String type) {
 		clickCustomerCareEditLink();
 		return helpDeskPage.noteDownAvailableLimit(type);
@@ -238,23 +242,54 @@ public class HelpdeskWorkflow {
 	public HashMap<String,BigDecimal> activateCreditLimitChangeRequest(HelpdeskGeneral helpdeskGeneral){
 		return helpDeskPage.activateCreditLimitChangeRequest(helpdeskGeneral);
 	}
-
-	public Map<String, String> fetchCardBalanceAndCloseHelpdesk(Device device) {
-		Map<String, String> balanceMapBeforePayments;
-		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+	
+	public Map<String,String> fetchCardBalanceAndCloseHelpdesk(Device device) {
+		Map<String, String> balanceMapBeforePayments;	
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);	
 		balanceMapBeforePayments = helpDeskPage.checkCreditBalances(device);
 		helpDeskPage.clickEndCall();
-		return balanceMapBeforePayments;
-	}
-
-	public void compareBalancesAfterPayment(Payment payment) {
-		helpDeskPage.checkAndCompareBalancePostPayment(payment);
+		return balanceMapBeforePayments;		
 	}
 	
-	public Map<String, String> getLoyaltyDetails() {
-		return helpDeskPage.getLoyaltyDetails();
+	public void compareBalancesAfterPayment(Payment payment){
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);	
+		helpDeskPage.checkAndCompareBalancePostPayment(payment);
 	}
 
+	public void checkBalanceDetailsThroughHelpdesk(Device device, String payment) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);	
+		helpDeskPage.checkBalancesDetails(device,payment);
+		helpDeskPage.clickEndCall();
+	}
+	
+	public void compareBalanceDetailsPostPayments(String payment){
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);	
+		helpDeskPage.compareBalanceDetailsPostPayments(payment);
+	}
+
+	public String verifyUnpaidAndAuthFlag(Device device, String label) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		helpDeskPage.getDeviceStatus(device);
+		return helpDeskPage.verifyUnpaidAndAuthFlag(device,label);
+	}
+	
+	public List<LoanDetails> raiseRetailToLoanRequest(HelpdeskGeneral helpdeskGeneral,LoanPlan loanPlan,TransactionSearchDetails transactionDetails){
+		return helpDeskPage.retailTransactionToLoan(helpdeskGeneral,loanPlan,transactionDetails);
+	}
+	public String getDeclineCode(Device device, String rrnNumber){
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		return helpDeskPage.getDeclineCodeForTransaction(device, rrnNumber);
+		
+	}
+	public String raiseLoanCancellationRequest(LoanPlan loanPlan, Device device, HelpdeskGeneral helpdeskGeneral) {
+		return helpDeskPage.raiseLoanCancellationRequest(helpdeskGeneral,loanPlan,device);
+		
+	}
+
+	public String raiseLoanPreClosureRequest(HelpdeskGeneral helpdeskGeneral,LoanPlan loanPlan,Device device){
+		return helpDeskPage.raiseLoanPreclosureRequest(helpdeskGeneral,loanPlan,device);
+	}
+	
 	public void navigateToLoyaltyDetails(Device device) {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		helpDeskPage.searchByDeviceNumber(device);
@@ -263,5 +298,8 @@ public class HelpdeskWorkflow {
 		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
 		helpDeskPage.clickLoyaltyBtn();
 	}
+	
+	public Map<String, String> getLoyaltyDetails() {
+		return helpDeskPage.getLoyaltyDetails();
+	}
 }
-

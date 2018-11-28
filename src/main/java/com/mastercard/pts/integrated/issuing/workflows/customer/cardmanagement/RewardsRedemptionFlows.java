@@ -24,6 +24,7 @@ public class RewardsRedemptionFlows {
 		rewards.verifyLoyaltyPointsRedeemed(provider);
 	}
 
+
 	public void verifyRewardsRedemptionScreenForCumulativeTxn(Device device, RewardsRedemption rewardsRedemption,
 			KeyValueProvider provider) {
 		RewardRedemptionPage rewards = navigator.navigateToPage(RewardRedemptionPage.class);
@@ -38,5 +39,11 @@ public class RewardsRedemptionFlows {
 		rewards.searchForRewardsRedemption(device);
 		rewards.selectLoyaltyPlan(rewardsRedemption);
 		rewards.verifyLoyaltyPointsNotRedeemed();
+	}
+
+	
+	public String getExpiredLoyaltyPoints() {
+		RewardRedemptionPage rewards = navigator.navigateToPage(RewardRedemptionPage.class);
+		return rewards.getExpiredLoyaltyPoints();
 	}
 }

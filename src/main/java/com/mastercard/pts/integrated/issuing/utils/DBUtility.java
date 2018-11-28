@@ -152,4 +152,5 @@ public class DBUtility {
 		String colName = Constants.INSTITUTION_DATE+"('"+ institutionCode +"')";
 		return getSingleRecordColumnValueFromDB(query, colName);
 	}
+
 }

@@ -14,7 +14,6 @@ public class PromotionPlan implements HasCodeAndDescription {
 
 	private String promotionPlanCode;
 	private String promotionDescription;
-
 	private String promotionCurrency;
 	private String promotionamountSpent;
 	private String promotionpointsEarned;
@@ -106,7 +105,10 @@ public class PromotionPlan implements HasCodeAndDescription {
 
 	private String promotionNoOfTransactions;
 	private String promotion;
+	private String floorTransactionAmount;
+	private String promotionLoyaltyPlan;
 
+	
 	public String getPromotionPlanCode() {
 		return promotionPlanCode;
 	}
@@ -210,4 +212,5 @@ public class PromotionPlan implements HasCodeAndDescription {
 	public String getDescription() {
 		return getPromotionDescription();
 	}
-}
+	
+	}

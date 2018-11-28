@@ -29,9 +29,11 @@ public class PromotionPlanPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(PromotionPlanPage.class);
 	private static final String ADD_PROMOTION_PLAN = "Add Promotion Plan";
+	private static final String EDIT_PROMOTION_PLAN = "Edit Promotion Plan";
 	private static final String TEXT = "TEST";
 	private static final int NUMBER = 3;
-	private static final String currency = "INR [356]";
+	private static final String currency="INR [356]";
+	private String pointsEarned;
 	
 	@Autowired
 	public DBUtility dbutil;
@@ -77,10 +79,10 @@ public class PromotionPlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=lypTxnAmt]")
 	private MCWebElement floorTxnAmtTxt;
-
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=lypCumTxnamt]")
 	private MCWebElement thresholdAmtTxt;
-
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=lypCumNotxns]")
 	private MCWebElement NoOfTrnxsTxt;
 
@@ -98,6 +100,7 @@ public class PromotionPlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@fld_fqn='lypPromotionType']/input[@value='T']")
 	private MCWebElement promotionTypetransaction;
+
 
 	public void verifyUiOperationStatus(PromotionPlan plan) {
 		logger.info("Promotion Plan");
@@ -119,6 +122,15 @@ public class PromotionPlanPage extends AbstractBasePage {
 			verifyAlreadyExistsAndClickCancel();
 		});
 	}
+
+	public void addPromotionPlanConfigurationwithMCG(PromotionPlan plan) {
+		logger.info(ADD_PROMOTION_PLAN);
+		clickAddNewButton();
+		runWithinPopup(ADD_PROMOTION_PLAN, () -> {
+			addPromotionPlanwithMCG(plan);
+			verifyAlreadyExistsAndClickCancel();
+		});
+	}
 	
 	public void inputFromDate() {
 		String currentDateString = dbutil.getCurrentDateForInstitution("303045");
@@ -131,15 +143,6 @@ public class PromotionPlanPage extends AbstractBasePage {
 		LocalDate date = LocalDate.parse(currentDateString, DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss")).plusDays(100);
 		WebElementUtils.pickDate(endDateDPkr, date);
 		
-	}
-
-	public void addPromotionPlanConfigurationwithMCG(PromotionPlan plan) {
-		logger.info(ADD_PROMOTION_PLAN);
-		clickAddNewButton();
-		runWithinPopup(ADD_PROMOTION_PLAN, () -> {
-			addPromotionPlanwithMCG(plan);
-			verifyAlreadyExistsAndClickCancel();
-		});
 	}
 
 	private void addPromotionPlan(PromotionPlan plan) {
@@ -160,6 +163,7 @@ public class PromotionPlanPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(mccRuleDdwn, plan.getMccCode());
 		clickSaveButton();
 	}
+
 
 	private void addPromotionPlanwithMCG(PromotionPlan plan) {
 		WebElementUtils.enterText(lypPromotionCodeTxt, plan.getPromotionPlanCode());
@@ -244,5 +248,34 @@ public class PromotionPlanPage extends AbstractBasePage {
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(promotionalPlanCodeTxt));
+	}
+	
+	public String getPointsEarned() {
+		runWithinPopup(EDIT_PROMOTION_PLAN, () -> {
+			pointsEarned = lypPtsEarnedTxt.getAttribute("value");
+			clickCancelButton();
+		});
+		return pointsEarned;
+	}
+	
+	public void searchByPlanCode(String code) {
+		WebElementUtils.enterText(lypPromotionCodeTxt, code);
+		clickSearchButton();
+		editFirstRecord();
+	}
+	
+	public String getAmountSpent() {
+		runWithinPopup(EDIT_PROMOTION_PLAN, () -> {
+			pointsEarned = lypAmtSpentTxt.getAttribute("value");
+			clickCancelButton();
+		});
+		return pointsEarned;
+	}
+
+	public void selectPromoRulesMCG(String value) {
+		runWithinPopup(EDIT_PROMOTION_PLAN, () -> {
+			WebElementUtils.selectDropDownByValue(mcgRuleDdwn, value);
+			saveOrDetailsOrSearchClick();
+		});
 	}
 }

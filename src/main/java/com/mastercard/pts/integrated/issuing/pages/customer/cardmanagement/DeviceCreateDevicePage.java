@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -165,8 +166,11 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Existing Client Code')]")
 	private MCWebElement existingClientLabel;
-
-	public String getWalletsFromPage() {
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePlanPromoCode1:input:dropdowncomponent")
+	private MCWebElement promotionPlanDDwn;
+		
+	public String getWalletsFromPage(){
 		return getTextFromPage(createdWalletList);
 	}
 
@@ -355,8 +359,11 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		clickNextButton();
 
 		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());
-		WebElementUtils.selectDropDownByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
-		WebElementUtils.selectDropDownByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
+		selectByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
+		if (Objects.nonNull(device.getPromotionPlanCode())) {
+			selectByVisibleText(promotionPlanDDwn, device.getPromotionPlanCode());
+		}
+		selectByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
 	}
 
 	private void fillProfileAndAddressDetailsAndClickNext(Device device) {
@@ -451,7 +458,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn, 1);
 			WebElementUtils.enterText(creditLimitTxt, String.valueOf(Integer.parseInt(program.getCreditLimit()) + 1));
 		}
-		clickNextButton();
-
+	
+		clickNextButton();		
 	}
 }

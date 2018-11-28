@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.loyalty;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
@@ -7,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 
 import junit.framework.Assert;
 
+import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,7 +87,58 @@ public class LoyaltyPlanSteps {
 		data.setLoyaltyPlan(LP);
 		uiVerificationLoyaltyWorkflow.EditLoyaltyPlanPage(loyaltyplan);
 	}
+
 	
+	@When("user notes down max loyalty points for plan")
+	@Then("user notes down max loyalty points for plan")
+	public void noteMaxLoyaltyPoints() {
+		Double maxPts = 0.0;
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+		if(data.getLoyaltyPlan() != null && !data.getLoyaltyPlan().trim().isEmpty())
+			maxPts = Double.parseDouble(uiVerificationLoyaltyWorkflow.getMaxLoyaltyPointsPerCycle(data.getLoyaltyPlan()));
+		context.put(Constants.MAX_LOYALTY_POINTS, maxPts);
+	}
+
+	@Then("deactivate loyalty plan")
+	public void inactivateLoyaltyPlan() {
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+		uiVerificationLoyaltyWorkflow.disableLoyaltyPlan(data.getLoyaltyPlan());
+	}
+	
+	@Then("select loyalty plan period unit as Month[M]/Year[Y] - $value")
+	public void selectPeriodUnit(String value) {
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+		uiVerificationLoyaltyWorkflow.selectPeriodUnitByIndex(data.getLoyaltyPlan(), value);
+	}
+	
+	@Given("use loyalty plan $plan")
+	@Then("use loyalty plan $plan")
+	@When("use loyalty plan $plan")
+	public void useLoyaltyPlan(String plan) {
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+		if(plan.equals("none"))
+			data.setLoyaltyPlan("");
+		else
+			data.setLoyaltyPlan(plan);
+		context.put(CreditConstants.JSON_VALUES, data);
+	}
+	
+	@Then ("verify loyalty points are credited on issuance for promotion plan code $plan")
+	public void verifyLpOnIssuance(String plan) {
+		Double pointsEarned;
+		String points = uiVerificationLoyaltyWorkflow.getPointsEarnedOnPromotionPlan(plan);
+		if(points.trim().equals("-"))
+			pointsEarned = 0.0;
+		else
+			pointsEarned = Double.parseDouble(points);
+		assertEquals(context.get(Constants.AVAILABLE_LOYALTY_POINTS), pointsEarned);
+	}
+	
+	@Then ("verify loyalty points are not credited on issuance for promotion plan code $plan")
+	public void verifyLPNotCreditedOnIssuance() {
+		assertEquals(context.get(Constants.AVAILABLE_LOYALTY_POINTS), (Double)0.0);
+	}
+
 	@Then("calculate loyalty points")
 	public void calculateLoyaltyPoints() {
 		AuthorizationRequest request = AuthorizationRequest.createWithProvider(provider);
@@ -100,17 +153,7 @@ public class LoyaltyPlanSteps {
 			}
 		}
 	}
-	
-	@When("use loyalty plan $plan")
-	@Then("use loyalty plan $plan")
-	public void useLoyaltyPlan(String plan) {
-		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
-		if(plan.equals("none"))
-			data.setLoyaltyPlan("");
-		else
-			data.setLoyaltyPlan(plan);
-		context.put(CreditConstants.JSON_VALUES, data);
-	}
+
 	
 	@When("user adds loyalty plan for autoredemption parameter as $value")
 	public void addLoyaltyPlanForAutoredemption(String value){
@@ -119,6 +162,12 @@ public class LoyaltyPlanSteps {
 		loyaltyplan.setAutoRedemptionMethod(value);		
 		uiVerificationLoyaltyWorkflow.addLoyaltyPlanWithAutoRedemption(loyaltyplan);
 		data.setLoyaltyPlan(loyaltyplan.buildDescriptionAndCode());
+	}
+
+	@Then("select blocked MCG for loyalty as $value")
+	public void selectBlockedMCG(String value) {
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+		uiVerificationLoyaltyWorkflow.selectBlockedMCG(data.getLoyaltyPlan(), value);
 	}
 
 }

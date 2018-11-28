@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoyaltyPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.NewLoyaltyPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -39,13 +40,17 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 	private static final int NUMBER = 3;
 	private static final int NUMBER1 = 1;
 	private static final String ADD_LOYALTY_PLAN = "Add Loyalty Plan";
-	private static final String VIEW_LOYALTY_PLAN = "View Loyalty Plan";
-	private static final String currency = "INR [356]";
+	private static final String EDIT_LOYALTY_PLAN = "Edit Loyalty Plan";
+	private static final String currency="INR [356]";
 	private String maxPtsPerCycle;
+
+
+	@Autowired
+	private TestContext context;
 	
 	@Autowired
 	private DBUtility dbUtil;
-
+	
 	@Autowired
 	NewLoyaltyPlan newLoyaltyPlan;
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
@@ -65,7 +70,7 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=maxPtsPerCycle]")
 	private MCWebElement maxPtsPerCycleTxt;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='maxPtsPerCycle']/..")
 	private MCWebElement maxPtsPerCycleValue;
 
@@ -105,6 +110,15 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=lytRedeemAmt]")
 	private MCWebElement lytRedeemAmtTxt;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "//input[@name='radtables:1:rows:5:cols:colspanMarkup:inputField:radioComponentio' and @value='A']")
+	private MCWebElement radioBtnActive;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='tables:1:rows:5:cols:colspanMarkup:inputField:radioComponent' and @value='I']")
+	private MCWebElement radioBtnInactive;
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:6:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	private MCWebElement blockedMCG;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = ".//*[@alt='Edit Record']")
 	private MCWebElement editBtn;
@@ -127,7 +141,7 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 
 		
 	public void inputFromDate() {
-		String currentDateString = dbUtil.getCurrentDateForInstitution("303045");
+		String currentDateString = dbUtil.getCurrentDateForInstitution(context.get("USER_INSTITUTION_SELECTED"));
 		LocalDate date = LocalDate.parse(currentDateString, DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss")).plusDays(1);
 		WebElementUtils.pickDate(planStartDateDPkr, date);
 	}
@@ -190,22 +204,45 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 		});
 	}
 
-	public void searchByPlanCode(String code) {
-		WebElementUtils.enterText(lytPlanCodeTxt, code);
-		clickSearchButton();
-		viewFirstRecord();
-	}
-
-	public String getMaxPtsPerCycle() {
-		runWithinPopup(VIEW_LOYALTY_PLAN, () -> {
-			maxPtsPerCycle = maxPtsPerCycleValue.getText();
-			clickCloseButton();
-		});
-		return maxPtsPerCycle;
-	}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(loyaltyPlanCodeTxt));
 	}
+	
+	public void searchByPlanCode(String code) {
+		WebElementUtils.enterText(lytPlanCodeTxt, code);
+		clickSearchButton();
+		editFirstRecord();
+	}
+	
+	public String getMaxPtsPerCycle() {
+		runWithinPopup(EDIT_LOYALTY_PLAN, () -> {
+			maxPtsPerCycle = maxPtsPerCycleValue.getAttribute("value");
+			clickCancelButton();
+		});
+		return maxPtsPerCycle;
+	}
+	
+	public void disableLoyaltyPlan() {
+		runWithinPopup(EDIT_LOYALTY_PLAN, () -> {
+			WebElementUtils.selectRadioBtn(radioBtnInactive);
+			saveOrDetailsOrSearchClick();
+		});
+	}
+	
+	public void selectPeriodUnitByIndex(String value) {
+		runWithinPopup(EDIT_LOYALTY_PLAN, () -> {
+			WebElementUtils.selectDropDownByValue(periodUnitDDwn, value);
+			saveOrDetailsOrSearchClick();
+		});
+	}
+	
+	public void selectBlockedMCG(String value) {
+		runWithinPopup(EDIT_LOYALTY_PLAN, () -> {
+			WebElementUtils.selectDropDownByValue(blockedMCG, value);
+			saveOrDetailsOrSearchClick();
+		});
+	}
+
 }

@@ -25,9 +25,8 @@ public class LoyaltyTransactionPlanSteps {
 	@When("user selects all the transactions for loyalty transaction plan")
 	public void selectAllTransactions() {
 		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
-		// loyaltyplan.setLoyaltyTransactionPlan(context.get(ContextConstants.TRANSACTION_PLAN));
-		String a = data.getTransactionPlan().substring(12);
-		loyaltyplan.setLoyaltyTransactionPlan(a);
+		String transactionPlan = data.getTransactionPlan();
+		loyaltyplan.setLoyaltyTransactionPlan(transactionPlan.substring(transactionPlan.indexOf("[")+1, transactionPlan.indexOf("]")));
 		loyaltyTransflows.selectTransactions(loyaltyplan);
 	}
 
