@@ -64,10 +64,10 @@ public class DumpSteps {
 		assertNotNull(partialFileName + " : Batch file is successfully downloaded", batchFile);
 	}
 	
-	@When("user compares mandatory field with a position $positionNumber in downloaded file")
-	@Then("user compares mandatory field with a position $positionNumber in downloaded file")
-	public void userComparesMandatoryValue(int position) {
-		Assert.assertTrue("Field Value is not Present in Downloaded CSV File ", csvDataLoader.compareValueFromCSV(position));
+	@When("using application position number $applicationNumberPosition user compares mandatory field with a position $mandatoryFieldPositionNumber in downloaded file")
+	@Then("using application position number $applicationNumberPosition user compares mandatory field with a position $mandatoryFieldPositionNumber in downloaded file")
+	public void userComparesMandatoryValue(int applicationNumberPosition, int mandatoryFieldPositionNumber) {
+		Assert.assertTrue("Field Value is not Present in Downloaded CSV File ", csvDataLoader.compareValueFromCSV(applicationNumberPosition, mandatoryFieldPositionNumber));
 	}
 
 }

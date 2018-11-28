@@ -32,7 +32,7 @@ WorkFlowRuleFlows workFlowRuleFlows;
 	}
 	
 	@When("User Adds WorkFlow Rule with Risk Analysis for $fieldName and $value on program")
-	@Then("User Adds WorkFlow Rule with Rish Analysis for $fieldName and $value on program")
+	@Then("User Adds WorkFlow Rule with Risk Analysis for $fieldName and $value on program")
 	public void addingWorkFlowRuleToProgramWithRiskAnalysis(String fieldName, String value) {
 		Assert.assertTrue("Application Scoring is not added successfully", workFlowRuleFlows.userAddsWorkFlowRuleOnlyForRiskAnalysis(fieldName, value));
 	}

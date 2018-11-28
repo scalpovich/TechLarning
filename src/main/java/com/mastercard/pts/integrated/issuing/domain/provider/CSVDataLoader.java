@@ -39,11 +39,6 @@ public class CSVDataLoader implements DataLoader {
 	@Autowired
 	private TestContext context;
 	
-	@Autowired
-	private KeyValueProvider provider;
-	
-	public static int CSV_Mandatory_Fix_Position = 179;
-	
 	@Override
 	public Optional<Map<String, String>> loadData(String storyName) {
 		if (!storyName.isEmpty()) {
@@ -100,7 +95,7 @@ public class CSVDataLoader implements DataLoader {
 	
 	public List loadRecordDataFromCSV(int columnId,String columnValue){
 		String filePath = context.get(CreditConstants.CSV_FILE_NAME);
-		logger.info(filePath);
+		logger.info("Local Destination File path for downloaded CSV : {}",filePath);
 		ArrayList<String> list = new ArrayList<String>();
 		try (FileReader is = new FileReader(filePath)) {
 			logger.info("Starting to read test data from csv file...");
@@ -122,12 +117,12 @@ public class CSVDataLoader implements DataLoader {
 		return list;
 	}
 	
-	public boolean compareValueFromCSV(int positionInCSV){
+	public boolean compareValueFromCSV(int applicaitonNumberPosition, int mandatoryFieldPositionNumber){
 		Device device = context.get(ContextConstants.DEVICE);
  		DevicePlan plan = context.get(ContextConstants.DEVICE_PLAN);
  		String mandatoryFieldValue = device.getMandatoryFieldValue();
  		logger.info("Mandatory Field Value is : {}", mandatoryFieldValue);
-		return loadRecordDataFromCSV(CSV_Mandatory_Fix_Position, plan.getDevicePlanCode()).get(positionInCSV).equals(mandatoryFieldValue);
+		return loadRecordDataFromCSV(applicaitonNumberPosition, plan.getDevicePlanCode()).get(mandatoryFieldPositionNumber).equals(mandatoryFieldValue);
 	}
 
 }

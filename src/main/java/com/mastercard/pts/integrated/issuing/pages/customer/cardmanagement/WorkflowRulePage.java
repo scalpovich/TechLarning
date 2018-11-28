@@ -187,8 +187,8 @@ public class WorkflowRulePage extends AbstractBasePage {
 		return successMessageDisplay();
 	}
 	
-	public boolean workFlowRulesForRiskAnalysis(String fieldName1, String fieldName2) {
-		addWorkFlowDetails(fieldName1, fieldName2);
+	public boolean workFlowRulesForRiskAnalysis(String workflowField1, String workflowOperationValue) {
+		addWorkFlowDetails(workflowField1, workflowOperationValue);
 		clickScoreCheckBox(true);
 		clickCreditBureauCheckBox(true);
 		saveButtonClick();
