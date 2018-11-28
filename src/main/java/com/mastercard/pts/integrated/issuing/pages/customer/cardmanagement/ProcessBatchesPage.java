@@ -403,8 +403,13 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		} catch (ParseException e) {
 			throw Throwables.propagate(e);
 		}
-		if (!dateFromUI.after(todayDate))
+		
+		if(batch.getBatchName().equalsIgnoreCase("Matching")){
 			submitAndVerifyBatch();
+		}
+			
+		if (!dateFromUI.after(todayDate))
+		submitAndVerifyBatch();
 
 		return batchStatus;
 	}
