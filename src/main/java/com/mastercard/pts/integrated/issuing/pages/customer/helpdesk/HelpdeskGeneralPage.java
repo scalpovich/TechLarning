@@ -1809,10 +1809,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		runWithinPopup("Process Loan Pre-Closure", ()->{	
 			SimulatorUtilities.wait(500);
 			preclosureFee=preclosureFeeTxt.getAttribute("value");
+			enterNote(MiscUtils.randomAlphabet(10));
 			SimulatorUtilities.wait(3000);	
 			clickWhenClickable(processBtn);	
 			waitForElementVisible(okBtn);
 			elementToBeClickable(okBtn);
+			clickWhenClickable(okBtn);	
 		});	
 		return preclosureFee;
 	}
