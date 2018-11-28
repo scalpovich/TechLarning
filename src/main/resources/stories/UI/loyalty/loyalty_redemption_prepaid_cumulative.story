@@ -13,7 +13,7 @@ And user selects all the transactions for loyalty transaction plan
 And for Magnetic Stripe Card [1] User fills Device Plan for Prepaid product for Mastercard
 And User fills Wallet Fee Plan for Prepaid product
 And User fills Wallet Plan for Prepaid product and program Retail General Purpose Card
-When user edits the loyalty plan for Maximum Points Each Period
+When user edits the loyalty plan Automation Test [AUTO] for Maximum Points Each Period
 When user adds promotion Plan with Cumulative Transactions
 When user edits the start date for promotion plan
 When user maps promotion Plan with loyalty Plan with priority 1

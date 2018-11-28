@@ -520,25 +520,10 @@ public class ProgramPage extends AbstractBasePage {
 		clickNextButton();
 		selectWalletPlanPlan1(program.getFirstWalletPlan());
 		selectDevicePlanPlan1DDwn(program.getDevicePlanPlan1());
-<<<<<<< HEAD
-
-		if (Objects.nonNull(program.getApplicationType()) || Objects.nonNull(program.getSubApplicationType())) {
-			if (program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)
-					|| program.getApplicationType().contains(
-							ApplicationType.ADD_ON_DEVICE) /*
-															 * && program.
-															 * getSubApplicationType
-															 * ().contains(
-															 * SubApplicationType
-															 * .EXISTING_CLIENT)
-															 */) {
-				selectDevicePlanPlan2DDwn(program.getDevicePlanPlan2());
-=======
-		
+	
 		if(Objects.nonNull(program.getApplicationType()) || Objects.nonNull(program.getSubApplicationType())){
 			if(program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||program.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){
 			      selectDevicePlanPlan2DDwn(program.getDevicePlanPlan2());
->>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 			}
 		}
 
@@ -925,11 +910,7 @@ public class ProgramPage extends AbstractBasePage {
 			editsProgram(program, editItem);
 		});
 	}
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 	public void editProgramToEnableCardLimit(String program) {
 		enterValueinTextBox(enterProgram, program);
 		clickWhenClickable(search);
@@ -941,19 +922,12 @@ public class ProgramPage extends AbstractBasePage {
 		});
 		verifyOperationStatus();
 	}
-<<<<<<< HEAD
 
-	public void cardCreditLimitValidation() {
-		SimulatorUtilities.wait(2000);
-		clickWhenClickable(txTLimitLevelValidation);
-		ClickCheckBox(chkBxCardCreditLimitValidation, true);
-=======
 	
 	public void cardCreditLimitValidation(){
 		SimulatorUtilities.wait(2000);
 		clickWhenClickable(txtLimitLevelValidation);
 		ClickCheckBox(chkBxCardCreditLimitValidation,true);
->>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 		clickSaveButton();
 	}
 }

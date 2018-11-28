@@ -1,7 +1,13 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.loyalty;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -14,7 +20,9 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Loya
 import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.NewLoyaltyPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
+import com.mastercard.pts.integrated.issuing.utils.DBUtility;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -34,6 +42,9 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 	private static final String VIEW_LOYALTY_PLAN = "View Loyalty Plan";
 	private static final String currency = "INR [356]";
 	private String maxPtsPerCycle;
+	
+	@Autowired
+	private DBUtility dbUtil;
 
 	@Autowired
 	NewLoyaltyPlan newLoyaltyPlan;
@@ -66,6 +77,22 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.ID, valueToFind = "lytCalcMethod")
 	private MCWebElement roundedOffChkBox;
+	
+	@PageElement(findBy = FindBy.ID, valueToFind = "lytPlanAutoRedeemFlg")
+	private MCWebElement autoRedemptionChkBox;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='lytPlanAutoRedemDayMethod']/select")
+	private MCWebElement autoredemptionmethodDDWn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='lytPlanAutoRedeemMinPts']/input")
+	private MCWebElement autoredemptionMinAmtTxt;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='lytPlanAutoRedeemDay']/input")
+	private MCWebElement autoredemptionDayTxt;
+	
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
+	private MCWebElement institutionDateTxt;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=lytMinPts]")
 	private MCWebElement lytMinPtsTxt;
@@ -96,13 +123,22 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 			verifyAlreadyExistsAndClickCancel();
 		});
 	}
+	
+
+		
+	public void inputFromDate() {
+		String currentDateString = dbUtil.getCurrentDateForInstitution("303045");
+		LocalDate date = LocalDate.parse(currentDateString, DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss")).plusDays(1);
+		WebElementUtils.pickDate(planStartDateDPkr, date);
+	}
+
 
 	private void addLoyaltyPlan() {
 		WebElementUtils.enterText(lytPlanCodeTxt, CustomUtils.randomAlphaNumeric(5).toUpperCase());
 		WebElementUtils.enterText(lytDescriptionTxt, TEXT);
 		WebElementUtils.selectDropDownByVisibleText(currencyDDwn, currency);
 		WebElementUtils.enterText(lytValidityNumTxt, NUMBER);
-		WebElementUtils.pickDate(planStartDateDPkr, futureDate);
+		inputFromDate();
 		WebElementUtils.enterText(maxPtsPerCycleTxt, NUMBER);
 		WebElementUtils.selectDropDownByIndex(periodUnitDDwn, NUMBER1);
 		WebElementUtils.enterText(lytMinPtsTxt, NUMBER);
@@ -113,6 +149,32 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 		newLoyaltyPlan.setLoyaltyPlan(lytPlanCodeTxt.getAttribute("value"));
 		clickSaveButton();
 	}
+	
+	public void addLoyaltyPlanforAutoRedemption(LoyaltyPlan plan) {
+		clickAddNewButton();
+		runWithinPopup(ADD_LOYALTY_PLAN, () -> {
+		WebElementUtils.enterText(lytPlanCodeTxt, plan.getLoyaltyPlanCode());
+		WebElementUtils.enterText(lytDescriptionTxt, plan.getDescription());
+		WebElementUtils.selectDropDownByVisibleText(currencyDDwn, currency);
+		WebElementUtils.enterText(lytValidityNumTxt, NUMBER);
+		inputFromDate();
+		WebElementUtils.enterText(maxPtsPerCycleTxt, NUMBER);
+		WebElementUtils.selectDropDownByIndex(periodUnitDDwn, NUMBER1);
+		WebElementUtils.enterText(lytMinPtsTxt, NUMBER);
+		WebElementUtils.enterText(lytGraceDaysTxt, NUMBER);
+		WebElementUtils.enterText(lytRedeemPtsTxt, NUMBER);
+		WebElementUtils.enterText(lytRedeemAmtTxt, NUMBER);
+		ClickCheckBox(roundedOffChkBox, true);
+		
+		ClickCheckBox(autoRedemptionChkBox, true);
+		WebElementUtils.selectDropDownByVisibleText(autoredemptionmethodDDWn, plan.getAutoRedemptionMethod());
+		WebElementUtils.enterText(autoredemptionMinAmtTxt, plan.getAutoRedemptionMinAmt());
+		WebElementUtils.enterText(autoredemptionDayTxt, plan.getAutoRedemptionDay());
+		
+		newLoyaltyPlan.setLoyaltyPlan(lytPlanCodeTxt.getAttribute("value"));
+		clickSaveButton();
+		});
+	}
 
 	public void editLoyaltyPlan(LoyaltyPlan loyaltyplan) {
 		WebElementUtils.enterText(lytPlanCodeTxt, loyaltyplan.getLoyaltyTransactionPlan());
@@ -120,7 +182,10 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 		SimulatorUtilities.wait(5000);
 		editBtn.click();
 		runWithinPopup("Edit Loyalty Plan", () -> {
+			if(loyaltyplan.getMaxloyaltypoints()!= null)
 			WebElementUtils.enterText(maxPtsPerCycleTxt, loyaltyplan.getMaxloyaltypoints());
+			if(loyaltyplan.getAutoRedemptionDay()!= null)
+				WebElementUtils.enterText(autoredemptionDayTxt, loyaltyplan.getAutoRedemptionDay());
 			clickSaveButton();
 		});
 	}

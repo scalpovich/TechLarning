@@ -415,7 +415,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			}
 			try {
 				if ((batch.getProductType().equalsIgnoreCase(ProductType.CREDIT))
-						|| (batch.getBatchName().equalsIgnoreCase("End Of Day - Credit [DAILY]"))) {
+						|| (batch.getBatchName().equalsIgnoreCase("EOD-Credit"))) {
 					String query = Constants.INSTITUTION_NUMBER_QUERY_START + context.get("USER_INSTITUTION_SELECTED")
 							+ Constants.INSTITUTION_NUMBER_QUERY_END;
 					String colName = Constants.INSTITUTION_DATE + "('" + context.get("USER_INSTITUTION_SELECTED")
@@ -456,6 +456,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 		else if ("EOD-Credit".equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "End Of Day - Credit [DAILY]");
+		
+		else if ("EOM-Credit".equalsIgnoreCase(batchName))
+			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "End Of Month - Credit [EOM]");
 
 		else if ("Statement Extract".equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Statement Extract [STATEMENT_GENERATION]");
@@ -619,44 +622,6 @@ public class ProcessBatchesPage extends AbstractBasePage {
         getFinder().getWebDriver().switchTo().defaultContent();
         return isProcessed;
 
-<<<<<<< HEAD
-		// unless it is completed, refresh it - No of attempts: 100
-		for (int i = 0; i < NUMBER_OF_ATTEMPTS_TO_CHECK_SUCCESS_STATE; i++) {
-			if (processBatchStatusTxt.getText().equalsIgnoreCase("PENDING [0]")
-					|| processBatchStatusTxt.getText().equalsIgnoreCase("IN PROCESS [1]")) {
-				ClickButton(closeBtn);
-				waitForLoaderToDisappear();
-				getFinder().getWebDriver().switchTo().defaultContent();
-				waitForLoaderToDisappear();
-				clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(statusXpath)));
-				switchToIframe(Constants.VIEW_BATCH_DETAILS);
-				waitForLoaderToDisappear();
-				waitForElementVisible(processBatchStatusTxt);
-			} else if (processBatchStatusTxt.getText().equalsIgnoreCase("SUCCESS [2]")) {
-				if (rejectedCountTxt.getText().contains("0") || rejectedCountTxt.getText().contains("-")) {
-					isProcessed = true;
-					break;
-				} else {
-					ClickButton(tracesLink);
-					getBatchTraces();
-					break;
-				}
-			} else if (processBatchStatusTxt.getText().equalsIgnoreCase("FAILED [3]")) {
-				ClickButton(tracesLink);
-				getBatchTraces();
-				break;
-			}
-		}
-		processBatchesDomain.setJoBID(processBatchjobIDTxt.getText());
-		MiscUtils.reportToConsole("JobID: {}", processBatchesDomain.getJoBID());
-		context.put(CreditConstants.JOB_ID, processBatchesDomain.getJoBID());
-		ClickButton(closeBtn);
-		// waitForPageToLoad(getFinder().getWebDriver());
-		waitForWicket(driver());
-		getFinder().getWebDriver().switchTo().defaultContent();
-		return isProcessed;
-=======
->>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 	}
 
 	public boolean processBatchUpload(ProcessBatches processBatchesDomain, String fileName) {
@@ -723,9 +688,16 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	 * @return status of batch e.g pass, fail
 	 */
 	public String processCreditBillingBatch(ProcessBatches batch) {
-		selectBatchTypeAndName(batch);
-		WebElementUtils.pickDate(bussinessDateTxt,
-				DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt)));
+		selectBatchTypeAndName(batch);		
+		
+		String query = Constants.INSTITUTION_NUMBER_QUERY_START + context.get("USER_INSTITUTION_SELECTED")
+				+ Constants.INSTITUTION_NUMBER_QUERY_END;
+		String colName = Constants.INSTITUTION_DATE + "('" + context.get("USER_INSTITUTION_SELECTED")
+				+ "')";
+		inputToDate(DateUtils.convertInstitutionCurrentDateInLocalDateFormat(
+				dbUtils.getSingleRecordColumnValueFromDB(query, colName)));
+		//WebElementUtils.pickDate(bussinessDateTxt,
+		//		DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt)));
 		submitAndVerifyBatch();
 		return batchStatus;
 	}

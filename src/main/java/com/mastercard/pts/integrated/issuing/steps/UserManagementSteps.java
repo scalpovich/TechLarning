@@ -130,6 +130,10 @@ public class UserManagementSteps {
 		loginWorkflow.logInInstitution(loginPortal, userDefaultInstitution);
 		context.put(USERNAME, loginPortal.getUserName());
 		context.put(ContextConstants.INSTITUTION_DATE, loginWorkflow.getInstitutionDateLogin());
+		String institutionEnvVar = System.getProperty("institution");
+		if (institutionEnvVar != null && !institutionEnvVar.trim().isEmpty())
+			context.put(USER_INSTITUTION_SELECTED, institutionEnvVar.substring(institutionEnvVar.indexOf("[")+1, institutionEnvVar.indexOf("]")));
+		
 	}
 
 	@Given("user is logged in non-default institution")

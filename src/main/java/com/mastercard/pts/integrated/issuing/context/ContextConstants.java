@@ -85,6 +85,8 @@ public class ContextConstants {
 	public static final String TRANSACTION_PLAN = "TRANSACTIONPLAN";
 
 	public static final String PROMOTION_PLAN = "PROMOTION_PLAN";
+	
+	public static final String EVENT_BASED_LOYALTY_PLAN = "PROMOTION_PLAN";
 
 	public static final String PROMOTION_PLAN_CODE = "PROMOTION_PLAN_CODE";
 
@@ -138,8 +140,11 @@ public class ContextConstants {
 
 	public static final String BALANCE_BEFORE_PAYMENT = "BALANCE_BEFORE_PAYMENT";
 
-	public static final String BALANCE_AFTER_PAYMENT = "BALANCE_AFTER_PAYMENT";
-
+	public static final String BALANCE_AFTER_PAYMENT = "BALANCE_AFTER_PAYMENT";	
+	
+	public static final String PROMOTION_PLAN_POINTS_EARNED = "PROMOTION_PLAN_POINTS_EARNED";
+	
+	public static final String PROMOTION_PLAN_AMT_SPENT = "PROMOTION_PLAN_AMT_SPENT";
 	private ContextConstants() {
 	}
 

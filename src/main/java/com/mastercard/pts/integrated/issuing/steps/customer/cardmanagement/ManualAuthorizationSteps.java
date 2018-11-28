@@ -32,15 +32,6 @@ public class ManualAuthorizationSteps {
 
 	@Autowired
 	private ManualAuthorizationWorkflow manualAuthorizationWorkflow;
-<<<<<<< HEAD
-
-	private String successMessage;
-
-	@Given("user raises an authorization request")
-	@When("user raises an authorization request")
-	@Then("user raises an authorization request")
-	public void whenUserRaisesAnAuthorizationRequest() {
-=======
 	
 	@Autowired
 	private LoginWorkflow loginWorkflow;
@@ -51,7 +42,6 @@ public class ManualAuthorizationSteps {
 	
 	@When("user raises an authorization request only")
 	public void whenUserRaisesAnAuthorizationRequest(){
->>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 		AuthorizationRequest request = AuthorizationRequest.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE);
 		request.setDeviceNumber(device.getDeviceNumber());
@@ -61,7 +51,6 @@ public class ManualAuthorizationSteps {
 		request.setCvv2(device.getCvv2Data());
 		successMessage = manualAuthorizationWorkflow.authorizeDevice(request);
 	}
-<<<<<<< HEAD
 
 	@Given("user raises an authorization request with invalid MCC")
 	@When("user raises an authorization request with invalid MCC")
@@ -74,14 +63,13 @@ public class ManualAuthorizationSteps {
 		successMessage = manualAuthorizationWorkflow.authorizeDevice(request);
 	}
 
-=======
-	
+
 	@When("user raises an authorization request")
 	@Composite(steps = {"When embossing file batch was generated in correct format","When user raises an authorization request only"})
 	public void manualAuthComposite(){
 		
 	}
->>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
+	
 	@Then("status of request is \"approved\"")
 	public void thenStatusOfRequestIsapproved() {
 		assertThat("Authorization is successful", successMessage, containsString("Authorization is successful"));

@@ -1,6 +1,7 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.loyalty;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -8,11 +9,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.PromotionPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.DBUtility;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -29,6 +32,9 @@ public class PromotionPlanPage extends AbstractBasePage {
 	private static final String TEXT = "TEST";
 	private static final int NUMBER = 3;
 	private static final String currency = "INR [356]";
+	
+	@Autowired
+	public DBUtility dbutil;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
 	private MCWebElement promotionalPlanCodeTxt;
@@ -113,6 +119,19 @@ public class PromotionPlanPage extends AbstractBasePage {
 			verifyAlreadyExistsAndClickCancel();
 		});
 	}
+	
+	public void inputFromDate() {
+		String currentDateString = dbutil.getCurrentDateForInstitution("303045");
+		LocalDate date = LocalDate.parse(currentDateString, DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss")).plusDays(1);
+		WebElementUtils.pickDate(startDateDPkr, date);
+	}
+	
+	public void inputToDate(){
+		String currentDateString = dbutil.getCurrentDateForInstitution("303045");
+		LocalDate date = LocalDate.parse(currentDateString, DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss")).plusDays(100);
+		WebElementUtils.pickDate(endDateDPkr, date);
+		
+	}
 
 	public void addPromotionPlanConfigurationwithMCG(PromotionPlan plan) {
 		logger.info(ADD_PROMOTION_PLAN);
@@ -129,9 +148,9 @@ public class PromotionPlanPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(currencyDDwn, plan.getPromotionCurrency());
 		WebElementUtils.enterText(lypAmtSpentTxt, plan.getPromotionamountSpent());
 		waitForElementVisible(startDateDPkr);
-		WebElementUtils.pickDate(startDateDPkr, futureDate);
+		inputFromDate();
 		waitForElementVisible(endDateDPkr);
-		WebElementUtils.pickDate(endDateDPkr, futureEndDate);
+		inputToDate();
 		WebElementUtils.enterText(lypPtsEarnedTxt, plan.getPromotionpointsEarned());
 		WebElementUtils.enterText(lypPriorrunsTxt, NUMBER);
 		WebElementUtils.enterText(lypCumTxnamtTxt, NUMBER);
@@ -148,9 +167,9 @@ public class PromotionPlanPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(currencyDDwn, plan.getPromotionCurrency());
 		WebElementUtils.enterText(lypAmtSpentTxt, plan.getPromotionamountSpent());
 		waitForElementVisible(startDateDPkr);
-		WebElementUtils.pickDate(startDateDPkr, futureDate);
+		inputFromDate();
 		waitForElementVisible(endDateDPkr);
-		WebElementUtils.pickDate(endDateDPkr, futureEndDate);
+		inputToDate();
 		WebElementUtils.enterText(lypPtsEarnedTxt, plan.getPromotionpointsEarned());
 		WebElementUtils.enterText(lypPriorrunsTxt, NUMBER);
 		WebElementUtils.enterText(lypCumTxnamtTxt, NUMBER);
@@ -171,7 +190,7 @@ public class PromotionPlanPage extends AbstractBasePage {
 			// WebElementUtils.enterText(lypAmtSpentTxt,
 			// plan.getPromotionIssuanceamountSpent());
 			waitForElementVisible(startDateDPkr);
-			WebElementUtils.pickDate(startDateDPkr, futureDate);
+			inputFromDate();
 			waitForElementVisible(endDateDPkr);
 			WebElementUtils.pickDate(endDateDPkr, futureEndDate);
 			WebElementUtils.enterText(lypPtsEarnedTxt, plan.getPromotionIssuancepointsEarned());
@@ -195,9 +214,9 @@ public class PromotionPlanPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByVisibleText(currencyDDwn, plan.getPromotionCurrency());
 			WebElementUtils.enterText(lypAmtSpentTxt, plan.getPromotionamountSpent());
 			waitForElementVisible(startDateDPkr);
-			WebElementUtils.pickDate(startDateDPkr, futureDate);
+			inputFromDate();
 			waitForElementVisible(endDateDPkr);
-			WebElementUtils.pickDate(endDateDPkr, futureEndDate);
+			inputToDate();
 			WebElementUtils.enterText(lypPtsEarnedTxt, plan.getPromotionpointsEarned());
 			WebElementUtils.enterText(lypPriorrunsTxt, NUMBER);
 			WebElementUtils.enterText(lypCumTxnamtTxt, NUMBER);

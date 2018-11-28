@@ -71,6 +71,15 @@ public class ReconciliationSteps {
 
 		processBatches.add(preClearingBatch);
 		processBatches.add(prepaidEodProcessBatch);
+		
+		if(provider.getString("BATCH_NAME_EOD") != null && provider.getString("BATCH_NAME_EOD").equalsIgnoreCase("EOD-Credit")) {
+			prepaidEodProcessBatch = null;
+			prepaidEodProcessBatch = new ProcessBatches();
+			prepaidEodProcessBatch.setProductType(provider.getString(BATCH_TYPE));
+			prepaidEodProcessBatch.setBatchName(provider.getString("BATCH_NAME_EOD"));
+			prepaidEodProcessBatch.setProductType("");
+			processBatches.add(prepaidEodProcessBatch);
+		}
 
 		reconciliationWorkFlow.runPreClearingAndLoyaltyCalcBatch(processBatches);
 	}

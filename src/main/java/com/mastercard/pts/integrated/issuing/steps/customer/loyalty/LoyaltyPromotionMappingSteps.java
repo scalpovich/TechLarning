@@ -35,11 +35,9 @@ public class LoyaltyPromotionMappingSteps {
 	@When("user maps promotion Plan with loyalty Plan with priority $priority")
 	public void loyaltyPromotionMappingAdd(String priority) {
 		PromotionPlan promotionPlan = context.get(ContextConstants.PROMOTION_PLAN);
-		// promotionPlan = PromotionPlan.createWithProvider(Provider);
 		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
 		loyaltyPromotionMapping.setMappingLoyaltyPlanddwn(data.getLoyaltyPlan());
 		loyaltyPromotionMapping.setMappingPromotionPlanddwn(promotionPlan.buildDescriptionAndCode());
-		// loyaltyPromotionMapping.setPriority(provider.getString("MAPPING_PRIORITY"));
 		loyaltyPromotionMapping.setPriority(priority);
 		uiVerificationLoyaltyWorkflow.verifyLoyaltyPlanPromotionMappingPage(loyaltyPromotionMapping);
 	}

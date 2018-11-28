@@ -16,6 +16,9 @@ public class Constants {
 	public static final String Record_Cannot_Be_deleted = "Plan is attached to Device Range. Cannot delete record";
 	public static final String ADD_USER = "Add User";
 	public static final String ADD_LOYALTY_PROMOTION_MAPPING = "Add Loyalty Plan & Promotion Mapping";
+	
+	public static final String ADD_EVENT_BASED_LOYALTY_POINTS = "Add Event Based Loyalty Points";
+	
 	public static final String EDIT_PROGRAM_FRAME = "Edit Program";
 
 	public static final String EDIT_DEVICE_RANGE_FRAME = "Edit Device Range";
@@ -473,6 +476,8 @@ public class Constants {
 	public static final String INSTITUTION_NUMBER_QUERY_START = "SELECT INSTITUTION_DATE('";
 	public static final String INSTITUTION_NUMBER_QUERY_END = "') from dual";
 	public static final String INSTITUTION_DATE = "INSTITUTION_DATE";
+	public static final String MAX_LOYALTY_POINTS = "maxLoyaltyPoints";
+	public static final String TRANSACTION_DATE = "TRANSACTION_DATE";
 	public static final String POINTS_EARNED = "pointsEarned";
 	public static final String AVAILABLE_LOYALTY_POINTS = "availableLoyaltyPoints";
 	public static final String ACCUMULATED_REVERSED_POINTS = "accumulatedReversedPoints";

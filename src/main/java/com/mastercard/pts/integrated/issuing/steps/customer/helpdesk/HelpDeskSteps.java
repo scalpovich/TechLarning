@@ -947,15 +947,26 @@ public class HelpDeskSteps {
 		assertEquals(context.get(Constants.ACCUMULATED_REVERSED_POINTS), accumulatedPts);
 	}
 
-	@When("user has loyalty points details for $type device")
+	@Then("user has loyalty points details for $type device")
 	public Map<String, String> givenUserHasLoyaltyPointsDetails(String type) {
+		Double zero = 0.0;
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskWorkflow.navigateToLoyaltyDetails(device);
 		Map<String, String> points = helpdeskWorkflow.getLoyaltyDetails();
-		context.put(Constants.AVAILABLE_LOYALTY_POINTS, points.get(Constants.AVAILABLE_LOYALTY_POINTS));
-		context.put(Constants.ACCUMULATED_REVERSED_POINTS, points.get(Constants.ACCUMULATED_REVERSED_POINTS));
+		
+		if(points.get(Constants.ACCUMULATED_REVERSED_POINTS).trim().equals("-"))
+			context.put(Constants.ACCUMULATED_REVERSED_POINTS, zero);
+		else
+			context.put(Constants.ACCUMULATED_REVERSED_POINTS, Double.parseDouble(points.get(Constants.ACCUMULATED_REVERSED_POINTS)));
+		
+		if(points.get(Constants.AVAILABLE_LOYALTY_POINTS).trim().equals("-"))
+			context.put(Constants.AVAILABLE_LOYALTY_POINTS, zero);
+		else
+			context.put(Constants.AVAILABLE_LOYALTY_POINTS, Double.parseDouble(points.get(Constants.AVAILABLE_LOYALTY_POINTS)));
+			
 		return points;
 	}
+	
 	@Given("check card balance details through helpdesk")
 	@When("check card balance details through helpdesk")
 	public void checkCardBalance(){

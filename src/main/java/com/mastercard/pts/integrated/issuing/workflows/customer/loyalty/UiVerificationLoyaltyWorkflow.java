@@ -7,6 +7,8 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.InstitutionData;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoyaltyPlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.EventBasedLoyaltyPlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.EventBasedLoyaltyPointsPosting;
 import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.LoyaltyPromotionMapping;
 import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.PromotionPlan;
 import com.mastercard.pts.integrated.issuing.pages.customer.loyalty.EventBasedLoyaltyPointsPage;
@@ -49,6 +51,13 @@ public class UiVerificationLoyaltyWorkflow {
 		LoyaltyPlanPage page = navigator.navigateToPage(LoyaltyPlanPage.class);
 		page.verifyUiOperationStatus();
 	}
+	
+	
+	public void addLoyaltyPlanWithAutoRedemption(LoyaltyPlan loyaltyplan) {
+		LoyaltyPlanPage page = navigator.navigateToPage(LoyaltyPlanPage.class);
+		page.addLoyaltyPlanforAutoRedemption(loyaltyplan);
+	}
+
 
 	public void EditLoyaltyPlanPage(LoyaltyPlan loyaltyplan) {
 		LoyaltyPlanPage page = navigator.navigateToPage(LoyaltyPlanPage.class);
@@ -123,4 +132,16 @@ public class UiVerificationLoyaltyWorkflow {
 		page.searchByPlanCode(plan.substring(plan.indexOf("[") + 1, plan.indexOf("]")));
 		return page.getMaxPtsPerCycle();
 	}
+	
+	public void addEventBasedLoyaltyPlan(EventBasedLoyaltyPlan plan){
+		EventBasedLoyaltyPointsPage page = navigator.navigateToPage(EventBasedLoyaltyPointsPage.class);
+		page.addEventBasedLoyaltyPoints(plan);
+	}
+	
+	public void addEventBasedLoyaltyPointsposting(EventBasedLoyaltyPointsPosting plan){
+		EventBasedLoyaltyPointsPostingPage page = navigator.navigateToPage(EventBasedLoyaltyPointsPostingPage.class);
+		page.addEventBasedLoyaltyPointsPosting(plan);
+	}
+	
+	
 }

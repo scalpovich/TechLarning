@@ -162,12 +162,8 @@ public class BatchProcessSteps {
 	}
 
 	@When("new Application processes pin generation batch for $type")
-<<<<<<< HEAD
-	public void whenProcessesPinGenerationBatchUsingNewApplication(String type) {
-=======
 	@Then("new Application processes pin generation batch for $type")
 	public void whenProcessesPinGenerationBatchUsingNewApplication(String type){
->>>>>>> 681f03a0d63dc1da30c3af014dda30ab3a585eb7
 		PinGenerationBatch batch = new PinGenerationBatch();
 		batch.setProductType(ProductType.fromShortName(type));
 		String batchNumber = context.get(CreditConstants.NEW_APPLICATION_BATCH);

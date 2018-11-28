@@ -17,6 +17,36 @@ public class LoyaltyPlan implements HasCodeAndDescription {
 	private String loyaltyTransactionPlan;
 
 	private String maxloyaltypoints;
+	
+	private String autoRedemptionMethod;
+	
+	private String autoRedemptionMinAmt;
+	
+	private String autoRedemptionDay;
+
+	public String getAutoRedemptionMethod() {
+		return autoRedemptionMethod;
+	}
+
+	public void setAutoRedemptionMethod(String autoRedemptionMethod) {
+		this.autoRedemptionMethod = autoRedemptionMethod;
+	}
+
+	public String getAutoRedemptionMinAmt() {
+		return autoRedemptionMinAmt;
+	}
+
+	public void setAutoRedemptionMinAmt(String autoRedemptionMinAmt) {
+		this.autoRedemptionMinAmt = autoRedemptionMinAmt;
+	}
+
+	public String getAutoRedemptionDay() {
+		return autoRedemptionDay;
+	}
+
+	public void setAutoRedemptionDay(String autoRedemptionDay) {
+		this.autoRedemptionDay = autoRedemptionDay;
+	}
 
 	public String getMaxloyaltypoints() {
 		return maxloyaltypoints;
@@ -49,6 +79,8 @@ public class LoyaltyPlan implements HasCodeAndDescription {
 		LoyaltyPlan plan = new LoyaltyPlan();
 		plan.setLoyaltyPlanCode(MiscUtils.generate8CharAlphaNumeric() + MiscUtils.generateRandomNumberAsString(1));
 		plan.setDescription(ConstantData.GENERIC_DESCRIPTION);
+		plan.setAutoRedemptionMinAmt(provider.getString("AUTO_REDEEM_MIN_AMT"));
+		plan.setAutoRedemptionDay(provider.getString("AUTO_REDEEM_DAY"));
 		return plan;
 	}
 
@@ -62,14 +94,12 @@ public class LoyaltyPlan implements HasCodeAndDescription {
 
 	@Override
 	public String getCode() {
-		// TODO Auto-generated method stub
-		return null;
+		return loyaltyPlanCode;
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return description;
 	}
 
 }
