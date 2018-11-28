@@ -35,7 +35,8 @@ Then user sign out from customer portal
 
 Scenario:4 Transaction - Verify that the transaction declines with appropriate response for not delivered
 Given user is logged in institution
-When user raises an authorization request
+When embossing file batch was generated in correct format
+And user raises an authorization request only
 And status of request is declined with reason NOT DELIVERED
 And search Purchase authorization and verify 111-Invalid card number status
 Then assert Decline response with 20002 AuthDecline Code and Device is not delivered. as description
@@ -49,7 +50,7 @@ Then user sign out from customer portal
 
 Scenario:6 Transaction - Verify that the transaction declines on the withdrawing the stoplisting of not activated card
 Given user is logged in institution
-When user raises an authorization request
+When user raises an authorization request only
 And status of request is declined with reason Not delivered
 And search Purchase authorization and verify 111-Invalid card number status
 Then assert Decline response with 20002 AuthDecline Code and Device is not delivered. as description

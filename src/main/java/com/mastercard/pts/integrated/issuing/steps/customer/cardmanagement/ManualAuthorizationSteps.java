@@ -40,9 +40,9 @@ public class ManualAuthorizationSteps {
 	
 	private String statusMessage;
 
-	@Given("user raises an authorization request")
-	@When("user raises an authorization request")
-	@Then("user raises an authorization request")
+	@Given("user raises an authorization request only")
+	@When("user raises an authorization request only")
+	@Then("user raises an authorization request only")
 	public void whenUserRaisesAnAuthorizationRequest(){
 		AuthorizationRequest request = AuthorizationRequest.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE);

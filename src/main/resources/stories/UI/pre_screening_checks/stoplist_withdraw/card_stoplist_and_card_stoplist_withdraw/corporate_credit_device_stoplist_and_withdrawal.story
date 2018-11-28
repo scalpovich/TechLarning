@@ -35,7 +35,8 @@ Then user sign out from customer portal
 
 Scenario:4 Transaction - Verify that the transaction declines with appropriate response for stoplisting
 Given user is logged in institution
-When user raises an authorization request
+When embossing file batch was generated in correct format
+And user raises an authorization request only
 And status of request is declined with reason EXPIRED
 And search Purchase authorization and verify 101-EXPIRED CARD status
 And assert Decline response with 70123 AuthDecline Code and Card Status is Expired with Decline Response as description
@@ -49,7 +50,7 @@ Then user sign out from customer portal
 
 Scenario:6 Transaction - Verify that the user is able to make a successful transaction on the withdrawaing the stoplisting
 Given user is logged in institution
-When user raises an authorization request
+When user raises an authorization request only
 And search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal
 
