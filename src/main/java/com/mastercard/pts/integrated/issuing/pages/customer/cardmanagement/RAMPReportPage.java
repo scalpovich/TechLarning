@@ -89,7 +89,6 @@ public class RAMPReportPage extends AbstractBasePage implements ReportVerificati
 
 	@Override
 	public String generateReport(GenericReport report) {
-		// TODO Auto-generated method stub
 		selectByVisibleText(selectReportDDwn,reportName);
 	    clicksearchButtonElement();
 	    selectReportType(report);

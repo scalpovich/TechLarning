@@ -7,7 +7,6 @@ import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
-import com.mastercard.pts.integrated.issuing.utils.Constants;
 
 public class GenericReport implements HasCodeAndDescription{
 
@@ -147,13 +146,11 @@ public class GenericReport implements HasCodeAndDescription{
 
 	@Override
 	public String getCode() {
-		// TODO Auto-generated method stub
 		return reportName;
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

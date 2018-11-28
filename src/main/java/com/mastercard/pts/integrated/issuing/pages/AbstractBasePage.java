@@ -1296,7 +1296,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 				 if(file.isFile()&& file.getName().startsWith(reportName)&&FilenameUtils.getExtension(file.getName()).equalsIgnoreCase("pdf")){
 					exists = true;
 				    path.append(file.getAbsolutePath());
-				    logger.info("File Path: "+path.toString());
+				    logger.info("File Path:"+path.toString());
 					 break;
 				 }
 			}
