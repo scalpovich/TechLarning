@@ -7,6 +7,7 @@ import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 
 public class GenericReport implements HasCodeAndDescription{
 
@@ -21,6 +22,33 @@ public class GenericReport implements HasCodeAndDescription{
 	private String reportUrl;
 	private String password;
 	private String clientCode;
+	private String deviceType;
+	private String loyaltyPlan;
+	private String loyaltyPromotionPlan;
+
+	public String getLoyaltyPromotionPlan() {
+		return loyaltyPromotionPlan;
+	}
+
+	public void setLoyaltyPromotionPlan(String loyaltyPromotionPlan) {
+		this.loyaltyPromotionPlan = loyaltyPromotionPlan;
+	}
+
+	public String getDeviceType() {
+		return deviceType;
+	}
+
+	public void setDeviceType(String deviceType) {
+		this.deviceType = deviceType;
+	}
+
+	public String getLoyaltyPlan() {
+		return loyaltyPlan;
+	}
+
+	public void setLoyaltyPlan(String loyaltyPlan) {
+		this.loyaltyPlan = loyaltyPlan;
+	}
 
 	public String getPassword() {
 		return password;
