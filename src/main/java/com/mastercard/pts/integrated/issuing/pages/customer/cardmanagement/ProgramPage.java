@@ -540,7 +540,7 @@ public class ProgramPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByOptionalVisibleText(markupFeePlanDDwn, program.getMarkUpFeePlan());
 			WebElementUtils.selectDropDownByOptionalVisibleText(stmtPlanCodeDDwn, program.getPrepaidStatementPlan());
 		}
-		if (loyaltyPlanDDwn != null && !program.getLoyaltyPlan().isEmpty()) {
+		if (loyaltyPlanDDwn != null && Objects.nonNull(program.getLoyaltyPlan()) && !program.getLoyaltyPlan().isEmpty()) {
 			WebElementUtils.selectDropDownByOptionalVisibleText(loyaltyPlanDDwn, program.getLoyaltyPlan());
 		}
 
