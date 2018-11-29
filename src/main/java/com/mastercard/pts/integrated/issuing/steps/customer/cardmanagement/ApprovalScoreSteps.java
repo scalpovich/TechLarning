@@ -38,6 +38,14 @@ public class ApprovalScoreSteps {
 		Assert.assertTrue("ApprovalScore is not added for auto refer", approvalScoreWorkFlow.userAddsNewApprovalScoreForAutoRefer());
 	}
    
+   @When("User adds Approval Score on program for auto reject")
+   @Then("User adds Approval Score on program for auto reject")
+	public void userAddsAApprovalScoreForAutoReject()
+	{
+		Assert.assertTrue("ApprovalScore is not added for auto refer", approvalScoreWorkFlow.userAddsNewApprovalScoreForAutoRefer());
+	}
+   
+   
    @When("User adds Approval Score on program with less end range for auto reject")
    @Then("User adds Approval Score on program with less end range for auto reject")
 	public void userAddsAApprovalScoreForOutsideRange()
