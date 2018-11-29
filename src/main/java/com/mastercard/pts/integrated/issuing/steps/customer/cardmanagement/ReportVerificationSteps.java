@@ -37,18 +37,12 @@ public class ReportVerificationSteps {
 	@Autowired
 	private KeyValueProvider provider;
 	
-	private static final String MCC = "5999";
-	
-	private static final String COUNTRY = "INDIA";
-	
-	private static final String MERCHANT = "ABC123TESTMTF19";
-	
 	@Autowired
 	private DBUtility dbUtils;
 	
 	private static final Logger logger = LoggerFactory.getLogger(ReportVerificationSteps.class);
 
-	@Given("validate the $reportField in $reportName report")
+	@When("validate the $reportField in $reportName report")
 	@Then("validate the $reportField in $reportName report")
 	public void validateGenericReport(String reportFields, String reportName) {
 		Device device = context.get(ContextConstants.DEVICE);
@@ -61,9 +55,9 @@ public class ReportVerificationSteps {
 			logger.info("No Report Type is present here!!");
 		}
 		report.setDeviceNumber(device.getDeviceNumber());
-			report.setFieldToValidate("MCC",MCC);
-			report.setFieldToValidate("Country",COUNTRY);
-			report.setFieldToValidate("Merchant",MERCHANT);
+			report.setFieldToValidate("MCC",report.getHighRiskMcc());
+			report.setFieldToValidate("Country",report.getHighRiskCountry());
+			report.setFieldToValidate("Merchant",report.getHighRiskMerchant());
 		report.setUsername(context.get(UserManagementSteps.USERNAME));
 		reportVerificationWorkflow.verifyGenericReport(report);		
 	}

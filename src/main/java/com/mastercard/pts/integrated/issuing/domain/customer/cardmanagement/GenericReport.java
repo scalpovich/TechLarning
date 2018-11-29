@@ -24,6 +24,37 @@ public class GenericReport implements HasCodeAndDescription{
 	private String deviceType;
 	private String loyaltyPlan;
 	private String loyaltyPromotionPlan;
+    private String highRiskMcc;
+	private String highRiskCountry;
+	private String highRiskMerchant;
+	
+	private static final String HIGH_RISK_MCC = "HIGH_RISK_MCC";
+	private static final String HIGH_RISK_COUNTRY = "HIGH_RISK_COUNTRY";
+	private static final String HIGH_RISK_MERCHANT = "HIGH_RISK_MERCHANT";
+
+	public String getHighRiskMcc() {
+		return highRiskMcc;
+	}
+
+	public void setHighRiskMcc(String highRiskMcc) {
+		this.highRiskMcc = highRiskMcc;
+	}
+
+	public String getHighRiskCountry() {
+		return highRiskCountry;
+	}
+
+	public void setHighRiskCountry(String highRiskCountry) {
+		this.highRiskCountry = highRiskCountry;
+	}
+
+	public String getHighRiskMerchant() {
+		return highRiskMerchant;
+	}
+
+	public void setHighRiskMerchant(String highRiskMerchant) {
+		this.highRiskMerchant = highRiskMerchant;
+	}
 
 	public String getLoyaltyPromotionPlan() {
 		return loyaltyPromotionPlan;
@@ -91,6 +122,9 @@ public class GenericReport implements HasCodeAndDescription{
 	
 	public static GenericReport createWithProvider(KeyValueProvider provider){
 		GenericReport report = new GenericReport();
+		report.setHighRiskMcc(provider.getString(HIGH_RISK_MCC));
+		report.setHighRiskCountry(provider.getString(HIGH_RISK_COUNTRY));
+		report.setHighRiskMerchant(provider.getString(HIGH_RISK_MERCHANT));
 		reportFields = new HashMap<>();
 		report.setReportRegEx();
 		return report;

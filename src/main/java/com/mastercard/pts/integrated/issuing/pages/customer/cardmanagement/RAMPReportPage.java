@@ -70,10 +70,10 @@ public class RAMPReportPage extends AbstractBasePage implements ReportVerificati
 	@PageElement(findBy = FindBy.NAME, valueToFind = "p_merchant_loc_code:input:dropdowncomponent")
 	private MCWebElement selectHighRiskMerchantLocationDDwn;
 	
-	private String reportName = "RAMP Report";
-	private String type = "ALL";
-	private String fileType = "PDF";
-	private String recordType = "A-Authorised transactions";
+	private final String reportName = "RAMP Report";
+	private final String type = "ALL";
+	private final String fileType = "PDF";
+	private final String recordType = "A-Authorised transactions";
 
 	public void verifyUiOperationStatus() {
 		logger.info(reportName);

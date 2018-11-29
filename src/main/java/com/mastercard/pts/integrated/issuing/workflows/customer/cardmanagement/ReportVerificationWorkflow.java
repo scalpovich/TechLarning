@@ -49,7 +49,6 @@ public class ReportVerificationWorkflow {
 	Boolean verificationStatus;
 	
     public void verifyGenericReport(GenericReport report) {
-		//page = (ReportVerificationPage)getInstance(report.getReportName());
 		Map<Object, String> reportContent = getGenericReport(report);
 		if(report.getReportRegEx()==null&&report.getReportRegEx().isEmpty()){
 			reportContent.forEach((k,v)->{
@@ -152,17 +151,6 @@ public class ReportVerificationWorkflow {
 			}
 		}
 	}   
-    
-    // Please make sure pass the exact name in Steps as the name of class
-    public Object getInstance(String className){
-			try {
-				return Class.forName("com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement."+className+"ReportPage").newInstance();
-			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e ) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return null;
-			} 	
-    }
 
     public String downloadAndVerifyLoyaltyReport(GenericReport report) {
     	deleteExistingReportsFromSystem(report.getReportName());

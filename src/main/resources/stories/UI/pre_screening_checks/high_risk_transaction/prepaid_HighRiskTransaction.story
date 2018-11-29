@@ -16,7 +16,7 @@ And User fills Program section for prepaid product
 And User fills Business Mandatory Fields Screen for prepaid product
 And User fills Device Range section for prepaid product
 And user assigns service code to program
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario:2 prepaid EMV retail general purpose card device production
 Given user is logged in institution
@@ -47,19 +47,19 @@ Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario:5 validate the High Risk MCC/MCG Report
 Given user is logged in institution
-Then validate the MCC in RAMP-REP05 report
-And user sign out from customer portal
+When validate the MCC in RAMP-REP05 report
+Then user sign out from customer portal
 
 Scenario:6 validate the High Risk Country Report
 Given user is logged in institution
-Then validate the Country in RAMP-REP04 report
-And user sign out from customer portal
+When validate the Country in RAMP-REP04 report
+Then user sign out from customer portal
 
 Scenario:7 validate the High Risk Merchant Location Report
 Given user is logged in institution
-Then validate the Merchant in RAMP-REP06 report
-And user sign out from customer portal
+When validate the Merchant in RAMP-REP06 report
+Then user sign out from customer portal
