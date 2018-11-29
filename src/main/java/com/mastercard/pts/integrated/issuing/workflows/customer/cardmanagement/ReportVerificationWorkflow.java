@@ -3,8 +3,10 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import com.mastercard.pts.integrated.issuing.pages.collect.administration.Admini
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ApplicationPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceActivityPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReportVerificationPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.loyalty.LoyaltyPointsPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.PDFUtils;
@@ -139,6 +142,13 @@ public class ReportVerificationWorkflow {
 		for (File file: new File(PDFUtils.getuserDownloadPath()).listFiles()) {
 			if (!file.isDirectory()&& file.getName().startsWith(reportName))   	
 				file.delete();
+			else if(file.isDirectory() && file.getName().startsWith(reportName)) {
+				try {
+					FileUtils.deleteDirectory(file);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}   
     
@@ -152,4 +162,28 @@ public class ReportVerificationWorkflow {
 				return null;
 			} 	
     }
+
+    public String downloadAndVerifyLoyaltyReport(GenericReport report) {
+    	deleteExistingReportsFromSystem(report.getReportName());
+		LoyaltyPointsPage page = navigator.navigateToPage(LoyaltyPointsPage.class);
+		page.selectReport("Loyalty Points Report");
+		page.selectProductType(report.getDeviceType());
+		page.selectLoyaltyPlan(report.getLoyaltyPlan());
+		page.enterDeviceNumber(report.getDeviceNumber());
+		page.selectFileType(report.getReportType());
+		page.clickSubmitButton();
+		String path = page.verifyReportDownloaded(report.getReportName(), "pdf");
+		report.setReportUrl(path);
+		//for excel report
+		/*unziputils.unZipTheFile(path, report.getPassword(), PDFUtils.getuserDownloadPath());
+		try {
+			points = ExcelUtils.readExcelDataAgainst("");
+		} catch (FilloException e) {
+			e.printStackTrace();
+		}*/
+		//for pdf report
+		Map<Object, String> reportContent = getReportContent(report);
+		String[] points = reportContent.get(Constants.AVAILABLE_LOYALTY_POINTS).split("\\s");
+		return points[0];
+	}
 }

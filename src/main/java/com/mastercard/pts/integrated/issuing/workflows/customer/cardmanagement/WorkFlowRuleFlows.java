@@ -37,6 +37,11 @@ public class WorkFlowRuleFlows {
 		return workFlowRulePage.workFlowRulesForApplicationScoring(fieldName1, fieldName2);
 	}
 	
+	public boolean userAddsWorkFlowRuleOnlyForRiskAnalysis(String fieldName1, String fieldName2) {
+		workFlowRulePage = navigator.navigateToPage(WorkflowRulePage.class);
+		return workFlowRulePage.workFlowRulesForRiskAnalysis(fieldName1, fieldName2);
+	}
+	
 	public boolean userAddsWorkFlowRuleForApplicationScoringCreditBureau(String fieldName1,String fieldName2)
 	{
 		workFlowRulePage=navigator.navigateToPage(WorkflowRulePage.class);

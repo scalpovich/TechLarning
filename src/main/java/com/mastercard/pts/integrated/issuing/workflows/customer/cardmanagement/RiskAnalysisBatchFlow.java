@@ -28,4 +28,10 @@ public class RiskAnalysisBatchFlow {
 		riskAnalysisPage.identifyBatchNumberToProcess();
 		riskAnalysisPage.processAppropriateBatchForApplication();
 	}
+	
+	public String processBatchForRiskAnalysis() {
+		riskAnalysisPage = navigator.navigateToPage(RiskAnalysisPage.class);
+		riskAnalysisPage.riskAnalysisBatchProcess();
+		return riskAnalysisPage.processSelected();
+	}
 }
