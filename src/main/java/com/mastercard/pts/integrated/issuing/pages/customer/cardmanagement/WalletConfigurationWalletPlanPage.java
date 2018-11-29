@@ -82,6 +82,12 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 	private MCWebElement mcgLimitPlanDDwn;
 	
 	private int reservedAmount = 0; // MiscUtils.randomNumber(5);
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:surchargePlanCode:input:dropdowncomponent")
+	private MCWebElement surchargePlanDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:surchargeWaiverPlanCode:input:dropdowncomponent")
+	private MCWebElement surchargeWaiverPlanDDwn;
 
 	public void inputWalletPlanCode(String walletPlanCodeString) {
 		WebElementUtils.enterText(walletPlanCodeTxt, walletPlanCodeString);
@@ -197,6 +203,10 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			waitForPageToLoad(driver());
 			fillDetailsBasedOnCardType(walletPlan, productType);
 			waitForPageToLoad(driver());
+			if(walletPlan.getSurchargePlan() != null && !walletPlan.getSurchargePlan().isEmpty())
+				selectSurchargePlan(walletPlan.getSurchargePlan());
+			if(walletPlan.getSurchargeWaiverPlan() != null && !walletPlan.getSurchargeWaiverPlan().isEmpty())
+				selectSurchargeWaiverPlan(walletPlan.getSurchargeWaiverPlan());
 			clickNextButton(); // Click on next button
 				clickFinishButton(); // click on finish button
 			});
@@ -277,5 +287,13 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			}
 			clickSaveButton();
 		});
+	}
+
+	public void selectSurchargePlan(String plan) {
+		WebElementUtils.selectDropDownByVisibleText(surchargePlanDDwn, plan);
+	}
+
+	public void selectSurchargeWaiverPlan(String plan) {
+		WebElementUtils.selectDropDownByVisibleText(surchargeWaiverPlanDDwn, plan);
 	}
 }

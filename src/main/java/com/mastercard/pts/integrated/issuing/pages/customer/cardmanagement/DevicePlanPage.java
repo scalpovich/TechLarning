@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -27,6 +29,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
+import com.mastercard.pts.integrated.issuing.utils.DBUtility;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -40,6 +43,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory.getLogger(DevicePlanPage.class);
 	private static final String STATUS_YES = "Yes";
 	private static final String STATUS_NO = "No";
+	private static final String MAIL = "Mail [2]";
 
 	@Autowired
 	MenuSubMenuPage menuSubMenuPage;
@@ -49,6 +53,9 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	@Autowired
 	private TestContext context;
+	
+	@Autowired
+	private DBUtility dbUtils;
 
 	public Vendor vendor;
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[@class='field'][1]/input")
@@ -1217,10 +1224,16 @@ public class DevicePlanPage extends AbstractBasePage {
 				{
 					if(!DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType()))
 					{
-						enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
-						String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
+						String currentDateString = dbUtils.getCurrentDateForInstitution(context.get(Constants.USER_INSTITUTION_SELECTED));
+						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
+					    LocalDateTime dateTime = LocalDateTime.parse(currentDateString, formatter);
+					    dateTime = dateTime.plusYears(10);
+					    DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("MM-yyyy");
+					    String tenYearsPlus = dateTime.format(formatter1);
+						enterIframeExpiryDateTxt(tenYearsPlus);
+						String dateInYYMM = getValueInYYMMFormatForExpiryDate(tenYearsPlus);
 						devicePlan.setExpiryDate(dateInYYMM);
-						logger.info("Expiry date for device = {}",devicePlan.getExpiryDate());				
+						logger.info("Expiry date for device = {}",devicePlan.getExpiryDate());
 					}
 				}
 				else
@@ -1247,7 +1260,7 @@ public class DevicePlanPage extends AbstractBasePage {
 			selectIframeEmbossingVendorDdwn(devicePlan.getEmbossingVendor());
 		}
 		
-		if (devicePlan.getDeliveryMode().equalsIgnoreCase("Mail [2]")){
+		if (devicePlan.getDeliveryMode().equalsIgnoreCase(MAIL)){
 			enableIframeCourierTrackingChkbx();
 			enableIframeManufacturingTrackingChkbx();
 		}
