@@ -52,7 +52,7 @@ public class CarrierAcknowledgementPage extends AbstractBasePage {
 	private MCWebElement institutionDateTxt;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "awbNumber:input:inputTextField")
-	private MCWebElement AWBNumberTxt;
+	private MCWebElement awbNumberTxt;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "receivedBy:input:inputTextField")
 	private MCWebElement receivedByTxt;
@@ -101,7 +101,7 @@ public class CarrierAcknowledgementPage extends AbstractBasePage {
 		editFirstRecord();
 		
 		runWithinPopup("Edit Carrier Acknowledgement", () -> {
-			WebElementUtils.enterText(AWBNumberTxt, carrierAcknowledgement.getAWBNumber());
+			WebElementUtils.enterText(awbNumberTxt, carrierAcknowledgement.getAwbNumber());
 			WebElementUtils.selectDropDownByVisibleText(statusDDwn, carrierAcknowledgement.getStatus());
 			SimulatorUtilities.wait(2000);
 			WebElementUtils.enterText(receivedByTxt, carrierAcknowledgement.getReceivedBy());

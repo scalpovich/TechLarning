@@ -50,7 +50,7 @@ public class DeviceTrackingPage extends AbstractBasePage {
 	private MCWebElement txtBatchNumber;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()= 'Pin Carrier Details']")
-	private MCWebElement pinCarierDetailsTab;
+	private MCWebElement pinCarrierDetailsTab;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id= 'statusDelvPin']//span[@class='labelselectf']")
 	private MCWebElement carrierStatusTxt;
@@ -87,7 +87,7 @@ public class DeviceTrackingPage extends AbstractBasePage {
 		SimulatorUtilities.wait(2000);
 		viewFirstRecord();
 		runWithinPopup("View Device Tracking", () -> {
-			clickWhenClickable(pinCarierDetailsTab);
+			clickWhenClickable(pinCarrierDetailsTab);
 			SimulatorUtilities.wait(1000);
 			carrierStatus = carrierStatusTxt.getText();
 			clickCloseButton();

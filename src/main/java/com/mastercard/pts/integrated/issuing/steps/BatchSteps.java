@@ -165,13 +165,13 @@ public class BatchSteps {
 	
 		String batchFile = context.get(ContextConstants.PIN_OFFSET_FILE) + "_PinFile";
 		String ackIndicator = "";
-		if(acknowledgementType.equalsIgnoreCase("positive"))
+		if (acknowledgementType.equalsIgnoreCase("positive"))
 			ackIndicator = "Y";
 		else
 			ackIndicator = "N";
-		
+
 		String wholeDataToAppend = "\t" + ackIndicator + StringUtils.rightPad(DateUtils.getDateddMMyyyy(), 208, "0");
-		fileCreation.updatePinOffsetFileWithAcknowledgement(batchFile,wholeDataToAppend);
+		fileCreation.updatePinOffsetFileWithAcknowledgement(batchFile, wholeDataToAppend);
 	}
 	
 	@When("User updates the new pin offset file with $acknowledgementType pin acknowledgement")
@@ -179,18 +179,18 @@ public class BatchSteps {
 	public void updateTheNewPinOffsetFileWithPinAcknowledgement(String acknowledgementType) throws IOException 
 	{
 		String ackIndicator = "";
-		if(acknowledgementType.equalsIgnoreCase("positive"))
+		if (acknowledgementType.equalsIgnoreCase("positive"))
 			ackIndicator = "Y";
 		else
 			ackIndicator = "N";
-		
+
 		String wholeDataToAppend = "\t" + ackIndicator + StringUtils.rightPad(DateUtils.getDateddMMyyyy(), 208, "0");
-		String batchFile = tempDirectory.toString()+ "\\" +fileCreation.getNewPinOffsetFile(tempDirectory.toString());
-		
+		String batchFile = tempDirectory.toString() + "\\" + fileCreation.getNewPinOffsetFile(tempDirectory.toString());
+
 		context.put(ContextConstants.PIN_OFFSET_FILE, batchFile);
 		MiscUtils.renamePinFile(batchFile.toString());
-		
-		fileCreation.updatePinOffsetFileWithAcknowledgement(batchFile+"_PinFile", wholeDataToAppend);
+
+		fileCreation.updatePinOffsetFileWithAcknowledgement(batchFile + "_PinFile", wholeDataToAppend);
 	}
 	
 	@When("User deletes existing pin offset files")

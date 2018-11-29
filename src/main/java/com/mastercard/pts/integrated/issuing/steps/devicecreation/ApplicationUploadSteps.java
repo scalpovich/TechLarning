@@ -291,7 +291,6 @@ public class ApplicationUploadSteps {
 	@Then("User creates UPLOAD $batchName batch")
 	public void thenUserCreatesUploadPinFileAcknowledgementBatch(String batchName) {
 		ProcessBatches batch=new ProcessBatches();
-		//ProcessBatches batch = ProcessBatches.getBatchData()
 		String batchFile = context.get(ContextConstants.PIN_OFFSET_FILE);
 		batch.setBatchFileName((new File(batchFile)).getName());
 		batch.setJoBID(processBatchesFlows.processUploadBatches(batchName, batch.getFileName()));

@@ -11,7 +11,7 @@ public class CarrierAcknowledgement {
 	private String fileType;
 	private String fileName;
 	private String courierVendorName;
-	private String AWBNumber;
+	private String awbNumber;
 	private String receivedBy;
 	private String status;
 	private String relationship;
@@ -40,11 +40,11 @@ public class CarrierAcknowledgement {
 	public void setCourierVendorName(String courierVendorName) {
 		this.courierVendorName = courierVendorName;
 	}
-	public String getAWBNumber() {
-		return AWBNumber;
+	public String getAwbNumber() {
+		return awbNumber;
 	}
-	public void setAWBNumber(String aWBNumber) {
-		AWBNumber = aWBNumber;
+	public void setAwbNumber(String awbNumber) {
+		awbNumber = awbNumber;
 	}
 	public String getReceivedBy() {
 		return receivedBy;
@@ -68,7 +68,7 @@ public class CarrierAcknowledgement {
 	public static CarrierAcknowledgement createWithProvider(KeyValueProvider provider){
 		CarrierAcknowledgement carrierAcknowledgement = new CarrierAcknowledgement();
 		carrierAcknowledgement.setCourierVendorName(provider.getString("COURIER_VENDOR"));
-		carrierAcknowledgement.setAWBNumber(provider.getString("AWB_NUMBER"));
+		carrierAcknowledgement.setAwbNumber(provider.getString("AWB_NUMBER"));
 		carrierAcknowledgement.setReceivedBy(provider.getString("RECEIVED_BY"));
 		carrierAcknowledgement.setStatus(provider.getString("CARRIER_STATUS"));
 		carrierAcknowledgement.setRelationship(provider.getString("RELATIONSHIP"));

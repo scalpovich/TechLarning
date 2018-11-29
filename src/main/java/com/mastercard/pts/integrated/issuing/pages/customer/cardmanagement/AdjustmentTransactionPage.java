@@ -70,7 +70,7 @@ public class AdjustmentTransactionPage extends AbstractBasePage {
 		logger.info("Create Adjustment Transaction: {}",
 				transaction.getVoucherNumber());
 		clickAddNewButton();
-		
+
 		runWithinPopup(
 				"Add Adjustment Transaction",
 				() -> {
@@ -107,6 +107,7 @@ public class AdjustmentTransactionPage extends AbstractBasePage {
 			WebElementUtils.enterText(memoTxt, transactionDetails.getMemo());
 			clickSaveButton();
 		});
+
 	}
 	
 	public void verifyUiOperationStatus() {
