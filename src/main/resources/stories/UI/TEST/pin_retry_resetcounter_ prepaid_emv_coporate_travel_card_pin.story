@@ -7,24 +7,28 @@ Meta:
 @StoryName p_emv_corp_travel
 @pinRetryLimitValidationAndResetCounter
 
-Scenario: Setup - prepaid emv corporate travel card with PIN
-Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card
-When user creates new device of prepaid type for new client
-Then user sign out from customer portal
+Scenario: 1.0 Set up prepaid emv corporate travel card
+Given setting json values in excel for Prepaid
+When user is logged in institution
+And User fills Device Plan for "Prepaid" "emv" card
+And User fills Wallet Plan for prepaid product
+And User fills Program section for prepaid product
+And User fills Business Mandatory Fields Screen for prepaid product
+And User fills Device Range section for prepaid product
+And user assigns service code to program
+Then user creates new device of prepaid type for new client
 
-Scenario: Device production - prepaid emv corporate travel card with PIN
+Scenario: 1.1 prepaid emv corporate travel card device production
 Given user is logged in institution
-And a new device was created
-When processes pre-production batch for prepaid
+When a new device was created
+And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
 And user has wallet number information for prepaid device
-And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
-Then device has "normal" status
+And device has "NOT ACTIVATED CARD" status
 And user activates device through helpdesk
-And embossing file batch was generated in correct format
+And device has "normal" status
 And user sets invalid pin
 And user sign out from customer portal
 

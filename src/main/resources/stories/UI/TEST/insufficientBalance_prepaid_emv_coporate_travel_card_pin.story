@@ -4,10 +4,12 @@ As an issuer
 I want to perform transactions for prepaid emv corporate travel card
 
 Meta:
-@StoryName p_emv_corp_travel
+@StoryName p_emv_corp
 
+Scenario: 1.0 Set up prepaid emv corporate travel card
 Given setting json values in excel for Prepaid
 When user is logged in institution
+And user uses existing transaction limit plan for limit type DAILY
 And User fills Device Plan for "Prepaid" "emv" card
 And User fills Wallet Plan for prepaid product
 And User fills Program section for prepaid product
@@ -23,10 +25,10 @@ And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 And processes pin generation batch for prepaid
 And user has wallet number information for prepaid device
-And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
-And device has "normal" status
+And device has "NOT ACTIVATED CARD" status
 And user activates device through helpdesk
+And device has "normal" status
 Then user sign out from customer portal
 
 Scenario: Pin Generation
