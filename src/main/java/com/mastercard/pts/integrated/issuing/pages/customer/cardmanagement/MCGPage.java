@@ -81,6 +81,11 @@ public class MCGPage extends AbstractBasePage {
 		enterValueinTextBox(mccNameTxt, plan.getMccName());
 	}
 
+	@Override
+	public void clickSaveButton() {
+		clickWhenClickable(saveBtn);
+	}
+		
 	public void selectMCCCode() {
 		clickWhenClickable(mccSelectChkBx);
 	}

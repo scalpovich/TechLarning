@@ -337,7 +337,6 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
 		SimulatorUtilities.wait(1000);
-		String programCodeDDwnBy = "view:programCode:input:dropdowncomponent";
 		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)
 				|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)) {
 			enterText(existingDeviceNumberTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));
