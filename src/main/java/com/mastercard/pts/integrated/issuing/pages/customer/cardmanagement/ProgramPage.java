@@ -540,9 +540,9 @@ public class ProgramPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByOptionalVisibleText(markupFeePlanDDwn, program.getMarkUpFeePlan());
 			WebElementUtils.selectDropDownByOptionalVisibleText(stmtPlanCodeDDwn, program.getPrepaidStatementPlan());
 		}
-		if (loyaltyPlanDDwn != null && !program.getLoyaltyPlan().isEmpty()) {
-			WebElementUtils.selectDropDownByOptionalVisibleText(loyaltyPlanDDwn, program.getLoyaltyPlan());
-		}
+//		if (loyaltyPlanDDwn != null && !program.getLoyaltyPlan().isEmpty()) {
+//			WebElementUtils.selectDropDownByOptionalVisibleText(loyaltyPlanDDwn, program.getLoyaltyPlan());
+//		}
 
 		waitForLoaderToDisappear();
 		clickNextButton();
