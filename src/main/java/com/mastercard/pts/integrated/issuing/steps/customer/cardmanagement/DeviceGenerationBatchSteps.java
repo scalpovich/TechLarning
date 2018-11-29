@@ -20,10 +20,11 @@ public class DeviceGenerationBatchSteps {
 	
 	@When("user processes deviceGeneration batch for new Application for FileUpload")
 	public void closeFirstBatchExecutionForNewApplication(){
-		deviceGenerationBatchFlows.deviceGenerationFirstBatchExecution();
+		deviceGenerationBatchFlows.deviceGenerationBatchExecutionForFileUpload();
 	}
 	
 	@When("user processesAll deviceGeneration batch for new Application")
+	@Then("user processesAll deviceGeneration batch for new Application")
 	public void closetBatchExecutionForNewApplication(){
 		deviceGenerationBatchFlows.deviceGenerationAllBatchExecution();
 	}

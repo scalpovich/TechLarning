@@ -19,7 +19,7 @@ public class DBUtility {
 			.getLogger(DBUtility.class);
 	private Connection conn = null;
 	private Statement stmt = null;
-	private ResultSet rs = null;
+	private ResultSet rs;
 	private String recordColumnValue = null;
 	
 
@@ -53,16 +53,20 @@ public class DBUtility {
 	 * @param queryString takes the SQL query
 	 * @param columnName takes the columnName for which the value has to be fetched
 	 */
-	public String getSingleRecordColumnValueFromDB(String queryString,
-			String columnName) {
+	public String getSingleRecordColumnValueFromDB(String queryString, String columnName) {
 		try {
 			stmt = getConnection().createStatement();
 			rs = stmt.executeQuery(queryString);
 			while (rs.next()) {
-				recordColumnValue = rs.getString(columnName);
-				logger.info("value returned from database ",recordColumnValue);
-				break;
-			}	
+				if (rs.getString(columnName) == null) {
+					recordColumnValue = null;
+				} else {
+					recordColumnValue = rs.getString(columnName);
+					logger.info("value returned from database ", recordColumnValue);
+					break;
+
+				}
+			}
 		} catch (Exception e) {
 			MiscUtils.propagate(e);
 		} finally {
@@ -141,5 +145,11 @@ public class DBUtility {
 			MiscUtils.propagate(e);
 		}
 		return null;
+	}
+	
+	public String getCurrentDateForInstitution(String institutionCode) {
+		String query = Constants.INSTITUTION_NUMBER_QUERY_START + institutionCode + Constants.INSTITUTION_NUMBER_QUERY_END;
+		String colName = Constants.INSTITUTION_DATE+"('"+ institutionCode +"')";
+		return getSingleRecordColumnValueFromDB(query, colName);
 	}
 }

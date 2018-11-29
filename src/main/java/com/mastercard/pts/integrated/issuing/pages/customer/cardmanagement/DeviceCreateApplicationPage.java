@@ -3,12 +3,11 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -182,7 +181,6 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
  	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Existing Client Code')]")
  	private MCWebElement existingClientLabel;
  	
-  	
 	public void selectAppliedForProduct(String product) {
 		WebElementUtils.selectDropDownByVisibleText(appliedForProdutDDwn, product);
 	}
@@ -274,7 +272,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		logger.info("Application Number: {}",device.getApplicationNumber());
 		
 		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)
-				&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)) {
+				/*&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)*/) {
 			context.put(ContextConstants.DEVICE_SUPPLEMENTARY_ADDON_EXISTING,device);
 		} else {
 			context.put(ContextConstants.DEVICE, device);
@@ -286,13 +284,19 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 	}
 
 	private void fillBatchDetails(Device device) {		
+		if(Objects.nonNull(context.get(CreditConstants.EXISTING_BATCH))){
+			WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn,"Open [O]");			
+			selectByVisibleText(openBatchDDwn, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
+			device.setBatchNumber(context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
+		}else{
 		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
 		clickWhenClickable(generateDeviceBatchBtn);
 		waitForWicket();
-		SimulatorUtilities.wait(10000);
+			SimulatorUtilities.wait(30000);
 		context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());		
 		device.setBatchNumber(batchNumberTxt.getText());
 		logger.info(" *********** Batch number *********** : {}",device.getBatchNumber());		
+		}
 		clickNextButton();
 	}
 
@@ -319,8 +323,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		}
 		SimulatorUtilities.wait(8000);
 		clickNextButton();
-		
-		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());		
+		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());
 		WebElementUtils.selectDropDownByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
 		WebElementUtils.selectDropDownByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
 	}
@@ -371,13 +374,15 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			clickNextButton();	
 		}	
 	}
-	private void fillAddOnProfileAndClickNext(Device device){
+
+	private void fillAddOnProfileAndClickNext(Device device) {
 		ClientDetails client = device.getClientDetails();
 		WebElementUtils.selectDropDownByVisibleText(addOnTitleOpt, client.getTitle());
 		WebElementUtils.enterText(addOnFirstNameTxt, client.getFirstName());
 		WebElementUtils.enterText(addOnLastNameTxt, client.getLastName());
-		WebElementUtils.selectDropDownByVisibleText(addOnGenderTxt, client.getGender());	
+		WebElementUtils.selectDropDownByVisibleText(addOnGenderTxt, client.getGender());
 		WebElementUtils.pickDate(addOnBirthCountryDate, client.getBirthDate());
+
 		clickNextButton();
 	}
 
@@ -419,18 +424,28 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		
 		ClientDetails client = device.getClientDetails();
 		WebElementUtils.selectDropDownByVisibleText(titleDDwn, client.getTitle());
+		if (Objects.nonNull(device.getDedupe())){	
+			WebElementUtils.enterText(firstNameTxt, client.getDedupeFirstName());
+			WebElementUtils.enterText(lastNameTxt, client.getDedupeLastName());
+			WebElementUtils.pickDate(birthDateDPkr, client.getDedupeBirthDate());
+			WebElementUtils.enterText(registeredMailIdTxt, client.getDedupeEmailId());
+		}
+		else{
 		WebElementUtils.enterText(firstNameTxt, client.getFirstName());
+			WebElementUtils.enterText(lastNameTxt, client.getLastName());
+			WebElementUtils.pickDate(birthDateDPkr, client.getBirthDate());
+			WebElementUtils.enterText(registeredMailIdTxt, client.getEmailId());
+		}
 		
 		if (client.getMiddleName1() != null) {
 			WebElementUtils.enterText(middleName1Txt, client.getMiddleName1());
 		}
 		
-		WebElementUtils.enterText(lastNameTxt, client.getLastName());
 		WebElementUtils.enterText(middleName2Txt, device.getMiddleName2());
 		WebElementUtils.enterText(encodedNameTxt, device.getEncodedName());
 		WebElementUtils.selectDropDownByVisibleText(genderDDwn, client.getGender());
 		WebElementUtils.selectDropDownByVisibleText(nationalityDDwn, client.getNationality());
-		WebElementUtils.pickDate(birthDateDPkr, client.getBirthDate());
+		
 		WebElementUtils.selectDropDownByVisibleText(maritalStatusDDwn, client.getMaritialStatus());
 		
 		if (device.getAppliedForProduct().equalsIgnoreCase(ProductType.DEBIT)) {
@@ -438,7 +453,6 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByVisibleText(accountTypeDDwn, device.getAccountType());
 		}
 		
-		WebElementUtils.enterText(registeredMailIdTxt, client.getEmailId());
 		WebElementUtils.selectDropDownByVisibleText(languagePreferencesDDwn, client.getLanguagePreference());
 		WebElementUtils.selectDropDownByVisibleText(vipDDwn, device.getVip());
 		WebElementUtils.selectDropDownByIndex(statementPreferenceDDwn,1);

@@ -18,45 +18,45 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
-		CardManagementNav.L1_OPERATION,
-		CardManagementNav.L2_OPERATION_APPLICATION,
-		CardManagementNav.L3_OPERATION_APPLICATION_CREDIT,
-		CardManagementNav.L4_CREDIT_BUREAU_VERIFICATION })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_OPERATION, CardManagementNav.L2_OPERATION_APPLICATION, CardManagementNav.L3_OPERATION_APPLICATION_CREDIT, CardManagementNav.L4_CREDIT_BUREAU_VERIFICATION })
 public class CreditBureauVerificationPage extends AbstractBasePage {
     
-	private static final String CREDIT_BUREAU_VERIFICATION_FRAME="Edit ";
+	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview")
+	private MCWebElement batchNoColumn;
 	
+	private static final String CREDIT_BUREAU_VERIFICATION_FRAME = "Edit ";
+
 	 @Autowired
 	 TestContext context;
-	 
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Process All']")
 	private MCWebElement processAllBtn;
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Credit Bureau Verification']")
 	private MCWebElement creditBureauVerificationLink;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//img[@alt='Edit Record']")
 	private MCWebElement manualApprovalLink;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='OK']")
-	private MCWebElement OKButtonClick;
-	
+	private MCWebElement okBtn;
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview")
 	private MCWebElement searchTable;
-	
+
 	public void creditBureauVerificationBatchProcess() {
 		if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER))) {
 			clickWhenClickable(creditBureauVerificationLink);
 			creditBureauVerificationBatchProcess();
 		}
-
 	}
 	
 	public void switchToManualApprovalLink() {
 		clickOnManualApprovalIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
 		switchToIframe(CREDIT_BUREAU_VERIFICATION_FRAME);
-		clickWhenClickable(OKButtonClick);
+		clickWhenClickable(okBtn);
 		SimulatorUtilities.wait(3000);
+		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
 		return;
 	}
 	
@@ -81,4 +81,4 @@ public class CreditBureauVerificationPage extends AbstractBasePage {
 			}
 		}
 	}
-	}
+}

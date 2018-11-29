@@ -10,42 +10,38 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.A
 
 @Component
 public class ApprovalScoreSteps {
+	
 	@Autowired
 	ApprovalScoreWorkFlow approvalScoreWorkFlow;
+	
     @When("User adds Approval Score on program")
     @Then("User adds Approval Score on program")
-	public void userAddsAApprovalScore()
-	{
-		Boolean approvalScore=approvalScoreWorkFlow.userAddsNewApprovalScore();
-		Assert.assertTrue("ApprovalScore is not added", approvalScore);
+	public void userAddsAApprovalScore() {
+		Assert.assertTrue("Approval Score is added successfully", approvalScoreWorkFlow.userAddsNewApprovalScore());
 	}
-   @When("user verifies edit and verify Approval Score") 
-    public void userVerifiesAndEditsApprovalScore()
-    {
+
+	@When("user verifies and edits Approval Score")
+	public void userVerifiesAndEditsApprovalScore() {
     	approvalScoreWorkFlow.userVerifiesAndEditsNewApprovalScore();
     }
    
-   @When("User adds Approval Score on program for auto reject")
-   @Then("User adds Approval Score on program for auto reject")
-	public void userAddsAApprovalScoreForAutoReject()
-	{
-		Boolean approvalScore=approvalScoreWorkFlow.userAddsNewApprovalScoreForAutoReject();
-		Assert.assertTrue("ApprovalScore is not added for auto reject", approvalScore);
+	@When("User adds Approval Score on program As $type")
+	@Then("User adds Approval Score on program As $type")
+	public void userAddsAApprovalScore(String type) {
+		Assert.assertTrue("Approval Score is added successfully", approvalScoreWorkFlow.userAddsNewApprovalScore(type));
 	}
    
    @When("User adds Approval Score on program for auto refer")
    @Then("User adds Approval Score on program for auto refer")
 	public void userAddsAApprovalScoreForAutoRefer()
 	{
-		Boolean approvalScore=approvalScoreWorkFlow.userAddsNewApprovalScoreForAutoRefer();
-		Assert.assertTrue("ApprovalScore is not added for auto refer", approvalScore);
+		Assert.assertTrue("ApprovalScore is not added for auto refer", approvalScoreWorkFlow.userAddsNewApprovalScoreForAutoRefer());
 	}
    
    @When("User adds Approval Score on program with less end range for auto reject")
    @Then("User adds Approval Score on program with less end range for auto reject")
 	public void userAddsAApprovalScoreForOutsideRange()
 	{
-		Boolean approvalScore=approvalScoreWorkFlow.userAddsNewApprovalScoreWithLessEndRangeForAutoReject();
-		Assert.assertTrue("ApprovalScore is not added", approvalScore);
+		Assert.assertTrue("ApprovalScore is not added", approvalScoreWorkFlow.userAddsNewApprovalScoreWithLessEndRangeForAutoReject());
 	}
 }

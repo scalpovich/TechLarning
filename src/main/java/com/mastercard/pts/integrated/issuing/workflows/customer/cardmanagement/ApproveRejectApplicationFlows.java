@@ -20,4 +20,9 @@ public class ApproveRejectApplicationFlows {
 		ApproveRejectPage approveRejectPage = navigator.navigateToPage(ApproveRejectPage.class);
 		approveRejectPage.approveApplicationFileUpload();
 	}
+	
+	public String pushbackCreditApplication(){
+		ApproveRejectPage approveRejectPage = navigator.navigateToPage(ApproveRejectPage.class);		
+		return approveRejectPage.pushbackApplication();
+	}
 }

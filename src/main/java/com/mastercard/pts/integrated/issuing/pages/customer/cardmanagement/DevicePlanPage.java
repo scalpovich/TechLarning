@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -27,6 +29,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigat
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
+import com.mastercard.pts.integrated.issuing.utils.DBUtility;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -39,6 +42,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class DevicePlanPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory.getLogger(DevicePlanPage.class);
 	private static final String STATUS_YES = "Yes";
+	private static final String STATUS_NO = "No";
 
 	@Autowired
 	MenuSubMenuPage menuSubMenuPage;
@@ -48,6 +52,9 @@ public class DevicePlanPage extends AbstractBasePage {
 
 	@Autowired
 	private TestContext context;
+	
+	@Autowired
+	private DBUtility dbUtils;
 
 	public Vendor vendor;
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[@class='field'][1]/input")
@@ -461,6 +468,9 @@ public class DevicePlanPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind="view:pinUnblockPriority:input:dropdowncomponent")	
 	private MCWebElement pinUnblockPriorityDdwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="presentmentTimeLimit:input:inputTextField")	
+	private MCWebElement txtPresentmentTimeLimit;
 	
 	public void AddDevicePlan() {
 		clickWhenClickable(AddDevicePlanBtn);
@@ -1186,6 +1196,7 @@ public class DevicePlanPage extends AbstractBasePage {
 		if(!devicePlan.getProductType().equalsIgnoreCase(ProductType.CREDIT)){
 			selectIframeTransactionFeePlan(devicePlan.getTransactionFeePlan());
 		}
+		selectIframeTransactionFeePlan(devicePlan.getTransactionFeePlan());
 		selectIframeTransactionLimitPlanDdwn(devicePlan.getTransactionLimitPlan());
 		clickIframeNextButton();		
 	}
@@ -1200,10 +1211,16 @@ public class DevicePlanPage extends AbstractBasePage {
 				{
 					if(!DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType()))
 					{
-						enterIframeExpiryDateTxt(devicePlan.getValidityOnInitialMonths());
-						String dateInYYMM = getValueInYYMMFormatForExpiryDate(devicePlan.getValidityOnInitialMonths());
+						String currentDateString = dbUtils.getCurrentDateForInstitution(context.get(Constants.USER_INSTITUTION_SELECTED));
+						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
+					    LocalDateTime dateTime = LocalDateTime.parse(currentDateString, formatter);
+					    dateTime = dateTime.plusYears(10);
+					    DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("MM-yyyy");
+					    String tenYearsPlus = dateTime.format(formatter1);
+						enterIframeExpiryDateTxt(tenYearsPlus);
+						String dateInYYMM = getValueInYYMMFormatForExpiryDate(tenYearsPlus);
 						devicePlan.setExpiryDate(dateInYYMM);
-						logger.info("Expiry date for device = {}",devicePlan.getExpiryDate());				
+						logger.info("Expiry date for device = {}",devicePlan.getExpiryDate());
 					}
 				}
 				else
@@ -1285,10 +1302,14 @@ public class DevicePlanPage extends AbstractBasePage {
 
 			if (devicePlan.getEmvPlanApplicationBlock().equalsIgnoreCase(STATUS_YES)) {
 				clickWhenClickable(applicationBlockChkBx);
+				selectByVisibleText(applicationBlockPriorityDdwn,
+						devicePlan.getEmvPlanApplicationBlockPriority());
 			}
 
 			if (devicePlan.getEmvPlanApplicationUnblock().equalsIgnoreCase(STATUS_YES)) {
 				clickWhenClickable(applicationUnblockChkBx);
+				selectByVisibleText(applicationUnblockPriorityDdwn,
+						devicePlan.getEmvPlanApplicationUnblockPriority());
 			}
 		
 			if (devicePlan.getEmvPlanPutData().equalsIgnoreCase(STATUS_YES)) {
@@ -1312,8 +1333,14 @@ public class DevicePlanPage extends AbstractBasePage {
 					devicePlan.getEmvPlanPutDataPriority());
 			WebElementUtils.selectDropDownByVisibleText(pinUnblockPriorityDdwn,
 					devicePlan.getEmvPlanPinUnblockPriority());
-
+			
+			if (devicePlan.getEmvIssuerScriptingNegative().equalsIgnoreCase(STATUS_NO)) {
+				selectByVisibleText(pinChangePriorityDdwn, devicePlan.getEmvPlanPinChangePriority());
+				selectByVisibleText(putDataPriorityDdwn, devicePlan.getEmvPlanPutDataPriority());
+				selectByVisibleText(pinUnblockPriorityDdwn, devicePlan.getEmvPlanPinUnblockPriority());
+			}
 		}
+
 	}
 
 	private void fillPinGenerationSection(DevicePlan devicePlan) {
@@ -1410,5 +1437,20 @@ public class DevicePlanPage extends AbstractBasePage {
 	
 	public void selectPriorityPassVendor(DevicePlan devicePlan){	
 		selectByVisibleText(iframePriorityPassVendorDdwn, devicePlan.getPriorityPassVendor());
+	}
+	
+	public void editDevicePlan(DevicePlan device) {
+		enterValueinTextBox(devicePlanCode, device.getDevicePlanCode());
+		clickSearchButton();
+		editFirstRecord();				
+		runWithinPopup("Edit Device Plan", () -> {			
+			WebElementUtils.elementToBeClickable(authorizationTab);
+			clickWhenClickable(authorizationTab);
+			enterValueinTextBox(txtPresentmentTimeLimit, device.getTransSetPresentmentTimeLimit());
+			clickSaveButton();
+		});
+
+		verifyOperationStatus();
+		
 	}
 }

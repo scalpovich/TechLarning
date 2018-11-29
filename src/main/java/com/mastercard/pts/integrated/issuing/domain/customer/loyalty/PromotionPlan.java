@@ -2,15 +2,18 @@ package com.mastercard.pts.integrated.issuing.domain.customer.loyalty;
 
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 @Component
-public class PromotionPlan {
+public class PromotionPlan implements HasCodeAndDescription {
 
 	private String promotionPlanCode;
 	private String promotionDescription;
-
 	private String promotionCurrency;
 	private String promotionamountSpent;
 	private String promotionpointsEarned;
@@ -18,6 +21,42 @@ public class PromotionPlan {
 	private String promotionthresholdAmount;
 	private String promotionNoOfTransactions;
 	private String promotion;
+	private String floorTransactionAmount;
+	private String mccCode;
+	private String mcgCode;
+	private String promotionLoyaltyPlan;
+
+	public String getMcgCode() {
+		return mcgCode;
+	}
+
+	public void setMcgCode(String mcgCode) {
+		this.mcgCode = mcgCode;
+	}
+
+	public String getPromotionloyaltyPlan() {
+		return promotionLoyaltyPlan;
+	}
+
+	public void setPromotionloyaltyPlan(String promotionLoyaltyPlan) {
+		this.promotionLoyaltyPlan = promotionLoyaltyPlan;
+	}
+
+	public String getMccCode() {
+		return mccCode;
+	}
+
+	public void setMccCode(String mccCode) {
+		this.mccCode = mccCode;
+	}
+
+	public String getFloortransactionAmount() {
+		return floorTransactionAmount;
+	}
+
+	public void setFloortransactionAmount(String floorTransactionAmount) {
+		this.floorTransactionAmount = floorTransactionAmount;
+	}
 
 	public String getPromotionPlanCode() {
 		return promotionPlanCode;
@@ -108,5 +147,28 @@ public class PromotionPlan {
 		setPromotionNoOfTransactions(MapUtils
 				.fnGetInputDataFromMap("noOfTransactions"));
 
+	}
+	
+	public static PromotionPlan createWithProvider(KeyValueProvider provider) {
+		PromotionPlan plan = new PromotionPlan();
+		plan.setPromotionPlanCode(MiscUtils.generate6CharAlphaNumeric());
+		plan.setPromotionDescription(ConstantData.GENERIC_DESCRIPTION);
+		plan.setPromotionCurrency(provider.getString("PROMOTION_CURRENCY"));
+		plan.setPromotionamountSpent(provider.getString("PROMOTION_AMOUNT_SPENT"));
+		plan.setPromotionpointsEarned(provider.getString("PROMOTION_POINTS_EARNED"));
+		plan.setFloortransactionAmount(provider.getString("FLOOR_TRANSACTION_AMOUNT"));
+		plan.setMccCode(provider.getString("MCC_CODE_INVALID"));
+		plan.setMcgCode(provider.getString("MCG_CODE"));
+		return plan;
+	}
+
+	@Override
+	public String getCode() {
+		return getPromotionPlanCode();
+	}
+
+	@Override
+	public String getDescription() {
+		return getPromotionDescription();
 	}
 }

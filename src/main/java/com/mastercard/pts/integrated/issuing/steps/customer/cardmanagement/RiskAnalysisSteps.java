@@ -14,14 +14,13 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.R
  */
 @Component
 public class RiskAnalysisSteps {
+	
 	@Autowired
 	RiskAnalysisRuleWorkFlow riskAnalysisRuleWorkFlow;
 	
 	@When("User Adds Risk Analysis Rule for fieldName1 $fieldName and fieldName2 $field on program")
 	@Then("User Adds Risk Analysis Rule for fieldName1 $fieldName and fieldName2 $field on program")
-	
 	public void whenUserCreatesACreditPlan(String fieldName,String field){
-		Boolean riskAnalysisRule=riskAnalysisRuleWorkFlow.userCreatesAValidRiskAnalysisRulePlan(fieldName,field);
-		Assert.assertTrue("RiskAnalysis Rule has not been added successfully", riskAnalysisRule);
+		Assert.assertTrue("RiskAnalysis Rule has not been added successfully", riskAnalysisRuleWorkFlow.userCreatesAValidRiskAnalysisRulePlan(fieldName,field));
 	}
 }

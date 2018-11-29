@@ -26,6 +26,23 @@ public class WorkFlowRuleFlows {
 		
 	}
 	
+	public boolean userAddsWorkFlowRuleOnlyForCreditBureau(String fieldName1, String fieldName2) {
+		workFlowRulePage = navigator.navigateToPage(WorkflowRulePage.class);
+		return workFlowRulePage.workFlowRulesForCreditBureau(fieldName1, fieldName2);
+	}
+	
+	public boolean userAddsWorkFlowRuleOnlyForApplicationScoring(String fieldName1,String fieldName2)
+	{
+		workFlowRulePage=navigator.navigateToPage(WorkflowRulePage.class);
+		return workFlowRulePage.workFlowRulesForApplicationScoring(fieldName1, fieldName2);
+	}
+	
+	public boolean userAddsWorkFlowRuleForApplicationScoringCreditBureau(String fieldName1,String fieldName2)
+	{
+		workFlowRulePage=navigator.navigateToPage(WorkflowRulePage.class);
+		return workFlowRulePage.workFlowRulesForApplicationScoringCreditBureau(fieldName1, fieldName2);
+	}
+	
 	public boolean userAddsNewWorkFlowRuleForApplicationScore(String fieldName1,String fieldName2)
 	{
 		workFlowRulePage=navigator.navigateToPage(WorkflowRulePage.class);

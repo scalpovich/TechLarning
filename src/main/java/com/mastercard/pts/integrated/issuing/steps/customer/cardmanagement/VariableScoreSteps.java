@@ -17,8 +17,6 @@ public class VariableScoreSteps {
 	@Then("User adds Variable Score for fieldName $fieldName on program")
 	public void addingVariableScoreOnProgram(String fieldName)
 	{
-		Boolean variableScore=variableScoreWorkFlow.userAddsNewVariableScore(fieldName);
-		Assert.assertTrue("ApprovalScore is not added successfully", variableScore);
+		Assert.assertTrue("ApprovalScore is not added successfully", variableScoreWorkFlow.userAddsNewVariableScore(fieldName));
 	}
-
 }

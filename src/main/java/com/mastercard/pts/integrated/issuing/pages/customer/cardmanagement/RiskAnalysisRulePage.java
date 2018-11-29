@@ -26,16 +26,18 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_APPLICATION,
 		CardManagementNav.L3_CREDIT, CardManagementNav.L4_RISK_ANALYSIS_RULE })
 public class RiskAnalysisRulePage extends AbstractBasePage{
-	 @Autowired
-	 CreditCardCreditPlan creditCardCreditPlan;
-	 @Autowired
-	 CreditCardPlan creditCardPlans;
-	 @Autowired
-	 TestContext context;
+	@Autowired
+	CreditCardCreditPlan creditCardCreditPlan;
+	
+	@Autowired
+	CreditCardPlan creditCardPlans;
+	
+	@Autowired
+	TestContext context;
 	 
     private static final String ADD_RISK_AANALYSIS_RULE_FRAME="Add Risk Analysis Rule";
-	private static final Logger logger = LoggerFactory
-			.getLogger(RiskAnalysisRulePage.class);
+
+	private static final Logger logger = LoggerFactory.getLogger(RiskAnalysisRulePage.class);
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "productCode:input:dropdowncomponent")
 	private MCWebElement programDDwn;
@@ -54,6 +56,7 @@ public class RiskAnalysisRulePage extends AbstractBasePage{
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "appendSectionContainer:appendButton")
 	private MCWebElement appendBtn;
+	
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement addBtn;
 	
@@ -65,7 +68,6 @@ public class RiskAnalysisRulePage extends AbstractBasePage{
 	}
 	
 	public void addButtonToEnterRiskAnalysisRulePlanFrame() {
-
 		clickAddNewButton();
 		switchToIframe(ADD_RISK_AANALYSIS_RULE_FRAME);
 	}

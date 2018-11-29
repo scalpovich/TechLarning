@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 
 public class GenericReport {
 
@@ -17,7 +19,35 @@ public class GenericReport {
 	private String reportType;
 	private String reportUrl;
 	private String password;
-	
+	private String clientCode;
+	private String deviceType;
+	private String loyaltyPlan;
+	private String loyaltyPromotionPlan;
+
+	public String getLoyaltyPromotionPlan() {
+		return loyaltyPromotionPlan;
+	}
+
+	public void setLoyaltyPromotionPlan(String loyaltyPromotionPlan) {
+		this.loyaltyPromotionPlan = loyaltyPromotionPlan;
+	}
+
+	public String getDeviceType() {
+		return deviceType;
+	}
+
+	public void setDeviceType(String deviceType) {
+		this.deviceType = deviceType;
+	}
+
+	public String getLoyaltyPlan() {
+		return loyaltyPlan;
+	}
+
+	public void setLoyaltyPlan(String loyaltyPlan) {
+		this.loyaltyPlan = loyaltyPlan;
+	}
+
 	public String getPassword() {
 		return password;
 	}
@@ -104,7 +134,16 @@ public class GenericReport {
 	public void setReportRegEx(){
 		reportRegEx = new HashMap<>();
 		reportRegEx.put("RAMP", "\\d\\d-\\d\\d-\\d\\d\\d\\d");
+		reportRegEx.put("Application Reject Report", "\\d\\d-\\d\\d-\\d\\d\\d\\d");
+		reportRegEx.put(ConstantData.DEVICE_ACTIVITY_REPORT_FILE_NAME, "\\D\\d\\d\\d\\d\\D");
 	}
 	
+	public String getClientCode() {
+		return clientCode;
+	}
+
+	public void setClientCode(String clientCode) {
+		this.clientCode = clientCode;
+	}
 	
 }

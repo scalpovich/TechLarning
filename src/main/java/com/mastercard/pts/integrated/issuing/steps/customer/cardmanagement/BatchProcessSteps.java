@@ -1,14 +1,12 @@
 
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
-import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Locale;
@@ -30,8 +28,8 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceGenerationBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequest;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ClientDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CutOverProfile;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
@@ -41,14 +39,13 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreP
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
-import com.mastercard.pts.integrated.issuing.pages.collect.administration.AdministrationHomePage;
-import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoadFromFileUploadWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ReportVerificationWorkflow;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProcessBatchesFlows;
 
 /**
  * @author E071669
@@ -69,6 +66,9 @@ public class BatchProcessSteps {
 
 	@Autowired
 	private LoadFromFileUploadWorkflow loadFromFileUploadWorkflow;
+	
+	@Autowired
+	private ProcessBatchesFlows processBatchesFlows;
 
 	@Autowired
 	private ReportVerificationWorkflow reportVerificationWorkflow;
@@ -188,7 +188,7 @@ public class BatchProcessSteps {
 		ProcessBatches batch =  new ProcessBatches();
 		batch.setProductType(ProductType.fromShortName(type));
 		batch.setBatchName(batchName);
-		assertEquals("SUCCESS [2]", batchProcessWorkflow.processSystemInternalProcessingBatchWithoutDateCheck(batch));			
+		assertEquals("SUCCESS [2]", batchProcessWorkflow.processSystemInternalProcessingBatch(batch));			
 
 	}
 	
@@ -210,7 +210,7 @@ public class BatchProcessSteps {
 	public void verifyStatementFileSuccessfullyGenerated(){
 		Device device =  context.get(ContextConstants.DEVICE);
 		String institutionCode = System.getProperty(ContextConstants.INST_PROPERTY).substring(System.getProperty(ContextConstants.INST_PROPERTY).indexOf('[')+1, System.getProperty(ContextConstants.INST_PROPERTY).length() - 1);
-		String partialFileName = "STMT_" +institutionCode  +"_"+ device.getProgramCode() + "_" + device.getClientCode() +"_"+ context.get(ContextConstants.STATEMENT_TO_DATE) + context.get(ContextConstants.STATEMENT_FROM_DATE) + "_" + device.getDeviceNumber().substring(device.getDeviceNumber().length() - 4); 
+		String partialFileName = "STMT_" +institutionCode  +"_"+ device.getProgramCode().substring(12,18) + "_" + device.getClientCode() +"_"+ context.get(ContextConstants.STATEMENT_TO_DATE) + context.get(ContextConstants.STATEMENT_FROM_DATE) + "_" + device.getDeviceNumber().substring(device.getDeviceNumber().length() - 4); 
 		logger.info("File Name :{} ",partialFileName);
 	    batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(partialFileName, tempDirectory.toString(), "STATEMENT_DOWNLOAD","proc");
      	assertNotNull("Statement file is successfully donwloaded :  "+batchFile.getAbsolutePath(),batchFile);			
@@ -224,8 +224,10 @@ public class BatchProcessSteps {
 		HashMap<String , String> helpdeskValues = context.get(ContextConstants.HELPDESK_VALUES);		
 		helpdeskValues.put(ContextConstants.STATEMENT_DATE, context.get(ContextConstants.STATEMENT_DATE));
 		GenericReport report = GenericReport.createWithProvider(provider);			
+		report.setReportUrl(batchFile.getAbsolutePath());
 		String dateOfBirth = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH).format(device.getClientDetails().getBirthDate());
-		report.setPassword(device.getClientDetails().getFirstName().substring(0,4)+""+dateOfBirth.substring(0, dateOfBirth.length()-5).replaceAll("/", ""));				
+		logger.info("passowrd for statement:{} ",device.getClientDetails().getFirstName().substring(0,4).toUpperCase()+dateOfBirth.substring(0, dateOfBirth.length()-5).replaceAll("/", "").trim());
+		report.setPassword(device.getClientDetails().getFirstName().substring(0,4).toUpperCase()+dateOfBirth.substring(0, dateOfBirth.length()-5).replaceAll("/", "").trim());				
 		for (int row = 0; row < parameterTable.getRows().size(); row++) {
 			String parameter = parameterTable.getRow(row).get(parameterTable.getHeaders().get(0));			
 			if(parameter.equals(ContextConstants.CREDIT_CARD_NUMBER_HEADER_IN_STATEMENT))
@@ -272,6 +274,6 @@ public class BatchProcessSteps {
 		String partialFileName = context.get(ConstantData.VISA_OUT_GOING_FILE_NAME);
 		File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(partialFileName, tempDirectory.toString(), ConstantData.VISA_BASEII_LINUX_DIRECTORY,"proc");
 		Assert.assertTrue("Transaction Data Does not match ",batchProcessWorkflow.validateVisaOutGoingFile(batchFile));
-
 	}
+
 }

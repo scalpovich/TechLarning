@@ -5,6 +5,8 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.LoyaltyPromotionMapping;
+import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.PromotionPlan;
 import com.mastercard.pts.integrated.issuing.workflows.LoginWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.administration.UiVerificationAdministrationWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.UiVerificationCardManagementWorkflow;
@@ -36,7 +38,13 @@ public class CustomerUiVerificationSteps {
 
 	@Autowired
 	private LoginWorkflow loginWorkflow;
-	
+
+	@Autowired
+	PromotionPlan plan;
+
+	@Autowired
+	LoyaltyPromotionMapping loyaltypromotionmapping;
+
 	@Then("AccountFile page of card management tab is rendered correctly")
 	public void thenAccountFilePageOfCardManagementTabIsRenderedCorrectly() {
 		uiVerificationCardManagementWorkflow.verifyAccountFilePage();
@@ -587,12 +595,7 @@ public class CustomerUiVerificationSteps {
 	public void thenLoanTypePageOfCardManagementTabIsRenderedCorrectly() {
 		uiVerificationCardManagementWorkflow.verifyLoanTypePage();
 	}
-
-	@Then("LocalCheque page of card management tab is rendered correctly")
-	public void thenLocalChequePageOfCardManagementTabIsRenderedCorrectly() {
-		uiVerificationCardManagementWorkflow.verifyLocalChequePage();
-	}
-
+	
 	@Then("ManualAlerts page of card management tab is rendered correctly")
 	public void thenManualAlertsPageOfCardManagementTabIsRenderedCorrectly() {
 		uiVerificationCardManagementWorkflow.verifyManualAlertsPage();
@@ -682,17 +685,7 @@ public class CustomerUiVerificationSteps {
 	public void thenOtherTransactionsPageOfCardManagementTabIsRenderedCorrectly() {
 		uiVerificationCardManagementWorkflow.verifyOtherTransactionsPage();
 	}
-
-	@Then("OutstationChequeCollection page of card management tab is rendered correctly")
-	public void thenOutstationChequeCollectionPageOfCardManagementTabIsRenderedCorrectly() {
-		uiVerificationCardManagementWorkflow.verifyOutstationChequeCollectionPage();
-	}
-
-	@Then("OutstationChequeProcessing page of card management tab is rendered correctly")
-	public void thenOutstationChequeProcessingPageOfCardManagementTabIsRenderedCorrectly() {
-		uiVerificationCardManagementWorkflow.verifyOutstationChequeProcessingPage();
-	}
-
+	
 	@Then("Override page of card management tab is rendered correctly")
 	public void thenOverridePageOfCardManagementTabIsRenderedCorrectly() {
 		uiVerificationCardManagementWorkflow.verifyOverridePage();
@@ -1210,7 +1203,7 @@ public class CustomerUiVerificationSteps {
 
 	@Then("LoyaltyPlanPromotionMapping page of loyalty tab is rendered correctly")
 	public void thenLoyaltyPlanPromotionMappingPageOfLoyaltyTabIsRenderedCorrectly() {
-		uiVerificationLoyaltyWorkflow.verifyLoyaltyPlanPromotionMappingPage();
+		uiVerificationLoyaltyWorkflow.verifyLoyaltyPlanPromotionMappingPage(loyaltypromotionmapping);
 	}
 
 	@Then("LoyaltyPoints page of loyalty tab is rendered correctly")
@@ -1225,7 +1218,8 @@ public class CustomerUiVerificationSteps {
 
 	@Then("PromotionPlan page of loyalty tab is rendered correctly")
 	public void thenPromotionPlanPageOfLoyaltyTabIsRenderedCorrectly() {
-		uiVerificationLoyaltyWorkflow.verifyPromotionPlanPage();
+		uiVerificationLoyaltyWorkflow.verifyPromotionPlanPage(plan);
+
 	}
 
 	@Then("Redemption page of loyalty tab is rendered correctly")
@@ -1356,6 +1350,21 @@ public class CustomerUiVerificationSteps {
 	@Then("DeviceStatus page of card management tab is rendered correctly")
 	public void thenDeviceStatusPageOfCardManagementTabIsRenderedCorrectly() {
 		uiVerificationCardManagementWorkflow.verifyDeviceStatusPage();
+	}
+	
+	@Then("LocalCheque page of card management tab is rendered correctly")
+	public void verifyLocalChequePage() {
+		uiVerificationCardManagementWorkflow.verifyLocalChequePage();
+	}
+	
+	@Then("OutstationChequeProcessing page of card management tab is rendered correctly")
+	public void verifyOutstationChequeProcessingPage() {
+		uiVerificationCardManagementWorkflow.verifyOutstationChequeProcessingPage();
+	}
+	
+	@Then("OutstationChequeCollection page of card management tab is rendered correctly")
+	public void verifyOutstationChequeCollectionPage() {
+		uiVerificationCardManagementWorkflow.verifyOutstationChequeCollectionPage();
 	}
 
 	@Then("user signs out from customer portal")

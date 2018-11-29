@@ -13,8 +13,10 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Loan
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanType;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -78,11 +80,20 @@ public class LoanPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "maxLoanAmt:input:inputAmountField")
 	private MCWebElement maximumLoanAmountTxt ;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "defaultInstallmentNo:input:inputAmountField")
+	private MCWebElement defaultInstallmentNoTxt ;	
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "minEmiAmt:input:inputAmountField")
+	private MCWebElement minEmiAmtTxt ;	
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "minInstallmentNo:input:inputAmountField")
 	private MCWebElement minimumNumberOfInstallmentTxt ;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "maxInstallmentNo:input:inputAmountField")
 	private MCWebElement maximumNumberOfInstallmentTxt ;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "defaultInterestRate:input:inputAmountField")
+	private MCWebElement defaultInterestRateTxt ;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "minInterestRate:input:inputAmountField")
 	private MCWebElement minInterestRateTxt ;
@@ -98,13 +109,47 @@ public class LoanPlanPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "procFeeFixed:input:inputAmountField")
 	private MCWebElement procFeeFixedTxt ;
+		
+	@PageElement(findBy = FindBy.NAME, valueToFind = "procFeeVariable:input:inputAmountField")
+	private MCWebElement procFeePercentTxt ;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "minProcFee:input:inputAmountField")
+	private MCWebElement minProcFeeTxt ;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "maxProcFee:input:inputAmountField")
+	private MCWebElement maxProcFeeTxt ;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "preclosureFeeFixed:input:inputAmountField")
 	private MCWebElement preclosureFeeFixedTxt ;
+		
+	@PageElement(findBy = FindBy.NAME, valueToFind = "feeApplication:input:dropdowncomponent")
+	private MCWebElement preclosureFeeAppliedOnDDwn ;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "preclosureOutstandingAmount:input:inputAmountField")
+	private MCWebElement preclosureOutstandingAmountPercentTxt ;		
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "preclosureFeeVariable:input:inputAmountField")
+	private MCWebElement preclosureFeePercentTxt ;	
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "minPreclosureFee:input:inputAmountField")
+	private MCWebElement minPreclosureFeeTxt ;	
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "maxPreclosureFee:input:inputAmountField")
+	private MCWebElement maxPreclosureFeeTxt ;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cancellationFeeFixed:input:inputAmountField")
 	private MCWebElement cancellationFeeFixedTxt ;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "cancellationFeeVariable:input:inputAmountField")
+	private MCWebElement cancellationFeePercentTxt ;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "minCancellationFee:input:inputAmountField")
+	private MCWebElement minCancellationFeeTxt ;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "maxCancellationFee:input:inputAmountField")
+	private MCWebElement maxCancellationFeeTxt ;
+	
+
 	final int FIRST_RECORD=1;
 	
 	public void verifyUiOperationStatus() {
@@ -183,6 +228,14 @@ public class LoanPlanPage extends AbstractBasePage {
 		enterText(minimumNumberOfInstallmentTxt, minimumNumberOfInstallment);
 	}
 	
+	public void enterDefaultNumberOfInstallment(String numberOfInstallment){
+		enterText(defaultInstallmentNoTxt, numberOfInstallment);
+	}
+	
+	public void enterMinEMIAmount(String emiAmount){
+		enterText(minEmiAmtTxt, emiAmount);
+	}
+	
 	public void enterMaximumNumberOfInstallment(String maximumNumberOfInstallment){
 		enterText(maximumNumberOfInstallmentTxt, maximumNumberOfInstallment);
 	}
@@ -207,12 +260,57 @@ public class LoanPlanPage extends AbstractBasePage {
 		enterText(procFeeFixedTxt, processingAmount);
 	}
 	
+	public void enterProcessingFeePercent(String procFeePercent){
+		enterText(procFeePercentTxt, procFeePercent);
+	}
+		
+	public void enterMinimumProcessingFee(String processingFee){
+		enterText(minProcFeeTxt, processingFee);
+	}
+	
+	public void enterMaximumProcessingFee(String processingFee){
+		enterText(maxProcFeeTxt, processingFee);
+	}
+	
     public void enterPreclosureFixedFeeAmount(String preclosureAmount){
     	enterText(preclosureFeeFixedTxt, preclosureAmount);
 	}
     
+    public void enterPreclosureFeePercent(String preclosureFeePercent){
+    	enterText(preclosureFeePercentTxt, preclosureFeePercent);
+	}
+    
+    public void enterPreclosureOutstandingAmountPercent(String preclosureFeePercent){
+    	enterText(preclosureOutstandingAmountPercentTxt, preclosureFeePercent);
+	}
+    
+    public void enterMinPreclosureFee(String preclosureFee){
+    	enterText(minPreclosureFeeTxt, preclosureFee);
+	}
+    
+    public void enterMaxPreclosureFee(String preclosureFee){
+    	enterText(maxPreclosureFeeTxt, preclosureFee);
+	}
+    
+	public void selectPreClosureFeeAppliedOn(String feeAppliedOn){
+		selectByVisibleText(preclosureFeeAppliedOnDDwn, feeAppliedOn);
+	}
+	
+    
     public void enterCancellationFixedFeeAmount(String cancellationAmount){
     	enterText(cancellationFeeFixedTxt, cancellationAmount);
+	}
+    
+    public void enterCancellationFeePercent(String cancellationFeePercent){
+    	enterText(cancellationFeePercentTxt, cancellationFeePercent);
+	}
+    
+    public void enterMinCancellationFee(String cancellationFee){
+    	enterText(minCancellationFeeTxt, cancellationFee);
+	}
+    
+    public void enterMaxCancellationFee(String cancellationFee){
+    	enterText(maxCancellationFeeTxt, Integer.toString(Integer.parseInt(cancellationFee)*100));
 	}
     
     public void selectProgram(String programCode){
@@ -221,6 +319,9 @@ public class LoanPlanPage extends AbstractBasePage {
     
     public void selectWallet(String walletCode){
 		selectByVisibleText(walletPromotionDDwn,walletCode);
+	}
+    public void enterDefaultInterestRate(String defaultInterestRate){
+		enterText(defaultInterestRateTxt, defaultInterestRate);
 	}
     
 	@Override
@@ -238,11 +339,11 @@ public class LoanPlanPage extends AbstractBasePage {
 		logger.info("Add Loan Plan");
 		clickAddNewButton();
 		runWithinPopup("Add Loan Plan", () -> {
+			SimulatorUtilities util = new SimulatorUtilities();
 			
 			enterLoanPlanCode(loanPlan.getLoanPlanCode());
 			enterLoanPlanDescription(loanPlan.getLoanPlanDescription());
 			selectLoanType(loanPlan.getLoanType());
-			selectDefaultLoanType();
 			selectProgramWalletPromotion(loanPlan.getProgramWalletPromotion());
 			WebElementUtils.scrollDown(driver(), 0, 250);
 			if(loanPlan.getProgramWalletPromotion().contains(Constants.PROGRAM)){
@@ -256,17 +357,44 @@ public class LoanPlanPage extends AbstractBasePage {
 			WebElementUtils.scrollDown(driver(), 0, 250);
 			enterMinimumLoanAmount(loanPlan.getMinimumLoanAmount());
 			enterMaximumLoanAmount(loanPlan.getMaximumLoanAmount());
+			enterDefaultNumberOfInstallment(loanPlan.getDefaultNumberOfInstallment());
+			util.pressTab();
+			enterMinEMIAmount(loanPlan.getMinimumEMIAmount());
+			util.pressTab();
 			enterMinimumNumberOfInstallment(loanPlan.getMinimumNumberOfInstallment());
 			WebElementUtils.scrollDown(driver(), 0, 250);
 			enterMaximumNumberOfInstallment(loanPlan.getMaximumNumberOfInstallment());
 			WebElementUtils.scrollDown(driver(), 0, 250);
+			enterDefaultInterestRate(loanPlan.getDefaultInterestRate());
 			enterMinimumInterestRate(loanPlan.getMinimumInterestRate());
 			enterMaximumInterestRate(loanPlan.getMaximumInterestRate());
 			enterMaximumMoratoriumPeriod( loanPlan.getMaximumMoratoriumPeriod());
 			navigateToFeesTab();
-			enterProcessingFixedFeeAmount(loanPlan.getProcessingFixedFeeAmount());
+			enterProcessingFixedFeeAmount(loanPlan.getProcessingFixedFeeAmount());			
+			enterProcessingFeePercent(loanPlan.getProcessingFeePercentOfLoanAmount());
+			util.pressTab();
+			enterMinimumProcessingFee(loanPlan.getMinimumProcessingFee());
+			enterMaximumProcessingFee(loanPlan.getMaximumProcessingFee());
+			
+			WebElementUtils.scrollDown(driver(), 0, 250);
 			enterPreclosureFixedFeeAmount(loanPlan.getPreclosureFixedFeeAmount());
-			enterCancellationFixedFeeAmount(loanPlan.getCancellationFixedFeeAmount());
+			selectPreClosureFeeAppliedOn(loanPlan.getPreclosureFeeAppliedOn());
+			if(loanPlan.getPreclosureFeeAppliedOn().equalsIgnoreCase(ConstantData.APPLIED_ON_LOAN_AMOUNT))
+				enterPreclosureFeePercent(loanPlan.getPreclosureFeePercentOfAmount());
+			else
+				enterPreclosureOutstandingAmountPercent(loanPlan.getPreclosureFeePercentOfAmount());
+			
+			util.pressTab();
+			enterMinPreclosureFee(loanPlan.getMinimumPreclosureFee());
+			enterMaxPreclosureFee(loanPlan.getMaximumPreclosureFee());
+			
+			WebElementUtils.scrollDown(driver(), 0, 250);
+			enterCancellationFixedFeeAmount(loanPlan.getCancellationFixedFeeAmount());	
+			enterCancellationFeePercent(loanPlan.getCancellationFeePercentOfLoanAmount());
+			util.pressTab();
+			enterMinCancellationFee(loanPlan.getMinimumCancellationFee());
+			enterMaxCancellationFee(loanPlan.getMaximumCancellationFee());
+			WebElementUtils.scrollDown(driver(), 0, 300);
 			clickSaveButton();
 		});
 	}

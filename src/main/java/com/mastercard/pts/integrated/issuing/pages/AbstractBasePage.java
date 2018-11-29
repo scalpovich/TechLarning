@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages;
 
+import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
@@ -17,12 +18,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -51,6 +54,7 @@ import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.CustomM
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.utils.PDFUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementFinderProvider;
@@ -110,6 +114,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	public static final String INVALID_TRANSACTION_MESSAGE = "Invalid transaction type - ";
     
+	public static final String REFUND_SUCCESS = "Refund is successful";
+	
     private static final String Device = null;
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -138,6 +144,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Cancel']")
 	private MCWebElement cancelBtn;
 
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Reverse']")
+	private MCWebElement reverseBtn;
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Process Selected']")
 	private MCWebElement processSelectedBtn;
 
@@ -175,7 +184,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private MCWebElement paragraph;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[.//*[text()='Status :']]/following-sibling::td[1]")
-	private MCWebElement batchStatus;
+	protected MCWebElement batchStatus;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Create']")
 	private MCWebElement createBtn;
@@ -295,13 +304,15 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	private static final String DeviceNumber="Device Number";
 	
+	private static final String REFUND_MESSAGE="//span[contains(text(),'Refund')]";
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers']/td[5]/span")
 	private MCWebElement deviceProductionHeaderBatchTxt;
 	
 	private static final int loopIterationToCheckBatchNumber=21;
 	
     @PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
-	private MCWebElement institutionDateTxt;
+	protected MCWebElement institutionDateTxt;
     
     int retryCounter =0;
 	
@@ -367,6 +378,11 @@ public abstract class AbstractBasePage extends AbstractPage {
 		clickWhenClickable(confirmButton);
 	}
 
+	public void clickReverseButton(){
+		WebElementUtils.scrollDown(driver(), 0, 250);
+		clickWhenClickable(reverseBtn);
+	}
+	
 	protected void clickCancelButton() {
 		clickWhenClickable(cancelBtn);
 	}
@@ -483,7 +499,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	public String getCellTextByColumnName(int rowNumber, String columnName) {
-		String xpath = String.format("//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]/span", rowNumber, columnName);
+		String xpath = String.format("//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]", rowNumber, columnName);
 		WebElement element = driver().findElement(By.xpath(xpath));
 		waitForElementVisible(element);
 		return element.getText().trim();
@@ -525,11 +541,17 @@ public abstract class AbstractBasePage extends AbstractPage {
 		logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
 	}
 
+	public boolean verifyRefundMessage() {
+		WebElement refundMessage = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(REFUND_MESSAGE)));
+		String refundStatus = refundMessage.getText();
+		return refundStatus.equalsIgnoreCase(REFUND_SUCCESS);
+
+	}
+	
 	protected boolean waitForRow() {
 		try {
 			waitForWicket();
-			Thread.sleep(30000); // Pre-production batch and device production
-									// batch takes little longer hence the wait
+			Thread.sleep(30000); // Pre-production batch and device production batch takes little longer hence the wait
 			return driver().findElement(By.cssSelector(FIRST_ROW_SELECT)).isDisplayed();
 		} catch (NoSuchElementException | InterruptedException e) {
 			logger.debug("Result not found", e);
@@ -541,9 +563,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		try {
 			WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
 			logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
-
 			return successMessageLbl.getText();
-
 		} catch (NoSuchElementException e) {
 			logger.info("No Status is updated");
 			logger.debug("Error", e);
@@ -633,7 +653,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	// fetching any message that may appear in the Label Panel
-	protected String getMessageFromFeedbackPanel() {
+	public String getMessageFromFeedbackPanel() {
 		List<WebElement> messages = driver().findElements(By.cssSelector(".feedbackPanel li"));
 
 		if (messages.isEmpty()) {
@@ -795,6 +815,16 @@ public abstract class AbstractBasePage extends AbstractPage {
 		boolean isAlertPresent = alert != null;
 		if (isAlertPresent) {
 			alert.accept();
+		}
+	}
+	
+	public boolean isAlertPresent() {
+		try {
+			Alert alert = driver().switchTo().alert();
+			alert.accept();
+			return true;
+		} catch (NoAlertPresentException e) {
+			return false;
 		}
 	}
 
@@ -1262,6 +1292,27 @@ public abstract class AbstractBasePage extends AbstractPage {
 			}
 		});
 	}
+	
+	protected String verifyReportDownloaded(String reportName) {
+		StringBuffer path= new StringBuffer();
+		WebDriverWait wait = new WebDriverWait(driver(), TIMEOUT);
+		wait.until(new ExpectedCondition<Boolean>() {
+			@Override
+			public Boolean apply(WebDriver driver) {
+				Boolean exists = false;
+				for (File file: new File(PDFUtils.getuserDownloadPath()).listFiles()) {
+				 if(file.isFile()&& file.getName().startsWith(reportName)&&FilenameUtils.getExtension(file.getName()).equalsIgnoreCase("pdf")){
+					exists = true;
+				    path.append(file.getAbsolutePath());
+				    logger.info("File Path:"+path.toString());
+					 break;
+				 }
+			}
+				return exists;
+			}
+		});
+		return path.toString();
+	}
 
 	protected void selectByText(MCWebElement ele, String optionName) {
 		waitForElementVisible(ele);
@@ -1442,7 +1493,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public void ClickButton(MCWebElement BtnName) {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		BtnName.click();
-		// addWicketAjaxListeners(getFinder().getWebDriver());
 	}
 
 	public void ClickCheckBox(MCWebElement optionChkBox, boolean value) {
@@ -1779,6 +1829,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		Device device  = context.get(CreditConstants.APPLICATION);
 		device.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
 	}
+	
 	public int getDeviceNumberIndex()
 	{  
 		int index=0;
@@ -1853,22 +1904,17 @@ public abstract class AbstractBasePage extends AbstractPage {
 		action.moveToElement(asWebElement(element), xOffset, yOffset).click().build().perform();
 	}
 	
+	
 	public void ifTextAvailableinTableThenDelete(MCWebElement tableHandle, String text) {
 		WebElement table = asWebElement(tableHandle);
-
 		List<WebElement> rowstable = table.findElements(By.tagName("tr"));
-
 		int rowscount = rowstable.size();
-		outerloop:
-		for (int row = 0; row < rowscount; row++) {
-
+		outerloop: for (int row = 0; row < rowscount; row++) {
 			List<WebElement> columnsrow = rowstable.get(row).findElements(By.tagName("td"));
-
 			int columnscount = columnsrow.size();
 			for (int col = 0; col < columnscount; col++) {
 				if (columnsrow.get(col).getText().equals(text)) {
 					List<WebElement> editAndDeleteIcon = rowstable.get(row).findElements(By.tagName("img"));
-					
 						for (int icon = 0; icon < editAndDeleteIcon.size(); icon++) {
 							if (editAndDeleteIcon.get(icon).getAttribute("alt").contains("Delete")) {
 								editAndDeleteIcon.get(icon).click();
@@ -1878,19 +1924,15 @@ public abstract class AbstractBasePage extends AbstractPage {
 								break outerloop;
 							}
 						}
-				
-
 				}
 			}
 		}
-
 	}
 	
 	public void clickOncheckBoxIfBatchAvailableinTable(MCWebElement tableHandle, String text) {
 		WebElement table = asWebElement(tableHandle);
 		List<WebElement> rowstable = table.findElements(By.tagName("tr"));
 		int rowscount = rowstable.size();
-		outerloop:
 		for (int row = 1; row < rowscount; row++) {
 			List<WebElement> columnsrow = rowstable.get(row).findElements(By.tagName("td"));
 			int columnscount = columnsrow.size();
@@ -1901,15 +1943,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 					logger.info("CheckBox Value:-{}",checkBox);
 					if (checkBox.isEnabled() && !checkBox.isSelected()) {
 						checkBox.click();
-						break outerloop;
+						break;
 					}
-
 				}
-
 			}
 		}
 	}
-	
 	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
@@ -1921,8 +1960,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		driver().switchTo().frame(Elements(element).get(index));
 	}
 	
-	public String getInstitutionDate()
-	{	
+	public String getInstitutionDate(){	
 		logger.info("Institution date : {}",getTextFromPage(institutionDateTxt));
 		return getTextFromPage(institutionDateTxt);
 	}
@@ -1952,5 +1990,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 				break;
 			}
 		}
+	}	
+	
+	public String getFirstRowColValueFor(int col) {
+		return firstRowColumnValues.getElements().get(col).getText();
 	}
 }

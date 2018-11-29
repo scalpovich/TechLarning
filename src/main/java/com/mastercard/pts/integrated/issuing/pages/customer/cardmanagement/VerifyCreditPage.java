@@ -1,13 +1,10 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +13,6 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Cred
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
-import com.mastercard.pts.integrated.issuing.utils.DatePicker;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
