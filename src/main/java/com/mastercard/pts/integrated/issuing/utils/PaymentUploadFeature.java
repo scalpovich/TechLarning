@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -85,7 +86,9 @@ public class PaymentUploadFeature {
 			tranactionAmount += Integer.parseInt(upload.getTransactionCurrencyAmount());
 		}
 
-		context.put(ConstantData.TRANSACTION_AMOUNT, String.valueOf(tranactionAmount));
+		DecimalFormat decimalFormat = new DecimalFormat("#.00");
+		context.put(ConstantData.TRANSACTION_AMOUNT, String.valueOf(decimalFormat.format(tranactionAmount)));
+		
 		String[] header = { getDateForFile(), String.valueOf(transactionCodesSplit.length),
 				String.valueOf(tranactionAmount) };
 		writer.writeNext(header);
@@ -94,7 +97,7 @@ public class PaymentUploadFeature {
 			writer.writeNext(data);
 			chequeNumber += 1;
 		}
-		
+
 		writer.close();
 		
 		String remoteDir = folderPath+paymentFileUploadPath;

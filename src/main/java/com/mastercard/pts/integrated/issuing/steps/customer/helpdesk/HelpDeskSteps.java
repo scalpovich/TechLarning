@@ -929,6 +929,7 @@ public class HelpDeskSteps {
 			context.put(ConstantData.LOAN_INSTALLMENT_OUTSTANDING, transactionAmount);
 		}
 
+		System.out.println("transactionAmount :      " + transactionAmount);
 		assertThat(category + " " + amount + BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device),
 				equalTo(transactionAmount));
 	}
