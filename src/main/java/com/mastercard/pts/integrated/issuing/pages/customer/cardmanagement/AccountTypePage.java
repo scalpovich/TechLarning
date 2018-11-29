@@ -83,6 +83,7 @@ public class AccountTypePage extends AbstractBasePage {
 		enterValueinTextBox(AccountDescription, Constants.ACCOUNTTYPE_SAVINGS);
 	}
 
+	@Override
 	public void clickSaveButton() {
 		clickWhenClickable(save);
 	}
