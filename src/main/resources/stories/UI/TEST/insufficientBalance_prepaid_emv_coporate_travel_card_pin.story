@@ -8,7 +8,6 @@ Meta:
 
 Given setting json values in excel for Prepaid
 When user is logged in institution
-And user uses existing transaction limit plan for limit type DAILY
 And User fills Device Plan for "Prepaid" "emv" card
 And User fills Wallet Plan for prepaid product
 And User fills Program section for prepaid product
