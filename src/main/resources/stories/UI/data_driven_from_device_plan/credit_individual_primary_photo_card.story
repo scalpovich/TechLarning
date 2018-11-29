@@ -55,7 +55,7 @@ And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
 And User Primary Device fills New Program Retail Credit Card section for credit product for Mastercard
 And for Primary Device and New Client user fills Device Range section for credit product
-And credit device with photoIndicator as photo is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
+And credit device is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device
 Then user processes Client photo/flat file download batch for new credit Device
@@ -95,7 +95,7 @@ And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
 And User Primary Device fills New Program Retail Credit Card section for credit product for Mastercard
 And for Primary Device and New Client user fills Device Range section for credit product
-And credit device with photoIndicator as photo is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
+And credit device is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device
 And process batch for DOWNLOAD type and Batch name CARDHOLDER_DUMP
@@ -113,7 +113,7 @@ And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
 And User Primary Device fills New Program Retail Credit Card section for credit product for Mastercard
 And for Primary Device and New Client user fills Device Range section for credit product
-And credit device with photoIndicator as photo is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
+And credit device is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device
 And user processes Client photo/flat file download batch for new credit Device
@@ -130,7 +130,7 @@ And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
 And User Primary Device fills New Program Retail Credit Card section for credit product for Mastercard
 And for Primary Device and New Client user fills Device Range section for credit product
-And credit device with photoIndicator as photo is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
+And credit device is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device
 And user processes Client photo/flat file download batch for new credit Device
