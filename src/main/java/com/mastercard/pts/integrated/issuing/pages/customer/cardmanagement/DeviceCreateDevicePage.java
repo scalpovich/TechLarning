@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.hamcrest.Matchers;
@@ -169,6 +170,9 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePlanPromoCode1:input:dropdowncomponent")
 	private MCWebElement promotionPlanDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:clientCustomerId:input:inputTextField")
+	private MCWebElement txtClientCustomerID;
 		
 	public String getWalletsFromPage(){
 		return getTextFromPage(createdWalletList);
@@ -421,9 +425,12 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	private void fillProfile(Device device) {
 		Program program = context.get(ContextConstants.PROGRAM);
 		selectByVisibleText(branchCodeDDwn, device.getBranchCode());
-
-		if (corporateClientCodeDDwn.isEnabled()) {
-			selectByVisibleText(corporateClientCodeDDwn, device.getCorporateClientCode());
+		Map<String,String>map=context.get(TestContext.KEY_STORY_DATA);
+		if(map.containsKey("CLIENT_CUSTOMER_ID")){
+			WebElementUtils.enterText(txtClientCustomerID, map.get("CLIENT_CUSTOMER_ID"));
+		}
+		if(corporateClientCodeDDwn.isEnabled()){
+			selectByVisibleText(corporateClientCodeDDwn,device.getCorporateClientCode());	
 		}
 
 		ClientDetails client = device.getClientDetails();

@@ -6,7 +6,7 @@ So that the Loyalty points can be calculated and can be redeemed by the user
 Meta:
 @StoryName prepaid_msr_retail_loyalty_issuance_cumulative	
 
-Scenario: Loyalty program setup - prepaid
+Scenario: 1.1-Loyalty program setup - prepaid
 Given setting json values in excel for Prepaid
 When user is logged in institution
 And user selects all the transactions for loyalty transaction plan
@@ -14,7 +14,7 @@ And for Magnetic Stripe Card [1] User fills Device Plan for Prepaid product for 
 And User fills Wallet Fee Plan for Prepaid product
 And User fills Wallet Plan for Prepaid product and program Retail General Purpose Card
 When user adds promotion Plan for Issuance
-!-- When user edits the start date for promotion plan
+When user edits the start date for promotion plan
 When user maps promotion Plan with loyalty Plan with priority 1
 When user adds promotion Plan with Cumulative Transactions
 When user edits the start date for promotion plan
@@ -27,7 +27,7 @@ And Prepaid processes deviceproduction batch using new Device for Supplementary
 Then user verifies loyalty details for Prepaid device
 And user sign out from customer portal
 
-Scenario: Loyalty program setup - prepaid
+Scenario: 1.2-Loyalty program setup - prepaid
 Given setting json values in excel for Prepaid
 When user is logged in institution
 And user performs adjustment transaction
@@ -37,7 +37,7 @@ And search Purchase authorization and verify Successful status
 And user has current wallet balance amount information for Prepaid [P] device
 And user sign out from customer portal
 
-Scenario: Loyalty program setup - prepaid
+Scenario: 1.3-Loyalty program setup - prepaid
 Given setting json values in excel for Prepaid
 When user is logged in institution
 And pre-clearing and Loyalty Calc batches are run

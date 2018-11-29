@@ -5,7 +5,7 @@ So that the Loyalty points can be calculated and can be redeemed by the user
 Meta:
 @StoryName credit_msr_retail_loyalty		 
 
-Scenario: Loyalty points redemption - credit
+Scenario: 1.1-Loyalty points redemption - credit
 Given setting json values in excel for Credit
 When user is logged in institution
 And user selects all the transactions for loyalty transaction plan
@@ -18,10 +18,10 @@ And Credit device is created using new device screen for Individual and Primary 
 And Credit processes pre-production batch using new Device
 And Credit processes deviceproduction batch using new Device for Supplementary
 And device has "normal" status
-When user notes down available Card limit for card
+Then user notes down available Card limit for card
 And user sign out from customer portal
 
-Scenario: Loyalty points redemption - credit
+Scenario: 1.2-Loyalty points redemption - credit
 Given setting json values in excel for Credit
 When user is logged in institution
 And user raises an authorization request
@@ -30,13 +30,14 @@ And search Purchase authorization and verify Successful status
 When user verifies available balance after transaction
 And device has "normal" status
 And user verifies available Card limit for card after transaction
+Then user wait for 5 min to perform certain activity
 And user sign out from customer portal
 
 
-Scenario: Loyalty points redemption - credit
+Scenario: 1.3-Loyalty points redemption - credit
 Given setting json values in excel for Credit
 When user is logged in institution
 And pre-clearing and Loyalty Calc batches are run
 And user verifies rewards and redemption screen
 And user verifies current wallet balance amount information after loyalty redemption CREDIT device
-And user sign out from customer portal
+Then user sign out from customer portal

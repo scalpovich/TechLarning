@@ -6,7 +6,7 @@ So that the Loyalty points can be calculated
 Meta:
 @StoryName prepaid_eventBased_loyalty		 
 
-Scenario: Loyalty program setup - Credit
+Scenario: 1.1-Loyalty program setup - Credit
 Given setting json values in excel for Credit
 When user is logged in institution
 And user selects all the transactions for loyalty transaction plan
@@ -23,7 +23,7 @@ And user adds posts the event based loyalty points for product CREDIT
 Then user has loyalty points details for CREDIT device
 And user verifies loyalty points for event based loyalty plan after posting
 
-Scenario: Loyalty program setup - Credit- points debited
+Scenario: 1.2-Loyalty program setup - Credit- points debited
 Given setting json values in excel for Credit
 When user is logged in institution
 And user adds event based loyalty plan for product CREDIT and type DEBIT
