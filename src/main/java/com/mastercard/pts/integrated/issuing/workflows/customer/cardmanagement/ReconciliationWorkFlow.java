@@ -1,8 +1,8 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Tran
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionReportsPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
-import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.PDFUtils;
 
 @Workflow
@@ -129,10 +128,11 @@ public class ReconciliationWorkFlow {
 		}
 		return records;
 	}
-
-	public void deleteExistingAuthorizationFilesFromSystem(String authFileName) {
-		for (File file : new File(PDFUtils.getuserDownloadPath()).listFiles()) {
-			if (!file.isDirectory() && file.getName().startsWith(ConstantData.AUTHORIZATION_REPORT_NAME))
+	
+	public void deleteExistingAuthorizationFilesFromSystem(String authFileName)
+	{
+		for (File file: new File(PDFUtils.getuserDownloadPath()).listFiles()) {
+			if (!file.isDirectory()&& file.getName().startsWith(authFileName))   	
 				file.delete();
 		}
 	}

@@ -176,7 +176,7 @@ public class ConstantData {
 
 	private ConstantData() {
 	}
-
+	
 	public static String fromShortName(String name) {
 		return MiscUtils.getConstantStringFromClassByPefixMatch(ConstantData.class, name);
 	}

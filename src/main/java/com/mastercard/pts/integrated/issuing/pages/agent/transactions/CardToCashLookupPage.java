@@ -52,6 +52,7 @@ public class CardToCashLookupPage extends TransactionsAbstractPage {
 				WebElementUtils.elementToBeClickable(searchBtn)).click();
 	}
 	
+	@Override
 	public void clickSubmitButton() {
 		new WebDriverWait(driver(), timeoutInSec).until(
 				WebElementUtils.elementToBeClickable(submitBtn)).click();

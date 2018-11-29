@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.utils;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -190,13 +191,14 @@ public class PDFUtils {
 						map.put((i++).toString(), text);
 					}
 				}
-				pd.close();
+			pd.close();
 			}
-			document.close();
-		} catch (Exception e) {
+           document.close();
+		}catch(IOException e){
 			e.printStackTrace();
-		}
-		return map;
+			return null;
+		}	
+			return map;
 	}
 
 	
