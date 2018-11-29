@@ -9,13 +9,17 @@ Meta:
 @StoryName p_msr_retail_gen_purpose
 @RecurringWithPin
 
-Scenario: Set up prepaid msr retail general purpose card
-Meta:
-@TestId TC398484
-Given user is logged in institution
-And device range for program with device plan for "prepaid" "magnetic stripe" card
-When user creates new device of prepaid type for new client
-Then device has "normal" status
+Scenario: 1.0 Set up prepaid msr corporate travel card
+Given setting json values in excel for Prepaid
+When user is logged in institution
+And User fills Device Plan for "Prepaid" "MAGNETIC STRIPE CARD" card
+And User fills Wallet Plan for prepaid product
+And User fills Program section for prepaid product
+And User fills Business Mandatory Fields Screen for prepaid product
+And User fills Device Range section for prepaid product
+And user assigns service code to program
+Then user creates new device of prepaid type for new client
+And user sign out from customer portal
 
 Scenario: prepaid msr retail general purpose card device production
 Meta:

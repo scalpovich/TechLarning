@@ -13,23 +13,31 @@ Meta:
 @AuthorizationRegressionGroup3
 @EMVWithPin
 
-Scenario: Set up prepaid emv corporate travel card
-Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card
-When user creates new device of prepaid type for new client
+Scenario: 1.0 Set up prepaid emv corporate travel card
+Given setting json values in excel for Prepaid
+When user is logged in institution
+And User fills Device Plan for "Prepaid" "emv" card
+And User fills Wallet Plan for prepaid product
+And User fills Program section for prepaid product
+And User fills Business Mandatory Fields Screen for prepaid product
+And User fills Device Range section for prepaid product
+And user assigns service code to program
+Then user creates new device of prepaid type for new client
+And user sign out from customer portal
 
-Scenario: prepaid emv corporate travel card device production
+Scenario: 1.1 prepaid emv corporate travel card device production
 Given user is logged in institution
-And a new device was created
-When processes pre-production batch for prepaid
-When processes device production batch for prepaid
-When processes pin generation batch for prepaid
+When a new device was created
+And processes pre-production batch for prepaid
+And processes device production batch for prepaid
+And processes pin generation batch for prepaid
 And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And device has "NOT ACTIVATED CARD" status
 And user activates device through helpdesk
 And device has "normal" status
 Then user sign out from customer portal
+
 
 Scenario: Pin Generation
 Given connection to FINSim is established
