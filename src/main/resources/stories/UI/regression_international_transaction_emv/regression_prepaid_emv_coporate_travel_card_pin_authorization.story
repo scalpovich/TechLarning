@@ -15,24 +15,23 @@ Meta:
 @InternationalTrx
 
 Scenario: Set up prepaid emv corporate travel card
-Given user is logged in institution
-And device range for program with device plan for "prepaid" "emv" card
-When user creates new device of prepaid type for new client
-
-Scenario: prepaid emv corporate travel card device production
-Given user is logged in institution
+Given setting json values in excel for Prepaid
+When user is logged in institution
+And User fills Device Plan for "prepaid" "emv" card
+And User fills Wallet Plan for prepaid product
+And User fills Program section for prepaid product
+And User fills Business Mandatory Fields Screen for prepaid product
+And User fills Device Range section for prepaid product
+And user creates new device of prepaid type for new client
 And a new device was created
-When processes pre-production batch for prepaid
-When processes device production batch for prepaid
-When processes pin generation batch for prepaid
-Then device has "normal" status
-When user has wallet number information for debit device
-Then user sign out from customer portal
-Then user is logged in institution
-When user performs adjustment transaction with 300000 amount
-When user has current wallet balance amount information for prepaid device
-Then device has "normal" status
-Then user activates device through helpdesk
+And processes pre-production batch for prepaid
+And processes device production batch for prepaid
+And processes pin generation batch for prepaid
+And device has "NOT ACTIVATED CARD" status
+And user activates device through helpdesk
+And user has wallet number information for prepaid device
+And user performs adjustment transaction
+And user has current wallet balance amount information for prepaid device
 Then user sign out from customer portal
 
 Scenario: Pin Generation
