@@ -394,6 +394,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
 		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, "SYSTEM INTERNAL PROCESSING [B]");
 		selectInternalBatchType(batch.getBatchName());
+		
+		
 		if (batch.getProductType() != null && !("".equals(batch.getProductType()))) {
 			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		}
@@ -403,11 +405,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		} catch (ParseException e) {
 			throw Throwables.propagate(e);
 		}
-		
 		if(batch.getBatchName().equalsIgnoreCase("Matching")){
 			submitAndVerifyBatch();
 		}
-			
 		if (!dateFromUI.after(todayDate))
 		submitAndVerifyBatch();
 
