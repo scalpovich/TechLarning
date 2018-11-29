@@ -28,7 +28,7 @@ And processes device production batch for prepaid
 And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
-And device has "normal" status
+And device has "NOT ACTIVATED CARD" status
 And user activates device through helpdesk
 And embossing file batch was generated in correct format
 Then user sign out from customer portal
