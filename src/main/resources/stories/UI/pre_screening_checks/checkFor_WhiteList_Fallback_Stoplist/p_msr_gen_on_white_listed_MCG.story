@@ -30,6 +30,7 @@ And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
 And device has "NOT ACTIVATED CARD" status
+And user activates device through helpdesk
 Then user sign out from customer portal
 
 Scenario:3 Pin Generation for  prepaid msr retail general purpose card
