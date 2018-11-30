@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.InstitutionData;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.GenericReport;
@@ -45,7 +46,8 @@ public class ReportVerificationSteps {
 	private String txtFormNumber = "form number";
 
 	@Given("validate the $reportField in $reportName report")
-	@When("validate the $reportField in $reportName report")	@Then("validate the $reportField in $reportName report")
+	@When("validate the $reportField in $reportName report")
+	@Then("validate the $reportField in $reportName report")
 	public void validateGenericReport(String reportFields, String reportName) {
 		Device device = context.get(ContextConstants.DEVICE);
 		GenericReport report = GenericReport.createWithProvider(provider);
@@ -90,6 +92,7 @@ public class ReportVerificationSteps {
 		String loyaltyPoints = reportVerificationWorkflow.downloadAndVerifyLoyaltyReport(report);
 		Assert.assertEquals(context.get(Constants.AVAILABLE_LOYALTY_POINTS), Double.parseDouble(loyaltyPoints));
 	}
+	
 	@When("verify duplicate applications in application reject report for upload")
 	@Then("verify duplicate applications in application reject report for upload")
 	public void verifyFieldInApplicationRejectReportForUpload() {
@@ -100,6 +103,5 @@ public class ReportVerificationSteps {
 			report.setFieldToValidate(txtFormNumber, formNumber);
 			reportVerificationWorkflow.verifyDuplicateAppInAppRejectReport(report);
 		});
-		
 	}
 }
