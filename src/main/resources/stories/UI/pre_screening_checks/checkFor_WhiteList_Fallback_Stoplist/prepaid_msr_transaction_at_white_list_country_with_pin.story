@@ -8,27 +8,16 @@ I want to make transaction at white listed country via prepaid card
 Meta:
 @StoryName prepaid_card_trx_at_white_list_country
 @CountryWhiteBlackListPreScreening
-Scenario: Set up prepaid msr retail general purpose card
-Given user is logged in institution
-When User fills Statement Message Plan for prepaid product
-And User fills Marketing Message Plan for prepaid product
-And User fills Prepaid Statement Plan
-And User fills MCC Rules for prepaid product
-And User fills Dedupe Plan
-And User fills Transaction Plan for prepaid product
-And User fills Transaction Limit Plan for prepaid product
-And User fills Document Checklist Screen for prepaid product
-And User fills Device Joining and Membership Fee Plan for prepaid product
-And User fills Device Event Based Fee Plan for prepaid product
-And User fills Device Plan for "prepaid" "magnetic stripe" card
+Given setting json values in excel for Prepaid
+When user is logged in institution
+And User fills Device Plan for "Prepaid" "magnetic stripe" card
 And User fills Wallet Plan for prepaid product
+When User fills MCC Rules for prepaid product
 And User fills Program section for prepaid product
 And User edits Program to update country white and black list
 And User fills Business Mandatory Fields Screen for prepaid product
 And User fills Device Range section for prepaid product
-And user assigns service code to program
-And user creates new device of prepaid type for new client
-And device has "normal" status
+Then user creates new device of prepaid type for new client
 Then user sign out from customer portal
 
 Scenario: Device Production
@@ -40,7 +29,8 @@ And processes pin generation batch for prepaid
 And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
-And device has "normal" status
+And device has "NOT ACTIVATED CARD" status
+And user activates device through helpdesk
 Then user sign out from customer portal
 
 Scenario: Pin Generation 
