@@ -139,7 +139,7 @@
 			"billingCycle": "AUTOMATION [147]",
 			"transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
 			"walletPlan":"AUTOMATION [TESRERR]",
-			"loyaltyPlan":"Automation Test [AUTO]",
+			"loyaltyPlan" : "Automation Test [AUTO]",
 			"devicePlan" : "",
 			"walletFeePlan" : "",
 			"programCode" : ""
