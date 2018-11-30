@@ -15,7 +15,6 @@ public class BatchLevelPrivilegesWorkflow extends AbstractBaseFlows {
 	@Autowired
 	private Navigator navigator;
 	
-
 	Portal portal = new Portal();
 	
 	@Autowired
@@ -88,7 +87,7 @@ public class BatchLevelPrivilegesWorkflow extends AbstractBaseFlows {
 	public void searchBatchLevelAccessesForEntity(){
 		navigator.navigateToPage(BatchLevelPreviledgePage.class);
 		Portal loginPortal = environment.getPortalByType(Portal.TYPE_CUSTOMER);
-		batch.selectEntityType("User [U]");
+		batch.selectEntityType(ENTITY_TYPE_USER);
 		batch.selectEntityID(loginPortal.getUserName());
 		batch.clickSearchBtn();
 	}
