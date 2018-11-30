@@ -8,6 +8,7 @@ I want to make transaction at white listed country via prepaid card
 Meta:
 @StoryName prepaid_card_trx_at_white_list_country
 @CountryWhiteBlackListPreScreening
+Scenario:1 Set up prepaid emv corporate travel card
 Given setting json values in excel for Prepaid
 When user is logged in institution
 And User fills Device Plan for "Prepaid" "magnetic stripe" card
