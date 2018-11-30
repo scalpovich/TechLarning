@@ -1,7 +1,7 @@
 Narrative:
 In order to a create a Payment Upload CSV from the set of input parameters
 As a user
-I want to onboard credit emv retail general purpose card and do payments with Payment Upload Batch
+I want to onboard credit emv retail general purpose card and do payments with Payment Upload Batch and Return it
 
 Meta:
 @StoryName credit_emv_retail
