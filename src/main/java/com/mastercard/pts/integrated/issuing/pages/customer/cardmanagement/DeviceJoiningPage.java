@@ -101,6 +101,7 @@ public class DeviceJoiningPage extends AbstractBasePage {
 		selectByVisibleText(CurrencyDDwn, devicejoiningmembershipfeeplan.getCurrency());
 	}
 
+	@Override
 	public void clickSaveButton() {
 		clickWhenClickable(saveBtn);
 		switchToDefaultFrame();

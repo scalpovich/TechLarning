@@ -1982,6 +1982,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 		}
 	}	
 	
+	public String getFirstRowColValueFor(int col) {
+		return firstRowColumnValues.getElements().get(col).getText();
+	}
 	
 	protected void waitForBatchStatus(MCWebElement successStatus) {
 		try {

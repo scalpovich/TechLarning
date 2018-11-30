@@ -1,9 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +9,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.CustomTestContextProvider;
-import com.mastercard.pts.integrated.issuing.utils.JDBCTemplateImpl;
 
 @Component
 public class AbstractBaseSteps {
