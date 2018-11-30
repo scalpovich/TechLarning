@@ -34,6 +34,8 @@ public class ReportVerificationSteps {
 	private KeyValueProvider provider;
 	
 	private static final Logger logger = LoggerFactory.getLogger(ReportVerificationSteps.class);
+	
+	private String txtFormNumber = "form number";
 
 	@Given("validate the $reportField in $reportName report")
 	@Then("validate the $reportField in $reportName report")
@@ -73,7 +75,7 @@ public class ReportVerificationSteps {
 		report.setPassword(((String)context.get(UserManagementSteps.USERNAME)).substring(0,4)+(new DateUtils()).getDateDDMMFormat());
 		List<String> allFormNumbers = context.get(CreditConstants.ALL_FORM_NUMBERS);
 		allFormNumbers.forEach( formNumber -> {
-			report.setFieldToValidate("form number", formNumber);
+			report.setFieldToValidate(txtFormNumber, formNumber);
 			reportVerificationWorkflow.verifyDuplicateAppInAppRejectReport(report);
 		});
 		
