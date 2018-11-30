@@ -14,12 +14,6 @@ public class CreditBureauVerificationBatchSteps {
 	
 	@Autowired
 	CreditBureauVerificationBatchFlow creditBureauVerificationBatchFlow;
-
-	@When("user processesAll creditBureauVerification batch for new Application")
-	@Then("user processesAll creditBureauVerification batch for new Application")
-	public void creditBureauVerificationBatchExecution() {
-		creditBureauVerificationBatchFlow.processCreditBureauVerificationBatch();
-	}
 	
 	@When("user process batch in credit bureau verification for new Application")
 	@Then("user process batch in credit bureau verification for new Application")

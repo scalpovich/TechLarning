@@ -38,6 +38,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePriorityPassIDAndCardPackIDTemplate;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoyaltyPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCCRulePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCG;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MCGLimitPlan;
@@ -105,6 +106,8 @@ public class ProgramSetupSteps {
 
 	private TransactionLimitPlan transactionLimitPlan;
 
+	private TransactionFeePlan transactionFeePlan;
+
 	private WalletPlan walletPlan;
 
 	private MarketingMessagePlan marketingMessagePlan;
@@ -128,6 +131,8 @@ public class ProgramSetupSteps {
 	private ApplicationDocumentChecklist documentCheckListPlan;
 
 	private MCCRulePlan mccRulePlan;
+
+	private LoyaltyPlan loyaltyPlan;
 
 	private PrepaidStatementPlan prepaidStatementPlan;
 	
@@ -641,6 +646,8 @@ public class ProgramSetupSteps {
 		} else {
 			devicePlan.setTransactionLimitPlan(data.getTransactionLimitPlan());
 		}
+
+		devicePlan.setTransactionFeePlan(data.getTransactionFeePlan());
 		if (Objects.nonNull(transactionPlan)) {
 			devicePlan.setAfterKYC(transactionPlan.buildDescriptionAndCode());
 			devicePlan.setBeforeKYC(transactionPlan.buildDescriptionAndCode());
@@ -651,7 +658,10 @@ public class ProgramSetupSteps {
 		}
 		devicePlan.setDeviceType(deviceType);
 
-		programSetupWorkflow.createDevicePlan(devicePlan);
+		if(data.getDevicePlan() != null && !data.getDevicePlan().trim().isEmpty())
+			devicePlan.setDevicePlanCode(data.getDevicePlan());
+		else
+			programSetupWorkflow.createDevicePlan(devicePlan);
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 	
@@ -1012,7 +1022,12 @@ public class ProgramSetupSteps {
 		walletFeePlan.setProductType(ProductType.fromShortName(type));
 		WalletFeePlanDetails details = WalletFeePlanDetails.createWithProvider(provider);
 		walletFeePlan.getWalletFeePlanDetails().add(details);
-		programSetupWorkflow.createWalletFeePlan(walletFeePlan, ProductType.fromShortName(type));
+		
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+		if(data.getWalletFeePlan() != null && !data.getWalletFeePlan().trim().isEmpty())
+			walletFeePlan.setWalletFeePlanCode(data.getWalletFeePlan());
+		else
+			programSetupWorkflow.createWalletFeePlan(walletFeePlan, ProductType.fromShortName(type));
 	}
 
 	@When("User fills Business Mandatory Fields Screen for $type product")
@@ -1074,10 +1089,17 @@ public class ProgramSetupSteps {
 					context.put(ConstantData.JSON_DATA_DRIVEN_EXECUTION, true);
 					walletPlan.setCreditPlan(data.getCreditPlan());
 					walletPlan.setBillingCyleCode(data.getBillingCycle());
+					if(csvData.get("SURCHARGE_PLAN") != null && !csvData.get("SURCHARGE_PLAN").toString().isEmpty())
+						walletPlan.setSurchargePlan(csvData.get("SURCHARGE_PLAN").toString());
+					if(csvData.get("SURCHARGE_WAIVER_PLAN") != null && !csvData.get("SURCHARGE_WAIVER_PLAN").toString().isEmpty())
+						walletPlan.setSurchargeWaiverPlan(csvData.get("SURCHARGE_WAIVER_PLAN").toString());
 				}
 			}
 		}
-		programSetupWorkflow.createWalletPlan(walletPlan);
+		if(data.getWalletPlan() != null && !data.getWalletPlan().isEmpty())
+			walletPlan.setWalletPlanCode(data.getWalletPlan().substring(data.getWalletPlan().indexOf("[")+1, data.getWalletPlan().indexOf("]")));
+		else
+			programSetupWorkflow.createWalletPlan(walletPlan);
 	}
 
 	@When("fills Wallet Plan for $type product and program $programtype")
@@ -1099,6 +1121,7 @@ public class ProgramSetupSteps {
 		// value is reset or set accordingly for Virtual and pinless cards
 		setPinRequiredToDefaultState();
 		transactionPlan = TransactionPlan.createWithProvider(dataProvider);
+		context.put(ContextConstants.TRANSACTION_PLAN, transactionPlan.getTransactionPlanCode());
 		transactionPlan.setProductType(ProductType.fromShortName(type));
 
 		programSetupWorkflow.createTransactionPlan(transactionPlan);
@@ -1205,15 +1228,23 @@ public class ProgramSetupSteps {
 		} else {
 			program.setMccRulePlan(data.getMccRulePlan());
 		}
+		if (Objects.nonNull(loyaltyPlan)) {
+			program.setLoyaltyPlan(loyaltyPlan.buildDescriptionAndCode());
+		} else {
+			program.setLoyaltyPlan(data.getLoyaltyPlan());
+		}
 		program.setProgramType(programType);
 		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID)){
 			if (Objects.nonNull(prepaidStatementPlan)) {
-			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
+				program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
 			} else {
 				program.setPrepaidStatementPlan(data.getPrepaidStatementPlan());
 			}
 		}
-		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
+		if(data.getProgramCode() != null && !data.getProgramCode().trim().isEmpty())
+			program.setProgramCode(data.getProgramCode());
+		else
+			programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
 		context.put(ContextConstants.PROGRAM, program);
 	}
 		

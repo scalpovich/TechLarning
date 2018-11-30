@@ -17,5 +17,5 @@ And credit device is created using new device screen for Individual and Primary 
 And User search for new device on helpdesk screen for credit and validates the mandatory field
 And Cardholder Dump [CARDHOLDER_DUMP] download batch is executed for Credit [C] user
 Then CHD file is successfully downloaded CARDHOLDER_DUMP
-And user compares mandatory field with a position 274 in downloaded file
+And using application position number 179 user compares mandatory field with a position 274 in downloaded file
 And user logouts from customer portal

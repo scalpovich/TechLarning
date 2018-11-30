@@ -14,12 +14,6 @@ public class CreditBureauVerificationBatchFlow {
 	
 	private CreditBureauVerificationPage creditBureauVerificationPage;
 	
-	public void processCreditBureauVerificationBatch() {
-		creditBureauVerificationPage = navigator.navigateToPage(CreditBureauVerificationPage.class);
-		creditBureauVerificationPage.creditBureauVerificationBatchProcess();
-		creditBureauVerificationPage.switchToManualApprovalLink();
-	}
-	
 	public String processBatchForCreditBureauVerification() {
 		creditBureauVerificationPage = navigator.navigateToPage(CreditBureauVerificationPage.class);
 		creditBureauVerificationPage.creditBureauVerificationBatchProcess();

@@ -47,15 +47,6 @@ public class CreditBureauVerificationPage extends AbstractBasePage {
 		}
 	}
 	
-	public void switchToManualApprovalLink() {
-		clickWhenClickable(manualApprovalLink);
-		switchToIframe(CREDIT_BUREAU_VERIFICATION_FRAME);
-		clickWhenClickable(okBtn);
-		SimulatorUtilities.wait(3000);
-		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
-		return;
-	}
-	
 	public String switchToManualApproval() {
 		clickWhenClickable(manualApprovalLink);
 		switchToIframe(CREDIT_BUREAU_VERIFICATION_FRAME);

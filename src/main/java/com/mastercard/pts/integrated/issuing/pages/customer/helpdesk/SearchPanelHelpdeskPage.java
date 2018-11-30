@@ -8,15 +8,10 @@ import java.util.Map;
 import org.openqa.selenium.By;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
-import com.mastercard.pts.integrated.issuing.context.TestContext;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
-import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -33,12 +28,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Component
 public class SearchPanelHelpdeskPage extends AbstractBasePage {
 	
-	@Autowired
-	TestContext context;
-	
-	@Autowired
-	private KeyValueProvider provider;
-	
+	public static final String VIEW_GENERAL = "View General";
 	public static final String UPLOAD_EXPECTED_STATUS="NORMAL [0]";
 	public static final String STATUS_DEVICE_NOT_NORMAL="device status is not normal";
 	private static final Logger logger = LoggerFactory.getLogger(SearchPanelHelpdeskPage.class);
@@ -150,19 +140,16 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 		return getCellTextByColumnName(Constants.TABLE_ROW_NUM, Constants.COLUMN_NAME);
 	}
 	
-	public String getClientCustomerID(String productType, String deviceNumber) {
-		Device device = Device.createWithProvider(provider);
-		searchNewDevice(productType, deviceNumber);
+	public Device getClientCustomerID(Device device, HelpDeskGeneral helpdeskgettersetter) {
+		searchNewDevice(helpdeskgettersetter.getProductType(), helpdeskgettersetter.getDeviceNumber());
 		viewFirstRecord();
 		SimulatorUtilities.wait(500);
-		runWithinPopup("View General", () -> {
-			context.put(CreditConstants.CLIENT_CUSTOMER_ID, clientCustomerID.getText());
-			device.setMandatoryFieldValue(clientCustomerID.getText());
-			context.put(ContextConstants.DEVICE, device);
+		runWithinPopup(VIEW_GENERAL, () -> {
 			logger.info(" Client Customer ID : {}", clientCustomerID.getText());
+			device.setMandatoryFieldValue(clientCustomerID.getText());
 			clickCloseButton();
 		});
-		return context.get(CreditConstants.CLIENT_CUSTOMER_ID);
+		return device;
 	}
 	
 	public void normalStatusCheckFileUploadInBulk(String productType,Map<String, Object>mapFileUpload) {

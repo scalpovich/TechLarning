@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.PromotionPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
-import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
-import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -26,9 +24,12 @@ public class PromotionPlanPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(PromotionPlanPage.class);
 	private static final String ADD_PROMOTION_PLAN = "Add Promotion Plan";
+	private static final String EDIT_PROMOTION_PLAN = "Edit Promotion Plan";
 	private static final String TEXT = "TEST";
 	private static final int NUMBER = 3;
 	private static final String currency="INR [356]";
+	private String pointsEarned;
+	
 	@Autowired
 	PromotionPlan promotionPlan;
 
@@ -64,41 +65,119 @@ public class PromotionPlanPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=lypCumNotxns]")
 	private MCWebElement lypCumNotxnsTxt;
-	
-	public void verifyUiOperationStatus() {
-		logger.info("Promotion Plan");
-		addPromotionPlanConfiguration();
-		verifyUiOperation("Add Promotion Plan");
-		}
 
-	public void addPromotionPlanConfiguration() {
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='lypMccCode']/select")
+	private MCWebElement mccRuleDdwn;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='lypMcgCode']/select")
+	private MCWebElement mcgRuleDdwn;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=lypTxnAmt]")
+	private MCWebElement floorTxnAmtTxt;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@fld_fqn='lypCalculationMethod']/input[@value='P']")
+	private MCWebElement calculationMethodPerTXn;
+
+	public void verifyUiOperationStatus(PromotionPlan plan) {
+		logger.info("Promotion Plan");
+		addPromotionPlanConfiguration(plan);
+		verifyUiOperation("Add Promotion Plan");
+	}
+
+	public void verifyUiOperationStatuswithMCG(PromotionPlan plan) {
+		logger.info("Promotion Plan");
+		addPromotionPlanConfigurationwithMCG(plan);
+		verifyUiOperation("Add Promotion Plan");
+	}
+
+	public void addPromotionPlanConfiguration(PromotionPlan plan) {
 		logger.info(ADD_PROMOTION_PLAN);
 		clickAddNewButton();
 		runWithinPopup(ADD_PROMOTION_PLAN, () -> {
-			addPromotionPlan();
+			addPromotionPlan(plan);
 			verifyAlreadyExistsAndClickCancel();
 		});
 	}
 
-	private void addPromotionPlan() {
-		WebElementUtils.enterText(lypPromotionCodeTxt, CustomUtils.randomAlphaNumeric(5).toUpperCase());
-		WebElementUtils.enterText(lypDescriptionTxt, TEXT);
-		WebElementUtils.selectDropDownByVisibleText(currencyDDwn,currency);
-		WebElementUtils.enterText(lypAmtSpentTxt, NUMBER);
+	public void addPromotionPlanConfigurationwithMCG(PromotionPlan plan) {
+		logger.info(ADD_PROMOTION_PLAN);
+		clickAddNewButton();
+		runWithinPopup(ADD_PROMOTION_PLAN, () -> {
+			addPromotionPlanwithMCG(plan);
+			verifyAlreadyExistsAndClickCancel();
+		});
+	}
+
+	private void addPromotionPlan(PromotionPlan plan) {
+		WebElementUtils.enterText(lypPromotionCodeTxt, plan.getPromotionPlanCode());
+		WebElementUtils.enterText(lypDescriptionTxt, plan.getPromotionDescription());
+		WebElementUtils.selectDropDownByVisibleText(currencyDDwn, plan.getPromotionCurrency());
+		WebElementUtils.enterText(lypAmtSpentTxt, plan.getPromotionamountSpent());
 		waitForElementVisible(startDateDPkr);
 		WebElementUtils.pickDate(startDateDPkr, futureDate);
 		waitForElementVisible(endDateDPkr);
 		WebElementUtils.pickDate(endDateDPkr, futureEndDate);
-		WebElementUtils.enterText(lypPtsEarnedTxt, NUMBER);
+		WebElementUtils.enterText(lypPtsEarnedTxt, plan.getPromotionpointsEarned());
 		WebElementUtils.enterText(lypPriorrunsTxt, NUMBER);
 		WebElementUtils.enterText(lypCumTxnamtTxt, NUMBER);
 		WebElementUtils.enterText(lypCumNotxnsTxt, NUMBER);
+		clickWhenClickable(calculationMethodPerTXn);
+		WebElementUtils.enterText(floorTxnAmtTxt, plan.getFloortransactionAmount());
+		WebElementUtils.selectDropDownByVisibleText(mccRuleDdwn, plan.getMccCode());
+		clickSaveButton();
+	}
+
+	private void addPromotionPlanwithMCG(PromotionPlan plan) {
+		WebElementUtils.enterText(lypPromotionCodeTxt, plan.getPromotionPlanCode());
+		WebElementUtils.enterText(lypDescriptionTxt, plan.getPromotionDescription());
+		WebElementUtils.selectDropDownByVisibleText(currencyDDwn, plan.getPromotionCurrency());
+		WebElementUtils.enterText(lypAmtSpentTxt, plan.getPromotionamountSpent());
+		waitForElementVisible(startDateDPkr);
+		WebElementUtils.pickDate(startDateDPkr, futureDate);
+		waitForElementVisible(endDateDPkr);
+		WebElementUtils.pickDate(endDateDPkr, futureEndDate);
+		WebElementUtils.enterText(lypPtsEarnedTxt, plan.getPromotionpointsEarned());
+		WebElementUtils.enterText(lypPriorrunsTxt, NUMBER);
+		WebElementUtils.enterText(lypCumTxnamtTxt, NUMBER);
+		WebElementUtils.enterText(lypCumNotxnsTxt, NUMBER);
+		clickWhenClickable(calculationMethodPerTXn);
 		promotionPlan.setPromotion(lypPromotionCodeTxt.getAttribute("value"));
+		WebElementUtils.enterText(floorTxnAmtTxt, plan.getFloortransactionAmount());
+		WebElementUtils.selectDropDownByVisibleText(mcgRuleDdwn, plan.getMcgCode());
 		clickSaveButton();
 		}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(promotionalPlanCodeTxt));
+	}
+	
+	public String getPointsEarned() {
+		runWithinPopup(EDIT_PROMOTION_PLAN, () -> {
+			pointsEarned = lypPtsEarnedTxt.getAttribute("value");
+			clickCancelButton();
+		});
+		return pointsEarned;
+	}
+	
+	public void searchByPlanCode(String code) {
+		WebElementUtils.enterText(lypPromotionCodeTxt, code);
+		clickSearchButton();
+		editFirstRecord();
+	}
+	
+	public String getAmountSpent() {
+		runWithinPopup(EDIT_PROMOTION_PLAN, () -> {
+			pointsEarned = lypAmtSpentTxt.getAttribute("value");
+			clickCancelButton();
+		});
+		return pointsEarned;
+	}
+
+	public void selectPromoRulesMCG(String value) {
+		runWithinPopup(EDIT_PROMOTION_PLAN, () -> {
+			WebElementUtils.selectDropDownByValue(mcgRuleDdwn, value);
+			saveOrDetailsOrSearchClick();
+		});
 	}
 }
