@@ -2,12 +2,9 @@ package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import java.util.Map;
 import java.util.Objects;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.mastercard.pts.integrated.issuing.steps.customer.transaction.TransactionSteps;
 
 import org.jbehave.core.annotations.Composite;
 import org.jbehave.core.annotations.Given;
