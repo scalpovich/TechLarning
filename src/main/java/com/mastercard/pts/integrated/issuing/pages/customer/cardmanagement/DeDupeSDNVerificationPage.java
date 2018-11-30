@@ -74,7 +74,7 @@ public class DeDupeSDNVerificationPage extends AbstractCardManagementPage {
 	
 	private static final String REJECT = "reject";
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[1]/td[1]/span//span")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Application Number')]/parent::td/following::td[1]/span/span")
 	private MCWebElement applicationNumberFileUploadTxt;
 	
 	private String inputApplicationNumber;
