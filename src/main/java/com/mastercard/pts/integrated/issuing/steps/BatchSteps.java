@@ -197,7 +197,7 @@ public class BatchSteps {
 			MiscUtils.reportToConsole("******** Photo Flat File Completed ***** " );
 
 		} catch (Exception e) {
-			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
+			MiscUtils.reportToConsole("photo flat file Exception :  " + e.toString());
 			throw MiscUtils.propagate(e);
 		}
 		Assert.assertTrue(isPhotoReferencePresentInFlatFile);
@@ -216,7 +216,7 @@ public class BatchSteps {
 			MiscUtils.reportToConsole("Photo file name :  " + photoFileName );		
 			photoJpegFile = linuxBox.downloadFileThroughSCPByPartialFileName(photoFileName, tempDirectory.toString(), "CLIENT_PHOTO_BATCH","proc");
 		} catch (Exception e) {
-			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
+			MiscUtils.reportToConsole("image file Exception :  " + e.toString());
 			throw MiscUtils.propagate(e);
 		}
 		Assert.assertNotNull(photoJpegFile);
@@ -231,9 +231,11 @@ public class BatchSteps {
 			String csvFileName = context.get(ContextConstants.CSV_FILE_NAME);
 			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(csvFileName, tempDirectory.toString(), "CARDHOLDER_DUMP","proc");
 			Device device = context.get(ContextConstants.DEVICE);
-			boolean flg= LinuxUtils.isPhotoReferenceNumberPresentInDataFile(batchFile,device.getApplicationNumber());
-			Assert.assertTrue("Photo Reference Number is present in Card Holder Dump File",flg);
+			Assert.assertTrue("Photo Reference Number is present in Card Holder Dump File",LinuxUtils.isPhotoReferenceNumberPresentInDataFile(batchFile,device.getApplicationNumber()));
 		}
-		catch(Exception e) {}
+		catch(Exception e) {
+			MiscUtils.reportToConsole("card holder dump file Exception :  " + e.toString());
+			throw MiscUtils.propagate(e);
+		}
 	}
 }
