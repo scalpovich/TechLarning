@@ -61,7 +61,6 @@ public class LoadFromFileUploadSteps {
 	private FileCreation file;
 	
 	private static String batchStatus = "SUCCESS [2]";
-
 	
 	@Then("verify processes batch for type $type with status $stauts")
 	public void whenUserProcessesBatchForPrepaid(String type, String status) {
@@ -70,7 +69,6 @@ public class LoadFromFileUploadSteps {
 		whenUserProcessesBatchForPrepaid(type);
 		batchStatus =previousStatus;
 	}
-	
 	
 	@When("user processes batch for $type")
 	public void whenUserProcessesBatchForPrepaid(String type) {

@@ -276,7 +276,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 	
 	private void captureSaveScreenShot(String methodName) {
-		//SimulatorUtilities.takeScreenShot(winiumDriver, methodName + "_" + new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
+		SimulatorUtilities.takeScreenShot(winiumDriver, methodName + "_" + new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 	}
 
 	public void performOptimizedMasTransaction(String transaction, Transaction transactionData, Boolean sameCard) {
@@ -928,13 +928,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 
 	public String getFileData(String filePath) throws IOException {
-		//String test = "C:\\Users\\E079917\\Desktop\\20180827_IssuingTests_Simulator"; //getTempDirectoryLocationForSimulatorResults()
 		try (FileInputStream fis = new FileInputStream(getTempDirectoryLocationForSimulatorResults()+ "//" + filePath);) {
 			BufferedReader br = new BufferedReader(new InputStreamReader(fis));
 			String fileName = br.readLine();
 			fis.close();
 			return fileName;
-
 		}
 	}
 
@@ -2150,9 +2148,61 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(2000);
 		winiumClickOperation("OK");
 	}
+	
+	public Transaction setDEElementsForMIDTID (Transaction transactionData, MID_TID_Blocking midtidBlocking, String midTidCombination)
+	{
+		switch(midTidCombination){
+		case "1" :
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_041, midtidBlocking.getTerminalID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_032, midtidBlocking.getAcquirerID());
+			break;
+		case "2" :
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_019, midtidBlocking.getAcquiringCountryCode());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_022_01, ConstantData.POS_TERMINAL_VALUE);
+			break;
+		case "3" :
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_022_01, ConstantData.POS_TERMINAL_VALUE);
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
+			break;
+		case "4": case "6" : 
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_032, midtidBlocking.getAcquirerID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_041, midtidBlocking.getTerminalID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
+			break;
+		case "5" :
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
+			break;
+		case "7" :
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_041, midtidBlocking.getTerminalID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
+			break;
+		case "9" :
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_032, midtidBlocking.getAcquirerID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
+			break;
+		case "10" :
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_019, midtidBlocking.getAcquiringCountryCode());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_032, midtidBlocking.getAcquirerID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_041, midtidBlocking.getTerminalID());
+			break;
+		case "11" : 
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_032, midtidBlocking.getAcquirerID());
+			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_041, midtidBlocking.getTerminalID());
+			break;
+		default:
+			logger.info("Invalid Combination Provided {}", midTidCombination);
+		}
+		return transactionData;
+	}
+	
+	public String addTransactionReversal(String device, String reversalReason, String cancelAmount) {
+		ReversalTransactionPage page = navigator.navigateToPage(ReversalTransactionPage.class);
+		page.searchTransactionForReversal(device, context.get(ConstantData.TRANSACTION_DATE));
+		return page.addTransactionReversal(cancelAmount, reversalReason);
+	}
 
 	public void manipulateIPMData(String status,Transaction transactionData){
-		//startWiniumDriverWithSimulator("MCPS");
 		activateMcps();
 		try{
 			if(UNMATCH.equalsIgnoreCase(status)){
@@ -2272,58 +2322,5 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	public void deleteMID_TID_Blocking(String combination, MID_TID_Blocking details) {
 		MID_TID_BlockingPage page = navigator.navigateToPage(MID_TID_BlockingPage.class);
 		page.deleteRecord(combination,details);
-	}
-
-	public Transaction setDEElementsForMIDTID (Transaction transactionData, MID_TID_Blocking midtidBlocking, String midTidCombination)
-	{
-		switch(midTidCombination){
-		case "1" :
-			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_041, midtidBlocking.getTerminalID());
-			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_032, midtidBlocking.getAcquirerID());
-			break;
-		case "2" :
-			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_019, midtidBlocking.getAcquiringCountryCode());
-			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
-			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_022_01, ConstantData.POS_TERMINAL_VALUE);
-			break;
-		case "3" :
-			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_022_01, ConstantData.POS_TERMINAL_VALUE);
-			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
-			break;
-		case "4": case "6" : 
-			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_032, midtidBlocking.getAcquirerID());
-			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_041, midtidBlocking.getTerminalID());
-			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
-			break;
-		case "5" :
-			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
-			break;
-		case "7" :
-			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_041, midtidBlocking.getTerminalID());
-			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
-			break;
-		case "9" :
-			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_032, midtidBlocking.getAcquirerID());
-			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_042, midtidBlocking.getMerchantID());
-			break;
-		case "10" :
-			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_019, midtidBlocking.getAcquiringCountryCode());
-			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_032, midtidBlocking.getAcquirerID());
-			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_041, midtidBlocking.getTerminalID());
-			break;
-		case "11" : 
-			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_032, midtidBlocking.getAcquirerID());
-			transactionData.setDeKeyValuePairDynamic(ConstantData.DE_041, midtidBlocking.getTerminalID());
-			break;
-		default:
-			logger.info("Invalid Combination Provided {}", midTidCombination);
-		}
-		return transactionData;
-	}
-	
-	public String addTransactionReversal(String device, String reversalReason, String cancelAmount) {
-		ReversalTransactionPage page = navigator.navigateToPage(ReversalTransactionPage.class);
-		page.searchTransactionForReversal(device, context.get(ConstantData.TRANSACTION_DATE));
-		return page.addTransactionReversal(cancelAmount, reversalReason);
 	}
 }

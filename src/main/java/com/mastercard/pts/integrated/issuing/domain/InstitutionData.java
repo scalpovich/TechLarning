@@ -4,22 +4,21 @@ import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 public class InstitutionData {
-	private String productIdentity;
-	private String code;
-	private String abbreviation;
 	private String branch;
 	private String cardPackIdGenerationTemplate;
 	private String deviceIdGenerationTemplate;
 	private String embossingVendor;
+	private String plasticId;
+	private String pictureCode;
+	private String code;
+	private String abbreviation;
+	private String corporateClientCode;
 	private String mastercardPrepaidIssuerBin;
 	private String mastercardDebitIssuerBin;
 	private String mastercardCreditIssuerBin;
 	private String visaPrepaidIssuerBin;
 	private String visaDebitIssuerBin;
 	private String visaCreditIssuerBin;
-	private String plasticId;
-	private String pictureCode;
-	private String corporateClientCode;
 	private String dedupePlanCode;
 	private String prepaidStatementPlan;
 	private String statementMessagePlan;
@@ -33,6 +32,7 @@ public class InstitutionData {
 	private String creditPlan;
 	private String billingCycle;
 	private String walletPlan;
+	private String productIdentity;
   	private String transactionFeePlan;
 	private String loyaltyPlan;
 	private String devicePlan;
