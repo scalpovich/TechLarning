@@ -103,7 +103,7 @@ And check status in batch job history for DOWNLOAD batch and CARDHOLDER_DUMP
 Then photo reference number is present in card holder dump file
 And user sign out from customer portal
 
-Scenario: 1.10 To verify new fields are added in device tracking screen to track photo card file name and photo reference number generated for photo device
+Scenario: 2.0 To verify new fields are added in device tracking screen to track photo card file name and photo reference number generated for photo device
 Meta: 
 @TC857983
 Given setting json values in excel for Credit
@@ -120,7 +120,7 @@ And user processes Client photo/flat file download batch for new credit Device
 Then new fields are added in device tracking screen
 And user sign out from customer portal
 
-Scenario: 1.11 To verify user is able to select photo reference numbers for device numbers and generate text file with photo reference number on new screen
+Scenario: 2.1 To verify user is able to select photo reference numbers for device numbers and generate text file with photo reference number on new screen
 Meta:
 @TC857984
 Given setting json values in excel for Credit
