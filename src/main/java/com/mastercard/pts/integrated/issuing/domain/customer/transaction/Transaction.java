@@ -21,9 +21,9 @@ public class Transaction {
 
 	private static final String FINSIM_PIN_LENGHT = "FINSIM_PIN_LENGHT";
 	
-	private static final String DIFFENTIAL_AMOUNT = "DIFFENTIAL_AMOUNT";
+	private static final String DIFFERENTIAL_AMOUNT = "DIFFERENTIAL_AMOUNT"; 
 	
-	private static final String DIFFENTIAL_CURRANCY = "DIFFENTIAL_CURRANCY";
+	private static final String DIFFERENTIAL_CURRENCY = "DIFFERENTIAL_CURRENCY";
 
 	private Map<String, String> deKeyValuePair = new LinkedHashMap<>();
 
@@ -151,12 +151,11 @@ public class Transaction {
 	
 	public static Transaction createWithProvider(KeyValueProvider provider){
 		Transaction transactionData  = new Transaction();
-		transactionData.setDiffentialAmount(provider.getString(DIFFENTIAL_AMOUNT));
-		transactionData.setDiffentialCurrency(provider.getString(DIFFENTIAL_CURRANCY));
+		transactionData.setDiffentialAmount(provider.getString(DIFFERENTIAL_AMOUNT));
+		transactionData.setDiffentialCurrency(provider.getString(DIFFERENTIAL_CURRENCY));
 		return transactionData;
 				
 	}
-	
 
 	public String getPinKey() {
 		return pinKey;
