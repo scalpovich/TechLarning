@@ -34,7 +34,43 @@ public class InstitutionData {
 	private String billingCycle;
 	private String walletPlan;
   	private String transactionFeePlan;
-  
+	private String loyaltyPlan;
+	private String devicePlan;
+	private String walletFeePlan;
+	private String programCode;
+
+	public String getProgramCode() {
+		return programCode;
+	}
+
+	public void setProgramCode(String programCode) {
+		this.programCode = programCode;
+	}
+
+	public String getWalletFeePlan() {
+		return walletFeePlan;
+	}
+
+	public void setWalletFeePlan(String walletFeePlan) {
+		this.walletFeePlan = walletFeePlan;
+	}
+
+	public String getDevicePlan() {
+		return devicePlan;
+	}
+
+	public void setDevicePlan(String devicePlan) {
+		this.devicePlan = devicePlan;
+	}
+
+	public String getLoyaltyPlan() {
+		return loyaltyPlan;
+	}
+
+	public void setLoyaltyPlan(String loyaltyPlan) {
+		this.loyaltyPlan = loyaltyPlan;
+	}
+
  	public String getTransactionFeePlan() {
 		return transactionFeePlan;
 	}

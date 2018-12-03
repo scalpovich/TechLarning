@@ -171,9 +171,12 @@ public class ConstantData {
 	public static final String LOAN_CANCELLATION_SR = "Loan Cancellation [243]";
 	public static final String PAYMENT_UPLOAD_METHOD = "paymentMethod";
 	
+	public static final String TRANSACTION_DATE = "transactionDate";
+	public static final String LOYALTY_POINTS_REPORT_FILENAME = "Loyalty Points Report.pdf";
+
 	private ConstantData() {
 	}
-
+	
 	public static String fromShortName(String name) {
 		return MiscUtils.getConstantStringFromClassByPefixMatch(ConstantData.class, name);
 	}

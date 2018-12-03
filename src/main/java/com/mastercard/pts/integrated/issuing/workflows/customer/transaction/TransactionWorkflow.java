@@ -14,8 +14,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -61,6 +64,7 @@ import com.mastercard.pts.integrated.issuing.pages.ValidationException;
 import com.mastercard.pts.integrated.issuing.pages.agent.settlement.InitiateSettlementPage;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceApprovePage;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceRequestPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.GenerateReversalPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.MID_TID_BlockingPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReversalTransactionPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionSearchPage;
@@ -2315,5 +2319,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			logger.info("Invalid Combination Provided {}", midTidCombination);
 		}
 		return transactionData;
+	}
+	
+	public String addTransactionReversal(String device, String reversalReason, String cancelAmount) {
+		ReversalTransactionPage page = navigator.navigateToPage(ReversalTransactionPage.class);
+		page.searchTransactionForReversal(device, context.get(ConstantData.TRANSACTION_DATE));
+		return page.addTransactionReversal(cancelAmount, reversalReason);
 	}
 }
