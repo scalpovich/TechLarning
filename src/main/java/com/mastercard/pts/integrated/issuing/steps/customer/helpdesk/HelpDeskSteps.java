@@ -1120,8 +1120,6 @@ public class HelpDeskSteps {
 		helpdeskGeneral.setServiceCode(ConstantData.LOAN_CANCELLATION_SR);
 		Device device = context.get(ContextConstants.DEVICE);
 		LoanPlan loanPlan = context.get(ContextConstants.LOAN_PLAN);
-
-		helpdeskWorkflow.raiseLoanCancellationRequestToVerifyErroMessage(loanPlan, device, helpdeskGeneral);
 		assertThat("Loan Cancellation request is approved",
 				helpdeskWorkflow.raiseLoanCancellationRequestToVerifyErroMessage(loanPlan, device, helpdeskGeneral),
 				containsString("Loan cancellation not allowed"));

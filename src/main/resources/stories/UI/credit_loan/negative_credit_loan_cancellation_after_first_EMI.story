@@ -76,7 +76,13 @@ And user verify Outstanding amount for Loan Installment category
 And update institution date to 1 days
 Then user sign out from customer portal
 
-Scenario:1.8 Verify User is not able to cancel the loan from helpdesk and verify the error
+Scenario:1.8 Login & Logout to wait for date to be updated 
+Given user is logged in institution
+When user sign out from customer portal
+And user is logged in institution
+Then user sign out from customer portal
+
+Scenario:1.9 Verify User is not able to cancel the loan from helpdesk and verify the error
 Given user is logged in institution
 When device has "normal" status
 Then verifies Loan Cancellation request is "declined"
