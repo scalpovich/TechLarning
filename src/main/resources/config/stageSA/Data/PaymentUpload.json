@@ -4,73 +4,65 @@
       "paymentMethod": "Outstation_Cheque",
       "transactionCode": "570",
       "transactionCurrency": "356",
-      "transactionCurrencyAmount": "100"
+      "transactionCurrencyAmount": "100",
+      "chequeNumber": "100200",
+      "returnedReason": ""
     },
     {
       "paymentMethod": "Cash_Payment",
       "transactionCode": "580",
       "transactionCurrency": "356",
-      "transactionCurrencyAmount": "100"
+      "transactionCurrencyAmount": "100",
+      "chequeNumber": "000500",
+      "returnedReason": ""
     },
     {
       "paymentMethod": "DD_Payment",
       "transactionCode": "590",
       "transactionCurrency": "356",
-      "transactionCurrencyAmount": "100"
+      "transactionCurrencyAmount": "100",
+      "chequeNumber": "100300",
+      "returnedReason": ""
     },
     {
       "paymentMethod": "Local_Cheque",
       "transactionCode": "610",
       "transactionCurrency": "356",
-      "transactionCurrencyAmount": "100"
+      "transactionCurrencyAmount": "100",
+      "chequeNumber": "100400",
+      "returnedReason": ""
     },
     {
       "paymentMethod": "Outstation_Cheque_return",
       "transactionCode": "572",
       "transactionCurrency": "356",
-      "transactionCurrencyAmount": "100"
+      "transactionCurrencyAmount": "100",
+      "chequeNumber": "100200",
+      "returnedReason": "791"
     },
     {
       "paymentMethod": "Cash_Payment_return",
       "transactionCode": "582",
       "transactionCurrency": "356",
-      "transactionCurrencyAmount": "100"
+      "transactionCurrencyAmount": "100",
+      "chequeNumber": "000500",
+      "returnedReason": "10"
     },
     {
       "paymentMethod": "DD_Payment_return",
       "transactionCode": "592",
       "transactionCurrency": "356",
-      "transactionCurrencyAmount": "100"
+      "transactionCurrencyAmount": "100",
+      "chequeNumber": "100300",
+      "returnedReason": "029"
     },
     {
       "paymentMethod": "Local_Cheque_return",
       "transactionCode": "612",
       "transactionCurrency": "356",
-      "transactionCurrencyAmount": "100"
-    },
-    {
-      "paymentMethod": "Outstation_Cheque_reversal",
-      "transactionCode": "571",
-      "transactionCurrency": "356",
-      "transactionCurrencyAmount": "100"
-    },
-    {
-      "paymentMethod": "Cash_Payment_reversal",
-      "transactionCode": "581",
-      "transactionCurrency": "356",
-      "transactionCurrencyAmount": "100"
-    },
-    {
-      "paymentMethod": "DD_Payment_reversal",
-      "transactionCode": "591",
-      "transactionCurrency": "356",
-      "transactionCurrencyAmount": "100"
-    },
-    {
-      "paymentMethod": "Local_Cheque_reversal",
-      "transactionCode": "611",
-      "transactionCurrency": "356",
-      "transactionCurrencyAmount": "100"
-    }
+      "transactionCurrencyAmount": "100",
+      "chequeNumber": "100400",
+      "returnedReason": "791"
+     }
   ]
 }

@@ -82,6 +82,8 @@ public class PaymentUploadFeature {
 			valuesForMap.add(upload.getTransactionCurrency());
 			valuesForMap.add(upload.getTransactionCode());
 			valuesForMap.add(upload.getTransactionCurrencyAmount());
+			valuesForMap.add(upload.getChequeNumber());
+			valuesForMap.add(upload.getReturnedReason());
 			mapForCSV.put(i, valuesForMap);
 			tranactionAmount += Integer.parseInt(upload.getTransactionCurrencyAmount());
 		}
@@ -93,7 +95,7 @@ public class PaymentUploadFeature {
 				String.valueOf(tranactionAmount) };
 		writer.writeNext(header);
 		for (Map.Entry<Integer, List<String>> map : mapForCSV.entrySet()) {
-			String[] data = { "MUM3", String.valueOf(map.getKey() + 1), map.getValue().get(1), device.getDeviceNumber(), "", map.getValue().get(2), getDateForFile(), getDateForFile(), getDateForFile(), getDateForFile(), String.valueOf(chequeNumber), "", "", "", "", "", "", "", "", map.getValue().get(0), "" };
+			String[] data = { "MUM3", String.valueOf(map.getKey() + 1), map.getValue().get(1), device.getDeviceNumber(), "", map.getValue().get(2), getDateForFile(), getDateForFile(), getDateForFile(), getDateForFile(), map.getValue().get(3), map.getValue().get(4), "", "", "", "", "", "", "", map.getValue().get(0), "" };
 			writer.writeNext(data);
 			chequeNumber += 1;
 		}
