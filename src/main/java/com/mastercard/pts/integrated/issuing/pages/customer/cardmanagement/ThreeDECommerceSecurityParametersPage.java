@@ -58,7 +58,7 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 	private MCWebElement skipCvv2ChkBx;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "decNonsecuredTxnMc:checkBoxComponent")
-	private MCWebElement declineAllNonSecuredTransaction;
+	private MCWebElement chkBxDeclineAllNonSecuredTransaction;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "decMerchantRiskBaseTxnMc:checkBoxComponent")
 	private MCWebElement declineMerchantRiskBasedTransaction;
@@ -87,10 +87,12 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 	public void edit3DESParams(ThreeDECommerceSecurityParameters threeDESParams) {
 		edit3DESecurityParameters(threeDESParams);
 		runWithinPopup("Edit 3D E-Commerce Security", () -> {
-			if (threeDESParams.getCheckStatus().equals("check"))
+			if (threeDESParams.getCheckStatus().equals("check")) {
 				ClickCheckBox(skipCvv2ChkBx, true);
-			else
+
+			} else {
 				ClickCheckBox(skipCvv2ChkBx, false);
+			}
 			clickSaveButton();
 		});
 	}
@@ -106,23 +108,25 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 	public void editDeclineAllNonSecuredTransaction(ThreeDECommerceSecurityParameters threeDESParams) {
 		edit3DESecurityParameters(threeDESParams);
 		runWithinPopup("Edit 3D E-Commerce Security", () -> {
-			if (threeDESParams.getCheckStatus().equals("check"))
-				ClickCheckBox(declineAllNonSecuredTransaction, true);
-			else
-				ClickCheckBox(declineAllNonSecuredTransaction, false);
+			if (threeDESParams.getCheckStatus().equals("check")) {
+				ClickCheckBox(chkBxDeclineAllNonSecuredTransaction, true);
+			} else {
+				ClickCheckBox(chkBxDeclineAllNonSecuredTransaction, false);
+			}
 			clickSaveButton();
 			SimulatorUtilities.wait(3000);
 		});
-		
+
 	}
 
 	public void editMerchantRiskBasedDecisioningTransaction(ThreeDECommerceSecurityParameters threeDESParams) {
 		edit3DESecurityParameters(threeDESParams);
 		runWithinPopup("Edit 3D E-Commerce Security", () -> {
-			if (threeDESParams.getCheckStatus().equals("check"))
+			if (threeDESParams.getCheckStatus().equals("check")) {
 				ClickCheckBox(declineMerchantRiskBasedTransaction, true);
-			else
+			} else {
 				ClickCheckBox(declineMerchantRiskBasedTransaction, false);
+			}
 			clickSaveButton();
 		});
 	}
@@ -132,18 +136,15 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 		runWithinPopup("Edit 3D E-Commerce Security", () -> {
 			List<MCWebElement> secureElement = new LinkedList<MCWebElement>();
 			secureElement.add(declineMerchantRiskBasedTransaction);
-			secureElement.add(declineAllNonSecuredTransaction);
+			secureElement.add(chkBxDeclineAllNonSecuredTransaction);
 			secureElement.add(declineAllTransactionsWithoutCAVVAAVChkBx);
-			for (int i = 0; i < secureElement.size(); i++) {
-				for (MCWebElement elementLocator : secureElement) {
-					ClickCheckBox(elementLocator, false);
-				}
+			for (MCWebElement elementLocator : secureElement) {
+				ClickCheckBox(elementLocator, false);
 			}
 			clickSaveButton();
 			SimulatorUtilities.wait(2000);
 			verifyOperationStatus();
 		});
-
 	}
 
 	public void selectSearchInterchange(String interchangeToSearch) {

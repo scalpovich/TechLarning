@@ -199,7 +199,7 @@ public class DeviceRange {
 	
 	public String getIssuerBinCode(String issuerBin){
 		issuerBin =issuerBin.substring(issuerBin.indexOf("[") + 1);
-		logger.info("Issuer Bin is"+ issuerBin);
+		logger.info("Issuer Bin is {}", issuerBin);
 		issuerBin = issuerBin.substring(0, issuerBin.indexOf("]"));
 		return issuerBin;
 	}

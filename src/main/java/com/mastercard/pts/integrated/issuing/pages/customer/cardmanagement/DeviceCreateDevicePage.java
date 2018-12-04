@@ -168,16 +168,16 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	private MCWebElement existingClientLabel;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:isdCode:input:dropdowncomponent")
-	private MCWebElement registertedMobileNumberCodeDdwn;
+	private MCWebElement registeredMobileNumberCodeDDwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:registeredMobileNumber:input:inputTextField")
 	private MCWebElement registertedMobileNumber;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:emailAlertList:checkBoxComponent")
-	private MCWebElement emailAlertRequiredChBx;
+	private MCWebElement chkBxEmailAlertRequired;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:smsAlertList:checkBoxComponent")
-	private MCWebElement smsAlertRequiredChxBx;
+	private MCWebElement chkBxSmsAlertRequired;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePlanPromoCode1:input:dropdowncomponent")
 	private MCWebElement promotionPlanDDwn;
@@ -465,10 +465,10 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		}
 		
 		WebElementUtils.enterText(registeredMailIdTxt, client.getEmailId());
-		WebElementUtils.checkCheckbox(emailAlertRequiredChBx, true);
-		WebElementUtils.checkCheckbox(smsAlertRequiredChxBx, true);
+		WebElementUtils.checkCheckbox(chkBxEmailAlertRequired, true);
+		WebElementUtils.checkCheckbox(chkBxSmsAlertRequired, true);
 		WebElementUtils.enterText(registeredMailIdTxt, ConstantData.EMAIL_ID);
-		WebElementUtils.selectDropDownByVisibleText(registertedMobileNumberCodeDdwn, ConstantData.COUNTRY_CODE);
+		WebElementUtils.selectDropDownByVisibleText(registeredMobileNumberCodeDDwn, ConstantData.COUNTRY_CODE);
 		WebElementUtils.enterText(registertedMobileNumber, ConstantData.CONTACT_NUMBER);
 		WebElementUtils.selectDropDownByVisibleText(languagePreferencesDDwn, client.getLanguagePreference());
 		WebElementUtils.selectDropDownByVisibleText(vipDDwn, device.getVip());
