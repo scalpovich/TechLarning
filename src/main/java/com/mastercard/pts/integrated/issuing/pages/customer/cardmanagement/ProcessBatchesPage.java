@@ -188,9 +188,6 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	private MCWebElement binDDwn;
 
 	// Parameters Added for CardHolder Dump
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='childPanel:inputPanel:rows:7:cols:colspanMarkup:inputField:input:dateTimeField:date']/../..")
-	private MCWebElement fromDate;
-	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class='yui-skin-sam']/..")
 	private MCWebElement businessDate;
 	
@@ -213,11 +210,6 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	private MCWebElement processFileNameTxt;
 
 	public final String SYSTEM_INTERNAL_PROCESSING = "SYSTEM INTERNAL PROCESSING [B]";
-	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='childPanel:inputPanel:rows:7:cols:nextCol:colspanMarkup:inputField:input:dateTimeField:date']/../..")
-	private MCWebElement toDate;
-	
-	
 
 	private static final int NUMBER_OF_ATTEMPTS_TO_CHECK_SUCCESS_STATE=100;
 
@@ -788,17 +780,17 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	{
 		selectByVisibleText(batchTypeDdwn, "DOWNLOAD [D]");
 		if(batchName.equalsIgnoreCase("CLIENT_PHOTO_BATCH"))
-			selectByVisibleText(batchNameDdwn, "Client Photo/Flat File Download Batch [CLIENT_PHOTO_DOWNLOAD]");
+			selectByVisibleText(batchNameDdwn, Constants.CLIENT_PHOTO_FLAT_FILE_DOWNLOAD_BATCH);
 		else
 		{
 			if(batchName.equalsIgnoreCase("CardholderDump"))
-				selectByVisibleText(batchNameDdwn, "Cardholder Dump [CARDHOLDER_DUMP]");
+				selectByVisibleText(batchNameDdwn, Constants.CARDHOLDER_DUMP_BATCH);
 		}
 		SimulatorUtilities.wait(2000);
 		selectByVisibleText(productTypeDDwn, context.get(ConstantData.PRODUCT_IDENTITY));
-		selectByVisibleText(extractTypeDrpDwn, "FULL [F]");
-		WebElementUtils.pickDate(fromDate, LocalDate.now().minusDays(1));
-		WebElementUtils.pickDate(toDate, LocalDate.now());
+		selectByVisibleText(extractTypeDrpDwn, Constants.EXTRACT_TYPE_FULL);
+		WebElementUtils.pickDate(fromDateAuth, LocalDate.now().minusDays(1));
+		WebElementUtils.pickDate(toDateAuth, LocalDate.now());
 		WebElementUtils.enterText(cardHolderKycFromDateHHTxtBx, "00");
 		WebElementUtils.enterText(cardHolderKycFromDateMMTxtBx, "00");
 		WebElementUtils.enterText(cardHolderKycToDateHHTxtBx, "23");

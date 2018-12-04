@@ -4,6 +4,8 @@ public class BatchProcessingReports {
 	
 	private String applicationNumber;
 	private String password;
+	
+	
 	public String getApplicationNumber() {
 		return applicationNumber;
 	}
