@@ -170,6 +170,7 @@ public class DedupePlanPage extends AbstractBasePage {
 		ClickCheckBox(LegalIDChkBx, true);
 	}
 
+	@Override
 	public void clickSaveButton() {
 		clickWhenClickable(save);
 	}

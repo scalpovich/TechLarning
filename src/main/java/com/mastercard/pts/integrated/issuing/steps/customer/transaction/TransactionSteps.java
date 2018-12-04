@@ -11,10 +11,8 @@ import java.awt.AWTException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Objects;
-import java.text.DecimalFormat;
 
 import org.apache.commons.lang3.StringUtils;
-import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Aliases;
@@ -109,12 +107,12 @@ public class TransactionSteps {
 	private static String PASS_MESSAGE = "Transaction is succcessful!  - Expected Result : ";
 
 	private static String FAILED = "Transaction failed! ";
-	
-	private boolean declineMerchantRiskBased=false;
 
 	private static String FAIL_MESSAGE = FAILED + " -  Result : ";
 	
 	private static String INVALID_KEYS = "(default) - M/Chip Key Set from the related BIN range will be used";
+	
+	private boolean declineMerchantRiskBased=false;
 	
 	public boolean membershipFlag = false;
 
@@ -279,15 +277,15 @@ public class TransactionSteps {
 			// this value is expected to be 0's for Balance Enquiry
 			transactionData.setDeKeyValuePairDynamic("004", "000000000000");
 		}
-		
-		if (declineMerchantRiskBased)
-		{
-			transactionData.setDeKeyValuePairDynamic("048.TLV.42.01.02", ConstantData.DECLINE_MERCHANT_RISK_VALUE);
-		}
 
 		if (midTidFlag){
 			MID_TID_Blocking midtidBlocking = context.get(ContextConstants.MID_TID_BLOCKING);
 			transactionData = transactionWorkflow.setDEElementsForMIDTID(transactionData,midtidBlocking,midTidCombination);
+		}
+		
+		if (declineMerchantRiskBased)
+		{
+			transactionData.setDeKeyValuePairDynamic("048.TLV.42.01.02", ConstantData.DECLINE_MERCHANT_RISK_VALUE);
 		}
 		// changed ECOMMERCE to ECOM
 		if (transactionWorkflow.isContains(transaction, "ECOMM_PURCHASE") || transactionWorkflow.isContains(transaction, "ASI_") || transactionWorkflow.isContains(transaction, "MMSR")
@@ -692,7 +690,7 @@ public class TransactionSteps {
 		device.setTransactionAmount(Integer.toString(i));
 		context.put(ContextConstants.DEVICE, device);
 	}
-
+	
 	@When("perform an $transaction MAS transaction with amount $amount")
 	public void givenGenerateTestDataForOptimizedTransactionWithDifferentAmountIsExecuted(String transaction, String amount) {
 		// Storing transaction name in context to use it at runtime
@@ -713,20 +711,34 @@ public class TransactionSteps {
 		context.put(ContextConstants.TRANSACTION_SEARCH_DETAILS, transactionSearch);
 		context.put(ContextConstants.DEVICE, device);
 	}
+	
+	@When("user add transaction reversal with reason $reversalReason")
+	@Then("user add transaction reversal with reason $reversalReason")
+	public void addTransactionReversal(String reversalReason) {
+		Device device = context.get(ContextConstants.DEVICE);
+		ReversalTransaction rt = ReversalTransaction.getProviderData(provider);
+		assertEquals("Record Added Successfully.", transactionWorkflow.addTransactionReversal(device.getDeviceNumber(), reversalReason, rt.getAmount()));
+	
+		if((provider.getString(Constants.FOR_LOYALTY) != null) && (provider.getString(Constants.FOR_LOYALTY).equalsIgnoreCase("yes"))) {
+			Double availablePoints = 0.0;
+			Double availableLP = context.get(Constants.AVAILABLE_LOYALTY_POINTS);
+			if(availableLP != 0.0)
+				availablePoints = (Double)context.get(Constants.AVAILABLE_LOYALTY_POINTS) - ((Double.parseDouble(rt.getAmount()) * (Double)context.get(ContextConstants.PROMOTION_PLAN_POINTS_EARNED)) / (Double)context.get(ContextConstants.PROMOTION_PLAN_AMT_SPENT));
+			context.put(Constants.AVAILABLE_LOYALTY_POINTS, Math.floor(availablePoints));
+			context.put(Constants.ACCUMULATED_REVERSED_POINTS, Math.floor((Double.parseDouble(rt.getAmount()) * (Double)context.get(ContextConstants.PROMOTION_PLAN_POINTS_EARNED)) / (Double)context.get(ContextConstants.PROMOTION_PLAN_AMT_SPENT)));
+		}
+	}
+
 	@When("User update DE Value for Decline Merchant Risk Based Decision Transaction to $type for $transaction")
 	@Given("User update DE Value for Decline Merchant Risk Based Decision Transaction to $type")
-	public void userUpdateDEValueForRiskBasedDecisionTransaction(String value, String transaction)
-	{
+	public void userUpdateDEValueForRiskBasedDecisionTransaction(String value, String transaction) {
 		Transaction transactionData = transactionProvider.loadTransaction(transaction);
 		transactionData.setDeKeyValuePairDynamic("048.42.01.02", value);
 	}
-	
+
 	@Given("User set Decline Merchant Risk Based Decisioning Transaction flag $type")
 	@When("User set Decline Merchant Risk Based Decisioning Transaction flag $type")
 	public void userSetMIDTIDFlagAndCaseValue(boolean declineMerchantRiskBased) {
 		this.declineMerchantRiskBased = declineMerchantRiskBased;
 	}
-	
-
-
 }

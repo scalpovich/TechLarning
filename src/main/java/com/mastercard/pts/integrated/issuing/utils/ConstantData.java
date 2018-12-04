@@ -150,6 +150,7 @@ public class ConstantData {
 	public static final String RETAIL_TO_LOAN_SR = "Retail Transaction to Loan [215]";
 	public static final String LOAN_PRE_CLOSURE_SR = "Loan Preclosure [242]";	
 	public static final String LOAN_PRE_CLOSURE_FEE = "Loan PreClosure Fee";
+	public static final String LOAN_CANCELLATION_FEE = "Loan Cancellation Fee";
 	
 	
 	public static final String APPLIED_ON_LOAN_AMOUNT= 	"Loan Amount [LA]";		
@@ -171,13 +172,15 @@ public class ConstantData {
 	public static final String EMAIL_ID = "johnsnow@mastercard.com";
 	public static final String COUNTRY_CODE = "IND [+91]";
 	public static final String CONTACT_NUMBER = "0123456789";
+	public static final String LOAN_CANCELLATION_SR = "Loan Cancellation [243]";
+	public static final String PAYMENT_UPLOAD_METHOD = "paymentMethod";
 	
-	
-	
-	
+	public static final String TRANSACTION_DATE = "transactionDate";
+	public static final String LOYALTY_POINTS_REPORT_FILENAME = "Loyalty Points Report.pdf";
+
 	private ConstantData() {
 	}
-
+	
 	public static String fromShortName(String name) {
 		return MiscUtils.getConstantStringFromClassByPefixMatch(ConstantData.class, name);
 	}
