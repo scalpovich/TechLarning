@@ -414,7 +414,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	private String preclosureFee;
 	private String cancellationFee;
-	private String loanCancellationStatus;
+	private String errorMsgOfloanCancellation;
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
 		logger.info(WALLET_NUMBER, CharMatcher.DIGIT.retainFrom(walletNumber.getText()));
@@ -1836,12 +1836,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			selectLoanPlan(loanPlan.getLoanPlanDescription() + " " + "[" + loanPlan.getLoanPlanCode() + "]");
 			selectLoanAccountNumber(device.getLoanAccountNumber());
 			clickCancelLoanButton();
-			loanCancellationStatus = processLoanCancel();
+			errorMsgOfloanCancellation = processLoanCancel();
 			clickWhenClickable(cancelBtn);
 		});
 
 		clickEndCall();
 		SimulatorUtilities.wait(1000);
-		return loanCancellationStatus;
+		return errorMsgOfloanCancellation;
 	}
 }
