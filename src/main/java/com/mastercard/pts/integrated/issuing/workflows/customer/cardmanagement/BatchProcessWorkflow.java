@@ -80,6 +80,11 @@ public class BatchProcessWorkflow extends MenuFlows{
 		return page.searchJob(jobId);
 	}
 	
+	public boolean verifyBatchTraceAvailability(String jobId){
+		BatchTraceHistoryPage page = navigator.navigateToPage(BatchTraceHistoryPage.class);
+		return page.searchJobTrace(jobId);
+	}
+
 	public boolean searchBatchJobHistory(String jobId){
 		BatchJobHistoryPage page = navigator.navigateToPage(BatchJobHistoryPage.class);
 		return page.searchJob(jobId);
@@ -163,9 +168,4 @@ public class BatchProcessWorkflow extends MenuFlows{
 		ResendPINRequestPage page = navigator.navigateToPage(ResendPINRequestPage.class);
 		page.processResendPinRequestBatch(batch);
 	}
-	public boolean verifyBatchTraceAvailability(String jobId){
-        BatchTraceHistoryPage page = navigator.navigateToPage(BatchTraceHistoryPage.class);
-        return page.searchJobTrace(jobId);
-}
-	
 }
