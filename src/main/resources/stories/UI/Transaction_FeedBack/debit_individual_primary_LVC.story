@@ -4,12 +4,9 @@ As a user
 I want to assert PDF Details of LVC Debit card
 
 Meta:
-@prepaidRegression
-@StoryName d_emv_corp
-@Individual				 
+@StoryName d_emv_corp			 
 Scenario:1.1 creation of mastercard_individual_primary_LVC Card prepaid device
-Meta:
-@UserCreatesNewprepaidDevice
+
 Given setting json values in excel for Debit
 When user is logged in institution
 And for Limited Validity Virtual Card [8] User fills Device Plan for debit product for MASTERCARD [02]
