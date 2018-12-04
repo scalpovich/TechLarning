@@ -82,7 +82,7 @@ public class BatchJobHistorySteps {
 				batchjobhistory.setBatch("Cardholder Dump [CARDHOLDER_DUMP]");
 			}
 		}
-		batchjobhistory.setJobIdBatchJobHistory(context.get("JOB_ID"));
+		batchjobhistory.setJobIdBatchJobHistory(context.get(ContextConstants.JOB_ID));
 		batchjobhistory.setFromdate(DateUtils.currentDateddMMyyyy());
 		batchjobhistory.setToDate(DateUtils.currentDateddMMyyyy());
 		return batchjobhistoryflows.checkBatchStatusInBatchJobHistory(batchjobhistory);

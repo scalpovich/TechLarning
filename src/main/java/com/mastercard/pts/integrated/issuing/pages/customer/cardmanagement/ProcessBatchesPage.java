@@ -751,7 +751,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		WebElementUtils.enterText(cardHolderKycToDateHHTxtBx, "23");
 		WebElementUtils.enterText(cardHolderKycToDateMMTxtBx, "00");
 		clickSubmitBtn();
-		context.put("JOB_ID", jobIDNumber.getText());
+		context.put(ContextConstants.JOB_ID, jobIDNumber.getText());
 		SimulatorUtilities.wait(3000);
 		
 		

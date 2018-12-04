@@ -231,10 +231,6 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 		enterValueinTextBox(jobIdTxt, batchJobHistory.getJobIdBatchJobHistory());
 		selectByVisibleText(batchDDwn,batchJobHistory.getBatch());
 		clickSearchButton();
-		WebElement SelectJob = getFinder().getWebDriver()
-				.findElement(By.xpath("//td[contains(.,'" + batchJobHistory.getJobIdBatchJobHistory() + "')]"));
-		clickWhenClickable(SelectJob);
-		waitForSucces();
 		context.put(ContextConstants.CSV_NO,getFirstRecordCellTextByColumnName(FILE_NAME));
 		SimulatorUtilities.wait(20000);
 		if(getFirstRecordCellTextByColumnName(STATUS).equals("SUCCESS [2]"))
