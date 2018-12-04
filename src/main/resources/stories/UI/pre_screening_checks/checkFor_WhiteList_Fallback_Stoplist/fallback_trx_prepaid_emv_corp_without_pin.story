@@ -17,7 +17,9 @@ And User fills MCC Rules for prepaid product
 And User fills Program section for prepaid product
 And User fills Business Mandatory Fields Screen for prepaid product
 And User fills Device Range section for prepaid product
-Then user creates new device of prepaid type for new client
+And user creates new device of prepaid type for new client
+And user assigns service code to program
+Then user sign out from customer portal
 
 Scenario: prepaid emv corporate travel card device production
 Given user is logged in institution
