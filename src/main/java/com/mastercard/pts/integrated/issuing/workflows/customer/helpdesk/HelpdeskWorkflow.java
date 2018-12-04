@@ -296,6 +296,12 @@ public class HelpdeskWorkflow {
 	public Map<String, String> getLoyaltyDetails() {
 		return helpDeskPage.getLoyaltyDetails();
 	}
+
+	public String raiseLoanCancellationRequestToVerifyErroMessage(LoanPlan loanPlan, Device device,
+			HelpdeskGeneral helpdeskGeneral) {
+		return helpDeskPage.raiseLoanCancellationRequestToVerifyErroMessage(helpdeskGeneral,loanPlan,device);
+		
+	}
 }
 
 
