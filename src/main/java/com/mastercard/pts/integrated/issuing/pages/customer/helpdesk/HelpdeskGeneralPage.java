@@ -44,6 +44,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGe
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
@@ -91,6 +92,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private String[] values;
 	private String walletBalanceInformation;
 	public boolean serviceStatus = false;
+	private Map<String,String> points;
 
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
@@ -378,6 +380,12 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public final String VIEW_AUTHORIZATION = "View Authorizations";
 
 
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Cancel Loan']")
+	private MCWebElement cancelLoanBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Cancellation Fee :']/../following-sibling::td/span/input")
+	private MCWebElement txtCancellationFee;
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Process']")
 	private MCWebElement processBtn;
 	
@@ -389,8 +397,23 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Account Number :']/../following-sibling::td[1]//span/select")
 	private MCWebElement selectLoanAccountNumberDdwn;
+
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value = 'Loyalty']")
+	private MCWebElement loyaltyBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Points Earned:']/following::span/span")
+	private MCWebElement pointsEarned;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Available Loyalty Points:']/following::span/span")
+	private MCWebElement availableLoyaltyPoints;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Accumulated Reversed Points:']/following::span/span")
+	private MCWebElement accumulatedReversedPoints;
+	
+	private final String LOYALTY_DETAILS = "Loyalty Details";
 	
 	private String preclosureFee;
+	private String cancellationFee;
 	
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
@@ -551,11 +574,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public void selectLoanPlan(String type) {
 		WebElementUtils.selectDropDownByVisibleText(selectLoanPlanDdwn, type);
 	}
-	
-	public void selectLoanAccountNumber(String type) {
-		WebElementUtils.selectDropDownByVisibleText(selectLoanAccountNumberDdwn, type);
-	}
-	
 	
 	public void clickCurrentStatusAndLimitsTab(){
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.visibilityOf(currentStatusAndLimitTab)).click();
@@ -874,6 +892,32 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			}
 		}
 		clickEndCall();
+		return walletBalanceInformation;
+	}
+
+	public String getWalletBalanceInformationAfterLoyaltyRedemption(Device device) {
+		logger.info("Get Wallet Balance Information for Device: {}", device.getDeviceNumber());
+		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, "Prepaid [P]");
+		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
+		clickSearchButton();
+		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
+		editDeviceLink.click();
+		clickWalletDetailsTab();
+		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
+		int rowCount = driver()
+				.findElements(By.xpath("//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr"))
+				.size();
+		DecimalFormat dec = new DecimalFormat("#0.00");
+		for (int j = 1; j <= rowCount; j++) {
+			logger.info("Current Available Balance {} Unsettled Debit {} ",
+					getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance"));
+			Double balance = Double.parseDouble(getCellTextByColumnNameInEmbeddedTab(j, "Current Available Balance"));
+
+			logger.info("Current Available Balance + Settled Credit : " + dec.format(balance));
+			walletBalanceInformation = walletBalanceInformation + ","
+					+ getCellTextByColumnNameInEmbeddedTab(j, "Wallet Currency") + ":" + dec.format(balance) + ":"
+					+ getCellTextByColumnNameInEmbeddedTab(j, "WALLET_NUMBER");
+		}
 		return walletBalanceInformation;
 	}
 
@@ -1635,7 +1679,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			loanDetails.setProcessingFee(processingFeeLbl.getAttribute("value"));
 			loanDetails.setMoratoriumLoan(moratoriumLoanLbl.getAttribute("value"));			
 			clickWhenClickable(sanctionBtn);			
-			SimulatorUtilities.wait(3000);	
+			SimulatorUtilities.wait(10000);	
 			waitForElementVisible(okBtn);
 			elementToBeClickable(okBtn);
 			clickWhenClickable(okBtn);			
@@ -1644,6 +1688,46 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return loanDetails;
 	}
 	
+	public String raiseLoanCancellationRequest(HelpdeskGeneral helpdeskGeneral, LoanPlan loanPlan, Device device) {
+		selectServiceCode(helpdeskGeneral.getServiceCode());
+		clickGoButton();
+		runWithinPopup("243 - Loan Cancellation", ()->{	
+			selectLoanPlan(loanPlan.getLoanPlanDescription() + " " + "[" + loanPlan.getLoanPlanCode() + "]");
+			selectLoanAccountNumber(device.getLoanAccountNumber());
+			clickCancelLoanButton();
+			cancellationFee=processLoanCancel();
+			clickWhenClickable(cancelBtn);
+		});			
+
+		clickEndCall();	
+		return cancellationFee;
+	}
+
+	private String processLoanCancel() {
+		SimulatorUtilities.wait(500);
+		runWithinPopup("Process Loan Cancel", ()->{	
+			SimulatorUtilities.wait(500);
+			logger.info("Loan Cancellation fee:{}",txtCancellationFee.getAttribute("value"));
+			cancellationFee=txtCancellationFee.getAttribute("value");
+			enterNote(MiscUtils.randomAlphabet(10));
+			SimulatorUtilities.wait(3000);	
+			clickWhenClickable(processBtn);	
+			waitForElementVisible(okBtn);
+			elementToBeClickable(okBtn);
+			clickWhenClickable(okBtn);	
+		
+		});	
+		return cancellationFee;
+	}
+
+	private void clickCancelLoanButton() {
+		clickWhenClickable(cancelLoanBtn);
+	}
+
+	private void selectLoanAccountNumber(String loanAccountNumber) {
+		WebElementUtils.selectDropDownByVisibleText(selectLoanAccountNumberDdwn, loanAccountNumber);
+	}
+
 	public String getDeclineCodeForTransaction(Device device, String rrnNumber){
 		logger.info("Fetching information for : {}", device.getDeviceNumber());
 		searchByDeviceNumber(device);
@@ -1686,9 +1770,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		});
 	}
 
-
-
-
 	public String raiseLoanPreclosureRequest(HelpdeskGeneral helpdeskGeneral, LoanPlan loanPlan, Device device) {
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
@@ -1718,8 +1799,26 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		});	
 		return preclosureFee;
 	}
+
+	public void clickLoyaltyBtn() {
+		WebElementUtils.scrollDown(driver(), 0, 250);
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(loyaltyBtn)).click();
+	}
 	
+	public void clickEditDeviceLink() {
+		editDeviceLink.click();
+	}
 	
-	
-	
+	public Map<String, String> getLoyaltyDetails() {
+		points = new HashMap<String, String>();
+		runWithinPopup(LOYALTY_DETAILS, () -> {
+			points.put(Constants.POINTS_EARNED, pointsEarned.getText());
+			points.put(Constants.AVAILABLE_LOYALTY_POINTS, availableLoyaltyPoints.getText());
+			points.put(Constants.ACCUMULATED_REVERSED_POINTS, accumulatedReversedPoints.getText());
+			clickCloseButton();
+		});
+		SimulatorUtilities.wait(3000);
+		clickEndCall();
+		return points;
+	}
 }

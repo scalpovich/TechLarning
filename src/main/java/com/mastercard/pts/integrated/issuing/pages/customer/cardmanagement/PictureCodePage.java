@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PictureCode;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
-import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
@@ -81,6 +80,7 @@ public class PictureCodePage extends AbstractBasePage {
 		return DescriptionTxt.getAttribute("value");
 	}
 
+	@Override
 	public void clickSaveButton() {
 		clickWhenClickable(saveBtn);
 	}

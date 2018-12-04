@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.utils;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -196,13 +197,21 @@ public class PDFUtils {
 					tStripper.setLineSeparator("<EOL>");
 					pdfFileInText = tStripper.getText(pd);
 					row = pdfFileInText.split("(<EOL>)+");
-					for (int j = 0; j < row.length; j = j + 2) {
-						if (!row[j].contains("Opening Balance"))
-							map.put(row[j], row[j + 1]);
-						else
-							map = resolvePDFLine(map, row[j], row[j + 1]);
-
-						logger.info("Field in statement : {}={}", row[j], row[j + 1]);
+					if(genericReports.getLoyaltyPromotionPlan() != null) {
+						for (int j = 0; j < row.length; j++) {
+							if(row[j].startsWith(genericReports.getLoyaltyPromotionPlan())) {
+								map.put(Constants.AVAILABLE_LOYALTY_POINTS, row[j + 2]);
+								return map;
+							}
+						}
+					} else {
+						for (int j = 0; j < row.length; j = j + 2) {
+							if (!row[j].contains("Opening Balance"))
+								map.put(row[j], row[j + 1]);
+							else
+								map = resolvePDFLine(map, row[j], row[j + 1]);
+							logger.info("Field in statement : {}={}", row[j], row[j + 1]);
+						}
 					}
 				} else {
 					// split by RegEx
@@ -211,13 +220,14 @@ public class PDFUtils {
 						map.put((i++).toString(), text);
 					}
 				}
-				pd.close();
+			pd.close();
 			}
-			document.close();
-		} catch (Exception e) {
+           document.close();
+		}catch(IOException e){
 			e.printStackTrace();
-		}
-		return map;
+			return null;
+		}	
+			return map;
 	}
 
 	

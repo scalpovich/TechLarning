@@ -25,6 +25,7 @@ import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
@@ -815,6 +816,16 @@ public abstract class AbstractBasePage extends AbstractPage {
 		boolean isAlertPresent = alert != null;
 		if (isAlertPresent) {
 			alert.accept();
+		}
+	}
+	
+	public boolean isAlertPresent() {
+		try {
+			Alert alert = driver().switchTo().alert();
+			alert.accept();
+			return true;
+		} catch (NoAlertPresentException e) {
+			return false;
 		}
 	}
 
@@ -1994,5 +2005,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 		} catch (NoSuchElementException | InterruptedException e) {
 			logger.info("Failed at batch status: ", e);
 		}
+	}
+	public String getFirstRowColValueFor(int col) {
+		return firstRowColumnValues.getElements().get(col).getText();
 	}
 }

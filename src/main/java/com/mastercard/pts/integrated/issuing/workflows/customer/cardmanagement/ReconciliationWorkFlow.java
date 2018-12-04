@@ -1,8 +1,8 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
-
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +20,6 @@ import com.mastercard.pts.integrated.issuing.pages.collect.report.ReportCardMana
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionReportsPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
-import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.PDFUtils;
 
 @Workflow
@@ -44,8 +43,12 @@ public class ReconciliationWorkFlow {
 	}
 	
 	public void runPreClearingAndLoyaltyCalcBatch(List<ProcessBatches> batch) {
-		ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
-		processBatch.processSystemInternalProcessingBatch(batch.get(1));
+		if (batch.size() != 0) {
+			for (int i = 0; i < batch.size(); i++) {
+				ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
+				processBatch.processSystemInternalProcessingBatch(batch.get(i));
+			}
+		}
 	}
 
 	public String runPreClearingBatch(ProcessBatches batch) {
@@ -148,7 +151,7 @@ public class ReconciliationWorkFlow {
 	public void deleteExistingAuthorizationFilesFromSystem(String authFileName)
 	{
 		for (File file: new File(PDFUtils.getuserDownloadPath()).listFiles()) {
-			if (!file.isDirectory()&& file.getName().startsWith(ConstantData.AUTHORIZATION_REPORT_NAME))   	
+			if (!file.isDirectory()&& file.getName().startsWith(authFileName))   	
 				file.delete();
 		}
 	}

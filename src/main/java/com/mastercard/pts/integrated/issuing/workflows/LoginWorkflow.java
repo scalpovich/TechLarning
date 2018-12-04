@@ -1,7 +1,5 @@
 package com.mastercard.pts.integrated.issuing.workflows;
 
-import net.thucydides.core.annotations.Step;
-
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.configuration.Portal;
 import com.mastercard.pts.integrated.issuing.pages.HeaderPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.administration.LoginPage;
-import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.pages.PageObjectFactory;
 import com.mastercard.pts.integrated.issuing.pages.customer.InstitutionSelectionPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.administration.LoginPage;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
+
+import net.thucydides.core.annotations.Step;
 
 @Workflow
 public class LoginWorkflow {
@@ -25,9 +25,10 @@ public class LoginWorkflow {
 	@Autowired
 	private WebDriverProvider webProvider;
 
-	public void openLoginPageForPortal(Portal portal) {                        
+	public void openLoginPageForPortal(Portal portal) {    
+		webProvider.get().manage().deleteAllCookies();
 		webProvider.get().get(portal.getUrl());
-		webProvider.get().manage().window().maximize();
+		webProvider.get().manage().window().maximize();		
 		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
 		loginPage.waitUntilIsLoaded();
 	}

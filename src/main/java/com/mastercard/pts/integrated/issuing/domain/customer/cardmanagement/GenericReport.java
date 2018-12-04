@@ -3,10 +3,12 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 
-public class GenericReport {
+public class GenericReport implements HasCodeAndDescription{
 
 	private String authorizationCode;
 	private String deviceNumber;
@@ -19,6 +21,64 @@ public class GenericReport {
 	private String reportUrl;
 	private String password;
 	private String clientCode;
+	private String deviceType;
+	private String loyaltyPlan;
+	private String loyaltyPromotionPlan;
+    private String highRiskMcc;
+	private String highRiskCountry;
+	private String highRiskMerchant;
+	
+	private static final String HIGH_RISK_MCC = "HIGH_RISK_MCC";
+	private static final String HIGH_RISK_COUNTRY = "HIGH_RISK_COUNTRY";
+	private static final String HIGH_RISK_MERCHANT = "HIGH_RISK_MERCHANT";
+
+	public String getHighRiskMcc() {
+		return highRiskMcc;
+	}
+
+	public void setHighRiskMcc(String highRiskMcc) {
+		this.highRiskMcc = highRiskMcc;
+	}
+
+	public String getHighRiskCountry() {
+		return highRiskCountry;
+	}
+
+	public void setHighRiskCountry(String highRiskCountry) {
+		this.highRiskCountry = highRiskCountry;
+	}
+
+	public String getHighRiskMerchant() {
+		return highRiskMerchant;
+	}
+
+	public void setHighRiskMerchant(String highRiskMerchant) {
+		this.highRiskMerchant = highRiskMerchant;
+	}
+
+	public String getLoyaltyPromotionPlan() {
+		return loyaltyPromotionPlan;
+	}
+
+	public void setLoyaltyPromotionPlan(String loyaltyPromotionPlan) {
+		this.loyaltyPromotionPlan = loyaltyPromotionPlan;
+	}
+
+	public String getDeviceType() {
+		return deviceType;
+	}
+
+	public void setDeviceType(String deviceType) {
+		this.deviceType = deviceType;
+	}
+
+	public String getLoyaltyPlan() {
+		return loyaltyPlan;
+	}
+
+	public void setLoyaltyPlan(String loyaltyPlan) {
+		this.loyaltyPlan = loyaltyPlan;
+	}
 
 	public String getPassword() {
 		return password;
@@ -62,6 +122,9 @@ public class GenericReport {
 	
 	public static GenericReport createWithProvider(KeyValueProvider provider){
 		GenericReport report = new GenericReport();
+		report.setHighRiskMcc(provider.getString(HIGH_RISK_MCC));
+		report.setHighRiskCountry(provider.getString(HIGH_RISK_COUNTRY));
+		report.setHighRiskMerchant(provider.getString(HIGH_RISK_MERCHANT));
 		reportFields = new HashMap<>();
 		report.setReportRegEx();
 		return report;
@@ -110,6 +173,21 @@ public class GenericReport {
 		reportRegEx.put(ConstantData.DEVICE_ACTIVITY_REPORT_FILE_NAME, "\\D\\d\\d\\d\\d\\D");
 	}
 	
+	@Override
+	public String toString() {
+		return MiscUtils.toString(this);
+	}
+
+	@Override
+	public String getCode() {
+		return reportName;
+	}
+
+	@Override
+	public String getDescription() {
+		return null;
+	}
+
 	public String getClientCode() {
 		return clientCode;
 	}

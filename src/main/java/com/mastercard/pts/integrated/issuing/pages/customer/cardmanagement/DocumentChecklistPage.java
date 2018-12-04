@@ -20,7 +20,6 @@ import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
-import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
@@ -89,6 +88,7 @@ public class DocumentChecklistPage extends AbstractBasePage {
 		return DescriptionTxt.getAttribute("value");
 	}
 
+	@Override
 	public void clickSaveButton() {
 		clickWhenClickable(saveBtn);
 		switchToDefaultFrame();

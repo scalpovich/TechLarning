@@ -31,6 +31,8 @@ import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.Proce
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.MenuFlows;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ResendPinRequest;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ResendPINRequestPage;
 
 @Workflow
 public class BatchProcessWorkflow extends MenuFlows{
@@ -152,6 +154,15 @@ public class BatchProcessWorkflow extends MenuFlows{
 		return  tranLine.substring(61, 73).contains(visafeecollection.getSourceAmount()) && tranLine.substring(27, 43).equals(device.getDeviceNumber()) ;
 	}
 	
+	public String processCarrierDownloadBatch(ProcessBatches batch) {
+		ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
+		return page.processCarrierDownloadBatch(batch);
+	}
+
+	public void processResendPinRequestBatch(ResendPinRequest batch) {
+		ResendPINRequestPage page = navigator.navigateToPage(ResendPINRequestPage.class);
+		page.processResendPinRequestBatch(batch);
+	}
 	public boolean verifyBatchTraceAvailability(String jobId){
         BatchTraceHistoryPage page = navigator.navigateToPage(BatchTraceHistoryPage.class);
         return page.searchJobTrace(jobId);
