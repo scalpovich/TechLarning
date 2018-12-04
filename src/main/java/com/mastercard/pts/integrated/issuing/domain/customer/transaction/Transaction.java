@@ -20,6 +20,10 @@ public class Transaction {
 	private static final String FINSIM_PAD = "FINSIM_PAD";
 
 	private static final String FINSIM_PIN_LENGHT = "FINSIM_PIN_LENGHT";
+	
+	private static final String DIFFERENTIAL_AMOUNT = "DIFFERENTIAL_AMOUNT"; 
+	
+	private static final String DIFFERENTIAL_CURRENCY = "DIFFERENTIAL_CURRENCY";
 
 	private Map<String, String> deKeyValuePair = new LinkedHashMap<>();
 
@@ -74,12 +78,17 @@ public class Transaction {
 	private String cardProfile;
 
 	private String issuerCountryCode;
-
+	
 	private String issuerCurrencyCode;
 
 	private String cardHolderBillingCurrency;
 	
 	private String serviceCode;
+	
+	private String diffentialAmount;
+	
+	private String diffentialCurrency ;
+	
 
 	public String getIssuerCurrencyCode() {
 		return issuerCurrencyCode;
@@ -132,6 +141,13 @@ public class Transaction {
 		transactionData.setOffSetForCard((device.getPinOffset().substring(1, 5)));
 		transactionData.setPinLength(provider.getString(FINSIM_PIN_LENGHT));
 
+		return transactionData;
+	}
+	
+	public static Transaction createWithProvider(KeyValueProvider provider){
+		Transaction transactionData  = new Transaction();
+		transactionData.setDiffentialAmount(provider.getString(DIFFERENTIAL_AMOUNT));
+		transactionData.setDiffentialCurrency(provider.getString(DIFFERENTIAL_CURRENCY));
 		return transactionData;
 	}
 
@@ -333,5 +349,21 @@ public class Transaction {
 
 	public void setCvvData2(String cvvData2) {
 		this.cvvData2 = cvvData2;
+	}
+	
+	public String getDiffentialCurrency() {
+		return diffentialCurrency;
+	}
+
+	public void setDiffentialCurrency(String diffentialCurrency) {
+		this.diffentialCurrency = diffentialCurrency;
+	}
+	
+	public String getDiffentialAmount() {
+		return diffentialAmount;
+	}
+
+	public void setDiffentialAmount(String diffentialAmount) {
+		this.diffentialAmount = diffentialAmount;
 	}
 }
