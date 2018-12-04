@@ -8,9 +8,9 @@ Meta:
 @StoryName credit_emv_retail
 @PreScreening
 @TestId TC548377			 
-Scenario:creation of mastercard_corporate_primary_EMV Card credit device
+Scenario:1.1 creation of mastercard_corporate_primary_EMV Card credit device
 Given setting json values in excel for Credit
-Given user is logged in institution
+And user is logged in institution
 When for EMV Card User fills Device Plan for credit product for Mastercard
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
@@ -25,14 +25,14 @@ Then User search for new device Supplementary on search screen for credit and va
 And user selects International Use Allow/Disallow [400] status
 And user sign out from customer portal
 
-Scenario: Pin Generation
+Scenario:1.2 Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 Then embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 And FINSim simulator is closed
 
-Scenario: Perform INT_EMV_PURCHASE Authorization transaction
+Scenario:1.3 Perform INT_EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an INT_EMV_PURCHASE MAS transaction
 And user is logged in institution
@@ -40,18 +40,18 @@ Then search Purchase authorization and verify 119-Transaction not permitted stat
 Then assert Decline response with 46007 AuthDecline Code and International transaction not allowed. as description
 And user sign out from customer portal
 
-Scenario: Perform International Allow/DisAllow for one hour
+Scenario:1.4 Perform International Allow/DisAllow for one hour
 Given user is logged in institution
 When user allow International Use Allow/Disallow [400] Transaction For One Hour
 And user sign out from customer portal
 
-Scenario: Perform INT_EMV_PURCHASE Authorization transaction
+Scenario:1.5 Perform INT_EMV_PURCHASE Authorization transaction
 When perform an INT_EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Wait for 1 hour and Then Perform Purchase Transaction
+Scenario:1.6 Wait for 1 hour and Then Perform Purchase Transaction
 When user wait for one hour to perform transaction
 And perform an INT_EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution

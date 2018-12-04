@@ -3,8 +3,6 @@ In order to a validate Non Secure Transaction on credit device
 As a user
 I want to perform Purchase Transaction on corporate credit card to check Decline Non Secure Transaction
 Meta:
-@CreditRegression
-@CreditWithPin
 @StoryName credit_emv_retail
 
 Scenario:1.1 creation of mastercard_corporate_primary_EMV Card credit device
@@ -22,12 +20,12 @@ And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pingeneration batch using new Device for Supplementary
 And device has "normal" status
 And user notes down available Card limit for card
-And user change all the fields of 3D Eccom Security for product Credit and interchange MasterCard as uncheck
+And user edits All field of 3D Eccom Security for product Credit and interchange MasterCard as uncheck
 Then user sign out from customer portal
 
 Scenario:1.2 Check Decline All Non Secured Transaction Check
 Given user is logged in institution
-When user edits 3D ecommerce security parameters to Decline all non secured transaction for product Credit and interchange Mastercard as check
+When user edits Decline all non secured transaction field of 3D Eccom Security for product Credit and interchange MasterCard as check
 Then user sign out from customer portal
 
 Scenario:1.3 Pin Generation
@@ -48,5 +46,5 @@ Then MAS simulator is closed
 
 Scenario:1.5 Uncheck Decline All Non Secured Transaction Check
 Given user is logged in institution
-When user edits 3D ecommerce security parameters to Decline all non secured transaction for product Credit and interchange Mastercard as uncheck
+When user edits Decline all non secured transaction field of 3D Eccom Security for product Credit and interchange MasterCard as uncheck
 Then user sign out from customer portal

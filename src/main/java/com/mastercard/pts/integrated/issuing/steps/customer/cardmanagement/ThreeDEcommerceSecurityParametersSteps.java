@@ -47,34 +47,21 @@ public class ThreeDEcommerceSecurityParametersSteps {
 		threeDESParams.seteCommerceSecurityInterchange(interchange);
 		threeDECommerceSecurityParametersFlows.edit3DESParams(threeDESParams);
 	}
-	
-	@When("user edits 3D ecommerce security parameters to Decline all non secured transaction for product $type and interchange $interchange as $status")
-	public void editDeclineAllNonSecuredTransaction(String type, String interchange,String status) {
-		ThreeDECommerceSecurityParameters threeDESParams = new ThreeDECommerceSecurityParameters();
-		threeDESParams.setCheckStatus(status);
-		DeviceRange deviceRange =   context.get(ContextConstants.DEVICE_RANGE); 		
-		threeDESParams.setDeviceRangeFrom(deviceRange.getIssuerBinCode(deviceRange.getIssuerBin()) + ConstantData.START_RANGE_DIGITS);
-		threeDESParams.seteCommerceSecurityInterchange(interchange);
-		threeDECommerceSecurityParametersFlows.editDeclineAllNonSecured(threeDESParams);
-	}
 
-	@When("user edits 3D ecommerce security parameters to Decline Merchant Risk Based Decisioning Transaction for product $type and interchange $interchange as $status")
-	public void editMerchantRiskBasedDecisioningTransaction(String type, String interchange, String status) {
+	@Given("user edits $field field of 3D Eccom Security for product $type and interchange $interchange as $status")
+	@When("user edits $field field of 3D Eccom Security for product $type and interchange $interchange as $status")
+	public void userChangeAllTheFieldsAsUncheck(String fields, String type, String interchange, String status) {
 		ThreeDECommerceSecurityParameters threeDESParams = new ThreeDECommerceSecurityParameters();
 		threeDESParams.setCheckStatus(status);
 		DeviceRange deviceRange = context.get(ContextConstants.DEVICE_RANGE);
 		threeDESParams.setDeviceRangeFrom(deviceRange.getIssuerBinCode(deviceRange.getIssuerBin()) + ConstantData.START_RANGE_DIGITS);
 		threeDESParams.seteCommerceSecurityInterchange(interchange);
-		threeDECommerceSecurityParametersFlows.editMerchantRiskBasedDecisioningTransaction(threeDESParams);
-	}
-	@Given("user change all the fields of 3D Eccom Security for product $type and interchange $interchange as $status")
-	@When("user change all the fields of 3D Eccom Security for product $type and interchange $interchange as $status")
-	public void userChangeAllTheFieldsAsUncheck(String type, String interchange, String status) {
-		ThreeDECommerceSecurityParameters threeDESParams = new ThreeDECommerceSecurityParameters();
-		threeDESParams.setCheckStatus(status);
-		DeviceRange deviceRange = context.get(ContextConstants.DEVICE_RANGE);
-		threeDESParams.setDeviceRangeFrom(deviceRange.getIssuerBinCode(deviceRange.getIssuerBin()) + ConstantData.START_RANGE_DIGITS);
-		threeDESParams.seteCommerceSecurityInterchange(interchange);
-		threeDECommerceSecurityParametersFlows.editAll3DSecureFieldsToUncheck(threeDESParams);
+		if (fields.equalsIgnoreCase("All"))
+			threeDECommerceSecurityParametersFlows.editAll3DSecureFieldsToUncheck(threeDESParams);
+		else if (fields.equalsIgnoreCase("Decline Merchant Risk Based Decisioning Transaction")) {
+			threeDECommerceSecurityParametersFlows.editMerchantRiskBasedDecisioningTransaction(threeDESParams);
+		} else if (fields.equalsIgnoreCase("Decline all non secured transaction")) {
+			threeDECommerceSecurityParametersFlows.editDeclineAllNonSecured(threeDESParams);
+		}
 	}
 }

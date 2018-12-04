@@ -3,8 +3,6 @@ In order to a validate Invalid CVV on credit device
 As a user
 I want to perform MSR_Purchase transaction to check MSR Transaction on EMV Card with Invalid CVV
 Meta:
-@CreditRegression
-@CreditWithPin
 @StoryName credit_emv_retail
 
 Scenario:1.1 creation of mastercard_corporate_primary_EMV Card credit device

@@ -3,8 +3,6 @@ In order to a validate 3D secure Transaction on credit device
 As a user
 I want to perform Transaction on corporate credit card to check 3D Secure Decisioning Transaction
 Meta:
-@CreditRegression
-@CreditWithPin
 @StoryName credit_emv_retail
 
 Scenario:1.1 creation of mastercard_corporate_primary_EMV Card credit device
@@ -21,18 +19,18 @@ And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And device has "normal" status
 And user notes down available Card limit for card
-And user change all the fields of 3D Eccom Security for product Credit and interchange MasterCard as uncheck
+And user edits All field of 3D Eccom Security for product Credit and interchange MasterCard as uncheck
 Then user sign out from customer portal
 And embossing file batch was generated in correct format
 
 Scenario:1.2 Check Decline All Non Secured Transaction Check
 Given user is logged in institution
-When user edits 3D ecommerce security parameters to Decline Merchant Risk Based Decisioning Transaction for product Credit and interchange Mastercard as check
+When user edits Decline Merchant Risk Based Decisioning Transaction field of 3D Eccom Security for product Credit and interchange MasterCard as check
 Then user sign out from customer portal
 
 Scenario:1.4 Perform 3D Secure Authorization transaction
 Given connection to MAS is established
-Given User set Decline Merchant Risk Based Decisioning Transaction flag true
+And User set Decline Merchant Risk Based Decisioning Transaction flag true
 When perform an 3D_SECURE_CAVV MAS transaction
 And user is logged in institution
 And search E-Commerce Transaction* authorization and verify 100-Do Not Honour status
@@ -42,5 +40,5 @@ Then MAS simulator is closed
 
 Scenario:1.5 Uncheck Decline All Non Secured Transaction Check
 Given user is logged in institution
-When user edits 3D ecommerce security parameters to Decline Merchant Risk Based Decisioning Transaction for product Credit and interchange Mastercard as uncheck
+When user edits Decline Merchant Risk Based Decisioning Transaction field of 3D Eccom Security for product Credit and interchange MasterCard as uncheck
 Then user sign out from customer portal

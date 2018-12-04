@@ -24,12 +24,12 @@ And user activates device through helpdesk
 And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
-And user change all the fields of 3D Eccom Security for product Prepaid and interchange MasterCard as uncheck
+And user edits All field of 3D Eccom Security for product Credit and interchange MasterCard as uncheck
 Then user sign out from customer portal
 
 Scenario:1.2 Check Decline All Non Secured Transaction Check
 Given user is logged in institution
-When user edits 3D ecommerce security parameters to Decline all non secured transaction for product Prepaid and interchange Mastercard as check
+When user edits Decline all non secured transaction field of 3D Eccom Security for product Credit and interchange MasterCard as check
 Then user sign out from customer portal
 
 Scenario:1.3 Pin Generation
@@ -50,5 +50,5 @@ Then MAS simulator is closed
 
 Scenario:1.5 Uncheck Decline All Non Secured Transaction Check
 Given user is logged in institution
-When user edits 3D ecommerce security parameters to Decline all non secured transaction for product Prepaid and interchange Mastercard as uncheck
+When user edits Decline all non secured transaction field of 3D Eccom Security for product Credit and interchange MasterCard as uncheck
 Then user sign out from customer portal
