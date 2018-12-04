@@ -65,10 +65,8 @@ public class WebElementUtils {
 
 	public static void switchToChildWindowByTitleAndCloseParent(WebDriver driver, String title) {
 		String currentWindow = driver.getWindowHandle();
-		String targetWindow = new FluentWait<WebDriver>(driver)
-				.until((com.google.common.base.Function<WebDriver, String>) wd -> wd.getWindowHandles().stream()
-						.filter(handle -> wd.switchTo().window(handle).getTitle().equalsIgnoreCase(title)).findFirst()
-						.orElse(null));
+		String targetWindow = new FluentWait<WebDriver>(driver).until((com.google.common.base.Function<WebDriver, String>) wd -> wd.getWindowHandles().stream()
+				.filter(handle -> wd.switchTo().window(handle).getTitle().equalsIgnoreCase(title)).findFirst().orElse(null));
 		driver.switchTo().window(currentWindow).close();
 		driver.switchTo().window(targetWindow);
 	}
@@ -147,8 +145,7 @@ public class WebElementUtils {
 	}
 
 	public static List<String> getOptionsTextFromSelect(MCWebElement element) {
-		return asWebElement(element).findElements(By.tagName("option")).stream().map(WebElement::getText)
-				.collect(Collectors.toList());
+		return asWebElement(element).findElements(By.tagName("option")).stream().map(WebElement::getText).collect(Collectors.toList());
 	}
 
 	public void moveToClick(MCWebElement element, WebDriver driver) {
@@ -162,9 +159,8 @@ public class WebElementUtils {
 
 		try {
 			switchToDefaultContent(driver);
-			new WebDriverWait(driver, timeoutInSec)
-					.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator));
-			// addWicketAjaxListeners(driver);
+			new WebDriverWait(driver, timeoutInSec).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameLocator));
+           //addWicketAjaxListeners(driver);
 			action.run();
 		} finally {
 			if (currentFrame == null) {
@@ -187,8 +183,7 @@ public class WebElementUtils {
 	}
 
 	public static void addWicketAjaxListeners(WebDriver driver) {
-		String javascript = "if (typeof tk  == 'undefined') {"
-				+ "tk = {activeAjaxCount: 0, ajaxCallsTried: 0, ajaxCallsCompleted: 0};"
+		String javascript = "if (typeof tk  == 'undefined') {" + "tk = {activeAjaxCount: 0, ajaxCallsTried: 0, ajaxCallsCompleted: 0};"
 				+ "Wicket.Ajax.registerPreCallHandler(function(){tk.activeAjaxCount++;tk.ajaxCallsTried++;});"
 				+ "Wicket.Ajax.registerPostCallHandler(function(){tk.activeAjaxCount--;tk.ajaxCallsCompleted++;});}";
 		executeJavascript(driver, javascript);
@@ -216,7 +211,7 @@ public class WebElementUtils {
 		} catch (StaleElementReferenceException ex) {
 			monthYear = fluentWait(() -> asWebElement(datePicker).findElement(By.cssSelector("a.calnav")));
 			currentYearMonth = YearMonth.parse(monthYear.getText(), formatter);
-		}
+		} 
 		if (date.getYear() != currentYearMonth.getYear() || date.getMonthValue() != currentYearMonth.getMonthValue()) {
 			monthYear.click();
 
@@ -234,9 +229,7 @@ public class WebElementUtils {
 	}
 
 	public static <R> R fluentWait(Supplier<R> condition) {
-		return new FluentWait<Object>(new Object()).ignoring(WebDriverException.class)
-				.withTimeout(TIMEOUT, TimeUnit.SECONDS)
-				.until((com.google.common.base.Function<Object, R>) o -> condition.get());
+		return new FluentWait<Object>(new Object()).ignoring(WebDriverException.class).withTimeout(TIMEOUT, TimeUnit.SECONDS).until((com.google.common.base.Function<Object, R>) o -> condition.get());
 	}
 
 	public static void retryUntilNoErrors(Runnable action) {
@@ -279,8 +272,7 @@ public class WebElementUtils {
 
 		FluentWebElement fluent = context.getFluent().element(loc);
 		try {
-			Class<?> mcElementClass = Thread.currentThread().getContextClassLoader()
-					.loadClass("com.mastercard.testing.mtaf.bindings.element.MCWebElementImpl");
+			Class<?> mcElementClass = Thread.currentThread().getContextClassLoader().loadClass("com.mastercard.testing.mtaf.bindings.element.MCWebElementImpl");
 			Constructor<?> constructor = mcElementClass.getConstructor(FluentWebElement.class, Actions.class);
 			constructor.setAccessible(true);
 
