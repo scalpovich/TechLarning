@@ -1,7 +1,7 @@
 !-- Author e084017
 Narrative:
 As a(n)  Customer portal user 
-I want to onboard credit device using application upload 
+I want to onboard application upload with duplicate data then it should caught in Dedupe/SDN 
 
 Meta:
 @StoryName greater_limit_credit_emv_retail
