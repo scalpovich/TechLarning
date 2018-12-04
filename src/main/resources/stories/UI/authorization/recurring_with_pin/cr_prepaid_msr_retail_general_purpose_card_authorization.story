@@ -9,7 +9,7 @@ Meta:
 @StoryName p_msr_retail_gen_purpose
 @RecurringWithPin
 
-Scenario: 1.0 Set up prepaid msr Retail travel card
+Scenario: 1.0 Set up prepaid msr Retail general purpose card
 Given setting json values in excel for Prepaid
 When user is logged in institution
 And User fills Device Plan for "Prepaid" "MAGNETIC STRIPE CARD" card
