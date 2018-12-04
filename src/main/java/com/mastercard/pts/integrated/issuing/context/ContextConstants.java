@@ -156,6 +156,10 @@ public class ContextConstants {
 	
 	public static final String TRANSACTION_DATE = "TRANSACTION_DATE";
 	
+	public static final String PAYMENT_UNBILLED = "Payment Unbilled";
+	
+	public static final String ZERO_UNBILLED_PAYMENT = "0.00";
+	
 	public static final String PAYMENT_UPLOAD = "PAYMENT_UPLOAD";
 
 	public static final String TRANSACTION_PLAN = "TRANSACTIONPLAN";
