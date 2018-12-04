@@ -44,6 +44,8 @@ public class DevicePlanPage extends AbstractBasePage {
 	private static final String STATUS_YES = "Yes";
 	private static final String STATUS_NO = "No";
 
+	private static final String MAIL = "Mail [2]";
+
 	@Autowired
 	MenuSubMenuPage menuSubMenuPage;
 
@@ -919,6 +921,18 @@ public class DevicePlanPage extends AbstractBasePage {
 		}
 	}
 
+	public void enableIframeCourierTrackingChkbx() {
+		if (iframeCourierTrackingChkbx.isEnabled()) {
+			iframeCourierTrackingChkbx.click();
+		}
+	}
+	
+	public void enableIframeManufacturingTrackingChkbx() {
+		if (iframeManufacturingTrackingChkbx.isEnabled()) {
+			iframeManufacturingTrackingChkbx.click();
+		}
+	}
+	
 	public void selectIframeEmbossingVendorDdwn(String embossingVendor) {
 		selectByVisibleText(iframeEmbossingVendorDdwn, embossingVendor);
 	}
@@ -1245,6 +1259,11 @@ public class DevicePlanPage extends AbstractBasePage {
 		
 		if(iframeEmbossingVendorDdwn.isEnabled())
 			selectIframeEmbossingVendorDdwn(devicePlan.getEmbossingVendor());
+		}
+		
+		if (devicePlan.getDeliveryMode().equalsIgnoreCase(MAIL)){
+			enableIframeCourierTrackingChkbx();
+			enableIframeManufacturingTrackingChkbx();
 		}
 		
 		if (devicePlan.getFillRenewalSection().equalsIgnoreCase(STATUS_YES))

@@ -415,7 +415,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	private String preclosureFee;
 	private String cancellationFee;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'Reason')]//following::select[@class = 'mandatoryFlag selectf']")
 	private MCWebElement stoplistReasonDDwn;
 
@@ -1789,9 +1789,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		});
 	}
 
-
-
-
 	public String raiseLoanPreclosureRequest(HelpdeskGeneral helpdeskGeneral, LoanPlan loanPlan, Device device) {
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
@@ -1820,6 +1817,28 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			clickWhenClickable(okBtn);	
 		});	
 		return preclosureFee;
+	}
+
+	public void clickLoyaltyBtn() {
+		WebElementUtils.scrollDown(driver(), 0, 250);
+		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(loyaltyBtn)).click();
+	}
+	
+	public void clickEditDeviceLink() {
+		editDeviceLink.click();
+	}
+	
+	public Map<String, String> getLoyaltyDetails() {
+		points = new HashMap<String, String>();
+		runWithinPopup(LOYALTY_DETAILS, () -> {
+			points.put(Constants.POINTS_EARNED, pointsEarned.getText());
+			points.put(Constants.AVAILABLE_LOYALTY_POINTS, availableLoyaltyPoints.getText());
+			points.put(Constants.ACCUMULATED_REVERSED_POINTS, accumulatedReversedPoints.getText());
+			clickCloseButton();
+		});
+		SimulatorUtilities.wait(3000);
+		clickEndCall();
+		return points;
 	}
 
 	public void addServiceRequest(HelpdeskGeneral helpdeskGeneral,
@@ -1901,27 +1920,5 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	public void selectApplyFeesChkBx(boolean value) {
 		ClickCheckBox(chkBxApplyFees, value);
-	}
-	
-	public void clickLoyaltyBtn() {
-		WebElementUtils.scrollDown(driver(), 0, 250);
-		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(loyaltyBtn)).click();
-	}
-	
-	public void clickEditDeviceLink() {
-		editDeviceLink.click();
-	}
-	
-	public Map<String, String> getLoyaltyDetails() {
-		points = new HashMap<String, String>();
-		runWithinPopup(LOYALTY_DETAILS, () -> {
-			points.put(Constants.POINTS_EARNED, pointsEarned.getText());
-			points.put(Constants.AVAILABLE_LOYALTY_POINTS, availableLoyaltyPoints.getText());
-			points.put(Constants.ACCUMULATED_REVERSED_POINTS, accumulatedReversedPoints.getText());
-			clickCloseButton();
-		});
-		SimulatorUtilities.wait(3000);
-		clickEndCall();
-		return points;
 	}
 }

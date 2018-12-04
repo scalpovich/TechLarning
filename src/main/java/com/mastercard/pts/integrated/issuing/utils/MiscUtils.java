@@ -19,11 +19,14 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.base.Strings;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorConstantsData;
 
 public class MiscUtils {
+
 
 	private MiscUtils() {
 	}
@@ -39,8 +42,10 @@ public class MiscUtils {
 	public static boolean renamePinFile(String fileName) {
 		File oldfile =new File(fileName);
 		File newfile =new File(fileName +"_PinFile");
+		
 		return oldfile.renameTo(newfile);
 	}
+		
 
 	public static String generateRandomNumberAsString(int number) {
 		return RandomStringUtils.randomNumeric(number);
@@ -183,5 +188,11 @@ public class MiscUtils {
 	public static String getEnvironment() {
 		String env = System.getProperty("env").toString();
 		return env;
+	}
+	
+	public static boolean deleteExistingFile(String fileName)
+	{
+		File file = new File(fileName);
+		return (file.delete());
 	}
 }

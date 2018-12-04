@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.helpdesk;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -1132,5 +1133,27 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.navigateToLoyaltyDetails(device);
 		Map<String, String> points = helpdeskWorkflow.getLoyaltyDetails();
 		return points;
+	}
+	
+	@Then("verifies Loan Cancellation request is \"declined\"")
+	public void thenLoanCancellationRequestIsDeclined() {
+		helpdeskGeneral = HelpdeskGeneral.createWithProviderWithCreditCardLimits(provider);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskGeneral.setServiceCode(ConstantData.LOAN_CANCELLATION_SR);
+		Device device = context.get(ContextConstants.DEVICE);
+		LoanPlan loanPlan = context.get(ContextConstants.LOAN_PLAN);
+		assertThat("Loan Cancellation request is approved",
+				helpdeskWorkflow.raiseLoanCancellationRequestToVerifyErroMessage(loanPlan, device, helpdeskGeneral),
+				containsString("Loan cancellation not allowed"));
+
+	}
+	
+	@When("user verifies $amountType after payment return")
+	@Then("user verifies $amountType after payment return")
+	public void verifyUnbilledPaymentAfterReversal(String amountType)
+	{
+		Device device = context.get(ContextConstants.DEVICE);
+		HashMap<String, String> helpdeskValues = helpdeskWorkflow.noteDownRequiredValues(device.getDeviceNumber());
+		assertThat("Invalid Unbilled amount", helpdeskValues.get(amountType), equalTo(ContextConstants.ZERO_UNBILLED_PAYMENT));
 	}
 }

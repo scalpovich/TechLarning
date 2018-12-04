@@ -466,7 +466,7 @@ public class TransactionSteps {
 	@Then("transaction status is \"$type\"")
 	public void thenTransactionStatusIsPresentmentMatched(String type) {
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
-		assertEquals(type, transactionWorkflow.getAuthorizationStatus(arnNumber, ts));
+		assertEquals(type, transactionWorkflow.getAuthorizationStatus(arnNumber, ts, type));
 	}
 
 	@Then("transaction fee is correctly posted")
@@ -705,6 +705,7 @@ public class TransactionSteps {
 		context.put(ContextConstants.DEVICE, device);
 	}
 	
+
 	@When("user add transaction reversal with reason $reversalReason")
 	@Then("user add transaction reversal with reason $reversalReason")
 	public void addTransactionReversal(String reversalReason) {
@@ -720,5 +721,12 @@ public class TransactionSteps {
 			context.put(Constants.AVAILABLE_LOYALTY_POINTS, Math.floor(availablePoints));
 			context.put(Constants.ACCUMULATED_REVERSED_POINTS, Math.floor((Double.parseDouble(rt.getAmount()) * (Double)context.get(ContextConstants.PROMOTION_PLAN_POINTS_EARNED)) / (Double)context.get(ContextConstants.PROMOTION_PLAN_AMT_SPENT)));
 		}
+	}
+	
+	@Given("user update IPM file to get status $status")
+	@When("user update IPM file to get status $status")
+	public void userUpdateIPMForDuplicateRecordCheck(String status){
+		Transaction trasactiondata = Transaction.createWithProvider(provider);
+		transactionWorkflow.manipulateIPMData(status,trasactiondata);
 	}
 }
