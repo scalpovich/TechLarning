@@ -144,17 +144,11 @@ public class Transaction {
 		return transactionData;
 	}
 	
-	public static Transaction generateFinSimPinTestData(KeyValueProvider provider) {
-		Transaction transactionData  = new Transaction();
-		return transactionData;
-	}
-	
 	public static Transaction createWithProvider(KeyValueProvider provider){
 		Transaction transactionData  = new Transaction();
 		transactionData.setDiffentialAmount(provider.getString(DIFFERENTIAL_AMOUNT));
 		transactionData.setDiffentialCurrency(provider.getString(DIFFERENTIAL_CURRENCY));
 		return transactionData;
-				
 	}
 
 	public String getPinKey() {

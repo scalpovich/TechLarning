@@ -80,11 +80,8 @@ public class TransactionSearchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Transaction Date']/ancestor::a")
 	private MCWebElement transactionDateOrderByLink;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Sequence Number')]")
-	private MCWebElement sequenceNumberText;
-	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Reconciliation Status')]//following-sibling::td[2]/select")
-	private MCWebElement reconciliationStatusDD;
+	private MCWebElement reconciliationStatusDDwn;
 	
 	private final String DUPLICATE_CURRENCY_PRESENTMENT = "Differential currency presentment";
 	private final String UNMATCH_PRESENTMENT = "Unmatched Presentment";
@@ -129,7 +126,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 		//selectFromDate(LocalDate.now());
 		if(type.equalsIgnoreCase(DUPLICATE_CURRENCY_PRESENTMENT) || type.equalsIgnoreCase(UNMATCH_PRESENTMENT)){
 			String st = Elements(RECONCILIATION_STATUS_OPTIONS).stream().filter(x -> x.getText().contains(type)).findFirst().get().getText();
-			selectByText(reconciliationStatusDD, st);
+			selectByText(reconciliationStatusDDwn, st);
 		}
 		clickSearchButton();
 		viewFirstRecord();

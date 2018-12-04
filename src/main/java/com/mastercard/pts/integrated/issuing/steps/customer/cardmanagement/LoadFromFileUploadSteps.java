@@ -82,7 +82,6 @@ public class LoadFromFileUploadSteps {
 		// batch.setBatchName("Load IPM Incoming File [IPM_INCOMING]");
 		batch.setProductType(ProductType.fromShortName(type));
 		HashMap<String, String> hm = (HashMap<String, String>) loadFromFileUploadWorkflow.processUploadBatch(batch);
-		assertEquals("SUCCESS [2]", hm.get("BatchStatus"));
 		assertEquals(batchStatus, hm.get("BatchStatus"));
 		jobId = hm.get("JobId");
 	}
