@@ -61,7 +61,7 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 	private MCWebElement chkBxDeclineAllNonSecuredTransaction;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "decMerchantRiskBaseTxnMc:checkBoxComponent")
-	private MCWebElement declineMerchantRiskBasedTransaction;
+	private MCWebElement chkBxDeclineMerchantRiskBasedTransaction;
 	
 	public void verifyUiOperationStatus() {
 		logger.info("3D E-Commerce Security Parameters");
@@ -123,9 +123,9 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 		edit3DESecurityParameters(threeDESParams);
 		runWithinPopup("Edit 3D E-Commerce Security", () -> {
 			if (threeDESParams.getCheckStatus().equals("check")) {
-				ClickCheckBox(declineMerchantRiskBasedTransaction, true);
+				ClickCheckBox(chkBxDeclineMerchantRiskBasedTransaction, true);
 			} else {
-				ClickCheckBox(declineMerchantRiskBasedTransaction, false);
+				ClickCheckBox(chkBxDeclineMerchantRiskBasedTransaction, false);
 			}
 			clickSaveButton();
 		});
@@ -135,7 +135,7 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 		edit3DESecurityParameters(threeDESParams);
 		runWithinPopup("Edit 3D E-Commerce Security", () -> {
 			List<MCWebElement> secureElement = new LinkedList<MCWebElement>();
-			secureElement.add(declineMerchantRiskBasedTransaction);
+			secureElement.add(chkBxDeclineMerchantRiskBasedTransaction);
 			secureElement.add(chkBxDeclineAllNonSecuredTransaction);
 			secureElement.add(declineAllTransactionsWithoutCAVVAAVChkBx);
 			for (MCWebElement elementLocator : secureElement) {
