@@ -119,8 +119,8 @@ public class Device {
 	private String joiningFees;
 	private String membershipFees;
 	private String promotionPlanCode;
-	private String loanAccountNumber;
-  	
+	private String loanAccountNumber;  	
+  	private String mandatoryFieldValue;
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
 		device.setApplicationType(provider.getString(APPLICATION_TYPE));
@@ -792,5 +792,13 @@ public class Device {
 
 	public void setLoanAccountNumber(String loanAccountNumber) {
 		this.loanAccountNumber = loanAccountNumber;
+	}
+	
+	public String getMandatoryFieldValue() {
+		return mandatoryFieldValue;
+	}
+
+	public void setMandatoryFieldValue(String mandatoryFieldValue) {
+		this.mandatoryFieldValue = mandatoryFieldValue;
 	}
 }
