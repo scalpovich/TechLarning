@@ -319,6 +319,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
     @PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Wallet Number')]/../following-sibling::td/span/span")
 	private MCWebElement txtWalletNumber;
+    
+    @PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Payment :']/../../following-sibling::td[2]/span/span")
+	private MCWebElement paymentUnbilledLbl;
 	
     @Autowired
 	TestContext context;
@@ -1405,26 +1408,27 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public HashMap<String, String> noteDownRequiredValues(String deviceNumber) {
-		HashMap<String, String> helpDeskValues = new HashMap<>();		
-		helpDeskValues.put(ContextConstants.ACCOUNT_NUMBER,txtWalletNumber.getText());
-		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);		
+		HashMap<String, String> helpDeskValues = new HashMap<>();
+		helpDeskValues.put(ContextConstants.ACCOUNT_NUMBER, txtWalletNumber.getText());
+		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
 		clickWhenClickable(currentStatusAndLimitTab);
 		helpDeskValues.put(ContextConstants.CREDIT_LIMIT, accountCreditLimitLabel.getText());
 		helpDeskValues.put(ContextConstants.AVAILABLE_CREDIT_LIMIT, availAccountCreditLimitLabel.getText());
 		helpDeskValues.put(ContextConstants.PAYMENT_DUE_DATE, paymentDueDateLabel.getText());
-		helpDeskValues.put(ContextConstants.MINIMUM_PAYMENT_DUE, minimumAmountDueLabel.getText());		
+		helpDeskValues.put(ContextConstants.MINIMUM_PAYMENT_DUE, minimumAmountDueLabel.getText());
 		context.put(ContextConstants.MINIMUM_PAYMENT_DUE, minimumAmountDueLabel.getText());
-		logger.info("MINIMUM_PAYMENT_DUE"+minimumAmountDueLabel.getText());
-		helpDeskValues.put(ContextConstants.CLOSING_BALANCE, closingBalanceLabel.getText());	
-		WebElementUtils.elementToBeClickable(balanceDetailsTab);	
+		logger.info("MINIMUM_PAYMENT_DUE" + minimumAmountDueLabel.getText());
+		helpDeskValues.put(ContextConstants.CLOSING_BALANCE, closingBalanceLabel.getText());
+		WebElementUtils.elementToBeClickable(balanceDetailsTab);
 		clickWhenClickable(balanceDetailsTab);
-		helpDeskValues.put(ContextConstants.TOTAL_PAYMENT_DUE, totalAmountDueLabel.getText());		
+		helpDeskValues.put(ContextConstants.TOTAL_PAYMENT_DUE, totalAmountDueLabel.getText());
 		context.put(ContextConstants.TOTAL_PAYMENT_DUE, totalAmountDueLabel.getText());
-		logger.info("TOTAL_PAYMENT_DUE"+totalAmountDueLabel.getText());
-		helpDeskValues.put(ContextConstants.INTEREST, interestLabel.getText());	
-		helpDeskValues.put(ContextConstants.LOAN, loanLabel.getText());	
-		helpDeskValues.put(ContextConstants.LOAN_INTEREST, loanInterestLabel.getText());	
-		helpDeskValues.put(ContextConstants.LOAN_INSTALLMENT_OUTSTANDING, loanInstallmentOutStandingLabel.getText());			
+		logger.info("TOTAL_PAYMENT_DUE" + totalAmountDueLabel.getText());
+		helpDeskValues.put(ContextConstants.INTEREST, interestLabel.getText());
+		helpDeskValues.put(ContextConstants.LOAN, loanLabel.getText());
+		helpDeskValues.put(ContextConstants.LOAN_INTEREST, loanInterestLabel.getText());
+		helpDeskValues.put(ContextConstants.LOAN_INSTALLMENT_OUTSTANDING, loanInstallmentOutStandingLabel.getText());
+		helpDeskValues.put(ContextConstants.PAYMENT_UNBILLED, paymentUnbilledLbl.getText());
 		clickEndCall();
 		return helpDeskValues;
 	}

@@ -17,6 +17,9 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Proc
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ReconciliationWorkFlow;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProcessBatchesFlows;
 
 @Component
 public class ReconciliationSteps {
@@ -30,6 +33,12 @@ public class ReconciliationSteps {
 
 	@Autowired
 	private ReconciliationWorkFlow reconciliationWorkFlow;
+	
+	@Autowired
+	private ProcessBatches processBatch;
+	
+	@Autowired
+	private ProcessBatchesFlows processBatchesFlows;
 
 	@Then("verify report for transactions with Program Balance Summary is downloaded")
 	public void verifyReportForTransactionsWithProgramBalanceSummaryIsDownloaded() {
@@ -111,6 +120,15 @@ public class ReconciliationSteps {
 		ProcessBatches batch = new ProcessBatches();
 		batch.setBatchName(batchName);
 		reconciliationWorkFlow.processStatementExtractBatch(batch);
+	}
+	
+	@When("user processes $batchName batch for $product")
+	public void processPaymentUploadBatchForCredit(String batchName, String product)
+	{
+		String fileName = context.get(ConstantData.PAYMENT_UPLOAD_FILE_NAME);
+		processBatch.setJoBID(processBatchesFlows.processUploadBatches(batchName, fileName));
+		SimulatorUtilities.wait(5000);
+		Assert.assertTrue(processBatchesFlows.verifyFileProcessFlowsUpload(processBatch, fileName));
 	}
 
 }
