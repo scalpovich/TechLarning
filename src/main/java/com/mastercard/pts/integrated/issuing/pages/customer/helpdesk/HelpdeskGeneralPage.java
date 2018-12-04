@@ -321,7 +321,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private MCWebElement txtWalletNumber;
     
     @PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Payment :']/../../following-sibling::td[2]/span/span")
-	private MCWebElement paymentUnbilledLabel;
+	private MCWebElement paymentUnbilledLbl;
 	
     @Autowired
 	TestContext context;
@@ -1428,7 +1428,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		helpDeskValues.put(ContextConstants.LOAN, loanLabel.getText());
 		helpDeskValues.put(ContextConstants.LOAN_INTEREST, loanInterestLabel.getText());
 		helpDeskValues.put(ContextConstants.LOAN_INSTALLMENT_OUTSTANDING, loanInstallmentOutStandingLabel.getText());
-		helpDeskValues.put(ContextConstants.PAYMENT_UNBILLED, paymentUnbilledLabel.getText());
+		helpDeskValues.put(ContextConstants.PAYMENT_UNBILLED, paymentUnbilledLbl.getText());
 		clickEndCall();
 		return helpDeskValues;
 	}

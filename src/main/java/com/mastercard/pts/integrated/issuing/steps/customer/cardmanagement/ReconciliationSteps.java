@@ -122,8 +122,8 @@ public class ReconciliationSteps {
 		reconciliationWorkFlow.processStatementExtractBatch(batch);
 	}
 	
-	@When("user processes $batchName batch for credit")
-	public void processPaymentUploadBatchForCredit(String batchName)
+	@When("user processes $batchName batch for $product")
+	public void processPaymentUploadBatchForCredit(String batchName, String product)
 	{
 		String fileName = context.get(ConstantData.PAYMENT_UPLOAD_FILE_NAME);
 		processBatch.setJoBID(processBatchesFlows.processUploadBatches(batchName, fileName));

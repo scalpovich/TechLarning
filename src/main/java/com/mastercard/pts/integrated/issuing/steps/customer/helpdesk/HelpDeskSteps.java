@@ -1113,6 +1113,7 @@ public class HelpDeskSteps {
 	}
 	
 	@When("user verifies $amountType after payment return")
+	@Then("user verifies $amountType after payment return")
 	public void verifyUnbilledPaymentAfterReversal(String amountType)
 	{
 		Device device = context.get(ContextConstants.DEVICE);

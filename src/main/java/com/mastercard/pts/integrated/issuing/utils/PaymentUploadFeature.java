@@ -102,8 +102,7 @@ public class PaymentUploadFeature {
 
 		writer.close();
 		
-		String remoteDir = folderPath+paymentFileUploadPath;
-		linuxBox.upload(file.getPath(), remoteDir);
+		linuxBox.upload(file.getPath(), folderPath+paymentFileUploadPath);
 	}
 
 	public String getDateForFileName() {
