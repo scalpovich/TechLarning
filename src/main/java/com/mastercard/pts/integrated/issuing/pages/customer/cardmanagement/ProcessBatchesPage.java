@@ -199,6 +199,15 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
 	private MCWebElement institutionDateTxt;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='File Type']/../following-sibling::td[1]//span/select")
+	private MCWebElement fileTypeDDwn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Vendor Name']/../following-sibling::td[1]//span/select")
+	private MCWebElement vendorNameDDwn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='processFileName']//span[@class='labeltextf']")
+	private MCWebElement processFileNameTxt;
 
 	public final String SYSTEM_INTERNAL_PROCESSING = "SYSTEM INTERNAL PROCESSING [B]";
 
@@ -420,7 +429,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 				WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 			}
 			try {
-				if ((batch.getProductType().equalsIgnoreCase(ProductType.CREDIT)) || (batch.getBatchName().equalsIgnoreCase("End Of Day - Credit [DAILY]"))) {
+				if ((batch.getProductType().equalsIgnoreCase(ProductType.CREDIT)) || (batch.getBatchName().equalsIgnoreCase("EOD-Credit"))) {
 					String query = Constants.INSTITUTION_NUMBER_QUERY_START + context.get(Constants.USER_INSTITUTION_SELECTED) + Constants.INSTITUTION_NUMBER_QUERY_END;
 					String colName = Constants.INSTITUTION_DATE+"('"+ context.get(Constants.USER_INSTITUTION_SELECTED) +"')";
 					inputToDate(DateUtils.convertInstitutionCurrentDateInLocalDateFormat(dbUtils.getSingleRecordColumnValueFromDB(query, colName)));
@@ -545,6 +554,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			waitForBatchStatus();
 			batchStatus = batchStatusTxt.getText();
 			jobID = processBatchjobIDTxt.getText();
+			context.put(ContextConstants.DAT_FILE_NAME, processFileNameTxt.getText());
 			try{
 			clickCloseButton();
 			}
@@ -772,4 +782,16 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		return batchStatus;
 	}
 
+	public String processCarrierDownloadBatch(ProcessBatches batch) {
+		logger.info("Process Carrier Download Batch: {}", batch.getBatchName());
+		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, batch.getBatchType());
+		doSelectByVisibleText(batchNameDDwn, batch.getBatchName());
+		SimulatorUtilities.wait(5000);
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+		doSelectByVisibleText(fileTypeDDwn, batch.getFileType());
+		SimulatorUtilities.wait(5000);
+		WebElementUtils.selectDropDownByVisibleText(vendorNameDDwn, batch.getVendorName());
+		submitAndVerifyBatch();
+		return batchStatus;
+	}
 }

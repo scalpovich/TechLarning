@@ -1144,4 +1144,13 @@ public class HelpDeskSteps {
 		Map<String, String> points = helpdeskWorkflow.getLoyaltyDetails();
 		return points;
 	}
+	
+	@When("user verifies $amountType after payment return")
+	@Then("user verifies $amountType after payment return")
+	public void verifyUnbilledPaymentAfterReversal(String amountType)
+	{
+		Device device = context.get(ContextConstants.DEVICE);
+		HashMap<String, String> helpdeskValues = helpdeskWorkflow.noteDownRequiredValues(device.getDeviceNumber());
+		assertThat("Invalid Unbilled amount", helpdeskValues.get(amountType), equalTo(ContextConstants.ZERO_UNBILLED_PAYMENT));
+	}
 }
