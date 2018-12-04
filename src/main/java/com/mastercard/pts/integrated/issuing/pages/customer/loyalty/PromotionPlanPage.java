@@ -191,21 +191,12 @@ public class PromotionPlanPage extends AbstractBasePage {
 			WebElementUtils.enterText(lypDescriptionTxt, plan.getPromotionDescription());
 			WebElementUtils.selectRadioBtn(promotionTypeissuance);
 			WebElementUtils.selectDropDownByVisibleText(currencyDDwn, plan.getPromotionCurrency());
-			// WebElementUtils.enterText(lypAmtSpentTxt,
-			// plan.getPromotionIssuanceamountSpent());
 			waitForElementVisible(startDateDPkr);
 			inputFromDate();
 			waitForElementVisible(endDateDPkr);
 			WebElementUtils.pickDate(endDateDPkr, futureEndDate);
 			WebElementUtils.enterText(lypPtsEarnedTxt, plan.getPromotionIssuancepointsEarned());
 			WebElementUtils.enterText(lypPriorrunsTxt, NUMBER);
-			// WebElementUtils.enterText(lypCumTxnamtTxt, NUMBER);
-			// WebElementUtils.enterText(lypCumNotxnsTxt, NUMBER);
-			// clickWhenClickable(calculationMethodPerTXn);
-			// WebElementUtils.enterText(floorTxnAmtTxt,
-			// plan.getFloortransactionAmount());
-			// WebElementUtils.selectDropDownByVisibleText(mcgRuleDdwn,
-			// plan.getMcgCode());
 			clickSaveButton();
 		});
 	}

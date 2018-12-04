@@ -34,28 +34,22 @@ public class EventBasedLoyaltyPointsPage extends AbstractBasePage{
 	private MCWebElement eventCodeTxt;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='lyeEventCode']/input")
-	private MCWebElement txteventCode;
+	private MCWebElement txtEventCode;
 	
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "addR")
 	private MCWebElement iconEventBasedLoyaltyPointsAdd;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='lyeProductType']/select")
-	private MCWebElement ddwnproductType;
+	private MCWebElement ddwnProductType;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='lyeCrDrIndicator']/select")
-	private MCWebElement ddwncrDrType;
-	
-	
+	private MCWebElement ddwnCrDrType;	
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='lyeEventDescription']/input")
 	private MCWebElement descriptionTxt;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='lyePointsAlloted']/input")
 	private MCWebElement pointsTxt;
-	
-	
-	
-	
 
 	public void verifyUiOperationStatus() {
 		logger.info("Event Based Loyalty Points ");
@@ -65,15 +59,15 @@ public class EventBasedLoyaltyPointsPage extends AbstractBasePage{
 	public void addEventBasedLoyaltyPoints(EventBasedLoyaltyPlan plan){
 		clickAddNewButton();
 		runWithinPopup(ADD_EVENT_BASED_LOYALTY_POINTS, () -> {
-		WebElementUtils.enterText(txteventCode, plan.getEventCode());
-		WebElementUtils.selectDropDownByVisibleText(ddwnproductType, plan.getProductType());
+		WebElementUtils.enterText(txtEventCode, plan.getEventCode());
+		WebElementUtils.selectDropDownByVisibleText(ddwnProductType, plan.getProductType());
 		WebElementUtils.enterText(descriptionTxt, plan.getEventDescription());
 		if(plan.getType().contains("Debit")){
 			WebElementUtils.enterText(pointsTxt, plan.getEventPointsTobeDebited());	
 		}else{
 			WebElementUtils.enterText(pointsTxt, plan.getEventPoints());
 		}
-		WebElementUtils.selectDropDownByVisibleText(ddwncrDrType, plan.getType());
+		WebElementUtils.selectDropDownByVisibleText(ddwnCrDrType, plan.getType());
 		clickSaveButton();
 		});
 	}

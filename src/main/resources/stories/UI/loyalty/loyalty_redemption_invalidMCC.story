@@ -18,7 +18,7 @@ And Credit device is created using new device screen for Individual and Primary 
 And Credit processes pre-production batch using new Device
 And Credit processes deviceproduction batch using new Device for Supplementary
 And device has "normal" status
-When user notes down available Card limit for card
+And user notes down available Card limit for card
 Then user sign out from customer portal
 
 Scenario: 1.2-Loyalty points redemption - credit -invalidMCC

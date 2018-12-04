@@ -17,13 +17,13 @@ And for Primary Device and New Client user fills Device Range section for Prepai
 And Prepaid device is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
 And Prepaid processes pre-production batch using new Device
 And Prepaid processes deviceproduction batch using new Device for Supplementary
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario: 1.2-Loyalty points redemption - prepaid -invalidMCC
 Given setting json values in excel for Prepaid
 When user is logged in institution
 And user performs adjustment transaction
-When user raises an authorization request with invalid MCC
+And user raises an authorization request with invalid MCC
 Then status of request is "approved"
 And search Purchase authorization and verify Successful status
 And user has current wallet balance amount information for Prepaid [P] device
@@ -34,4 +34,4 @@ Given setting json values in excel for Prepaid
 When user is logged in institution
 And pre-clearing and Loyalty Calc batches are run
 And user verifies rewards and redemption screen
-And user sign out from customer portal
+Then user sign out from customer portal

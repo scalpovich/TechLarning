@@ -53,7 +53,6 @@ public class AuthorizationRequestPage extends AbstractBasePage {
 		logger.info("Authorization Request: {}", request.getDeviceNumber());
 		clickAddNewButton();
 		runWithinPopup("Add Request", () -> {
-			SimulatorUtilities.wait(3000);
 			WebElementUtils.enterText(deviceNumberTxt, request.getDeviceNumber());
 			WebElementUtils.enterText(cvv2Txt, request.getCvv2());
 			WebElementUtils.selectDropDownByVisibleText(transactionCurrencyDDwn, request.getTransactionCurrency());

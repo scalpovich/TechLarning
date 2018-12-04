@@ -14,7 +14,7 @@ And user selects all the transactions for loyalty transaction plan
 And for Magnetic Stripe Card [1] User fills Device Plan for Credit product for Mastercard
 And User fills Wallet Fee Plan for Credit product
 And User fills Wallet Plan for Credit product and program Retail Credit Card [9]
-When user edits the loyalty plan AUTOMATION [AUTOREDEM1] for AutoRedemption day
+And user edits the loyalty plan AUTOMATION [AUTOREDEM1] for AutoRedemption day
 And User Primary Device fills New Program Retail Credit Card [9] section for Credit product for Mastercard
 And for Primary Device and New Client user fills Device Range section for Credit [C] product
 And Credit device is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
@@ -41,3 +41,4 @@ Given setting json values in excel for Credit
 When user is logged in institution
 And pre-clearing and Loyalty Calc batches are run
 Then user verifies loyalty details for Credit device
+And user sign out from customer portal

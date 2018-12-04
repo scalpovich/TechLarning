@@ -22,6 +22,7 @@ And user adds event based loyalty plan for product CREDIT and type CREDIT
 And user adds posts the event based loyalty points for product CREDIT
 Then user has loyalty points details for CREDIT device
 And user verifies loyalty points for event based loyalty plan after posting
+And user sign out from customer portal
 
 Scenario: 1.2-Loyalty program setup - Credit- points debited
 Given setting json values in excel for Credit
@@ -30,3 +31,4 @@ And user adds event based loyalty plan for product CREDIT and type DEBIT
 And user adds posts the event based loyalty points for product CREDIT
 Then user has loyalty points details for CREDIT device
 And user verifies debited loyalty points for event based loyalty plan after posting
+And user sign out from customer portal

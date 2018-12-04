@@ -33,16 +33,16 @@ public class LoyaltyPlanPromotionMappingPage extends AbstractBasePage {
 	PromotionPlan promotionPlan;
 	private static final Logger logger = LoggerFactory.getLogger(LoyaltyPlanPromotionMappingPage.class);
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'Loyalty Plan')]//following::select")
 	private MCWebElement loyaltyPlanDDwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:1:componentPanel:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'Promotion Plan')]//following::select")
 	private MCWebElement promotionPlanDDwn;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:1:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='lytPlanCode']/select")
 	private MCWebElement ddwnLoyaltyPlanMapping;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:2:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='lypPromotionCode']/select")
 	private MCWebElement ddwnPromotionPlanMapping;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='tables:1:rows:3:cols:colspanMarkup:inputField:input:inputAmountField']")
@@ -68,7 +68,6 @@ public class LoyaltyPlanPromotionMappingPage extends AbstractBasePage {
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		clickWhenClickable(iconLoyaltyPromotionAdd);
 		switchToIframe(Constants.ADD_LOYALTY_PROMOTION_MAPPING);
-		// newLoyaltyPromotionPlanMappingAdd();
 		selectLoyaltyPlanMappingDropDown(loyaltypromotionmapping);
 		selectPromotionPlanMappingDropDown(loyaltypromotionmapping);
 		enterPriority(loyaltypromotionmapping);

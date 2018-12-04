@@ -19,7 +19,17 @@ public class PromotionPlan implements HasCodeAndDescription {
 	private String promotionpointsEarned;
 	private String promotionIssuanceamountSpent;
 	private String promotionIssuancepointsEarned;
-
+	private String promotionloyaltyBatchDate;
+	private String floortransactionAmount;
+	private String mccCode;
+	private String invalidMccCode;
+	private String mcgCode;
+	private String thresholdAmount;
+	private String numberOfTransactions;
+	private String promotionloyaltyPlan;
+	private String promotionNoOfTransactions;
+	private String promotion;
+	
 	public String getPromotionIssuanceamountSpent() {
 		return promotionIssuanceamountSpent;
 	}
@@ -34,12 +44,7 @@ public class PromotionPlan implements HasCodeAndDescription {
 
 	public void setPromotionIssuancepointsEarned(String promotionIssuancepointsEarned) {
 		this.promotionIssuancepointsEarned = promotionIssuancepointsEarned;
-	}
-
-	private String promotionloyaltyBatchDate;
-	private String floortransactionAmount;
-	private String mccCode;
-	private String invalidMccCode;
+	}	
 
 	public String getInvalidMccCode() {
 		return invalidMccCode;
@@ -48,10 +53,6 @@ public class PromotionPlan implements HasCodeAndDescription {
 	public void setInvalidMccCode(String invalidMccCode) {
 		this.invalidMccCode = invalidMccCode;
 	}
-
-	private String mcgCode;
-	private String thresholdAmount;
-	private String numberOfTransactions;
 
 	public String getNumberOfTransactions() {
 		return numberOfTransactions;
@@ -77,8 +78,6 @@ public class PromotionPlan implements HasCodeAndDescription {
 		this.thresholdAmount = thresholdAmount;
 	}
 
-	private String promotionloyaltyPlan;
-
 	public String getPromotionloyaltyPlan() {
 		return promotionloyaltyPlan;
 	}
@@ -102,12 +101,6 @@ public class PromotionPlan implements HasCodeAndDescription {
 	public void setFloortransactionAmount(String floortransactionAmount) {
 		this.floortransactionAmount = floortransactionAmount;
 	}
-
-	private String promotionNoOfTransactions;
-	private String promotion;
-	private String floorTransactionAmount;
-	private String promotionLoyaltyPlan;
-
 	
 	public String getPromotionPlanCode() {
 		return promotionPlanCode;
@@ -212,5 +205,5 @@ public class PromotionPlan implements HasCodeAndDescription {
 	public String getDescription() {
 		return getPromotionDescription();
 	}
-	
-	}
+
+}

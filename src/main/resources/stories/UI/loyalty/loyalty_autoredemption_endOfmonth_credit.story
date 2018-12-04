@@ -42,3 +42,4 @@ When user is logged in institution
 And pre-clearing and Loyalty Calc batches are run
 And user processes EOM-Credit system internal batch for Credit
 Then user verifies loyalty details for Credit device
+And user sign out from customer portal

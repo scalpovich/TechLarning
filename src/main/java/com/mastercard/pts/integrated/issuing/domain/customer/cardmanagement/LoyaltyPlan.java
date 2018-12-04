@@ -16,7 +16,7 @@ public class LoyaltyPlan implements HasCodeAndDescription {
 
 	private String loyaltyTransactionPlan;
 
-	private String maxloyaltypoints;
+	private String maxLoyaltyPoints;
 	
 	private String autoRedemptionMethod;
 	
@@ -49,11 +49,11 @@ public class LoyaltyPlan implements HasCodeAndDescription {
 	}
 
 	public String getMaxloyaltypoints() {
-		return maxloyaltypoints;
+		return maxLoyaltyPoints;
 	}
 
 	public void setMaxloyaltypoints(String maxloyaltypoints) {
-		this.maxloyaltypoints = maxloyaltypoints;
+		this.maxLoyaltyPoints = maxloyaltypoints;
 	}
 
 	public String getLoyaltyTransactionPlan() {

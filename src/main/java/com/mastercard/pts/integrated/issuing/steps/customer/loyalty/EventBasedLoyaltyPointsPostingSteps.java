@@ -36,7 +36,7 @@ public class EventBasedLoyaltyPointsPostingSteps {
 		eventbasedLoyaltyPointsPosting.setDeviceNumber(device.getDeviceNumber());
 		eventbasedLoyaltyPointsPosting.setEventName(eventbasedLoyaltyPlan.buildDescriptionAndCode());
 		eventbasedLoyaltyPointsPosting.setProductType(ProductType.fromShortName(Product));
-		eventbasedLoyaltyPointsPosting.setMemo("MEMO");
+		eventbasedLoyaltyPointsPosting.setMemo(Provider.getString("MEMO"));
 		uiVerificationLoyaltyWorkflow.addEventBasedLoyaltyPointsposting(eventbasedLoyaltyPointsPosting);
 	}
 

@@ -13,17 +13,17 @@ And user selects all the transactions for loyalty transaction plan
 And for Magnetic Stripe Card [1] User fills Device Plan for Credit product for Mastercard
 And User fills Wallet Fee Plan for Credit product
 And User fills Wallet Plan for Credit product and program Retail Credit Card [9]
-When user adds promotion Plan with MCG
-When user edits the start date for promotion plan
-When user maps promotion Plan with loyalty Plan with priority 1
+And user adds promotion Plan with MCG
+And user edits the start date for promotion plan
+And user maps promotion Plan with loyalty Plan with priority 1
 And User Primary Device fills New Program Retail Credit Card [9] section for Credit product for Mastercard
 And for Primary Device and New Client user fills Device Range section for Credit [C] product
 And Credit device is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
 And Credit processes pre-production batch using new Device
 And Credit processes deviceproduction batch using new Device for Supplementary
 And device has "normal" status
-When user notes down available Card limit for card
-And user sign out from customer portal
+And user notes down available Card limit for card
+Then user sign out from customer portal
 
 
 Scenario: 1.2-Loyalty program setup - Credit
@@ -36,7 +36,7 @@ When user verifies available balance after transaction
 And device has "normal" status
 And user verifies available Card limit for card after transaction
 And user wait for 5 min to perform certain activity
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario: 1.3-Loyalty program setup - Credit
 Given setting json values in excel for Credit
@@ -46,4 +46,4 @@ And user verifies rewards and redemption screen
 And device has "normal" status
 And user verifies current wallet balance amount information after loyalty redemption CREDIT device
 And user deletes promotion Plan and loyalty Plan mapping
-And user sign out from customer portal
+Then user sign out from customer portal

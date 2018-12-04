@@ -21,8 +21,8 @@ And Prepaid processes deviceproduction batch using new Device for Supplementary
 And user adds event based loyalty plan for product PREPAID and type CREDIT
 And user adds posts the event based loyalty points for product PREPAID
 Then user has loyalty points details for PREPAID device
-Then user verifies loyalty points for event based loyalty plan after posting
-
+And user verifies loyalty points for event based loyalty plan after posting
+And user sign out from customer portal
 
 Scenario: 1.2-Loyalty program setup - Prepaid- points debited
 Given setting json values in excel for Prepaid
@@ -31,3 +31,4 @@ And user adds event based loyalty plan for product PREPAID and type DEBIT
 And user adds posts the event based loyalty points for product PREPAID
 Then user has loyalty points details for PREPAID device
 And user verifies debited loyalty points for event based loyalty plan after posting
+And user sign out from customer portal

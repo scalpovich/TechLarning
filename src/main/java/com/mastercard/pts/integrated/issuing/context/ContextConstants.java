@@ -166,7 +166,7 @@ public class ContextConstants {
 
 	public static final String PROMOTION_PLAN = "PROMOTION_PLAN";
 	
-	public static final String EVENT_BASED_LOYALTY_PLAN = "PROMOTION_PLAN";
+	public static final String EVENT_BASED_LOYALTY_PLAN = "EVENT_BASED_LOYALTY_PLAN";
 
 	public static final String PROMOTION_PLAN_CODE = "PROMOTION_PLAN_CODE";
 
