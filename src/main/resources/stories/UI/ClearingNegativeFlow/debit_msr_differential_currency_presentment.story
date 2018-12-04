@@ -1,7 +1,7 @@
 Narrative:
-In order to validate transaction is matched with authorization for Mastercard when presentment is uploaded after card is stop listed
+In order to validate transaction status is updated to differenetial currency presentment 
 As a Issuer
-I want to perform transaction clearing on card which is stoplisted after Authorization
+I want to perform transaction clearing with different settlement currency
 
 Meta:
 @StoryName d_msr_corp
