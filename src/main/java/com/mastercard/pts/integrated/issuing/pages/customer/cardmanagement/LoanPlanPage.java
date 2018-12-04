@@ -310,7 +310,7 @@ public class LoanPlanPage extends AbstractBasePage {
 	}
     
     public void enterMaxCancellationFee(String cancellationFee){
-    	enterText(maxCancellationFeeTxt, cancellationFee);
+    	enterText(maxCancellationFeeTxt, Integer.toString(Integer.parseInt(cancellationFee)*100));
 	}
     
     public void selectProgram(String programCode){

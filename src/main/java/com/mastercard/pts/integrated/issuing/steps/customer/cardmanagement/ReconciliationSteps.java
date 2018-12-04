@@ -16,10 +16,10 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ReconciliationWorkFlow;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProcessBatchesFlows;
-import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ReconciliationWorkFlow;
 
 @Component
 public class ReconciliationSteps {
@@ -45,6 +45,7 @@ public class ReconciliationSteps {
 		Assert.assertTrue(reconciliationWorkFlow.verifyReportGenerationRecon());
 	}
 
+	@Then("pre-clearing and Pre-EOD batches are run")
 	@When("pre-clearing and Pre-EOD batches are run")
 	public void whenPreclearingAndPreEODBatchesAreRun() {
 
@@ -73,27 +74,38 @@ public class ReconciliationSteps {
 		reconciliationWorkFlow.runPostMaintenanceBatch(postMaintenanceBatch);
 	}
 	
+	@Then("pre-clearing and Loyalty Calc batches are run")
 	@When("pre-clearing and Loyalty Calc batches are run")
 	public void whenPreclearingAndLoyaltyBatchesAreRun() {
 
 		List<ProcessBatches> processBatches = new ArrayList<>();
-		ProcessBatches prepaidEodProcessBatch = new ProcessBatches();
-		prepaidEodProcessBatch.setProductType(provider.getString(BATCH_TYPE));
-		prepaidEodProcessBatch.setBatchName(provider.getString("BATCH_NAME_LOYALTY"));
-		prepaidEodProcessBatch.setProductType("");
-
 		ProcessBatches preClearingBatch = new ProcessBatches();
 		preClearingBatch.setProductType(provider.getString(BATCH_TYPE));
 		preClearingBatch.setBatchName(provider.getString("BATCH_NAME_PRE_CLEARING"));
 		preClearingBatch.setProductType(provider.getString("PREPAID_PRODUCT_TYPE"));
 
+		ProcessBatches prepaidEodProcessBatch = new ProcessBatches();
+		prepaidEodProcessBatch.setProductType(provider.getString(BATCH_TYPE));
+		prepaidEodProcessBatch.setBatchName(provider.getString("BATCH_NAME_LOYALTY"));
+		prepaidEodProcessBatch.setProductType("");
+
 		processBatches.add(preClearingBatch);
 		processBatches.add(prepaidEodProcessBatch);
+		
+		if(provider.getString("BATCH_NAME_EOD") != null && provider.getString("BATCH_NAME_EOD").equalsIgnoreCase("End Of Day - Credit [DAILY]")) {
+			prepaidEodProcessBatch = null;
+			prepaidEodProcessBatch = new ProcessBatches();
+			prepaidEodProcessBatch.setProductType(provider.getString(BATCH_TYPE));
+			prepaidEodProcessBatch.setBatchName(provider.getString("BATCH_NAME_EOD"));
+			prepaidEodProcessBatch.setProductType("");
+			processBatches.add(prepaidEodProcessBatch);
+		}
 
 		reconciliationWorkFlow.runPreClearingAndLoyaltyCalcBatch(processBatches);
 	}
 	
 	@When("user processes $batchName system internal batch for $productType")
+	@Then("user processes $batchName system internal batch for $productType")
 	public void processBillingBatchForCredit(String batchName,String productType){
 		ProcessBatches batch = new ProcessBatches();
 		batch.setProductType(ProductType.fromShortName(productType));
@@ -109,7 +121,7 @@ public class ReconciliationSteps {
 		batch.setBatchName(batchName);
 		reconciliationWorkFlow.processStatementExtractBatch(batch);
 	}
-
+	
 	@When("user processes $batchName batch for credit")
 	public void processPaymentUploadBatchForCredit(String batchName)
 	{
@@ -118,4 +130,5 @@ public class ReconciliationSteps {
 		SimulatorUtilities.wait(5000);
 		Assert.assertTrue(processBatchesFlows.verifyFileProcessFlowsUpload(processBatch, fileName));
 	}
+
 }

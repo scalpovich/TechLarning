@@ -31,6 +31,12 @@ WorkFlowRuleFlows workFlowRuleFlows;
 		Assert.assertTrue("Application Scoring is not added successfully", workFlowRuleFlows.userAddsWorkFlowRuleOnlyForApplicationScoring(fieldName, value));
 	}
 	
+	@When("User Adds WorkFlow Rule with Risk Analysis for $fieldName and $value on program")
+	@Then("User Adds WorkFlow Rule with Risk Analysis for $fieldName and $value on program")
+	public void addingWorkFlowRuleToProgramWithRiskAnalysis(String fieldName, String value) {
+		Assert.assertTrue("Application Scoring is not added successfully", workFlowRuleFlows.userAddsWorkFlowRuleOnlyForRiskAnalysis(fieldName, value));
+	}
+	
 	@When("User Adds WorkFlow Rule with Application Scoring,Credit Bureau for $fieldName and $value on program")
 	@Then("User Adds WorkFlow Rule with Application Scoring,Credit Bureau for $fieldName and $value on program")
 	public void addingWorkFlowRuleToProgramWithApplicationScoringCreditBureau(String fieldName, String value) {

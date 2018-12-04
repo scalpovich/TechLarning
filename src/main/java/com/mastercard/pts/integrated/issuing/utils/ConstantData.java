@@ -149,6 +149,7 @@ public class ConstantData {
 	public static final String RETAIL_TO_LOAN_SR = "Retail Transaction to Loan [215]";
 	public static final String LOAN_PRE_CLOSURE_SR = "Loan Preclosure [242]";	
 	public static final String LOAN_PRE_CLOSURE_FEE = "Loan PreClosure Fee";
+	public static final String LOAN_CANCELLATION_FEE = "Loan Cancellation Fee";
 	
 	
 	public static final String APPLIED_ON_LOAN_AMOUNT= 	"Loan Amount [LA]";		
@@ -167,12 +168,17 @@ public class ConstantData {
 	public static final String DE_042 = "042";
 	public static final String DE_022_01 = "022.01";
 	public static final String POS_TERMINAL_VALUE = "05";
+	public static final String LOAN_CANCELLATION_SR = "Loan Cancellation [243]";
 	public static final String PAYMENT_UPLOAD_METHOD = "paymentMethod";
+	
+	public static final String TRANSACTION_DATE = "transactionDate";
+	public static final String LOYALTY_POINTS_REPORT_FILENAME = "Loyalty Points Report.pdf";
+
 	public static final String PAYMENT_UPLOAD_FILE_NAME = "PAYMENT_UPLOAD_FILE_NAME";
 	
 	private ConstantData() {
 	}
-
+	
 	public static String fromShortName(String name) {
 		return MiscUtils.getConstantStringFromClassByPefixMatch(ConstantData.class, name);
 	}

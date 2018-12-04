@@ -121,6 +121,7 @@ public class TransactionPlanPage extends AbstractBasePage {
 		moveToRightBtn.click();
 	}
 
+	@Override
 	public void clickSaveButton() {
 		clickWhenClickable(saveBtn);
 	}

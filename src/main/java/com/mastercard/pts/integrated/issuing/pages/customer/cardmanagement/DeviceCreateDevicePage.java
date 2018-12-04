@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.hamcrest.Matchers;
@@ -168,6 +169,9 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePlanPromoCode1:input:dropdowncomponent")
 	private MCWebElement promotionPlanDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:clientCustomerId:input:inputTextField")
+	private MCWebElement txtClientCustomerID;
 		
 	public String getWalletsFromPage(){
 		return getTextFromPage(createdWalletList);
@@ -333,7 +337,6 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
 		SimulatorUtilities.wait(1000);
-		String programCodeDDwnBy = "view:programCode:input:dropdowncomponent";
 		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)
 				|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)) {
 			enterText(existingDeviceNumberTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));
@@ -418,7 +421,10 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	private void fillProfile(Device device) {
 		Program program=context.get(ContextConstants.PROGRAM);
 		selectByVisibleText(branchCodeDDwn, device.getBranchCode());
-		
+		Map<String,String>map=context.get(TestContext.KEY_STORY_DATA);
+		if(map.containsKey("CLIENT_CUSTOMER_ID")){
+			WebElementUtils.enterText(txtClientCustomerID, map.get("CLIENT_CUSTOMER_ID"));
+		}
 		if(corporateClientCodeDDwn.isEnabled()){
 			selectByVisibleText(corporateClientCodeDDwn,device.getCorporateClientCode());	
 		}

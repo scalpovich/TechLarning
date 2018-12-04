@@ -1,10 +1,15 @@
 package com.mastercard.pts.integrated.issuing.configuration;
 import java.io.File;
 import java.nio.file.Paths;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;
 import com.mastercard.pts.integrated.issuing.utils.LinuxUtils.RemoteConnectionDetails;
@@ -29,6 +34,9 @@ public class LinuxBox implements RemoteConnectionDetails {
 	private String folderPath;
 
 	private String password;
+	
+	@Autowired
+	TestContext context;
 
 	public File download(String remoteSource, String localDestination) {
 		logger.info("Download {} -> {}", remoteSource, localDestination);
@@ -92,6 +100,7 @@ public class LinuxBox implements RemoteConnectionDetails {
 		logger.info("Download {} -> {} at folder", lookupForFile, localDestination);
 		downloadFileViaScp(folderPath + "*" + whatAreWeLookingFile + "*//"+ childFolder +"//*" + lookupForFile + "*", localDestination);
 		logger.info(Paths.get(localDestination).resolve(Paths.get(localDestination + "\\" + ListFileOffSetAndEmbossing(localDestination, lookupForFile)).getFileName()).toFile().getAbsolutePath());
+		context.put(CreditConstants.CSV_FILE_NAME, Paths.get(localDestination).resolve(Paths.get(localDestination + "\\" + ListFileOffSetAndEmbossing(localDestination, lookupForFile)).getFileName()).toFile().getAbsolutePath());
 		return Paths.get(localDestination).resolve(Paths.get(localDestination + "\\" + ListFileOffSetAndEmbossing(localDestination, lookupForFile)).getFileName()).toFile();
 	}
 

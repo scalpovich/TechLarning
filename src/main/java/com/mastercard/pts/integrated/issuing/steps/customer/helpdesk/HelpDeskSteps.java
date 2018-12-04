@@ -52,6 +52,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.Proce
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
@@ -720,6 +721,18 @@ public class HelpDeskSteps {
 		}
 	}
 	
+	@Then("User search for new device on helpdesk screen for $productType and validates the mandatory field")
+	@When("User search for new device on helpdesk screen for $productType and validates the mandatory field")
+	public void thenUserSearchForClientCustomerIDOnHelpdeskScreen(String productType) {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpDeskGetterSetter.setDeviceNumber(device.getDeviceNumber());
+		helpDeskGetterSetter.setProductType(ProductType.fromShortName(productType));
+		device = helpdeskFlows.searchForClientCustomerIDForNewDevice(device, helpDeskGetterSetter);
+		Assert.assertNotNull("Client Customer ID is Null", device.getMandatoryFieldValue());
+		context.put(CreditConstants.CLIENT_CUSTOMER_ID, device.getMandatoryFieldValue());
+		context.put(ContextConstants.DEVICE, device);
+	}
+	
 	@Then("User search for new device Supplementary on search screen for $productType and validates the status as $NORMAL")
 	@When("User search for new device Supplementary on search screen for $productType and validates the status as $NORMAL")
 	public void thenUserSearchForDeviceOnSearchScreenForSupplementary(String productType, String status) {
@@ -929,12 +942,12 @@ public class HelpDeskSteps {
 			context.put(ConstantData.LOAN_INSTALLMENT_OUTSTANDING, transactionAmount);
 		}
 
-		System.out.println("transactionAmount :      " + transactionAmount);
 		assertThat(category + " " + amount + BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device),
 				equalTo(transactionAmount));
 	}
 	
 	@When("user check balance details through helpdesk $payment")
+	@Then("user check balance details through helpdesk $payment")
 	public void userCheckBalanceDetailsThroughHelpdesk(String payment){
 		Device device = context.get(ContextConstants.DEVICE);	
 		context.put(ContextConstants.DEVICE,device);
@@ -954,7 +967,7 @@ public class HelpDeskSteps {
 				equalTo(value));
 	}
 	
-
+	@Then("user raises $limittype credit limit change request for $customerType")
 	@Given("user raises $limittype credit limit change request for $customerType")
 	@When("user raises $limittype credit limit change request for $customerType")
 	public void userRaisesCreditLimitChangeRequestThroughHelpdesk(String limitType,String customerType) {
@@ -1002,12 +1015,17 @@ public class HelpDeskSteps {
 		helpdeskGeneral.setServiceCode(serviceCode);
 		Device device = context.get(ContextConstants.DEVICE);
 		LoanPlan loanPlan = context.get(ContextConstants.LOAN_PLAN);			
-		TransactionSearchDetails transactionDetails = context.get(ContextConstants.TRANSACTION_SEARCH_DETAILS);		
+		TransactionSearchDetails transactionDetails = context.get(ContextConstants.TRANSACTION_SEARCH_DETAILS);
 		if (serviceCode.equalsIgnoreCase(ConstantData.RETAIL_TO_LOAN_SR)) {
-			context.put(ContextConstants.LOAN_SANCTION_DETAILS, helpdeskWorkflow.raiseRetailToLoanRequest(helpdeskGeneral,loanPlan,transactionDetails).get(0));
+			context.put(ContextConstants.LOAN_SANCTION_DETAILS,
+					helpdeskWorkflow.raiseRetailToLoanRequest(helpdeskGeneral, loanPlan, transactionDetails).get(0));
 		}else if(serviceCode.equalsIgnoreCase(ConstantData.LOAN_PRE_CLOSURE_SR)){
 			context.put(ConstantData.LOAN_PRE_CLOSURE_FEE,helpdeskWorkflow.raiseLoanPreClosureRequest(helpdeskGeneral,loanPlan,device));			
+		}else if(serviceCode.equalsIgnoreCase(ConstantData.LOAN_CANCELLATION_SR)){
+			context.put(ConstantData.LOAN_CANCELLATION_FEE,helpdeskWorkflow.raiseLoanCancellationRequest(loanPlan,device,helpdeskGeneral));
+			
 		}
+		
 		
 	}
 	
@@ -1027,17 +1045,71 @@ public class HelpDeskSteps {
 		device.setAppliedForProduct(ProductType.fromShortName(product));
 		assertThat("Verify Decline Code for Transaction", declineCode, equalTo(helpdeskWorkflow.getDeclineCode(device, rrnNumber)));
 	}
-	@When("user verifies loan preclosure fee")
-	@Then("user verifies loan preclosure fee")
-	public void userVerifiesLoanCancellationFee(){
+	
+	@When("user verifies loan $fee fee")
+	@Then("user verifies loan $fee fee")
+	public void userVerifiesLoanFeeCharged(String feeType){
 		LoanPlan loanPlan = context.get(ContextConstants.LOAN_PLAN);
-		String expectedFee = String.format("%.2f",
-				Double.valueOf(loanPlan.getPreclosureFixedFeeAmount())
-						+ Double.valueOf(loanPlan.getPreclosureFeePercentOfAmount())
-								* Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))
-						/ 100);
-		String actualFee = context.get(ConstantData.LOAN_PRE_CLOSURE_FEE);
-		assertThat("Loan Preclosure Fee is not same", actualFee, equalTo(expectedFee));
+		String expectedFee;
+		String actualFee;
+		if (feeType.equalsIgnoreCase("preclosure")) {
+			expectedFee = String.format("%.2f",
+					Double.valueOf(loanPlan.getPreclosureFixedFeeAmount())
+							+ Double.valueOf(loanPlan.getPreclosureFeePercentOfAmount())
+									* Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT)) / 100);
+			actualFee = context.get(ConstantData.LOAN_PRE_CLOSURE_FEE);
+		} else {
+			expectedFee = String.format("%.2f",
+					Double.valueOf(loanPlan.getCancellationFixedFeeAmount())
+							+ Double.valueOf(loanPlan.getCancellationFeePercentOfLoanAmount())
+									* Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))
+							/ 100);
+			actualFee = context.get(ConstantData.LOAN_CANCELLATION_FEE);
+		}
+		assertThat("Loan "+feeType+" fee is not same", actualFee, equalTo(expectedFee));
+	}
+	
+	@Then("user verifies loyalty details for $type device")
+	public void verifyLoyaltyDetails(String type) {
+		Double availablePts, accumulatedPts;
+		Map<String, String> points = getLoyaltyDetails();
+		if(points.get(Constants.AVAILABLE_LOYALTY_POINTS).trim().equals("-"))
+			availablePts = 0.0;
+		else
+			availablePts = Double.parseDouble(points.get(Constants.AVAILABLE_LOYALTY_POINTS));
+		if(points.get(Constants.AVAILABLE_LOYALTY_POINTS).trim().equals("-"))
+			accumulatedPts = 0.0;
+		else
+			accumulatedPts = Double.parseDouble(points.get(Constants.ACCUMULATED_REVERSED_POINTS));
+		
+		assertEquals(context.get(Constants.AVAILABLE_LOYALTY_POINTS), availablePts);
+		assertEquals(context.get(Constants.ACCUMULATED_REVERSED_POINTS), accumulatedPts);
+	}
+	
+	@Then("user has loyalty points details for $type device")
+	@When("user has loyalty points details for $type device")
+	public Map<String, String> givenUserHasLoyaltyPointsDetails(String type) {
+		Double zero = 0.0;
+		Map<String, String> points = getLoyaltyDetails();
+		
+		if(points.get(Constants.ACCUMULATED_REVERSED_POINTS).trim().equals("-"))
+			context.put(Constants.ACCUMULATED_REVERSED_POINTS, zero);
+		else
+			context.put(Constants.ACCUMULATED_REVERSED_POINTS, Double.parseDouble(points.get(Constants.ACCUMULATED_REVERSED_POINTS)));
+		
+		if(points.get(Constants.AVAILABLE_LOYALTY_POINTS).trim().equals("-"))
+			context.put(Constants.AVAILABLE_LOYALTY_POINTS, zero);
+		else
+			context.put(Constants.AVAILABLE_LOYALTY_POINTS, Double.parseDouble(points.get(Constants.AVAILABLE_LOYALTY_POINTS)));
+			
+		return points;
+	}
+	
+	public Map<String, String> getLoyaltyDetails() {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskWorkflow.navigateToLoyaltyDetails(device);
+		Map<String, String> points = helpdeskWorkflow.getLoyaltyDetails();
+		return points;
 	}
 	
 	@When("user verifies $amountType after payment return")

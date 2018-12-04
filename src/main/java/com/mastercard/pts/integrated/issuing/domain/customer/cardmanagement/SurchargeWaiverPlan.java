@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
-import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 
 /**
  * @author e076177
