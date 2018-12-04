@@ -1,7 +1,5 @@
 package com.mastercard.pts.integrated.issuing.pages.collect.report;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +19,6 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class ReportCardManagementPage extends AbstractBasePage{
 
 	
-	private static final Logger logger = LoggerFactory.getLogger(ReportCardManagementPage.class);
 
 	@Autowired
 	private ReconciliationWorkFlow reconciliationWorkFlow;

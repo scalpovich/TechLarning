@@ -1,7 +1,5 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,14 +7,12 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
-import com.mastercard.pts.integrated.issuing.pages.customer.administration.ScreenLevelPrivilegesPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
-import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
-import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
+import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
@@ -26,12 +22,11 @@ public class ClientPhotoDownloadBatchPage extends AbstractBasePage {
 	@Autowired
 	private TestContext context;
 	
-	private static final Logger logger = LoggerFactory.getLogger(ClientPhotoDownloadBatchPage.class);
 	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[text()='Product Type']/following-sibling::td/select")
 	private MCWebElement productTypeDDwn;
 	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:3:componentList:0:componentPanel:input:inputTextField")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[text()='Application Number']/following-sibling::td[2]")
 	private MCWebElement applicationNumberTxt;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']/..//td[13]")

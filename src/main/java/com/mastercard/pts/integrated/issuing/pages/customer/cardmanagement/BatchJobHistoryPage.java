@@ -223,26 +223,23 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 	
 	
 	public boolean checkBatchStatus(BatchJobHistory batchJobHistory) {
-		
+
 		selectByVisibleText(batchTypeDDwn, batchJobHistory.getBatchType());
 		SimulatorUtilities.wait(1000);
 		WebElementUtils.pickDate(fromJobStartDttmDPkr, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toJobStartDttmDPkr, LocalDate.now());
 		enterValueinTextBox(jobIdTxt, batchJobHistory.getJobIdBatchJobHistory());
-		selectByVisibleText(batchDDwn,batchJobHistory.getBatch());
+		selectByVisibleText(batchDDwn, batchJobHistory.getBatch());
 		clickSearchButton();
-		context.put(ContextConstants.CSV_NO,getFirstRecordCellTextByColumnName(FILE_NAME));
+		context.put(ContextConstants.CSV_NO, getFirstRecordCellTextByColumnName(FILE_NAME));
 		SimulatorUtilities.wait(20000);
-		if(getFirstRecordCellTextByColumnName(STATUS).equals("SUCCESS [2]"))
-		{	
-			String timeStamp = LocalDateTime.now(ZoneId.of("GMT-6")).format(DateTimeFormatter.ofPattern("ddMMyyyyHHmm")); //CDT time when batch download is done. 
-            context.put(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME,timeStamp);
-            logger.info("timestamp of processing",timeStamp);
+		if (getFirstRecordCellTextByColumnName(STATUS).equals(Constants.SUCCESS_STATUS)) {
+			String timeStamp = LocalDateTime.now(ZoneId.of("GMT-6"))
+					.format(DateTimeFormatter.ofPattern("ddMMyyyyHHmm")); // CDT time when batch download is done.
+			context.put(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME, timeStamp);
+			logger.info("timestamp of processing", timeStamp);
 			return true;
 		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 }
