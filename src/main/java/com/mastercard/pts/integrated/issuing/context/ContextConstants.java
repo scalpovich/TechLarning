@@ -82,15 +82,7 @@ public class ContextConstants {
 
 	public static final String PRIMARY_DEVICE = "PRIMARY_DEVICE";
 
-	public static final String PRIMARY_DEVICE_PLAN = "PRIMARY_DEVICE_PLAN";
-
-	public static final String TRANSACTION_PLAN = "TRANSACTIONPLAN";
-
-	public static final String PROMOTION_PLAN = "PROMOTION_PLAN";
-	
-	public static final String EVENT_BASED_LOYALTY_PLAN = "PROMOTION_PLAN";
-
-	public static final String PROMOTION_PLAN_CODE = "PROMOTION_PLAN_CODE";
+	public static final String PRIMARY_DEVICE_PLAN = "PRIMARY_DEVICE_PLAN";	
 
 	public static final String INSTITUTION_DATE = "INSTITUTION_DATE";
 
@@ -169,6 +161,14 @@ public class ContextConstants {
 	public static final String TRANSACTION_DATE = "TRANSACTION_DATE";
 	
 	public static final String PAYMENT_UPLOAD = "PAYMENT_UPLOAD";
+	
+	public static final String TRANSACTION_PLAN = "TRANSACTIONPLAN";
+
+	public static final String PROMOTION_PLAN = "PROMOTION_PLAN";
+	
+	public static final String EVENT_BASED_LOYALTY_PLAN = "PROMOTION_PLAN";
+
+	public static final String PROMOTION_PLAN_CODE = "PROMOTION_PLAN_CODE";
 
 	private ContextConstants() {
 	}

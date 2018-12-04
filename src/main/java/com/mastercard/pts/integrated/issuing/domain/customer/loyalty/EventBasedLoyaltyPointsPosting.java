@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 
 @Component
-public class EventBasedLoyaltyPointsPosting implements HasCodeAndDescription{
+public class EventBasedLoyaltyPointsPosting {
 	
 	private String deviceNumber;
 	private String eventName;
@@ -44,16 +44,14 @@ public class EventBasedLoyaltyPointsPosting implements HasCodeAndDescription{
 		this.memo = memo;
 	}
 
-	@Override
+	/*@Override
 	public String getCode() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 
 }
