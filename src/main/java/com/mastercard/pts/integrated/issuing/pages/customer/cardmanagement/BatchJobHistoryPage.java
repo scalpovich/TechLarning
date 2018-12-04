@@ -231,6 +231,4 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 		context.put(ContextConstants.CSV_FILE_NAME, getCellTextByColumnName(1,"File Name"));
 		return isElementPresent(batchJobSuccessStatus);
 	}
-
-
 }

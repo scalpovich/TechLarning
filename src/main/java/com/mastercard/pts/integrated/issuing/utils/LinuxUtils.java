@@ -435,7 +435,7 @@ public abstract class LinuxUtils {
 	}
 	
 	public static String getServerTime(DateTimeFormatter formatter){
-		LocalDateTime serverTime = LocalDateTime.now(ZoneId.of("GMT-6")); //CDT time of Linux server. 
+		LocalDateTime serverTime = LocalDateTime.now(ZoneId.of("GMT-6")); //CST time of Linux server. 
 		if(serverTime.getHour()>12){
 			serverTime = serverTime.minusHours(12);
 		}
