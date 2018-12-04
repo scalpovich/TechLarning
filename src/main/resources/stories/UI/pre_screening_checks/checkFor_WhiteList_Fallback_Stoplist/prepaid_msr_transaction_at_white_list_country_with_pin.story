@@ -18,7 +18,8 @@ And User fills Program section for prepaid product
 And User edits Program to update country white and black list
 And User fills Business Mandatory Fields Screen for prepaid product
 And User fills Device Range section for prepaid product
-Then user creates new device of prepaid type for new client
+And user assigns service code to program
+And user creates new device of prepaid type for new client
 Then user sign out from customer portal
 
 Scenario:1.1 Device Production
@@ -51,8 +52,8 @@ Then user sign out from customer portal
 
 Scenario:1.4 Perform INT_MSR_PURCHASE Authorization transaction
 Given perform an INT_MSR_PURCHASE MAS transaction on the same card
-Then MAS simulator is closed
-When user is logged in institution
+When MAS simulator is closed
+And user is logged in institution
 And search Purchase authorization and verify 100-Do Not Honour status
 And assert Decline response with 25001 AuthDecline Code and Whitelisted Country Not Found as description
 Then user sign out from customer portal

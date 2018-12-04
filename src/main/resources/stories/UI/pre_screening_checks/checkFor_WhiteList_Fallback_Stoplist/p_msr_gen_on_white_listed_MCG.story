@@ -17,7 +17,8 @@ When User fills MCC Rules for prepaid product
 And User fills Program section for prepaid product
 And User fills Business Mandatory Fields Screen for prepaid product
 And User fills Device Range section for prepaid product
-Then user creates new device of prepaid type for new client
+And user assigns service code to program
+And user creates new device of prepaid type for new client
 Then user sign out from customer portal
 
 Scenario:2 Device Production for  prepaid msr retail general purpose card
@@ -49,8 +50,8 @@ And search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal
 
 Scenario:5 Perform MSR_CASH_ADVANCE Authorization transaction
-When perform an MSR_CASH_ADVANCE MAS transaction on the same card
-And MAS simulator is closed
+Given perform an MSR_CASH_ADVANCE MAS transaction on the same card
+When MAS simulator is closed
 And user is logged in institution
 And search Cash Advance authorization and verify 100-Do Not Honour status
 And assert Decline response with 20004 AuthDecline Code and Invalid wallet. as description
