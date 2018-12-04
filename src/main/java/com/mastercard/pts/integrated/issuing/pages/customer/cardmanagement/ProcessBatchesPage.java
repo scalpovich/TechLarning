@@ -97,6 +97,15 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='privateField4']/select")
 	private MCWebElement interchangeTypeDDwn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='multiAccAdmStatus']/select")
+	private MCWebElement accountAdminStatusDDwn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='multiAccBalStatus']/select")
+	private MCWebElement accountBalanceStatusDDwn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='multiAccUnpStatus']/select")
+	private MCWebElement accountUnpaidStatusDDwn;
 
 	// Authorization dump specific locators start here
 
@@ -198,7 +207,25 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
 	private MCWebElement institutionDateTxt;
-
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='batchId']/span/span")
+	private MCWebElement txtBatchType;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='jobStartDttm']/span/span/span")
+	private MCWebElement txtStartDateForBatchJob;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='jobEndDttm']/span/span/span")
+	private MCWebElement txtEndDateForBatchJob;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='processFileName']/span/span")
+	private MCWebElement txtProcessFileName;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='executionMode']/span/span")
+	private MCWebElement txtExecutionMode;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='executionTime']/span/span")
+	private MCWebElement txtExecutionTime;
+	
 	public final String SYSTEM_INTERNAL_PROCESSING = "SYSTEM INTERNAL PROCESSING [B]";
 	
 	private static final int NUMBER_OF_ATTEMPTS_TO_CHECK_SUCCESS_STATE=100;
@@ -212,7 +239,13 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	private final String successStatus = "SUCCESS [2]";
 	
 	private static final String  POST_MAINTENANCE_FEE_BATCH = "Post Maintenance Fee Batch [POST_MAINTENANCE_FEE]";
+	
+	private static final String ACC_ADMIN_STATUS = "ACCOUNT_ADMIN_STATUS";
+	
+	private static final String ACC_BAL_STATUS = "ACCOUNT_BALANCE_STATUS";
 
+	private static final String ACC_UNPAID_STATUS = "ACCOUNT_UNPAID_STATUS";
+	
 	public void selectBatchType(String option) {
 		selectByVisibleText(batchTypeDDwn, option);
 	}
@@ -513,7 +546,18 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	public void processAccountsDownloadBatch(ProcessBatches batch) {
 		selectAccountDumpAndCHDump(batch);
-		submitAndVerifyBatch();
+		SimulatorUtilities.wait(500);// this delay is to load data for Balance type
+		Map<String, String> map = context.get(TestContext.KEY_STORY_DATA);
+		if (map.containsKey(ACC_ADMIN_STATUS)) {
+			WebElementUtils.selectDropDownByVisibleText(accountAdminStatusDDwn, map.get(ACC_ADMIN_STATUS));
+		}
+		if (map.containsKey(ACC_BAL_STATUS)) {
+			WebElementUtils.selectDropDownByVisibleText(accountBalanceStatusDDwn, map.get(ACC_BAL_STATUS));
+		}
+		if (map.containsKey(ACC_UNPAID_STATUS)) {
+			WebElementUtils.selectDropDownByVisibleText(accountUnpaidStatusDDwn, map.get(ACC_UNPAID_STATUS));
+		}
+		submitAndVerifyBatchDetails();
 	}
 
 	public void processKYCDownloadBatch(ProcessBatches batch) {
@@ -542,6 +586,39 @@ public class ProcessBatchesPage extends AbstractBasePage {
 				clickCloseButton();
 			}
 		});
+	}
+	
+	public void submitAndVerifyBatchDetails() {
+		clickSubmitBtn();
+		clickWhenClickable(statusBtn);
+		runWithinPopup("View Batch Details", () -> {
+			logger.info("Retrieving batch status");
+			waitForBatchStatus();
+			SimulatorUtilities.wait(5000);
+			for (String fieldValue : getBatchDetailsValidationFields()) {
+				if (!(fieldValue.contains("-"))) {
+					logger.info("{} is validated.", fieldValue);
+				}
+			}
+			try {
+				clickCloseButton();
+			} catch (StaleElementReferenceException ex) {
+				clickCloseButton();
+			}
+		});
+	}
+	
+	public List<String> getBatchDetailsValidationFields(){
+		List<String> fieldValues = new ArrayList<String>();
+		fieldValues.add(txtBatchType.getText());
+		fieldValues.add(txtStartDateForBatchJob.getText());
+		fieldValues.add(txtEndDateForBatchJob.getText());
+		fieldValues.add(txtProcessFileName.getText());
+		fieldValues.add(txtExecutionTime.getText());
+		fieldValues.add(txtExecutionMode.getText());
+		fieldValues.add(batchStatusTxt.getText());
+		fieldValues.add(processBatchjobIDTxt.getText());
+		return fieldValues;
 	}
 	
 	public void submitAndVerifyBaseIIBatch() {
