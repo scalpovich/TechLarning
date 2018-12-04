@@ -134,7 +134,7 @@ public class CustomerUiVerificationSteps {
 	public void thenBalancePageOfCardManagementTabIsRenderedCorrectly() {
 		uiVerificationCardManagementWorkflow.verifyBalancePage();
 	}
-
+	
 	@When("BatchJobHistory page of card management tab is rendered correctly")
 	@Then("BatchJobHistory page of card management tab is rendered correctly")
 	public void thenBatchJobHistoryPageOfCardManagementTabIsRenderedCorrectly() {
@@ -1370,6 +1370,6 @@ public class CustomerUiVerificationSteps {
 	@Then("user signs out from customer portal")
 	public void signOutFromPortal() {
 		loginWorkflow.signOutCustomer();
-	}
-
+	}	
+	
 }

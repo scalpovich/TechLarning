@@ -116,7 +116,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public static final String REFUND_SUCCESS = "Refund is successful";
 	
     private static final String Device = null;
-
 	@Value("${default.wait.timeout_in_sec}")
 	private long timeoutInSec;
 
@@ -492,8 +491,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	public String getCellTextByColumnName(int rowNumber, String columnName) {
-		String xpath = String.format("//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]/span", rowNumber, columnName);
-		SimulatorUtilities.wait(3000);
+		String xpath = String.format("//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]", rowNumber, columnName);
 		WebElement element = driver().findElement(By.xpath(xpath));
 		waitForElementVisible(element);
 		return element.getText().trim();
@@ -759,8 +757,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		context.put(CreditConstants.EXISTING_DEVICE_NUMBER, deviceNumberFetch.getText());
 		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
 		selectFirstRecord();
-		SimulatorUtilities.wait(10000);
-		clickProcessSelectedButton();
+		clickProcessSelectedButton();		
 	}	
 	
 	protected void waitAndSearchForRecordToExists() {
@@ -812,7 +809,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 			alert.accept();
 		}
 	}
-
 	
 	public boolean isAlertPresent() {
 		try {
@@ -823,7 +819,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 			return false;
 		}
 	}
-
 
 	protected void verifyDeleteRecordAlert(String expectedAlertText) {
 		Alert alert = driver().switchTo().alert();
@@ -1901,6 +1896,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		action.moveToElement(asWebElement(element), xOffset, yOffset).click().build().perform();
 	}
 	
+	
 	public void ifTextAvailableinTableThenDelete(MCWebElement tableHandle, String text) {
 		WebElement table = asWebElement(tableHandle);
 		List<WebElement> rowstable = table.findElements(By.tagName("tr"));
@@ -1984,11 +1980,9 @@ public abstract class AbstractBasePage extends AbstractPage {
 				break;
 			}
 		}
-
 	}	
 	
 	public String getFirstRowColValueFor(int col) {
 		return firstRowColumnValues.getElements().get(col).getText();
 	}
 }
-
