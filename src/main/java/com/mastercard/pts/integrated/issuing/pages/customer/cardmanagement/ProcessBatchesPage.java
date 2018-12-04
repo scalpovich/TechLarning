@@ -551,6 +551,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			{
 				clickCloseButton();
 			}
+			SimulatorUtilities.wait(1000);
 		});
 	}
 	
