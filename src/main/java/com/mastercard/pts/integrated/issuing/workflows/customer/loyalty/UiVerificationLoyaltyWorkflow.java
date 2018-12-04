@@ -3,9 +3,6 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.loyalty;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
-import com.mastercard.pts.integrated.issuing.context.TestContext;
-import com.mastercard.pts.integrated.issuing.domain.InstitutionData;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoyaltyPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.EventBasedLoyaltyPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.EventBasedLoyaltyPointsPosting;
@@ -28,9 +25,6 @@ public class UiVerificationLoyaltyWorkflow {
 
 	@Autowired
 	private Navigator navigator;
-
-	@Autowired
-	private TestContext context;
 
 	public void verifyEventBasedLoyaltyPointsPage() {
 		EventBasedLoyaltyPointsPage page = navigator.navigateToPage(EventBasedLoyaltyPointsPage.class);
@@ -130,14 +124,6 @@ public class UiVerificationLoyaltyWorkflow {
 		return page.getMaxPtsPerCycle();
 	}
 
-	public String getMaxLoyaltyPointsPerCycle() {
-		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
-		LoyaltyPlanPage page = navigator.navigateToPage(LoyaltyPlanPage.class);
-		String plan = data.getLoyaltyPlan();
-		page.searchByPlanCode(plan.substring(plan.indexOf("[") + 1, plan.indexOf("]")));
-		return page.getMaxPtsPerCycle();
-	}
-	
 	public void addEventBasedLoyaltyPlan(EventBasedLoyaltyPlan plan){
 		EventBasedLoyaltyPointsPage page = navigator.navigateToPage(EventBasedLoyaltyPointsPage.class);
 		page.addEventBasedLoyaltyPoints(plan);

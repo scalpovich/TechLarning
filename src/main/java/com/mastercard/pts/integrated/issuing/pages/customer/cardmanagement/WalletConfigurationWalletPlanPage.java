@@ -25,8 +25,7 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_PROGRAM_SETUP,
-		CardManagementNav.L2_WALLET_CONFIGURATION, CardManagementNav.L3_WALLET_PLAN })
+@Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_PROGRAM_SETUP, CardManagementNav.L2_WALLET_CONFIGURATION, CardManagementNav.L3_WALLET_PLAN })
 public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 
 	@Autowired
@@ -209,8 +208,8 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			if(walletPlan.getSurchargeWaiverPlan() != null && !walletPlan.getSurchargeWaiverPlan().isEmpty())
 				selectSurchargeWaiverPlan(walletPlan.getSurchargeWaiverPlan());
 			clickNextButton(); // Click on next button
-			clickFinishButton(); // click on finish button
-		});
+				clickFinishButton(); // click on finish button
+			});
 		verifyOperationStatus();
 	}
 
@@ -239,8 +238,8 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			fillDetailsBasedOnCardType(walletPlan, productType);
 			SimulatorUtilities.wait(2000);
 			clickNextButton(); // Click on next button
-			clickFinishButton(); // click on finish button
-		});
+				clickFinishButton(); // click on finish button
+			});
 		verifyOperationStatus();
 	}
 
@@ -261,21 +260,21 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			}
 		}
 	}
-
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Wallet Configuration Wallet PLan");
 		verifySearchButton("Search");
 	}
-
-	public void setReservedAmount(int reservedAmount) {
-		this.reservedAmount = reservedAmount;
+	
+	public void setReservedAmount(int reservedAmount){
+		this.reservedAmount=reservedAmount; 
 	}
 
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(walletPlanCodeSearchTxt));
 	}
-
+	
 	public void editWalletPlan(WalletPlan walletPlan, String updateField) {
 		WebElementUtils.enterText(walletPlanCodeSearchTxt, walletPlan.getWalletPlanCode());
 		clickSearchButton();
@@ -289,7 +288,6 @@ public class WalletConfigurationWalletPlanPage extends AbstractBasePage {
 			clickSaveButton();
 		});
 	}
-
 
 	public void selectSurchargePlan(String plan) {
 		WebElementUtils.selectDropDownByVisibleText(surchargePlanDDwn, plan);

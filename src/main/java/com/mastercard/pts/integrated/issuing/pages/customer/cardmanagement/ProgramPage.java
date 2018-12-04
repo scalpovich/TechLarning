@@ -92,7 +92,7 @@ public class ProgramPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePlanCode1:input:dropdowncomponent")
 	private MCWebElement devicePlanPlan1DDwn;
-
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePlanCode2:input:dropdowncomponent")
 	private MCWebElement devicePlanPlan2DDwn;
 
@@ -230,7 +230,7 @@ public class ProgramPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:currencyPayoutListPlanCode:input:dropdowncomponent")
 	private MCWebElement payoutCurrencyPlanDDwn;
-
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:cashLimitCycleIndicatior:input:dropdowncomponent")
 	private MCWebElement CashLimitResetDDwn;
 
@@ -280,18 +280,17 @@ public class ProgramPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//ul[@class='tabs']/li[2]")
 	private MCWebElement planTab;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[contains(@name,'countryWbPlanCode:input:dropdowncomponent')]")
 	private MCWebElement countryWhiteBlackListPlan;
-
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "authoLevelCard:checkBoxComponent")
 	private MCWebElement chkBxCardCreditLimitValidation;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[starts-with(text(),'Limits')]")
 	private MCWebElement txtLimitLevelValidation;
 
-	private final String COUNTRY_WHITELIST_AND_BLACKLIST_PLAN = "country white and black list";
-
+	private final String COUNTRY_WHITELIST_AND_BLACKLIST_PLAN="country white and black list";
 	public void addProgram(String programCode) {
 		WebElementUtils.enterText(programTxt, programCode);
 	}
@@ -369,7 +368,7 @@ public class ProgramPage extends AbstractBasePage {
 	public void selectDevicePlanPlan1DDwn(String devicePlanPlan1) {
 		WebElementUtils.selectDropDownByVisibleText(devicePlanPlan1DDwn, devicePlanPlan1);
 	}
-
+	
 	public void selectDevicePlanPlan2DDwn(String devicePlanPlan2) {
 		WebElementUtils.selectDropDownByVisibleText(devicePlanPlan2DDwn, devicePlanPlan2);
 	}
@@ -381,9 +380,10 @@ public class ProgramPage extends AbstractBasePage {
 	public void selectOtherPlanMarketingMessagePlan(String otherPlanMarketingMessagePlan) {
 		WebElementUtils.selectDropDownByVisibleText(otherPlanMarketingMessagePlanDDwn, otherPlanMarketingMessagePlan);
 	}
-
+	
 	public void selectPayoutCurrencyPlan(String payoutCurrencyPlan) {
-		if (payoutCurrencyPlanDDwn.isEnabled()) {
+		if (payoutCurrencyPlanDDwn.isEnabled())
+		{
 			WebElementUtils.selectDropDownByVisibleText(payoutCurrencyPlanDDwn, payoutCurrencyPlan);
 		}
 	}
@@ -393,14 +393,14 @@ public class ProgramPage extends AbstractBasePage {
 		clickAddNewButton();
 
 		runWithinPopup("Add Program", () -> {
-			addProgram(program.getProgramCode());
+			addProgram(program.getProgramCode());          	
 			addDescription(program.getDescription());
 			SimulatorUtilities.wait(2000);
 			selectInterchange(program.getInterchange());
 			SimulatorUtilities.wait(2000);
 			selectProduct(program.getProduct());
 			SimulatorUtilities.wait(2000);
-			selectProgramType(program.getProgramType());
+			selectProgramType(program.getProgramType());					
 			SimulatorUtilities.wait(2000);
 			selectBaseCurrency(program.getBaseCurrency());
 			program.setProgramCodeDevice(program.getDescription() + " " + "[" + program.getProgramCode() + "]");
@@ -413,10 +413,9 @@ public class ProgramPage extends AbstractBasePage {
 				if ("Reference Currency [R]".equalsIgnoreCase(program.getWalletToWalletTransferType()))
 					selectReferenceCurrency(program.getReferenceCurrency());
 			}
-
 			if (productType.equalsIgnoreCase(ProductType.PREPAID)){
 				selectCurrencyConversionBy(program.getCurrencyConversionBy());
-			}
+			}				
 			selectCalendarStartMonth(program.getCalendarStartMonth());
 			fillExtraSections(program, productType);
 			clickNextButton();
@@ -432,15 +431,15 @@ public class ProgramPage extends AbstractBasePage {
 		runWithinPopup("Add Program", () -> {
 			addProgram(program.getProgramCode());
 			addDescription(program.getDescription());
-			SimulatorUtilities.wait(2000);
+          	SimulatorUtilities.wait(2000);
 			selectInterchange(program.getInterchange());
-			SimulatorUtilities.wait(2000);
+          	SimulatorUtilities.wait(2000);
 			selectProduct(program.getProduct());
-			SimulatorUtilities.wait(2000);
+          	SimulatorUtilities.wait(2000);
 			selectProgramType(program.getProgramType());
-			SimulatorUtilities.wait(2000);
+          	SimulatorUtilities.wait(2000);
 			selectBaseCurrency(program.getBaseCurrency());
-			SimulatorUtilities.wait(2000);
+          	SimulatorUtilities.wait(2000);
 			program.setProgramCodeDevice(program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {
@@ -509,7 +508,7 @@ public class ProgramPage extends AbstractBasePage {
 	}
 
 	private void fillExtraSections(Program program, String productType) {
-
+		
 		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
 			addMaximumBalanceWithoutKyc(program.getMaximumBalanceWithoutKyc());
 			addnumberOfLoadsAllowedWithoutKyc(program.getNumberOfLoadsAllowedWithoutKyc());
@@ -521,13 +520,13 @@ public class ProgramPage extends AbstractBasePage {
 		clickNextButton();
 		selectWalletPlanPlan1(program.getFirstWalletPlan());
 		selectDevicePlanPlan1DDwn(program.getDevicePlanPlan1());
-	
+		
 		if(Objects.nonNull(program.getApplicationType()) || Objects.nonNull(program.getSubApplicationType())){
 			if(program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||program.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){
 			      selectDevicePlanPlan2DDwn(program.getDevicePlanPlan2());
 			}
-		}
-
+		}		
+		
 		if (!productType.equalsIgnoreCase(ProductType.DEBIT)) {
 			selectOtherPlanStatementMessagePlan(program.getOtherPlanStatementMessagePlan());
 			selectOtherPlanMarketingMessagePlan(program.getOtherPlanMarketingMessagePlan());
@@ -546,11 +545,8 @@ public class ProgramPage extends AbstractBasePage {
 		}
 
 		waitForLoaderToDisappear();
-
 		clickNextButton();
-		if (productType.equalsIgnoreCase(ProductType.CREDIT))
-
-		{
+		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
 			fillDataForCreditCard(program);
 		}
 	}
@@ -597,7 +593,7 @@ public class ProgramPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(cashLimitTypeDDwn, program.getCashLimitType());
 		WebElementUtils.enterText(cashLimitAmountTxt, program.getCashLimitAmount());
 		WebElementUtils.selectDropDownByVisibleText(cashLimitResetDDwn, program.getCashLimitReset());
-		WebElementUtils.selectDropDownByVisibleText(addOnLimitResetDDwn, program.getAddOnLimitReset());
+		WebElementUtils.selectDropDownByVisibleText(addOnLimitResetDDwn, program.getAddOnLimitReset());		
 	}
 
 	public void verifyUiOperationStatus() {
@@ -877,16 +873,15 @@ public class ProgramPage extends AbstractBasePage {
 	public void switchToEditProgramframe() {
 		switchToIframe(Constants.EDIT_PROGRAM_FRAME);
 	}
-
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(programSearchTxt));
 
 	}
-
+	
 	private void setCountryWhiteListAndBlackListPlan(Program program) {
-		WebElementUtils.selectDropDownByVisibleText(countryWhiteBlackListPlan,
-				program.getCountryWhiteListAndBlackListPlan());
+		WebElementUtils.selectDropDownByVisibleText(countryWhiteBlackListPlan, program.getCountryWhiteListAndBlackListPlan());
 
 	}
 
@@ -910,19 +905,18 @@ public class ProgramPage extends AbstractBasePage {
 			editsProgram(program, editItem);
 		});
 	}
-
+	
 	public void editProgramToEnableCardLimit(String program) {
 		enterValueinTextBox(enterProgram, program);
 		clickWhenClickable(search);
 		waitForElementVisible(editProgram);
 		editFirstRecord();
 		Scrolldown(editProgram);
-		runWithinPopup(Constants.EDIT_PROGRAM_FRAME, () -> {
-			cardCreditLimitValidation();
+		runWithinPopup(Constants.EDIT_PROGRAM_FRAME,()-> {
+			cardCreditLimitValidation();	
 		});
 		verifyOperationStatus();
 	}
-
 	
 	public void cardCreditLimitValidation(){
 		SimulatorUtilities.wait(2000);
