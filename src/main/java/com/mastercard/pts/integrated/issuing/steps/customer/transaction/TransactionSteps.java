@@ -472,7 +472,7 @@ public class TransactionSteps {
 	@Then("transaction status is \"$type\"")
 	public void thenTransactionStatusIsPresentmentMatched(String type) {
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
-		assertEquals(type, transactionWorkflow.getAuthorizationStatus(arnNumber, ts));
+		assertEquals(type, transactionWorkflow.getAuthorizationStatus(arnNumber, ts, type));
 	}
 
 	@Then("transaction fee is correctly posted")
@@ -739,5 +739,12 @@ public class TransactionSteps {
 	@When("User set Decline Merchant Risk Based Decisioning Transaction flag $type")
 	public void userSetMIDTIDFlagAndCaseValue(boolean declineMerchantRiskBased) {
 		this.declineMerchantRiskBased = declineMerchantRiskBased;
+	}
+
+	@Given("user update IPM file to get status $status")
+	@When("user update IPM file to get status $status")
+	public void userUpdateIPMForDuplicateRecordCheck(String status) {
+		Transaction trasactiondata = Transaction.createWithProvider(provider);
+		transactionWorkflow.manipulateIPMData(status, trasactiondata);
 	}
 }
