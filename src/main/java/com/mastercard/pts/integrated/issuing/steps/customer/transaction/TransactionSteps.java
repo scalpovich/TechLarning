@@ -723,6 +723,7 @@ public class TransactionSteps {
 		}
 	}
 	
+	@Given("user update IPM file to get status $status")
 	@When("user update IPM file to get status $status")
 	public void userUpdateIPMForDuplicateRecordCheck(String status){
 		Transaction trasactiondata = Transaction.createWithProvider(provider);

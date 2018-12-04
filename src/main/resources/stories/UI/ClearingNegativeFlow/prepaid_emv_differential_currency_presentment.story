@@ -45,17 +45,13 @@ When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
 
 Scenario: 1.4 Generate Auth File for Clearing
-Meta:
-@TestId 
-When Auth file is generated after transaction
-And MAS simulator is closed
+Given Auth file is generated after transaction
+When MAS simulator is closed
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal
 
 Scenario: 1.5 Load auth file in MCPS and create NOT file of IPM extension
-Meta:
-@TestId 
 Given connection to MCPS is established
 When Auth file is generated
 And Auth file is loaded into MCPS and processed
