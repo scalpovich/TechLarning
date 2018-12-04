@@ -13,6 +13,10 @@ public class PaymentUpload {
 	private String transactionCode;
 
 	private String transactionCurrencyAmount;
+	
+	private String chequeNumber;
+	
+	private String returnedReason;
 
 	public String getPaymentMethod() {
 		return paymentMethod;
@@ -44,6 +48,22 @@ public class PaymentUpload {
 
 	public void setTransactionCurrencyAmount(String transactionCurrencyAmount) {
 		this.transactionCurrencyAmount = transactionCurrencyAmount;
+	}
+	
+	public String getChequeNumber() {
+		return chequeNumber;
+	}
+
+	public void setChequeNumber(String chequeNumber) {
+		this.chequeNumber = chequeNumber;
+	}
+
+	public String getReturnedReason() {
+		return returnedReason;
+	}
+
+	public void setReturnedReason(String returnedReason) {
+		this.returnedReason = returnedReason;
 	}
 
 	public static PaymentUpload createWithProviderForPayment(DataProvider provider, String transactionCode) {
