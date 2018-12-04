@@ -82,8 +82,7 @@ public class ApplicationPage extends AbstractBasePage {
 		selectByVisibleText(productTypeAuthReportDDwn, deviceRange.getProductType().split(" ")[0]);
 		selectByVisibleText(programNameAuthReportDDwn, program.getProgramCode());
 		WebElementUtils.selectDropDownByVisibleText(fileTypeAuthReportDDwn, txtFileType);
-		SimulatorUtilities.wait(5000);
-		generateReportBtn.click();
+		clickWhenClickable(generateReportBtn);
 		return verifyReportDownloaded(reportFileName);
 	}
 	

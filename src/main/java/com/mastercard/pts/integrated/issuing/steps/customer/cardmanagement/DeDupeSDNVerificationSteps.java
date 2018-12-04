@@ -41,8 +41,8 @@ public class DeDupeSDNVerificationSteps {
 		Assert.assertTrue("Application Number Not Found",device.getApplicationNumber().equals(dedupeAppliaction));
 	}
 	
-	@When("$approvesReject duplicate application for upload caught in dedupe / SDN")
-	@Then("$approvesReject duplicate application for upload caught in dedupe / SDN")
+	@When("user $approvesReject duplicate application for upload caught in dedupe / SDN")
+	@Then("user $approvesReject duplicate application for upload caught in dedupe / SDN")
 	public void whenApplicationCaughtonDedupeSDNThenApproveRejectForUpload(String operation) throws IOException{
 		Assert.assertTrue("Application Not Approved/Rejected",dedupeSDNVerificationWorkflow.verifyApproveRejectTheApplicationForUpload(operation));
 	}
