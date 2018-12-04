@@ -1,7 +1,7 @@
 Narrative:
-In order to a validate 3 d secure Transaction on credit device
+In order to a validate 3D secure Transaction on credit device
 As a user
-I want to perform Transaction on corporate debit card to check 3D Secure Decisioning Transaction
+I want to perform Transaction on corporate credit card to check 3D Secure Decisioning Transaction
 Meta:
 @CreditRegression
 @CreditWithPin
@@ -30,7 +30,7 @@ Given user is logged in institution
 When user edits 3D ecommerce security parameters to Decline Merchant Risk Based Decisioning Transaction for product Credit and interchange Mastercard as check
 Then user sign out from customer portal
 
-Scenario:1.4 Perform EMV_PURCHASE Authorization transaction
+Scenario:1.4 Perform 3D Secure Authorization transaction
 Given connection to MAS is established
 Given User set Decline Merchant Risk Based Decisioning Transaction flag true
 When perform an 3D_SECURE_CAVV MAS transaction

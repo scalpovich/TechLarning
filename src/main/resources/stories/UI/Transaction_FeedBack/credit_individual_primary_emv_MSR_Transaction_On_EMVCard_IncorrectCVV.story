@@ -1,5 +1,5 @@
 Narrative:
-In order to a validate 3 d secure Transaction on credit device
+In order to a validate Invalid CVV on credit device
 As a user
 I want to perform MSR_Purchase transaction to check MSR Transaction on EMV Card with Invalid CVV
 Meta:

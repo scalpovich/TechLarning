@@ -1,13 +1,13 @@
 Narrative:
 In order to a create a Prepaid Primary LVC Device under customer portal cardmanagement tab
 As a user
-I want to assert pages
+I want to assert PDF Details of LVC Prepaid card
 
 Meta:
 @prepaidRegression
 @StoryName prepaid_emv_retail
 @Individual				 
-Scenario:creation of mastercard_individual_primary_LVC Card prepaid device
+Scenario:1.1 creation of mastercard_individual_primary_LVC Card prepaid device
 Meta:
 @UserCreatesNewprepaidDevice
 Given setting json values in excel for Prepaid
@@ -26,6 +26,6 @@ And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
 Then user sign out from customer portal
 
-Scenario: Download PDF File for LVC Crad
+Scenario:1.2 Download PDF File for LVC Crad
 Given User Download and Verify PDF File for LVC Card
 

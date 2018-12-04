@@ -1,7 +1,7 @@
 Narrative:
-In order to a validate 3 d secure Transaction on credit device
+In order to a validate Non Secure Transaction on credit device
 As a user
-I want to perform Transaction on corporate credit card to check Decline Non Secure Transaction
+I want to perform Purchase Transaction on corporate credit card to check Decline Non Secure Transaction
 Meta:
 @CreditRegression
 @CreditWithPin
