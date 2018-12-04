@@ -20,6 +20,10 @@ public class Transaction {
 	private static final String FINSIM_PAD = "FINSIM_PAD";
 
 	private static final String FINSIM_PIN_LENGHT = "FINSIM_PIN_LENGHT";
+	
+	private static final String DIFFERENTIAL_AMOUNT = "DIFFERENTIAL_AMOUNT"; 
+	
+	private static final String DIFFERENTIAL_CURRENCY = "DIFFERENTIAL_CURRENCY";
 
 	private Map<String, String> deKeyValuePair = new LinkedHashMap<>();
 
@@ -41,6 +45,8 @@ public class Transaction {
 	private String cvvData2;
 
 	private Map<String, String> cardDataElements = new LinkedHashMap<>();
+	
+	private Map <String, String> cardDataElementsUpdatedATC = new LinkedHashMap<>();
 
 	//TestCasesAndCardAndDataElementsData
 	private String testCaseToSelect; 
@@ -72,12 +78,17 @@ public class Transaction {
 	private String cardProfile;
 
 	private String issuerCountryCode;
-
+	
 	private String issuerCurrencyCode;
 
 	private String cardHolderBillingCurrency;
 	
 	private String serviceCode;
+	
+	private String diffentialAmount;
+	
+	private String diffentialCurrency ;
+	
 
 	public String getIssuerCurrencyCode() {
 		return issuerCurrencyCode;
@@ -130,6 +141,13 @@ public class Transaction {
 		transactionData.setOffSetForCard((device.getPinOffset().substring(1, 5)));
 		transactionData.setPinLength(provider.getString(FINSIM_PIN_LENGHT));
 
+		return transactionData;
+	}
+	
+	public static Transaction createWithProvider(KeyValueProvider provider){
+		Transaction transactionData  = new Transaction();
+		transactionData.setDiffentialAmount(provider.getString(DIFFERENTIAL_AMOUNT));
+		transactionData.setDiffentialCurrency(provider.getString(DIFFERENTIAL_CURRENCY));
 		return transactionData;
 	}
 
@@ -260,9 +278,17 @@ public class Transaction {
 	public Map<String, String> getCardDataElements() {
 		return cardDataElements;
 	}
-
+	
 	public void setCardDataElements(Map<String, String> cardDataElements) {
 		this.cardDataElements = cardDataElements;
+	}
+	
+	public Map<String, String> getCardDataElemetsUpdatedATC(){
+		return cardDataElementsUpdatedATC;
+	}
+	
+	public void setCardDataElementsUpdatedATC(Map<String, String> cardDataElementsUpdatedATC) {
+		this.cardDataElementsUpdatedATC = cardDataElementsUpdatedATC;
 	}
 
 	public void setCardDataElementsDynamic(String s1, String s2) {
@@ -323,5 +349,21 @@ public class Transaction {
 
 	public void setCvvData2(String cvvData2) {
 		this.cvvData2 = cvvData2;
+	}
+	
+	public String getDiffentialCurrency() {
+		return diffentialCurrency;
+	}
+
+	public void setDiffentialCurrency(String diffentialCurrency) {
+		this.diffentialCurrency = diffentialCurrency;
+	}
+	
+	public String getDiffentialAmount() {
+		return diffentialAmount;
+	}
+
+	public void setDiffentialAmount(String diffentialAmount) {
+		this.diffentialAmount = diffentialAmount;
 	}
 }

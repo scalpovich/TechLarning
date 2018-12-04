@@ -348,6 +348,8 @@ public class Constants {
 	final public static String COMPARE_RETURN_OPERATION = "compare_return";
 
 	final public static String BOTH_PRIVILEGE_OPERATION = "both_privilege";
+	
+	final public static String BOTH = "Both";
 
 	final public static String DELETE_PRODUCTION_OPERATION = "delete_production";
 
@@ -467,5 +469,16 @@ public class Constants {
 	public static final String CARD_PACK_TEMPLATE = "Card Pack ID Template";
 	
 	public static final String PROGRAM = "Program";
-
+	public static final String APP_REJECT_REPORT = "Application Reject Report";
+	
+	public static final String POINTS_EARNED = "pointsEarned";
+	public static final String MAX_LOYALTY_POINTS = "maxLoyaltyPoints";
+	public static final String AVAILABLE_LOYALTY_POINTS = "availableLoyaltyPoints";
+	public static final String ACCUMULATED_REVERSED_POINTS = "accumulatedReversedPoints";
+	public static final String FOR_LOYALTY = "FOR_LOYALTY";
+	public static final String TRANSACTION_DATE = "TRANSACTION_DATE";
+	public static final String INSTITUTION_NUMBER_QUERY_START = "SELECT INSTITUTION_DATE('";
+	public static final String INSTITUTION_NUMBER_QUERY_END = "') from dual";
+	public static final String INSTITUTION_DATE = "INSTITUTION_DATE";
+	public static final String USER_INSTITUTION_SELECTED = "USER_INSTITUTION_SELECTED";
 }

@@ -14,6 +14,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -25,16 +26,17 @@ import com.google.common.base.Throwables;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.BatchType;
-import com.mastercard.pts.integrated.issuing.domain.ProductType;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
+import com.mastercard.pts.integrated.issuing.domain.helpdesk.ProductType;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
-import com.mastercard.pts.integrated.issuing.utils.DatabaseUtils;
+import com.mastercard.pts.integrated.issuing.utils.DBUtility;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
@@ -51,6 +53,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	
 	@Autowired
 	private TestContext context;
+	
+	@Autowired
+	private DBUtility dbUtils;
 
 	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
 
@@ -62,6 +67,12 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "buttonPanel:submitButton")
 	private MCWebElement submitBtn;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Rejected')]")
+	private MCWebElement rejectBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers']//td[3]/span")
+	private MCWebElement rejectDueToMandatory;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='productType']/select")
 	private MCWebElement productTypeDDwn;
@@ -131,6 +142,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	private MCWebElement jobId;
 
 	private String batchStatus;
+	
+	private String jobID;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "batchType:input:dropdowncomponent")
 	private MCWebElement batchTypeDdwn;
 
@@ -158,6 +172,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='jobId']//span[@class='labeltextf']")
 	private MCWebElement processBatchjobIDTxt;
 
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "*//td[@width='150px']/span[@class='labeltextf']")
+	private MCWebElement processBatchjobIDPathTxt;
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='dispTraceLink']/a")
 	private MCWebElement tracesLink;
 
@@ -170,15 +187,40 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanel:inputPanel:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement binDDwn;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class='yui-skin-sam']/..")
+	private MCWebElement businessDate;
+	
+	@PageElement( findBy = FindBy.X_PATH, valueToFind="//span[@id='jobId'] ")
+	private MCWebElement jobIDNumber;
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.yui-skin-sam")
 	private MCWebElement bussinessDateTxt;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
 	private MCWebElement institutionDateTxt;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='File Type']/../following-sibling::td[1]//span/select")
+	private MCWebElement fileTypeDDwn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Vendor Name']/../following-sibling::td[1]//span/select")
+	private MCWebElement vendorNameDDwn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='processFileName']//span[@class='labeltextf']")
+	private MCWebElement processFileNameTxt;
 
 	public final String SYSTEM_INTERNAL_PROCESSING = "SYSTEM INTERNAL PROCESSING [B]";
 	
 	private static final int NUMBER_OF_ATTEMPTS_TO_CHECK_SUCCESS_STATE=100;
+
+	private String reasonToReject = "";
+	
+	private Boolean isProcess = false;
+	
+	private final String failStatus = "FAILED [3]";
+	
+	private final String successStatus = "SUCCESS [2]";
+	
+	private static final String  POST_MAINTENANCE_FEE_BATCH = "Post Maintenance Fee Batch [POST_MAINTENANCE_FEE]";
 
 	public void selectBatchType(String option) {
 		selectByVisibleText(batchTypeDDwn, option);
@@ -351,7 +393,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		return batchStatus;
 
 	}
-
+	
 	public String processSystemInternalProcessingBatchWithoutDateCheck(ProcessBatches batch) {
 		logger.info("Process System Internal Processing Batch: {}", batch.getBatchName());
 		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, "SYSTEM INTERNAL PROCESSING [B]");
@@ -361,25 +403,43 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		return batchStatus;
 	}
 
+	public void inputToDate(LocalDate date) {
+		WebElementUtils.pickDate(businessDate, date);
+	}
+
 	public String processSystemInternalProcessingBatch(ProcessBatches batch) {
 		logger.info("Process System Internal Processing Batch: {}", batch.getBatchName());
-		Date todayDate;
-		Date dateFromUI;
+		Date todayDate = null;
+		Date dateFromUI = null;
 		batchStatus = null;
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
 		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, "SYSTEM INTERNAL PROCESSING [B]");
 		selectInternalBatchType(batch.getBatchName());
-		if (batch.getProductType() != null && !("".equals(batch.getProductType()))) {
-			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-		}
-		try {
-			todayDate = dateFormatter.parse(dateFormatter.format(new Date()));
-			dateFromUI = getDateFromUI(dateFormatter, batch);
-		} catch (ParseException e) {
-			throw Throwables.propagate(e);
-		}
-		if (!dateFromUI.after(todayDate))
+		if (!(batch.getBatchName().contains("Loyalty"))) {
+
+			if (batch.getProductType() != null && !("".equals(batch.getProductType()))) {
+				WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+			}
+			try {
+				if ((batch.getProductType().equalsIgnoreCase(ProductType.CREDIT)) || (batch.getBatchName().equalsIgnoreCase("End Of Day - Credit [DAILY]"))) {
+					String query = Constants.INSTITUTION_NUMBER_QUERY_START + context.get(Constants.USER_INSTITUTION_SELECTED) + Constants.INSTITUTION_NUMBER_QUERY_END;
+					String colName = Constants.INSTITUTION_DATE+"('"+ context.get(Constants.USER_INSTITUTION_SELECTED) +"')";
+					inputToDate(DateUtils.convertInstitutionCurrentDateInLocalDateFormat(dbUtils.getSingleRecordColumnValueFromDB(query, colName)));
+					submitAndVerifyBatch();
+				} else {
+					todayDate = dateFormatter.parse(dateFormatter.format(new Date()));
+					dateFromUI = getDateFromUI(dateFormatter, batch);
+				}
+
+			} catch (ParseException e) {
+				throw Throwables.propagate(e);
+			}
+
+			if (dateFromUI != null && !dateFromUI.after(todayDate))
+				submitAndVerifyBatch();
+		} else {
 			submitAndVerifyBatch();
+		}
 
 		return batchStatus;
 	}
@@ -405,6 +465,14 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		
 		else if("Billing Process - Credit".equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Billing Process - Credit [BILLING]"); 
+		
+		else if(POST_MAINTENANCE_FEE_BATCH.equalsIgnoreCase(batchName))
+			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, POST_MAINTENANCE_FEE_BATCH); 
+		
+		else if("Ageing".equalsIgnoreCase(batchName))
+			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Ageing Batch [AGEING_BATCH]");
+		else
+			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, batchName);
 	}
 
 	public String processDownloadBatch(ProcessBatches batch) {
@@ -459,27 +527,31 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	public void processKYCDownloadBatch(ProcessBatches batch) {
 		selectDownloadBatch(batch);
-
 		WebElementUtils.enterText(cardHolderKycFromDateHHTxtBx, "00");
-
 		WebElementUtils.enterText(cardHolderKycFromDateMMTxtBx, "00");
-
 		WebElementUtils.enterText(cardHolderKycToDateHHTxtBx, "23");
-
 		WebElementUtils.enterText(cardHolderKycToDateMMTxtBx, "00");
-
 		submitAndVerifyBatch();
-
 	}
 
 	public void submitAndVerifyBatch() {
 		submitBtn.click();
-		statusBtn.click();
+		//statusBtn.click();
+		clickWhenClickable(statusBtn);
 		runWithinPopup("View Batch Details", () -> {
 			logger.info("Retrieving batch status");
 			waitForBatchStatus();
 			batchStatus = batchStatusTxt.getText();
+			jobID = processBatchjobIDTxt.getText();
+			context.put(ContextConstants.DAT_FILE_NAME, processFileNameTxt.getText());
+			try{
 			clickCloseButton();
+			}
+			catch(StaleElementReferenceException ex)
+			{
+				clickCloseButton();
+			}
+			SimulatorUtilities.wait(1000);
 		});
 	}
 	
@@ -502,10 +574,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	public void statementDownloadBatch(ProcessBatches batch) {
 		selectDownloadBatch(batch);
-
 		WebElementUtils.pickDate(fromDateTxt, LocalDate.now().minusDays(2));
 		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
-
 		submitAndVerifyBatch();
 	}
 
@@ -545,49 +615,68 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	}
 
 	public boolean verifyFileProcessUpload(ProcessBatches processBatchesDomain, String fileName) {
-		FileCreation.filenameStatic = fileName;
-		String elementXpath = String.format("//span[contains(text(),'%s')]", FileCreation.filenameStatic);
-		Boolean isProcessed = false;
-		String statusXpath = elementXpath + "//parent::td//following-sibling::td/a";
-		SimulatorUtilities.wait(20000);
-		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(statusXpath)));
-		switchToIframe(Constants.VIEW_BATCH_DETAILS);
+        FileCreation.filenameStatic = fileName;
+        Boolean isProcessed = true;
+        String elementXpath = String.format("//span[contains(text(),'%s')]", FileCreation.filenameStatic);
+        String statusXpath = elementXpath + "//parent::td//following-sibling::td/a";
+        SimulatorUtilities.wait(20000);
+        clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(statusXpath)));
+        
+        SimulatorUtilities.wait(5000);//this delay is for table to load data 
+        runWithinPopup("View Batch Details", () -> {
+              logger.info("Retrieving batch status");
+              waitForBatchStatus();
+              SimulatorUtilities.wait(5000);
+              batchStatus = batchStatusTxt.getText();
+              processBatchesDomain.setJoBID(processBatchjobIDTxt.getText());
+              SimulatorUtilities.wait(5000);
+              clickCloseButton();
+        });
+        SimulatorUtilities.wait(3000);//this delay is for table to load data
+        MiscUtils.reportToConsole("JobID: {}", processBatchesDomain.getJoBID());
+        context.put(CreditConstants.JOB_ID, processBatchesDomain.getJoBID());
+        waitForWicket(driver());
+        getFinder().getWebDriver().switchTo().defaultContent();
+        return isProcessed;
 
-		// unless it is completed, refresh it - No of attempts: 100
-		for (int i = 0; i < NUMBER_OF_ATTEMPTS_TO_CHECK_SUCCESS_STATE; i++) {
-			if (processBatchStatusTxt.getText().equalsIgnoreCase("PENDING [0]") || processBatchStatusTxt.getText().equalsIgnoreCase("IN PROCESS [1]")) {
-				ClickButton(closeBtn);
-				waitForLoaderToDisappear();
-				getFinder().getWebDriver().switchTo().defaultContent();
-				waitForLoaderToDisappear();
-				clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(statusXpath)));
-				switchToIframe(Constants.VIEW_BATCH_DETAILS);
-				waitForLoaderToDisappear();
-				waitForElementVisible(processBatchStatusTxt);
-			} else if (processBatchStatusTxt.getText().equalsIgnoreCase("SUCCESS [2]")) {
-				if (rejectedCountTxt.getText().contains("0") || rejectedCountTxt.getText().contains("-")) {
-					isProcessed = true;
-					break;
-				} else {
-					ClickButton(tracesLink);
-					getBatchTraces();
-					break;
-				}
-			} else if (processBatchStatusTxt.getText().equalsIgnoreCase("FAILED [3]")) {
-				ClickButton(tracesLink);
-				getBatchTraces();
-				break;
-			}
-		}
-		processBatchesDomain.setJoBID(processBatchjobIDTxt.getText());
-		MiscUtils.reportToConsole("JobID: {}", processBatchesDomain.getJoBID());
-		ClickButton(closeBtn);
-		//waitForPageToLoad(getFinder().getWebDriver());
-		waitForWicket(driver());
-		getFinder().getWebDriver().switchTo().defaultContent();
-		return isProcessed;
 	}
-
+	
+	public boolean processBatchUpload(ProcessBatches processBatchesDomain, String fileName){
+		FileCreation.filenameStatic = fileName;
+		String statusXpath = String.format("//span[contains(text(),'%s')]", FileCreation.filenameStatic) + "//parent::td//following-sibling::td/a";
+		SimulatorUtilities.wait(10000);
+		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(statusXpath)));
+		SimulatorUtilities.wait(5000);//this delay is for table to load data 
+		runWithinPopup("View Batch Details", () -> {
+			logger.info("Retrieving batch status");
+			waitForBatchStatus();
+			SimulatorUtilities.wait(5000);
+			batchStatus = batchStatusTxt.getText();
+			processBatchesDomain.setJoBID(processBatchjobIDTxt.getText());
+			SimulatorUtilities.wait(5000);
+			if(batchStatus.equalsIgnoreCase(successStatus)){
+				isProcess = true;
+			}
+			else if(batchStatus.equals(failStatus)){
+				isProcess = true;
+				SimulatorUtilities.wait(5000);
+				ClickButton(rejectBtn);
+				SimulatorUtilities.wait(5000);
+				runWithinPopup("Rejected Record Details", () -> {
+					reasonToReject = getTextFromPage(rejectDueToMandatory);
+					context.put(ContextConstants.REJECTED_FILE_UPLOAD, reasonToReject);
+					clickCloseButton();
+				});
+			}
+			clickCloseButton();
+		});
+		SimulatorUtilities.wait(3000);//this delay is for table to load data
+		MiscUtils.reportToConsole("JobID: {}", processBatchesDomain.getJoBID());
+		context.put(CreditConstants.JOB_ID, processBatchesDomain.getJoBID());
+		waitForWicket(driver());
+		return isProcess;
+	}
+	
 	public String visaOutgoingDownloadBatch(ProcessBatches batch) {
 		Device device=context.get(ContextConstants.DEVICE);
 		selectBatchType(batch.getBatchType());
@@ -613,11 +702,14 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	 * @param batch 
 	 * @return status of batch e.g pass, fail
 	 */
-	public String processCreditBillingBatch(ProcessBatches batch) {
+	public ProcessBatches processCreditBillingBatch(ProcessBatches batch) {
+		ProcessBatches batches = new ProcessBatches();
 		selectBatchTypeAndName(batch);
 		WebElementUtils.pickDate(bussinessDateTxt, DateUtils.convertInstitutionDateInLocalDateFormat(getTextFromPage(institutionDateTxt)));
 		submitAndVerifyBatch();
-		return batchStatus;
+		batches.setJoBID(jobID);
+		batches.setStatus(batchStatus);
+		return batches;
 	}
 
 	/**
@@ -645,6 +737,40 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		selectInternalBatchType(batch.getBatchName());
 		if(batch.getBatchName().equalsIgnoreCase("Pre-clearing"))
 			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+	}
+
+	public String processSystemInternalProcessingBatchPostMaintenance(ProcessBatches batch) {
+		logger.info("Process System Internal Processing Batch: {}", batch.getBatchName());
+		Date todayDate;
+		Date dateFromUI;
+		batchStatus = null;
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, "SYSTEM INTERNAL PROCESSING [B]");
+		SimulatorUtilities.wait(2000);
+		selectInternalBatchType(batch.getBatchName());
+		SimulatorUtilities.wait(2000);
+
+		try {
+			todayDate = dateFormatter.parse(dateFormatter.format(new Date()));
+			dateFromUI = getDateFromUI(dateFormatter, batch);
+		} catch (ParseException e) {
+			throw MiscUtils.propagate(e);
+		}
+
+		submitAndVerifyBatch();
+		return batchStatus;
+	}
 	
+	public String processCarrierDownloadBatch(ProcessBatches batch) {
+		logger.info("Process Carrier Download Batch: {}", batch.getBatchName());
+		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, batch.getBatchType());
+		doSelectByVisibleText(batchNameDDwn, batch.getBatchName());
+		SimulatorUtilities.wait(5000);
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+		doSelectByVisibleText(fileTypeDDwn, batch.getFileType());
+		SimulatorUtilities.wait(5000);
+		WebElementUtils.selectDropDownByVisibleText(vendorNameDDwn, batch.getVendorName());
+		submitAndVerifyBatch();
+		return batchStatus;
 	}
 }

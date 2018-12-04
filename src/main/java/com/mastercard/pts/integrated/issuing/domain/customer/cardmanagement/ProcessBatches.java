@@ -1,7 +1,7 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.springframework.stereotype.Component;
-
+import java.time.LocalDate;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 @Component
@@ -17,16 +17,14 @@ public class ProcessBatches {
 	private String interchangeType;
 	private String extractType;
 	private String methodToGenerateFile;
-
+	private String vendorName;
+	private LocalDate businessDate;
+	private String status;	
 	
-	
-
 	private static final String BATCH_TYPE = "UPLOAD [U]";
-	
 //	private static final String BATCH_NAME = "Transaction Upload [TRANSACTION_UPLOAD]";
 	private static final String BATCH_NAME = "Load IPM Incoming File [IPM_INCOMING]";
 	private static String fileName;
-
 
 	public static ProcessBatches createWithProvider(KeyValueProvider provider){
 		ProcessBatches batch = new ProcessBatches();
@@ -41,6 +39,14 @@ public class ProcessBatches {
 		batch.setBatchType(BATCH_TYPE);
 		return batch;
 	}
+	
+	public static ProcessBatches getBatchDataForDownload(KeyValueProvider provider){
+		ProcessBatches batch = new ProcessBatches();
+		batch.setBatchType("DOWNLOAD [D]");
+		batch.setVendorName(provider.getString("COURIER_VENDOR"));
+		return batch;
+	}
+	
 	
 	public static void setBatchFileName(String sFileName){
 		fileName = sFileName;
@@ -128,4 +134,27 @@ public class ProcessBatches {
 		this.methodToGenerateFile = methodToGenerateFile;
 	}
 
+	public String getVendorName() {
+		return vendorName;
+	}
+
+	public void setVendorName(String vendorName) {
+		this.vendorName = vendorName;
+	}
+	
+	public void setBusinessDate(LocalDate businessDate) {
+		this.businessDate = businessDate;
+	}
+
+	public LocalDate getBusinessDate() {
+		return businessDate;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }

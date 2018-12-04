@@ -2,7 +2,6 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import java.time.LocalDate;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
@@ -111,14 +110,14 @@ public class TransactionFeePlan {
 	public static TransactionFeePlan getAllTransactionFee(KeyValueProvider provider) {
 
 		TransactionFeePlan txnFee = new TransactionFeePlan();
-		txnFee.setRateTxnFee(provider.getString(TRANSACTION_RATE));
-		txnFee.setBillingAmount(provider.getString(BILLING_AMOUNT));
+		txnFee.setRateTxnFee(String.format("%.2f", Double.valueOf(provider.getString(TRANSACTION_RATE))));
+		txnFee.setBillingAmount(String.format("%.2f", Double.valueOf(provider.getString(BILLING_AMOUNT))));
 		txnFee.setBillingAmountRate(provider.getString(BILLING_AMOUNT_RATE));
 		txnFee.setMinTxnRate(provider.getString(MIN_TXN_RATE));
 		txnFee.setRateTxnFee(provider.getString(RATE_TXN_FEE));
 		txnFee.setMaxTxnRate(provider.getString(MAX_TXN_RATE));
-		txnFee.setFixedRateFee(provider.getString(FIXED_RATE_FEE));
-		txnFee.setFixedTxnFees(provider.getString(FIXED_TXN_FEE));
+		txnFee.setFixedRateFee(String.format("%.2f", Double.valueOf(provider.getString(FIXED_RATE_FEE))));
+		txnFee.setFixedTxnFees(String.format("%.2f", Double.valueOf(provider.getString(FIXED_TXN_FEE))));
 
 		return txnFee;
 	}

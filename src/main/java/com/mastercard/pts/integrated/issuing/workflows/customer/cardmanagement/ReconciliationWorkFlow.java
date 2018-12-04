@@ -1,8 +1,8 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Tran
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionReportsPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
-import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.PDFUtils;
 
 @Workflow
@@ -35,17 +34,25 @@ public class ReconciliationWorkFlow {
 			processBatch.processSystemInternalProcessingBatch(batch.get(1));
 		}
 	}
-
+	
 	public void runPreClearingAndLoyaltyCalcBatch(List<ProcessBatches> batch) {
-		ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
-		processBatch.processSystemInternalProcessingBatch(batch.get(1));
+		if (batch.size() != 0) {
+			for (int i = 0; i < batch.size(); i++) {
+				ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
+				processBatch.processSystemInternalProcessingBatch(batch.get(i));
+			}
+		}
 	}
 
 	public String runPreClearingBatch(ProcessBatches batch) {
 		ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
 		return processBatch.processSystemInternalProcessingBatch(batch);
 	}
-
+	
+	public String runPostMaintenanceBatch(ProcessBatches batch) {
+		ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
+		return processBatch.processSystemInternalProcessingBatchPostMaintenance(batch);
+	}
 	public boolean verifyReportGeneration() {
 		TransactionReportsPage page = navigator.navigateToPage(TransactionReportsPage.class);
 		int fileCountBeforeReportGeneration = checkDownLoadedFilesCount();
@@ -119,15 +126,17 @@ public class ReconciliationWorkFlow {
 		}
 		return records;
 	}
+	
+	
 	public void deleteExistingAuthorizationFilesFromSystem(String authFileName)
 	{
 		for (File file: new File(PDFUtils.getuserDownloadPath()).listFiles()) {
-			if (!file.isDirectory()&& file.getName().startsWith(ConstantData.AUTHORIZATION_REPORT_NAME))   	
+			if (!file.isDirectory()&& file.getName().startsWith(authFileName))   	
 				file.delete();
 		}
 	}
 	
-	public String runCreditBillingBatch(ProcessBatches batch) {
+	public ProcessBatches runCreditBillingBatch(ProcessBatches batch) {
 		ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
 		return processBatch.processCreditBillingBatch(batch);
 	}

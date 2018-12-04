@@ -3,6 +3,8 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
@@ -165,7 +167,12 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Existing Client Code')]")
 	private MCWebElement existingClientLabel;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePlanPromoCode1:input:dropdowncomponent")
+	private MCWebElement promotionPlanDDwn;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:clientCustomerId:input:inputTextField")
+	private MCWebElement txtClientCustomerID;
+		
 	public String getWalletsFromPage(){
 		return getTextFromPage(createdWalletList);
 	}
@@ -306,11 +313,16 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
   	}
 
 	private void fillBatchDetails(Device device) {
-		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
-		clickWhenClickable(generateDeviceBatchBtn);
-		waitForWicket();
-		SimulatorUtilities.wait(10000);
-		context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());
+		if(device.getApplicationType().contains(ApplicationType.PRIMARY_DEVICE)){
+			WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
+			clickWhenClickable(generateDeviceBatchBtn);
+			waitForWicket();
+			SimulatorUtilities.wait(10000);
+			context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());
+		}else if(device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){
+			WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn,ConstantData.OPEN_BATCH);
+			WebElementUtils.selectDropDownByVisibleText(openBatchDdwn, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));			
+		}		
 		device.setBatchNumber(batchNumberTxt.getText());
 		logger.info(" *********** Batch number *********** : {}",device.getBatchNumber());		
 		clickNextButton();
@@ -325,7 +337,8 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
 		SimulatorUtilities.wait(1000);
-		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)) {
+		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)
+				|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)) {
 			enterText(existingDeviceNumberTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));
 			SimulatorUtilities.wait(8000);
 			moveToElementAndClick(existingClientLabel, 50, 50);
@@ -339,15 +352,19 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			SimulatorUtilities.wait(10000);
 			waitForWicket(driver());
 			selectByVisibleText(programCodeDDwn, device.getProgramCode());
-			SimulatorUtilities.wait(10000);	
-			waitForWicket(driver());
+			SimulatorUtilities.wait(10000);
+			selectByVisibleText(programCodeDDwn, device.getProgramCode());
+			
 		}
-		SimulatorUtilities.wait(1000);
+		SimulatorUtilities.wait(10000);
 		clickNextButton();
-		
-		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());		
-		WebElementUtils.selectDropDownByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
-		WebElementUtils.selectDropDownByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
+
+		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());
+		selectByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
+		if (Objects.nonNull(device.getPromotionPlanCode())) {
+			selectByVisibleText(promotionPlanDDwn, device.getPromotionPlanCode());
+		}
+		selectByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
 	}
 
 	private void fillProfileAndAddressDetailsAndClickNext(Device device) {
@@ -404,7 +421,10 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	private void fillProfile(Device device) {
 		Program program=context.get(ContextConstants.PROGRAM);
 		selectByVisibleText(branchCodeDDwn, device.getBranchCode());
-		
+		Map<String,String>map=context.get(TestContext.KEY_STORY_DATA);
+		if(map.containsKey("CLIENT_CUSTOMER_ID")){
+			WebElementUtils.enterText(txtClientCustomerID, map.get("CLIENT_CUSTOMER_ID"));
+		}
 		if(corporateClientCodeDDwn.isEnabled()){
 			selectByVisibleText(corporateClientCodeDDwn,device.getCorporateClientCode());	
 		}

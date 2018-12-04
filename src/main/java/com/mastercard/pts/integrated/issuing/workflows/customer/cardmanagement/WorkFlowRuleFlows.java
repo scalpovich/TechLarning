@@ -3,7 +3,6 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WorkFlowRule;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.WorkflowRulePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
@@ -15,28 +14,37 @@ public class WorkFlowRuleFlows {
 	
 	private WorkflowRulePage workFlowRulePage;
 	
-	public boolean userAddsNewWorkFlowRule(WorkFlowRule rule)
+	public boolean userAddsNewWorkFlowRule(String fieldName1,String fieldName2)
 	{
 		workFlowRulePage=navigator.navigateToPage(WorkflowRulePage.class);
-		workFlowRulePage.selectFieldName(rule);
-		workFlowRulePage.selectOperator1(rule);
-		workFlowRulePage.selectOperator1Value1(rule);
-		workFlowRulePage.enterOperator1Value2(rule);
-		workFlowRulePage.selectOperator2(rule);
-		workFlowRulePage.selectOperator2Value1(rule);
-		workFlowRulePage.enterOperator2Value2(rule);
-		workFlowRulePage.selectInsert(rule);
+		workFlowRulePage.selectFieldName(fieldName1);
+		workFlowRulePage.selectOperator1();
+		workFlowRulePage.selectOperator1Value1(fieldName2);
 		workFlowRulePage.clickAppendButton();
-		workFlowRulePage.clickRiskCheckBox(true);
-		workFlowRulePage.clickScoreCheckBox(true);
-		workFlowRulePage.clickCreditBureauCheckBox(true);
-		workFlowRulePage.enterPriorityText(rule);
-		return false;
+		workFlowRulePage.saveButtonClick();
+		return workFlowRulePage.successMessageDisplay();
 		
 	}
 	
-	public void fieldNameSelect()
+	public boolean userAddsWorkFlowRuleOnlyForCreditBureau(String fieldName1, String fieldName2) {
+		workFlowRulePage = navigator.navigateToPage(WorkflowRulePage.class);
+		return workFlowRulePage.workFlowRulesForCreditBureau(fieldName1, fieldName2);
+	}
+	
+	public boolean userAddsWorkFlowRuleOnlyForApplicationScoring(String fieldName1,String fieldName2)
 	{
-		
+		workFlowRulePage=navigator.navigateToPage(WorkflowRulePage.class);
+		return workFlowRulePage.workFlowRulesForApplicationScoring(fieldName1, fieldName2);
+	}
+	
+	public boolean userAddsWorkFlowRuleOnlyForRiskAnalysis(String fieldName1, String fieldName2) {
+		workFlowRulePage = navigator.navigateToPage(WorkflowRulePage.class);
+		return workFlowRulePage.workFlowRulesForRiskAnalysis(fieldName1, fieldName2);
+	}
+	
+	public boolean userAddsWorkFlowRuleForApplicationScoringCreditBureau(String fieldName1,String fieldName2)
+	{
+		workFlowRulePage=navigator.navigateToPage(WorkflowRulePage.class);
+		return workFlowRulePage.workFlowRulesForApplicationScoringCreditBureau(fieldName1, fieldName2);
 	}
 }

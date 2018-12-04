@@ -16,7 +16,6 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ApplicationType;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
-import com.mastercard.pts.integrated.issuing.domain.SubApplicationType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
@@ -284,6 +283,12 @@ public class ProgramPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//select[contains(@name,'countryWbPlanCode:input:dropdowncomponent')]")
 	private MCWebElement countryWhiteBlackListPlan;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "authoLevelCard:checkBoxComponent")
+	private MCWebElement chkBxCardCreditLimitValidation;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[starts-with(text(),'Limits')]")
+	private MCWebElement txtLimitLevelValidation;
 
 	private final String COUNTRY_WHITELIST_AND_BLACKLIST_PLAN="country white and black list";
 	public void addProgram(String programCode) {
@@ -408,7 +413,7 @@ public class ProgramPage extends AbstractBasePage {
 				if ("Reference Currency [R]".equalsIgnoreCase(program.getWalletToWalletTransferType()))
 					selectReferenceCurrency(program.getReferenceCurrency());
 			}
-			if (!productType.equalsIgnoreCase(ProductType.DEBIT)){
+			if (productType.equalsIgnoreCase(ProductType.PREPAID)){
 				selectCurrencyConversionBy(program.getCurrencyConversionBy());
 			}				
 			selectCalendarStartMonth(program.getCalendarStartMonth());
@@ -496,6 +501,12 @@ public class ProgramPage extends AbstractBasePage {
 		enterNoOfCurrencyAllowed(numberOfCurrencyAllowed);
 	}
 
+	public void selectIframeLoyaltyPlan(String loyaltyPlan) {
+		if (loyaltyPlan != null)
+			selectByVisibleText(loyaltyPlanDDwn, loyaltyPlan);
+
+	}
+
 	private void fillExtraSections(Program program, String productType) {
 		
 		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
@@ -511,7 +522,7 @@ public class ProgramPage extends AbstractBasePage {
 		selectDevicePlanPlan1DDwn(program.getDevicePlanPlan1());
 		
 		if(Objects.nonNull(program.getApplicationType()) || Objects.nonNull(program.getSubApplicationType())){
-			if(program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||program.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) && program.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)){
+			if(program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)||program.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)){
 			      selectDevicePlanPlan2DDwn(program.getDevicePlanPlan2());
 			}
 		}		
@@ -525,11 +536,14 @@ public class ProgramPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByOptionalVisibleText(documentPlanCodeDDwn, program.getDocumentChecklistPlan());
 		WebElementUtils.selectDropDownByOptionalVisibleText(mccRulePlanCodeDDwn, program.getMmcRulePlan());
 
-		if (productType.equalsIgnoreCase(ProductType.PREPAID)) {
+		if (productType.equalsIgnoreCase(ProductType.PREPAID)|| productType.equalsIgnoreCase(ProductType.CREDIT)) {
 			WebElementUtils.selectDropDownByOptionalVisibleText(markupFeePlanDDwn, program.getMarkUpFeePlan());
 			WebElementUtils.selectDropDownByOptionalVisibleText(stmtPlanCodeDDwn, program.getPrepaidStatementPlan());
 		}
-		
+		if (loyaltyPlanDDwn != null && Objects.nonNull(program.getLoyaltyPlan()) && !program.getLoyaltyPlan().isEmpty()) {
+			WebElementUtils.selectDropDownByOptionalVisibleText(loyaltyPlanDDwn, program.getLoyaltyPlan());
+		}
+
 		waitForLoaderToDisappear();
 		clickNextButton();
 		if (productType.equalsIgnoreCase(ProductType.CREDIT)) {
@@ -838,7 +852,6 @@ public class ProgramPage extends AbstractBasePage {
 		selectMarketingMessagePlan();
 		if (loyaltyPlan != null)
 			selectByVisibleText(loyaltyPlanDDwn, loyaltyPlan);
-
 	}
 
 	public void selectOtherPlans1() {
@@ -891,5 +904,24 @@ public class ProgramPage extends AbstractBasePage {
 		runWithinPopup("Edit Program", () -> {
 			editsProgram(program, editItem);
 		});
+	}
+	
+	public void editProgramToEnableCardLimit(String program) {
+		enterValueinTextBox(enterProgram, program);
+		clickWhenClickable(search);
+		waitForElementVisible(editProgram);
+		editFirstRecord();
+		Scrolldown(editProgram);
+		runWithinPopup(Constants.EDIT_PROGRAM_FRAME,()-> {
+			cardCreditLimitValidation();	
+		});
+		verifyOperationStatus();
+	}
+	
+	public void cardCreditLimitValidation(){
+		SimulatorUtilities.wait(2000);
+		clickWhenClickable(txtLimitLevelValidation);
+		ClickCheckBox(chkBxCardCreditLimitValidation,true);
+		clickSaveButton();
 	}
 }

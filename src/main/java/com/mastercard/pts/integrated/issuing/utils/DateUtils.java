@@ -10,9 +10,9 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -336,6 +336,46 @@ public class DateUtils {
 		logger.info("monthLastDate date : {}" ,monthLastDate);
 		logger.info("Diffrence Days : {}",ChronoUnit.DAYS.between(localDate, monthLastDate));
 		return (int) (ChronoUnit.DAYS.between(localDate, monthLastDate) + 1);
-	}	
+	}
 	
+	public static int getDaysDifferenceBetweenTwoDates(String fromDate,String toDate){			
+		LocalDate convertedDate1 = LocalDate.parse(fromDate, DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
+		LocalDate convertedDate2 = LocalDate.parse(toDate, DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
+		logger.info("Coverted Institution date : {} " , convertedDate1);
+		logger.info("Coverted Transaction date : {} " , convertedDate2);
+		logger.info("Diffrence Days : {}",ChronoUnit.DAYS.between(convertedDate1, convertedDate2));
+		return (int) (ChronoUnit.DAYS.between(convertedDate1, convertedDate2));
+	}
+	
+	public static int noOfDaysInYear(String institutionDate){
+		LocalDate convertedDate1 = LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
+		if(convertedDate1.isLeapYear()){
+			return 366;
+		}
+		return 365;
+	}
+	
+	public static int getNextDate(String institutionDate) {
+		LocalDate localDate = LocalDate.now();
+		logger.info("localDate date : {}", localDate);
+		LocalDate convertedDate = LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss"));
+		logger.info("Coverted Institution date : {} ", convertedDate);
+		logger.info("Diffrence Days : {}", ChronoUnit.DAYS.between(localDate, convertedDate));
+		return (int) (ChronoUnit.DAYS.between(localDate, convertedDate));
+	}
+	
+	public static LocalDate convertTransactionDateInLocalDateFormat(String institutionDate){
+		return LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+	}
+	
+	public static LocalDate convertInstitutionCurrentDateInLocalDateFormat(String institutionDate){
+		return LocalDate.parse(institutionDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+	}
+
+	public String getDateDDMMFormat(String currentDate) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
+		LocalDateTime dateTime = LocalDateTime.parse(currentDate, formatter);
+		DateTimeFormatter formatterddMM = DateTimeFormatter.ofPattern("ddMM");
+		return dateTime.format(formatterddMM);
+	}
 }

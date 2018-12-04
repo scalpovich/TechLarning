@@ -97,11 +97,29 @@ public class ApplicationBusinessMandatoryFieldsPage extends AbstractBasePage {
 			WebElementUtils.selectDropDownByValue(customerTypeDDwn, applicationBusinessMandatoryFields.getCustomerType());
 			SimulatorUtilities.wait(3000);
 			WebElementUtils.selectDropDownByVisibleText(programCodeDDwn, applicationBusinessMandatoryFields.getProgramCode());
-			clickOnElementWhenClickable(searchBtn);
+			clickSearchButton();
 			SimulatorUtilities.wait(2000);
 			selectMandatoryFields(applicationBusinessMandatoryFields.getMandatoryFields());
 			clickSaveButton();
 
+			verifyNoErrors();
+		});
+		verifyOperationStatus();
+	}
+	
+	public void addBusinessMandatoryField(String mandatoryField, ApplicationBusinessMandatoryFields applicationBusinessMandatoryFields) {
+		logger.info("Add Business Mandatory Fields: {}", mandatoryField);
+		clickAddNewButton();
+		runWithinPopup("Add Business Mandatory Fields", () -> {
+			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, applicationBusinessMandatoryFields.getProductType());
+			SimulatorUtilities.wait(2000);	
+			WebElementUtils.selectDropDownByValue(customerTypeDDwn, applicationBusinessMandatoryFields.getCustomerType());
+			SimulatorUtilities.wait(3000);
+			WebElementUtils.selectDropDownByVisibleText(programCodeDDwn, applicationBusinessMandatoryFields.getProgramCode());
+			clickOnElementWhenClickable(searchBtn);
+			SimulatorUtilities.wait(2000);
+			selectMandatoryFields(mandatoryField);
+			clickSaveButton();
 			verifyNoErrors();
 		});
 		verifyOperationStatus();
