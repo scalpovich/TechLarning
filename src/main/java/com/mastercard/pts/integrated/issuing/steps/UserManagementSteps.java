@@ -1,9 +1,10 @@
 package com.mastercard.pts.integrated.issuing.steps;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.RandomStringUtils;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -19,24 +20,26 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.processingcenter.Institution;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.pages.customer.administration.LoginPage;
 import com.mastercard.pts.integrated.issuing.pages.PageObjectFactory;
 import com.mastercard.pts.integrated.issuing.pages.agent.AgentHomePage;
 import com.mastercard.pts.integrated.issuing.pages.cardholder.CardholderHomePage;
 import com.mastercard.pts.integrated.issuing.pages.collect.CollectHomePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.InstitutionHomePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.InstitutionSelectionPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.administration.LoginPage;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.LoginWorkflow;
 
+import org.apache.commons.lang.RandomStringUtils;
+
 @Component
 public class UserManagementSteps {
 
 	public static final String KEY_USER_INSTRITUTIONS = "USER_INSTRITUTIONS";
-
+	
 	public static final String USER_INSTITUTION_SELECTED = "USER_INSTITUTION_SELECTED";
 
 	private static final String INCORRECT_PASSCODE = "incorrect";
@@ -64,7 +67,7 @@ public class UserManagementSteps {
 	private static final String NON_FUNDED_AGENT = "nonfundedagent";
 
 	private static final String USER_INSTITUTION_NON_DEFAULT = "USER_INSTITUTION_NON_DEFAULT";
-
+	
 	public static final String USERNAME = "USERNAME";
 
 	@Autowired
@@ -96,12 +99,6 @@ public class UserManagementSteps {
 			loginWorkflow.signOutCustomer();
 		if (AGENT.equalsIgnoreCase(type))
 			loginWorkflow.signOutAgent();
-	}
-
-	@When("user waits for $ms milliseconds")
-	@Then("user waits for $ms milliseconds")
-	public void givenUserwaitsformilliseconds(int ms) {
-		SimulatorUtilities.wait(ms);
 	}
 
 	@Then("user sign out from $type portal")
@@ -159,7 +156,7 @@ public class UserManagementSteps {
 		userDefaultInstitution = ConstantData.PROCESSING_INSTITUTION;
 		loginWorkflow.logInInstitutionAsAdmin(csrPortal, userDefaultInstitution);
 	}
-
+	
 	@Given("user is logged in customer portal as admin user in default institution")
 	@When("user is logged in customer portal as admin user in default institution")
 	public void givenUserIsLoggedInCustomerPortalInDefaultInstitution() {
@@ -167,8 +164,8 @@ public class UserManagementSteps {
 		String institution = Institution.createWithProvider(provider).buildAbbreviationAndCode();
 		loginWorkflow.logInInstitutionAsAdmin(csrPortal, institution);
 	}
-
-	@Given("user logs in with valid credentials")
+	
+    @Given("user logs in with valid credentials")
 	@When("user logs in with valid credentials")
 	public void whenUserLogsInWithValidCredentials() {
 		loginWorkflow.login(portal.getUserName(), portal.getPassword());
@@ -289,14 +286,13 @@ public class UserManagementSteps {
 		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
 		String loginErrorMessage = loginPage.getErrorMessage();
 		Assert.assertTrue("Incorrect login error message or Login is Successful", !loginErrorMessage.isEmpty());
-		Assert.assertEquals("Incorrect login error message", LoginPage.AUTHENTIFICATION_FAILED_COLLECT,
-				loginErrorMessage); // NOSONAR:
-									// isPresent()
-									// is
-									// checked
-									// in
-									// assertTrue
-									// statement
+		Assert.assertEquals("Incorrect login error message", LoginPage.AUTHENTIFICATION_FAILED_COLLECT, loginErrorMessage); // NOSONAR:
+																															// isPresent()
+																															// is
+																															// checked
+																															// in
+																															// assertTrue
+																															// statement
 	}
 
 	@Then("user sees message that user name or password is incorrect for cardholder portal")
@@ -304,8 +300,7 @@ public class UserManagementSteps {
 		LoginPage loginPage = pageFactory.getPage(LoginPage.class);
 		String loginErrorMessage = loginPage.getErrorMessageCollect();
 		Assert.assertTrue("login error message found", !loginErrorMessage.isEmpty());
-		Assert.assertEquals("Incorrect login error message", LoginPage.AUTHENTIFICATION_FAILED_CARDHOLDER,
-				loginErrorMessage);
+		Assert.assertEquals("Incorrect login error message", LoginPage.AUTHENTIFICATION_FAILED_CARDHOLDER, loginErrorMessage);
 	}
 
 	@Then("list of available institutions is displayed")
@@ -333,14 +328,14 @@ public class UserManagementSteps {
 		String expectedInstitution = userDefaultInstitution.replace('[', '(').replace(']', ')');
 		Assert.assertEquals("Default institution is not selected", expectedInstitution, selectedInstitution);
 	}
-
 	@When("user wait for one hour to perform transaction")
-	public void whenUserWaitForOneHourToPerformTransaction() {
+	public void whenUserWaitForOneHourToPerformTransaction()
+	{
 		SimulatorUtilities.wait(ConstantData.STATIC_WAIT_FOR_PRESCREENING);
 	}
-
 	@When("user wait for one 21 mins to perform transaction")
-	public void whenUserWaitToPerformCrossBorderTransaction() {
+	public void whenUserWaitToPerformCrossBorderTransaction()
+	{
 		SimulatorUtilities.wait(1260000);
 	}
 	@When("user wait for $time min to perform certain activity")
