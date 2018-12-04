@@ -166,6 +166,10 @@ public class ContextConstants {
 	
 	public static final String PROMOTION_PLAN_POINTS_EARNED = "PROMOTION_PLAN_POINTS_EARNED";
 	
+	public static final String PIN_OFFSET_FILE = "PIN_OFFSET_FILE";
+	
+	public static final String DAT_FILE_NAME = "DAT_FILE_NAME";
+	
 	private ContextConstants() {
 	}
 

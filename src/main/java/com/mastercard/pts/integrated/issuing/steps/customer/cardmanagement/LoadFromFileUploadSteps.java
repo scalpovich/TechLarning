@@ -12,6 +12,7 @@ import java.util.List;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,9 +27,11 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Proc
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
-import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.AuthorizationSearchWorkflow;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoadFromFileUploadWorkflow;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProcessBatchesFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.transaction.TransactionWorkflow;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.AuthorizationSearchWorkflow;
 
 @Component
 public class LoadFromFileUploadSteps {
@@ -46,13 +49,15 @@ public class LoadFromFileUploadSteps {
 	private TransactionWorkflow transWorkflow;
 	
 	@Autowired
-	
-	private AuthorizationSearchWorkflow authSearchWorkFlow;
+	private ProcessBatchesFlows processBatchesFlows;
 
 	@Autowired
 	private LinuxBox linuxBox;
+	
+	@Autowired
+	private AuthorizationSearchWorkflow authSearchWorkFlow;
 
-	private File notFileName;
+	private File notFileName, pinOffsetFileName;
 
 	private String jobId;
 
@@ -92,14 +97,7 @@ public class LoadFromFileUploadSteps {
 		transaction.getAdjustmentTransactionDetails().add(details);
 		loadFromFileUploadWorkflow.createAdjustmentTransaction(transaction);
 	}
-	
-	@Given("user generates Reversal for Transaction")
-	@When("user generates Reversal for Transaction")
-	@Then("user generates Reversal for Transaction")
-	public void userGenerateReversalForTransaction(){
-		Device device = context.get(ContextConstants.DEVICE);
-		authSearchWorkFlow.generateReversalForTransaction(device.getDeviceNumber());
-	}
+
 	@Given("user performs adjustment transaction with $amount amount")
 	@When("user performs adjustment transaction with $amount amount")
 	@Then("user performs adjustment transaction with $amount amount")
@@ -125,7 +123,7 @@ public class LoadFromFileUploadSteps {
 		transaction.getAdjustmentTransactionDetails().add(details);
 		loadFromFileUploadWorkflow.createAdjustmentTransaction(transaction);
 	}
-	
+
 	@Given("user gets attached wallet details for device")
 	@When("user gets attached wallet details for device")
 	@Then("user gets attached wallet details for device")
@@ -181,7 +179,19 @@ public class LoadFromFileUploadSteps {
 		loadFromFileUploadWorkflow.loadIncomingIPM(notFileName);
 		batch.setBatchFileName(notFileName.getName());
 	}
-
+	
+	
+	@When("User uploads the updated PinOffset file to Server")
+	@Then("User uploads the updated PinOffset file to Server")
+	public void thenUserUploadsTheUpdatedPinOffsetFileToServer() {
+		ProcessBatches batch=new ProcessBatches();
+		String batchFile = context.get(ContextConstants.PIN_OFFSET_FILE);
+		pinOffsetFileName = new File(batchFile);
+		loadFromFileUploadWorkflow.loadIncomingPinOffset(pinOffsetFileName);
+		batch.setBatchFileName(pinOffsetFileName.getName());
+		SimulatorUtilities.wait(15000);
+	}	 
+	
 	@When("user processes upload batch for $type")
 	public void whenUserProcessesUploadBatchForPrepaid(String type) {
 		ProcessBatches batch = ProcessBatches.getBatchData();
@@ -206,5 +216,13 @@ public class LoadFromFileUploadSteps {
 	@Then("batch is successful")
 	public void thenBatchisSuccesful() {
 		assertEquals("SUCCESS [2]", jobStatus);
+	}
+	
+	@Given("user generates Reversal for Transaction")
+	@When("user generates Reversal for Transaction")
+	@Then("user generates Reversal for Transaction")
+	public void userGenerateReversalForTransaction(){
+		Device device = context.get(ContextConstants.DEVICE);
+		authSearchWorkFlow.generateReversalForTransaction(device.getDeviceNumber());
 	}
 }
