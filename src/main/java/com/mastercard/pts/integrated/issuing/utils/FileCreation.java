@@ -1,10 +1,12 @@
 package com.mastercard.pts.integrated.issuing.utils;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.PrintWriter;
@@ -73,7 +75,6 @@ public class FileCreation {
 	@Autowired
 	private DataProvider provider;
 	
-
 	@Autowired
 	private TestContext context;
 
@@ -149,13 +150,44 @@ public class FileCreation {
 		return content;
 	}
 
+	public void updatePinOffsetFileWithAcknowledgement(String filename, String contents) throws IOException {
+		logger.info("***** File Updation Started : {} ******", filename);
+
+		BufferedWriter writer = null;
+		BufferedReader reader = null;
+		String line = null;
+		filenameStatic = context.get(ContextConstants.PIN_OFFSET_FILE);
+
+		try {
+			File oldfile = new File(filename);
+			File newFile = new File(filenameStatic);
+
+			reader = new BufferedReader(new FileReader(oldfile));
+			writer = new BufferedWriter(new FileWriter(newFile, true));
+
+			line = (reader.readLine()).replace(System.lineSeparator(), "");
+			writer.write(line);
+			writer.write(contents);
+		} catch (IOException e) {
+			logger.error(ConstantData.EXCEPTION, e);
+			// NO SONAR. We are propagating exception to another class where it
+			// is thrown
+			MiscUtils.propagate(e);
+		} finally {
+			writer.close();
+			reader.close();
+		}
+		logger.info("***** File Updation Completed *****");
+	}
+
 	public void setTransactionLine(String transactionLine) {
 		this.transactionLine = transactionLine;
 	}
 
 	public static FileCreation createFile(KeyValueProvider provider) {
 		FileCreation file = new FileCreation();
-		file.setFilename("TXU" + provider.getString(INSTITUTION_CODE) + DateUtils.getDate() + DateUtils.getTime() + ".DAT");
+		file.setFilename(
+				"TXU" + provider.getString(INSTITUTION_CODE) + DateUtils.getDate() + DateUtils.getTime() + ".DAT");
 		file.setHeader("HD" + provider.getString(INSTITUTION_CODE) + DateUtils.getDateTimeDDMMYYYYHHMMSS() + "2.0");
 		file.setFooter("FT" + "000000001");
 		return file;
@@ -166,7 +198,8 @@ public class FileCreation {
 		String date = nextDay(DateUtils.getDateddMMyyyy(), "Mastercard");
 		String time = DateUtils.getTime();
 
-		filenameStatic = "TT057T0." + date + "-" + time.substring(0, 2) + "-" + time.substring(2, 4) + "-" + time.substring(4) + ".001";
+		filenameStatic = "TT057T0." + date + "-" + time.substring(0, 2) + "-" + time.substring(2, 4) + "-"
+				+ time.substring(4) + ".001";
 		fileCreation.setFilename(filenameStatic);
 		File file = new File(filenameStatic);
 
@@ -179,7 +212,8 @@ public class FileCreation {
 					writer.println(createCERMCRecord());
 				}
 			}
-			writer.print("T00016600001359263799930                                                                                                     ");
+			writer.print(
+					"T00016600001359263799930                                                                                                     ");
 		} catch (IOException e) {
 			logger.error("Fail to create page object: {}", e);
 			throw Throwables.propagate(e);
@@ -308,8 +342,8 @@ public class FileCreation {
 		String toleranceLoad = getUploadFileFromDatamap("Tolerance Load");
 		String toleranceRefund = getUploadFileFromDatamap("Tolerance Refund");
 		String record = "DR" + "|1|" + currencyExchangeRatesPage.getCode(getUploadFileFromDatamap("Rate Origin")) + "|"
-				+ currencyExchangeRatesPage.getCode(getUploadFileFromDatamap("Source Currency")) + "|" + currencyExchangeRatesPage.getCode(getUploadFileFromDatamap("Destination Currency")) + "|"
-				+ date + "|" + createRateString(getUploadFileFromDatamap("BUY_RATE")) + "|" + createRateString(getUploadFileFromDatamap("MID_RATE")) + "|"
+				+ currencyExchangeRatesPage.getCode(getUploadFileFromDatamap("Source Currency")) + "|" + currencyExchangeRatesPage.getCode(getUploadFileFromDatamap("Destination Currency")) 
+				+ "|" + date + "|" + createRateString(getUploadFileFromDatamap("BUY_RATE")) + "|" + createRateString(getUploadFileFromDatamap("MID_RATE")) + "|"
 				+ createRateString(getUploadFileFromDatamap("SELL_RATE")) + "|";
 		if (programCode != null)
 			record = record + currencyExchangeRatesPage.getCode(getUploadFileFromDatamap("Program")) + "|";
@@ -332,12 +366,9 @@ public class FileCreation {
 		InstitutionCreation institute;
 		if (context.get(ContextConstants.INSTITUTION) != null) {
 			institute = context.get(ContextConstants.INSTITUTION);
-			return "HD" + "|" + institute.getInstitutionCode() + "|" + date
-					+ "|" + "2.0";
+			return "HD" + "|" + institute.getInstitutionCode() + "|" + date + "|" + "2.0";
 		} else
-			return "HD" + "|"
-					+ MapUtils.fnGetInputDataFromMap("INSTITUTION_CODE") + "|"
-					+ date + "|" + "2.0";
+			return "HD" + "|" + MapUtils.fnGetInputDataFromMap("INSTITUTION_CODE") + "|" + date + "|" + "2.0";
 	}
 
 	public String createCERMCRecord() {
@@ -347,7 +378,8 @@ public class FileCreation {
 	}
 
 	public String createCERMCHeader(String date, String time) {
-		return "H" + date.replace("-", "") + time + "1" + "                                                                                                             ";
+		return "H" + date.replace("-", "") + time + "1"
+				+ "                                                                                                             ";
 	}
 
 	// Currency Exchange Rates File Upload: Bank
@@ -365,14 +397,11 @@ public class FileCreation {
 
 		if (context.get(ContextConstants.INSTITUTION) != null) {
 			instituteCreation = context.get(ContextConstants.INSTITUTION);
-			filenameStatic = "CER" + instituteCreation.getInstitutionCode()
-					+ DateUtils.getDate() + DateUtils.getTime()
+			filenameStatic = "CER" + instituteCreation.getInstitutionCode() + DateUtils.getDate() + DateUtils.getTime()
 					+ getSequenceNumber() + ".DAT";
 		} else {
-			filenameStatic = "CER"
-					+ MapUtils.fnGetInputDataFromMap("INSTITUTION_CODE")
-					+ DateUtils.getDate() + DateUtils.getTime()
-					+ getSequenceNumber() + ".DAT";
+			filenameStatic = "CER" + MapUtils.fnGetInputDataFromMap("INSTITUTION_CODE") + DateUtils.getDate()
+					+ DateUtils.getTime() + getSequenceNumber() + ".DAT";
 		}
 		fileCreation.setFilename(filenameStatic);
 		File file = new File(filenameStatic);
@@ -425,9 +454,11 @@ public class FileCreation {
 		this.getUploadedValues = uploadedValues;
 	}
 
-	public String createApplicationUploadForFile(String institutionCode, String customerType) throws FileNotFoundException {
+	public String createApplicationUploadForFile(String institutionCode, String customerType)
+			throws FileNotFoundException {
 		int totalRecords = 0;
-		String fileName = "APPPR" + institutionCode + DateUtils.getDateTimeDDMMYYHHMMSS() + MiscUtils.generateRandomNumberAsString(6) + ".DAT";
+		String fileName = "APPPR" + institutionCode + DateUtils.getDateTimeDDMMYYHHMMSS()
+				+ MiscUtils.generateRandomNumberAsString(6) + ".DAT";
 		HashMap<String, HashMap<String, String>> applicationUploadMap;
 		File file = new File(fileName);
 		String remoteDir = linuxFolderPath+applicationUpload;
@@ -469,9 +500,11 @@ public class FileCreation {
 		return fileName;
 	}
 
-	public String createApplicationUploadForFileStaticVirtualCard(String institutionCode, String customerType) throws FileNotFoundException {
+	public String createApplicationUploadForFileStaticVirtualCard(String institutionCode, String customerType)
+			throws FileNotFoundException {
 		int totalRecords = 0;
-		String fileName = "APPPR" + institutionCode + DateUtils.getDateTimeDDMMYYHHMMSS() + MiscUtils.generateRandomNumberAsString(6) + ".DAT";
+		String fileName = "APPPR" + institutionCode + DateUtils.getDateTimeDDMMYYHHMMSS()
+				+ MiscUtils.generateRandomNumberAsString(6) + ".DAT";
 		HashMap<String, HashMap<String, String>> applicationUploadMap;
 		File file = new File(fileName);
 		String remoteDir = Constants.APPLICATION_UPLOAD_PREPAID_FILE_PATH;
@@ -514,7 +547,8 @@ public class FileCreation {
 		return fileName;
 	}
 	
-	public String createApplicationUploadFile(String INSTITUTION_CODE, String customerType, String cardType) throws Exception {
+	public String createApplicationUploadFile(String INSTITUTION_CODE, String customerType, String cardType)
+			throws Exception {
 		DeviceRange deviceRange = context.get(ContextConstants.DEVICE_RANGE);
 		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		Program program = context.get(ContextConstants.PROGRAM);
@@ -541,9 +575,11 @@ public class FileCreation {
 		logger.info("Length Of all Files:{}", listOfFiles.length);
 
 			if (cardType.equalsIgnoreCase("prepaid")) {
-				fileName = "APPPR" + INSTITUTION_CODE + DateUtils.getDateTimeDDMMYYHHMMSS() + MiscUtils.generateRandomNumberAsString(6) + ".DAT";
+			fileName = "APPPR" + INSTITUTION_CODE + DateUtils.getDateTimeDDMMYYHHMMSS()
+					+ MiscUtils.generateRandomNumberAsString(6) + ".DAT";
 			} else if (cardType.equalsIgnoreCase("credit")) {
-				fileName = "APPCR" + INSTITUTION_CODE + DateUtils.getDateTimeDDMMYYHHMMSS() + MiscUtils.generateRandomNumberAsString(6) + ".DAT";
+			fileName = "APPCR" + INSTITUTION_CODE + DateUtils.getDateTimeDDMMYYHHMMSS()
+					+ MiscUtils.generateRandomNumberAsString(6) + ".DAT";
 			}
 			HashMap<String, HashMap<String, String>> applicationUploadMap = new HashMap<>();
 			File file = new File(fileName);
@@ -563,19 +599,25 @@ public class FileCreation {
 				for (int i = 0; i < applicationUploadMap.size(); i++) {
 					if (true == dataReader.iterateUploadDataFromExcelMap("Test Record " + (i + 1))) {
 
-						if (DeviceType.MAGNETIC_STRIPE_CARD.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
+					if (DeviceType.MAGNETIC_STRIPE_CARD.toUpperCase()
+							.contains(devicePlan.getDeviceType().toUpperCase())) {
 							deviceType = "1";
 						} else if (DeviceType.EMV_CARD.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
 							deviceType = "2";
-						} else if (DeviceType.PHYSICAL_NFC_DEVICE_MAG_STRIPE_PAYPASS.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
+					} else if (DeviceType.PHYSICAL_NFC_DEVICE_MAG_STRIPE_PAYPASS.toUpperCase()
+							.contains(devicePlan.getDeviceType().toUpperCase())) {
 							deviceType = "3";
-						} else if (DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
+					} else if (DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS.toUpperCase()
+							.contains(devicePlan.getDeviceType().toUpperCase())) {
 							deviceType = "4";
-						} else if (DeviceType.PHYSICAL_NFC_DEVICE_PAYPASS.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
+					} else if (DeviceType.PHYSICAL_NFC_DEVICE_PAYPASS.toUpperCase()
+							.contains(devicePlan.getDeviceType().toUpperCase())) {
 							deviceType = "5";
-						} else if (DeviceType.STATIC_VIRTUAL_CARD.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
+					} else if (DeviceType.STATIC_VIRTUAL_CARD.toUpperCase()
+							.contains(devicePlan.getDeviceType().toUpperCase())) {
 							deviceType = "7";
-						} else if (DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
+					} else if (DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.toUpperCase()
+							.contains(devicePlan.getDeviceType().toUpperCase())) {
 							deviceType = "8";
 						}
 						if(customerType.equals(CustomerType.INDIVIDUAL)){
@@ -602,7 +644,8 @@ public class FileCreation {
 
 			if (cardType.equalsIgnoreCase("credit")) {
 				readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(fileName, cardType);
-				context.put(CreditConstants.FILEUPLOAD_IN_BULK, readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(fileName, cardType));
+			context.put(CreditConstants.FILEUPLOAD_IN_BULK,
+					readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(fileName, cardType));
 			}
 			linuxBox.upload(file.getPath(), remoteDir);
 
@@ -714,10 +757,12 @@ public class FileCreation {
 		List<Integer> indexRequiredToSeachDeviceOnHelpdesk = new LinkedList<Integer>();
 		Map<Integer, Object> mapFileUpload = new HashMap<>();
 		if (cardType.equalsIgnoreCase("credit")) {
-			indexRequiredToSeachDeviceOnHelpdesk = dataReader.dataProviderFileUploadHelpDesk("AllUploadTestData", "Credit Card File");
+			indexRequiredToSeachDeviceOnHelpdesk = dataReader.dataProviderFileUploadHelpDesk("AllUploadTestData",
+					"Credit Card File");
 			logger.info("Values :{}", indexRequiredToSeachDeviceOnHelpdesk);
 		} else if (cardType.equalsIgnoreCase("prepaid")) {
-			indexRequiredToSeachDeviceOnHelpdesk = dataReader.dataProviderFileUploadHelpDesk("AllUploadTestData", "Prepaid Card File");
+			indexRequiredToSeachDeviceOnHelpdesk = dataReader.dataProviderFileUploadHelpDesk("AllUploadTestData",
+					"Prepaid Card File");
 		}
 		String formNumber = "";
 		String name = "";
@@ -764,7 +809,8 @@ public class FileCreation {
 	}
 	
 	public int countLines(String fileName) throws IOException {
-		LineNumberReader reader = new LineNumberReader(new FileReader(System.getProperty("user.dir") + "\\" + fileName));
+		LineNumberReader reader = new LineNumberReader(
+				new FileReader(System.getProperty("user.dir") + "\\" + fileName));
 		int countNumberOfLinesInDatFile = 0;
 		String lineRead = "";
 		while ((lineRead = reader.readLine()) != null) {
@@ -774,4 +820,20 @@ public class FileCreation {
 		reader.close();
 		return countNumberOfLinesInDatFile;
 	}
+
+	public String getNewPinOffsetFile(String localDestination) {
+		File[] listOfFiles = new File(localDestination).listFiles();
+		String firstFileName = listOfFiles[0].getName();
+		String matchingFile = "";
+
+		for (File file : listOfFiles) {
+			if (file.isFile() && file.getName().contains(firstFileName))
+				continue;
+			else
+				matchingFile = file.getName();
+}
+		return matchingFile;
+
+	}
+
 }

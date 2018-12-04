@@ -6,6 +6,11 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.junit.Assert.assertEquals;
+import java.io.File;
+
+import com.mastercard.pts.integrated.issuing.steps.customer.transaction.TransactionSteps;
+
 import org.jbehave.core.annotations.Composite;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
@@ -63,6 +68,13 @@ import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.MCGFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramSetupWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.TransactionFeeWaiverPlanFlows;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CarrierAcknowledgement;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SendToCarrier;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.CarrierAcknowledgementWorkflow;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceTrackingWorkflow;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.SendToCarrierWorkflow;
+import com.mastercard.pts.integrated.issuing.steps.customer.transaction.TransactionSteps;
 
 @Component
 public class ProgramSetupSteps {
@@ -87,6 +99,15 @@ public class ProgramSetupSteps {
 
 	@Autowired
 	private TransactionFeeWaiverPlanFlows transactionFeeWaiverPlanFlows;
+	
+	@Autowired
+	private SendToCarrierWorkflow sendToCarrierWorkflow;
+
+	@Autowired
+	private CarrierAcknowledgementWorkflow carrierAcknowledgementWorkflow;
+	
+	@Autowired
+	DeviceTrackingWorkflow deviceTrackingWorkflow;
 	
 	private DeviceJoiningAndMemberShipFeePlan deviceJoiningAndMemberShipFeePlan;
 
@@ -163,6 +184,7 @@ public class ProgramSetupSteps {
 	private static final String DEFAULT_PRESENTMENT_TIME_LIMIT = "3";
 	
 	private static final String MERCHANT_CODE = "5999";
+
 	@When("prepaid $deviceType device is available with balance amount")
 	@Given("prepaid $deviceType device is available with balance amount")
 	@Composite(steps = { "When User fills Statement Message Plan for prepaid product", "When User fills Marketing Message Plan for prepaid product", "When User fills Prepaid Statement Plan",
@@ -1715,13 +1737,6 @@ public class ProgramSetupSteps {
 		transactionLimitPlan = TransactionLimitPlan.createWithProvider(dataProvider);
 		transactionLimitPlan.setTransactionLimitPlanCode(provider.getString(limitType));
 	}
-	@When("user edits Presentment Time Limit in $plan")
-	public void userEditsPresentmentTimeLimit(String plan) {
-		DevicePlan device = context.get(ContextConstants.DEVICE_PLAN);
-		device.setTransSetPresentmentTimeLimit(DEFAULT_PRESENTMENT_TIME_LIMIT);
-		device.setMerchantCode(MERCHANT_CODE);
-		programSetupWorkflow.editPlan(plan,device,program);
-	}
 	
 	public void setMCGLimitPlan(){
 		if (context.get(ContextConstants.MCG_LIMIT_PLAN) != null) {
@@ -1735,5 +1750,39 @@ public class ProgramSetupSteps {
 		}
 	}
 
+	@When("user processes Send To Carrier batch for $fileType File Type and product $product")
+	public void thenProcessesSendToCarrierBatch(String fileType, String product) {
+		SendToCarrier sendToCarrier = SendToCarrier.createWithProvider(provider);
+		String batchFile = context.get("PIN_OFFSET_FILE");
+		sendToCarrier.setProductType((ProductType.fromShortName(product)).toUpperCase());
+		sendToCarrier.setFileType(fileType);
+		sendToCarrier.setFileName((new File(batchFile)).getName());
+		sendToCarrierWorkflow.processSendToCarrierBatch(sendToCarrier);
+	}
 
+	@When("$type processes Carrier Acknowledgement batch for $fileType File Type")
+	@Then("$type processes Carrier Acknowledgement batch for $fileType File Type")
+	public void thenProcessesCarrierAcknowledgementBatch(String type, String fileType) {
+		CarrierAcknowledgement carrierAcknowledgement = CarrierAcknowledgement.createWithProvider(provider);
+		carrierAcknowledgement.setProductType(ProductType.fromShortName(type));
+		carrierAcknowledgement.setFileType(fileType);
+		carrierAcknowledgement.setFileName(context.get(ContextConstants.DAT_FILE_NAME));
+		carrierAcknowledgementWorkflow.processCarrierAcknowledgementBatch(carrierAcknowledgement);
+}
+
+	@When("search with device in device tracking screen and status of carrier")
+	@Then("search with device in device tracking screen and status of carrier")
+	public void thenSearchWithDeviceInDeviceTrackingScreenAndStatusOfCarrier() {
+
+		Device device = context.get(ContextConstants.DEVICE);
+		assertEquals(deviceTrackingWorkflow.searchInDeviceTrackingWithDeviceAndCarrierStatus(device), provider.getString("CARRIER_STATUS"));
+	}
+	
+	@When("user edits Presentment Time Limit in $plan")
+	public void userEditsPresentmentTimeLimit(String plan) {
+		DevicePlan device = context.get(ContextConstants.DEVICE_PLAN);
+		device.setTransSetPresentmentTimeLimit(DEFAULT_PRESENTMENT_TIME_LIMIT);
+		device.setMerchantCode(MERCHANT_CODE);
+		programSetupWorkflow.editPlan(plan,device,program);
+	}
 }
