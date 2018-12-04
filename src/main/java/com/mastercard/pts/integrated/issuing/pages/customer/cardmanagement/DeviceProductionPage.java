@@ -3,7 +3,6 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequestbatch;
@@ -41,9 +39,10 @@ public class DeviceProductionPage extends AbstractBasePage {
 	TestContext context;
 	// ------------- Card Management > Institution Parameter Setup > Institution
 	// Currency [ISSS05]
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "[fld_fqn=batchNumber]")
 	private MCWebElement txtBatchNumber;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Product Type')]//following-sibling::td[2]//select")
 	private MCWebElement productTypeDDwn;
 
@@ -79,7 +78,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr")
 	private MCWebElements rowSize;
-
+	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class='headers']//a/span")
 	private MCWebElements deviceNumberHeaderTxt;
 
@@ -124,7 +123,7 @@ public class DeviceProductionPage extends AbstractBasePage {
 		verifyOperationStatus();
 
 	}
-
+	
 	public void processDeviceProductionBatchForAllForFileUpload(DeviceProductionBatch batch) {
 		List<String> batchNumbers = context.get(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION);
 		waitForLoaderToDisappear();
@@ -139,12 +138,12 @@ public class DeviceProductionPage extends AbstractBasePage {
 		String batchNumber = context.get(CreditConstants.BATCH_NUMBER_FILEUPLOAD);
 		waitForLoaderToDisappear();
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-		WebElementUtils.enterText(batchNumberTxt, batchNumber);
+		WebElementUtils.enterText(batchNumberTxt,batchNumber);
 		waitAndSearchForRecordToAppear();
 		clickWhenClickable(processAllBtn);
 		verifyOperationStatus();
 	}
-
+	
 	public void selectProduct(BulkDeviceRequestbatch bulkdeviceGenBatch) {
 		selectByVisibleText(productTypeDDwn, bulkdeviceGenBatch.getProduct());
 	}
@@ -247,13 +246,13 @@ public class DeviceProductionPage extends AbstractBasePage {
 		waitAndSearchForRecordToExistForSupplementary();
 		verifyOperationStatus();
 	}
-
+	
 	protected void waitForRecordAndAssignDevice() {
 		waitAndSearchForRecordToAppear();
 		context.put(CreditConstants.EXISTING_DEVICE_NUMBER, deviceNumberFetch.getText());
 		context.put(CreditConstants.DEVICE_NUMBER, deviceNumberFetch.getText());
 		selectFirstRecord();
-		clickProcessSelectedButton();
+		clickProcessSelectedButton();		
 	}
 
 	public int deviceNumberHeaderIndexFetch() {
@@ -265,12 +264,11 @@ public class DeviceProductionPage extends AbstractBasePage {
 		}
 		return index + 1;
 	}
-
+	
 	public List<String> deviceNumbers() {
 		List<WebElement> allDeviceNumbers = new ArrayList<WebElement>();
 		List<String> allDeviceNumberfText = new ArrayList<String>();
-		String deviceNumberToFetch = String.format(
-				"//table[@class='dataview']//tr[@class='even' or 'odd']/td['%s']/span", deviceNumberHeaderIndexFetch());
+		String deviceNumberToFetch=String.format("//table[@class='dataview']//tr[@class='even' or 'odd']/td['%s']/span",deviceNumberHeaderIndexFetch());
 		allDeviceNumbers = Elements(deviceNumberToFetch);
 
 		for (int i = 0; i < allDeviceNumbers.size(); i++) {

@@ -12,18 +12,18 @@ public class AuthorizationRequest {
 	public static final String TRANSACTION_AMOUNT = "TRANSACTION_AMOUNT";
 	
 	private String deviceNumber;
-
+	
 	private String transactionCurrency;
-
+	
 	private String mcc;
 
 	private String transactionAmount;
-
+	
 	private String memo;
 	
 	private String cvv2;
 
-	public static AuthorizationRequest createWithProvider(KeyValueProvider provider) {
+	public static AuthorizationRequest createWithProvider(KeyValueProvider provider){
 		AuthorizationRequest request = new AuthorizationRequest();
 		request.setTransactionCurrency(provider.getString(CURRENCY));
 		request.setMcc(provider.getString(MCC_CODE));
@@ -31,7 +31,7 @@ public class AuthorizationRequest {
 		request.setMemo(ConstantData.GENERIC_DESCRIPTION);
 		return request;
 	}
-
+	
 	public String getDeviceNumber() {
 		return deviceNumber;
 	}
