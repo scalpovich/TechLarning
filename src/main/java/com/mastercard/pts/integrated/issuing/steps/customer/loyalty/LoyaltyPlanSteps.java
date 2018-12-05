@@ -56,7 +56,7 @@ public class LoyaltyPlanSteps {
 	
 	@Then("user verifies debited loyalty points for event based loyalty plan after posting")
 	public void verifyLoyaltyPointsForEventBasedPlanDebited(){
-		Assert.assertEquals(context.get(Constants.AVAILABLE_LOYALTY_POINTS), Double.valueOf(provider.getString("EVENT_POINTS")) + Double.valueOf(provider.getString("EVENT_POINTS_TO_BE_DEBITED")));
+		Assert.assertEquals(context.get(Constants.AVAILABLE_LOYALTY_POINTS), Double.valueOf(provider.getString("EVENT_POINTS")) - Double.valueOf(provider.getString("EVENT_POINTS_TO_BE_DEBITED")));
 		
 	}
 	
