@@ -27,9 +27,8 @@ Then user sign out from customer portal
 
 
 Scenario: 1.2-Loyalty program setup - Credit
-Given setting json values in excel for Credit
-When user is logged in institution
-And user raises an authorization request
+Given user is logged in institution
+When user raises an authorization request
 Then status of request is "approved"
 And search Purchase authorization and verify Successful status
 When user verifies available balance after transaction
@@ -39,9 +38,8 @@ And user wait for 5 min to perform certain activity
 Then user sign out from customer portal
 
 Scenario: 1.3-Loyalty program setup - Credit
-Given setting json values in excel for Credit
-When user is logged in institution
-And pre-clearing and Loyalty Calc batches are run
+Given user is logged in institution
+When pre-clearing and Loyalty Calc batches are run
 And user verifies rewards and redemption screen
 And device has "normal" status
 And user verifies current wallet balance amount information after loyalty redemption CREDIT device

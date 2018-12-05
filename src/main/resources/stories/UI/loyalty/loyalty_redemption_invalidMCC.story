@@ -22,17 +22,15 @@ And user notes down available Card limit for card
 Then user sign out from customer portal
 
 Scenario: 1.2-Loyalty points redemption - credit -invalidMCC
-Given setting json values in excel for Credit
-When user is logged in institution
-And user raises an authorization request with invalid MCC
+Given user is logged in institution
+When user raises an authorization request with invalid MCC
 Then status of request is "approved"
 And search Purchase authorization and verify Successful status
 When user verifies available balance after transaction
 Then user sign out from customer portal
 
 Scenario: 1.3-Loyalty points redemption - credit -invalidMCC
-Given setting json values in excel for Credit
-When user is logged in institution
-And pre-clearing and Loyalty Calc batches are run
+Given user is logged in institution
+When pre-clearing and Loyalty Calc batches are run
 And user verifies rewards and redemption screen
 Then user sign out from customer portal

@@ -25,9 +25,8 @@ Then user notes down available Card limit for card
 And user sign out from customer portal
 
 Scenario: 1.2- Loyalty program setup - credit
-Given setting json values in excel for Credit
-When user is logged in institution
-And user raises an authorization request
+Given user is logged in institution
+When user raises an authorization request
 Then status of request is "approved"
 And search Purchase authorization and verify Successful status
 When user verifies available balance after transaction
@@ -37,8 +36,7 @@ Then user wait for 5 min to perform certain activity
 And user sign out from customer portal
 
 Scenario: 1.3- Loyalty program setup - credit
-Given setting json values in excel for Credit
-When user is logged in institution
-And pre-clearing and Loyalty Calc batches are run
+Given user is logged in institution
+When pre-clearing and Loyalty Calc batches are run
 Then user verifies loyalty details for Credit device
 And user sign out from customer portal
