@@ -92,7 +92,7 @@ public class ReconciliationSteps {
 		processBatches.add(preClearingBatch);
 		processBatches.add(prepaidEodProcessBatch);
 		
-		if(provider.getString("BATCH_NAME_EOD") != null && provider.getString("BATCH_NAME_EOD").equalsIgnoreCase("EOD-Credit")) {
+		if(provider.getString("BATCH_NAME_EOD") != null && provider.getString("BATCH_NAME_EOD").equalsIgnoreCase("End Of Day - Credit [DAILY]")) {
 			prepaidEodProcessBatch = null;
 			prepaidEodProcessBatch = new ProcessBatches();
 			prepaidEodProcessBatch.setProductType(provider.getString(BATCH_TYPE));

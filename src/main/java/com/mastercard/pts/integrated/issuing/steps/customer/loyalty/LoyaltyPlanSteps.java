@@ -80,7 +80,7 @@ public class LoyaltyPlanSteps {
 		loyaltyplan.setMaxloyaltypoints(provider.getString("MAX_AMT_EACH_PERIOD"));
 		}
 		if(field.contains("AutoRedemption day")){
-			String currentDateString = dbutil.getCurrentDateForInstitution("303045");
+			String currentDateString = dbutil.getCurrentDateForInstitution(context.get("USER_INSTITUTION_SELECTED"));
 			LocalDate date = LocalDate.parse(currentDateString, DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss"));
 			loyaltyplan.setAutoRedemptionDay(String.valueOf(date.getDayOfMonth()));
 		}

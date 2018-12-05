@@ -483,5 +483,10 @@ public class Constants {
 	public static final String INSTITUTION_NUMBER_QUERY_END = "') from dual";
 	public static final String INSTITUTION_DATE = "INSTITUTION_DATE";
 	public static final String USER_INSTITUTION_SELECTED = "USER_INSTITUTION_SELECTED";
-
+	public static final String MCC_CODE_INVALID = "MCC_CODE_INVALID";
+	public static final String EVENT_POINTS ="EVENT_POINTS";
+	public static final String EVENT_POINTS_TO_BE_DEBITED ="EVENT_POINTS_TO_BE_DEBITED";
+	public static final String AUTO_REDEEM_MIN_AMT ="AUTO_REDEEM_MIN_AMT";
+	public static final String AUTO_REDEEM_DAY ="AUTO_REDEEM_DAY";
+	
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 @Component
@@ -79,9 +80,8 @@ public class EventBasedLoyaltyPlan implements HasCodeAndDescription {
 		EventBasedLoyaltyPlan plan = new EventBasedLoyaltyPlan();
 		plan.setEventCode(MiscUtils.generate6CharAlphaNumeric());
 		plan.setEventDescription(ConstantData.GENERIC_DESCRIPTION);
-		//plan.setProductType(provider.getString("PROMOTION_CURRENCY"));
-		plan.setEventPoints(provider.getString("EVENT_POINTS"));
-		plan.setEventPointsTobeDebited(provider.getString("EVENT_POINTS_TO_BE_DEBITED"));
+		plan.setEventPoints(provider.getString(Constants.EVENT_POINTS));
+		plan.setEventPointsTobeDebited(provider.getString(Constants.EVENT_POINTS_TO_BE_DEBITED));
 		return plan;
 	}
 		

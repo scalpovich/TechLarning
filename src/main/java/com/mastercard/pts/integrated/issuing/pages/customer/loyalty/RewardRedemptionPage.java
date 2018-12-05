@@ -67,7 +67,7 @@ public class RewardRedemptionPage extends AbstractBasePage {
 			clickSaveButton();
 			SimulatorUtilities.wait(5000);
 			while (checkButton(saveBtn)) {
-				saveBtn.click();
+				clickSaveButton();
 				SimulatorUtilities.wait(2000);
 
 			}

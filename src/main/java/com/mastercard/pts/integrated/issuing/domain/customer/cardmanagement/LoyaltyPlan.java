@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 @Component
@@ -79,8 +80,8 @@ public class LoyaltyPlan implements HasCodeAndDescription {
 		LoyaltyPlan plan = new LoyaltyPlan();
 		plan.setLoyaltyPlanCode(MiscUtils.generate8CharAlphaNumeric() + MiscUtils.generateRandomNumberAsString(1));
 		plan.setDescription(ConstantData.GENERIC_DESCRIPTION);
-		plan.setAutoRedemptionMinAmt(provider.getString("AUTO_REDEEM_MIN_AMT"));
-		plan.setAutoRedemptionDay(provider.getString("AUTO_REDEEM_DAY"));
+		plan.setAutoRedemptionMinAmt(provider.getString(Constants.AUTO_REDEEM_MIN_AMT));
+		plan.setAutoRedemptionDay(provider.getString(Constants.AUTO_REDEEM_DAY));
 		return plan;
 	}
 

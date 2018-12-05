@@ -18,6 +18,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Auth
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.workflows.LoginWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ManualAuthorizationWorkflow;
 
@@ -59,7 +60,7 @@ public class ManualAuthorizationSteps {
 		AuthorizationRequest request = AuthorizationRequest.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE);
 		request.setDeviceNumber(device.getDeviceNumber());
-		request.setMcc(provider.getString("MCC_CODE_INVALID"));
+		request.setMcc(provider.getString(Constants.MCC_CODE_INVALID));
 		successMessage = manualAuthorizationWorkflow.authorizeDevice(request);
 	}
 

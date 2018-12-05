@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.PromotionPlan;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -37,6 +38,9 @@ public class PromotionPlanPage extends AbstractBasePage {
 	
 	@Autowired
 	public DBUtility dbutil;
+	
+	@Autowired
+	private TestContext context;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
 	private MCWebElement promotionalPlanCodeTxt;
@@ -92,9 +96,6 @@ public class PromotionPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@fld_fqn='lypCalculationMethod']/input[@value='C']")
 	private MCWebElement calculationMethodCumulativeTXn;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = ".//*[@alt='Edit Record']")
-	private MCWebElement editBtn;
-
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@fld_fqn='lypPromotionType']/input[@value='I']")
 	private MCWebElement promotionTypeissuance;
 
@@ -133,13 +134,13 @@ public class PromotionPlanPage extends AbstractBasePage {
 	}
 	
 	public void inputFromDate() {
-		String currentDateString = dbutil.getCurrentDateForInstitution("303045");
+		String currentDateString = dbutil.getCurrentDateForInstitution(context.get("USER_INSTITUTION_SELECTED"));
 		LocalDate date = LocalDate.parse(currentDateString, DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss")).plusDays(1);
 		WebElementUtils.pickDate(startDateDPkr, date);
 	}
 	
 	public void inputToDate(){
-		String currentDateString = dbutil.getCurrentDateForInstitution("303045");
+		String currentDateString = dbutil.getCurrentDateForInstitution(context.get("USER_INSTITUTION_SELECTED"));
 		LocalDate date = LocalDate.parse(currentDateString, DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss")).plusDays(100);
 		WebElementUtils.pickDate(endDateDPkr, date);
 		
@@ -228,7 +229,7 @@ public class PromotionPlanPage extends AbstractBasePage {
 		WebElementUtils.enterText(lypPromotionCodeTxt, plan.getPromotionPlanCode());
 		clickSearchButton();
 		SimulatorUtilities.wait(5000);
-		editBtn.click();
+		editFirstRecord();
 		runWithinPopup("Edit Promotion Plan", () -> {
 			waitForElementVisible(startDateDPkr);
 			WebElementUtils.pickDate(startDateDPkr, LocalDate.now());
