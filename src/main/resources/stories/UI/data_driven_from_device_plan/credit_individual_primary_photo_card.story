@@ -28,14 +28,14 @@ Meta:
 @TC857968
 Given user is logged in institution
 When client photo/flat file download batch is present under download in batch level privilege page
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario: 1.3 To verify that Super Admin user is able to provide access for new download batch ?Get Photo Card?  to operations user
 Meta:
 @TC857970
 Given user is logged in customer portal as admin user in default institution
-Then admin provides access to download photo/flat file download batch
-And user sign out from customer portal
+When admin provides access to download photo/flat file download batch
+Then user sign out from customer portal
 
 Scenario: 1.4 To verify the screen details when ?Get Photo Card? batch is selected on Process batches screen
 Meta:

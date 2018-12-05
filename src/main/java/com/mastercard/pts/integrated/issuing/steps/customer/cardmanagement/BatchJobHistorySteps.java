@@ -16,6 +16,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BatchJobHistory;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequestbatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchJobHistoryFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchJobHistoryWorkflow;
@@ -68,7 +69,7 @@ public class BatchJobHistorySteps {
 	@Then("user verifies batch job history with job id")
 	public void userSearchBatchJobHistoryWithJobID() {
 		ProcessBatches batches = context.get(ContextConstants.PROCESSED_BATCHES);
-		assertEquals("SUCCESS [2]", batchJobHistoryWorkflow.searchRecordByJobIDInBatchJobHistory(batches).getStatus());
+		assertEquals(Constants.SUCCESS_STATUS, batchJobHistoryWorkflow.searchRecordByJobIDInBatchJobHistory(batches).getStatus());
 	}
 	@When("check status in batch job history for $batchType batch and $batch")
 	@Then("check status in batch job history for $batchType batch and $batch")

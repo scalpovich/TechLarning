@@ -29,7 +29,7 @@ public class BatchLevelPrivilegesSteps {
 	private BatchLevelPriviledge batchlevelprevidge;
 
 	@Autowired
-	private BatchLevelPrivilegesWorkflow batchlevelprevFlow;
+	private BatchLevelPrivilegesWorkflow batchLevelPrevFlow;
 
 	@Autowired
 	TestContext context;
@@ -41,7 +41,7 @@ public class BatchLevelPrivilegesSteps {
 				.getPortalByType(Portal.TYPE_CUSTOMER);
 		login.Login(userPortal, adminUser);
 		batchlevelprevidge.setEntityType("User");
-		batchlevelprevFlow
+		batchLevelPrevFlow
 				.setAllBatchLevelTabPriviledgesForUsers(applicationUser);
 	}
 
@@ -50,18 +50,19 @@ public class BatchLevelPrivilegesSteps {
 	public void assignBatchLevelPrivileges(String entityType) {
 		UserCreation userCreation = context.get(ContextConstants.USER);
 		batchlevelprevidge.setEntityType(entityType);
-		batchlevelprevFlow.setAllBatchLevelTabPriviledgesForUsers(userCreation
+		batchLevelPrevFlow.setAllBatchLevelTabPriviledgesForUsers(userCreation
 				.buildDescriptionAndCode());
 	}
 
 	@When("client photo/flat file download batch is present under download in batch level privilege page")
 	@Then("client photo/flat file download batch is present under download in batch level privilege page")
 	public void thenPhotoFileDownloadBatchPresentInBatchLevelPriviledgeScreen(){
-		Assert.assertTrue("batch is not present", batchlevelprevFlow.verifyPhotoFileDownloadBatchPresent());
+		Assert.assertTrue("batch is not present", batchLevelPrevFlow.verifyPhotoFileDownloadBatchPresent());
 	}
 	
 	@Then("admin provides access to download photo/flat file download batch")
+	@When("admin provides access to download photo/flat file download batch")	
 	public void whenAdminProvidesAccessToDownloadPhotoFile(){
-		batchlevelprevFlow.provideAccessToDownloadPhotoFileDownloadBatch();
+		batchLevelPrevFlow.provideAccessToDownloadPhotoFileDownloadBatch();
 	}
 }
