@@ -98,8 +98,8 @@ And for Primary Device and New Client user fills Device Range section for credit
 And credit device is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device
-And process batch for DOWNLOAD type and Batch name CARDHOLDER_DUMP
-And check status in batch job history for DOWNLOAD batch and CARDHOLDER_DUMP
+And process batch for DOWNLOAD type and Batch name CardholderDump
+And check status in batch job history for DOWNLOAD batch and CardholderDump
 Then photo reference number is present in card holder dump file
 And user sign out from customer portal
 

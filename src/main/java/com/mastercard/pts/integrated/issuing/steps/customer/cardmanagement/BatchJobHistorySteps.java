@@ -75,25 +75,9 @@ public class BatchJobHistorySteps {
 		ProcessBatches batches = context.get(ContextConstants.PROCESSED_BATCHES);
 		assertEquals(Constants.SUCCESS_STATUS, batchJobHistoryWorkflow.searchRecordByJobIDInBatchJobHistory(batches).getStatus());
 	}
-	@When("check status in batch job history for $batchType batch and $batch")
-	@Then("check status in batch job history for $batchType batch and $batch")
-	public void checkBatchStatusForClientPhotoFlatFile(@Named("batchType") String batchType, @Named("batch") String batch) {		
-		if ("download".equalsIgnoreCase(batchType)) {
-			batchjobhistory.setBatchType(BATCH_TYPE_DOWNLOAD);
-		}else if ("upload".equalsIgnoreCase(batchType)) {
-			batchjobhistory.setBatchType(BATCH_TYPE_UPLOAD);
-		}		
-		
-		batchjobhistory.setJobIdBatchJobHistory(context.get(ContextConstants.JOB_ID));
-		if("CLIENT_PHOTO_DOWNLOAD".equalsIgnoreCase(batch)){
-			batchjobhistory.setBatch(CLIENT_PHOTO_FLAT_FILE_DOWNLOAD_BATCH);
-		} else if("CARDHOLDER_DUMP".equalsIgnoreCase(batch)) {
-			batchjobhistory.setBatch(CARDHOLDER_DUMP_BATCH);
-		}
-		Assert.assertTrue( "Batch job status is not displayed success",batchjobhistoryflows.verifyBatchJobHistoryStatusDisplayed(batchjobhistory) );
-	}
 	
 	@When("check status in batch job history for $batchType batch and $batchName")
+	@Then("check status in batch job history for $batchType batch and $batch")
 	public boolean checkStatusInBatchJobHistory(String batchType, String batchName) {
 		if (batchType.equalsIgnoreCase("DOWNLOAD")) {
 			batchjobhistory.setBatchType(Constants.BATCH_TYPE_DOWNLOAD);
