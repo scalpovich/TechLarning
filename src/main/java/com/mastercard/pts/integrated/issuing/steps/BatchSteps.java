@@ -322,8 +322,8 @@ public class BatchSteps {
 			String pdfPassword = LocalDate.now().format(DateTimeFormatter.ofPattern("ddMMyyyy")).substring(0, 4);
 			batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(localDate.substring(0, 6), tempDirectory.toString(), "VIRTUAL_DEVICE_PRODUCTION", "proc");
 			logger.info("Local Path of Folder: {}", tempDirectory.toString());
-			File[] newPDFfILE = getLastFileName(tempDirectory.toString());
-			String absolutePathofPDF = tempDirectory.toString() + "\\" + newPDFfILE[0].getName();
+			File[] newPDFFile = getLastFileName(tempDirectory.toString());
+			String absolutePathofPDF = tempDirectory.toString() + "\\" + newPDFFile[0].getName();
 			logger.info("Absolute Path of PDF File: {}", absolutePathofPDF);
 			reportVerificationWorkFlow.verificationOfPDFFileForLVCCard(absolutePathofPDF, pdfPassword);
 
