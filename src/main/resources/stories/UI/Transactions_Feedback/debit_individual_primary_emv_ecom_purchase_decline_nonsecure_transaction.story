@@ -24,12 +24,12 @@ And user activates device through helpdesk
 And user has wallet number information for debit device
 And user performs adjustment transaction
 And user has current wallet balance amount information for debit device
-And user edits All field of 3D Eccom Security for product debit and interchange MasterCard as uncheck
+And user edits All field of 3D Ecom Security for product debit and interchange MasterCard as uncheck
 Then user sign out from customer portal
 
 Scenario:1.2 Check Decline All Non Secured Transaction Check
 Given user is logged in institution
-When user edits Decline all non secured transaction field of 3D Eccom Security for product debit and interchange MasterCard as check
+When user edits Decline all non secured transaction field of 3D Ecom Security for product debit and interchange MasterCard as check
 Then user sign out from customer portal
 
 Scenario:1.3 Pin Generation
@@ -50,5 +50,5 @@ Then MAS simulator is closed
 
 Scenario:1.5 Uncheck Decline All Non Secured Transaction Check
 Given user is logged in institution
-When user edits Decline all non secured transaction field of 3D Eccom Security for product debit and interchange MasterCard as uncheck
+When user edits Decline all non secured transaction field of 3D Ecom Security for product debit and interchange MasterCard as uncheck
 Then user sign out from customer portal

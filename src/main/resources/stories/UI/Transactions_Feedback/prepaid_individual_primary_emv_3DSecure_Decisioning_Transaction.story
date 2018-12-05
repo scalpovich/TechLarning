@@ -23,18 +23,18 @@ And user activates device through helpdesk
 And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
-And user edits All field of 3D Eccom Security for product prepaid and interchange MasterCard as uncheck
+And user edits All field of 3D Ecom Security for product prepaid and interchange MasterCard as uncheck
 Then user sign out from customer portal
 And embossing file batch was generated in correct format
 
 Scenario:1.2 Check Decline All Non Secured Transaction Check
 Given user is logged in institution
-When user edits Decline Merchant Risk Based Decisioning Transaction field of 3D Eccom Security for product prepaid and interchange MasterCard as check and interchange Mastercard as check
+When user edits Decline Merchant Risk Based Decisioning Transaction field of 3D Ecom Security for product prepaid and interchange MasterCard as check and interchange Mastercard as check
 Then user sign out from customer portal
 
 Scenario:1.3 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
-Given User set Decline Merchant Risk Based Decisioning Transaction flag true
+Given User sets Decline Merchant Risk Based Decisioning Transaction flag true
 When perform an 3D_SECURE_CAVV MAS transaction
 And user is logged in institution
 And search E-Commerce Transaction* authorization and verify 100-Do Not Honour status
@@ -44,5 +44,5 @@ Then MAS simulator is closed
 
 Scenario:1.4 Uncheck Decline All Non Secured Transaction Check
 Given user is logged in institution
-When user edits Decline Merchant Risk Based Decisioning Transaction field of 3D Eccom Security for product prepaid and interchange MasterCard as uncheck
+When user edits Decline Merchant Risk Based Decisioning Transaction field of 3D Ecom Security for product prepaid and interchange MasterCard as uncheck
 Then user sign out from customer portal

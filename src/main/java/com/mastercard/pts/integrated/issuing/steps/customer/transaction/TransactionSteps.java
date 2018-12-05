@@ -728,15 +728,15 @@ public class TransactionSteps {
 		}
 	}
 
-	@When("User update DE Value for Decline Merchant Risk Based Decision Transaction to $type for $transaction")
-	@Given("User update DE Value for Decline Merchant Risk Based Decision Transaction to $type")
+	@When("User updates DE Value for Decline Merchant Risk Based Decision Transaction to $type for $transaction")
+	@Given("User updates DE Value for Decline Merchant Risk Based Decision Transaction to $type")
 	public void userUpdateDEValueForRiskBasedDecisionTransaction(String value, String transaction) {
 		Transaction transactionData = transactionProvider.loadTransaction(transaction);
-		transactionData.setDeKeyValuePairDynamic("048.42.01.02", value);
+		transactionData.setDeKeyValuePairDynamic(ConstantData.UNIVERSAL_CARDHOLDER_AUTHENTICATION_FIELD, value);
 	}
 
-	@Given("User set Decline Merchant Risk Based Decisioning Transaction flag $type")
-	@When("User set Decline Merchant Risk Based Decisioning Transaction flag $type")
+	@Given("User sets Decline Merchant Risk Based Decisioning Transaction flag $type")
+	@When("User sets Decline Merchant Risk Based Decisioning Transaction flag $type")
 	public void userSetMIDTIDFlagAndCaseValue(boolean declineMerchantRiskBased) {
 		this.declineMerchantRiskBased = declineMerchantRiskBased;
 	}

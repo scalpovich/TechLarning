@@ -21,4 +21,4 @@ And device has "normal" status
 And user sign out from customer portal
 
 Scenario:1.2 Download PDF File for LVC Crad
-Given User Download and Verify PDF File for LVC Card
+Given User Downloads and Verify PDF File for LVC Card

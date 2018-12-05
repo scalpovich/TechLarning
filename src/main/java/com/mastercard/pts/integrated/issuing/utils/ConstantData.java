@@ -93,6 +93,7 @@ public class ConstantData {
 	public static final String JSON_DATA_DRIVEN_EXECUTION = "dataDrivenExecution";
 	public static final String VIRTUAL_DEVICE_TYPE = "virtual";
 	public static final String RESPONSE_CODE_DESCRIPTION = "Capture";
+	public static final String UNIVERSAL_CARDHOLDER_AUTHENTICATION_FIELD = "048.42.01.02";
 
 
 	public static final String INVALID_CVV = "123";	

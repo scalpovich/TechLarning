@@ -48,8 +48,8 @@ public class ThreeDEcommerceSecurityParametersSteps {
 		threeDECommerceSecurityParametersFlows.edit3DESParams(threeDESParams);
 	}
 
-	@Given("user edits $field field of 3D Eccom Security for product $type and interchange $interchange as $status")
-	@When("user edits $field field of 3D Eccom Security for product $type and interchange $interchange as $status")
+	@Given("user edits $field field of 3D Ecom Security for product $type and interchange $interchange as $status")
+	@When("user edits $field field of 3D Ecom Security for product $type and interchange $interchange as $status")
 	public void userUnchecksAllFields(String fields, String type, String interchange, String status) {
 		ThreeDECommerceSecurityParameters threeDESParams = new ThreeDECommerceSecurityParameters();
 		threeDESParams.setCheckStatus(status);
