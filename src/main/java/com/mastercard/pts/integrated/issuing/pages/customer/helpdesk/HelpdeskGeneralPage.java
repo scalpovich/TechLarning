@@ -427,7 +427,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private MCWebElement chkBxNewDeviceNumber;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'Reason :')]//following::select[@class='mandatoryFlag textf']")
-	private MCWebElement replaceDeviceRequestReasonDdwn;
+	private MCWebElement replaceDeviceRequestReasonDDwn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'New Pack ID :')]//following::input[@class='mandatoryFlag textf']")
 	private MCWebElement txtnewPackID;
@@ -1905,7 +1905,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 
 	public MCWebElement getReplaceDeviceRequestReasonDdwn() {
-		return replaceDeviceRequestReasonDdwn;
+		return replaceDeviceRequestReasonDDwn;
 	}
 
 	public MCWebElement getstoplistReasonDDwn() {
