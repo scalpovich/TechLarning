@@ -2,6 +2,8 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -9,6 +11,7 @@ import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 public class DeviceRange {
     
+	private static final Logger logger = LoggerFactory.getLogger(DeviceRange.class);
 	private static final int BIN_RANGE_SIZE = 10;
 	private static final String	ISSUER_BIN	 = 	"ISSUER_BIN";
 	private static final String	BRANCH	 = 	"BRANCH";
@@ -195,6 +198,7 @@ public class DeviceRange {
 	public String getIssuerBinCode(String issuerBin){
 		issuerBin =issuerBin.substring(issuerBin.indexOf("[") + 1);
 		issuerBin = issuerBin.substring(0, issuerBin.indexOf("]"));
+		logger.info("Issuer Bin is {}", issuerBin);
 		return issuerBin;
 	}
 

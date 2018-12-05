@@ -27,6 +27,8 @@ public class GenericReport implements HasCodeAndDescription{
     private String highRiskMcc;
 	private String highRiskCountry;
 	private String highRiskMerchant;
+	private String cvv2;
+	private String expiryDate;
 	
 	private static final String HIGH_RISK_MCC = "HIGH_RISK_MCC";
 	private static final String HIGH_RISK_COUNTRY = "HIGH_RISK_COUNTRY";
@@ -119,6 +121,25 @@ public class GenericReport implements HasCodeAndDescription{
 	public Map<String, String> getFieldToValidate(){
 		return reportFields;
 	}
+	
+	
+	public String getCVV2() {
+		return cvv2;
+	}
+
+	public void setCVV2(String cvv2) {
+		this.cvv2 = cvv2;
+	}
+	
+	public String getExpiryDate() {
+		return expiryDate;
+	}
+
+	public void setExpiryDate(String expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+	
+
 	
 	public static GenericReport createWithProvider(KeyValueProvider provider){
 		GenericReport report = new GenericReport();

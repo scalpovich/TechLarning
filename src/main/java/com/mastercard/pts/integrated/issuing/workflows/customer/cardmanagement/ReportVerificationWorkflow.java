@@ -21,6 +21,8 @@ import com.mastercard.pts.integrated.issuing.pages.collect.administration.Admini
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ApplicationPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceActivityPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReportVerificationPage;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.pages.customer.loyalty.LoyaltyPointsPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.steps.UserManagementSteps;
@@ -45,6 +47,10 @@ public class ReportVerificationWorkflow {
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
 	public static final int BILL_AMOUNT_INDEX_VALUE = 3;
+	
+	private static final int PDF_KEY_EXPIRY=17;
+			
+	private static final int PDF_KEY_CVC2=15;
 
 	Boolean verificationStatus;
 	
@@ -174,5 +180,37 @@ public class ReportVerificationWorkflow {
 		Map<Object, String> reportContent = getReportContent(report);
 		String[] points = reportContent.get(Constants.AVAILABLE_LOYALTY_POINTS).split("\\s");
 		return points[0];
+	}
+
+	public void verificationOfPDFFileForLVCCard(String reportURL, String password) {
+		PDFUtils pdfutils = new PDFUtils();
+		GenericReport report = new GenericReport();
+		Device device = context.get(ContextConstants.DEVICE);
+		report.setDeviceNumber(device.getDeviceNumber());
+		report.setReportUrl(reportURL);
+		MiscUtils.reportToConsole("PDF Report URL is : " + report.getReportUrl());
+		report.setPassword("JOHN" + password);
+		MiscUtils.reportToConsole("PDF Password is : " + report.getPassword());
+		report.setReportName("LVC");
+		report.setReportRegEx();
+		Map<Object, String> records = pdfutils.getContentRow(report);
+		records.forEach((k, v) -> {
+			if (v.contains("Card Number")) {
+				assertTrue("Card Number is incorrect in PDF File", v.contains(report.getDeviceNumber()));
+			}
+			if (v.contains("CVC2")) {
+				String cvv2 = records.get(PDF_KEY_CVC2);
+				String[] cvvValue = cvv2.trim().split(":");
+				logger.info(cvvValue[1]);
+				device.setCvv2Data(cvvValue[1]);
+			}
+			if (v.contains("Expiry")) {
+				String expiryDate = records.get(PDF_KEY_EXPIRY);
+				String[] expiryValues = expiryDate.trim().split(":");
+				logger.info(expiryValues[1]);
+				device.setExpirationDate(expiryValues[1]);
+			}
+			context.put(ContextConstants.DEVICE, device);
+		});
 	}
 }
