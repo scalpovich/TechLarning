@@ -40,10 +40,10 @@ public class EventBasedLoyaltyPointsPage extends AbstractBasePage{
 	private MCWebElement iconEventBasedLoyaltyPointsAdd;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='lyeProductType']/select")
-	private MCWebElement ddwnProductType;
+	private MCWebElement productTypeDdwn;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='lyeCrDrIndicator']/select")
-	private MCWebElement ddwnCrDrType;	
+	private MCWebElement crDrTypeDdwn;	
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='lyeEventDescription']/input")
 	private MCWebElement descriptionTxt;
@@ -60,14 +60,14 @@ public class EventBasedLoyaltyPointsPage extends AbstractBasePage{
 		clickAddNewButton();
 		runWithinPopup(ADD_EVENT_BASED_LOYALTY_POINTS, () -> {
 		WebElementUtils.enterText(txtEventCode, plan.getEventCode());
-		WebElementUtils.selectDropDownByVisibleText(ddwnProductType, plan.getProductType());
+		WebElementUtils.selectDropDownByVisibleText(productTypeDdwn, plan.getProductType());
 		WebElementUtils.enterText(descriptionTxt, plan.getEventDescription());
 		if(plan.getType().contains("Debit")){
 			WebElementUtils.enterText(pointsTxt, plan.getEventPointsTobeDebited());	
 		}else{
 			WebElementUtils.enterText(pointsTxt, plan.getEventPoints());
 		}
-		WebElementUtils.selectDropDownByVisibleText(ddwnCrDrType, plan.getType());
+		WebElementUtils.selectDropDownByVisibleText(crDrTypeDdwn, plan.getType());
 		clickSaveButton();
 		});
 	}

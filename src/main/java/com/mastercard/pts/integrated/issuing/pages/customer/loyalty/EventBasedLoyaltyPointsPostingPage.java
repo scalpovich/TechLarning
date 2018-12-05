@@ -37,10 +37,10 @@ public class EventBasedLoyaltyPointsPostingPage extends AbstractBasePage{
 	private MCWebElement deviceNumberTxt;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "productType:input:dropdowncomponent")
-	private MCWebElement ddwnProductType;
+	private MCWebElement productTypeDdwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "lyeEventCode:input:dropdowncomponent")
-	private MCWebElement ddwnEventName;	
+	private MCWebElement eventNameDdwn;	
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "memo:input:textAreaComponent")
 	private MCWebElement memoTxt;
@@ -56,8 +56,8 @@ public class EventBasedLoyaltyPointsPostingPage extends AbstractBasePage{
 		clickAddNewButton();
 		runWithinPopup(ADD_EVENT_BASED_LOYALTY_POINTS_POSTING, () -> {
 		WebElementUtils.enterText(deviceNumberTxt, plan.getDeviceNumber());
-		WebElementUtils.selectDropDownByVisibleText(ddwnProductType, plan.getProductType());
-		WebElementUtils.selectDropDownByVisibleText(ddwnEventName, plan.getEventName());		
+		WebElementUtils.selectDropDownByVisibleText(productTypeDdwn, plan.getProductType());
+		WebElementUtils.selectDropDownByVisibleText(eventNameDdwn, plan.getEventName());		
 		WebElementUtils.enterText(memoTxt, plan.getMemo());		
 		clickSaveButton();
 		});
