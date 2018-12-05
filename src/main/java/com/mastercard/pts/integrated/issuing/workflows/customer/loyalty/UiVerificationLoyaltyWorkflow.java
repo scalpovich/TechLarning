@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.loyalty;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoyaltyPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.EventBasedLoyaltyPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.loyalty.EventBasedLoyaltyPointsPosting;
@@ -19,12 +20,18 @@ import com.mastercard.pts.integrated.issuing.pages.customer.loyalty.PromotionPla
 import com.mastercard.pts.integrated.issuing.pages.customer.loyalty.RedemptionPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.loyalty.RewardRedemptionPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 
 @Workflow
 public class UiVerificationLoyaltyWorkflow {
 
 	@Autowired
 	private Navigator navigator;
+	
+
+	@Autowired
+	private TestContext context;
+	
 
 	public void verifyEventBasedLoyaltyPointsPage() {
 		EventBasedLoyaltyPointsPage page = navigator.navigateToPage(EventBasedLoyaltyPointsPage.class);
@@ -43,13 +50,15 @@ public class UiVerificationLoyaltyWorkflow {
 
 	public void verifyLoyaltyPlanPage() {
 		LoyaltyPlanPage page = navigator.navigateToPage(LoyaltyPlanPage.class);
-		page.verifyUiOperationStatus();
+		String instCode= context.get(Constants.USER_INSTITUTION_SELECTED);
+		page.verifyUiOperationStatus(instCode);
 	}
 	
 	
 	public void addLoyaltyPlanWithAutoRedemption(LoyaltyPlan loyaltyplan) {
 		LoyaltyPlanPage page = navigator.navigateToPage(LoyaltyPlanPage.class);
-		page.addLoyaltyPlanforAutoRedemption(loyaltyplan);
+		String instCode= context.get(Constants.USER_INSTITUTION_SELECTED);
+		page.addLoyaltyPlanforAutoRedemption(loyaltyplan,instCode);
 	}
 
 
@@ -83,23 +92,27 @@ public class UiVerificationLoyaltyWorkflow {
 
 	public void verifyPromotionPlanPage(PromotionPlan plan) {
 		PromotionPlanPage page = navigator.navigateToPage(PromotionPlanPage.class);
-		page.verifyUiOperationStatus(plan);
+		String instCode = context.get(Constants.USER_INSTITUTION_SELECTED);
+		page.verifyUiOperationStatus(plan,instCode);
 	}
 
 	public void verifyPromotionPlanwithMCG(PromotionPlan plan) {
 		PromotionPlanPage page = navigator.navigateToPage(PromotionPlanPage.class);
-		page.verifyUiOperationStatuswithMCG(plan);
+		String instCode = context.get(Constants.USER_INSTITUTION_SELECTED);
+		page.verifyUiOperationStatuswithMCG(plan,instCode);
 
 	}
 
 	public void addPromotionPlanwithCumulative(PromotionPlan plan) {
 		PromotionPlanPage page = navigator.navigateToPage(PromotionPlanPage.class);
-		page.addPromotionPlanwithCumulativeTxn(plan);
+		String instCode = context.get(Constants.USER_INSTITUTION_SELECTED);
+		page.addPromotionPlanwithCumulativeTxn(plan,instCode);
 	}
 
 	public void addPromotionPlanwithIssuance(PromotionPlan plan) {
 		PromotionPlanPage page = navigator.navigateToPage(PromotionPlanPage.class);
-		page.addPromotionPlanwithIssuance(plan);
+		String instCode = context.get(Constants.USER_INSTITUTION_SELECTED);
+		page.addPromotionPlanwithIssuance(plan,instCode);
 	}
 
 	public void editPromotionPlanDate(PromotionPlan plan) {

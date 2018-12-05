@@ -46,9 +46,6 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 
 
 	@Autowired
-	private TestContext context;
-	
-	@Autowired
 	private DBUtility dbUtil;
 	
 	@Autowired
@@ -123,36 +120,36 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = ".//*[@alt='Edit Record']")
 	private MCWebElement editBtn;
 
-	public void verifyUiOperationStatus() {
+	public void verifyUiOperationStatus(String instCode) {
 		logger.info(ADD_LOYALTY_PLAN);
-		addLoyaltyPlanConfiguration();
+		addLoyaltyPlanConfiguration(instCode);
 		verifyUiOperation(ADD_LOYALTY_PLAN);
 	}
 
-	public void addLoyaltyPlanConfiguration() {
+	public void addLoyaltyPlanConfiguration(String instCode) {
 		logger.info(ADD_LOYALTY_PLAN);
 		clickAddNewButton();
 		runWithinPopup(ADD_LOYALTY_PLAN, () -> {
-			addLoyaltyPlan();
+			addLoyaltyPlan(instCode);
 			verifyAlreadyExistsAndClickCancel();
 		});
 	}
 	
 
 		
-	public void inputFromDate() {
-		String currentDateString = dbUtil.getCurrentDateForInstitution(context.get(Constants.USER_INSTITUTION_SELECTED));
+	public void inputFromDate(String instCode) {
+		String currentDateString = dbUtil.getCurrentDateForInstitution(instCode);
 		LocalDate date = LocalDate.parse(currentDateString, DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss")).plusDays(1);
 		WebElementUtils.pickDate(planStartDateDPkr, date);
 	}
 
 
-	private void addLoyaltyPlan() {
+	private void addLoyaltyPlan(String instCode) {
 		WebElementUtils.enterText(lytPlanCodeTxt, CustomUtils.randomAlphaNumeric(5).toUpperCase());
 		WebElementUtils.enterText(lytDescriptionTxt, TEXT);
 		WebElementUtils.selectDropDownByVisibleText(currencyDDwn, currency);
 		WebElementUtils.enterText(lytValidityNumTxt, NUMBER);
-		inputFromDate();
+		inputFromDate(instCode);
 		WebElementUtils.enterText(maxPtsPerCycleTxt, NUMBER);
 		WebElementUtils.selectDropDownByIndex(periodUnitDDwn, NUMBER1);
 		WebElementUtils.enterText(lytMinPtsTxt, NUMBER);
@@ -164,14 +161,14 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 		clickSaveButton();
 	}
 	
-	public void addLoyaltyPlanforAutoRedemption(LoyaltyPlan plan) {
+	public void addLoyaltyPlanforAutoRedemption(LoyaltyPlan plan, String instCode) {
 		clickAddNewButton();
 		runWithinPopup(ADD_LOYALTY_PLAN, () -> {
 		WebElementUtils.enterText(lytPlanCodeTxt, plan.getLoyaltyPlanCode());
 		WebElementUtils.enterText(lytDescriptionTxt, plan.getDescription());
 		WebElementUtils.selectDropDownByVisibleText(currencyDDwn, currency);
 		WebElementUtils.enterText(lytValidityNumTxt, NUMBER);
-		inputFromDate();
+		inputFromDate(instCode);
 		WebElementUtils.enterText(maxPtsPerCycleTxt, NUMBER);
 		WebElementUtils.selectDropDownByIndex(periodUnitDDwn, NUMBER1);
 		WebElementUtils.enterText(lytMinPtsTxt, NUMBER);
