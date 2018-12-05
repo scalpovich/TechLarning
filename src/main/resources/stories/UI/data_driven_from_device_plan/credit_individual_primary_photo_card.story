@@ -66,7 +66,7 @@ Meta:
 @TC857976
 Given setting json values in excel for Credit
 When user is logged in institution
-Then check status in batch job history for DOWNLOAD batch and CLIENT_PHOTO_DOWNLOAD
+Then check status in batch job history for DOWNLOAD batch and CLIENT_PHOTO_BATCH
 And user sign out from customer portal
 
 Scenario: 1.7 To verify photo files are generated in JPEG format when Get Photo Card batch is successfully executed on saved path in batch definition for the batch
