@@ -232,8 +232,8 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 		enterValueinTextBox(jobIdTxt, batchJobHistory.getJobIdBatchJobHistory());
 		selectByVisibleText(batchDDwn, batchJobHistory.getBatch());
 		clickSearchButton();
-		context.put(ContextConstants.CSV_NO, getFirstRecordCellTextByColumnName(FILE_NAME));
 		SimulatorUtilities.wait(20000);
+		context.put(ContextConstants.CSV_NO, getFirstRecordCellTextByColumnName(FILE_NAME));
 		if (getFirstRecordCellTextByColumnName(STATUS).equals(Constants.SUCCESS_STATUS)) {
 			String timeStamp = LocalDateTime.now(ZoneId.of("GMT-6"))
 					.format(DateTimeFormatter.ofPattern("ddMMyyyyHHmm")); // CDT time when batch download is done.
