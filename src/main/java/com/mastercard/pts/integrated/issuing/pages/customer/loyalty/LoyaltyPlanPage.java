@@ -141,7 +141,7 @@ public class LoyaltyPlanPage extends AbstractBasePage {
 
 		
 	public void inputFromDate() {
-		String currentDateString = dbUtil.getCurrentDateForInstitution(context.get("USER_INSTITUTION_SELECTED"));
+		String currentDateString = dbUtil.getCurrentDateForInstitution(context.get(Constants.USER_INSTITUTION_SELECTED));
 		LocalDate date = LocalDate.parse(currentDateString, DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss")).plusDays(1);
 		WebElementUtils.pickDate(planStartDateDPkr, date);
 	}
