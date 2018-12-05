@@ -209,14 +209,14 @@ public class BatchSteps {
 	public void embossingFileWasGeneratedSuccessfullyForPhotoCard() {
 		MiscUtils.reportToConsole("******** Embossing File Start ***** ");
 		DevicePlan tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
-		if(Objects.isNull(tempdevicePlan)){
-			flow.findAndPutDeviceApplicationNumberInContext();
-			tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
-		}
 		try {
 			File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(tempdevicePlan.getDevicePlanCode(),
 					tempDirectory.toString(), "DEVICE", "proc");
 			Device device = context.get(CreditConstants.APPLICATION);
+			if(Objects.isNull(device)){
+				flow.findAndPutDeviceApplicationNumberInContext();
+				device = context.get(ContextConstants.DEVICE);
+			}
 			String photoReferenceNumber = LinuxUtils.getPhotoReferenceNumberFromEmbossingFile(batchFile);
 			logger.info("Photo Reference Number in Embossing File:", photoReferenceNumber);
 			Assert.assertTrue("Photo Reference Number is not present in Embossing File",
