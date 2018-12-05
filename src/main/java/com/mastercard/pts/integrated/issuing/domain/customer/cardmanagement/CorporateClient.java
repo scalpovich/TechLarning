@@ -11,26 +11,18 @@ public class CorporateClient {
 	private static final String CASH_LIMIT = "PGM_CASH_LIMITS_CASH_LIMIT_AMOUNT";
 	private static final String BILLING_CURRENCY = "BILLING_CURRENCY";
 	private static final String CASH_LIMIT_RESET = "CASH_LIMIT_RESET";
-	private static final String COMPANY_NAME = "COMPANY_NAME";
-	
-	
-	public String productType;
-	
+	private static final String COMPANY_NAME = "COMPANY_NAME";	
+	public String productType;	
 	public String applicationRefNumber;
-
 	public String branch;
-
 	public String companyName;
-
 	public String embossedLine;
-
 	public String program;
-
 	public String liabilityType;
-	
 	public String tanNumber;
 	public String creditLimit;
-	
+	public String cashLimit;
+	public String billingCurrency;
 	
 	public static CorporateClient createDataWithProvider( KeyValueProvider provider) {
 		CorporateClient programObject =new	CorporateClient();
@@ -66,11 +58,7 @@ public class CorporateClient {
 	public void setBillingCurrency(String billingCurrency) {
 		this.billingCurrency = billingCurrency;
 	}
-
-	public String cashLimit;
-	public String billingCurrency;
 	
-
 	public String getTanNumber() {
 		return tanNumber;
 	}
@@ -79,8 +67,7 @@ public class CorporateClient {
 		this.tanNumber = tanNumber;
 	}
 
-	public String getProductType() {
-		
+	public String getProductType() {		
 		return productType;
 	}
 
@@ -135,6 +122,4 @@ public class CorporateClient {
 	public void setLiabilityType(String liabilityType) {
 		this.liabilityType = liabilityType;
 	}
-
-	
 }

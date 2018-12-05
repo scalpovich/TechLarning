@@ -432,10 +432,7 @@ public class DeviceSteps {
 	public void userCreatesCorporateClient(String type, String product){
 		CorporateClient corporateclient = CorporateClient.createDataWithProvider(provider);
 		corporateclient.setProductType(ProductType.fromShortName(type));
-		corporateClientFlow.createCorporateClient(corporateclient); 
-		
-		
-
+		corporateClientFlow.createCorporateClient(corporateclient);
 	}
 	
 }
