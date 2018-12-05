@@ -62,7 +62,7 @@ public class UiVerificationLoyaltyWorkflow {
 	}
 
 
-	public void EditLoyaltyPlanPage(LoyaltyPlan loyaltyplan) {
+	public void editLoyaltyPlanPage(LoyaltyPlan loyaltyplan) {
 		LoyaltyPlanPage page = navigator.navigateToPage(LoyaltyPlanPage.class);
 		page.editLoyaltyPlan(loyaltyplan);
 	}

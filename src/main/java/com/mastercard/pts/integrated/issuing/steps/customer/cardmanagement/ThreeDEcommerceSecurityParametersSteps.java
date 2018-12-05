@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -47,4 +48,20 @@ public class ThreeDEcommerceSecurityParametersSteps {
 		threeDECommerceSecurityParametersFlows.edit3DESParams(threeDESParams);
 	}
 
+	@Given("user edits $field field of 3D Ecom Security for product $type and interchange $interchange as $status")
+	@When("user edits $field field of 3D Ecom Security for product $type and interchange $interchange as $status")
+	public void userUnchecksAllFields(String fields, String type, String interchange, String status) {
+		ThreeDECommerceSecurityParameters threeDESParams = new ThreeDECommerceSecurityParameters();
+		threeDESParams.setCheckStatus(status);
+		DeviceRange deviceRange = context.get(ContextConstants.DEVICE_RANGE);
+		threeDESParams.setDeviceRangeFrom(deviceRange.getIssuerBinCode(deviceRange.getIssuerBin()) + ConstantData.START_RANGE_DIGITS);
+		threeDESParams.seteCommerceSecurityInterchange(interchange);
+		if (fields.equalsIgnoreCase("All"))
+			threeDECommerceSecurityParametersFlows.editAll3DSecureFieldsToUncheck(threeDESParams);
+		else if (fields.equalsIgnoreCase("Decline Merchant Risk Based Decisioning Transaction")) {
+			threeDECommerceSecurityParametersFlows.editMerchantRiskBasedDecisioningTransaction(threeDESParams);
+		} else if (fields.equalsIgnoreCase("Decline all non secured transaction")) {
+			threeDECommerceSecurityParametersFlows.editDeclineAllNonSecured(threeDESParams);
+		}
+	}
 }

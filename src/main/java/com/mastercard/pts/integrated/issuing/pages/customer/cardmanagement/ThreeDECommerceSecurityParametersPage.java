@@ -1,8 +1,11 @@
 
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -14,6 +17,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Thre
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -52,7 +56,13 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "skipValidationMc:checkBoxComponent")
 	private MCWebElement skipCvv2ChkBx;
-
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "decNonsecuredTxnMc:checkBoxComponent")
+	private MCWebElement chkBxDeclineAllNonSecuredTransaction;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "decMerchantRiskBaseTxnMc:checkBoxComponent")
+	private MCWebElement chkBxDeclineMerchantRiskBasedTransaction;
+	
 	public void verifyUiOperationStatus() {
 		logger.info("3D E-Commerce Security Parameters");
 		verifySearchButton("Search");
@@ -73,19 +83,67 @@ public class ThreeDECommerceSecurityParametersPage extends AbstractBasePage {
 			verifyDuplicateBinAndClickCancel();
 		});
 	}
-	
+
 	public void edit3DESParams(ThreeDECommerceSecurityParameters threeDESParams) {
+		edit3DESecurityParameters(threeDESParams);
+		runWithinPopup("Edit 3D E-Commerce Security", () -> {
+			if (threeDESParams.getCheckStatus().equals("check")) {
+				ClickCheckBox(skipCvv2ChkBx, true);
+
+			} else {
+				ClickCheckBox(skipCvv2ChkBx, false);
+			}
+			clickSaveButton();
+		});
+	}
+
+	public void edit3DESecurityParameters(ThreeDECommerceSecurityParameters threeDESParams) {
 		logger.info("Edit 3D E-Commerce Security Parameters");
 		selectSearchInterchange(threeDESParams.geteCommerceSecurityInterchange());
 		enterSearchDeviceRangeFrom(threeDESParams.getDeviceRangeFrom());
 		clickSearchButton();
 		editFirstRecord();
+	}
+
+	public void editDeclineAllNonSecuredTransaction(ThreeDECommerceSecurityParameters threeDESParams) {
+		edit3DESecurityParameters(threeDESParams);
 		runWithinPopup("Edit 3D E-Commerce Security", () -> {
-			if(threeDESParams.getCheckStatus().equals("check"))
-				ClickCheckBox(skipCvv2ChkBx, true);
-			else
-				ClickCheckBox(skipCvv2ChkBx, false);
+			if (threeDESParams.getCheckStatus().equals("check")) {
+				ClickCheckBox(chkBxDeclineAllNonSecuredTransaction, true);
+			} else {
+				ClickCheckBox(chkBxDeclineAllNonSecuredTransaction, false);
+			}
 			clickSaveButton();
+			SimulatorUtilities.wait(3000);
+		});
+
+	}
+
+	public void editMerchantRiskBasedDecisioningTransaction(ThreeDECommerceSecurityParameters threeDESParams) {
+		edit3DESecurityParameters(threeDESParams);
+		runWithinPopup("Edit 3D E-Commerce Security", () -> {
+			if (threeDESParams.getCheckStatus().equals("check")) {
+				ClickCheckBox(chkBxDeclineMerchantRiskBasedTransaction, true);
+			} else {
+				ClickCheckBox(chkBxDeclineMerchantRiskBasedTransaction, false);
+			}
+			clickSaveButton();
+		});
+	}
+
+	public void editAll3DSecureFieldsToUncheck(ThreeDECommerceSecurityParameters threeDESParams) {
+		edit3DESecurityParameters(threeDESParams);
+		runWithinPopup("Edit 3D E-Commerce Security", () -> {
+			List<MCWebElement> secureElement = new LinkedList<MCWebElement>();
+			secureElement.add(chkBxDeclineMerchantRiskBasedTransaction);
+			secureElement.add(chkBxDeclineAllNonSecuredTransaction);
+			secureElement.add(declineAllTransactionsWithoutCAVVAAVChkBx);
+			for (MCWebElement elementLocator : secureElement) {
+				ClickCheckBox(elementLocator, false);
+			}
+			clickSaveButton();
+			SimulatorUtilities.wait(2000);
+			verifyOperationStatus();
 		});
 	}
 

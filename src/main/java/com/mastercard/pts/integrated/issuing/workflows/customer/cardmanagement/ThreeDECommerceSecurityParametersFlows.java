@@ -22,5 +22,20 @@ public class ThreeDECommerceSecurityParametersFlows {
 		ThreeDECommerceSecurityParametersPage page = navigator.navigateToPage(ThreeDECommerceSecurityParametersPage.class);
 		page.edit3DESParams(threeDESParams);
 	}
-
+	
+	public void editDeclineAllNonSecured(ThreeDECommerceSecurityParameters threeDESParams) {
+		ThreeDECommerceSecurityParametersPage page = navigator.navigateToPage(ThreeDECommerceSecurityParametersPage.class);
+		page.editDeclineAllNonSecuredTransaction(threeDESParams);
+	}
+	
+	public void editMerchantRiskBasedDecisioningTransaction(ThreeDECommerceSecurityParameters threeDESParams) {
+		ThreeDECommerceSecurityParametersPage page = navigator.navigateToPage(ThreeDECommerceSecurityParametersPage.class);
+		page.editMerchantRiskBasedDecisioningTransaction(threeDESParams);
+	}
+	
+	public void editAll3DSecureFieldsToUncheck(ThreeDECommerceSecurityParameters threeDESParams) {
+		ThreeDECommerceSecurityParametersPage page = navigator.navigateToPage(ThreeDECommerceSecurityParametersPage.class);
+		page.editAll3DSecureFieldsToUncheck(threeDESParams);
+	}
+	
 }

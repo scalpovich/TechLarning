@@ -63,13 +63,10 @@ public class LoyaltyPlanSteps {
 	
 	@Then("verify available loyalty points should be within loyalty plan limit")
 	public void verifyMaxAccruedLoyalty() {
-		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
 		Double availablePts = 0.0;
-		Double maxPts = Double
-				.parseDouble(uiVerificationLoyaltyWorkflow.getMaxLoyaltyPointsPerCycle(data.getLoyaltyPlan()));
-		if (!(context.get(Constants.AVAILABLE_LOYALTY_POINTS).equals("-")))
-			availablePts = Double.parseDouble(context.get(Constants.AVAILABLE_LOYALTY_POINTS));
-		assertTrue(maxPts >= availablePts);
+		if(!(context.get(Constants.AVAILABLE_LOYALTY_POINTS).equals("-")))
+			availablePts = context.get(Constants.AVAILABLE_LOYALTY_POINTS);
+		assertTrue((Double)context.get(Constants.MAX_LOYALTY_POINTS) >= availablePts);
 	}
 
 	@When("user edits the loyalty plan $LP for $field")
@@ -85,7 +82,7 @@ public class LoyaltyPlanSteps {
 			loyaltyplan.setAutoRedemptionDay(String.valueOf(date.getDayOfMonth()));
 		}
 		data.setLoyaltyPlan(LP);
-		uiVerificationLoyaltyWorkflow.EditLoyaltyPlanPage(loyaltyplan);
+		uiVerificationLoyaltyWorkflow.editLoyaltyPlanPage(loyaltyplan);
 	}
 
 	

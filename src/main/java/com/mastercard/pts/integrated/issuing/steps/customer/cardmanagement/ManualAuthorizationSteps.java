@@ -38,10 +38,12 @@ public class ManualAuthorizationSteps {
 	private LoginWorkflow loginWorkflow;
 	
 	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
-	private String successMessage;
-
 	
+	private String statusMessage;
+
+	@Given("user raises an authorization request only")
 	@When("user raises an authorization request only")
+	@Then("user raises an authorization request only")
 	public void whenUserRaisesAnAuthorizationRequest(){
 		AuthorizationRequest request = AuthorizationRequest.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE);
@@ -50,7 +52,7 @@ public class ManualAuthorizationSteps {
 		logger.info("Transaction Date->"+loginWorkflow.getInstitutionDateLogin());
 		context.put("transaction_date",trxDate);
 		request.setCvv2(device.getCvv2Data());
-		successMessage = manualAuthorizationWorkflow.authorizeDevice(request);
+		statusMessage = manualAuthorizationWorkflow.authorizeDevice(request);
 	}
 
 	@Given("user raises an authorization request with invalid MCC")
@@ -61,7 +63,7 @@ public class ManualAuthorizationSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		request.setDeviceNumber(device.getDeviceNumber());
 		request.setMcc(provider.getString(Constants.MCC_CODE_INVALID));
-		successMessage = manualAuthorizationWorkflow.authorizeDevice(request);
+		statusMessage = manualAuthorizationWorkflow.authorizeDevice(request);
 	}
 
 
@@ -75,9 +77,18 @@ public class ManualAuthorizationSteps {
 	
 	@When("status of request is \"approved\"")
 	@Then("status of request is \"approved\"")
-	public void thenStatusOfRequestIsapproved() {
-		assertThat("Authorization is successful", successMessage, containsString("Authorization is successful"));
+	public void thenStatusOfRequestIsapproved(){
+		assertThat("Authorization is successful", statusMessage,
+				containsString("Authorization is successful"));
 
+	}
+
+	@Then("status of request is declined with reason $declineReason")
+	@When("status of request is declined with reason $declineReason")
+	public void thenVerifyDeclineStatusCode(String declineReason) {
+		assertThat("Authorization is declined ", statusMessage,
+				containsString(manualAuthorizationWorkflow
+						.getDeclineReasonMessage(declineReason)));
 	}
 }
 
