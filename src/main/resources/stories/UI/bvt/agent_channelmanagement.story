@@ -87,7 +87,7 @@ And AgencyUserCreate page of channelmanagement tab is rendered correctly
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378829| admin  |
 |@TestId TC411839| agency |
@@ -100,7 +100,7 @@ And AgencyUserViewEdit page of channelmanagement tab is rendered correctly
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378831| admin  |
 |@TestId TC411840| agency |
@@ -122,7 +122,7 @@ And AgencyUserActiveDeactiveUser page of channelmanagement tab is rendered corre
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378828| admin  |
 |@TestId TC411841| agency |
@@ -135,7 +135,7 @@ And BranchEntityCreate page of channelmanagement tab is rendered correctly
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378844| admin  |
 |@TestId TC411842| agency |
@@ -148,7 +148,7 @@ And BranchEntityViewEdit page of channelmanagement tab is rendered correctly
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378845| admin  |
 |@TestId TC411843| agency |
@@ -161,7 +161,7 @@ And BranchEntityActivateSuspendBranch page of channelmanagement tab is rendered 
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378843| admin  |
 |@TestId TC411845| agency |
@@ -174,7 +174,7 @@ And AssignProgramsBranch page of channelmanagement tab is rendered correctly
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378842| admin  |
 |@TestId TC411844| agency |
@@ -187,7 +187,7 @@ And BranchUserCreate page of channelmanagement tab is rendered correctly
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378847| admin  |
 |@TestId TC378847| agency |
@@ -201,7 +201,7 @@ And BranchUserViewEdit page of channelmanagement tab is rendered correctly
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378849| admin  |
 |@TestId TC411848| agency |
@@ -215,7 +215,7 @@ And BranchUserResetUserPassword page of channelmanagement tab is rendered correc
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378848| admin  |
 |@TestId TC411850| agency |
@@ -228,7 +228,7 @@ And BranchUserActiveDeactiveUser page of channelmanagement tab is rendered corre
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378846| admin  |
 |@TestId TC411851| agency |
@@ -242,7 +242,7 @@ And AgentEntityCreate page of channelmanagement tab is rendered correctly
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378833| admin  |
 |@TestId TC411853| agency |
@@ -256,7 +256,7 @@ And AgentEntityViewEdit page of channelmanagement tab is rendered correctly
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378834| admin  |
 |@TestId TC411855| agency |
@@ -270,7 +270,7 @@ And AgentEntityActiveSuspendAgent page of channelmanagement tab is rendered corr
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378832| admin  |
 |@TestId TC411857| agency |
@@ -284,7 +284,7 @@ And AssignProgramsAgent page of channelmanagement tab is rendered correctly
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378841| admin  |
 |@TestId TC411859| agency |
@@ -298,7 +298,7 @@ And AgentUserCreate page of channelmanagement tab is rendered correctly
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378836| admin  |
 |@TestId TC411861| agency |
@@ -313,7 +313,7 @@ And AgentUserViewEdit page of channelmanagement tab is rendered correctly
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378838| admin  |
 |@TestId TC411864| agency |
@@ -328,7 +328,7 @@ And AgentUserResetUserPassword page of channelmanagement tab is rendered correct
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378837| admin  |
 |@TestId TC411867| agency |
@@ -342,7 +342,7 @@ And AgentUserActiveDeactiveUser page of channelmanagement tab is rendered correc
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378835| admin  |
 |@TestId TC411869| agency |
@@ -393,7 +393,7 @@ And CreateRole page of channelmanagement tab is rendered correctly
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378854| admin  |
 |@TestId TC411872| agency |
@@ -408,7 +408,7 @@ And AssignPrivileges page of channelmanagement tab is rendered correctly
 And user sign out from agent portal
 
 Examples:
-!-- {metaByRow=true}
+!-- 
 |Meta:| type   |
 |@TestId TC378839| admin  |
 |@TestId TC411875| agency |

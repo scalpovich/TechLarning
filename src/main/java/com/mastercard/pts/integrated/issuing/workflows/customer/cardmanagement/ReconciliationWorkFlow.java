@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.google.common.base.Throwables;
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BatchProcessingReports;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionReports;
+import com.mastercard.pts.integrated.issuing.pages.collect.report.ReportCardManagementPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionReportsPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.PDFUtils;
 
 @Workflow
@@ -27,6 +33,8 @@ public class ReconciliationWorkFlow {
 
 	@Autowired
 	private TestContext context;
+	
+	private static final String USERNAME = "USERNAME";
 
 	public void runPreClearingAndPrepaidEodBatch(List<ProcessBatches> batch) {
 		while (runPreClearingBatch(batch.get(0)) != null) {
@@ -70,7 +78,15 @@ public class ReconciliationWorkFlow {
 		return getReportContent(fileName,transactionReports);
 		//return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
 	}
-		
+	
+	public boolean isPhotoReferenceNumberPresentInReport(String fileName,BatchProcessingReports batchProcessingReports) {
+		ReportCardManagementPage page = navigator.navigateToPage(ReportCardManagementPage.class);
+		int fileCountBeforeReportGeneration = checkDownLoadedFilesCount();
+		System.out.println(fileCountBeforeReportGeneration);
+		int fileCountAfterReportGeneration = waitForReportToDownLoad(fileCountBeforeReportGeneration);
+		System.out.println(fileCountAfterReportGeneration);
+		return isNumberPresentInReportContent(fileName,batchProcessingReports);
+	}
 	public boolean verifyReportGenerationClearing() {
 		TransactionReportsPage page = navigator.navigateToPage(TransactionReportsPage.class);
 		int fileCountBeforeReportGeneration = checkDownLoadedFilesCount();
@@ -127,7 +143,12 @@ public class ReconciliationWorkFlow {
 		return records;
 	}
 	
-	
+	public boolean isNumberPresentInReportContent(String fileName,BatchProcessingReports batchProcessingReports) {
+		PDFUtils pdfutils=new PDFUtils();
+		boolean flag = pdfutils.isNumberPresentInContentRow(PDFUtils.getuserDownloadPath() + "\\"+fileName, batchProcessingReports);
+		logger.info("Flag:",flag);
+		return flag;
+	}
 	public void deleteExistingAuthorizationFilesFromSystem(String authFileName)
 	{
 		for (File file: new File(PDFUtils.getuserDownloadPath()).listFiles()) {
@@ -144,6 +165,16 @@ public class ReconciliationWorkFlow {
 	public String processStatementExtractBatch(ProcessBatches batch) {
 		ProcessBatchesPage processBatch = navigator.navigateToPage(ProcessBatchesPage.class);
 		return processBatch.processStatementExtractBatch(batch);
+	}
+	
+	public void verifyPhotoReferenceNumberIsPresent(String reportFormatType,String productType) {
+		ReportCardManagementPage reportpage = navigator.navigateToPage(ReportCardManagementPage.class);
+		deleteExistingAuthorizationFilesFromSystem(ConstantData.DEVICE_PRODUCTION_REPORT_PDF_FILE_NAME);
+		Device device = context.get(CreditConstants.APPLICATION);
+		BatchProcessingReports batchProcessingReports = new BatchProcessingReports();
+		batchProcessingReports.setApplicationNumber(device.getApplicationNumber());
+		batchProcessingReports.setPassword(context.get(USERNAME));
+		Assert.assertTrue("Photo Reference Number is not Present in Device Production Report",reportpage.verifyPhotoReferenceNumberIsPresent(batchProcessingReports,reportFormatType,productType));
 	}
 
 }
