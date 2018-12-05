@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Objects;
 import java.util.Scanner;
 
 import org.apache.commons.lang3.StringUtils;
@@ -208,6 +209,10 @@ public class BatchSteps {
 	public void embossingFileWasGeneratedSuccessfullyForPhotoCard() {
 		MiscUtils.reportToConsole("******** Embossing File Start ***** ");
 		DevicePlan tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
+		if(Objects.isNull(tempdevicePlan)){
+			flow.findAndPutDeviceApplicationNumberInContext();
+			tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
+		}
 		try {
 			File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(tempdevicePlan.getDevicePlanCode(),
 					tempDirectory.toString(), "DEVICE", "proc");
