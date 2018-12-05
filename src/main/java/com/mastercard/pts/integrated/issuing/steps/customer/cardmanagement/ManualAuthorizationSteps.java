@@ -18,6 +18,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Auth
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.workflows.LoginWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ManualAuthorizationWorkflow;
 
@@ -29,7 +30,7 @@ public class ManualAuthorizationSteps {
 
 	@Autowired
 	private KeyValueProvider provider;
-	
+
 	@Autowired
 	private ManualAuthorizationWorkflow manualAuthorizationWorkflow;
 	
@@ -53,6 +54,19 @@ public class ManualAuthorizationSteps {
 		request.setCvv2(device.getCvv2Data());
 		statusMessage = manualAuthorizationWorkflow.authorizeDevice(request);
 	}
+
+	@Given("user raises an authorization request with invalid MCC")
+	@When("user raises an authorization request with invalid MCC")
+	@Then("user raises an authorization request with invalid MCC")
+	public void whenUserRaisesAnAuthorizationRequestInvalidMCC() {
+		AuthorizationRequest request = AuthorizationRequest.createWithProvider(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		request.setDeviceNumber(device.getDeviceNumber());
+		request.setMcc(provider.getString(Constants.MCC_CODE_INVALID));
+		statusMessage = manualAuthorizationWorkflow.authorizeDevice(request);
+	}
+
+
 	
 	@Then("user raises an authorization request")
 	@When("user raises an authorization request")

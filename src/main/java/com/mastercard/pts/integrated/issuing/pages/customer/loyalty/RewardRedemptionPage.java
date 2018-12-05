@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.loyalty;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -45,6 +46,9 @@ public class RewardRedemptionPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "lrhPtsRedeemed:input:inputTextField")
 	private MCWebElement pointsredeemedtxt;
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
+	private MCWebElement saveBtn;
+
 	public void searchForRewardsRedemption(Device device) {
 		WebElementUtils.enterText(deviceNumberTxt, device.getDeviceNumber());
 		clickSearchButton();
@@ -59,9 +63,29 @@ public class RewardRedemptionPage extends AbstractBasePage {
 		redeemBtn.click();
 		runWithinPopup("Redemption", () -> {
 			WebElementUtils.enterText(pointsredeemedtxt, rewards.getPointsToRedeem());
+			SimulatorUtilities.wait(2000);
 			clickSaveButton();
-		});
+			SimulatorUtilities.wait(5000);
+			while (checkButton(saveBtn)) {
+				clickSaveButton();
+				SimulatorUtilities.wait(2000);
+
+			}
+	});
+
 	}
+
+	public static boolean checkButton(MCWebElement element) {
+		boolean b = true;
+		try {
+			if (element.isVisible())
+				return b = true;
+		} catch (Exception e) {
+			return b = false;
+		}
+		return b;
+
+}
 
 	public void verifyLoyaltyPointsNotRedeemed() {
 		try {
@@ -69,17 +93,27 @@ public class RewardRedemptionPage extends AbstractBasePage {
 				Assert.fail("Loyalty points shouldnot be available for redemption");
 			}
 
+
 		} catch (ElementNotVisibleException e) {
-			logger.info("Redeem button is not displayed as loyalty points not available for redemption");
+		logger.info("Redeem button is not displayed as loyalty points not available for redemption");
 		}
 	}
 
 	public void verifyLoyaltyPointsRedeemed(KeyValueProvider provider) {
+		waitForElementVisible(redeemBtn);
 		Assert.assertEquals(getCellTextByColumnName(1, "Total Loyalty Points Earned"),
 				provider.getString("TRANSACTION_AMOUNT"));
 		Assert.assertEquals(getCellTextByColumnName(1, "Redeemed"), provider.getString("POINTS_TO_REDEEM"));
 		Assert.assertEquals(getCellTextByColumnName(1, "Available for Redemption"), "0");
 	}
+
+	public void verifyLoyaltyPointsRedeemedforCumulative(KeyValueProvider provider, RewardsRedemption rewards) {
+		Assert.assertEquals(getCellTextByColumnName(1, "Total Loyalty Points Earned"),
+				provider.getString("MAX_AMT_EACH_PERIOD"));
+		Assert.assertEquals(getCellTextByColumnName(1, "Redeemed"), rewards.getPointsToRedeem());
+		Assert.assertEquals(getCellTextByColumnName(1, "Available for Redemption"), "0");
+	}
+
 
 	public void verifyUiOperationStatus() {
 		logger.info("Reward Redemption");
@@ -93,5 +127,13 @@ public class RewardRedemptionPage extends AbstractBasePage {
 	
 	public String getExpiredLoyaltyPoints() {
 		return getFirstRowColValueFor(6);
+	}
+	
+	@Override
+	public String getCellTextByColumnName(int rowNumber, String columnName) {
+		String xpath = String.format("//table[@class='dataview']/tbody/tr[%d]/td[count(//th[.//*[text()='%s']]/preceding-sibling::th)+1]/span", rowNumber, columnName);
+		SimulatorUtilities.wait(3000);
+		waitForElementVisible(Element(xpath));
+		return Element(xpath).getText().trim();
 	}
 }

@@ -920,7 +920,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	public String getWalletBalanceInformationAfterLoyaltyRedemption(Device device) {
 		logger.info("Get Wallet Balance Information for Device: {}", device.getDeviceNumber());
-		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, "Prepaid [P]");
+		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
 		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
