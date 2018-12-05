@@ -186,7 +186,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanel:inputPanel:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement binDDwn;
-	
+
+	// Parameters Added for CardHolder Dump
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class='yui-skin-sam']/..")
 	private MCWebElement businessDate;
 	
@@ -209,7 +210,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	private MCWebElement processFileNameTxt;
 
 	public final String SYSTEM_INTERNAL_PROCESSING = "SYSTEM INTERNAL PROCESSING [B]";
-	
+
 	private static final int NUMBER_OF_ATTEMPTS_TO_CHECK_SUCCESS_STATE=100;
 
 	private String reasonToReject = "";
@@ -772,5 +773,32 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(vendorNameDDwn, batch.getVendorName());
 		submitAndVerifyBatch();
 		return batchStatus;
+	}
+
+	
+	public void processDownloadBatch(String batchType, String batchName)
+	{
+		selectByVisibleText(batchTypeDdwn, "DOWNLOAD [D]");
+		if(batchName.equalsIgnoreCase("CLIENT_PHOTO_BATCH"))
+			selectByVisibleText(batchNameDdwn, Constants.CLIENT_PHOTO_FLAT_FILE_DOWNLOAD_BATCH);
+		else
+		{
+			if(batchName.equalsIgnoreCase("CardholderDump"))
+				selectByVisibleText(batchNameDdwn, Constants.CARDHOLDER_DUMP_BATCH);
+		}
+		SimulatorUtilities.wait(2000);
+		selectByVisibleText(productTypeDDwn, context.get(ConstantData.PRODUCT_IDENTITY));
+		selectByVisibleText(extractTypeDrpDwn, Constants.EXTRACT_TYPE_FULL);
+		WebElementUtils.pickDate(fromDateAuth, LocalDate.now().minusDays(1));
+		WebElementUtils.pickDate(toDateAuth, LocalDate.now());
+		WebElementUtils.enterText(cardHolderKycFromDateHHTxtBx, "00");
+		WebElementUtils.enterText(cardHolderKycFromDateMMTxtBx, "00");
+		WebElementUtils.enterText(cardHolderKycToDateHHTxtBx, "23");
+		WebElementUtils.enterText(cardHolderKycToDateMMTxtBx, "00");
+		clickSubmitBtn();
+		context.put(ContextConstants.JOB_ID, jobIDNumber.getText());
+		SimulatorUtilities.wait(3000);
+		
+		
 	}
 }

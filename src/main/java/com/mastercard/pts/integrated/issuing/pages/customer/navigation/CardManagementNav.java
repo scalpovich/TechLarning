@@ -86,11 +86,12 @@ public class CardManagementNav {
 	public static final String L3_DEVICE_PRODUCTION_BATCH = "DEVPRD01";
 	public static final String L3_PIN_GENERATION_BATCH = "PINPRD01";
 	public static final String L3PROCESS_BATCHES = "BATPRO01";
-
+	public static final String L3_CLIENT_PHOTO_DOWNLOAD_BATCHES = "FTODWN01";
+	
 	// Search
 	public static final String L2BATCH_TRACE_HISTORY = "SERA03";
 	public static final String L2SEARCHAPPLICATION= "ISEAP0";
-	
+	public static final String L2_BATCH_JOB_HISTORY= "BATPRO02";
 
 	// Host Accounting
 	public static final String L2HOST_ACCOUNTING = "ISSHA01";

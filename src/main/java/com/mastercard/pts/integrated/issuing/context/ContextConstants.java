@@ -83,6 +83,8 @@ public class ContextConstants {
 	public static final String PRIMARY_DEVICE = "PRIMARY_DEVICE";
 	
 	public static final String PRIMARY_DEVICE_PLAN = "PRIMARY_DEVICE_PLAN";
+
+	public static final String CLIENT_PHOTO_BATCH_SUCCESS_TIME = "CLIENT_PHOTO_BATCH_SUCCESS_TIME";
 	
 	public static final String INSTITUTION_DATE = "INSTITUTION_DATE";
 
@@ -173,6 +175,9 @@ public class ContextConstants {
 	public static final String PIN_OFFSET_FILE = "PIN_OFFSET_FILE";
 	
 	public static final String DAT_FILE_NAME = "DAT_FILE_NAME";
+	
+	public static final String CSV_NO = "CSV_No";
+	
 	
 	private ContextConstants() {
 	}
