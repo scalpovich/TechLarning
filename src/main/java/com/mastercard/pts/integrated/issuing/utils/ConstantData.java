@@ -60,6 +60,7 @@ public class ConstantData {
 	public static final String TRANSACTION_AMOUNT_BD = "transactionAmountbd";
 	public static final String INTERNATIONAL_ALLOW_DISALLOW = "International Use Allow/Disallow [400]";
 	public static final String ECCOMERCE_ALLOW_DISALLOW= "E-commerce Activation/Deactivation [304]";
+	public static final String DEVICE_PRODUCTION_REPORT_PDF_FILE_NAME = "Device Production.pdf";
 
 	public static final String OPTION_SELECT_ONE = "Select One";
 
@@ -174,6 +175,7 @@ public class ConstantData {
 	public static final String CONTACT_NUMBER = "0123456789";
 	public static final String LOAN_CANCELLATION_SR = "Loan Cancellation [243]";
 	public static final String PAYMENT_UPLOAD_METHOD = "paymentMethod";
+	public static final String PHOTO_CARD = "Photo [1]";
 	
 	public static final String TRANSACTION_DATE = "transactionDate";
 	public static final String LOYALTY_POINTS_REPORT_FILENAME = "Loyalty Points Report.pdf";
