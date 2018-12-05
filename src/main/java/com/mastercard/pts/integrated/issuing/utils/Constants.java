@@ -482,15 +482,15 @@ public class Constants {
 	public static final String INSTITUTION_DATE = "INSTITUTION_DATE";
 	public static final String USER_INSTITUTION_SELECTED = "USER_INSTITUTION_SELECTED";
 	
-	//batch processing
+	// batch processing
 	public static final String BATCH_TYPE_UPLOAD = "UPLOAD [U]";
 	public static final String BATCH_TYPE_DOWNLOAD = "DOWNLOAD [D]";
 
 	public static final String CLIENT_PHOTO_FLAT_FILE_DOWNLOAD_BATCH = "Client Photo/Flat File Download Batch [CLIENT_PHOTO_DOWNLOAD]";
 	public static final String CARDHOLDER_DUMP_BATCH = "Cardholder Dump [CARDHOLDER_DUMP]";
-	
+
 	public static final String PRODUCT_TYPE_CREDIT = "Credit [C]";
 	public static final String EXTRACT_TYPE_FULL = "FULL [F]";
-	
+
 	public static final String SUCCESS_STATUS = "SUCCESS [2]";
 }

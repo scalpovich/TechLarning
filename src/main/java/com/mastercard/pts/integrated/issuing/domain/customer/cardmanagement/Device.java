@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 @Component
 public class Device {
-
+   
 	private static final String BRANCH = "BRANCH";
 	private static final String APPLICATION_TYPE = "APPLICATION_TYPE";
 	private static final String SUB_APPLICATION_TYPE = "SUB_APPLICATION_TYPE";
@@ -45,6 +45,7 @@ public class Device {
 	private static final String MEMBERSHIP_FEES = "MEMBERSHIP_FEES";
 	private static final String LATE_PAYMENT_FEE = "LATE_PAYMENT_FEE";
 	private static final String INTEREST_ON_PURCHASE = "INTEREST_ON_PURCHASE";
+	private static final String PHOTO_INDICATOR = "PHOTO_INDICATOR";
 	
 	private String currencyofTransfer;
 	private String currentTransPassword;

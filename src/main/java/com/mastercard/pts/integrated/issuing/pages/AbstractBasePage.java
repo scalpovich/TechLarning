@@ -540,6 +540,15 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	}
 	
+	protected String verifyOperationStatusAndgetJobID() {
+		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
+		String successMessage = successMessageLbl.getText();
+		int successMessageLength = successMessage.length();
+		int jobIdLength = 20;
+		context.put("JOB_ID",successMessage.substring(successMessageLength-jobIdLength,successMessageLength));
+		logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
+		return successMessage.substring(successMessageLength-jobIdLength,successMessageLength);
+	}
 	protected boolean waitForRow() {
 		try {
 			waitForWicket();
@@ -592,7 +601,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 		try {
 			WebElement errorMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.feedbackPanelERROR")));
 			logger.info("Error message : {}", errorMessageLbl.getText());
-			return errorMessageLbl.toString();
+			return errorMessageLbl.getText();
 		} catch (TimeoutException e) {
 			logger.info("Operation Status message {}: " + "No Status is updated");
 			logger.debug("Error message {}: ", e);
@@ -1981,21 +1990,23 @@ public abstract class AbstractBasePage extends AbstractPage {
 			}
 		}
 	}	
-	
-	public String getFirstRowColValueFor(int col) {
-		return firstRowColumnValues.getElements().get(col).getText();
-	}
-	
-	protected void waitForBatchStatus(MCWebElement successStatus) {
+
+	protected void waitForBatchStatus(MCWebElement ele) {
 		try {
 			WebElementUtils.waitForWicket(driver());
 			for (int l = 0; l < 21; l++) {
-				while (!isElementPresent(successStatus))
-					SimulatorUtilities.wait(10000);// waiting for page auto refresh
-				clickSearchButton();
+				while ("PENDING [0]".equalsIgnoreCase(ele.getText())
+						|| "IN PROCESS [1]".equalsIgnoreCase(ele.getText())) {
+					Thread.sleep(10000); // waiting for page auto refresh
+					clickSearchButton();
+				}
 			}
-		} catch (NoSuchElementException e) {
-			logger.debug("Result not found", e);
+
+		} catch (NoSuchElementException | InterruptedException e) {
+			logger.info("Failed at batch status: ", e);
 		}
+	}
+	public String getFirstRowColValueFor(int col) {
+		return firstRowColumnValues.getElements().get(col).getText();
 	}
 }

@@ -47,13 +47,13 @@ public class LoadFromFileUploadSteps {
 
 	@Autowired
 	private TransactionWorkflow transWorkflow;
-	
+
 	@Autowired
 	private ProcessBatchesFlows processBatchesFlows;
 
 	@Autowired
 	private LinuxBox linuxBox;
-	
+
 	@Autowired
 	private AuthorizationSearchWorkflow authSearchWorkFlow;
 
@@ -65,6 +65,16 @@ public class LoadFromFileUploadSteps {
 
 	private FileCreation file;
 
+	private static String batchStatus = "SUCCESS [2]";
+
+	@Then("verify processes batch for type $type with status $stauts")
+	public void whenUserProcessesBatchForPrepaid(String type, String status) {
+		String previousStatus = batchStatus;
+		batchStatus = status;
+		whenUserProcessesBatchForPrepaid(type);
+		batchStatus =previousStatus;
+	}
+
 	@When("user processes batch for $type")
 	public void whenUserProcessesBatchForPrepaid(String type) {
 		// since data is constant for this transaction, we do not need this data to go into Excel
@@ -72,7 +82,7 @@ public class LoadFromFileUploadSteps {
 		// batch.setBatchName("Load IPM Incoming File [IPM_INCOMING]");
 		batch.setProductType(ProductType.fromShortName(type));
 		HashMap<String, String> hm = (HashMap<String, String>) loadFromFileUploadWorkflow.processUploadBatch(batch);
-		assertEquals("SUCCESS [2]", hm.get("BatchStatus"));
+		assertEquals(batchStatus, hm.get("BatchStatus"));
 		jobId = hm.get("JobId");
 	}
 
@@ -179,8 +189,8 @@ public class LoadFromFileUploadSteps {
 		loadFromFileUploadWorkflow.loadIncomingIPM(notFileName);
 		batch.setBatchFileName(notFileName.getName());
 	}
-	
-	
+
+
 	@When("User uploads the updated PinOffset file to Server")
 	@Then("User uploads the updated PinOffset file to Server")
 	public void thenUserUploadsTheUpdatedPinOffsetFileToServer() {
@@ -191,7 +201,7 @@ public class LoadFromFileUploadSteps {
 		batch.setBatchFileName(pinOffsetFileName.getName());
 		SimulatorUtilities.wait(15000);
 	}	 
-	
+
 	@When("user processes upload batch for $type")
 	public void whenUserProcessesUploadBatchForPrepaid(String type) {
 		ProcessBatches batch = ProcessBatches.getBatchData();
@@ -217,7 +227,7 @@ public class LoadFromFileUploadSteps {
 	public void thenBatchisSuccesful() {
 		assertEquals("SUCCESS [2]", jobStatus);
 	}
-	
+
 	@Given("user generates Reversal for Transaction")
 	@When("user generates Reversal for Transaction")
 	@Then("user generates Reversal for Transaction")

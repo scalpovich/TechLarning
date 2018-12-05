@@ -2,6 +2,9 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -18,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BatchJobHistory;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -37,7 +41,13 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 		CardManagementNav.L2_BATCH_JOB_HISTORY })
 public class BatchJobHistoryPage extends AbstractBasePage {
 
+	@Autowired
+	TestContext context;
 	private static final Logger logger = LoggerFactory.getLogger(BatchJobHistoryPage.class);
+	
+	private static final String FILE_NAME ="File Name";
+	
+	private static final String STATUS ="Status";
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
 	private MCWebElement batchTypeDDwn;
@@ -69,13 +79,7 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@class = 'searchButton']//input[@type= 'submit'][@value ='Search']")
 	private MCWebElement searchBtn;
 	
-	public String calelement = "//td[7]";
-	
-	@PageElement (findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'SUCCESS')]")
-	private MCWebElement batchJobSuccessStatus;
-	
-	@Autowired
-	private TestContext context;
+	public String calElement = "//td[7]";
 	
 	@Autowired
 	DatePicker date;
@@ -102,7 +106,7 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 		date.setDate(date11);
 		waitForPageToLoad(getFinder().getWebDriver());
 		SimulatorUtilities.wait(2000);
-		date.setDateCalendar2(DateUtils.getDateinDDMMYYYY(), calelement);
+		date.setDateCalendar2(DateUtils.getDateinDDMMYYYY(), calElement);
 		waitForPageToLoad(getFinder().getWebDriver());
 	}
 
@@ -218,17 +222,25 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 		return found;
 	}
 	
+	
 	public boolean checkBatchStatus(BatchJobHistory batchJobHistory) {
-        
-        selectByVisibleText(batchTypeDDwn, batchJobHistory.getBatchType());
-        SimulatorUtilities.wait(1000);
-        WebElementUtils.pickDate(fromJobStartDttmDPkr, LocalDate.now());
-        WebElementUtils.pickDate(toJobStartDttmDPkr, LocalDate.now());
-        enterValueinTextBox(jobIdTxt, batchJobHistory.getJobIdBatchJobHistory());
-        selectByVisibleText(batchDDwn,batchJobHistory.getBatch());
-        clickSearchButton();
-		waitForBatchStatus(batchJobSuccessStatus);
-		context.put(ContextConstants.CSV_FILE_NAME, getCellTextByColumnName(1,"File Name"));
-		return isElementPresent(batchJobSuccessStatus);
+
+		selectByVisibleText(batchTypeDDwn, batchJobHistory.getBatchType());
+		SimulatorUtilities.wait(1000);
+		WebElementUtils.pickDate(fromJobStartDttmDPkr, LocalDate.now().minusDays(1));
+		WebElementUtils.pickDate(toJobStartDttmDPkr, LocalDate.now());
+		enterValueinTextBox(jobIdTxt, batchJobHistory.getJobIdBatchJobHistory());
+		selectByVisibleText(batchDDwn, batchJobHistory.getBatch());
+		clickSearchButton();
+		context.put(ContextConstants.CSV_NO, getFirstRecordCellTextByColumnName(FILE_NAME));
+		SimulatorUtilities.wait(20000);
+		if (getFirstRecordCellTextByColumnName(STATUS).equals(Constants.SUCCESS_STATUS)) {
+			String timeStamp = LocalDateTime.now(ZoneId.of("GMT-6"))
+					.format(DateTimeFormatter.ofPattern("ddMMyyyyHHmm")); // CDT time when batch download is done.
+			context.put(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME, timeStamp);
+			logger.info("timestamp of processing", timeStamp);
+			return true;
+		}
+		return false;
 	}
 }

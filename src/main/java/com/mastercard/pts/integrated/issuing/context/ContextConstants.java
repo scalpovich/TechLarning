@@ -84,6 +84,8 @@ public class ContextConstants {
 	public static final String PRIMARY_DEVICE = "PRIMARY_DEVICE";
 	
 	public static final String PRIMARY_DEVICE_PLAN = "PRIMARY_DEVICE_PLAN";
+
+	public static final String CLIENT_PHOTO_BATCH_SUCCESS_TIME = "CLIENT_PHOTO_BATCH_SUCCESS_TIME";
 	
 	public static final String INSTITUTION_DATE = "INSTITUTION_DATE";
 
@@ -157,6 +159,10 @@ public class ContextConstants {
 	
 	public static final String TRANSACTION_DATE = "TRANSACTION_DATE";
 	
+	public static final String PAYMENT_UNBILLED = "Payment Unbilled";
+	
+	public static final String ZERO_UNBILLED_PAYMENT = "0.00";
+	
 	public static final String PAYMENT_UPLOAD = "PAYMENT_UPLOAD";
 
 	public static final String TRANSACTION_PLAN = "TRANSACTIONPLAN";
@@ -171,7 +177,8 @@ public class ContextConstants {
 	
 	public static final String DAT_FILE_NAME = "DAT_FILE_NAME";
 	
-	public static final String CSV_FILE_NAME = "CSV_FILE_NAME";
+	public static final String CSV_NO = "CSV_No";
+	
 	
 	private ContextConstants() {
 	}
