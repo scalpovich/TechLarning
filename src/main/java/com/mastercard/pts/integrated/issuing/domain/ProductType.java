@@ -17,8 +17,7 @@ public class ProductType {
     public static final String INTERCHANGE = "Mastercard";
     public static final String ALL = "All [0]";
     public static final String All = "All [0]";
-   
-	private ProductType() {
+   	private ProductType() {
 	}
 
 	/**
