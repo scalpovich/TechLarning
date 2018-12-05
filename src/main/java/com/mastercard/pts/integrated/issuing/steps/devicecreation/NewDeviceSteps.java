@@ -480,8 +480,8 @@ public class NewDeviceSteps {
 
 	}
 	
-	@Then("user processes Client photo/flat file download batch for new $type Device")
-	@When("user processes Client photo/flat file download batch for new $type Device")
+	@Then("processes Client photo/flat file download batch for new $type Device")
+	@When("processes Client photo/flat file download batch for new $type Device")
 	public void whenProcessesClientPhotoFlatFileDownloadBatchForDevice(String type) {
 		ClientPhotoFlatFileDownloadBatch batch = new ClientPhotoFlatFileDownloadBatch();
 		batch.setProductType(ProductType.fromShortName(type));

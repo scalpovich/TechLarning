@@ -58,7 +58,7 @@ And for Primary Device and New Client user fills Device Range section for credit
 And credit device is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device
-Then user processes Client photo/flat file download batch for new credit Device
+Then processes Client photo/flat file download batch for new credit Device
 And user sign out from customer portal
 
 Scenario: 1.6 To verify that status(Successful/Failed/In Progress) of scheduled Get Photo Card batch is displayed on batch job history page when searched with either job id or batch name along with schedule date
@@ -74,7 +74,7 @@ Meta:
 @TC857975
 Given setting json values in excel for Credit
 When user is logged in institution
-Then photo image file is generated in JPEG format
+Then photo image file generated in JPEG format
 And user sign out from customer portal
 
 Scenario: 1.8 To verify that batch trace is displayed properly for Get Photo Card batch when scheduled in case of successful or failed
@@ -116,7 +116,7 @@ And for Primary Device and New Client user fills Device Range section for credit
 And credit device is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device
-And user processes Client photo/flat file download batch for new credit Device
+And processes Client photo/flat file download batch for new credit Device
 Then new fields are added in device tracking screen
 And user sign out from customer portal
 
@@ -133,8 +133,8 @@ And for Primary Device and New Client user fills Device Range section for credit
 And credit device is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device
-And user processes Client photo/flat file download batch for new credit Device
-Then photo flat file is generated with photo reference number
+And processes Client photo/flat file download batch for new credit Device
+Then photo flat file generated with photo reference number
 And user sign out from customer portal
 
 

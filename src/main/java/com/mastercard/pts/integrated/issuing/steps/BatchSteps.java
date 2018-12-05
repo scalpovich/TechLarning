@@ -204,6 +204,7 @@ public class BatchSteps {
 	}
 	
 	@When("verify photo reference number is present in embossing file")
+	@Then("photo reference number is present at given position in embossing file")
 	public void embossingFileWasGeneratedSuccessfullyForPhotoCard() {
 		MiscUtils.reportToConsole("******** Embossing File Start ***** ");
 		DevicePlan tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
@@ -221,6 +222,7 @@ public class BatchSteps {
 	}
 
 	@When("verify photo reference number is present in card holder dump file")
+	@Then("photo reference number is present in card holder dump file")
 	public void cardHolderDumpFileWasGeneratedSuccessfullyForPhotoCard() {
 		MiscUtils.reportToConsole("******** Embossing File Start ***** ");
 		try {
