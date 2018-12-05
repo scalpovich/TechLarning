@@ -318,9 +318,9 @@ public class BatchSteps {
 	public void pdfFileGetsDownloadedForLVCCard() {
 		MiscUtils.reportToConsole("******** PDF File Download Start ***** ");
 		try {
-			String localDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-			String pdfPassword = LocalDate.now().format(DateTimeFormatter.ofPattern("ddMMyyyy")).substring(0, 4);
-			batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(localDate.substring(0, 6), tempDirectory.toString(), "VIRTUAL_DEVICE_PRODUCTION", "proc");
+			String localDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM"));
+			String pdfPassword = LocalDate.now().format(DateTimeFormatter.ofPattern("ddMM"));
+			batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(localDate, tempDirectory.toString(), "VIRTUAL_DEVICE_PRODUCTION", "proc");
 			logger.info("Local Path of Folder: {}", tempDirectory.toString());
 			File[] newPDFFile = getLastFileName(tempDirectory.toString());
 			String absolutePathofPDF = tempDirectory.toString() + "\\" + newPDFFile[0].getName();

@@ -171,7 +171,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	private MCWebElement registeredMobileNumberCodeDDwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:registeredMobileNumber:input:inputTextField")
-	private MCWebElement registertedMobileNumber;
+	private MCWebElement registeredMobileNumber;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:emailAlertList:checkBoxComponent")
 	private MCWebElement chkBxEmailAlertRequired;
@@ -469,7 +469,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		WebElementUtils.checkCheckbox(chkBxSmsAlertRequired, true);
 		WebElementUtils.enterText(registeredMailIdTxt, ConstantData.EMAIL_ID);
 		WebElementUtils.selectDropDownByVisibleText(registeredMobileNumberCodeDDwn, ConstantData.COUNTRY_CODE);
-		WebElementUtils.enterText(registertedMobileNumber, ConstantData.CONTACT_NUMBER);
+		WebElementUtils.enterText(registeredMobileNumber, ConstantData.CONTACT_NUMBER);
 		WebElementUtils.selectDropDownByVisibleText(languagePreferencesDDwn, client.getLanguagePreference());
 		WebElementUtils.selectDropDownByVisibleText(vipDDwn, device.getVip());
 

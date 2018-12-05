@@ -17,6 +17,8 @@ public class CardManagementNav {
 	public static final String L2_TRANSACTION_LIMIT_PLAN = "TXLP001";
 	public static final String L2_TRANSACTION_REGISTRATION = "ISSS25";
 	public static final String L2_DEDUPE_PLAN = "DDPLN001";
+	public static final String L2_COBRANDPARTNER = "ISSS20";
+	
 
 	public static final String L2_MCC_RULES = "ISSD03";
 

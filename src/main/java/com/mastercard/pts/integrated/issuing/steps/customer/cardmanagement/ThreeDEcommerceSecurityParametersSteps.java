@@ -50,7 +50,7 @@ public class ThreeDEcommerceSecurityParametersSteps {
 
 	@Given("user edits $field field of 3D Eccom Security for product $type and interchange $interchange as $status")
 	@When("user edits $field field of 3D Eccom Security for product $type and interchange $interchange as $status")
-	public void userChangeAllTheFieldsAsUncheck(String fields, String type, String interchange, String status) {
+	public void userUnchecksAllFields(String fields, String type, String interchange, String status) {
 		ThreeDECommerceSecurityParameters threeDESParams = new ThreeDECommerceSecurityParameters();
 		threeDESParams.setCheckStatus(status);
 		DeviceRange deviceRange = context.get(ContextConstants.DEVICE_RANGE);

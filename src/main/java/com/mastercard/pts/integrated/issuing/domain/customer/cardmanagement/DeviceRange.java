@@ -6,10 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
-import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ThreeDECommerceSecurityParametersPage;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
-import org.slf4j.LoggerFactory;
 
 public class DeviceRange {
     
@@ -199,8 +197,8 @@ public class DeviceRange {
 	
 	public String getIssuerBinCode(String issuerBin){
 		issuerBin =issuerBin.substring(issuerBin.indexOf("[") + 1);
-		logger.info("Issuer Bin is {}", issuerBin);
 		issuerBin = issuerBin.substring(0, issuerBin.indexOf("]"));
+		logger.info("Issuer Bin is {}", issuerBin);
 		return issuerBin;
 	}
 
