@@ -12,7 +12,7 @@ Meta:
 Given setting json values in excel for Credit
 Given user is logged in institution
 When User fills Corporate client individual for credit product
-When User fills Dedupe Plan
+And User fills Dedupe Plan
 And User fills Statement Message Plan for credit product
 And User fills Marketing Message Plan for credit product
 And User fills Transaction Plan for credit product
@@ -29,8 +29,9 @@ And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Corporate Credit Card
 And User fills MCC Rules for credit product
 And User Primary Device fills New Program Corporate Credit Card section for credit product for Mastercard
-When for Primary Device and New Client user fills Device Range section for credit product
+And for Primary Device and New Client user fills Device Range section for credit product
 Then credit device is created using new device screen for Corporate and Primary Device and New Client and Magnetic Stripe Card
-Then credit processes pre-production batch using new Device
-Then credit processes deviceproduction batch using new Device for Supplementary
-Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
+And credit processes pre-production batch using new Device
+And credit processes deviceproduction batch using new Device for Supplementary
+And User search for new device Supplementary on search screen for credit and validates the status as NORMAL
+And user sign out from customer portal

@@ -103,7 +103,7 @@ public class CreateCorporatePage extends AbstractBasePage {
 					corporateclient.getEmbossedLine());
 			WebElementUtils.selectDropDownByVisibleText(liabilityTypeDdwn,
 					corporateclient.getLiabilityType());
-			clickWhenClickable(nextBtn);
+			clickNextButton();
 			WebElementUtils.enterText(officeAddress1Txt,
 					corporateclient.getCompanyName());
 			WebElementUtils.selectDropDownByVisibleText(officeCountryCodeDdwn,
@@ -112,7 +112,7 @@ public class CreateCorporatePage extends AbstractBasePage {
 					corporateclient.getCompanyName());
 			WebElementUtils.enterText(officeEmailTxt,
 					corporateclient.getCompanyName());
-			clickWhenClickable(nextBtn);
+			clickNextButton();
 			WebElementUtils.pickDate(dateOfIncorporation, LocalDate.now()
 					.minusDays(1));
 			WebElementUtils.enterText(tanNumberTxt,
