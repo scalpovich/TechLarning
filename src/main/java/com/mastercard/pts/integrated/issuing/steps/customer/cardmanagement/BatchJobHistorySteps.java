@@ -77,7 +77,7 @@ public class BatchJobHistorySteps {
 	}
 	
 	@When("check status in batch job history for $batchType batch and $batchName")
-	@Then("check status in batch job history for $batchType batch and $batch")
+	@Then("check status in batch job history for $batchType batch and $batchName")
 	public boolean checkStatusInBatchJobHistory(String batchType, String batchName) {
 		if (batchType.equalsIgnoreCase("DOWNLOAD")) {
 			batchjobhistory.setBatchType(Constants.BATCH_TYPE_DOWNLOAD);
