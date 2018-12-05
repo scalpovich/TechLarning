@@ -43,7 +43,6 @@ public class DevicePlanPage extends AbstractBasePage {
 	private static final Logger logger = LoggerFactory.getLogger(DevicePlanPage.class);
 	private static final String STATUS_YES = "Yes";
 	private static final String STATUS_NO = "No";
-
 	private static final String MAIL = "Mail [2]";
 
 	@Autowired
