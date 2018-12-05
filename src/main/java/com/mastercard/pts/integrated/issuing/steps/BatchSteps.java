@@ -313,8 +313,8 @@ public class BatchSteps {
 		Assert.assertTrue(isPhotoReferencePresentInFlatFile);
 	}
 	
-	@Given("User Downloads and Verify PDF File for LVC Card")
-	@Then("User Downloads and Verify PDF File for LVC Card")
+	@Given("User Downloads and Verifies PDF File for LVC Card")
+	@Then("User Downloads and Verifies PDF File for LVC Card")
 	public void pdfFileGetsDownloadedForLVCCard() {
 		MiscUtils.reportToConsole("******** PDF File Download Start ***** ");
 		try {

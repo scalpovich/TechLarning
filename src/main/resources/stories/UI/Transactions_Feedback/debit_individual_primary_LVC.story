@@ -24,5 +24,5 @@ And user has current wallet balance amount information for debit device
 Then user sign out from customer portal
 
 Scenario:1.2 Download PDF File for LVC Crad
-Given User Downloads and Verify PDF File for LVC Card
+Given User Downloads and Verifies PDF File for LVC Card
 
