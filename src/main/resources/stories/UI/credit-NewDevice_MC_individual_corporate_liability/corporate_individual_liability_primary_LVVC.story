@@ -5,13 +5,12 @@ I want to assert pages
 
 Meta:
 @CreditRegression
-@StoryName credit_emv_retail
-@DipeshSirExecution				 
+@StoryName credit_emv_retail 
 Scenario:creation of mastercard_corporate_primary_Limited Validity Virtual Card credit device
 Meta:
 @TestId TC565834
 @UserCreatesNewCreditDevice
-Given setting json values in excel
+Given setting json values in excel for Credit
 And user is logged in institution
 When User fills Dedupe Plan
 And User fills Statement Message Plan for credit product

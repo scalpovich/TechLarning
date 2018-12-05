@@ -9,7 +9,7 @@ Meta:
 Scenario:creation of mastercard_corporate_primary_Physical NFC Device - EMV Paypass Card credit device
 Meta:
 @UserCreatesNewCreditDevice
-Given setting json values in excel
+Given setting json values in excel for Credit
 And user is logged in institution
 When User fills Dedupe Plan
 And User fills Statement Message Plan for credit product
