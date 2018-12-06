@@ -214,10 +214,7 @@ public class BatchSteps {
 			File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(tempdevicePlan.getDevicePlanCode(),
 					tempDirectory.toString(), "DEVICE", "proc");
 			Device device = context.get(CreditConstants.APPLICATION);
-			if(Objects.isNull(device)){
-				flow.findAndPutDeviceApplicationNumberInContext();
-				device = context.get(ContextConstants.DEVICE);
-			}
+			device = retrieveApplicationNumberIfNotAvailable(device);	
 			String photoReferenceNumber = LinuxUtils.getPhotoReferenceNumberFromEmbossingFile(batchFile);
 			logger.info("Photo Reference Number in Embossing File:", photoReferenceNumber);
 			Assert.assertTrue("Photo Reference Number is not present in Embossing File",
@@ -236,6 +233,7 @@ public class BatchSteps {
 			File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(CSVno, tempDirectory.toString(),
 					"CARDHOLDER_DUMP", "proc");
 			Device device = context.get(CreditConstants.APPLICATION);
+			device = retrieveApplicationNumberIfNotAvailable(device);
 			boolean flg = LinuxUtils.isPhotoReferenceNumberPresentInDataFile(batchFile, device.getApplicationNumber());
 			Assert.assertTrue("Photo Reference Number is not present in Card Holder Dump File", flg);
 		} catch (Exception e) {
@@ -260,14 +258,9 @@ public class BatchSteps {
 		String timestamp = context.get(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME);
 		Device device = context.get(ContextConstants.DEVICE);
 		
-		if(Objects.isNull(device)||Strings.isNullOrEmpty(device.getApplicationNumber())){
-			flow.findAndPutDeviceApplicationNumberInContext();
-			device = context.get(ContextConstants.DEVICE);
-		}
-		
-		String deviceApplicationNumber =device.getApplicationNumber();
+		device = retrieveApplicationNumberIfNotAvailable(device);	
+		String deviceApplicationNumber = device.getApplicationNumber();
 		String partialFileName = "Account_PhotoNonPhoto_"+timestamp;
-		
 		String photoFileName=deviceApplicationNumber+".jpeg";
 		File photoJpegFile = null;
 		try {
@@ -288,10 +281,7 @@ public class BatchSteps {
 	public void thenFlatFileGeneratedWithPhotoReferenceNumber() {
 		Device device = context.get(ContextConstants.DEVICE);
 		
-		if(Objects.isNull(device)||Strings.isNullOrEmpty(device.getApplicationNumber())){
-			flow.findAndPutDeviceApplicationNumberInContext();
-			device = context.get(ContextConstants.DEVICE);
-		}
+		device = retrieveApplicationNumberIfNotAvailable(device);
 		
 		MiscUtils.reportToConsole("******** Photo Flat File Start ***** ");
 		String deviceApplicationNumber = device.getApplicationNumber();
@@ -316,6 +306,14 @@ public class BatchSteps {
 			throw MiscUtils.propagate(e);
 		}
 		Assert.assertTrue(isPhotoReferencePresentInFlatFile);
+	}
+	
+	private Device retrieveApplicationNumberIfNotAvailable(Device device){
+		if(Objects.isNull(device)||Strings.isNullOrEmpty(device.getApplicationNumber())){
+			flow.findAndPutDeviceApplicationNumberInContext();
+			device = context.get(ContextConstants.DEVICE);
+		} 
+		return device;
 	}
 
 
