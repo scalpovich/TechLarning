@@ -605,11 +605,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 					logger.info("{} is validated.", fieldValue);
 				}
 			}
-			try {
-				clickCloseButton();
-			} catch (StaleElementReferenceException ex) {
-				clickCloseButton();
-			}
+			clickCloseButton();
 		});
 	}
 	

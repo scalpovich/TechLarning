@@ -45,9 +45,7 @@ public class DumpSteps {
 	private CSVDataLoader csvDataLoader;
 	
 	private static final String ACC_ADMIN_STATUS = "ACCOUNT_ADMIN_STATUS";
-	
 	private static final String ACC_BAL_STATUS = "ACCOUNT_BALANCE_STATUS";
-
 	private static final String ACC_UNPAID_STATUS = "ACCOUNT_UNPAID_STATUS";
 
 	@When("$batchType download batch is executed for  $cardType user")
