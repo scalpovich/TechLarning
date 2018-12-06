@@ -79,14 +79,14 @@ public class BatchJobHistorySteps {
 	@When("check status in batch job history for $batchType batch and $batchName")
 	@Then("check status in batch job history for $batchType batch and $batchName")
 	public boolean checkStatusInBatchJobHistory(String batchType, String batchName) {
-		if (batchType.equalsIgnoreCase("DOWNLOAD")) {
+		if ("DOWNLOAD".equalsIgnoreCase(batchType)) {
 			batchjobhistory.setBatchType(Constants.BATCH_TYPE_DOWNLOAD);
 		}
 		SimulatorUtilities.wait(3000);
-		if (batchName.equalsIgnoreCase("CLIENT_PHOTO_BATCH")) {
+		if ("CLIENT_PHOTO_BATCH".equalsIgnoreCase(batchName)) {
 			batchjobhistory.setBatch(Constants.CLIENT_PHOTO_FLAT_FILE_DOWNLOAD_BATCH);
 		} else {
-			if (batchName.equalsIgnoreCase("CardholderDump")) {
+			if ("CardholderDump".equalsIgnoreCase(batchName)) {
 				batchjobhistory.setBatch(Constants.CARDHOLDER_DUMP_BATCH);
 			}
 		}

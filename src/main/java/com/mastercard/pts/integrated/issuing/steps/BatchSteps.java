@@ -62,9 +62,7 @@ public class BatchSteps {
 	
 	@Autowired
 	DeviceDetailsFlows flow; 
-	
-	private static final int PHOTO_REFERENCE_NUMBER_POSITION = 29;
-	
+		
 	@When("embossing file batch was generated in correct format")
 	@Then("embossing file batch was generated in correct format")
 	public void  embossingFileWasGeneratedSuccessfully() {
@@ -269,7 +267,7 @@ public class BatchSteps {
 			MiscUtils.reportToConsole("******** Photo Flat File Completed ***** " );
 
 		} catch (Exception e) {
-			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
+			MiscUtils.reportToConsole("Photo file Exception :  " + e.toString());
 			throw MiscUtils.propagate(e);
 		}
 		Assert.assertNotNull(photoJpegFile);
@@ -299,7 +297,7 @@ public class BatchSteps {
 			MiscUtils.reportToConsole("******** Photo Flat File Completed ***** ");
 
 		} catch (Exception e) {
-			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
+			MiscUtils.reportToConsole("Photo Flat Exception :  " + e.toString());
 			throw MiscUtils.propagate(e);
 		}
 		Assert.assertTrue(isPhotoReferencePresentInFlatFile);

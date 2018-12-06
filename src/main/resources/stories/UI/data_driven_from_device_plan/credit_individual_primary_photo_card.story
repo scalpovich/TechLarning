@@ -16,7 +16,7 @@ Meta:
 @TC857972
 Given user is logged in customer portal as admin user in default institution
 When client photo/flat file download batch is present under download in batch level privilege page
-When admin provides access to download photo/flat file download batch
+And admin provides access to download photo/flat file download batch
 Then Date should be displayed as editable on screen
 And user sign out from customer portal
 
@@ -47,7 +47,7 @@ And check status in batch job history for DOWNLOAD batch and CLIENT_PHOTO_BATCH
 And user checks for the client photo/flat file batch trace for download batch
 And new fields are added in device tracking screen
 And photo image file generated in JPEG format
-And photo flat file generated with photo reference number 
+And photo flat file generated with photo reference number
 And process batch for DOWNLOAD type and Batch name CardholderDump
 And check status in batch job history for DOWNLOAD batch and CardholderDump
 And photo reference number is present in card holder dump file
