@@ -19,7 +19,11 @@ public class ProcessBatches {
 	private String methodToGenerateFile;
 	private String vendorName;
 	private LocalDate businessDate;
-	private String status;	
+	private String status;
+	
+	private String accountAdminStatus;
+	private String accountBalanceStatus;
+	private String accountUnpaidStatus;
 	
 	private static final String BATCH_TYPE = "UPLOAD [U]";
 //	private static final String BATCH_NAME = "Transaction Upload [TRANSACTION_UPLOAD]";
@@ -156,5 +160,29 @@ public class ProcessBatches {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public String getAccountAdminStatus() {
+		return accountAdminStatus;
+	}
+
+	public void setAccountAdminStatus(String accountAdminStatus) {
+		this.accountAdminStatus = accountAdminStatus;
+	}
+
+	public String getAccountBalanceStatus() {
+		return accountBalanceStatus;
+	}
+
+	public void setAccountBalanceStatus(String accountBalanceStatus) {
+		this.accountBalanceStatus = accountBalanceStatus;
+	}
+
+	public String getAccountUnpaidStatus() {
+		return accountUnpaidStatus;
+	}
+
+	public void setAccountUnpaidStatus(String accountUnpaidStatus) {
+		this.accountUnpaidStatus = accountUnpaidStatus;
 	}
 }

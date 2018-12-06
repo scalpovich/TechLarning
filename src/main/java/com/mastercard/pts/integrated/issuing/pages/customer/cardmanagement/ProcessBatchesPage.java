@@ -250,12 +250,6 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	
 	private static final String  POST_MAINTENANCE_FEE_BATCH = "Post Maintenance Fee Batch [POST_MAINTENANCE_FEE]";
 	
-	private static final String ACC_ADMIN_STATUS = "ACCOUNT_ADMIN_STATUS";
-	
-	private static final String ACC_BAL_STATUS = "ACCOUNT_BALANCE_STATUS";
-
-	private static final String ACC_UNPAID_STATUS = "ACCOUNT_UNPAID_STATUS";
-	
 	public void selectBatchType(String option) {
 		selectByVisibleText(batchTypeDDwn, option);
 	}
@@ -557,15 +551,14 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	public void processAccountsDownloadBatch(ProcessBatches batch) {
 		selectAccountDumpAndCHDump(batch);
 		SimulatorUtilities.wait(500);// this delay is to load data for Balance type
-		Map<String, String> map = context.get(TestContext.KEY_STORY_DATA);
-		if (map.containsKey(ACC_ADMIN_STATUS)) {
-			WebElementUtils.selectDropDownByVisibleText(accountAdminStatusDDwn, map.get(ACC_ADMIN_STATUS));
+		if (batch.getAccountAdminStatus() != null) {
+			WebElementUtils.selectDropDownByVisibleText(accountAdminStatusDDwn, batch.getAccountAdminStatus());
 		}
-		if (map.containsKey(ACC_BAL_STATUS)) {
-			WebElementUtils.selectDropDownByVisibleText(accountBalanceStatusDDwn, map.get(ACC_BAL_STATUS));
+		if (batch.getAccountBalanceStatus() != null) {
+			WebElementUtils.selectDropDownByVisibleText(accountBalanceStatusDDwn, batch.getAccountBalanceStatus());
 		}
-		if (map.containsKey(ACC_UNPAID_STATUS)) {
-			WebElementUtils.selectDropDownByVisibleText(accountUnpaidStatusDDwn, map.get(ACC_UNPAID_STATUS));
+		if (batch.getAccountUnpaidStatus() != null) {
+			WebElementUtils.selectDropDownByVisibleText(accountUnpaidStatusDDwn, batch.getAccountUnpaidStatus());
 		}
 		submitAndVerifyBatchDetails();
 	}
