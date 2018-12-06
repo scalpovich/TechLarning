@@ -317,4 +317,10 @@ public class ApplicationUploadSteps {
 		batch.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
 		batchProcessWorkflow.processResendPinRequestBatch(batch);
 	}
+	
+	@When("process batch for $batchType type and Batch name $batchName")
+	public void submitJobForProcessing(String batchType, String batchName)
+	{
+		processBatchesFlows.processDownloadBatches(batchType,batchName);
+	}
 }

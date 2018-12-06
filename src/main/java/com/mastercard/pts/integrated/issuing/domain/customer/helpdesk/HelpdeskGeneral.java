@@ -1,7 +1,5 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.helpdesk;
 
-import java.math.BigDecimal;
-
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ProductType;
@@ -59,6 +57,7 @@ public class HelpdeskGeneral {
 	private String accountCreditLimit; 
 	private String newCreditLimit;
 	private String customerType;
+	private String reason;
 	
 	
 	public String getCustomerType() {
@@ -266,6 +265,14 @@ public class HelpdeskGeneral {
 
 	public void setLimitType(String limitType) {
 		this.limitType = limitType;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
 	}
 
 	@Override
