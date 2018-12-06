@@ -102,10 +102,7 @@ public class ExcelUtils {
 	}
 	
 	public static String getFilePath() {
-		/*String filePath =   System.getProperty("user.dir")
-				+ "/src/main/resources/config/" + System.getProperty("env") + "/TestData/"+ Constants.TESTDATA +".xlsx";*/
-		String filePath =   System.getProperty("user.dir")
-				+ "/src/main/resources/config/StageSA/TestData/"+ Constants.TESTDATA +".xlsx";
+		String filePath = System.getProperty("user.dir") + "/src/main/resources/config/" + System.getProperty("env") + "/TestData/" + Constants.TESTDATA + ".xlsx";
 		return filePath;
 	}
 
