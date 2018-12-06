@@ -79,7 +79,7 @@ public class ApplicationUploadSteps {
 	@Autowired
 	private KeyValueProvider keyValueProvider;
 	
-	private String ExpectedRejectedTxt = "Caught in Dedupe ./SDN matching.";
+	private String txtExpectedRejected = "Caught in Dedupe ./SDN matching.";
 	
 	public SearchApplicationDetails searchDomain;
 
@@ -118,7 +118,7 @@ public class ApplicationUploadSteps {
 	@When("Application Upload rejected due to missing Business Mandatory field")
 	public void applicationUploadRejectedDueToMissingBMF(){
 		String rejectedDueToMissingMandatory = context.get(ContextConstants.REJECTED_FILE_UPLOAD);
-		Assert.assertEquals("Application not Caught in Dedupe ./SDN matching", ExpectedRejectedTxt, rejectedDueToMissingMandatory);
+		Assert.assertEquals("Application not Caught in Dedupe ./SDN matching", txtExpectedRejected, rejectedDueToMissingMandatory);
 	}
 	
 	@When("user creates $application_upload_file batch file and uploads it on server for $customerType")

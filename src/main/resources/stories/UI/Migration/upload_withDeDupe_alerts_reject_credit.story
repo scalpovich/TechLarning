@@ -1,7 +1,7 @@
 !-- Author e084017
 Narrative:
 As a(n)  Customer portal user 
-I want to onboard credit device using application upload 
+I want to onboard application upload with duplicate data then it should caught in Dedupe/SDN 
 
 Meta:
 @StoryName greater_limit_credit_emv_retail
@@ -16,6 +16,6 @@ And User Primary Device fills New Program Retail Credit Card section for credit 
 And for Primary Device and New Client user fills Device Range section for credit product
 And user creates Application Upload Credit batch file with duplicate data and upload it on server for Individual for credit
 And Application Upload rejected due to missing Business Mandatory field
-And reject duplicate application for upload caught in dedupe / SDN
+And user reject duplicate application for upload caught in dedupe / SDN
 And verify duplicate applications in application reject report for upload
 Then user logouts from customer portal
