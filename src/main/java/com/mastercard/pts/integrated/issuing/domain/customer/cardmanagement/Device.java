@@ -122,6 +122,8 @@ public class Device {
 	private String promotionPlanCode;
 	private String loanAccountNumber;  	
   	private String mandatoryFieldValue;
+  	private String cardPackID;
+  	
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
 		device.setApplicationType(provider.getString(APPLICATION_TYPE));
@@ -801,5 +803,13 @@ public class Device {
 
 	public void setMandatoryFieldValue(String mandatoryFieldValue) {
 		this.mandatoryFieldValue = mandatoryFieldValue;
+	}
+	
+	public String getCardPackID() {
+		return cardPackID;
+	}
+
+	public void setCardPackID(String cardPackID) {
+		this.cardPackID = cardPackID;
 	}
 }
