@@ -238,7 +238,7 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 		if (getFirstRecordCellTextByColumnName(STATUS).equals(Constants.SUCCESS_STATUS)) {
 			String timeStamp = LinuxUtils.getServerTime(DateTimeFormatter.ofPattern("ddMMyyyyHHmm")); 
 			context.put(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME, timeStamp);
-			logger.info("timestamp of processing", timeStamp);
+			logger.info("timestamp of processing : {}", timeStamp);
 			return true;
 		}
 		return false;
