@@ -9,6 +9,16 @@ Meta:
 	 
 	 
 	 
+Scenario: 1.1 To verify that Super Admin user is able to provide access for new download batch ?Get Photo Card?  to operations user
+Meta:
+@TC857968
+@TC857970
+@TC857972
+Given user is logged in customer portal as admin user in default institution
+When client photo/flat file download batch is present under download in batch level privilege page
+And admin provides access to download photo/flat file download batch
+Then Date should be displayed as editable on screen
+And user sign out from customer portal
 
 
 Scenario: 1.2 To verify Photo Reference number is present in embossing file, cardholder dump and photo flat file, when new Primary credit device has been boarded through New device screen when card type is selected as photo card
