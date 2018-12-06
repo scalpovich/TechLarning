@@ -508,4 +508,6 @@ public class Constants {
 	public static final String AUTO_REDEEM_MIN_AMT ="AUTO_REDEEM_MIN_AMT";
 	public static final String AUTO_REDEEM_DAY ="AUTO_REDEEM_DAY";
 
+	public static String TESTDATA = "TestData";
+
 }

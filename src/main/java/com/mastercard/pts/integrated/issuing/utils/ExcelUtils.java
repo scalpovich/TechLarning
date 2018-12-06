@@ -6,6 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import com.codoid.products.exception.FilloException;
+import com.codoid.products.fillo.Connection;
+import com.codoid.products.fillo.Fillo;
+import com.codoid.products.fillo.Recordset;
+
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
@@ -95,4 +100,46 @@ public class ExcelUtils {
 			}
 		}
 	}
+	
+	public static String getFilePath() {
+		/*String filePath =   System.getProperty("user.dir")
+				+ "/src/main/resources/config/" + System.getProperty("env") + "/TestData/"+ Constants.TESTDATA +".xlsx";*/
+		String filePath =   System.getProperty("user.dir")
+				+ "/src/main/resources/config/StageSA/TestData/"+ Constants.TESTDATA +".xlsx";
+		return filePath;
+	}
+
+	public static String getDataFromExcelThroughQuery(String inputStream, String strQuery, String getFieldvalue) throws FilloException {
+		String getFieldValue = null;
+		Fillo fillo = new Fillo();
+		Connection connection = fillo.getConnection(inputStream);
+		Recordset recordset = connection.executeQuery(strQuery);
+		while (recordset.next()) {
+			getFieldValue = recordset.getField(getFieldvalue);
+		}
+		recordset.close();
+		connection.close();
+		return getFieldValue;
+
+	}
+
+	@SuppressWarnings("deprecation")
+	public static String getField(String strQuery, String getFieldValue) throws FilloException {
+		return getDataFromExcelThroughQuery(getFilePath(), strQuery, getFieldValue);
+	}
+
+	public static void insertDataIntoExcelThroughQuery(String inputStream, String strQuery) throws FilloException {
+		Fillo fillo = new Fillo();
+		Connection connection = fillo.getConnection(inputStream);
+		// connection.createTable("Cards", new String []
+		// {"Product","ProgramType","ProgramCode","DevicePlan"});
+		connection.executeUpdate(strQuery);
+		connection.close();
+	}
+
+	@SuppressWarnings("deprecation")
+	public static void insertDataIntoExcel(String strQuery) throws FilloException {
+		insertDataIntoExcelThroughQuery(getFilePath(), strQuery);
+	}
+
 }
