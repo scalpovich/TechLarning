@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
@@ -21,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 
 import com.google.common.base.Throwables;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
@@ -603,6 +606,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			for (String fieldValue : getBatchDetailsValidationFields()) {
 				if (!(fieldValue.contains("-"))) {
 					logger.info("{} is validated.", fieldValue);
+				}
+				else{
+					Assert.assertTrue("present field value is not correct.", false);
 				}
 			}
 			clickCloseButton();
