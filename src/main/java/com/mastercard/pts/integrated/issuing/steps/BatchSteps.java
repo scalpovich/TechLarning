@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.google.common.base.Strings;
 import com.mastercard.pts.integrated.issuing.configuration.LinuxBox;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
@@ -258,8 +259,13 @@ public class BatchSteps {
 		
 		String timestamp = context.get(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME);
 		Device device = context.get(ContextConstants.DEVICE);
-		String deviceApplicationNumber =device.getApplicationNumber();
 		
+		if(Objects.isNull(device)||Strings.isNullOrEmpty(device.getApplicationNumber())){
+			flow.findAndPutDeviceApplicationNumberInContext();
+			device = context.get(ContextConstants.DEVICE);
+		}
+		
+		String deviceApplicationNumber =device.getApplicationNumber();
 		String partialFileName = "Account_PhotoNonPhoto_"+timestamp;
 		
 		String photoFileName=deviceApplicationNumber+".jpeg";
@@ -280,8 +286,13 @@ public class BatchSteps {
 	@When("photo flat file generated with photo reference number")
 	@Then("photo flat file generated with photo reference number")
 	public void thenFlatFileGeneratedWithPhotoReferenceNumber() {
-
 		Device device = context.get(ContextConstants.DEVICE);
+		
+		if(Objects.isNull(device)||Strings.isNullOrEmpty(device.getApplicationNumber())){
+			flow.findAndPutDeviceApplicationNumberInContext();
+			device = context.get(ContextConstants.DEVICE);
+		}
+		
 		MiscUtils.reportToConsole("******** Photo Flat File Start ***** ");
 		String deviceApplicationNumber = device.getApplicationNumber();
 
