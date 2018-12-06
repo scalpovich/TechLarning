@@ -258,7 +258,6 @@ public class BatchSteps {
 		String timestamp = context.get(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME);
 		Device device = context.get(ContextConstants.DEVICE);
 		
-		device = retrieveApplicationNumberIfNotAvailable(device);	
 		String deviceApplicationNumber = device.getApplicationNumber();
 		String partialFileName = "Account_PhotoNonPhoto_"+timestamp;
 		String photoFileName=deviceApplicationNumber+".jpeg";
@@ -280,9 +279,7 @@ public class BatchSteps {
 	@Then("photo flat file generated with photo reference number")
 	public void thenFlatFileGeneratedWithPhotoReferenceNumber() {
 		Device device = context.get(ContextConstants.DEVICE);
-		
-		device = retrieveApplicationNumberIfNotAvailable(device);
-		
+				
 		MiscUtils.reportToConsole("******** Photo Flat File Start ***** ");
 		String deviceApplicationNumber = device.getApplicationNumber();
 
