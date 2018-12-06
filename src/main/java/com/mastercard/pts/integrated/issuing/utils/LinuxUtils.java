@@ -7,8 +7,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.taskdefs.optional.ssh.Scp;
 import org.slf4j.Logger;
@@ -24,6 +26,7 @@ public abstract class LinuxUtils {
 
 	private static final Logger logger = LoggerFactory.getLogger(LinuxUtils.class);
 	private static String[] cardData;
+	
 
 	public interface RemoteConnectionDetails{
 		String getUserName(); 
@@ -379,5 +382,47 @@ public abstract class LinuxUtils {
 			throw MiscUtils.propagate(e);
 		}
 		return photoFileName;
+	}
+	
+	public static boolean isPhotoReferenceNumberPresentInDataFile(File filePath, String applicationNumber) {
+		MiscUtils.reportToConsole("*********   started reading in Dump File *******  ");
+		boolean flg = false;
+		try {
+			List<String> lines = FileUtils.readLines(filePath);
+			for (String line : lines) {
+				line = line.trim().replaceAll("\\s+", " ");
+				MiscUtils.reportToConsole("*********   File Data *******  " + line);
+				String[] data = line.trim().split(",");
+				for (String string : data) {
+					if (string.equals(applicationNumber)) {
+						flg = true;
+						break;
+					}
+				}
+				if (flg)
+					break;
+			}
+		} catch (Exception e) {
+			MiscUtils.reportToConsole("getphotoReferenceNumber Exception :  " + e.toString());
+			logger.info(ConstantData.EXCEPTION + " {} " + e.getMessage());
+			throw MiscUtils.propagate(e);
+		}
+		return flg;
+	}
+
+	public static String getPhotoReferenceNumberFromEmbossingFile(File filePath) {
+		String photoReferenceNumber = "";
+		try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+			List<String> strLines = FileUtils.readLines(filePath);
+			String strLine = strLines.get(1).trim().replaceAll("\\s+", " ");
+			MiscUtils.reportToConsole("********* File Data on second line *******  " + strLine);
+			String[] data = strLine.trim().split(" ");
+			photoReferenceNumber = data[data.length - 1];
+		} catch (Exception e) {
+			MiscUtils.reportToConsole("getPhotoReferenceNumberFromEmbossingFile Exception :  " + e.toString());
+			logger.info(ConstantData.EXCEPTION + " {} " + e.getMessage());
+			throw MiscUtils.propagate(e);
+		}
+		return photoReferenceNumber;
 	}
 }

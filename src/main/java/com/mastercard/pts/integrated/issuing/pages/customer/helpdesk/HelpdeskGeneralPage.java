@@ -41,6 +41,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Loan
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
+import com.mastercard.pts.integrated.issuing.domain.restapi.DeviceDetails;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
@@ -418,6 +419,25 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private String preclosureFee;
 	private String cancellationFee;
 	private String errorMsgOfloanCancellation;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'Reason')]//following::select[@class = 'mandatoryFlag selectf']")
+	private MCWebElement stoplistReasonDDwn;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'New Device Number :')]//following::input[@type='checkbox']")
+	private MCWebElement chkBxNewDeviceNumber;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'Reason :')]//following::select[@class='mandatoryFlag textf']")
+	private MCWebElement replaceDeviceRequestReasonDDwn;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'New Pack ID :')]//following::input[@class='mandatoryFlag textf']")
+	private MCWebElement txtnewPackID;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'Withdrawal Reason :')]//following::select[@class='mandatoryFlag selectf']")
+	private MCWebElement withdrawStoplistReasonDDwn;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Apply Fees :']//following::input[@type='checkbox']")
+	private MCWebElement chkBxApplyFees;
+
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
 		logger.info(WALLET_NUMBER, CharMatcher.DIGIT.retainFrom(walletNumber.getText()));
@@ -900,7 +920,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	public String getWalletBalanceInformationAfterLoyaltyRedemption(Device device) {
 		logger.info("Get Wallet Balance Information for Device: {}", device.getDeviceNumber());
-		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, "Prepaid [P]");
+		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
 		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
@@ -1847,5 +1867,86 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 		SimulatorUtilities.wait(1000);
 		return errorMsgOfloanCancellation;
+	}
+
+	public void addServiceRequest(HelpdeskGeneral helpdeskGeneral,
+			MCWebElement element, String frame, boolean isNewDevice) {
+		editFirstRecord();
+		SimulatorUtilities.wait(2000);
+		selectServiceCode(helpdeskGeneral.getServiceCode());
+		SimulatorUtilities.wait(500);
+		clickGoButton();
+		SimulatorUtilities.wait(2000);
+		runWithinPopup(
+				frame,
+				() -> {
+					if (isNewDevice) {
+						selectNewDeviceCheckBox(isNewDevice);
+						SimulatorUtilities.wait(2000);
+						selectReasonForRequest(element,
+								helpdeskGeneral.getReason());
+					} else {
+						selectReasonForRequest(element,
+								helpdeskGeneral.getReason());
+						if (helpdeskGeneral.getServiceCode().equals(
+								Constants.INSTANT_REPLACE_DEVICE)) {
+							DeviceDetails deviceDetails = context
+									.get(ContextConstants.DEVICE_DETAILS);
+							enterNewPackID(deviceDetails.getCardPackID());
+						}
+					}
+					enterNotes(helpdeskGeneral.getNotes());
+					clickSaveButton();
+					verifyOperationStatus();
+					clickOKButtonPopup();
+				});
+		SimulatorUtilities.wait(5000);
+		clickEndCall();
+	}
+
+	public MCWebElement getReplaceDeviceRequestReasonDdwn() {
+		return replaceDeviceRequestReasonDDwn;
+	}
+
+	public MCWebElement getstoplistReasonDDwn() {
+		return stoplistReasonDDwn;
+	}
+
+	public void selectNewDeviceCheckBox(boolean value) {
+		ClickCheckBox(chkBxNewDeviceNumber, value);
+	}
+
+	public void selectReasonForRequest(MCWebElement webelement, String reason) {
+		WebElementUtils.selectDropDownByVisibleText(webelement, reason);
+	}
+
+	public void enterNewPackID(String newPackID) {
+		WebElementUtils.enterText(txtnewPackID, newPackID);
+	}
+
+	public void withdrawDeviceFromStoplist(HelpdeskGeneral helpdeskGeneral) {
+		editFirstRecord();
+		SimulatorUtilities.wait(5000);
+		selectServiceCode(Constants.DEVICE_WITHDRAW_STOPLIST_REQ);
+		clickGoButton();
+		runWithinPopup("221 - Withdraw Device from Stop-list", () -> {
+			selectWithdrawalReason(helpdeskGeneral.getReason());
+			selectApplyFeesChkBx(false);
+			enterNotes(helpdeskGeneral.getNotes());
+			clickSaveButton();
+			verifyOperationStatus();
+			clickOKButtonPopup();
+		});
+		SimulatorUtilities.wait(3000);
+		clickEndCall();
+	}
+
+	public void selectWithdrawalReason(String reason) {
+		WebElementUtils.selectDropDownByVisibleText(withdrawStoplistReasonDDwn,
+				reason);
+	}
+
+	public void selectApplyFeesChkBx(boolean value) {
+		ClickCheckBox(chkBxApplyFees, value);
 	}
 }
