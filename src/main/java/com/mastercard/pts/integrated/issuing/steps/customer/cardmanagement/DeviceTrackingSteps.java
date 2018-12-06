@@ -31,6 +31,7 @@ public class DeviceTrackingSteps {
 	@When("new fields are added in device tracking screen")
 	public void thenNewFieldAreAddedInDeviceTrackingScreen(){
 		
+		deviceDetailsWorkflow.findAndPutDeviceApplicationNumberInContext();
 		Device device = context.get(ContextConstants.DEVICE);
 		deviceTrackingWorkflow.checkForNewFieldsAdded(device);
 	}

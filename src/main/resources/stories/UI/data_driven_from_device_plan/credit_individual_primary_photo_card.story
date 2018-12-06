@@ -5,9 +5,7 @@ As a user
 I want to perform card setup of photo credit msr card device
 
 Meta:
-@StoryName credit_msr_retail		
-	 
-	 
+@StoryName credit_msr_retail_photo 
 	 
 Scenario: 1.1 To verify that Super Admin user is able to provide access for new download batch ?Get Photo Card?  to operations user
 Meta:
