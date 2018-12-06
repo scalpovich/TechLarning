@@ -64,17 +64,17 @@ public class FileCreation {
 	Vendor vendor;
 	@Autowired
 	HelpDeskGeneral helpDeskGeneral;
-
+	
 	@Value("${linux.application.upload.path}")
 	private String applicationUpload;
-
+	
 	@Value("${linux.folder.path}")
 	private String linuxFolderPath;
-
 	
+
 	@Autowired
 	private DataProvider provider;
-
+	
 	@Autowired
 	private TestContext context;
 
@@ -91,7 +91,7 @@ public class FileCreation {
 	private static final String BUY_RATE = "BUY_RATE";
 	private static final String MID_RATE = "SOURCE_CURRENCY";
 	private static final String SELL_RATE = "DEST_CURRENCY";
-	private static final String UPLOAD_FILENAME = "UploadFile";
+	private static final String UPLOAD_FILENAME = "UploadFile";	
 	private static final String CORPORATE_CLIENT_CODE = "12121217222000002";
 
 	private String filename;
@@ -130,7 +130,7 @@ public class FileCreation {
 
 	public static String createTransactionLine(String deviceNumber, String walletNumber, KeyValueProvider provider) {
 		return deviceNumber + "|" + walletNumber + "|0|" + DateUtils.getDateddMMyyyy() + "|" + provider.getString(TRANSACTION_CODE) + "|" + provider.getString(TRANSACTION_AMOUNT) + "|"
-				+ provider.getString(TRANSACTION_CURRENCY) + "||" + DateUtils.getDateddMMyyyy() + "|" + provider.getString(BILLING_AMOUNT) + "|" + provider.getString(BILLING_CURRENCY) + "|" 
+				+ provider.getString(TRANSACTION_CURRENCY) + "||" + DateUtils.getDateddMMyyyy() + "|" + provider.getString(BILLING_AMOUNT) + "|" + provider.getString(BILLING_CURRENCY) + "|"
 				+ ConstantData.GENERIC_DESCRIPTION + "|||" + "00000000";
 	}
 
@@ -373,8 +373,8 @@ public class FileCreation {
 
 	public String createCERMCRecord() {
 		return "D" + currencyExchangeRatesPage.getCode(getUploadFileFromDatamap("Source Currency")) + currencyExchangeRatesPage.getCode(getUploadFileFromDatamap("Destination Currency")) + "3MD"
-				+ createRateString(getUploadFileFromDatamap("BUY_RATE")) + createRateString(getUploadFileFromDatamap("MID_RATE")) + createRateString(getUploadFileFromDatamap("SELL_RATE")) 
-				+ "999999999999999"+ "                                                       ";
+				+ createRateString(getUploadFileFromDatamap("BUY_RATE")) + createRateString(getUploadFileFromDatamap("MID_RATE")) + createRateString(getUploadFileFromDatamap("SELL_RATE"))
+				+ "999999999999999" + "                                                       ";
 	}
 
 	public String createCERMCHeader(String date, String time) {
@@ -461,7 +461,7 @@ public class FileCreation {
 				+ MiscUtils.generateRandomNumberAsString(6) + ".DAT";
 		HashMap<String, HashMap<String, String>> applicationUploadMap;
 		File file = new File(fileName);
-		String remoteDir = linuxFolderPath + applicationUpload;
+		String remoteDir = linuxFolderPath+applicationUpload;
 
 		applicationUploadMap = dataReader.dataProviderFileUpload("AllUploadTestData", "Prepaid Card File");
 		logger.info("applicationUploadMap = {} ", applicationUploadMap);
@@ -546,7 +546,7 @@ public class FileCreation {
 		logger.info(customerType);
 		return fileName;
 	}
-
+	
 	public String createApplicationUploadFile(String INSTITUTION_CODE, String customerType, String cardType)
 			throws Exception {
 		DeviceRange deviceRange = context.get(ContextConstants.DEVICE_RANGE);
@@ -574,82 +574,82 @@ public class FileCreation {
 		File[] listOfFiles = folder.listFiles();
 		logger.info("Length Of all Files:{}", listOfFiles.length);
 
-		if (cardType.equalsIgnoreCase("prepaid")) {
+			if (cardType.equalsIgnoreCase("prepaid")) {
 			fileName = "APPPR" + INSTITUTION_CODE + DateUtils.getDateTimeDDMMYYHHMMSS()
 					+ MiscUtils.generateRandomNumberAsString(6) + ".DAT";
-		} else if (cardType.equalsIgnoreCase("credit")) {
+			} else if (cardType.equalsIgnoreCase("credit")) {
 			fileName = "APPCR" + INSTITUTION_CODE + DateUtils.getDateTimeDDMMYYHHMMSS()
 					+ MiscUtils.generateRandomNumberAsString(6) + ".DAT";
-		}
-		HashMap<String, HashMap<String, String>> applicationUploadMap = new HashMap<>();
-		File file = new File(fileName);
-		if (cardType.equalsIgnoreCase("prepaid")) {
-			applicationUploadMap = dataReader.dataProviderFileUpload("AllUploadTestData", "Prepaid Card File");
-		} else if (cardType.equalsIgnoreCase("credit")) {
-			applicationUploadMap = dataReader.dataProviderFileUpload("AllUploadTestData", "Credit Card File");
-		}
+			}
+			HashMap<String, HashMap<String, String>> applicationUploadMap = new HashMap<>();
+			File file = new File(fileName);
+			if (cardType.equalsIgnoreCase("prepaid")) {
+				applicationUploadMap = dataReader.dataProviderFileUpload("AllUploadTestData", "Prepaid Card File");
+			} else if (cardType.equalsIgnoreCase("credit")) {
+				applicationUploadMap = dataReader.dataProviderFileUpload("AllUploadTestData", "Credit Card File");
+			}
 
-		try (PrintWriter writer = new PrintWriter(file)) {
-			writer.println("HD|" + INSTITUTION_CODE + "|" + DateUtils.getDateTimeDDMMYYYYHHMMSS() + "|" + "2.0");
-			String name = CustomUtils.randomString(9).toUpperCase();
-			String lastName = CustomUtils.randomString(11).toUpperCase();
-			helpDeskGeneral.setFirstName(name);
-			helpDeskGeneral.setLastName(lastName);
+			try (PrintWriter writer = new PrintWriter(file)) {
+				writer.println("HD|" + INSTITUTION_CODE + "|" + DateUtils.getDateTimeDDMMYYYYHHMMSS() + "|" + "2.0");
+				String name = CustomUtils.randomString(9).toUpperCase();
+				String lastName = CustomUtils.randomString(11).toUpperCase();
+				helpDeskGeneral.setFirstName(name);
+				helpDeskGeneral.setLastName(lastName);
 
-			for (int i = 0; i < applicationUploadMap.size(); i++) {
-				if (true == dataReader.iterateUploadDataFromExcelMap("Test Record " + (i + 1))) {
+				for (int i = 0; i < applicationUploadMap.size(); i++) {
+					if (true == dataReader.iterateUploadDataFromExcelMap("Test Record " + (i + 1))) {
 
 					if (DeviceType.MAGNETIC_STRIPE_CARD.toUpperCase()
 							.contains(devicePlan.getDeviceType().toUpperCase())) {
-						deviceType = "1";
-					} else if (DeviceType.EMV_CARD.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
-						deviceType = "2";
+							deviceType = "1";
+						} else if (DeviceType.EMV_CARD.toUpperCase().contains(devicePlan.getDeviceType().toUpperCase())) {
+							deviceType = "2";
 					} else if (DeviceType.PHYSICAL_NFC_DEVICE_MAG_STRIPE_PAYPASS.toUpperCase()
 							.contains(devicePlan.getDeviceType().toUpperCase())) {
-						deviceType = "3";
+							deviceType = "3";
 					} else if (DeviceType.PHYSICAL_NFC_DEVICE_EMV_PAYPASS.toUpperCase()
 							.contains(devicePlan.getDeviceType().toUpperCase())) {
-						deviceType = "4";
+							deviceType = "4";
 					} else if (DeviceType.PHYSICAL_NFC_DEVICE_PAYPASS.toUpperCase()
 							.contains(devicePlan.getDeviceType().toUpperCase())) {
-						deviceType = "5";
+							deviceType = "5";
 					} else if (DeviceType.STATIC_VIRTUAL_CARD.toUpperCase()
 							.contains(devicePlan.getDeviceType().toUpperCase())) {
-						deviceType = "7";
+							deviceType = "7";
 					} else if (DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.toUpperCase()
 							.contains(devicePlan.getDeviceType().toUpperCase())) {
-						deviceType = "8";
-					}
-					if(customerType.equals(CustomerType.INDIVIDUAL)){
-						writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", INSTITUTION_CODE).replace("%F%", "FORM" + CustomUtils.randomAlphaNumeric(6)).replace("%t%", "0").replace("%P%", program.getProgramCode()).replace("%q%", deviceType).replace("%D%", devicePlan.getDevicePlanCode()).replace("%b%", branchCode).replace("%Z%", "").replace("%N%", CustomUtils.randomString(9).toUpperCase()).replace("%I%", CustomUtils.randomString(11).toUpperCase()).replace("%K%", CustomUtils.RandomNumbers(10)).replace("%X%", CustomUtils.randomAlphaNumeric(5) + "@" + CustomUtils.randomAlphaNumeric(4) + ".com").replace("%G%", "1").replace("%h%", "P"));
-					} else if (customerType.equals(CustomerType.CORPORATE) && cardType.equalsIgnoreCase(ProductType.Prepaid)) {
-						writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", INSTITUTION_CODE).replace("%F%", "FORM" + CustomUtils.randomAlphaNumeric(6)).replace("%t%", "1").replace("%P%", program.getProgramCode()).replace("%q%", deviceType).replace("%D%", devicePlan.getDevicePlanCode()).replace("%b%", branchCode).replace("%Z%", Institution.createWithProvider(provider).getCorporateClientCodePrepaid()).replace("%N%", CustomUtils.randomString(9).toUpperCase()).replace("%I%", CustomUtils.randomString(11).toUpperCase()).replace("%K%", CustomUtils.RandomNumbers(10)).replace("%X%", CustomUtils.randomAlphaNumeric(5) + "@" + CustomUtils.randomAlphaNumeric(4) + ".com").replace("%G%", "1").replace("%h%", "P"));
-					} else if (customerType.equals(CustomerType.CORPORATE) && cardType.equalsIgnoreCase(ProductType.Credit)) {
-						writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", INSTITUTION_CODE).replace("%F%", "FORM" + CustomUtils.randomAlphaNumeric(6)).replace("%t%", "1").replace("%q%", deviceType).replace("%P%", program.getProgramCode()).replace("%D%", devicePlan.getDevicePlanCode()).replace("%b%", branchCode).replace("%Z%", Institution.createWithProvider(provider).getCorporateClientCodeCredit()).replace("%N%", CustomUtils.randomString(9).toUpperCase()).replace("%I%", CustomUtils.randomString(11).toUpperCase()).replace("%K%", CustomUtils.RandomNumbers(10)).replace("%X%", CustomUtils.randomAlphaNumeric(5) + "@" + CustomUtils.randomAlphaNumeric(4) + ".com").replace("%G%", "1").replace("%h%", "P"));
-					} else if (customerType.equals(CustomerType.BANKSTAFF)) {
-						writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", INSTITUTION_CODE).replace("%F%", "FORM" + CustomUtils.randomAlphaNumeric(6)).replace("%t%", "2").replace("%P%", program.getProgramCode()).replace("%q%", deviceType).replace("%D%", devicePlan.getDevicePlanCode()).replace("%b%", branchCode).replace("%Z%", "").replace("%N%", CustomUtils.randomString(9).toUpperCase()).replace("%I%", CustomUtils.randomString(11).toUpperCase()).replace("%K%", CustomUtils.RandomNumbers(10)).replace("%X%", CustomUtils.randomAlphaNumeric(5) + "@" + CustomUtils.randomAlphaNumeric(4) + ".com").replace("%G%", "1").replace("%h%", "P"));
-					}
+							deviceType = "8";
+						}
+						if(customerType.equals(CustomerType.INDIVIDUAL)){
+							writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", INSTITUTION_CODE).replace("%F%", "FORM" + CustomUtils.randomAlphaNumeric(6)).replace("%t%", "0").replace("%P%", program.getProgramCode()).replace("%q%", deviceType).replace("%D%", devicePlan.getDevicePlanCode()).replace("%b%", branchCode).replace("%Z%", "").replace("%N%", CustomUtils.randomString(9).toUpperCase()).replace("%I%", CustomUtils.randomString(11).toUpperCase()).replace("%K%", CustomUtils.RandomNumbers(10)).replace("%X%", CustomUtils.randomAlphaNumeric(5) + "@" + CustomUtils.randomAlphaNumeric(4) + ".com").replace("%G%", "1").replace("%h%", "P"));
+						} else if (customerType.equals(CustomerType.CORPORATE) && cardType.equalsIgnoreCase(ProductType.Prepaid)) {
+							writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", INSTITUTION_CODE).replace("%F%", "FORM" + CustomUtils.randomAlphaNumeric(6)).replace("%t%", "1").replace("%P%", program.getProgramCode()).replace("%q%", deviceType).replace("%D%", devicePlan.getDevicePlanCode()).replace("%b%", branchCode).replace("%Z%", Institution.createWithProvider(provider).getCorporateClientCodePrepaid()).replace("%N%", CustomUtils.randomString(9).toUpperCase()).replace("%I%", CustomUtils.randomString(11).toUpperCase()).replace("%K%", CustomUtils.RandomNumbers(10)).replace("%X%", CustomUtils.randomAlphaNumeric(5) + "@" + CustomUtils.randomAlphaNumeric(4) + ".com").replace("%G%", "1").replace("%h%", "P"));
+						} else if (customerType.equals(CustomerType.CORPORATE) && cardType.equalsIgnoreCase(ProductType.Credit)) {
+							writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", INSTITUTION_CODE).replace("%F%", "FORM" + CustomUtils.randomAlphaNumeric(6)).replace("%t%", "1").replace("%q%", deviceType).replace("%P%", program.getProgramCode()).replace("%D%", devicePlan.getDevicePlanCode()).replace("%b%", branchCode).replace("%Z%", Institution.createWithProvider(provider).getCorporateClientCodeCredit()).replace("%N%", CustomUtils.randomString(9).toUpperCase()).replace("%I%", CustomUtils.randomString(11).toUpperCase()).replace("%K%", CustomUtils.RandomNumbers(10)).replace("%X%", CustomUtils.randomAlphaNumeric(5) + "@" + CustomUtils.randomAlphaNumeric(4) + ".com").replace("%G%", "1").replace("%h%", "P"));
+						} else if (customerType.equals(CustomerType.BANKSTAFF)) {
+							writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", INSTITUTION_CODE).replace("%F%", "FORM" + CustomUtils.randomAlphaNumeric(6)).replace("%t%", "2").replace("%P%", program.getProgramCode()).replace("%q%", deviceType).replace("%D%", devicePlan.getDevicePlanCode()).replace("%b%", branchCode).replace("%Z%", "").replace("%N%", CustomUtils.randomString(9).toUpperCase()).replace("%I%", CustomUtils.randomString(11).toUpperCase()).replace("%K%", CustomUtils.RandomNumbers(10)).replace("%X%", CustomUtils.randomAlphaNumeric(5) + "@" + CustomUtils.randomAlphaNumeric(4) + ".com").replace("%G%", "1").replace("%h%", "P"));
+						}
 
-					totalRecords++;
+						totalRecords++;
+
+					}
 
 				}
-
+				writer.print("FT|" + createRecordNumber(9, totalRecords));
+			} catch (IOException e) {
+				logger.error("Fail to create page object: {}", e);
+				throw Throwables.propagate(e);
 			}
-			writer.print("FT|" + createRecordNumber(9, totalRecords));
-		} catch (IOException e) {
-			logger.error("Fail to create page object: {}", e);
-			throw Throwables.propagate(e);
-		}
-		logger.info(file.getPath());
+			logger.info(file.getPath());
 
-		if (cardType.equalsIgnoreCase("credit")) {
-			readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(fileName, cardType);
+			if (cardType.equalsIgnoreCase("credit")) {
+				readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(fileName, cardType);
 			context.put(CreditConstants.FILEUPLOAD_IN_BULK,
 					readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(fileName, cardType));
-		}
-		linuxBox.upload(file.getPath(), remoteDir);
+			}
+			linuxBox.upload(file.getPath(), remoteDir);
 
-		// }
+		//}
 
 		return fileName;
 	}
@@ -719,7 +719,7 @@ public class FileCreation {
 							deviceType = "8";
 						}
 						if (customerType.equals(CustomerType.INDIVIDUAL)) {
-							writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", INSTITUTION_CODE).replace("%F%", "FORM").replace("%t%", "0").replace("%P%", program.getProgramCode()).replace("%q%", deviceType).replace("%D%", devicePlan.getDevicePlanCode()).replace("%b%", branchCode).replace("%Z%", "").replace("%N%", "Aman").replace("%I%", "Khan").replace("%K%", "9966223863").replace("%X%",  "amanullah.pathan@master.com"));
+							writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", INSTITUTION_CODE).replace("%F%", "FORM"+CustomUtils.randomAlphaNumeric(4)).replace("%t%", "0").replace("%P%", program.getProgramCode()).replace("%q%", deviceType).replace("%D%", devicePlan.getDevicePlanCode()).replace("%b%", branchCode).replace("%Z%", "").replace("%N%", "Aman").replace("%I%", "Khan").replace("%K%", "9966223863").replace("%X%",  "amanullah.pathan@master.com"));
 						} else if (customerType.equals(CustomerType.CORPORATE) && cardType.equalsIgnoreCase(ProductType.Prepaid)) {
 							writer.println(getUploadFileFromDatamap("Concatenated Application Record").replace("%B%", INSTITUTION_CODE).replace("%F%", "FORM").replace("%t%", "1").replace("%P%", program.getProgramCode()).replace("%q%", deviceType).replace("%D%", devicePlan.getDevicePlanCode()).replace("%b%", branchCode).replace("%Z%", Institution.createWithProvider(provider).getCorporateClientCodePrepaid()).replace("%N%", "Aman").replace("%I%", "Khan").replace("%K%", "9966223863").replace("%X%", "amanullah.pathan@master.com" ));
 						} else if (customerType.equals(CustomerType.CORPORATE) && cardType.equalsIgnoreCase(ProductType.Credit)) {
@@ -753,10 +753,9 @@ public class FileCreation {
 		return filename;
 	}
 
-	public Map<String, Object> readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(String fileName, String cardType)
-			throws IOException {
+	public Map<Integer, Object> readingAllLinesOfDatFileToRetrieveAttributesForHelpDesk(String fileName, String cardType) throws IOException {
 		List<Integer> indexRequiredToSeachDeviceOnHelpdesk = new LinkedList<Integer>();
-		Map<String, Object> mapFileUpload = new HashMap<>();
+		Map<Integer, Object> mapFileUpload = new HashMap<>();
 		if (cardType.equalsIgnoreCase("credit")) {
 			indexRequiredToSeachDeviceOnHelpdesk = dataReader.dataProviderFileUploadHelpDesk("AllUploadTestData",
 					"Credit Card File");
@@ -797,8 +796,7 @@ public class FileCreation {
 					helpDeskGeneral.setEmail(email);
 					helpDeskGeneral.setMobileNumber(mobileNumber);
 					context.put(CreditConstants.HELPDESK_FILEUPLOAD, helpDeskGeneral);
-					mapFileUpload.put(CustomUtils.randomAlphaNumeric(8),
-							context.get(CreditConstants.HELPDESK_FILEUPLOAD));
+					mapFileUpload.put(counter, context.get(CreditConstants.HELPDESK_FILEUPLOAD));
 				}
 
 			}
@@ -809,7 +807,7 @@ public class FileCreation {
 		return mapFileUpload;
 
 	}
-
+	
 	public int countLines(String fileName) throws IOException {
 		LineNumberReader reader = new LineNumberReader(
 				new FileReader(System.getProperty("user.dir") + "\\" + fileName));
@@ -833,7 +831,7 @@ public class FileCreation {
 				continue;
 			else
 				matchingFile = file.getName();
-		}
+}
 		return matchingFile;
 
 	}

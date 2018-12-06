@@ -79,7 +79,7 @@ public class ApplicationUploadSteps {
 	@Autowired
 	private KeyValueProvider keyValueProvider;
 	
-	private String ExpectedRejectedTxt = "Reuter reference number is Business mandatory field.";
+	private String txtExpectedRejected = "Caught in Dedupe ./SDN matching.";
 	
 	public SearchApplicationDetails searchDomain;
 
@@ -115,10 +115,10 @@ public class ApplicationUploadSteps {
 		Assert.assertTrue(processBatchesFlows.verifyProcessUploadBatch(processBatch, fileName));
 	}
 
-	@When("Application Upload rejected due to missing Business Mandatory feild")
+	@When("Application Upload rejected due to missing Business Mandatory field")
 	public void applicationUploadRejectedDueToMissingBMF(){
 		String rejectedDueToMissingMandatory = context.get(ContextConstants.REJECTED_FILE_UPLOAD);
-		Assert.assertEquals("Reuter reference number is Business mandatory field.",rejectedDueToMissingMandatory,ExpectedRejectedTxt);
+		Assert.assertEquals("Application not Caught in Dedupe ./SDN matching", txtExpectedRejected, rejectedDueToMissingMandatory);
 	}
 	
 	@When("user creates $application_upload_file batch file and uploads it on server for $customerType")

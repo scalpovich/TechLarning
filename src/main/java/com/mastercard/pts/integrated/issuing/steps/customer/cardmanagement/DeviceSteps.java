@@ -16,6 +16,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ApplicationType;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.SubApplicationType;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CorporateClient;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
@@ -24,6 +25,7 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.CorporateClientCreationFlow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramFlows;
 
@@ -46,6 +48,9 @@ public class DeviceSteps {
 
 	@Autowired
 	Program program;
+	
+	@Autowired
+	CorporateClientCreationFlow corporateClientFlow;
 
 	private static final String CREDIT_LIMIT_GREATER_THEN_MAXIMUM_EXP = "Entered Credit Limit is greater than Primary Card Credit Limit.";
 
@@ -431,4 +436,11 @@ public class DeviceSteps {
 		context.put(ContextConstants.DEVICE_PLAN, deviceplan);
 		context.put(ContextConstants.DEVICE, device);
 	}
+	@When("User fills Corporate client $individual for $credit product")
+	public void userCreatesCorporateClient(String type, String product){
+		CorporateClient corporateclient = CorporateClient.createDataWithProvider(provider);
+		corporateclient.setProductType(ProductType.fromShortName(type));
+		corporateClientFlow.createCorporateClient(corporateclient);
+	}
+	
 }

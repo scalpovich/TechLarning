@@ -17,14 +17,50 @@ public class PromotionPlan implements HasCodeAndDescription {
 	private String promotionCurrency;
 	private String promotionamountSpent;
 	private String promotionpointsEarned;
+	private String promotionIssuanceamountSpent;
+	private String promotionIssuancepointsEarned;
 	private String promotionloyaltyBatchDate;
-	private String promotionthresholdAmount;
+	private String floortransactionAmount;
+	private String mccCode;
+	private String invalidMccCode;
+	private String mcgCode;
+	private String thresholdAmount;
+	private String numberOfTransactions;
+	private String promotionloyaltyPlan;
 	private String promotionNoOfTransactions;
 	private String promotion;
-	private String floorTransactionAmount;
-	private String mccCode;
-	private String mcgCode;
-	private String promotionLoyaltyPlan;
+	
+	public String getPromotionIssuanceamountSpent() {
+		return promotionIssuanceamountSpent;
+	}
+
+	public void setPromotionIssuanceamountSpent(String promotionIssuanceamountSpent) {
+		this.promotionIssuanceamountSpent = promotionIssuanceamountSpent;
+	}
+
+	public String getPromotionIssuancepointsEarned() {
+		return promotionIssuancepointsEarned;
+	}
+
+	public void setPromotionIssuancepointsEarned(String promotionIssuancepointsEarned) {
+		this.promotionIssuancepointsEarned = promotionIssuancepointsEarned;
+	}	
+
+	public String getInvalidMccCode() {
+		return invalidMccCode;
+	}
+
+	public void setInvalidMccCode(String invalidMccCode) {
+		this.invalidMccCode = invalidMccCode;
+	}
+
+	public String getNumberOfTransactions() {
+		return numberOfTransactions;
+	}
+
+	public void setNumberOfTransactions(String numberOfTransactions) {
+		this.numberOfTransactions = numberOfTransactions;
+	}
 
 	public String getMcgCode() {
 		return mcgCode;
@@ -34,12 +70,20 @@ public class PromotionPlan implements HasCodeAndDescription {
 		this.mcgCode = mcgCode;
 	}
 
-	public String getPromotionloyaltyPlan() {
-		return promotionLoyaltyPlan;
+	public String getThresholdAmount() {
+		return thresholdAmount;
 	}
 
-	public void setPromotionloyaltyPlan(String promotionLoyaltyPlan) {
-		this.promotionLoyaltyPlan = promotionLoyaltyPlan;
+	public void setThresholdAmount(String thresholdAmount) {
+		this.thresholdAmount = thresholdAmount;
+	}
+
+	public String getPromotionloyaltyPlan() {
+		return promotionloyaltyPlan;
+	}
+
+	public void setPromotionloyaltyPlan(String promotionloyaltyPlan) {
+		this.promotionloyaltyPlan = promotionloyaltyPlan;
 	}
 
 	public String getMccCode() {
@@ -51,13 +95,13 @@ public class PromotionPlan implements HasCodeAndDescription {
 	}
 
 	public String getFloortransactionAmount() {
-		return floorTransactionAmount;
+		return floortransactionAmount;
 	}
 
-	public void setFloortransactionAmount(String floorTransactionAmount) {
-		this.floorTransactionAmount = floorTransactionAmount;
+	public void setFloortransactionAmount(String floortransactionAmount) {
+		this.floortransactionAmount = floortransactionAmount;
 	}
-
+	
 	public String getPromotionPlanCode() {
 		return promotionPlanCode;
 	}
@@ -106,14 +150,6 @@ public class PromotionPlan implements HasCodeAndDescription {
 		this.promotionloyaltyBatchDate = promotionloyaltyBatchDate;
 	}
 
-	public String getPromotionthresholdAmount() {
-		return promotionthresholdAmount;
-	}
-
-	public void setPromotionthresholdAmount(String promotionthresholdAmount) {
-		this.promotionthresholdAmount = promotionthresholdAmount;
-	}
-
 	public String getPromotionNoOfTransactions() {
 		return promotionNoOfTransactions;
 	}
@@ -131,24 +167,17 @@ public class PromotionPlan implements HasCodeAndDescription {
 	}
 
 	public void promotionDataProvider() {
-		setPromotionPlanCode(MapUtils
-				.fnGetInputDataFromMap("PromotionPlanCode")
-				+ CustomUtils.randomAlphaNumeric(5).toUpperCase());
-		setPromotionDescription(MapUtils
-				.fnGetInputDataFromMap("PromotionPlanDesc"));
-		setPromotionCurrency(MapUtils
-				.fnGetInputDataFromMap("promotionCurrency"));
+		setPromotionPlanCode(
+				MapUtils.fnGetInputDataFromMap("PromotionPlanCode") + CustomUtils.randomAlphaNumeric(5).toUpperCase());
+		setPromotionDescription(MapUtils.fnGetInputDataFromMap("PromotionPlanDesc"));
+		setPromotionCurrency(MapUtils.fnGetInputDataFromMap("promotionCurrency"));
 		setPromotionamountSpent(MapUtils.fnGetInputDataFromMap("AmountSpent"));
 		setPromotionpointsEarned(MapUtils.fnGetInputDataFromMap("pointsEarned"));
-		setPromotionloyaltyBatchDate(MapUtils
-				.fnGetInputDataFromMap("LoyaltyBatchSettlementDays"));
-		setPromotionthresholdAmount(MapUtils
-				.fnGetInputDataFromMap("thresholdAmount"));
-		setPromotionNoOfTransactions(MapUtils
-				.fnGetInputDataFromMap("noOfTransactions"));
+		setPromotionloyaltyBatchDate(MapUtils.fnGetInputDataFromMap("LoyaltyBatchSettlementDays"));
+		setPromotionNoOfTransactions(MapUtils.fnGetInputDataFromMap("noOfTransactions"));
 
 	}
-	
+
 	public static PromotionPlan createWithProvider(KeyValueProvider provider) {
 		PromotionPlan plan = new PromotionPlan();
 		plan.setPromotionPlanCode(MiscUtils.generate6CharAlphaNumeric());
@@ -156,8 +185,13 @@ public class PromotionPlan implements HasCodeAndDescription {
 		plan.setPromotionCurrency(provider.getString("PROMOTION_CURRENCY"));
 		plan.setPromotionamountSpent(provider.getString("PROMOTION_AMOUNT_SPENT"));
 		plan.setPromotionpointsEarned(provider.getString("PROMOTION_POINTS_EARNED"));
+		plan.setPromotionIssuanceamountSpent(provider.getString("PROMOTION_ISSUANCE_AMOUNT_SPENT"));
+		plan.setPromotionIssuancepointsEarned(provider.getString("PROMOTION_ISSUANCE_POINTS_EARNED"));
 		plan.setFloortransactionAmount(provider.getString("FLOOR_TRANSACTION_AMOUNT"));
-		plan.setMccCode(provider.getString("MCC_CODE_INVALID"));
+		plan.setThresholdAmount(provider.getString("THRESHOLD_AMOUNT"));
+		plan.setNumberOfTransactions(provider.getString("NO._OF_TRANSACTIONS"));
+		plan.setMccCode(provider.getString("CODE_MCC"));
+		plan.setInvalidMccCode("MCC_CODE_INVALID");
 		plan.setMcgCode(provider.getString("MCG_CODE"));
 		return plan;
 	}
@@ -171,4 +205,5 @@ public class PromotionPlan implements HasCodeAndDescription {
 	public String getDescription() {
 		return getPromotionDescription();
 	}
+
 }

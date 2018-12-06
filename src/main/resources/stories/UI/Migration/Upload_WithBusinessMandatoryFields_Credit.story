@@ -16,5 +16,5 @@ And User Primary Device fills New Program Retail Credit Card section for credit 
 And User fills Business Mandatory Fields Screen for credit product
 And for Primary Device and New Client user fills Device Range section for credit product
 And user creates Application Upload Credit batch file with duplicate data and upload it on server for Individual for credit
-And Application Upload rejected due to missing Business Mandatory feild
+And Application Upload rejected due to missing Business Mandatory field
 Then user logouts from customer portal
