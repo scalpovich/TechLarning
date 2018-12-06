@@ -32,6 +32,14 @@ import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceDetailsFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoadFromFileUploadWorkflow;
+import java.util.Arrays;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import org.apache.commons.io.comparator.LastModifiedFileComparator;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ReportVerificationWorkflow;
 
 @Component
 public class BatchSteps {
@@ -61,7 +69,12 @@ public class BatchSteps {
 	private LoadFromFileUploadWorkflow loadFromFileUploadWorkflow;
 	
 	@Autowired
-	DeviceDetailsFlows flow; 
+	DeviceDetailsFlows flow;
+
+	private File batchFile;
+
+	@Autowired
+	private ReportVerificationWorkflow reportVerificationWorkFlow;
 		
 	@When("embossing file batch was generated in correct format")
 	@Then("embossing file batch was generated in correct format")
@@ -303,6 +316,34 @@ public class BatchSteps {
 		Assert.assertTrue(isPhotoReferencePresentInFlatFile);
 	}
 	
+	@Given("User Downloads and Verifies PDF File for LVC Card")
+	@Then("User Downloads and Verifies PDF File for LVC Card")
+	public void pdfFileGetsDownloadedForLVCCard() {
+		MiscUtils.reportToConsole("******** PDF File Download Start ***** ");
+		try {
+			String localDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMM"));
+			String pdfPassword = LocalDate.now().format(DateTimeFormatter.ofPattern("ddMM"));
+			batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(localDate, tempDirectory.toString(), "VIRTUAL_DEVICE_PRODUCTION", "proc");
+			logger.info("Local Path of Folder: {}", tempDirectory.toString());
+			String latestPDFFile = getLastFileName(tempDirectory.toString());
+			String absolutePathofPDF = tempDirectory.toString() + "\\" + latestPDFFile;
+			logger.info("Absolute Path of PDF File: {}", absolutePathofPDF);
+			reportVerificationWorkFlow.verificationOfPDFFileForLVCCard(absolutePathofPDF, pdfPassword);
+
+		} catch (Exception e) {
+			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
+			throw MiscUtils.propagate(e);
+		}
+	}
+
+	public static String getLastFileName(String filePath) {		
+		File f = new File(filePath);
+		File[] files = f.listFiles();
+		Arrays.sort(files,LastModifiedFileComparator.LASTMODIFIED_REVERSE);
+		logger.info("Latest Downloaded File Name " + files[0].getName());
+		return files[0].getName();
+	} 
+
 	private Device retrieveApplicationNumberIfNotAvailable(Device device){
 		if(Objects.isNull(device)||Strings.isNullOrEmpty(device.getApplicationNumber())){
 			flow.findAndPutDeviceApplicationNumberInContext();
@@ -310,6 +351,4 @@ public class BatchSteps {
 		} 
 		return device;
 	}
-
-
 }

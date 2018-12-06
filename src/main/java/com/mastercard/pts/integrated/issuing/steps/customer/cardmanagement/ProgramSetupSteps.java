@@ -2,7 +2,6 @@ package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import java.util.Map;
 import java.util.Objects;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -181,8 +180,8 @@ public class ProgramSetupSteps {
 	private static final Logger logger = LoggerFactory.getLogger(ProgramSetupSteps.class);
 
 	private static final String JOINING_FEE_PLAN = "JOINING_FEE_PLAN";
-	
-private static final String DEFAULT_PRESENTMENT_TIME_LIMIT = "3";
+
+	private static final String DEFAULT_PRESENTMENT_TIME_LIMIT = "3";
 	
 	private static final String MERCHANT_CODE = "5999";
 
@@ -1760,7 +1759,7 @@ private static final String DEFAULT_PRESENTMENT_TIME_LIMIT = "3";
 		sendToCarrier.setFileName((new File(batchFile)).getName());
 		sendToCarrierWorkflow.processSendToCarrierBatch(sendToCarrier);
 	}
-	
+
 	@When("$type processes Carrier Acknowledgement batch for $fileType File Type")
 	@Then("$type processes Carrier Acknowledgement batch for $fileType File Type")
 	public void thenProcessesCarrierAcknowledgementBatch(String type, String fileType) {
@@ -1769,7 +1768,7 @@ private static final String DEFAULT_PRESENTMENT_TIME_LIMIT = "3";
 		carrierAcknowledgement.setFileType(fileType);
 		carrierAcknowledgement.setFileName(context.get(ContextConstants.DAT_FILE_NAME));
 		carrierAcknowledgementWorkflow.processCarrierAcknowledgementBatch(carrierAcknowledgement);
-	}
+}
 
 	@When("search with device in device tracking screen and status of carrier")
 	@Then("search with device in device tracking screen and status of carrier")

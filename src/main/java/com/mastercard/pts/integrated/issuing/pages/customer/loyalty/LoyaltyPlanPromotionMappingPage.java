@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.Assert;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -23,29 +24,30 @@ import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
-@Navigation(tabTitle = LoyaltyNav.TAB_LOYALTY, treeMenuItems = {
-		LoyaltyNav.L1_LOYALTY_SETUP,
-		LoyaltyNav.L2_LOYALTY_PLAN_PROMOTION_MAPPING
-		})
-public class LoyaltyPlanPromotionMappingPage extends AbstractBasePage{
-    @Autowired
+@Navigation(tabTitle = LoyaltyNav.TAB_LOYALTY, treeMenuItems = { LoyaltyNav.L1_LOYALTY_SETUP,
+		LoyaltyNav.L2_LOYALTY_PLAN_PROMOTION_MAPPING })
+public class LoyaltyPlanPromotionMappingPage extends AbstractBasePage {
+	@Autowired
 	NewLoyaltyPlan newLoyaltyPlan;
-    @Autowired
-    PromotionPlan promotionPlan;
-	private static final Logger logger = LoggerFactory
-			.getLogger(LoyaltyPlanPromotionMappingPage.class);
+	@Autowired
+	PromotionPlan promotionPlan;
+	private static final Logger logger = LoggerFactory.getLogger(LoyaltyPlanPromotionMappingPage.class);
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'Loyalty Plan')]//following::select")
 	private MCWebElement loyaltyPlanDDwn;
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:1:cols:colspanMarkup:inputField:input:dropdowncomponent")
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'Promotion Plan')]//following::select")
+	private MCWebElement promotionPlanDDwn;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='lytPlanCode']/select")
 	private MCWebElement ddwnLoyaltyPlanMapping;
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "tables:1:rows:2:cols:colspanMarkup:inputField:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='lypPromotionCode']/select")
 	private MCWebElement ddwnPromotionPlanMapping;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='tables:1:rows:3:cols:colspanMarkup:inputField:input:inputAmountField']")
 	private MCWebElement priorityTxt;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='btn_alignment']//input[@class='btn_or_sbt' and @value='Save']")
 	private MCWebElement btnSave;
 
@@ -66,21 +68,44 @@ public class LoyaltyPlanPromotionMappingPage extends AbstractBasePage{
 		addWicketAjaxListeners(getFinder().getWebDriver());
 		clickWhenClickable(iconLoyaltyPromotionAdd);
 		switchToIframe(Constants.ADD_LOYALTY_PROMOTION_MAPPING);
-		// newLoyaltyPromotionPlanMappingAdd();
 		selectLoyaltyPlanMappingDropDown(loyaltypromotionmapping);
 		selectPromotionPlanMappingDropDown(loyaltypromotionmapping);
 		enterPriority(loyaltypromotionmapping);
 		clickSaveButton();
 		Assert.assertTrue("LoyaltyPlan Mapping success message is not proper", messageSuccess());
 	}
-	
-    public boolean messageSuccess() {
+
+	public void deleteLoyaltyPromotionMapping(LoyaltyPromotionMapping loyaltypromotionmapping) {
+		WebElementUtils.selectDropDownByVisibleText(loyaltyPlanDDwn,
+				loyaltypromotionmapping.getMappingLoyaltyPlanddwn());
+		WebElementUtils.selectDropDownByVisibleText(promotionPlanDDwn,
+				loyaltypromotionmapping.getMappingPromotionPlanddwn());
+		deleteRecord();
+
+	}
+
+	public void deleteRecord() {
+		if (isDeleteColumnPresent()) {
+			deleteFirstRecord();
+			Alert alert = driver().switchTo().alert();
+			String actualAlertText = null;
+			boolean isAlertPresent = alert != null;
+			if (isAlertPresent) {
+				actualAlertText = alert.getText();
+				Assert.assertTrue(actualAlertText.contains("Are you sure you want to delete the highlighted record?"));
+				alert.accept();
+			}
+		}
+	}
+
+	public boolean messageSuccess() {
 		if (iconSuccessMessage.isVisible()) {
 			return true;
-		
+
 		}
 		return false;
 	}
+
 	public void newLoyaltyPromotionPlanMappingAdd() {
 		clickWhenClickable(iconLoyaltyPromotionAdd);
 	}
@@ -109,6 +134,7 @@ public class LoyaltyPlanPromotionMappingPage extends AbstractBasePage{
 	public void clickCancelButton() {
 		clickWhenClickable(btnCancel);
 	}
+
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(loyaltyPlanDDwn));

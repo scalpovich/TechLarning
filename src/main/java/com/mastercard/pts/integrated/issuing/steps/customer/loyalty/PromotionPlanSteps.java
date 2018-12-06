@@ -32,6 +32,7 @@ public class PromotionPlanSteps {
 		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
 		promotionPlan.setPromotionloyaltyPlan(data.getLoyaltyPlan());
 		context.put(ContextConstants.PROMOTION_PLAN, promotionPlan);
+		context.put(ContextConstants.PROMOTION_PLAN_CODE, promotionPlan.getPromotionPlanCode());
 		uiVerificationLoyaltyWorkflow.verifyPromotionPlanPage(promotionPlan);
 	}
 
@@ -41,6 +42,35 @@ public class PromotionPlanSteps {
 		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
 		promotionPlan.setPromotionloyaltyPlan(data.getLoyaltyPlan());
 		context.put(ContextConstants.PROMOTION_PLAN, promotionPlan);
+		context.put(ContextConstants.PROMOTION_PLAN_CODE, promotionPlan.getPromotionPlanCode());
+		uiVerificationLoyaltyWorkflow.verifyPromotionPlanwithMCG(promotionPlan);
+	}
+
+	@When("user adds promotion Plan for Issuance")
+	public void addPromotionPlanwithIssuance() {
+		promotionPlan = PromotionPlan.createWithProvider(Provider);
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+		promotionPlan.setPromotionloyaltyPlan(data.getLoyaltyPlan());
+		context.put(ContextConstants.PROMOTION_PLAN, promotionPlan);
+		context.put(ContextConstants.PROMOTION_PLAN_CODE, promotionPlan.getPromotionPlanCode());
+		uiVerificationLoyaltyWorkflow.addPromotionPlanwithIssuance(promotionPlan);
+	}
+
+	@When("user adds promotion Plan with Cumulative Transactions")
+	public void addPromotionPlanwithCumulativeTxn() {
+		promotionPlan = PromotionPlan.createWithProvider(Provider);
+		InstitutionData data = context.get(CreditConstants.JSON_VALUES);
+		promotionPlan.setPromotionloyaltyPlan(data.getLoyaltyPlan());
+		context.put(ContextConstants.PROMOTION_PLAN, promotionPlan);
+		context.put(ContextConstants.PROMOTION_PLAN_CODE, promotionPlan.getPromotionPlanCode());
+		uiVerificationLoyaltyWorkflow.addPromotionPlanwithCumulative(promotionPlan);
+	}
+
+	@When("user edits the start date for promotion plan")
+	public void editPromotionPlanstartDate() {
+		promotionPlan = PromotionPlan.createWithProvider(Provider);
+		promotionPlan.setPromotionPlanCode(context.get(ContextConstants.PROMOTION_PLAN_CODE));
+		uiVerificationLoyaltyWorkflow.editPromotionPlanDate(promotionPlan);
 		uiVerificationLoyaltyWorkflow.verifyPromotionPlanwithMCG(promotionPlan);
 	}
 	

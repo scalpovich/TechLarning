@@ -169,6 +169,18 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Existing Client Code')]")
 	private MCWebElement existingClientLabel;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:isdCode:input:dropdowncomponent")
+	private MCWebElement registeredMobileNumberCodeDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:registeredMobileNumber:input:inputTextField")
+	private MCWebElement registeredMobileNumber;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:emailAlertList:checkBoxComponent")
+	private MCWebElement chkBxEmailAlertRequired;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:smsAlertList:checkBoxComponent")
+	private MCWebElement chkBxSmsAlertRequired;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePlanPromoCode1:input:dropdowncomponent")
 	private MCWebElement promotionPlanDDwn;
 	
@@ -465,6 +477,11 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		}
 		
 		WebElementUtils.enterText(registeredMailIdTxt, client.getEmailId());
+		WebElementUtils.checkCheckbox(chkBxEmailAlertRequired, true);
+		WebElementUtils.checkCheckbox(chkBxSmsAlertRequired, true);
+		WebElementUtils.enterText(registeredMailIdTxt, ConstantData.EMAIL_ID);
+		WebElementUtils.selectDropDownByVisibleText(registeredMobileNumberCodeDDwn, ConstantData.COUNTRY_CODE);
+		WebElementUtils.enterText(registeredMobileNumber, ConstantData.CONTACT_NUMBER);
 		WebElementUtils.selectDropDownByVisibleText(languagePreferencesDDwn, client.getLanguagePreference());
 		WebElementUtils.selectDropDownByVisibleText(vipDDwn, device.getVip());
 

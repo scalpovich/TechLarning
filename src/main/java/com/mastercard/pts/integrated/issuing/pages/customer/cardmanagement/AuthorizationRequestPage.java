@@ -12,7 +12,9 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AuthorizationRequest;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -46,7 +48,7 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 	@PageElement(findBy = FindBy.NAME, valueToFind = "cvv2:input:inputTextField")
 	private MCWebElement cvv2Txt;
 
-	private String successMessage = null;
+	private String statusMessage = null;
 	
 	public String addAuthorizationRequest(AuthorizationRequest request){
 		logger.info("Authorization Request: {}", request.getDeviceNumber());
@@ -60,12 +62,13 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 			WebElementUtils.enterText(transactionAmountTxt, request.getTransactionAmount());
 			WebElementUtils.enterText(memoTxt, request.getMemo());
 			clickSaveButton();
-			successMessage = getSuccessMessage();
-			logger.info("Success Meesage: " + successMessage);
+			SimulatorUtilities.wait(6000);
+			statusMessage = getMessageFromFeedbackPanel();
+			logger.info("Authorization Status: " + statusMessage);
 			clickOkButton();
 			});
 		
-		return successMessage;
+		return statusMessage;
 	}
 	
 	public void verifyUiOperationStatus() {
@@ -77,6 +80,28 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
 				WebElementUtils.elementToBeClickable(deviceNumberSearchTxt));
+	}
+
+	public String getDeclineReasonMessage(String declineReasonCode) {
+		String declineMessage = "";
+		switch (declineReasonCode.toUpperCase()) {
+		case "LOST":
+			declineMessage = Constants.REPLACE_DECLINE_MESSAGE_LOST;
+			break;
+
+		case "EXPIRED":
+			declineMessage = Constants.REPLACE_DECLINE_MESSAGE_EXPIRED;
+			break;
+
+		case "NOT DELIVERED":
+			declineMessage = Constants.REPLACE_DECLINE_MESSAGE_NOT_DELIVERED;
+			break;
+		default:
+			logger.info("Did not match to any of the cases mentioned - ",
+					declineReasonCode);
+			break;
+		}
+		return declineMessage;
 	}
 
 }
