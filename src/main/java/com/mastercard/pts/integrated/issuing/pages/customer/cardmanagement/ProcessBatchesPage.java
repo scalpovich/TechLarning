@@ -418,26 +418,26 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		selectInternalBatchType(batch.getBatchName());
 		if (!(batch.getBatchName().contains("Loyalty"))) {
 
-		if (batch.getProductType() != null && !("".equals(batch.getProductType()))) {
-			WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-		}
-		try {
+			if (batch.getProductType() != null && !("".equals(batch.getProductType()))) {
+				WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+			}
+			try {
 				if ((batch.getProductType().equalsIgnoreCase(ProductType.CREDIT)) || (batch.getBatchName().equalsIgnoreCase("End Of Day - Credit [DAILY]"))) {
 					String query = Constants.INSTITUTION_NUMBER_QUERY_START + context.get(Constants.USER_INSTITUTION_SELECTED) + Constants.INSTITUTION_NUMBER_QUERY_END;
 					String colName = Constants.INSTITUTION_DATE+"('"+ context.get(Constants.USER_INSTITUTION_SELECTED) +"')";
 					inputToDate(DateUtils.convertInstitutionCurrentDateInLocalDateFormat(dbUtils.getSingleRecordColumnValueFromDB(query, colName)));
 					submitAndVerifyBatch();
 				} else {
-			todayDate = dateFormatter.parse(dateFormatter.format(new Date()));
-			dateFromUI = getDateFromUI(dateFormatter, batch);
+					todayDate = dateFormatter.parse(dateFormatter.format(new Date()));
+					dateFromUI = getDateFromUI(dateFormatter, batch);
 				}
 
-		} catch (ParseException e) {
-			throw Throwables.propagate(e);
-		}
+			} catch (ParseException e) {
+				throw Throwables.propagate(e);
+			}
 
 			if (dateFromUI != null && !dateFromUI.after(todayDate))
-			submitAndVerifyBatch();
+				submitAndVerifyBatch();
 		} else {
 			submitAndVerifyBatch();
 		}
@@ -616,12 +616,12 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	}
 
 	public boolean verifyFileProcessUpload(ProcessBatches processBatchesDomain, String fileName) {
-		FileCreation.filenameStatic = fileName;
+        FileCreation.filenameStatic = fileName;
         Boolean isProcessed = true;
-		String elementXpath = String.format("//span[contains(text(),'%s')]", FileCreation.filenameStatic);
-		String statusXpath = elementXpath + "//parent::td//following-sibling::td/a";
-		SimulatorUtilities.wait(20000);
-		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(statusXpath)));
+        String elementXpath = String.format("//span[contains(text(),'%s')]", FileCreation.filenameStatic);
+        String statusXpath = elementXpath + "//parent::td//following-sibling::td/a";
+        SimulatorUtilities.wait(20000);
+        clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(statusXpath)));
         
         SimulatorUtilities.wait(5000);//this delay is for table to load data 
         runWithinPopup("View Batch Details", () -> {
@@ -629,16 +629,16 @@ public class ProcessBatchesPage extends AbstractBasePage {
               waitForBatchStatus();
               SimulatorUtilities.wait(5000);
               batchStatus = batchStatusTxt.getText();
-		processBatchesDomain.setJoBID(processBatchjobIDTxt.getText());
+              processBatchesDomain.setJoBID(processBatchjobIDTxt.getText());
               SimulatorUtilities.wait(5000);
               clickCloseButton();
         });
         SimulatorUtilities.wait(3000);//this delay is for table to load data
-		MiscUtils.reportToConsole("JobID: {}", processBatchesDomain.getJoBID());
-		context.put(CreditConstants.JOB_ID, processBatchesDomain.getJoBID());
-		waitForWicket(driver());
-		getFinder().getWebDriver().switchTo().defaultContent();
-		return isProcessed;
+        MiscUtils.reportToConsole("JobID: {}", processBatchesDomain.getJoBID());
+        context.put(CreditConstants.JOB_ID, processBatchesDomain.getJoBID());
+        waitForWicket(driver());
+        getFinder().getWebDriver().switchTo().defaultContent();
+        return isProcessed;
 
 	}
 	
