@@ -267,5 +267,13 @@ public class FileUtils {
 		logger.info("Latest Downloaded File Name " + files[0].getName());
 		return files[0].getName();
 	}
+	
+	public static File[] getLastFileName(String filePath) {		
+		File f = new File(filePath);
+		File[] files = f.listFiles();
+		Arrays.sort(files,LastModifiedFileComparator.LASTMODIFIED_REVERSE);
+		logger.info("Latest Downloaded File Name " + files[0].getName());
+		return files;
+	}
 }
 
