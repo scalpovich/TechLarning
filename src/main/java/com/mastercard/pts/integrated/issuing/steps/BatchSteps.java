@@ -4,8 +4,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import org.apache.commons.io.comparator.LastModifiedFileComparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jbehave.core.annotations.Given;
@@ -17,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.codoid.products.exception.FilloException;
 import com.google.common.base.Strings;
 import com.mastercard.pts.integrated.issuing.configuration.LinuxBox;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
@@ -26,19 +37,14 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
+import com.mastercard.pts.integrated.issuing.utils.ExcelUtils;
 import com.mastercard.pts.integrated.issuing.utils.FileCreation;
 import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceDetailsFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoadFromFileUploadWorkflow;
-import java.util.Arrays;
-import java.util.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import org.apache.commons.io.comparator.LastModifiedFileComparator;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ReportVerificationWorkflow;
 
 @Component
@@ -47,9 +53,9 @@ public class BatchSteps {
 	private static final String DEFAULT_TRAILER = "TR\\d{8}";
 
 	private static final String DEFAULT_HEADER = "[\\w ]{32}\\d{6}";
-		
+
 	private static final Logger logger = LoggerFactory.getLogger(BatchSteps.class);
-	
+
 	@Autowired
 	private KeyValueProvider provider;
 
@@ -76,88 +82,121 @@ public class BatchSteps {
 	@Autowired
 	private ReportVerificationWorkflow reportVerificationWorkFlow;
 		
+	@Given("embossing file batch was generated in correct format")
 	@When("embossing file batch was generated in correct format")
 	@Then("embossing file batch was generated in correct format")
-	public void  embossingFileWasGeneratedSuccessfully() {
-		MiscUtils.reportToConsole("******** Embossing File Start ***** " );
+	public void embossingFileWasGeneratedSuccessfully() throws FilloException {
+		MiscUtils.reportToConsole("******** Embossing File Start ***** ");
+		File batchFile;
 		DevicePlan tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
+		if (Objects.isNull(tempdevicePlan)) {
+			String deviceplanCode = ExcelUtils.getField(Constants.QUERY_EXISTING_PROGRAM_DATA, "DevicePlan");
+			batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(getCodeFromPlan(deviceplanCode), tempDirectory.toString(), "DEVICE", "proc");
+		}
+		else {
+			batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "DEVICE", "proc");
+		}
+		// CardDetails c=new CardDetails();
+		// DevicePlan tempdevicePlan=(DevicePlan)
+		// c.readingJsonWithoutCreatingDevice("devicePlan");
 		try {
-			File batchFile =linuxBox.downloadFileThroughSCPByPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "DEVICE","proc");		
-			String[] fileData = LinuxUtils.getCardNumberAndExpiryDate(batchFile);
-			MiscUtils.reportToConsole("File Data : " + fileData);
+			List<String> fileDataByLine = LinuxUtils.getCardNumberAndExpiryDate(batchFile);
+			MiscUtils.reportToConsole("File Data : " + fileDataByLine);
 			Device device = context.get(ContextConstants.DEVICE);
-			if(device.getDeviceType1().toLowerCase().contains(ConstantData.MSR_CARD)||device.getDeviceType1().toLowerCase().contains(ConstantData.NFC_MSR_CARD))
-			{
-				device.setDeviceNumber(fileData[0]);
-				device.setCvv2Data(fileData[2]);
-				device.setCvvData(fileData[3]);
-				
+			for (int i = 0; i < fileDataByLine.size() - 1; i++) {
+				String[] fileData = fileDataByLine.get(i).split(":");
+				for (String s : fileData) {
+					if (s.contains("|")) {
+						device.setCardPackID(s.trim().split(" ")[1]);
+						break;
+					}
+				}
+				if (device.getDeviceType1().toLowerCase().contains(ConstantData.MSR_CARD) || device.getDeviceType1().toLowerCase().contains(ConstantData.NFC_MSR_CARD)) {
+					device.setDeviceNumber(fileData[0].trim());
+					device.setCvv2Data(fileData[2].trim());
+					device.setCvvData(fileData[3].trim());
+
 				logger.info("******** setDeviceNumber " + " : " +  fileData[0] + " - "  + "   setCvv2Data " + " : " +  fileData[2] + " - "  + " setCvvData  " + " : " +  fileData[3]);
-			}
-			else
-			{
-				device.setDeviceNumber(fileData[0]);
-				device.setCvv2Data(fileData[2]);
-				device.setCvvData(fileData[3]);
-				device.setIcvvData(fileData[4]);		
-				device.setPvkiData(fileData[5]);				
+					// ExcelUtils.insertDataIntoExcel("INSERT into Sheet10(DeviceNumber,CVV2,CVV,Status) VALUES('"+device.getDeviceNumber()+"','"+device.getCvv2Data()+"','"+device.getCvvData()+"','Active')");
+				} else {
+					device.setDeviceNumber(fileData[0].trim());
+					device.setCvv2Data(fileData[2].trim());
+					device.setCvvData(fileData[3].trim());
+					device.setIcvvData(fileData[4].trim());
+					device.setPvkiData(fileData[5].trim());
 				logger.info("******** setDeviceNumber " + " : " +  fileData[0] + " - "  + "   setCvv2Data " + " : " +  fileData[2] + " - "  + " setCvvData  " + " : " +  fileData[3] + " - "  + " setIcvvData " + " : " +  fileData[4] + "  ***** ");
 			}
-			//for format of date to be passed is YYMM
-			String tempDate = fileData[1].substring(fileData[1].length()-2) + fileData[1].substring(0, 2);
+				// for format of date to be passed is YYMM
+				String tempDate = fileData[1].substring(fileData[1].length() - 2) + fileData[1].substring(0, 2);
 			device.setExpirationDate(tempDate);
-			logger.info("Expiration Data :  {} ", tempDate );
-			MiscUtils.reportToConsole("Expiration Data :  " + tempDate );
-			MiscUtils.reportToConsole("******** Embossing File Completed ***** " );
-
+				logger.info("Expiration Data :  {} ", tempDate);
+				ExcelUtils.insertDataIntoExcel("INSERT into Sheet10(DeviceNumber,CVV2,CVV,ICVV,PVKI,ExpiryDate,PINOFFSET,CardPackID,Status,Sale,load) VALUES('" + device.getDeviceNumber() + "','" + device.getCvv2Data() + "','" + device.getCvvData() + "','" + device.getIcvvData() + "','" + device.getPvkiData() + "','" + tempDate + "','%s','" + device.getCardPackID() + "','Active','%Sale','%Load')");
+				MiscUtils.reportToConsole("Expiration Data :  " + tempDate);
+				MiscUtils.reportToConsole("******** Embossing File Completed ***** ");
+				context.put(ContextConstants.DEVICE, device);
+			}
 		} catch (Exception e) {
 			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
 			throw MiscUtils.propagate(e);
 		}
 	}
-		
+
 	@When("user sets invalid cvv/ccv2/icvv to device")
 	@Then("user sets invalid cvv/ccv2/icvv to device")
 	public void  userSetInvaliCVVCVV2ICVV() {
-		MiscUtils.reportToConsole("******** setting invalid CVV/CVV2/ICVV ***** " );
+		MiscUtils.reportToConsole("******** setting invalid CVV/CVV2/ICVV ***** ");
 		try {
-			
 			Device device = context.get(ContextConstants.DEVICE);
-	
 				device.setCvv2Data(ConstantData.INVALID_CVV2);
 				device.setCvvData(ConstantData.INVALID_CVV);
-				device.setIcvvData(ConstantData.INVALID_ICVV);		
-				device.setPvkiData(ConstantData.INVALID_PVKI);				
-
-
+			device.setIcvvData(ConstantData.INVALID_ICVV);
+			device.setPvkiData(ConstantData.INVALID_PVKI);
 		} catch (Exception e) {
 			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
 			throw MiscUtils.propagate(e);
 		}
 	}
-	
+
 	@Given("Pin Offset file batch was generated successfully")
 	@When("Pin Offset file batch was generated successfully")
 	@Then("Pin Offset file batch was generated successfully")
-	public void getPinFileData() {
+	public void getPinFileData() throws FilloException {
 		MiscUtils.reportToConsole("******** Pin Offset Start ***** ");
-		String[] values = null;
-		DevicePlan tempdevice = context.get(ContextConstants.DEVICE_PLAN);
-		File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(tempdevice.getDevicePlanCode(),tempDirectory.toString(), "PIN_PROD","proc");
+		Map<String, String> values = new HashMap<>();
+		// CardDetails cardDetails=new CardDetails();
+		// DevicePlan tempdevice=(DevicePlan)
+		// cardDetails.readingJsonWithoutCreatingDevice("devicePlan");
+		// DevicePlan tempdevice = context.get(ContextConstants.DEVICE_PLAN);
+		File batchFile;
+		DevicePlan tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
+		if (Objects.isNull(tempdevicePlan)) {
+			String deviceplanCode = ExcelUtils.getField(Constants.QUERY_EXISTING_PROGRAM_DATA, "DevicePlan");
+			batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(getCodeFromPlan(deviceplanCode), tempDirectory.toString(), "PIN_PROD", "proc");
+		}
+		else {
+			batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(tempdevicePlan.getDevicePlanCode(), tempDirectory.toString(), "PIN_PROD", "proc");
+		}
+		// Device device=(Device)
+		// cardDetails.readingJsonWithoutCreatingDevice("device");
 		Device device = context.get(ContextConstants.DEVICE);
 		try (Scanner scanner = new Scanner(batchFile)) {
 			while (scanner.hasNext()) {
-				values = scanner.nextLine().split(">");
+				String[] pinDetails = scanner.nextLine().split(">");
+				values.put(pinDetails[1].trim(), pinDetails[0].trim());
 			}
-
 			if (values != null) {
-				device.setPinOffset(values[0]);
-				logger.info("Pin Offset :  {}", values[0]);
+				for (Map.Entry<String, String> entry : values.entrySet()) {
+					String deviceNumber = entry.getKey();
+					String pinOffset = entry.getValue();
+					device.setPinOffset(pinOffset);
+					context.put(ContextConstants.DEVICE, device);
+					ExcelUtils.insertDataIntoExcel("Update Sheet10 set PinOffset='" + pinOffset + "' where DeviceNumber='" + deviceNumber + "'");
+					logger.info("Pin Offset :  {}", pinOffset);
+			}
 			}
 			scanner.close();
-			context.put(ContextConstants.PIN_OFFSET_FILE, batchFile.toString());
-			
-			// renaming file name as sometimes the embosing file name is also same
+			// renaming file name as sometimes the embosing file name is also
+			// same
 			MiscUtils.renamePinFile(batchFile.toString());
 			MiscUtils.reportToConsole("******** Pin Offset Completed ***** ");
 		} catch (NullPointerException | FileNotFoundException e) {
@@ -174,14 +213,12 @@ public class BatchSteps {
 	@Then("Pin Offset file was updated with $acknowledgementType pin acknowledgement")
 	public void updatePinOffsetFileWithPinAcknowledgement(String acknowledgementType) throws IOException 
 	{
-	
 		String batchFile = context.get(ContextConstants.PIN_OFFSET_FILE) + "_PinFile";
 		String ackIndicator = "";
 		if (acknowledgementType.equalsIgnoreCase("positive"))
 			ackIndicator = "Y";
 		else
 			ackIndicator = "N";
-
 		String wholeDataToAppend = "\t" + ackIndicator + StringUtils.rightPad(DateUtils.getDateddMMyyyy(), 208, "0");
 		fileCreation.updatePinOffsetFileWithAcknowledgement(batchFile, wholeDataToAppend);
 	}
@@ -195,13 +232,10 @@ public class BatchSteps {
 			ackIndicator = "Y";
 		else
 			ackIndicator = "N";
-
 		String wholeDataToAppend = "\t" + ackIndicator + StringUtils.rightPad(DateUtils.getDateddMMyyyy(), 208, "0");
 		String batchFile = tempDirectory.toString() + "\\" + fileCreation.getNewPinOffsetFile(tempDirectory.toString());
-
 		context.put(ContextConstants.PIN_OFFSET_FILE, batchFile);
 		MiscUtils.renamePinFile(batchFile.toString());
-
 		fileCreation.updatePinOffsetFileWithAcknowledgement(batchFile + "_PinFile", wholeDataToAppend);
 	}
 	
@@ -258,7 +292,7 @@ public class BatchSteps {
 	private String getHeaderPattern() {
 		return provider.getString("BATCH_HEADER_PATTERN", DEFAULT_HEADER);
 	}
-	
+
 	@SuppressWarnings("unused")
 	private String getTrailerPattern() {
 		return provider.getString(" BATCH_TRAILER_PATTERN", DEFAULT_TRAILER);
@@ -267,10 +301,8 @@ public class BatchSteps {
 	@When("photo image file generated in JPEG format")
 	@Then("photo image file generated in JPEG format")
 	public void thenPhotoFileGeneratedInJPEGFormat() {
-		
 		String timestamp = context.get(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME);
 		Device device = context.get(ContextConstants.DEVICE);
-		
 		String deviceApplicationNumber = device.getApplicationNumber();
 		String partialFileName = "Account_PhotoNonPhoto_"+timestamp;
 		String photoFileName=deviceApplicationNumber+".jpeg";
@@ -295,22 +327,18 @@ public class BatchSteps {
 				
 		MiscUtils.reportToConsole("******** Photo Flat File Start ***** ");
 		String deviceApplicationNumber = device.getApplicationNumber();
-
 		String timestamp = context.get(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME);
 		timestamp = timestamp.substring(0, timestamp.length() - 1);
 		String partialFileName = "Account_PhotoNonPhoto_" + timestamp;
-
 		boolean isPhotoReferencePresentInFlatFile = false;
 		try {
 			MiscUtils.reportToConsole("Flat file path name :  " + partialFileName);
-
 			File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(partialFileName, tempDirectory.toString(),
 					"CLIENT_PHOTO_BATCH", "proc");
 			isPhotoReferencePresentInFlatFile = LinuxUtils.isPhotoReferenceNumberPresentInDataFile(batchFile,
 					deviceApplicationNumber);
 			MiscUtils.reportToConsole("Device Application number :  " + deviceApplicationNumber);
 			MiscUtils.reportToConsole("******** Photo Flat File Completed ***** ");
-
 		} catch (Exception e) {
 			MiscUtils.reportToConsole("Photo Flat Exception :  " + e.toString());
 			throw MiscUtils.propagate(e);
@@ -344,8 +372,17 @@ public class BatchSteps {
 		Arrays.sort(files,LastModifiedFileComparator.LASTMODIFIED_REVERSE);
 		logger.info("Latest Downloaded File Name " + files[0].getName());
 		return files[0].getName();
-	} 
+	}
 
+	public String getCodeFromPlan(String planName) {
+		String s = planName;
+		Pattern p = Pattern.compile(".*\\[ *(.*) *\\].*");
+		Matcher m = p.matcher(s);
+		m.find();
+		String text = m.group(1);
+		logger.info("plan code :  {}", text);
+		return text;
+	}
 	private Device retrieveApplicationNumberIfNotAvailable(Device device){
 		if(Objects.isNull(device)||Strings.isNullOrEmpty(device.getApplicationNumber())){
 			flow.findAndPutDeviceApplicationNumberInContext();

@@ -507,5 +507,13 @@ public class Constants {
 	public static final String EVENT_POINTS_TO_BE_DEBITED ="EVENT_POINTS_TO_BE_DEBITED";
 	public static final String AUTO_REDEEM_MIN_AMT ="AUTO_REDEEM_MIN_AMT";
 	public static final String AUTO_REDEEM_DAY ="AUTO_REDEEM_DAY";
+	
+	public static final String QUERY_PROGRAM_DATA="INSERT into Sheet10(Product,ProgramType,ProgramCode,DevicePlan,Agency,BranchID, DeviceTechnology) VALUES('%pr','%pg','%pc','%dp','%dn','%st','%dty')";
+	public static final String QUERY_EXISTING_PROGRAM_DATA = "SELECT * from Sheet10 WHERE ProgramType like '"+System.getProperty("programType")+"%'";
+	public static final String GET_DEVICE_DETAILS = "SELECT * from Sheet10 WHERE ProgramType like '"+System.getProperty("programType")+"%' AND Status='Active' AND Sale<>'Y'";
+	public static final String GET_SOLD_DEVICE_DETAILS = "SELECT * from Sheet10 WHERE ProgramType like '"+System.getProperty("programType")+"%' AND Status='Active' AND Sale='Y'";
+	public static final String GET_EXISTING_DEVICE_DETAILS = "SELECT * from Sheet10 WHERE ProgramType like '"+System.getProperty("programType")+"%' AND Sale='Y'";
+
+	public static String TESTDATA = "TestData";
 
 }
