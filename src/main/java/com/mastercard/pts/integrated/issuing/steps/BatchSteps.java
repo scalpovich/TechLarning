@@ -231,7 +231,8 @@ public class BatchSteps {
 			Assert.assertTrue("Photo Reference Number is not present in Embossing File",
 					photoReferenceNumber.equals(device.getApplicationNumber()));
 		} catch (Exception e) {
-			logger.info("Error:{}", e);
+			MiscUtils.reportToConsole("embossing file Exception :  " + e.toString());
+			throw MiscUtils.propagate(e);
 		}
 	}
 
@@ -248,7 +249,8 @@ public class BatchSteps {
 			boolean flg = LinuxUtils.isPhotoReferenceNumberPresentInDataFile(batchFile, device.getApplicationNumber());
 			Assert.assertTrue("Photo Reference Number is not present in Card Holder Dump File", flg);
 		} catch (Exception e) {
-			logger.info("Error:{}", e);
+			MiscUtils.reportToConsole("cardholder dump file Exception :  " + e.toString());
+			throw MiscUtils.propagate(e);
 		}
 	}
 
