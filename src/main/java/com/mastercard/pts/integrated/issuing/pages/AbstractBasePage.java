@@ -1916,15 +1916,15 @@ public abstract class AbstractBasePage extends AbstractPage {
 			for (int col = 0; col < columnscount; col++) {
 				if (columnsrow.get(col).getText().equals(text)) {
 					List<WebElement> editAndDeleteIcon = rowstable.get(row).findElements(By.tagName("img"));
-						for (int icon = 0; icon < editAndDeleteIcon.size(); icon++) {
-							if (editAndDeleteIcon.get(icon).getAttribute("alt").contains("Delete")) {
-								editAndDeleteIcon.get(icon).click();
-								SimulatorUtilities.wait(2000);
-								Alert alert = driver().switchTo().alert();
-								alert.accept();
-								break outerloop;
-							}
+					for (int icon = 0; icon < editAndDeleteIcon.size(); icon++) {
+						if (editAndDeleteIcon.get(icon).getAttribute("alt").contains("Delete")) {
+							editAndDeleteIcon.get(icon).click();
+							SimulatorUtilities.wait(2000);
+							Alert alert = driver().switchTo().alert();
+							alert.accept();
+							break outerloop;
 						}
+					}
 				}
 			}
 		}

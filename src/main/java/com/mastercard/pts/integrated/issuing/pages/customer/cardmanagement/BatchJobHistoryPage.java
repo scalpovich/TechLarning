@@ -234,11 +234,11 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 		selectByVisibleText(batchDDwn, batchJobHistory.getBatch());
 		clickSearchButton();
 		SimulatorUtilities.wait(20000);
+		String timeStamp = LinuxUtils.getServerTime(DateTimeFormatter.ofPattern("ddMMyyyyHHmm")); 
+		context.put(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME, timeStamp);
+		logger.info("timestamp of processing : {}", timeStamp);
 		context.put(ContextConstants.CSV_NO, getFirstRecordCellTextByColumnName(FILE_NAME));
 		if (getFirstRecordCellTextByColumnName(STATUS).equals(Constants.SUCCESS_STATUS)) {
-			String timeStamp = LinuxUtils.getServerTime(DateTimeFormatter.ofPattern("ddMMyyyyHHmm")); 
-			context.put(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME, timeStamp);
-			logger.info("timestamp of processing : {}", timeStamp);
 			return true;
 		}
 		return false;
