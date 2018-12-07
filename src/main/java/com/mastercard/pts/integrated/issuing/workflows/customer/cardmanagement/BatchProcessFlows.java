@@ -204,10 +204,10 @@ public class BatchProcessFlows extends MenuFlows {
 		page.processPinProductionBatchNewApplication(batch);
 	}
 
-	public boolean processClientPhotoFlatFileDownloadBatchNewDevice(
-			ClientPhotoFlatFileDownloadBatch batch) {
+	public String processClientPhotoFlatFileDownloadBatchNewDevice(
+			ClientPhotoFlatFileDownloadBatch batch, com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device device) {
 		ClientPhotoFlatFileDownloadBatchPage page = navigator.navigateToPage(ClientPhotoFlatFileDownloadBatchPage.class);
-		return page.processClientPhotoFlatFileDownloadBatch(batch);
+		return page.processClientPhotoFlatFileDownloadBatch(batch,device);
 		
 	}
 

@@ -72,8 +72,7 @@ public class DeviceDetailsPage extends AbstractCardManagementPage {
 		return statusText;
 	}
 	
-	public void retriveDeviceApplicationNumber() {
-		Device device = context.get(ContextConstants.DEVICE);
+	public void retriveDeviceApplicationNumber(Device device) {
 		enterText(deviceNumber, device.getDeviceNumber());
 		clickSearchButton();
 		viewFirstRecord();

@@ -1,8 +1,5 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -10,17 +7,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.google.common.base.Strings;
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
-import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ClientPhotoFlatFileDownloadBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
-import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
@@ -32,9 +24,6 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class ClientPhotoFlatFileDownloadBatchPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(ClientPhotoFlatFileDownloadBatchPage.class);
-
-	@Autowired
-	TestContext context;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='cardNumber']")
 	private MCWebElement txtDeviceNumber;
@@ -51,18 +40,14 @@ public class ClientPhotoFlatFileDownloadBatchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Action Code')]//following-sibling::td[2]//select")
 	private MCWebElement actionCodeDDwn;
 
-	public boolean processClientPhotoFlatFileDownloadBatch(ClientPhotoFlatFileDownloadBatch batch) {
-		Device device = context.get(ContextConstants.DEVICE);
+	public String processClientPhotoFlatFileDownloadBatch(ClientPhotoFlatFileDownloadBatch batch, Device device) {
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
 		WebElementUtils.enterText(txtDeviceNumber, device.getDeviceNumber());
 
 		waitAndSearchForRecordToExist();
 		verifyOperationStatus();
 		String successMessage[] = getSuccessMessage().split(" ");
-		String jobId = successMessage[successMessage.length-1];
-		context.put(ContextConstants.JOB_ID, jobId);
-		        
-		return !Strings.isNullOrEmpty(getSuccessMessage());
+		return successMessage[successMessage.length-1];		        
 	}
 	
 	public boolean isBatchDatePresent(){

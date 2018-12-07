@@ -385,8 +385,8 @@ public class BatchSteps {
 	}
 	private Device retrieveApplicationNumberIfNotAvailable(Device device){
 		if(Objects.isNull(device)||Strings.isNullOrEmpty(device.getApplicationNumber())){
-			flow.findAndPutDeviceApplicationNumberInContext();
 			device = context.get(ContextConstants.DEVICE);
+			flow.findAndPutDeviceApplicationNumberInContext(device);
 		} 
 		return device;
 	}

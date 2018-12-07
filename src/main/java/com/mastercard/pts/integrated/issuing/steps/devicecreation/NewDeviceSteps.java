@@ -1,7 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps.devicecreation;
 
 import org.junit.Assert;
-
 import org.jbehave.core.annotations.Composite;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
@@ -9,10 +8,12 @@ import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.google.common.base.Strings;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ClientPhotoFlatFileDownloadBatch;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
@@ -485,7 +486,10 @@ public class NewDeviceSteps {
 	public void whenProcessesClientPhotoFlatFileDownloadBatchForDevice(String type) {
 		ClientPhotoFlatFileDownloadBatch batch = new ClientPhotoFlatFileDownloadBatch();
 		batch.setProductType(ProductType.fromShortName(type));
-		Assert.assertTrue("batch job id not displayed for Client photo/flat file download batch", batchProcessFlows.processClientPhotoFlatFileDownloadBatchNewDevice(batch));
+		Device device = context.get(ContextConstants.DEVICE);
+		String jobId = batchProcessFlows.processClientPhotoFlatFileDownloadBatchNewDevice(batch,device);
+		Assert.assertFalse("batch job id not displayed for Client photo/flat file download batch", Strings.isNullOrEmpty(jobId));
+		context.put(ContextConstants.JOB_ID, jobId);
 	}
 
 }
