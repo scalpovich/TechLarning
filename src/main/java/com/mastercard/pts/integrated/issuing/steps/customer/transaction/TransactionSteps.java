@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.codoid.products.exception.FilloException;
 import com.mastercard.pts.integrated.issuing.configuration.FinSimSimulator;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
@@ -48,6 +49,7 @@ import com.mastercard.pts.integrated.issuing.pages.ValidationException;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
+import com.mastercard.pts.integrated.issuing.utils.ExcelUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKeyValuePair;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceUsageWorkflow;
@@ -132,7 +134,7 @@ public class TransactionSteps {
 		String temp = transaction;
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		if(!Objects.isNull(context.get(ConstantData.IS_PIN_REQUIRED))){
-			MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));				
+			MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));			
 		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
 			// ECOMM are pinless tranasactions
 			if (!transaction.toLowerCase().contains("ecom"))
@@ -747,4 +749,15 @@ public class TransactionSteps {
 		Transaction trasactiondata = Transaction.createWithProvider(provider);
 		transactionWorkflow.manipulateIPMData(status, trasactiondata);
 	}
+	@When("User Configure device")
+	public void userConfigureDevice() throws FilloException
+	{
+		context.put(ConstantData.IS_PIN_REQUIRED, "TRUE");
+		Device device = Device.createWithProvider(provider);
+		device.setDeviceNumber(ExcelUtils.getField(Constants.GET_DEVICE_READY_FOR_TRANSACTION, "DeviceNumber"));
+		device.setExpirationDate(ExcelUtils.getField(Constants.GET_DEVICE_READY_FOR_TRANSACTION, "ExpiryDate"));
+		device.setCvvData(ExcelUtils.getField(Constants.GET_DEVICE_READY_FOR_TRANSACTION, "CVV"));
+		device.setPinOffset(ExcelUtils.getField(Constants.GET_DEVICE_READY_FOR_TRANSACTION, "PinOffset"));
+	}
+	
 }

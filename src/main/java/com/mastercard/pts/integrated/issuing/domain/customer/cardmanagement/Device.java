@@ -123,6 +123,7 @@ public class Device {
 	private String loanAccountNumber;  	
   	private String mandatoryFieldValue;
   	private String cardPackID;
+  
   	
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
@@ -153,6 +154,7 @@ public class Device {
 		device.setDevicePlan1(provider.getString(DEVICE_PLAN));     
 		device.setTransactionPassword(provider.getString(TRANSACTION_PASSWORD));		
 		device.setCurrencyofTransfer(provider.getString(CURRENCY_OF_TRANSFER));
+		device.setServiceCode(provider.getString(SERVICE_CODE));
 		return device;
 	}
 	
