@@ -758,6 +758,8 @@ public class TransactionSteps {
 		device.setExpirationDate(ExcelUtils.getField(Constants.GET_DEVICE_READY_FOR_TRANSACTION, "ExpiryDate"));
 		device.setCvvData(ExcelUtils.getField(Constants.GET_DEVICE_READY_FOR_TRANSACTION, "CVV"));
 		device.setPinOffset(ExcelUtils.getField(Constants.GET_DEVICE_READY_FOR_TRANSACTION, "PinOffset"));
+		context.put(ContextConstants.DEVICE,device);
+		
 	}
 	
 }
