@@ -264,7 +264,8 @@ public class BatchSteps {
 			device = retrieveApplicationNumberIfNotAvailable(device);	
 			String photoReferenceNumber = LinuxUtils.getPhotoReferenceNumberFromEmbossingFile(batchFile);
 			logger.info("Photo Reference Number in Embossing File:", photoReferenceNumber);
-			Assert.assertThat("Veirfy that Photo Reference Number present in Embossing File",device.getApplicationNumber(),
+			String applicationNumber = device.getApplicationNumber();
+			Assert.assertThat("Verify that Photo Reference Number present in Embossing File",applicationNumber,
 					Matchers.equalTo(photoReferenceNumber));
 		} catch (Exception e) {
 			MiscUtils.reportToConsole("embossing file Exception :  " + e.toString());
