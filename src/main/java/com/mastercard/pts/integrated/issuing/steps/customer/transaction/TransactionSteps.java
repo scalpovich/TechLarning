@@ -753,8 +753,12 @@ public class TransactionSteps {
 	public void userConfigureDevice() throws FilloException
 	{
 		DevicePlan deviceplan = DevicePlan.createWithProvider(provider);
-		context.put(ContextConstants.DEVICE_PLAN, deviceplan);
 		context.put(ConstantData.IS_PIN_REQUIRED, "TRUE");
+		deviceplan.setExpiryDate(ExcelUtils.getField(Constants.GET_DEVICE_READY_FOR_TRANSACTION, "ExpiryDate"));
+		
+			deviceplan.setIsPinLess("No");
+
+		
 		Device device = Device.createWithProvider(provider);		
 		device.setDeviceNumber(ExcelUtils.getField(Constants.GET_DEVICE_READY_FOR_TRANSACTION, "DeviceNumber"));
 		device.setExpirationDate(ExcelUtils.getField(Constants.GET_DEVICE_READY_FOR_TRANSACTION, "ExpiryDate"));

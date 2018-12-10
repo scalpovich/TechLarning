@@ -46,6 +46,8 @@ public class Device {
 	private static final String LATE_PAYMENT_FEE = "LATE_PAYMENT_FEE";
 	private static final String INTEREST_ON_PURCHASE = "INTEREST_ON_PURCHASE";
 	private static final String PHOTO_INDICATOR = "PHOTO_INDICATOR";
+	private static final String CURRENCY = "CURRENCY";
+	
 	
 	private String currencyofTransfer;
 	private String currentTransPassword;
@@ -155,6 +157,8 @@ public class Device {
 		device.setTransactionPassword(provider.getString(TRANSACTION_PASSWORD));		
 		device.setCurrencyofTransfer(provider.getString(CURRENCY_OF_TRANSFER));
 		device.setServiceCode(provider.getString(SERVICE_CODE));
+		device.setExpiryFlag(provider.getString(EXPIRY_FLAG));
+		device.setCurrency(provider.getString(CURRENCY));
 		return device;
 	}
 	
