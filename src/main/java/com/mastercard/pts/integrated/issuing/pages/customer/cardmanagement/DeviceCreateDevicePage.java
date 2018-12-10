@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
@@ -185,6 +187,16 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:clientCustomerId:input:inputTextField")
 	private MCWebElement txtClientCustomerID;
 		
+	
+	@PageElement(findBy = FindBy.ID, valueToFind = "card_type_photo")
+	private MCWebElement photoFileInput;
+
+	@PageElement(findBy = FindBy.ID, valueToFind = "uploadPhoto")
+	private MCWebElement uploadPhotoBtn;
+
+	@Value("src/main/resources/InstitutionLogo/CreditLogo.png")
+	private  String photoFilePath;
+
 	public String getWalletsFromPage(){
 		return getTextFromPage(createdWalletList);
 	}
@@ -375,7 +387,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		selectByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
 		if (Objects.nonNull(device.getPromotionPlanCode())) {
 			selectByVisibleText(promotionPlanDDwn, device.getPromotionPlanCode());
-		}
+	}
 		selectByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
 	}
 
@@ -478,6 +490,14 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			WebElementUtils.enterText(creditLimitTxt,String.valueOf(Integer.parseInt(program.getCreditLimit())+1));
 		}
 		
+		if(device.getPhotoIndicator().contains("Photo")) {
+			String filePath = new File(photoFilePath).getAbsolutePath();
+			logger.info("upload file path : {}",filePath);
+			photoFileInput.sendKeys(filePath);
+			SimulatorUtilities.wait(5000);
+			clickWhenClickable(uploadPhotoBtn);
+			SimulatorUtilities.wait(5000);
+		}
 		clickNextButton();		
 	}
 }

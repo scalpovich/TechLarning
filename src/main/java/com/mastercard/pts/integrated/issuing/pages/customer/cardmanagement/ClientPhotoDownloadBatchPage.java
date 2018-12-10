@@ -44,17 +44,18 @@ public class ClientPhotoDownloadBatchPage extends AbstractBasePage {
 		clickSearchButton();
 		SimulatorUtilities.wait(2000);
 		waitAndSearchForRecordToAppear();
-		if(isNoRecordsFoundInTable())
-		{downloadBatchDetails[0]=false; downloadBatchDetails[1]=false;}
-		else
-		{
+		if(isNoRecordsFoundInTable()) {
+			downloadBatchDetails[0]=false; 
+			downloadBatchDetails[1]=false;
+		} else {
 			ClickCheckBox(processBatchCheckBox, true);
 			SimulatorUtilities.wait(500);
 			ClickButton(processSelectedBtn);
 			
 		}
-		if(verifyOperationStatusAndgetJobID().isEmpty())
+		if(verifyOperationStatusAndgetJobID().isEmpty()) {
 			downloadBatchDetails[2]=false;
+		}
 		return downloadBatchDetails;
 	}
 	

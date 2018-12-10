@@ -57,6 +57,9 @@ public class DeviceSteps {
 	private static final String CORPORATE_CLIENT_CODE_DEVICE2 = "CORPORATE_CLIENT_CODE_DEVICE2";
 	
 	private static final String PROMOTION_FEE_PLAN = "PROMOTION_FEE_PLAN";
+	
+	private static final String PHOTO_INDICATOR = "PHOTO_INDICATOR";
+	
 
 	@When("user creates new device of $type type for new client")
 	@Then("user creates new device of $type type for new client")
@@ -173,6 +176,11 @@ public class DeviceSteps {
 		if (storyTestData.containsKey(PROMOTION_FEE_PLAN)) {
 			device.setPromotionPlanCode(provider.getString(PROMOTION_FEE_PLAN));
 		}
+		Map<String,String>map=context.get(TestContext.KEY_STORY_DATA);
+		if(map.containsKey(PHOTO_INDICATOR)){
+			device.setPhotoIndicator(map.get(PHOTO_INDICATOR));			
+		}
+		
 		Program program = context.get(ContextConstants.PROGRAM);
 		device.setProgramCode(program.buildDescriptionAndCode());
 		

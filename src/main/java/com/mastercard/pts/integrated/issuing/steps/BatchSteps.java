@@ -4,10 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
 import org.apache.commons.io.comparator.LastModifiedFileComparator;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hamcrest.Matchers;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -28,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.codoid.products.exception.FilloException;
+import com.google.common.base.Strings;
 import com.mastercard.pts.integrated.issuing.configuration.LinuxBox;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
@@ -80,7 +83,7 @@ public class BatchSteps {
 
 	@Autowired
 	private ReportVerificationWorkflow reportVerificationWorkFlow;
-	
+		
 	@Given("embossing file batch was generated in correct format")
 	@When("embossing file batch was generated in correct format")
 	@Then("embossing file batch was generated in correct format")
@@ -115,7 +118,7 @@ public class BatchSteps {
 					device.setCvv2Data(fileData[2].trim());
 					device.setCvvData(fileData[3].trim());
 
-					logger.info("******** setDeviceNumber " + " : " + fileData[0] + " - " + "   setCvv2Data " + " : " + fileData[2] + " - " + " setCvvData  " + " : " + fileData[3]);
+				logger.info("******** setDeviceNumber " + " : " +  fileData[0] + " - "  + "   setCvv2Data " + " : " +  fileData[2] + " - "  + " setCvvData  " + " : " +  fileData[3]);
 					// ExcelUtils.insertDataIntoExcel("INSERT into Sheet10(DeviceNumber,CVV2,CVV,Status) VALUES('"+device.getDeviceNumber()+"','"+device.getCvv2Data()+"','"+device.getCvvData()+"','Active')");
 				} else {
 					device.setDeviceNumber(fileData[0].trim());
@@ -123,11 +126,11 @@ public class BatchSteps {
 					device.setCvvData(fileData[3].trim());
 					device.setIcvvData(fileData[4].trim());
 					device.setPvkiData(fileData[5].trim());
-					logger.info("******** setDeviceNumber " + " : " + fileData[0] + " - " + "   setCvv2Data " + " : " + fileData[2] + " - " + " setCvvData  " + " : " + fileData[3] + " - " + " setIcvvData " + " : " + fileData[4] + "  ***** ");
-				}
+				logger.info("******** setDeviceNumber " + " : " +  fileData[0] + " - "  + "   setCvv2Data " + " : " +  fileData[2] + " - "  + " setCvvData  " + " : " +  fileData[3] + " - "  + " setIcvvData " + " : " +  fileData[4] + "  ***** ");
+			}
 				// for format of date to be passed is YYMM
 				String tempDate = fileData[1].substring(fileData[1].length() - 2) + fileData[1].substring(0, 2);
-				device.setExpirationDate(tempDate);
+			device.setExpirationDate(tempDate);
 				logger.info("Expiration Data :  {} ", tempDate);
 				ExcelUtils.insertDataIntoExcel("INSERT into Sheet10(DeviceNumber,CVV2,CVV,ICVV,PVKI,ExpiryDate,PINOFFSET,CardPackID,Status,Sale,load) VALUES('" + device.getDeviceNumber() + "','" + device.getCvv2Data() + "','" + device.getCvvData() + "','" + device.getIcvvData() + "','" + device.getPvkiData() + "','" + tempDate + "','%s','" + device.getCardPackID() + "','Active','%Sale','%Load')");
 				MiscUtils.reportToConsole("Expiration Data :  " + tempDate);
@@ -142,12 +145,12 @@ public class BatchSteps {
 
 	@When("user sets invalid cvv/ccv2/icvv to device")
 	@Then("user sets invalid cvv/ccv2/icvv to device")
-	public void userSetInvaliCVVCVV2ICVV() {
+	public void  userSetInvaliCVVCVV2ICVV() {
 		MiscUtils.reportToConsole("******** setting invalid CVV/CVV2/ICVV ***** ");
 		try {
 			Device device = context.get(ContextConstants.DEVICE);
-			device.setCvv2Data(ConstantData.INVALID_CVV2);
-			device.setCvvData(ConstantData.INVALID_CVV);
+				device.setCvv2Data(ConstantData.INVALID_CVV2);
+				device.setCvvData(ConstantData.INVALID_CVV);
 			device.setIcvvData(ConstantData.INVALID_ICVV);
 			device.setPvkiData(ConstantData.INVALID_PVKI);
 		} catch (Exception e) {
@@ -191,7 +194,7 @@ public class BatchSteps {
 					context.put(ContextConstants.DEVICE, device);
 					ExcelUtils.insertDataIntoExcel("Update Sheet10 set PinOffset='" + pinOffset + "' where DeviceNumber='" + deviceNumber + "'");
 					logger.info("Pin Offset :  {}", pinOffset);
-				}
+			}
 			}
 			scanner.close();
 			// renaming file name as sometimes the embosing file name is also
@@ -207,7 +210,7 @@ public class BatchSteps {
 			throw MiscUtils.propagate(e);
 		}
 	}
-	
+		
 	@When("Pin Offset file was updated with $acknowledgementType pin acknowledgement")
 	@Then("Pin Offset file was updated with $acknowledgementType pin acknowledgement")
 	public void updatePinOffsetFileWithPinAcknowledgement(String acknowledgementType) throws IOException 
@@ -250,6 +253,7 @@ public class BatchSteps {
 	}
 	
 	@When("verify photo reference number is present in embossing file")
+	@Then("photo reference number is present at given position in embossing file")
 	public void embossingFileWasGeneratedSuccessfullyForPhotoCard() {
 		MiscUtils.reportToConsole("******** Embossing File Start ***** ");
 		DevicePlan tempdevicePlan = context.get(ContextConstants.DEVICE_PLAN);
@@ -257,16 +261,20 @@ public class BatchSteps {
 			File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(tempdevicePlan.getDevicePlanCode(),
 					tempDirectory.toString(), "DEVICE", "proc");
 			Device device = context.get(CreditConstants.APPLICATION);
+			device = retrieveApplicationNumberIfNotAvailable(device);	
 			String photoReferenceNumber = LinuxUtils.getPhotoReferenceNumberFromEmbossingFile(batchFile);
 			logger.info("Photo Reference Number in Embossing File:", photoReferenceNumber);
-			Assert.assertTrue("Photo Reference Number is not present in Embossing File",
-					photoReferenceNumber.equals(device.getApplicationNumber()));
+			String applicationNumber = device.getApplicationNumber();
+			Assert.assertThat("Verify that Photo Reference Number present in Embossing File",applicationNumber,
+					Matchers.equalTo(photoReferenceNumber));
 		} catch (Exception e) {
-			logger.info("Error:{}", e);
+			MiscUtils.reportToConsole("embossing file Exception :  " + e.toString());
+			throw MiscUtils.propagate(e);
 		}
 	}
 
 	@When("verify photo reference number is present in card holder dump file")
+	@Then("photo reference number is present in card holder dump file")
 	public void cardHolderDumpFileWasGeneratedSuccessfullyForPhotoCard() {
 		MiscUtils.reportToConsole("******** Embossing File Start ***** ");
 		try {
@@ -274,10 +282,12 @@ public class BatchSteps {
 			File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(CSVno, tempDirectory.toString(),
 					"CARDHOLDER_DUMP", "proc");
 			Device device = context.get(CreditConstants.APPLICATION);
+			device = retrieveApplicationNumberIfNotAvailable(device);
 			boolean flg = LinuxUtils.isPhotoReferenceNumberPresentInDataFile(batchFile, device.getApplicationNumber());
 			Assert.assertTrue("Photo Reference Number is not present in Card Holder Dump File", flg);
 		} catch (Exception e) {
-			logger.info("Error:{}", e);
+			MiscUtils.reportToConsole("cardholder dump file Exception :  " + e.toString());
+			throw MiscUtils.propagate(e);
 		}
 	}
 
@@ -296,7 +306,7 @@ public class BatchSteps {
 	public void thenPhotoFileGeneratedInJPEGFormat() {
 		String timestamp = context.get(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME);
 		Device device = context.get(ContextConstants.DEVICE);
-		String deviceApplicationNumber =device.getApplicationNumber();
+		String deviceApplicationNumber = device.getApplicationNumber();
 		String partialFileName = "Account_PhotoNonPhoto_"+timestamp;
 		String photoFileName=deviceApplicationNumber+".jpeg";
 		File photoJpegFile = null;
@@ -307,7 +317,7 @@ public class BatchSteps {
 			MiscUtils.reportToConsole("******** Photo Flat File Completed ***** " );
 
 		} catch (Exception e) {
-			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
+			MiscUtils.reportToConsole("Photo file Exception :  " + e.toString());
 			throw MiscUtils.propagate(e);
 		}
 		Assert.assertNotNull(photoJpegFile);
@@ -317,6 +327,7 @@ public class BatchSteps {
 	@Then("photo flat file generated with photo reference number")
 	public void thenFlatFileGeneratedWithPhotoReferenceNumber() {
 		Device device = context.get(ContextConstants.DEVICE);
+				
 		MiscUtils.reportToConsole("******** Photo Flat File Start ***** ");
 		String deviceApplicationNumber = device.getApplicationNumber();
 		String timestamp = context.get(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME);
@@ -332,7 +343,7 @@ public class BatchSteps {
 			MiscUtils.reportToConsole("Device Application number :  " + deviceApplicationNumber);
 			MiscUtils.reportToConsole("******** Photo Flat File Completed ***** ");
 		} catch (Exception e) {
-			MiscUtils.reportToConsole("embossingFile Exception :  " + e.toString());
+			MiscUtils.reportToConsole("Photo Flat Exception :  " + e.toString());
 			throw MiscUtils.propagate(e);
 		}
 		Assert.assertTrue(isPhotoReferencePresentInFlatFile);
@@ -374,6 +385,13 @@ public class BatchSteps {
 		String text = m.group(1);
 		logger.info("plan code :  {}", text);
 		return text;
+	}
+	private Device retrieveApplicationNumberIfNotAvailable(Device device){
+		if(Objects.isNull(device)||Strings.isNullOrEmpty(device.getApplicationNumber())){
+			device = context.get(ContextConstants.DEVICE);
+			flow.findAndPutDeviceApplicationNumberInContext(device);
+		} 
+		return device;
 	}
 
 }

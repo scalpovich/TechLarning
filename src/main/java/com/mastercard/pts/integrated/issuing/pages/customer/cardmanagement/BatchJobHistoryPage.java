@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BatchJobHistory;
@@ -29,6 +30,7 @@ import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.DatePicker;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
+import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -231,13 +233,12 @@ public class BatchJobHistoryPage extends AbstractBasePage {
 		enterValueinTextBox(jobIdTxt, batchJobHistory.getJobIdBatchJobHistory());
 		selectByVisibleText(batchDDwn, batchJobHistory.getBatch());
 		clickSearchButton();
-		context.put(ContextConstants.CSV_NO, getFirstRecordCellTextByColumnName(FILE_NAME));
 		SimulatorUtilities.wait(20000);
+		String timeStamp = LinuxUtils.getServerTime(DateTimeFormatter.ofPattern("ddMMyyyyHHmm")); 
+		context.put(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME, timeStamp);
+		logger.info("timestamp of processing : {}", timeStamp);
+		context.put(ContextConstants.CSV_NO, getFirstRecordCellTextByColumnName(FILE_NAME));
 		if (getFirstRecordCellTextByColumnName(STATUS).equals(Constants.SUCCESS_STATUS)) {
-			String timeStamp = LocalDateTime.now(ZoneId.of("GMT-6"))
-					.format(DateTimeFormatter.ofPattern("ddMMyyyyHHmm")); // CDT time when batch download is done.
-			context.put(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME, timeStamp);
-			logger.info("timestamp of processing", timeStamp);
 			return true;
 		}
 		return false;

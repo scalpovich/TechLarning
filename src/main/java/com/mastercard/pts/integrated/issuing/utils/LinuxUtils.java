@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Properties;
 
@@ -38,7 +41,7 @@ public abstract class LinuxUtils {
 	public static void download(RemoteConnectionDetails connectiondetails, String remoteSource, String localDestination) throws JSchException {
 		logger.info("Conection Details: {}", connectiondetails);
 		JSch jsch = new JSch();
-		Session session = jsch.getSession(connectiondetails.getUserName(), connectiondetails.getHostName(), connectiondetails.getPort());
+		Session session = jsch.getSession(connectiondetails.getUserName(), 	connectiondetails.getHostName(), connectiondetails.getPort());
 		session.setPassword(connectiondetails.getPassword());
 		Properties config = new Properties();
 		config.put("StrictHostKeyChecking", "no");
@@ -92,8 +95,8 @@ public abstract class LinuxUtils {
 			while (true) {
 				int i = in.read(tmp, 0, 1024);
 				result = new String(tmp, 0, i).trim();
-				// channel.disconnect();
-				// session.disconnect();
+				//		   channel.disconnect();
+				//			session.disconnect();
 				return result;
 			}
 		} catch (Exception e) {
@@ -179,7 +182,7 @@ public abstract class LinuxUtils {
 				c = in.read();
 				stringBuilder.append((char) c);
 			} while (c != '\n');
-		}
+			}
 		return b;
 	}
 
@@ -226,7 +229,7 @@ public abstract class LinuxUtils {
 				if (lnNumber > 1) {
 					strLine = strLine.trim().replaceAll("\\s+", " ");
 					MiscUtils.reportToConsole("*********   File Data *******  " + strLine);
-					String[] data = strLine.trim().split("  ");
+					String[] data = strLine.trim().split(" ");
 					cardData.add(data[0].trim());
 					// break;
 				}
@@ -405,5 +408,13 @@ public abstract class LinuxUtils {
 			throw MiscUtils.propagate(e);
 		}
 		return photoReferenceNumber;
+	}
+	
+	public static String getServerTime(DateTimeFormatter formatter){
+		LocalDateTime serverTime = LocalDateTime.now(ZoneId.of("GMT-6")); //CST time of Linux server. 
+		if(serverTime.getHour()>12){
+			serverTime = serverTime.minusHours(12);
+		}
+		return serverTime.format(formatter); 
 	}
 }
