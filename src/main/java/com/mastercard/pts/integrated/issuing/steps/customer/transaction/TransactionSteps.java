@@ -755,13 +755,11 @@ public class TransactionSteps {
 		DevicePlan deviceplan = DevicePlan.createWithProvider(provider);
 		context.put(ConstantData.IS_PIN_REQUIRED, "TRUE");
 		deviceplan.setExpiryDate(ExcelUtils.getField(Constants.GET_DEVICE_READY_FOR_TRANSACTION, "ExpiryDate"));
-		
-			deviceplan.setIsPinLess("No");
-
-		
+		deviceplan.setIsPinLess("No");
 		Device device = Device.createWithProvider(provider);		
 		device.setDeviceNumber(ExcelUtils.getField(Constants.GET_DEVICE_READY_FOR_TRANSACTION, "DeviceNumber"));
 		device.setExpirationDate(ExcelUtils.getField(Constants.GET_DEVICE_READY_FOR_TRANSACTION, "ExpiryDate"));
+		device.setIcvvData(ExcelUtils.getField(Constants.GET_DEVICE_READY_FOR_TRANSACTION, "ICVV"));
 		device.setCvvData(ExcelUtils.getField(Constants.GET_DEVICE_READY_FOR_TRANSACTION, "CVV"));
 		device.setPinOffset(ExcelUtils.getField(Constants.GET_DEVICE_READY_FOR_TRANSACTION, "PinOffset"));
 		context.put(ContextConstants.DEVICE,device);
