@@ -2009,4 +2009,27 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public String getFirstRowColValueFor(int col) {
 		return firstRowColumnValues.getElements().get(col).getText();
 	}
+	
+	public void findAndEnterValueInElement(String label,String value){
+		String webElements = "*:not([style='display: none;'])>input:not(.btn_or_sbt), *:not([style='display: none;'])>select";
+	    
+	    String webElementLabel = ".displayName";
+	    
+		MCWebElements fieldType = getFinder().findMany(FindBy.CSS,webElements);
+        List<String> fieldLabel = new ArrayList<>();
+        List<MCWebElement> labelElement = getFinder().findMany(FindBy.CSS,webElementLabel).getElements();
+        labelElement.forEach(element->fieldLabel.add(element.getText()));
+        int index = fieldLabel.indexOf(label);
+        if(index!=-1){
+        	switch(fieldType.getElements().get(index).getTagName()){
+        	case "input" :
+        		enterValueinTextBox(fieldType.getElements().get(index),value);
+        		break;
+        	case "select" :
+        		selectByVisibleText(fieldType.getElements().get(index), value);
+        		break;
+        	}
+        		
+        }
+   }
 }
