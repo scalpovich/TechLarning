@@ -763,6 +763,7 @@ public class TransactionSteps {
 		device.setCvvData(ExcelUtils.getField(Constants.GET_DEVICE_READY_FOR_TRANSACTION, "CVV"));
 		device.setPinOffset(ExcelUtils.getField(Constants.GET_DEVICE_READY_FOR_TRANSACTION, "PinOffset"));
 		context.put(ContextConstants.DEVICE,device);
+		context.put(ContextConstants.DEVICE_PLAN, deviceplan);
 		
 	}
 	
