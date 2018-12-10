@@ -513,7 +513,7 @@ public class Constants {
 	public static final String GET_DEVICE_DETAILS = "SELECT * from Sheet10 WHERE ProgramType like '"+System.getProperty("programType")+"%' AND Status='Active' AND Sale<>'Y'";
 	public static final String GET_SOLD_DEVICE_DETAILS = "SELECT * from Sheet10 WHERE ProgramType like '"+System.getProperty("programType")+"%' AND Status='Active' AND Sale='Y'";
 	public static final String GET_EXISTING_DEVICE_DETAILS = "SELECT * from Sheet10 WHERE ProgramType like '"+System.getProperty("programType")+"%' AND Sale='Y'";
-    public static final String GET_DEVICE_READY_FOR_TRANSACTION="SELECT * from Sheet10 WHERE ProgramType like '"+System.getProperty("programType")+"%' AND Status='Ready for Transactionn'";
+    public static final String GET_DEVICE_READY_FOR_TRANSACTION="SELECT * from Sheet10 WHERE ProgramType like '"+System.getProperty("programType")+"%' AND Status='Ready for Transaction'";
 	public static String TESTDATA = "TestData";
 
 }
