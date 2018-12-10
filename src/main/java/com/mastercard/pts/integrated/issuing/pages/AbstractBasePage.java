@@ -60,6 +60,7 @@ import com.mastercard.testing.mtaf.bindings.element.ElementFinderProvider;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
+import com.mastercard.testing.mtaf.bindings.exception.ElementNotFoundException;
 import com.mastercard.testing.mtaf.bindings.page.AbstractPage;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
@@ -2011,7 +2012,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 	
 	public void findAndEnterValueInElement(String label,String value){
-		String webElements = "*:not([style='display: none;'])>input:not(.btn_or_sbt), *:not([style='display: none;'])>select";
+		String webElements = "*:not([style='display: none;'])>input:not(.btn_or_sbt), *:not([style='display: none;'])>select,input[type='checkbox'],.labeltextf";
 	    
 	    String webElementLabel = ".displayName";
 	    
@@ -2028,8 +2029,12 @@ public abstract class AbstractBasePage extends AbstractPage {
         	case "select" :
         		selectByVisibleText(fieldType.getElements().get(index), value);
         		break;
+        	default:
+        		throw new ElementNotFoundException("Element with Tag Name not found!");
         	}
         		
-        }
+        } else {
+        	throw new ElementNotFoundException("Element with label" + label + " not found!");
+        }       
    }
 }
