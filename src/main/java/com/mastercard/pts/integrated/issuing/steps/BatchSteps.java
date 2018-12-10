@@ -4,10 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
 import org.apache.commons.io.comparator.LastModifiedFileComparator;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hamcrest.Matchers;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -262,8 +264,8 @@ public class BatchSteps {
 			device = retrieveApplicationNumberIfNotAvailable(device);	
 			String photoReferenceNumber = LinuxUtils.getPhotoReferenceNumberFromEmbossingFile(batchFile);
 			logger.info("Photo Reference Number in Embossing File:", photoReferenceNumber);
-			Assert.assertTrue("Photo Reference Number is not present in Embossing File",
-					photoReferenceNumber.equals(device.getApplicationNumber()));
+			Assert.assertThat("Veirfy that Photo Reference Number present in Embossing File",device.getApplicationNumber(),
+					Matchers.equalTo(photoReferenceNumber));
 		} catch (Exception e) {
 			MiscUtils.reportToConsole("embossing file Exception :  " + e.toString());
 			throw MiscUtils.propagate(e);

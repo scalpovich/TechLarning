@@ -50,15 +50,3 @@ And process batch for DOWNLOAD type and Batch name CardholderDump
 And check status in batch job history for DOWNLOAD batch and CardholderDump
 And photo reference number is present in card holder dump file
 And user sign out from customer portal
-
-
-
-
-
-
-
-
-
-
-
-

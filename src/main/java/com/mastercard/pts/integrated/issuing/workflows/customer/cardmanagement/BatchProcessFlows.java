@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ClientPhotoFlatFileDownloadBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PinGenerationBatch;
@@ -205,7 +206,7 @@ public class BatchProcessFlows extends MenuFlows {
 	}
 
 	public String processClientPhotoFlatFileDownloadBatchNewDevice(
-			ClientPhotoFlatFileDownloadBatch batch, com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device device) {
+			ClientPhotoFlatFileDownloadBatch batch, Device device) {
 		ClientPhotoFlatFileDownloadBatchPage page = navigator.navigateToPage(ClientPhotoFlatFileDownloadBatchPage.class);
 		return page.processClientPhotoFlatFileDownloadBatch(batch,device);
 		
