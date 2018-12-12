@@ -9,6 +9,7 @@ Meta:
 @StoryName S203706
 @SanityCards
 @UISanity
+@SanityTestTemp
 
 Scenario:1 Set up retail magnetic stripe prepaid card
 Meta:
