@@ -376,7 +376,12 @@
 			"visaCreditIssuerBin": "413765",
 			"plasticId": "712",
 			"pictureCode": "316",
-			"corporateClientCode": "27063518131000001"
+			"corporateClientCode": "27063518131000001",
+			"walletPlan":"",
+			"loyaltyPlan" : "Automation Test [AUTO]",
+			"devicePlan" : "",
+			"walletFeePlan" : "",
+			"programCode" : ""
 		},
 		{
 			"productIdentity": "Debit",
