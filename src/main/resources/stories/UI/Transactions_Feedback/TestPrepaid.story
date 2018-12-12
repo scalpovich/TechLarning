@@ -26,11 +26,11 @@ Scenario:1.1 Set up prepaid emv corporate travel card
 !-- Then user sign out from customer portal
 
 Scenario:1.1 Set up prepaid emv corporate travel card
-!-- Given setting json values in excel for Prepaid
+Given setting json values in excel for Prepaid
 Given user is logged in institution
 When User Configure device
-And device has "NORMAL [0]" status
-!-- When user activates device through helpdesk
+And device has "NOT ACTIVATED CARD" status
+When user activates device through helpdesk
 
 
 Scenario:1.4 Pin Generation
