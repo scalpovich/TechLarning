@@ -328,7 +328,7 @@ public class HelpdeskWorkflow {
 		helpDeskPage.searchByDeviceNumber(device);
 		helpdeskGeneral.setServiceCode(Constants.REISSUE_TPIN_REQ);
 		helpDeskPage.raiseReissueTPINRequest(helpdeskGeneral,
-				Constants.FRAME_STOPLIST_REQUEST);
+				Constants.FRAME_REISSUE_TPIN);
 	}
 }
 
