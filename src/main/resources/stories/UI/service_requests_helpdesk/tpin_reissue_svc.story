@@ -22,7 +22,6 @@ And user sign out from customer portal
 Scenario:2 To Verify that the user can stoplist a credit device through helpdesk
 Given user is logged in institution
 When credit processes pre-production batch using new Device
-And credit processes deviceproduction batch using new Device for Supplementary
 And device has "normal" status
 And user reissues TPIN request for svc
 Then user sign out from customer portal
