@@ -50,6 +50,7 @@ public class ConstantData {
 	public static final String VISA_FEE_COLLECTION_TRANSACTIONCODE = "10";
 	public static final String VISA_FUND_DISBURSEMENT_TRANSACTIONCODE = "20";
 	public static final String VISA_BASEII_LINUX_DIRECTORY = "VISA";
+	public static final String UNIVERSAL_CARDHOLDER_AUTHENTICATION_FIELD = "048.42.01.02";
 
 	public static final String AUTHORIZATION_REPORT_FILE_NAME = "Authorization.pdf";
 	public static final String AUTHORIZATION_REPORT_NAME = "Authorization";
@@ -93,7 +94,6 @@ public class ConstantData {
 	public static final String JSON_DATA_DRIVEN_EXECUTION = "dataDrivenExecution";
 	public static final String VIRTUAL_DEVICE_TYPE = "virtual";
 	public static final String RESPONSE_CODE_DESCRIPTION = "Capture";
-	public static final String UNIVERSAL_CARDHOLDER_AUTHENTICATION_FIELD = "048.42.01.02";
 
 
 	public static final String INVALID_CVV = "123";	
@@ -173,12 +173,10 @@ public class ConstantData {
 	public static final String POS_TERMINAL_VALUE = "05";
 	public static final String EMAIL_ID = "johnsnow@mastercard.com";
 	public static final String COUNTRY_CODE = "IND [+91]";
-	public static final String CONTACT_NUMBER = "7123456789";
+	public static final String CONTACT_NUMBER = "0123456789";
 	public static final String LOAN_CANCELLATION_SR = "Loan Cancellation [243]";
 	public static final String PAYMENT_UPLOAD_METHOD = "paymentMethod";
 	public static final String PHOTO_CARD = "Photo [1]";
-	
-	
 	
 	public static final String TRANSACTION_DATE = "transactionDate";
 	public static final String LOYALTY_POINTS_REPORT_FILENAME = "Loyalty Points Report.pdf";

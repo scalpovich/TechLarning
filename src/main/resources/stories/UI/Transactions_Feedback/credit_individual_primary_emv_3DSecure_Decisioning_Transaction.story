@@ -4,6 +4,7 @@ As a user
 I want to perform Transaction on corporate credit card to check 3D Secure Decisioning Transaction
 Meta:
 @StoryName credit_emv_retail
+@Abhishek_Credit
 
 Scenario:1.1 creation of mastercard_corporate_primary_EMV Card credit device
 

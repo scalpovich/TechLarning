@@ -4,6 +4,7 @@ As a user
 I want to perform MSR_Purchase transaction to check MSR Transaction on EMV Card with Invalid CVV
 Meta:
 @StoryName credit_emv_retail
+@Abhishek_Credit
 
 Scenario:1.1 creation of mastercard_corporate_primary_EMV Card credit device
 
