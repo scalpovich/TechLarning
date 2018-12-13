@@ -516,4 +516,8 @@ public class Constants {
 
 	public static String TESTDATA = "TestData";
 
+	public static String REISSUE_TPIN_NOTES = "Reissue TPIN";
+	public static final String REISSUE_TPIN_REQ = "Reissue TPIN [216]";
+	public static final String FRAME_REISSUE_TPIN = "216 - Reissue TPIN";
+	
 }

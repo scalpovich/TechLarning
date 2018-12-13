@@ -83,6 +83,7 @@ public class HelpDeskSteps {
 	private static final String STOPLIST_NOTES = "STOPLIST_NOTES";
 	private static final String STOPLIST_REASON = "STOPLIST_REASON";
 	private static final String WITHDRAWAL_REASON = "WITHDRAWAL_REASON";
+	private static final String REISSUE_TPIN_REASON = "REISSUE_TPIN_REASON";
 	
 	@Autowired
 	private TestContext context;
@@ -1156,4 +1157,14 @@ public class HelpDeskSteps {
 		HashMap<String, String> helpdeskValues = helpdeskWorkflow.noteDownRequiredValues(device.getDeviceNumber());
 		assertThat("Invalid Unbilled amount", helpdeskValues.get(amountType), equalTo(ContextConstants.ZERO_UNBILLED_PAYMENT));
 	}
+	
+	@When("user reissues TPIN request for $cardType")
+	public void reissueTPINServiceRequest(@Named("cardType") String cardType) {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskGeneral.setNotes(Constants.REISSUE_TPIN_NOTES);
+		helpdeskGeneral.setReason(provider.getString(REISSUE_TPIN_REASON));
+		helpdeskWorkflow.raiseReissueTPINRequest(device, helpdeskGeneral);
+	}
+	
 }

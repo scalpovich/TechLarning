@@ -168,4 +168,26 @@ public class BatchProcessWorkflow extends MenuFlows{
 		ResendPINRequestPage page = navigator.navigateToPage(ResendPINRequestPage.class);
 		page.processResendPinRequestBatch(batch);
 	}
+	
+	public boolean isDevicePresentInDATFile(File file, Device  device) {
+		boolean isPresent = false;
+		Scanner scnr = null;
+		try {
+			scnr = new Scanner(file);
+			while(scnr.hasNextLine()){
+				String line = scnr.nextLine();
+				if(line.contains(device.getDeviceNumber())){
+					logger.info("Data in DAT File : {}",line);
+					isPresent = true;
+					break;
+				}
+			}
+		} catch(Exception e) {
+			logger.error("Error in getting data from file",  e);
+		} finally {
+			if(scnr !=null)
+				scnr.close();
+		}
+		return isPresent;
+	}
 }

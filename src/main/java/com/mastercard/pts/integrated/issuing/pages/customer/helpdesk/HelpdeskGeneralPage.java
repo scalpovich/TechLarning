@@ -421,7 +421,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private String errorMsgOfloanCancellation;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'Reason')]//following::select[@class = 'mandatoryFlag selectf']")
-	private MCWebElement stoplistReasonDDwn;
+	private MCWebElement reasonDDwn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'New Device Number :')]//following::input[@type='checkbox']")
 	private MCWebElement chkBxNewDeviceNumber;
@@ -1909,7 +1909,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 
 	public MCWebElement getstoplistReasonDDwn() {
-		return stoplistReasonDDwn;
+		return reasonDDwn;
 	}
 
 	public void selectNewDeviceCheckBox(boolean value) {
@@ -1949,4 +1949,31 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public void selectApplyFeesChkBx(boolean value) {
 		ClickCheckBox(chkBxApplyFees, value);
 	}
+	
+	public void selectReason(String reason) {
+		WebElementUtils.selectDropDownByVisibleText(reasonDDwn,
+				reason);
+	}
+	
+	public void raiseReissueTPINRequest(HelpdeskGeneral helpdeskGeneral,String frame) {
+		editFirstRecord();
+		SimulatorUtilities.wait(2000);
+		selectServiceCode(helpdeskGeneral.getServiceCode());
+		SimulatorUtilities.wait(500);
+		clickGoButton();
+		SimulatorUtilities.wait(2000);
+		runWithinPopup(
+				frame,
+				() -> {
+					selectReason(helpdeskGeneral.getReason());
+					SimulatorUtilities.wait(500);
+					enterNotes(helpdeskGeneral.getNotes());
+					clickSaveButton();
+					verifyOperationStatus();
+					clickOKButtonPopup();
+				});
+		SimulatorUtilities.wait(5000);
+		clickEndCall();
+	}
+
 }

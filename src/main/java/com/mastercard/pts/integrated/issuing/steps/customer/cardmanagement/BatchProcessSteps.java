@@ -313,4 +313,19 @@ public class BatchProcessSteps {
 		batchProcessWorkflow.verifyBatchTraceAvailability(context.get(ContextConstants.JOB_ID));	
 	}
 	
+	@When("reissue TPIN dump download batch is processed for $type")
+	public void downloadReissueTPIN(String type){
+		ProcessBatches batch =  ProcessBatches.createWithProvider(provider);
+		batch.setProductType(ProductType.fromShortName(type));
+		batchProcessWorkflow.processDownloadBatch(batch);
+	}
+	
+	
+	@Then("verify that the device number is present in the $filename DAT file")
+	public void isDevicePresentInDATFile(String filename) {
+		String partialFileName = context.get(ContextConstants.DAT_FILE_NAME);
+		Device device = context.get(ContextConstants.DEVICE);
+		File file = linuxBox.downloadFileThroughSCPByPartialFileName(partialFileName, tempDirectory.toString(), ConstantData.REISSUE_TPIN_DIRECTORY,"proc");
+		Assert.assertTrue("The device is not present in the file ",batchProcessWorkflow.isDevicePresentInDATFile(file, device));
+	}
 }

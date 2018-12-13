@@ -508,16 +508,26 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	public String processDownloadBatch(ProcessBatches batch) {
 		logger.info("Process Download Batch: {}", batch.getBatchName());
-
-		if ("Authorization Download [AUTHORIZATION_DOWNLOAD]".equals(batch.getBatchName()))
+		switch (batch.getBatchName()) {
+		case "Authorization Download [AUTHORIZATION_DOWNLOAD]":
 			processAuthorizationDownloadBatch(batch);
-		else if ("Cardholder Dump [CARDHOLDER_DUMP]".equals(batch.getBatchName()))
+			break;
+		case "Cardholder Dump [CARDHOLDER_DUMP]":
 			processCardHolderDownloadBatch(batch);
-		else if ("Account Dump [ACCOUNT_DUMP]".equals(batch.getBatchName()))
+			break;
+		case "Account Dump [ACCOUNT_DUMP]":
 			processAccountsDownloadBatch(batch);
-		else if ("Statement Download [STATEMENT_DOWNLOAD]".equals(batch.getBatchName()))
+			break;
+		case "Statement Download [STATEMENT_DOWNLOAD]":
 			statementDownloadBatch(batch);
-
+			break;
+		case "TPIN File Download [TPIN_FILE_DOWNLOAD]":
+			selectReissueTPINDump(batch);
+			break;
+		default:
+			logger.info("The specified case did not match to any of the cases - ", batch.getBatchName());
+			break;
+		}
 		return batchStatus;
 	}
 
@@ -577,7 +587,6 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	public void submitAndVerifyBatch() {
 		submitBtn.click();
-		//statusBtn.click();
 		clickWhenClickable(statusBtn);
 		runWithinPopup("View Batch Details", () -> {
 			logger.info("Retrieving batch status");
@@ -588,9 +597,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			try{
 			clickCloseButton();
 			}
-			catch(StaleElementReferenceException ex)
-			{
+			catch(StaleElementReferenceException ex){
 				clickCloseButton();
+				logger.error("Error occured: ", ex);
 			}
 			SimulatorUtilities.wait(1000);
 		});
@@ -872,5 +881,13 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		SimulatorUtilities.wait(3000);
 		
 		
+	}
+	
+	public void selectReissueTPINDump(ProcessBatches batch) {
+		WebElementUtils.selectDDByVisibleText(batchTypeDDwn, Constants.BATCH_TYPE_DOWNLOAD);
+		SimulatorUtilities.wait(500);
+		WebElementUtils.selectDDByVisibleText(batchNameDDwn, batch.getBatchName());
+		SimulatorUtilities.wait(500);
+		submitAndVerifyBatch();
 	}
 }

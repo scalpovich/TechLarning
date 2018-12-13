@@ -321,6 +321,15 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.raiseLoanCancellationRequestToVerifyErroMessage(helpdeskGeneral,loanPlan,device);
 		
 	}
+	
+	public void raiseReissueTPINRequest(Device device,
+			HelpdeskGeneral helpdeskGeneral) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		helpDeskPage.searchByDeviceNumber(device);
+		helpdeskGeneral.setServiceCode(Constants.REISSUE_TPIN_REQ);
+		helpDeskPage.raiseReissueTPINRequest(helpdeskGeneral,
+				Constants.FRAME_STOPLIST_REQUEST);
+	}
 }
 
 
