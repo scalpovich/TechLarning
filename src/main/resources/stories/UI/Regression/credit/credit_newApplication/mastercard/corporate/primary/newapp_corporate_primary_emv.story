@@ -5,18 +5,11 @@ I want to assert card creation
 
 Meta:
 @StoryName credit_card	
+@RegressionGroup
 		 
 Scenario:creation of mastercard_individual_primary_emv Card credit device
 Given setting json values in excel for Credit
 When user is logged in institution
-And User fills Dedupe Plan
-And User fills Statement Message Plan for credit product
-And User fills Marketing Message Plan for credit product
-And User fills Transaction Plan for credit product
-And User fills Transaction Limit Plan for credit product
-And User fills Document Checklist Screen for credit product
-And User fills Device Joining and Membership Fee Plan for credit product
-And User fills Device Event Based Fee Plan for credit product
 And for EMV Card User fills Device Plan for credit product for Mastercard
 And User fills Billing Cycle
 And User fills Payment Priority

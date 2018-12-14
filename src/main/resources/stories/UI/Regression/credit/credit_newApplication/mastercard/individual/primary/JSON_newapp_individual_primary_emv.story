@@ -5,6 +5,7 @@ I want to assert card creation
 
 Meta:
 @StoryName credit_card
+@RegressionGroup
 		 
 Scenario:creation of mastercard_individual_primary_emv Card credit device
 Given setting json values in excel for Credit
