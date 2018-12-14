@@ -197,8 +197,9 @@ public class BatchSteps {
 			}
 			}
 			scanner.close();
-			// renaming file name as sometimes the embosing file name is also
-			// same
+          	context.put(ContextConstants.PIN_OFFSET_FILE, batchFile.toString());
+			// renaming file name as sometimes the embosing file name is same
+			
 			MiscUtils.renamePinFile(batchFile.toString());
 			MiscUtils.reportToConsole("******** Pin Offset Completed ***** ");
 		} catch (NullPointerException | FileNotFoundException e) {
