@@ -393,6 +393,7 @@ public class ProgramPage extends AbstractBasePage {
 		clickAddNewButton();
 
 		runWithinPopup("Add Program", () -> {
+			
 			addProgram(program.getProgramCode());          	
 			addDescription(program.getDescription());
 			SimulatorUtilities.wait(2000);

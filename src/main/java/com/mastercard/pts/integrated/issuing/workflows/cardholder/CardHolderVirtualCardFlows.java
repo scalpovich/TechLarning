@@ -4,12 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.mastercard.pts.integrated.issuing.pages.cardholder.virtualcard.VirtualCardLimitedValidityVirtualCardCancellationPage;
+import com.mastercard.pts.integrated.issuing.domain.cardholder.CardholderServices;
+import com.mastercard.pts.integrated.issuing.pages.cardholder.virtualcard.LimitedValidityVirtualCardCancelPage;
+import com.mastercard.pts.integrated.issuing.pages.cardholder.virtualcard.RequestForLimitedValidityVirtualCardPage;
 import com.mastercard.pts.integrated.issuing.pages.cardholder.virtualcard.VirtualPrepaidCardRequestPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
-import junit.framework.Assert;
 
 @Component
 public class CardHolderVirtualCardFlows extends AbstractBaseFlows{
@@ -19,42 +19,39 @@ public class CardHolderVirtualCardFlows extends AbstractBaseFlows{
 	@Autowired
 	Navigator navigate;
 	
-	@Autowired
-	VirtualPrepaidCardRequestPage virtualPrpdCardReqstPage;
+	RequestForLimitedValidityVirtualCardPage virtualPrpdCardReqstPage;
 	
-	@Autowired
-	VirtualCardLimitedValidityVirtualCardCancellationPage cancelVirtualLimitValidityCard;
+	LimitedValidityVirtualCardCancelPage cancelVirtualLimitValidityCard;	
 	
-	public void openVirtualCardPage(){
+	
+	
+	
+			
+	public String sbmtRreqForVirtualPrepardCard(CardholderServices cardholderService){
+		virtualPrpdCardReqstPage = navigate.navigateToPage(RequestForLimitedValidityVirtualCardPage.class);
+			
+			
+		return virtualPrpdCardReqstPage.submitRequestforVirtualCrd(cardholderService);
+	}
+	
+	public String requestStaticVirtualPrepaidCard(CardholderServices cardholderService){
 		VirtualPrepaidCardRequestPage page = navigate.navigateToPage(VirtualPrepaidCardRequestPage.class);
-	}
-	
-	public void openCancellationCardRequstPage(){
-		VirtualCardLimitedValidityVirtualCardCancellationPage page = navigate.navigateToPage(VirtualCardLimitedValidityVirtualCardCancellationPage.class);
-	}
-	
-	
-	public void sbmtRreqForVirtualPrepardCard(){
-		if(virtualPrpdCardReqstPage.verifyPermissionCardholder()){
-			
-			logger.info("Limited validity virtual device is not permitted");
-			
-		}else{
-			
-			virtualPrpdCardReqstPage.submitRequestforVirtualCrd();
-		}
+		return page.submitRequestforVirtualCrd(cardholderService);
 	}
 	
 	public void sbmtCancelRequstForLimitedVirtualCard(){
 		if(cancelVirtualLimitValidityCard.verifyPermissionCardholder()){
 			logger.info("Limited validity virtual device is not requested");
-		}else{
+		}
 			
 		}
 		
+	public String verifyVirtualCardRequestStatus(){
+		return virtualPrpdCardReqstPage.getVirtualCardRequesResponse();
 	}
 	
-	public void verifyVirtualCardRequestStatus(){
-		Assert.assertEquals("Static virtual device is not created ", virtualPrpdCardReqstPage.getVirtualCardRequesResponse().contains("Static Virtual device created successfully"));
+	public void cancelLvvcRequest(){
+		LimitedValidityVirtualCardCancelPage page = navigate.navigateToPage(LimitedValidityVirtualCardCancelPage.class);
+		page.cancelLvccRequest();
 	}
 } 

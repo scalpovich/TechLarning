@@ -191,6 +191,7 @@ public class DeviceSteps {
 			DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 			device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
 		}
+		
 		deviceWorkflow.createDevice(device);
 		context.put(ContextConstants.DEVICE, device);
 	}
