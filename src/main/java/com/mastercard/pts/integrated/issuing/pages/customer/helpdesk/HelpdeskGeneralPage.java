@@ -1955,13 +1955,18 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				reason);
 	}
 	
-	public void raiseReissueTPINRequest(HelpdeskGeneral helpdeskGeneral,String frame) {
+	public String raiseReissueTPINRequest(HelpdeskGeneral helpdeskGeneral, 
+			String frame) {
+		String errorMessage = null;
 		editFirstRecord();
 		SimulatorUtilities.wait(2000);
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		SimulatorUtilities.wait(500);
 		clickGoButton();
 		SimulatorUtilities.wait(2000);
+		if(helpdeskGeneral.getIsServiceRequestAllowed().equalsIgnoreCase("No") 
+				&& errorMessagePresence())
+			errorMessage = getErrorMessage();
 		runWithinPopup(
 				frame,
 				() -> {
@@ -1974,6 +1979,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 				});
 		SimulatorUtilities.wait(5000);
 		clickEndCall();
+		return errorMessage;
 	}
 
 }

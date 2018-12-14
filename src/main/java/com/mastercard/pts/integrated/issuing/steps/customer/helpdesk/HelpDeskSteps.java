@@ -109,6 +109,8 @@ public class HelpDeskSteps {
 
 	@Autowired
 	DeviceCreation deviceCreation;
+	
+	private String errorMessage = null;
 
 	@When("user navigates to General in Helpdesk")
 	public void thenUserNavigatesToGeneralInHelpdesk() {
@@ -1158,13 +1160,22 @@ public class HelpDeskSteps {
 		assertThat("Invalid Unbilled amount", helpdeskValues.get(amountType), equalTo(ContextConstants.ZERO_UNBILLED_PAYMENT));
 	}
 	
-	@When("user reissues TPIN request for $cardType")
-	public void reissueTPINServiceRequest(@Named("cardType") String cardType) {
+	@When("user reissues TPIN request for $deviceType")
+	public void reissueTPINServiceRequest(@Named("deviceType") String deviceType) {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setNotes(Constants.REISSUE_TPIN_NOTES);
 		helpdeskGeneral.setReason(provider.getString(REISSUE_TPIN_REASON));
-		helpdeskWorkflow.raiseReissueTPINRequest(device, helpdeskGeneral);
+		if (deviceType.contains("lvvc"))
+			helpdeskGeneral.setIsServiceRequestAllowed("No");
+		else
+			helpdeskGeneral.setIsServiceRequestAllowed("Yes");
+		errorMessage = helpdeskWorkflow.raiseReissueTPINRequest(device, helpdeskGeneral);
+	}
+
+	@Then("verify that the reissue TPIN request is not allowed for LVVC")
+	public void verifyRequestAllowed() {
+		assertThat("The reissue TPIN request is allowed for LVVC", errorMessage, equalTo(Constants.REISSUE_TPIN_LVVC_ERROR));
 	}
 	
 }

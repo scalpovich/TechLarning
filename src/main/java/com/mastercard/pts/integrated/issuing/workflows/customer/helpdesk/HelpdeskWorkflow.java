@@ -322,12 +322,12 @@ public class HelpdeskWorkflow {
 		
 	}
 	
-	public void raiseReissueTPINRequest(Device device,
+	public String raiseReissueTPINRequest(Device device,
 			HelpdeskGeneral helpdeskGeneral) {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		helpDeskPage.searchByDeviceNumber(device);
 		helpdeskGeneral.setServiceCode(Constants.REISSUE_TPIN_REQ);
-		helpDeskPage.raiseReissueTPINRequest(helpdeskGeneral,
+		return helpDeskPage.raiseReissueTPINRequest(helpdeskGeneral,
 				Constants.FRAME_REISSUE_TPIN);
 	}
 }

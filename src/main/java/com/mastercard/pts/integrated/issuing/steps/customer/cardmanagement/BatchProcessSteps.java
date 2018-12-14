@@ -323,9 +323,9 @@ public class BatchProcessSteps {
 	
 	@Then("verify that the device number is present in the $filename DAT file")
 	public void isDevicePresentInDATFile(String filename) {
-		String partialFileName = context.get(ContextConstants.DAT_FILE_NAME);
 		Device device = context.get(ContextConstants.DEVICE);
-		File file = linuxBox.downloadFileThroughSCPByPartialFileName(partialFileName, tempDirectory.toString(), ConstantData.REISSUE_TPIN_DIRECTORY,"proc");
+		File file = linuxBox.downloadFileThroughSCPByPartialFileName(context.get(ContextConstants.DAT_FILE_NAME), 
+				tempDirectory.toString(), ConstantData.REISSUE_TPIN_DIRECTORY,"proc");
 		Assert.assertTrue("The device is not present in the file ",batchProcessWorkflow.isDevicePresentInDATFile(file, device));
 	}
 }

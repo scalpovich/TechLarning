@@ -19,7 +19,7 @@ And for Primary Device and New Client user fills Device Range section for credit
 Then credit device is created using new device screen for Individual and Primary Device and New Client and Static Virtual Card
 And user sign out from customer portal
 
-Scenario:2 To Verify that the user can stoplist a credit device through helpdesk
+Scenario:2 To Verify that the user can raise a Reissue TPIN request through helpdesk
 Given user is logged in institution
 When credit processes pre-production batch using new Device
 And device has "normal" status
