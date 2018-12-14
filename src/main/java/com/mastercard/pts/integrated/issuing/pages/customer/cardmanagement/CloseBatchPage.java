@@ -110,6 +110,7 @@ public class CloseBatchPage extends AbstractBasePage {
 	public void processAppropriateBatchForApplication() {
 		String checkBox = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd'][" + identifyBatchNumberToProcess() + 1 + "]/td[10]/span/input";
 		clickWhenClickable(driver().findElement(By.xpath(checkBox)));
+		SimulatorUtilities.wait(2000);
 		clickWhenClickable(btnProcessSelected);
 		try {
 			if (btnConfirmMsg.isEnabled() && btnConfirmMsg.isVisible()) {
