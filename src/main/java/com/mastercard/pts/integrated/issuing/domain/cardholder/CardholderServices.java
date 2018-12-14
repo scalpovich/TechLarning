@@ -255,7 +255,7 @@ public class CardholderServices {
 		cardholderService.setEcomToDate(provider.getString(ECOM_ACTI_TO_DATE));
 		cardholderService.setInternationalFromDate(provider.getString(INTERNATIONAL_ACTI_FROM_DATE));
 		cardholderService.setInternationalToDate(provider.getString(INTERNATIONAL_ACTI_TO_DATE));
-		cardholderService.setInternationalToDate(provider.getString(INTERNATIONAL_ACTIVATION_HOUR));
+		cardholderService.setInternationalActivationHours(provider.getString(INTERNATIONAL_ACTIVATION_HOUR));
 		cardholderService.setVirtualCardtype(provider.getString(VIRTUAL_CARD_TYPE));
 		return cardholderService;
 	}
