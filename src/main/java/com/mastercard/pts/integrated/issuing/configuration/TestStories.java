@@ -34,12 +34,15 @@ public class TestStories extends CustomUIStories {
         String storyName = System.getProperty("storyName", "*");
         String lookUpPath = String.format("**/stories/**/%s.story", storyName);
         URL codeLocation = CodeLocations.codeLocationFromClass(this.getClass());
-        Pattern storyNamePattern = Pattern.compile("\\w+\\s*,\\s*\\w+");
+        Pattern storyNamePattern = Pattern.compile("\\S*\\s*,\\s*\\S*");
 		if(storyNamePattern.matcher(storyName).matches()){
 			List<String> paths = new ArrayList<>();
 			for(String singleStory : storyName.split("\\s*,\\s*")){
 				lookUpPath = String.format("**/stories/**/%s.story",singleStory);
-			paths.add(new StoryFinder().findPaths(codeLocation, lookUpPath, "").get(0));
+			List<String> path = new StoryFinder().findPaths(codeLocation, lookUpPath, "");
+			for(String story : path){
+				paths.add(story);
+			}
 			}
 			return paths;
 		}
