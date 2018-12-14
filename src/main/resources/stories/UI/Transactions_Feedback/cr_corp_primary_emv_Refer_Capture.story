@@ -6,8 +6,7 @@ I want to perform Transaction on corporate credit card to check differenr status
 Meta:
 @CreditRegression
 @CreditWithPin
-@StoryName credit_emv_retail
-@Abhishek_Credit				 
+@StoryName credit_emv_retail			 
 Scenario:1.1 creation of mastercard_corporate_primary_EMV Card credit device
 Meta:
 @TestId TC548377
@@ -35,9 +34,9 @@ And user sign out from customer portal
 Scenario:1.3 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
-Then MAS test results are verified
 And user is logged in institution
-And search Capture authorization and verify 000-Successful status
+And search Purchase authorization and verify 208-LOST CARD, PICK-UP status
+And assert Capture response with 70053 AuthDecline Code and Card Status is Lost with Capture Response as description
 And user sign out from customer portal
 
 Scenario:1.4 When User Chnage device status to Refer of Lost Status
@@ -50,6 +49,7 @@ Scenario:1.5 Perform EMV_PURCHASE Authorization transaction
 When perform an EMV_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
 And user is logged in institution
-And search Refer authorization and verify 000-Successful status
+And search Purchase authorization and verify 107-REFER TO CARD ISSUER status
+And assert Refer response with 70052 AuthDecline Code and Card Status is Lost with Refer Response as description
 And user sign out from customer portal
 Then MAS simulator is closed

@@ -5,7 +5,7 @@ import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 
 public class WithdrawDevice {
      
-	private final static String WITHDRAW_REASON="Withdraw_Reason";
+	private final static String WITHDRAW_REASON="WITHDRAW_REASON";
 	private String withdrawReason;
 	private String withdrawDescription;
 

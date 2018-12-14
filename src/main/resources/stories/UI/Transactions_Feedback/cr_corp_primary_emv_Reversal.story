@@ -6,8 +6,7 @@ I want to perform Transaction on corporate credit card to check Reversal Status.
 Meta:
 @CreditRegression
 @CreditWithPin
-@StoryName credit_emv_retail
-@Abhishek_Credit			 
+@StoryName credit_emv_retail			 
 Scenario:1.1 creation of mastercard_corporate_primary_EMV Card credit device
 Meta:
 @TestId TC548377

@@ -5,7 +5,7 @@ I want to assert PDF Details of LVC Credit card
 
 Meta:
 @StoryName credit_emv_retail
-@Abhishek_Credit		 
+		 
 Scenario:1.1 creation of mastercard_individual_primary_LVC Card prepaid device
 
 Given setting json values in excel for Credit

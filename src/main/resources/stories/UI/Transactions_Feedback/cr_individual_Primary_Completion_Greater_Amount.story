@@ -7,7 +7,6 @@ Meta:
 @CreditRegression
 @CreditWithPin
 @StoryName credit_emv_retail
-@Abhishek_Credit
 Scenario:1.1 creation of mastercard_retail_primary_emv Card credit device
 
 Given setting json values in excel for Credit
