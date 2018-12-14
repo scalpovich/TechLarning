@@ -54,7 +54,7 @@ public class CloseBatchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "saveAll")
 	private MCWebElement processAll;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']/td[1]/span")
+	@PageElement(findBy = FindBy.TEXT_VALUE_CONTAINS, valueToFind = "Process Selected")
 	private MCWebElement btnProcessSelected;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']/td[1]")
