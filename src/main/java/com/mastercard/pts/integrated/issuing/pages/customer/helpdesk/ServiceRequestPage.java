@@ -65,7 +65,7 @@ public class ServiceRequestPage extends AbstractBasePage{
 		clickSearchButton();
 		waitForWicket();
 		waitForPageToLoad(driver());
-		SimulatorUtilities.wait(80000);
+		SimulatorUtilities.wait(100000);
 		String serviceRequest = String.format("//*[@class='dataview']/..//td[count(//span[text()='Service Description']//..//..//preceding-sibling::th)+1]");
 		return driver().findElement(By.xpath(serviceRequest)).getText();
 	}
