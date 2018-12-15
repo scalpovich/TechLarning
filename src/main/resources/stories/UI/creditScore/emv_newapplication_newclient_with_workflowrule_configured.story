@@ -40,7 +40,7 @@ And User fills Wallet Plan for credit product and program Retail Credit Card
 And User Primary fills new Program Retail Credit Card section for credit product for mastercard
 And User adds Fixed Score for fieldName MARITAL STATUS and fieldValue SINGLE on program
 And User adds Variable Score for fieldName AGE on program
-And User adds Approval Score on program
+And User adds Approval Score on program As Approve
 And User Adds WorkFlow Rule for fieldName1 Customer and fieldName2 Individual on program for application score
 And User fills Business Mandatory Fields Screen for credit product
 When User fills Device Range section for credit product
@@ -65,7 +65,7 @@ And User fills Wallet Plan for credit product and program Retail Credit Card
 And User Primary fills new Program Retail Credit Card section for credit product for mastercard
 And User adds Fixed Score for fieldName MARITAL STATUS and fieldValue SINGLE on program
 And User adds Variable Score for fieldName AGE on program
-And User adds Approval Score on program for auto reject
+And User adds Approval Score on program As Reject
 And User Adds WorkFlow Rule for fieldName1 Customer and fieldName2 Individual on program for application score
 And User fills Business Mandatory Fields Screen for credit product
 When User fills Device Range section for credit product
@@ -85,7 +85,7 @@ And User fills Wallet Plan for credit product and program Retail Credit Card
 And User Primary fills new Program Retail Credit Card section for credit product for mastercard
 And User adds Fixed Score for fieldName MARITAL STATUS and fieldValue SINGLE on program
 And User adds Variable Score for fieldName AGE on program
-And User adds Approval Score on program for auto refer
+And User adds Approval Score on program As Refer
 And User Adds WorkFlow Rule for fieldName1 Customer and fieldName2 Individual on program for application score
 And User fills Business Mandatory Fields Screen for credit product
 When User fills Device Range section for credit product
