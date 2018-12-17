@@ -114,8 +114,8 @@ public class Device {
 	private String interestOnPurchase;
 	private String latePaymentFee;
   	private String updatedATCValue;
-  	private static double deviceAmountUsage = 0.00;
-  	private static double deviceVelocity = 0;
+  	private double deviceAmountUsage;
+  	private int deviceVelocity;
   	private String dedupe;
 	private String joiningFees;
 	private String membershipFees;
@@ -153,6 +153,8 @@ public class Device {
 		device.setDevicePlan1(provider.getString(DEVICE_PLAN));     
 		device.setTransactionPassword(provider.getString(TRANSACTION_PASSWORD));		
 		device.setCurrencyofTransfer(provider.getString(CURRENCY_OF_TRANSFER));
+		device.setDeviceAmountUsage(0.00);
+		device.setDeviceVelocity(0);
 		return device;
 	}
 	
@@ -165,6 +167,8 @@ public class Device {
 		device.setExpirationDate(provider.getString(VALIDITY_ON_INITIAL_MONTHS));
 		device.setExpiryFlag(provider.getString(EXPIRY_FLAG));
 		device.setCreditLimit(provider.getString(CREDIT_LIMIT));
+		device.setDeviceAmountUsage(0.00);
+		device.setDeviceVelocity(0);
 		return device;
 	}
 	
@@ -178,6 +182,8 @@ public class Device {
 		device.setOtherInfoRegisterForDncr(provider.getString(ND_OTHERINFO_REGISTER_FOR_DCNR));
 		device.setOtherInfoSmsAlertRequired(provider.getString(ND_OTHERINFO_SMS_ALERT_REQUIRED));
 		device.setOtherInfoStatementPreference(provider.getString(ND_OTHERINFO_STATEMENT_PREFERENCE));
+		device.setDeviceAmountUsage(0.00);
+		device.setDeviceVelocity(0);
 		return device;
 	}
 
@@ -746,15 +752,15 @@ public class Device {
 	}
 
 	public void setDeviceAmountUsage(double deviceAmountUsage) {
-		Device.deviceAmountUsage = Device.deviceAmountUsage + deviceAmountUsage;
+		this.deviceAmountUsage = this.deviceAmountUsage + deviceAmountUsage;
 	}
 
 	public double getDeviceVelocity() {
 		return deviceVelocity;
 	}
 
-	public void setDeviceVelocity() {
-		++deviceVelocity;
+	public void setDeviceVelocity(int deviceUsageVelocity) {
+		deviceVelocity = deviceUsageVelocity + deviceVelocity ;
 	}
 
 	public String getDedupe() {

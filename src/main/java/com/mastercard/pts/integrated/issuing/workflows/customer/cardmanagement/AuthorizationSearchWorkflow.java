@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AvailableBalance;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
@@ -117,10 +118,11 @@ public class AuthorizationSearchWorkflow {
 		 String billingAmountValue = authSearchPage.getCellTextByColumnName(1, "Billing Amount");
 		 context.put(ConstantData.BILLING_AMOUNT, billingAmountValue);
 		if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && !ConstantData.PRE_AUTH.equalsIgnoreCase(type)){
-			device.setDeviceVelocity();
+			device.setDeviceVelocity(1);
 			device.setDeviceAmountUsage(Double.parseDouble(billingAmountValue));
 		}
-
+		context.put(ContextConstants.DEVICE, device);
+		
 		assertTrue("Latest (Row) Description and Code Action does not match on Authorization Search Screen", condition);
 	}
 	
