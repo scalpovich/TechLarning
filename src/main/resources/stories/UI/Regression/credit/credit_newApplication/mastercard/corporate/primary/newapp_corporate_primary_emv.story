@@ -11,13 +11,7 @@ Scenario:creation of mastercard_individual_primary_emv Card credit device
 Given setting json values in excel for Credit
 When user is logged in institution
 And for EMV Card User fills Device Plan for credit product for Mastercard
-And User fills Billing Cycle
-And User fills Payment Priority
-And User fills Transaction Rule Plan
-And User fills Credit Plan
-And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Corporate Credit Card [10]
-And User fills MCC Rules for credit product
 And User Primary fills new Program Corporate Credit Card [10] section for credit product for mastercard
 And User fills Device Range section for credit product
 And credit device is created using new Application screen for Corporate [1] and "Primary Device" and New Client and EMV Card

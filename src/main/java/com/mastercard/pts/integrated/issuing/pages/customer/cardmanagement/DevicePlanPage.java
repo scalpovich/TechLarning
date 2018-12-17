@@ -1364,7 +1364,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	private void fillPinGenerationSection(DevicePlan devicePlan) {
 		// perform below steps only when pinRequired is true which is the
 		// default state
-		if (!(DeviceType.VIRTUAL_CARD.toLowerCase().contains(devicePlan.getDeviceType().toLowerCase()) || DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.toLowerCase().contains(devicePlan.getDeviceType().toLowerCase()))){
+		if (!(DeviceType.STATIC_VIRTUAL_CARD.contains(devicePlan.getDeviceType()) || DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType()))){
 			WebElementUtils.scrollDown(driver(), 0, 250);
 			pinRequiredChk.click();
 			WebElementUtils.selectDropDownByVisibleText(pinDataTransmissionDDwn, devicePlan.getPinDataTransmission());
