@@ -61,11 +61,11 @@ public class InternationalUseActivationPage extends ServicesAbstractPage {
 	}
 	
 	public void activationFromDate(LocalDate fromDate){		
-		WebElementUtils.pickDateJQuery(driver(),activationFromDateInpt, fromDate);
+		WebElementUtils.pickDateChp(driver(),activationFromDateInpt, fromDate);
 	}
 	
 	public void activationToDate(LocalDate toDate){		
-		WebElementUtils.pickDateJQuery(driver(),activationToDateInpt, toDate);
+		WebElementUtils.pickDateChp(driver(),activationToDateInpt, toDate);
 	}
 	
 	public void activationNHours(){

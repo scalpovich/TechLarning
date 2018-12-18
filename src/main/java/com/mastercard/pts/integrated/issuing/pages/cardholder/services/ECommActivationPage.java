@@ -79,13 +79,11 @@ public class ECommActivationPage extends ServicesAbstractPage {
 	}
 	
 	public void setActivationFromDate(LocalDate fromDate){
-		//WebElementUtils.pickDate(ecomActivationFrom, fromDate);	
-		WebElementUtils.pickDateJQuery(driver(),ecomActivationFrom, fromDate);
+		WebElementUtils.pickDateChp(driver(),ecomActivationFrom, fromDate);
 	}
 	
 	public void setActivationToDate(LocalDate toDate){
-		//WebElementUtils.pickDate(ecomActionTo,toDate);
-		WebElementUtils.pickDateJQuery(driver(),ecomActionTo, toDate);
+		WebElementUtils.pickDateChp(driver(),ecomActionTo, toDate);
 	}
 	
 	public String getEcomActivationResponseMsg(){

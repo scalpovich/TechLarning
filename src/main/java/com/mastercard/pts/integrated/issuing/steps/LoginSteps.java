@@ -19,6 +19,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.admin.InstitutionCr
 import com.mastercard.pts.integrated.issuing.domain.customer.admin.UserCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.provider.DataLoader;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceCreateDevicePage;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
@@ -58,6 +59,9 @@ public class LoginSteps extends AbstractBaseFlows {
 
 	@Autowired
 	public UserManagementSteps user;
+	
+	@Autowired
+	private KeyValueProvider provider;
 
 	@Autowired
 	@Qualifier("defaultDataLoader")
@@ -105,9 +109,8 @@ public class LoginSteps extends AbstractBaseFlows {
 	@When("login to cardholder portal as existing Cardholder user")
 	public void loginToCardholder() {
 		loginCardHolderProvider = LoginCardholder.loginCardholderDataProvider();
-		loginCardholder(loginCardHolderProvider.getUserName(), loginCardHolderProvider.getPassWord());
-		switchToWindowCHP();
-		CustomUtils.ThreadDotSleep(1100);
+		loginCardholder("11008818330000046","aBcd1234*"/*loginCardHolderProvider.getUserName(), loginCardHolderProvider.getPassWord()*/);
+		switchToWindowCHP();		
 	}
 
 	@Given("read test data for scenario")
@@ -120,21 +123,23 @@ public class LoginSteps extends AbstractBaseFlows {
 		loginFlows.openCardHolderApplication();
 	}
 
-	@Given("cardholder registration for login")
-	public void firstTimeCardRegistration() {
-		loginFlows.signUpCardHolderUser(loginCardHolderProvider.getPassWord(),
-				loginCardHolderProvider.getCardHolderTransPassword(), loginCardHolderProvider.getFirstSequrityQst(),
-				loginCardHolderProvider.getFirstSequrityAnsw(), loginCardHolderProvider.getSecondSequrityQst(),
-				loginCardHolderProvider.getSecondSequrityAnsw());
-
+	@Given("cardholder complete registration and login into portal")
+	@When("cardholder complete registration and login into portal")
+	public void cardholderSignUp() {
+		loginCardHolderProvider = LoginCardholder.loginCardholderProvider(provider);
+		loginFlows.signUpCardHolderUser(loginCardHolderProvider);
+		getFinder().getWebDriver().get(appEnvironment.getPortalByType("cardholder").getUrl());
+		switchToNewWindow();
+		context.put(ContextConstants.CARDHOLDER, loginCardHolderProvider);
 	}
 
 	@Given("cardholder signup with valid details")
+	@When("cardholder signup with valid details")
 	@Then("cardholder signup with valid details")
 	public void cardHolderSignUp() {
 		Device device = context.get(ContextConstants.DEVICE);
 		loginWorkflow.login(device.getClientCode(), device.getClientCode());
-		loginFlows.signUpCardHolderPortal(device.getClientCode(), device.getNewTransPassword());
+		loginFlows.signUpCardHolderPortal(device);
 		switchToNewWindow();
 	}
 
@@ -165,12 +170,7 @@ public class LoginSteps extends AbstractBaseFlows {
 	public void loginCardholder(@Named("userName") String userName, @Named("passWord") String passWord) {
 
 		if (loginFlows.loginAsCardholderUser(userName, passWord)) {
-
-			loginFlows.signUpCardHolderUser(loginCardHolderProvider.getPassWord(),
-					loginCardHolderProvider.getCardHolderTransPassword(), loginCardHolderProvider.getFirstSequrityQst(),
-					loginCardHolderProvider.getFirstSequrityAnsw(), loginCardHolderProvider.getSecondSequrityQst(),
-					loginCardHolderProvider.getSecondSequrityAnsw());
-
+			loginFlows.signUpCardHolderUser(loginCardHolderProvider);
 			LoginCardholder.loginCardholderDataProvider().setPassWord("aBcd1234*");
 			loginFlows.loginAsCardholderUserAfterSignUp(userName, passWord);
 		}
@@ -229,4 +229,9 @@ public class LoginSteps extends AbstractBaseFlows {
 				+ " [" + institute.getInstitutionCode() + "]");
 	}
 
+	@When ("select wallet for operation")
+	public void selectDevice(){
+		Device device = context.get(ContextConstants.DEVICE);
+		loginFlows.selectDeviceForOperation(device);
+	}
 }

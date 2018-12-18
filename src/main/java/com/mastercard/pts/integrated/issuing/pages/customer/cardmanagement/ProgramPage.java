@@ -393,7 +393,6 @@ public class ProgramPage extends AbstractBasePage {
 		clickAddNewButton();
 
 		runWithinPopup("Add Program", () -> {
-			
 			addProgram(program.getProgramCode());          	
 			addDescription(program.getDescription());
 			SimulatorUtilities.wait(2000);
@@ -469,17 +468,11 @@ public class ProgramPage extends AbstractBasePage {
 
 		runWithinPopup("Add Program", () -> {
 			addProgram(program.getProgramCode());
-			SimulatorUtilities.wait(2500);
 			addDescription(program.getDescription());
-			SimulatorUtilities.wait(2500);
 			selectInterchange(program.getInterchange());
-			SimulatorUtilities.wait(2500);
 			selectProduct(program.getProduct());
-			SimulatorUtilities.wait(2500);
 			selectProgramType(program.getProgramType());
-			SimulatorUtilities.wait(2500);
 			selectBaseCurrency(program.getBaseCurrency());
-			SimulatorUtilities.wait(2500);
 			program.setProgramCodeDevice(program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			logger.info("Program added :" + program.getDescription() + " " + "[" + program.getProgramCode() + "]");
 			if (program.getProgramType().contains("Multi")) {

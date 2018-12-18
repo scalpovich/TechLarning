@@ -1,21 +1,27 @@
-/**
- * @author e076168
- */
 package com.mastercard.pts.integrated.issuing.domain.cardholder;
 
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 
 public class LoginCardholder {
+	
+	public static String CHP_USERNAME = "CHP_USERNAME";
+	public static String CHP_PASSWORD = "CHP_PASSWORD";
+	public static String CHP_NEW_PASSWORD = "CHP_NEW_PASSWORD";
+	public static String CHP_TRANSACTION_PASSWORD = "CHP_TRANSACTION_PASSWORD";
+	public static String FIRST_QUESTION = "FIRST_QUESTION";
+	public static String FIRST_ANSWER = "FIRST_ANSWER";
+	public static String SECOND_QUESTION = "SECOND_QUESTION";
+	public static String SECOND_ANSWER = "SECOND_ANSWER";	
 	
 	String userName;
 	String passWord;
 	String newPassword;
 	String cardHolderTransPassword;	
-	String FirstSequrityQst;
-	String FirstSequrityAnsw;
-	String SecondSequrityQst;
-	String SecondSequrityAnsw;
-	
+	String FirstSecurityQst;
+	String FirstSecurityAnsw;
+	String SecondSecurityQst;
+	String SecondSequrityAnsw;	
 	
 	public String getNewPassword() {
 		return newPassword;
@@ -33,31 +39,31 @@ public class LoginCardholder {
 		this.cardHolderTransPassword = cardHolderTransPassword;
 	}
 
-	public String getFirstSequrityQst() {
-		return FirstSequrityQst;
+	public String getFirstSecurityQst() {
+		return FirstSecurityQst;
 	}
 
-	public void setFirstSequrityQst(String firstSequrityQst) {
-		FirstSequrityQst = firstSequrityQst;
+	public void setFirstSecurityQst(String firstSequrityQst) {
+		FirstSecurityQst = firstSequrityQst;
 	}
 
-	public String getFirstSequrityAnsw() {
-		return FirstSequrityAnsw;
+	public String getFirstSecurityAnsw() {
+		return FirstSecurityAnsw;
 	}
 
-	public void setFirstSequrityAnsw(String firstSequrityAnsw) {
-		FirstSequrityAnsw = firstSequrityAnsw;
+	public void setFirstSecurityAnsw(String firstSequrityAnsw) {
+		FirstSecurityAnsw = firstSequrityAnsw;
 	}
 
-	public String getSecondSequrityQst() {
-		return SecondSequrityQst;
+	public String getSecondSecurityQst() {
+		return SecondSecurityQst;
 	}
 
-	public void setSecondSequrityQst(String secondSequrityQst) {
-		SecondSequrityQst = secondSequrityQst;
+	public void setSecondSecurityQst(String secondSequrityQst) {
+		SecondSecurityQst = secondSequrityQst;
 	}
 
-	public String getSecondSequrityAnsw() {
+	public String getSecondSecurityAnsw() {
 		return SecondSequrityAnsw;
 	}
 
@@ -86,14 +92,23 @@ public class LoginCardholder {
 		loginCardHolder.setUserName(MapUtils.fnGetInputDataFromMap("UserId"));
 		loginCardHolder.setNewPassword(MapUtils.fnGetInputDataFromMap("newPassword"));
 		loginCardHolder.setCardHolderTransPassword(MapUtils.fnGetInputDataFromMap("CardHolderTransPassword"));
-		loginCardHolder.setFirstSequrityQst(MapUtils.fnGetInputDataFromMap("FirstSequrityQuestion"));
-		loginCardHolder.setFirstSequrityAnsw(MapUtils.fnGetInputDataFromMap("FirstSequrityAnswer"));
-		loginCardHolder.setSecondSequrityQst(MapUtils.fnGetInputDataFromMap("SecondSequrityQuestion"));
-		loginCardHolder.setSecondSequrityAnsw(MapUtils.fnGetInputDataFromMap("SecondSequrityAnswer"));
-		
+		loginCardHolder.setFirstSecurityQst(MapUtils.fnGetInputDataFromMap("FirstSequrityQuestion"));
+		loginCardHolder.setFirstSecurityAnsw(MapUtils.fnGetInputDataFromMap("FirstSequrityAnswer"));
+		loginCardHolder.setSecondSecurityQst(MapUtils.fnGetInputDataFromMap("SecondSequrityQuestion"));
+		loginCardHolder.setSecondSequrityAnsw(MapUtils.fnGetInputDataFromMap("SecondSequrityAnswer"));		
 		return loginCardHolder;
 	}
 	
-	
-
+	public static LoginCardholder loginCardholderProvider(KeyValueProvider provider){
+		LoginCardholder loginCardHolder = new LoginCardholder();
+		loginCardHolder.setPassWord(provider.getString(CHP_PASSWORD));
+		loginCardHolder.setUserName(provider.getString(CHP_USERNAME));
+		loginCardHolder.setNewPassword(provider.getString(CHP_NEW_PASSWORD));
+		loginCardHolder.setCardHolderTransPassword(provider.getString(CHP_TRANSACTION_PASSWORD));
+		loginCardHolder.setFirstSecurityQst(provider.getString(FIRST_QUESTION));
+		loginCardHolder.setFirstSecurityAnsw(provider.getString(FIRST_ANSWER));
+		loginCardHolder.setSecondSecurityQst(provider.getString(SECOND_QUESTION));
+		loginCardHolder.setSecondSequrityAnsw(provider.getString(SECOND_ANSWER));		
+		return loginCardHolder;
+	}
 }

@@ -3,7 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.administration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
-
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -14,8 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.configuration.Portal;
+import com.mastercard.pts.integrated.issuing.domain.cardholder.LoginCardholder;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
@@ -26,7 +26,8 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 public class LoginPage extends AbstractBasePage {
-	final Logger llogger = LoggerFactory.getLogger(LoginPage.class);
+	final Logger logger = LoggerFactory.getLogger(LoginPage.class);
+	
 	public static final String AUTHENTIFICATION_FAILED_COLLECT = "Authentication failed. "
 			+ "You have used an invalid user name, password or client certificate.";
 
@@ -48,13 +49,8 @@ public class LoginPage extends AbstractBasePage {
 	private MCWebElement username;
 
 	@PageElement(findBy = FindBy.ID, valueToFind = "useralias")
-	private MCWebElement useralias;
+	private MCWebElement useralias;	
 
-	/*
-	 * @PageElement(findBy = FindBy.X_PATH, valueToFind =
-	 * "//div[@class = 'error-btn']//a[contains(text(),'Back to login page')]")
-	 * private MCWebElement backToLoginPageTxt;
-	 */
 	@PageElement(findBy = FindBy.TEXT_VALUE_CONTAINS, valueToFind = "Back to login page")
 	private MCWebElement backToLoginPageTxt;
 
@@ -111,6 +107,15 @@ public class LoginPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.ID, valueToFind = "mpts_cardHolderPortal_button_submit")
 	private MCWebElement signUpConfirmBtn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//form[@id='myForm']/table[2]/tbody/tr")
+	private MCWebElement devicesTable;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//div[@class='dataview-div']/table/tbody/tr[2]")
+	private MCWebElement deviceTableRow;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//div[@class='dataview-div']/table/tbody/tr[2]")
+	private MCWebElement selectDeviceBtn;
 
 	public void loadPage() {
 		getFinder().getWebDriver().get(env.getProperty("application.url"));
@@ -182,7 +187,6 @@ public class LoginPage extends AbstractBasePage {
 		loadAppURL();
 		CustomUtils.ThreadDotSleep(3000);
 		enterUserIDCardHolder(uName).enterPwd(pwd).clickSignIn();
-
 		return waitforElement(chpSignUpUserAlias);
 	}
 
@@ -191,23 +195,23 @@ public class LoginPage extends AbstractBasePage {
 		enterUserIDCardHolder(uName).enterPwd(pwd).clickSignIn();
 	}
 
-	public void signUpCardHolderUser(String loginPass, String trnPass, String firstSequrityQst,
-			String firstSequerAnswer, String secondSequrityQst, String secondSequerAnswer) {
-		enterText(chplNewSignUpPassword, loginPass);
-		enterText(chpSignUpPasswordConfirm, loginPass);
-		enterText(chpSignUpTranPass, trnPass);
-		enterText(chpSignUpTranPassConfirm, trnPass);
-		selectByText(chpSignUpSeqQuesOne, firstSequrityQst);
-		enterText(chpSignUpSeqQueOneInpt, firstSequerAnswer);
-		selectByText(chpSignUpSeqQueTwo, secondSequrityQst);
-		enterText(chpSignUpSeqQueTwoAnsInpt, secondSequerAnswer);
+	public void signUpCardHolderUser(LoginCardholder loginCardHolderProvider) {		
+		enterText(chplNewSignUpPassword, loginCardHolderProvider.getPassWord());
+		enterText(chpSignUpPasswordConfirm, loginCardHolderProvider.getPassWord());
+		enterText(chpSignUpTranPass, loginCardHolderProvider.getCardHolderTransPassword());
+		enterText(chpSignUpTranPassConfirm, loginCardHolderProvider.getCardHolderTransPassword());
+		selectByText(chpSignUpSeqQuesOne, loginCardHolderProvider.getFirstSecurityQst());
+		enterText(chpSignUpSeqQueOneInpt, loginCardHolderProvider.getFirstSecurityAnsw());
+		selectByText(chpSignUpSeqQueTwo, loginCardHolderProvider.getSecondSecurityQst());
+		enterText(chpSignUpSeqQueTwoAnsInpt, loginCardHolderProvider.getSecondSecurityAnsw());
 		confirmSignUpCardHolder();
+		acceptPopup();
 	}
 
-	public void createTransPassword(String currentPass, String newTrnPass) {
-		enterText(currentPassword, currentPass);
-		enterText(chpSignUpTranPass, newTrnPass);
-		enterText(chpSignUpTranPassConfirm, newTrnPass);
+	public void createTransPassword(Device device) {		
+		enterText(currentPassword, device.getClientCode());
+		enterText(chpSignUpTranPass, device.getNewTransPassword());
+		enterText(chpSignUpTranPassConfirm, device.getNewTransPassword());
 		confirmSignUpCardHolder();
 	}
 
@@ -241,7 +245,7 @@ public class LoginPage extends AbstractBasePage {
 		if (!isLoggedIn(getFinder().getWebDriver())) {
 			password.sendKeys(pwd);
 		} else {
-			System.out.println("Logout Button not found  we are not setting userID");
+			logger.error("Password field not found on page");
 		}
 		return this;
 	}
@@ -250,14 +254,13 @@ public class LoginPage extends AbstractBasePage {
 		if (!isLoggedIn(getFinder().getWebDriver())) {
 			signin.click();
 		} else {
-			System.out.println("Logout Button not found  we are not loading page and miximizing it");
+			logger.error("Logout Button not found  we are not loading page and miximizing it");
 		}
 	}
 
 	public void clickLogout() {
 		signOut.click();
 		getFinder().getWebDriver().manage().deleteAllCookies();
-
 	}
 
 	public void clickLogoutCardHolder() {
@@ -276,7 +279,7 @@ public class LoginPage extends AbstractBasePage {
 				CutomerPortalUsername.sendKeys(uName);
 			}
 		} else {
-			llogger.info("Logout Button not found  we are not setting userID");
+			logger.info("Logout Button not found  we are not setting userID");
 		}
 		return this;
 	}
@@ -291,7 +294,7 @@ public class LoginPage extends AbstractBasePage {
 			}
 
 		} else {
-			llogger.info("Logout Button not found  we are not loading page and miximizing it");
+			logger.info("Logout Button not found  we are not loading page and miximizing it");
 		}
 	}
 
@@ -326,11 +329,11 @@ public class LoginPage extends AbstractBasePage {
 		try {
 			WebElement errorMessageLbl = new WebDriverWait(driver(), timeoutInSec)
 					.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.feedbackPanelERROR")));
-			llogger.info("Error message : {}", errorMessageLbl.getText());
+			logger.info("Error message : {}", errorMessageLbl.getText());
 			return errorMessageLbl.toString();
 		} catch (TimeoutException e) {
-			llogger.info("Operation Status message {}: " + "No Status is updated");
-			llogger.debug("Error message {}: ", e);
+			logger.info("Operation Status message {}: " + "No Status is updated");
+			logger.debug("Error message {}: ", e);
 			return null;
 		}
 	}
@@ -339,17 +342,20 @@ public class LoginPage extends AbstractBasePage {
 		try {
 			WebElement errorMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions
 					.visibilityOfElementLocated(By.xpath("//span[@class='feedbackPanelERROR']/span")));
-			llogger.info("Error message : {}", errorMessageLbl.getText());
+			logger.info("Error message : {}", errorMessageLbl.getText());
 			return errorMessageLbl.getText();
 		} catch (TimeoutException e) {
-			llogger.info("Operation Status message {}: " + "No Status is updated");
-			llogger.debug("Error message {}: ", e);
+			logger.info("Operation Status message {}: " + "No Status is updated");
+			logger.debug("Error message {}: ", e);
 			return null;
 		}
 	}
 	
-	public String getInstitutionDateLogin()
-	{
+	public String getInstitutionDateLogin(){
 		return getInstitutionDate();
+	} 
+	
+	public void selectWalletForDevice(Device device){	
+		getFinder().getWebDriver().findElement(By.xpath(String.format("//tr[@id='%s']//*[@type='submit']", device.getWalletNumber()))).click();
 	}
 }
