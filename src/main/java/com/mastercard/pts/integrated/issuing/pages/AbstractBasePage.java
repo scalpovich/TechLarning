@@ -344,12 +344,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		SimulatorUtilities.wait(500);
 	}
 	
-	protected void clickNextButtonWithEnter() {
-		WebElementUtils.scrollDown(driver(), 0, 250);
-		SimulatorUtilities.wait(500);
-		driver().findElement(By.cssSelector("input[value='Next >']")).sendKeys(Keys.ENTER);
-		SimulatorUtilities.wait(500);
-	}
 
 	protected void clickAddNewButton() {
 		clickWhenClickable(addNewBtn);

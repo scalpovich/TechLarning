@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -391,11 +392,10 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		WebElementUtils.enterText(currentAddressLine1Txt, currentAddress.getAddressLine1());
 		WebElementUtils.selectDropDownByVisibleText(currentCountryCodeDDwn, currentAddress.getCountry());
 		WebElementUtils.enterText(currentAddressPostalCode, currentAddress.getPostalCode());		
-		SimulatorUtilities.wait(5000);		
-		pageScrollDown();
-		SimulatorUtilities.wait(10000);
-		clickNextButtonWithEnter();
+		currentAddressPostalCode.getActions().sendKeys(Keys.TAB);
 		SimulatorUtilities.wait(5000);
+		pageScrollDown();
+		clickNextButton();
 		if(!isElementPresent(legalIDTxt)){
 			clickNextButton();
 		}
