@@ -166,6 +166,7 @@ public class DeviceSteps {
 	@Then("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
 	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceForGivenCustomerUsingNewDevice(String type,String customerType,String applicationType,String subApplicationType,String deviceType) {
 		Device device = Device.createWithProviderForOtherDetails(provider);
+		device.setProductType(ProductType.fromShortName(type));
 		device.setAppliedForProduct(ProductType.fromShortName(type));
 		device.setCustomerType(customerType);
 		device.setApplicationType(applicationType);
