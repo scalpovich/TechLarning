@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -7,10 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 
+import com.codoid.products.exception.FilloException;
+import com.codoid.products.fillo.Recordset;
 import com.mastercard.pts.integrated.issuing.steps.customer.transaction.TransactionSteps;
 
+import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.jbehave.core.annotations.Composite;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
@@ -65,6 +71,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Wall
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.ExcelUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.MCGFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramSetupWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.TransactionFeeWaiverPlanFlows;
@@ -1784,5 +1791,32 @@ public class ProgramSetupSteps {
 		device.setTransSetPresentmentTimeLimit(DEFAULT_PRESENTMENT_TIME_LIMIT);
 		device.setMerchantCode(MERCHANT_CODE);
 		programSetupWorkflow.editPlan(plan,device,program);
+	}
+	
+	
+	@Given("user get data from excel for $scenario scenario")
+	public void userGetDataFromExcelForScenario(String scenario) throws FilloException{
+		Device device = Device.createWithProvider(provider);
+		Map<String, String> map = ExcelUtils.getRowDataFromExcelThroughQuery("Select * from Sheet10 WHERE ScenarioID = 'Test'");
+		System.out.println(map);
+		device.setDeviceNumber(map.get("DeviceNumber"));
+		device.setCvvData( map.get("CVV"));
+		device.setCvv2Data(map.get("CVV2"));
+		device.setIcvvData(map.get("ICVV"));
+		device.setPvkiData(map.get("PVKI"));
+		device.setExpirationDate(map.get("ExpiryDate"));
+		device.setPinOffset(map.get("PinOffset"));
+		System.out.println(device);
+		context.put(ContextConstants.DEVICE, device);
+		
+		DevicePlan deviceplan = DevicePlan.createWithProvider(provider);
+		deviceplan.setServiceCode("201");
+		deviceplan.setExpiryDate(map.get("ExpiryDate"));
+		deviceplan.setIsPinLess("No");
+		context.put(ConstantData.IS_PIN_REQUIRED, "TRUE");
+		context.put(ContextConstants.DEVICE_PLAN, deviceplan);
+		
+		
+		
 	}
 }
