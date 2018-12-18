@@ -22,15 +22,9 @@ public class CardHolderVirtualCardFlows extends AbstractBaseFlows{
 	RequestForLimitedValidityVirtualCardPage virtualPrpdCardReqstPage;
 	
 	LimitedValidityVirtualCardCancelPage cancelVirtualLimitValidityCard;	
-	
-	
-	
-	
 			
 	public String sbmtRreqForVirtualPrepardCard(CardholderServices cardholderService){
 		virtualPrpdCardReqstPage = navigate.navigateToPage(RequestForLimitedValidityVirtualCardPage.class);
-			
-			
 		return virtualPrpdCardReqstPage.submitRequestforVirtualCrd(cardholderService);
 	}
 	
@@ -43,9 +37,8 @@ public class CardHolderVirtualCardFlows extends AbstractBaseFlows{
 		if(cancelVirtualLimitValidityCard.verifyPermissionCardholder()){
 			logger.info("Limited validity virtual device is not requested");
 		}
-			
-		}
-		
+	}
+	
 	public String verifyVirtualCardRequestStatus(){
 		return virtualPrpdCardReqstPage.getVirtualCardRequesResponse();
 	}

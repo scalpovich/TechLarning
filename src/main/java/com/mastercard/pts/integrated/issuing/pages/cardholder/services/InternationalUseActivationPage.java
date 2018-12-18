@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages.cardholder.services;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -8,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.ServicesNav;
+import com.mastercard.pts.integrated.issuing.domain.cardholder.CardholderServices;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -51,27 +53,19 @@ public class InternationalUseActivationPage extends ServicesAbstractPage {
 	@PageElement(findBy = FindBy.ID, valueToFind ="mpts_cardHolderPortal_button_submit")
 	private MCWebElement activateInternationalUseSubmitBtn;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind="//tr[@class='sectionHead'][2]")
-	public MCWebElement iternationlUseConfirmationMsg;
-	
-	public void selectActivationRdo(){
-		clickWhenClickableCHP(internationalActivation);
-	}
-	
-	public void selectDeActivationRdo(){
-		clickWhenClickableCHP(internationalDeActivation);
-	}
-	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//*[@class='sectionHead']/td/../following-sibling::tr[1]/td")
+	public MCWebElement responseLbl;
+		
 	public void selectActivationInPeriodRdo(){
 		clickWhenClickableCHP(activationInPeriodRdo);
 	}
 	
-	public void activationFromDate(String fromDate){
-		enterText(activationFromDateInpt, fromDate);
+	public void activationFromDate(LocalDate fromDate){		
+		WebElementUtils.pickDateJQuery(driver(),activationFromDateInpt, fromDate);
 	}
 	
-	public void activationToDate(String toDate){		
-		enterText(activationToDateInpt, toDate);
+	public void activationToDate(LocalDate toDate){		
+		WebElementUtils.pickDateJQuery(driver(),activationToDateInpt, toDate);
 	}
 	
 	public void activationNHours(){
@@ -95,8 +89,38 @@ public class InternationalUseActivationPage extends ServicesAbstractPage {
 	}
 	
 	public String getInternationlUseActivaStatusConfrmMsg(){
-		return getTextFromPage(iternationlUseConfirmationMsg);			
+		return getTextFromPage(responseLbl);			
 	}
+	
+	public void setInternationalUse(String fromDate, String toDate){
+		activationFromDate(LocalDate.now().minusDays(1));
+		activationToDate(LocalDate.now());
+		internationalActivSubmitBtn();
+	}
+	
+	public String updateInternationalDeviceUsage(CardholderServices cardholderService){
+		if(cardholderService.getInternationActivationType().contains(CardholderServices.HOURS_ACTIVATION)){				
+			activationNHours();
+			enterNHours(cardholderService.getInternationalActivationHours());
+			internationalActivSubmitBtn();
+			
+		}else if(cardholderService.getInternationActivationType().contains(CardholderServices.LIFELONG_ACTIVATION)){
+			selectActivationLifeLongRdo();
+			internationalActivSubmitBtn();	
+			
+		}else if(cardholderService.getInternationActivationType().contains(CardholderServices.PERIOD_ACTIVATION)){
+			selectActivationInPeriodRdo();			
+		}
+		return getTextFromPage(responseLbl);
+	}
+	
+	public String deactivateInternationlTransaction(){
+		WebElementUtils.selectRadioBtn(internationalDeActivation);
+		clickWhenClickable(activateInternationalUseSubmitBtn);
+		waitForLoaderToDisappear();
+		return getTextFromPage(responseLbl);
+	}
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(masterDetailContentTitle), WebElementUtils.visibilityOf(intUseInput0Rbtn),

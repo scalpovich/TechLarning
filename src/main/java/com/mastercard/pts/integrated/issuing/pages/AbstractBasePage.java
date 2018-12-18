@@ -181,7 +181,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private MCWebElement paragraph;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[.//*[text()='Status :']]/following-sibling::td[1]")
-	private MCWebElement batchStatus;
+	protected MCWebElement batchStatus;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Create']")
 	private MCWebElement createBtn;

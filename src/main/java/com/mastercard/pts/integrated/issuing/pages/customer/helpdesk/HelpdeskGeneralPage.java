@@ -148,6 +148,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody a img")
 	private MCWebElement editDeviceLink;
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value = 'Transactions']")
 	private MCWebElement transactionsBtn;
 
@@ -316,9 +317,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
   
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Installment :']/../../following-sibling::td[3]/span/span")
 	private MCWebElement loanInstallmentOutStandingLabel;
-	
-    @PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody a img")
-	private MCWebElement editDeviceLink;
 	
     @PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Wallet Number')]/../following-sibling::td/span/span")
 	private MCWebElement txtWalletNumber;

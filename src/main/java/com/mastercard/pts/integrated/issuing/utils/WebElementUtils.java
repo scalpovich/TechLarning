@@ -342,4 +342,10 @@ public class WebElementUtils {
 		if (!radioButton.isSelected())
 			radioButton.click();
 	}
+	
+	public static void pickDateJQuery(WebDriver driver, MCWebElement datePicker, LocalDate date) {
+		asWebElement(datePicker).findElement(By.cssSelector("img")).click();		
+		String clickDate = String.format("//*[@class='ui-datepicker-calendar']//a[text()='%d']",date.getDayOfMonth());
+		driver.findElement(By.xpath(clickDate)).click();
+	}
 }

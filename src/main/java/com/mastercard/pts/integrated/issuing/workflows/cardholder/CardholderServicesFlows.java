@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.workflows.cardholder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.domain.cardholder.CardholderServices;
 import com.mastercard.pts.integrated.issuing.pages.cardholder.services.ActivateDeactivateWalletPage;
 import com.mastercard.pts.integrated.issuing.pages.cardholder.services.BlockDevicePage;
@@ -40,57 +41,38 @@ public class CardholderServicesFlows  extends AbstractBaseFlows{
 	
 	private String walletStatusDeactive ="Deactive";
 	
-	public void navigateToServicesReplaceDevicePage(){		
-		navigator.navigateToPage(ReplaceDevicePage.class);
-	}
-	
-	public void navigateToServicesInternationalUseActivationPage(){
-		navigator.navigateToPage(InternationalUseActivationPage.class);
-	}
-	public void navigateToServiceBlockDevicePage(){
-		navigator.navigateToPage(BlockDevicePage.class);
-	}
-	
-	public void navigateToServiceUnblockBlockDevicePage(){
-		navigator.navigateToPage(UnblockDevicePage.class);
-	}
-	
 	public void navigateToServiceActivateDeactivateWalletPage(){
 		navigator.navigateToPage(ActivateDeactivateWalletPage.class);
 	}
 	
-	public void navigateToServiceEcommTransactionPage(){
-		navigator.navigateToPage(ECommActivationPage.class);
+	public String selectReplacementForCard(CardholderServices replaceMenetOption){
+		ReplaceDevicePage page = navigator.navigateToPage(ReplaceDevicePage.class);
+		return page.deviceReplacementRequest(replaceMenetOption);
 	}
 	
-	public void selectReplacementReasoneFrCard(String replaceMenetOption){
-		replaceDevicePage.selectReplaceMentOption(replaceMenetOption);
+	public void blockSelectedCard(CardholderServices cardHolderService){
+		BlockDevicePage page = navigator.navigateToPage(BlockDevicePage.class);
+		page.enterCardBlockRemark(cardHolderService.getBlockCardRemark());	
 	}
 	
-	
-	public boolean verifyCardReplacementServiceConfirmationMsg(String confirmationMsg){	
-		
-	return replaceDevicePage.getReplacementRequestConfirmationMsg().contains(confirmationMsg);			
-	
+	public String requestBlockCard(CardholderServices cardHolderService){
+		BlockDevicePage page = navigator.navigateToPage(BlockDevicePage.class);
+		return page.blockDeviceRequest(cardHolderService);	
 	}
 	
-	public void blockSelectedCard(String blockCardRemark){
-		blockDevicePage.enterCardBlockRemark(blockCardRemark);
-		blockDevicePage.confirmCardBlockRequest();
-	}
-	
-	public boolean verifyBlockCardRequestConfirmMsg(String cardBlockconfirMessage){
-		if(blockDevicePage.getCardBlockConfirmMsg().contains(cardBlockconfirMessage)){
-			blockDevicePage.clickOnOkayButton();
-			return true;
-		}else{
-			return false;
-		}
+	public String verifyBlockCardRequestConfirmMsg(){
+		return blockDevicePage.getCardBlockConfirmMsg();
 	}
 
 	public void unblockSelectedCard(String unblockCardRemark){
-		unblockDevicePage.enterCardUnblockRemerk(unblockCardRemark);
-		unblockDevicePage.confirmUnblockCardRequestBtn();
+		UnblockDevicePage page = navigator.navigateToPage(UnblockDevicePage.class);
+		page.enterCardUnblockRemerk(unblockCardRemark);
+		page.confirmUnblockCardRequestBtn();
+	}
+	
+	public String unblockSelectedDevice(CardholderServices cardholderService){
+		UnblockDevicePage page = navigator.navigateToPage(UnblockDevicePage.class);
+		return page.unblockCard(cardholderService);
 	}
 	
 	
@@ -111,77 +93,45 @@ public class CardholderServicesFlows  extends AbstractBaseFlows{
 		}
 	}
 	
-	public void activateWallet(String activateRemark){
-		activateDeactivateWalletPage.setActivateDeactivaeteWalletRemrk(activateRemark);
-		activateDeactivateWalletPage.clickOnWalletActivateDeactivateSubtButton();
+	public String activateWallet(CardholderServices cardHolderService){
+		ActivateDeactivateWalletPage page = navigator.navigateToPage(ActivateDeactivateWalletPage.class);
+		return page.activateWallet(cardHolderService);
 	}
 	
-	public void deactivateWallet(String deactivationRemark){
-		activateDeactivateWalletPage.setActivateDeactivaeteWalletRemrk(deactivationRemark);
-		activateDeactivateWalletPage.clickOnWalletActivateDeactivateSubtButton();
+	public String deactivateWallet(CardholderServices cardHolderService){
+		ActivateDeactivateWalletPage page = navigator.navigateToPage(ActivateDeactivateWalletPage.class);
+		return page.activateWallet(cardHolderService);		
 	}
 	
-	public boolean verifyWalletActivateDeactivateConfirmationMsg(String walletActivateDeactivateConfirmMessag){
-		
-		if(activateDeactivateWalletPage.getWalletActivateDeactivateConfirmMsg().contains(walletActivateDeactivateConfirmMessag)){
-			return true;
-		}else{
-			return false;
-		}
+	public String verifyWalletActivateDeactivateConfirmationMsg(){		
+		return activateDeactivateWalletPage.getWalletActivateDeactivateConfirmMsg();
 	}
 	
-	public void activateEcomTransaction(String activationPlan){
-		
-		if(activationPlan.contains(CardholderServices.ECOM_HOURS_ACTIVATION)){
-			eCommActivationPage.setActivationForNHours();			
-			
-			
-		}else if(activationPlan.contains(CardholderServices.ECOM_LIELONG_ACTIVATION)){
-			eCommActivationPage.setActivationForLifeLong();
-			eCommActivationPage.submitEcomActivationPlan();
-			
-		}else if(activationPlan.contains(CardholderServices.ECOM_PERIOD_ACTIVATION)){
-			eCommActivationPage.setActivationInPeriod();
-		}
+	public String activateEcomTransaction(CardholderServices cardholderService){
+		ECommActivationPage page = navigator.navigateToPage(ECommActivationPage.class);
+		return page.configureEcomActivation(cardholderService);
 	}
 	
-	public void setEcomActivationHours(String activationHours){
-		eCommActivationPage.setNumberOfHours(activationHours);
+	public void setEcomActivationHours(CardholderServices cardholderService){
+		eCommActivationPage.setNumberOfHours(cardholderService.getEcomActivationHour());
 		eCommActivationPage.submitEcomActivationPlan();
 	}
 	
-	public void setEcomActivationDurationDate(String fromDate,String toDate){
-		eCommActivationPage.setActivationFromDate(fromDate);
-		eCommActivationPage.setActivationToDate(toDate);
-		eCommActivationPage.submitEcomActivationPlan();
+	public void setActivationDate(String fromDate,String toDate){
+		eCommActivationPage.setEcomActivationDurationDate();
 	}
 	
 	public boolean verifyStatusAfterActivation(String activationStatus){
 		return eCommActivationPage.getEcomActivationResponseMsg().contains(activationStatus);
 	}
 	
-	public void setFromAndToDateForEcomActivation(String fromDate,String toDate){
-		
-	}
-	
-	public void activateInternationalTransaction(String activationPlan){
-		
-		if(activationPlan.contains(CardholderServices.ECOM_HOURS_ACTIVATION)){				
-			InternationalUseActiPage.activationNHours();
-			
-		}else if(activationPlan.contains(CardholderServices.ECOM_LIELONG_ACTIVATION)){
-			InternationalUseActiPage.selectActivationLifeLongRdo();
-			InternationalUseActiPage.internationalActivSubmitBtn();	
-			
-		}else if(activationPlan.contains(CardholderServices.ECOM_PERIOD_ACTIVATION)){
-			InternationalUseActiPage.selectActivationLifeLongRdo();
-		}
+	public String activateInternationalTransaction(CardholderServices cardholderService){
+		InternationalUseActivationPage page = navigator.navigateToPage(InternationalUseActivationPage.class);
+		return page.updateInternationalDeviceUsage(cardholderService);
 	}
 	
 	public void selectDateFrnInternationalUse(String fromDate, String toDate){
-		InternationalUseActiPage.activationFromDate(fromDate);
-		InternationalUseActiPage.activationToDate(toDate);
-		InternationalUseActiPage.internationalActivSubmitBtn();
+		InternationalUseActiPage.setInternationalUse(fromDate,toDate);
 	}
 	
 	public void setInternationalUseHours(String activationHours){
@@ -191,12 +141,20 @@ public class CardholderServicesFlows  extends AbstractBaseFlows{
 	
 	public boolean checkInternationalUseActivationStatus(String confirmationStatusMsg){
 		if(InternationalUseActiPage.getInternationlUseActivaStatusConfrmMsg().contains(confirmationStatusMsg)){
-			return true;
-			
-		}else{
-			
+			return true;			
+		}else{			
 			return false;			
 		}
+	}
+	
+	public String deactivateComTransaction(){
+		ECommActivationPage page = navigator.navigateToPage(ECommActivationPage.class);		
+		return page.deactivateEcomTransaction();
+	}
+	
+	public String deactivateInternationlTransaction(){
+		InternationalUseActivationPage page = navigator.navigateToPage(InternationalUseActivationPage.class);
+		return page.deactivateInternationlTransaction();
 	}
 	
 }
