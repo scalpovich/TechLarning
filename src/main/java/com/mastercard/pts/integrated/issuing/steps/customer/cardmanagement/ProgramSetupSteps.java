@@ -1798,7 +1798,6 @@ public class ProgramSetupSteps {
 	public void userGetDataFromExcelForScenario(String scenario) throws FilloException{
 		Device device = Device.createWithProvider(provider);
 		Map<String, String> map = ExcelUtils.getRowDataFromExcelThroughQuery("Select * from Sheet10 WHERE ScenarioID = 'Test'");
-		System.out.println(map);
 		device.setDeviceNumber(map.get("DeviceNumber"));
 		device.setCvvData( map.get("CVV"));
 		device.setCvv2Data(map.get("CVV2"));
@@ -1806,7 +1805,6 @@ public class ProgramSetupSteps {
 		device.setPvkiData(map.get("PVKI"));
 		device.setExpirationDate(map.get("ExpiryDate"));
 		device.setPinOffset(map.get("PinOffset"));
-		System.out.println(device);
 		context.put(ContextConstants.DEVICE, device);
 		
 		DevicePlan deviceplan = DevicePlan.createWithProvider(provider);
