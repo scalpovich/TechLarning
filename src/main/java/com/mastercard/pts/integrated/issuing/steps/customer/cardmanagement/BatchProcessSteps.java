@@ -318,14 +318,22 @@ public class BatchProcessSteps {
 		ProcessBatches batch =  ProcessBatches.createWithProvider(provider);
 		batch.setProductType(ProductType.fromShortName(type));
 		batchProcessWorkflow.processDownloadBatch(batch);
+		batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(context.get(ContextConstants.DAT_FILE_NAME), 
+				tempDirectory.toString(), ConstantData.REISSUE_TPIN_DIRECTORY,"proc");
 	}
 	
 	
 	@Then("verify that the device number is present in the $filename DAT file")
 	public void isDevicePresentInDATFile(String filename) {
 		Device device = context.get(ContextConstants.DEVICE);
-		File file = linuxBox.downloadFileThroughSCPByPartialFileName(context.get(ContextConstants.DAT_FILE_NAME), 
-				tempDirectory.toString(), ConstantData.REISSUE_TPIN_DIRECTORY,"proc");
-		Assert.assertTrue("The device is not present in the file ",batchProcessWorkflow.isDevicePresentInDATFile(file, device));
+		Assert.assertTrue("The device is not present in the file ",batchProcessWorkflow.isDevicePresentInDATFile(batchFile, device));
+	}
+	
+	@Then("verify that the $dataField is set to $fieldValue")
+	public void verifyDataFieldInTPINFile(@Named("dataField") String dataField, 
+			@Named("fieldValue") String fieldValue) {
+		Device device = context.get(ContextConstants.DEVICE);
+		Assert.assertTrue("The data field " + dataField + "does not have the expected value " + fieldValue, 
+				batchProcessWorkflow.isFieldValuePresent(batchFile, device));
 	}
 }
