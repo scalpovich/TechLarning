@@ -1,8 +1,10 @@
 
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -95,7 +97,7 @@ public class BatchProcessSteps {
 	private static final Logger logger = LoggerFactory.getLogger(BatchProcessSteps.class);
 	
 	private File batchFile;
-
+	
 	@When("user creates a bulk device production request for $type")
 	public void whenUserCreatesABulkDeviceProductionRequestForPrepaid(String type){
 		BulkDeviceRequest request = BulkDeviceRequest.createWithProvider(provider);
@@ -322,18 +324,18 @@ public class BatchProcessSteps {
 				tempDirectory.toString(), ConstantData.REISSUE_TPIN_DIRECTORY,"proc");
 	}
 	
-	
-	@Then("verify that the device number is present in the $filename DAT file")
-	public void isDevicePresentInDATFile(String filename) {
+	@Then("verify that the $dataField is present in the TPIN reissue DAT file")
+	public void isDevicePresentInDATFile(String dataField) {
 		Device device = context.get(ContextConstants.DEVICE);
-		Assert.assertTrue("The device is not present in the file ",batchProcessWorkflow.isDevicePresentInDATFile(batchFile, device));
+		assertThat("The device is not present in the file ", device.getDeviceNumber(), 
+				equalTo(batchProcessWorkflow.isValuePresentInTPINFile(batchFile, dataField, device)));
 	}
 	
 	@Then("verify that the $dataField is set to $fieldValue")
 	public void verifyDataFieldInTPINFile(@Named("dataField") String dataField, 
 			@Named("fieldValue") String fieldValue) {
 		Device device = context.get(ContextConstants.DEVICE);
-		Assert.assertTrue("The data field " + dataField + "does not have the expected value " + fieldValue, 
-				batchProcessWorkflow.isFieldValuePresent(batchFile, device));
+		assertThat("The data field " + dataField + "does not have the expected value " + fieldValue, fieldValue, 
+				equalTo(batchProcessWorkflow.isValuePresentInTPINFile(batchFile, dataField, device)));
 	}
 }

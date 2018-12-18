@@ -50,6 +50,8 @@ public class BatchProcessWorkflow extends MenuFlows{
 	private TestContext context;
 	
 	protected  static final Logger logger = LoggerFactory.getLogger(BatchProcessWorkflow.class); 
+	
+	private ProcessBatchesPage page;
 
 	public String createBulkDeviceRequest(BulkDeviceRequest request){	
 		DeviceProductionBulkDeviceRequestPage page = navigator.navigateToPage(DeviceProductionBulkDeviceRequestPage.class);
@@ -97,7 +99,7 @@ public class BatchProcessWorkflow extends MenuFlows{
 	}
 
 	public void processDownloadBatch(ProcessBatches batch) {
-		ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
+		page = navigator.navigateToPage(ProcessBatchesPage.class);
 		page.processDownloadBatch(batch);
 	}
 
@@ -169,25 +171,8 @@ public class BatchProcessWorkflow extends MenuFlows{
 		page.processResendPinRequestBatch(batch);
 	}
 	
-	public boolean isDevicePresentInDATFile(File file, Device  device) {
-		boolean isPresent = false;
-		Scanner scnr = null;
-		try {
-			scnr = new Scanner(file);
-			while(scnr.hasNextLine()){
-				String line = scnr.nextLine();
-				if(line.contains(device.getDeviceNumber())){
-					logger.info("Data in DAT File : {}",line);
-					isPresent = true;
-					break;
-				}
-			}
-		} catch(Exception e) {
-			logger.error("Error in getting data from file",  e);
-		} finally {
-			if(scnr !=null)
-				scnr.close();
-		}
-		return isPresent;
+	public String isValuePresentInTPINFile(File file, String value, Device device) {
+		return page.isValuePresentInTPINFile(file, value, device);
 	}
+	
 }

@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -14,6 +15,8 @@ import java.util.Locale;
 import java.util.Map;
 
 
+import java.util.Scanner;
+
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -23,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 
 
 import com.google.common.base.Throwables;
@@ -889,5 +893,27 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		WebElementUtils.selectDDByVisibleText(batchNameDDwn, batch.getBatchName());
 		SimulatorUtilities.wait(500);
 		submitAndVerifyBatch();
+	}
+	
+	public String isValuePresentInTPINFile(File file, String whatToFind, Device device) {
+		String value = null;
+		Scanner scnr = null;
+		try {
+			scnr = new Scanner(file);
+			while(scnr.hasNextLine()){
+				String line = scnr.nextLine();
+				if(line.contains(device.getDeviceNumber())){
+					logger.info("Data in DAT File : {}",line);
+					value = "";
+					break;
+				}
+			}
+		} catch(Exception e) {
+			logger.error("Error in getting data from file",  e);
+		} finally {
+			if(scnr !=null)
+				scnr.close();
+		}
+		return value;
 	}
 }
