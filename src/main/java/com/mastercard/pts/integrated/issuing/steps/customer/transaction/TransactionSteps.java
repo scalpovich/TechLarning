@@ -184,8 +184,10 @@ public class TransactionSteps {
 	
 	@When("perform an $type MAS transaction with wrong keys")
 	public void performTransactionWithWrongKeys(String transaction) {
+		String originalValue = TransactionWorkflow.STAGE_KEYS ;
 		TransactionWorkflow.STAGE_KEYS = INVALID_KEYS;
 		givenTransactionIsExecuted(transaction);
+		TransactionWorkflow.STAGE_KEYS = originalValue;
 	}
 
 	@When("user performs generate TestData for an optimized $transaction MAS transaction")
