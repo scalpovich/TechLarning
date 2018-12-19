@@ -756,6 +756,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	protected void waitAndSearchForRecordToExist() {
 		waitAndSearchForRecordToAppear();		
 		selectFirstRecord();
+		SimulatorUtilities.wait(5000);
 		clickProcessSelectedButton();		
 	}	
 	

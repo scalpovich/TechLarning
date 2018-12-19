@@ -42,8 +42,7 @@ public class CardHolderVirtualCardSteps extends AbstractBaseSteps{
 	@When ("cancel limited validity virtual card request")
 	@Then ("cancel limited validity virtual card request")
 	public void cancelReqstLimitedValidityVirtCard(){
-		chpVirtualCardFlow.cancelLvvcRequest();
-		
+		chpVirtualCardFlow.cancelLvvcRequest();		
 	}
 	
 	@Then ("verify virtual prepaid card request status")
@@ -55,6 +54,5 @@ public class CardHolderVirtualCardSteps extends AbstractBaseSteps{
 	public void serviceRequestForStaticVirtualCard(){
 		CardholderServices cardholderService = CardholderServices.cardholderServicesDataProvider(provider);
 		Assert.assertTrue("Virtual device creation failed", chpVirtualCardFlow.requestStaticVirtualPrepaidCard(cardholderService).toLowerCase().contains("successfully"));
-	}
-	
+	}	
 }

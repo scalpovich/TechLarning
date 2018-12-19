@@ -18,7 +18,7 @@ And add menus to access card holder portal
 And user creates new device of prepaid type for new client of Corporate customer
 And processes pre-production batch for prepaid
 And processes device production batch for prepaid
-Then device has "normal" status
+!-- Then device has "normal" status
 And user sign out from customer portal
 
 Scenario:2 Activate E-Com transaction for specified date

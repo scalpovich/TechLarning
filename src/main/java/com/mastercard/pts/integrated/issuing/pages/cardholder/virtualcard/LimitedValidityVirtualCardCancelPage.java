@@ -37,7 +37,7 @@ public class LimitedValidityVirtualCardCancelPage extends AbstractBasePage {
 	}
 	
 	public void cancelLvccRequest(){
-		
+		//TO DO
 	}
 
 	@Override

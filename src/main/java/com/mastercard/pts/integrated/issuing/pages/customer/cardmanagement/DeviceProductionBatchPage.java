@@ -40,9 +40,7 @@ public class DeviceProductionBatchPage extends AbstractBasePage {
 		logger.info("Device-Production Batch: {}", batch.getBatchNumber());
 		WebElementUtils.enterText(batchNumberTxt, batch.getBatchNumber());
 		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
-
 		waitAndSearchForRecordToExist();
-
 		verifyOperationStatus();
 	}
 
