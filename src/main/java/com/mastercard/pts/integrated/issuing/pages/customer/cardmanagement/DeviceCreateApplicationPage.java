@@ -391,11 +391,15 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		Address currentAddress = device.getCurrentAddress();
 		WebElementUtils.enterText(currentAddressLine1Txt, currentAddress.getAddressLine1());
 		WebElementUtils.selectDropDownByVisibleText(currentCountryCodeDDwn, currentAddress.getCountry());
-		WebElementUtils.enterText(currentAddressPostalCode, currentAddress.getPostalCode());		
+		WebElementUtils.enterText(currentAddressPostalCode, currentAddress.getPostalCode());
+		SimulatorUtilities.wait(5000);
 		currentAddressPostalCode.getActions().sendKeys(Keys.TAB);
 		SimulatorUtilities.wait(5000);
 		pageScrollDown();
 		clickNextButton();
+		if(!isElementPresent(legalIDTxt)){
+			clickNextButton();
+		}
 	}
 
 	private void fillProfile(Device device) {
