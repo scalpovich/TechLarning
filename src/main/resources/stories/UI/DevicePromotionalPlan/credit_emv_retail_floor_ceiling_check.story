@@ -5,6 +5,7 @@ I want to perform transaction
 
 Meta:
 @StoryName credit_emv_retail_Limits
+@DPPCredit
 
 Scenario: 1.1 Create EMV credit device
 Given setting json values in excel for Credit
