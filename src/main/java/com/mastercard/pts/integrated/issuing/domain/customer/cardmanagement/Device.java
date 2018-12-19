@@ -153,8 +153,8 @@ public class Device {
 		device.setDevicePlan1(provider.getString(DEVICE_PLAN));     
 		device.setTransactionPassword(provider.getString(TRANSACTION_PASSWORD));		
 		device.setCurrencyofTransfer(provider.getString(CURRENCY_OF_TRANSFER));
-		device.setDeviceAmountUsage(0.00);
-		device.setDeviceVelocity(0);
+		device.setDeviceAmountUsage();
+		device.setDeviceVelocity();
 		return device;
 	}
 	
@@ -167,8 +167,8 @@ public class Device {
 		device.setExpirationDate(provider.getString(VALIDITY_ON_INITIAL_MONTHS));
 		device.setExpiryFlag(provider.getString(EXPIRY_FLAG));
 		device.setCreditLimit(provider.getString(CREDIT_LIMIT));
-		device.setDeviceAmountUsage(0.00);
-		device.setDeviceVelocity(0);
+		device.setDeviceAmountUsage();
+		device.setDeviceVelocity();
 		return device;
 	}
 	
@@ -182,8 +182,8 @@ public class Device {
 		device.setOtherInfoRegisterForDncr(provider.getString(ND_OTHERINFO_REGISTER_FOR_DCNR));
 		device.setOtherInfoSmsAlertRequired(provider.getString(ND_OTHERINFO_SMS_ALERT_REQUIRED));
 		device.setOtherInfoStatementPreference(provider.getString(ND_OTHERINFO_STATEMENT_PREFERENCE));
-		device.setDeviceAmountUsage(0.00);
-		device.setDeviceVelocity(0);
+		device.setDeviceAmountUsage();
+		device.setDeviceVelocity();
 		return device;
 	}
 
@@ -817,5 +817,13 @@ public class Device {
 
 	public void setCardPackID(String cardPackID) {
 		this.cardPackID = cardPackID;
+	}
+	
+	public void setDeviceAmountUsage() {
+		this.deviceAmountUsage = 0.00;
+	}
+
+	public void setDeviceVelocity() {
+		deviceVelocity = 0;
 	}
 }
