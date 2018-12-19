@@ -396,9 +396,6 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		SimulatorUtilities.wait(5000);
 		pageScrollDown();
 		clickNextButton();
-		if(!isElementPresent(legalIDTxt)){
-			clickNextButton();
-		}
 	}
 
 	private void fillProfile(Device device) {
