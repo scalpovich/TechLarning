@@ -19,10 +19,10 @@ When for Primary Device and New Client user fills Device Range section for credi
 Then credit device is created using new device screen for Individual and Primary Device and New Client and Limited Validity Virtual Card
 And user sign out from customer portal
 
-Scenario:2 To Verify that the user can stoplist a credit device through helpdesk
+Scenario:2 To Verify that the user is not able to raise an TPIN SR for lvvc through helpdesk
 Given user is logged in institution
 When credit processes pre-production batch using new Device
 And device has "normal" status
-And user reissues TPIN request for lvc
+And user reissues TPIN request for lvvc
 Then verify that the reissue TPIN request is not allowed for LVVC
 And user sign out from customer portal

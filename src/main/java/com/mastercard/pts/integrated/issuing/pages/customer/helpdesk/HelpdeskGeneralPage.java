@@ -1965,21 +1965,22 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickGoButton();
 		SimulatorUtilities.wait(2000);
 		if(helpdeskGeneral.getIsServiceRequestAllowed().equalsIgnoreCase("No") 
-				&& errorMessagePresence())
+				&& errorMessagePresence()) {
 			errorMessage = getErrorMessage();
-		runWithinPopup(
-				frame,
-				() -> {
-					selectReason(helpdeskGeneral.getReason());
-					SimulatorUtilities.wait(500);
-					enterNotes(helpdeskGeneral.getNotes());
-					clickSaveButton();
-					verifyOperationStatus();
-					clickOKButtonPopup();
-				});
-		SimulatorUtilities.wait(5000);
-		clickEndCall();
+		} else {
+			runWithinPopup(
+					frame,
+					() -> {
+						selectReason(helpdeskGeneral.getReason());
+						SimulatorUtilities.wait(500);
+						enterNotes(helpdeskGeneral.getNotes());
+						clickSaveButton();
+						verifyOperationStatus();
+						clickOKButtonPopup();
+					});
+			SimulatorUtilities.wait(5000);
+			clickEndCall();
+		}
 		return errorMessage;
 	}
-
 }

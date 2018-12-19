@@ -30,4 +30,4 @@ Scenario: 3 To verify that the USER_DELETE is set to 'N' in the TPIN_DOWNLOAD if
 Given user is logged in institution
 When user update the wallet admin status to MANUAL BLOCK 1 [4]
 And reissue TPIN dump download batch is processed for credit
-Then verify that the USER DELETE is set to N
+Then verify that the USER_DELETE is set to N

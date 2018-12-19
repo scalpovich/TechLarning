@@ -29,4 +29,4 @@ Then user sign out from customer portal
 Scenario:3 To verify that the TPIN dump is downloaded successfully
 Given user is logged in institution
 When reissue TPIN dump download batch is processed for credit
-Then verify that the device number is present in the TPIN reissue DAT file
+Then verify that the DEVICE_NUMBER is present in the TPIN reissue DAT file

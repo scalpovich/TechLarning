@@ -18,6 +18,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PinGenerationBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ReissueTPINDownload;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.VisaFeeCollection;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.BatchJobHistoryPage;
@@ -171,8 +172,8 @@ public class BatchProcessWorkflow extends MenuFlows{
 		page.processResendPinRequestBatch(batch);
 	}
 	
-	public String isValuePresentInTPINFile(File file, String value, Device device) {
-		return page.isValuePresentInTPINFile(file, value, device);
+	public String isValuePresentInTPINFile(File file, String value, Device device, ReissueTPINDownload reissueTPIN) {
+		return page.isValuePresentInTPINFile(file, value, device, reissueTPIN.getFileHeaderMap());
 	}
 	
 }

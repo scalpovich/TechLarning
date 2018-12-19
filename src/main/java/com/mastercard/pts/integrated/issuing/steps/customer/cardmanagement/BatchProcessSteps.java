@@ -40,6 +40,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PinG
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ReissueTPINDownload;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
@@ -327,15 +328,17 @@ public class BatchProcessSteps {
 	@Then("verify that the $dataField is present in the TPIN reissue DAT file")
 	public void isDevicePresentInDATFile(String dataField) {
 		Device device = context.get(ContextConstants.DEVICE);
+		ReissueTPINDownload reissueTPIN = ReissueTPINDownload.createWithProvider(provider);
 		assertThat("The device is not present in the file ", device.getDeviceNumber(), 
-				equalTo(batchProcessWorkflow.isValuePresentInTPINFile(batchFile, dataField, device)));
+				equalTo(batchProcessWorkflow.isValuePresentInTPINFile(batchFile, dataField, device, reissueTPIN)));
 	}
 	
 	@Then("verify that the $dataField is set to $fieldValue")
 	public void verifyDataFieldInTPINFile(@Named("dataField") String dataField, 
 			@Named("fieldValue") String fieldValue) {
 		Device device = context.get(ContextConstants.DEVICE);
+		ReissueTPINDownload reissueTPIN = ReissueTPINDownload.createWithProvider(provider);
 		assertThat("The data field " + dataField + "does not have the expected value " + fieldValue, fieldValue, 
-				equalTo(batchProcessWorkflow.isValuePresentInTPINFile(batchFile, dataField, device)));
+				equalTo(batchProcessWorkflow.isValuePresentInTPINFile(batchFile, dataField, device, reissueTPIN)));
 	}
 }

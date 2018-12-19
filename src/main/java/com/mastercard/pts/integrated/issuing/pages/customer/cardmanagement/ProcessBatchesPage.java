@@ -36,6 +36,7 @@ import com.mastercard.pts.integrated.issuing.domain.BatchType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ReissueTPINDownload;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ProductType;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.customer.navigation.CardManagementNav;
@@ -895,21 +896,26 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		submitAndVerifyBatch();
 	}
 	
-	public String isValuePresentInTPINFile(File file, String whatToFind, Device device) {
+	public String isValuePresentInTPINFile(File file, String whatToFind, 
+			Device device, Map<String, String> fileHeader) {
 		String value = null;
 		Scanner scnr = null;
+		Map<String, String> fileData = new HashMap<>();
 		try {
 			scnr = new Scanner(file);
 			while(scnr.hasNextLine()){
 				String line = scnr.nextLine();
 				if(line.contains(device.getDeviceNumber())){
-					logger.info("Data in DAT File : {}",line);
-					value = "";
-					break;
+					logger.info("Data in DAT File : {}" +line);
+					String [] temp = line.split("\\|");
+					for(int i = 0; i <temp.length; i++) {
+						fileData.put((String)fileHeader.get("field" +i), temp[i]);
+					}
+					value = fileData.get(whatToFind);
 				}
 			}
 		} catch(Exception e) {
-			logger.error("Error in getting data from file",  e);
+			 logger.error("Error in reading the line from DAT file",  e);
 		} finally {
 			if(scnr !=null)
 				scnr.close();
