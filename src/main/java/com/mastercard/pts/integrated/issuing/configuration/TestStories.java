@@ -1,9 +1,11 @@
 package com.mastercard.pts.integrated.issuing.configuration;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 import org.jbehave.core.embedder.Embedder;
@@ -16,6 +18,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import com.mastercard.pts.integrated.issuing.utils.CustomRallyReport;
 import com.mastercard.pts.integrated.issuing.utils.CustomUIStories;
+
 import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
 
 @RunWith(JUnitReportingRunner.class)
@@ -31,6 +34,18 @@ public class TestStories extends CustomUIStories {
         String storyName = System.getProperty("storyName", "*");
         String lookUpPath = String.format("**/stories/**/%s.story", storyName);
         URL codeLocation = CodeLocations.codeLocationFromClass(this.getClass());
+        Pattern storyNamePattern = Pattern.compile("\\S*\\s*,\\s*\\S*");
+		if(storyNamePattern.matcher(storyName).matches()){
+			List<String> paths = new ArrayList<>();
+			for(String singleStory : storyName.split("\\s*,\\s*")){
+				lookUpPath = String.format("**/stories/**/%s.story",singleStory);
+			List<String> path = new StoryFinder().findPaths(codeLocation, lookUpPath, "");
+			for(String story : path){
+				paths.add(story);
+			}
+			}
+			return paths;
+		}
 		return new StoryFinder().findPaths(codeLocation, lookUpPath, "");
     }
 

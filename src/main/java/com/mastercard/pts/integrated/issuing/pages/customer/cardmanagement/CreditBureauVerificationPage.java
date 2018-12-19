@@ -51,13 +51,13 @@ public class CreditBureauVerificationPage extends AbstractBasePage {
 		}
 	}
 	
-	public void switchToManualApprovalLink() {
+	public String switchToManualApproval() {
 		clickOnManualApprovalIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
 		switchToIframe(CREDIT_BUREAU_VERIFICATION_FRAME);
 		clickWhenClickable(okBtn);
 		SimulatorUtilities.wait(3000);
 		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
-		return;
+		return getSuccessMessage();
 	}
 	
 	public void clickOnManualApprovalIfBatchAvailableinTable(MCWebElement tableHandle, String text) {

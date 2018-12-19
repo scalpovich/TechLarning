@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 @Component
 public class Device {
-
+   
 	private static final String BRANCH = "BRANCH";
 	private static final String APPLICATION_TYPE = "APPLICATION_TYPE";
 	private static final String SUB_APPLICATION_TYPE = "SUB_APPLICATION_TYPE";
@@ -45,6 +45,7 @@ public class Device {
 	private static final String MEMBERSHIP_FEES = "MEMBERSHIP_FEES";
 	private static final String LATE_PAYMENT_FEE = "LATE_PAYMENT_FEE";
 	private static final String INTEREST_ON_PURCHASE = "INTEREST_ON_PURCHASE";
+	private static final String PHOTO_INDICATOR = "PHOTO_INDICATOR";
 	
 	private String currencyofTransfer;
 	private String currentTransPassword;
@@ -119,7 +120,9 @@ public class Device {
 	private String joiningFees;
 	private String membershipFees;
 	private String promotionPlanCode;
-	private String loanAccountNumber;
+	private String loanAccountNumber;  	
+  	private String mandatoryFieldValue;
+  	private String cardPackID;
   	
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
@@ -792,5 +795,21 @@ public class Device {
 
 	public void setLoanAccountNumber(String loanAccountNumber) {
 		this.loanAccountNumber = loanAccountNumber;
+	}
+	
+	public String getMandatoryFieldValue() {
+		return mandatoryFieldValue;
+	}
+
+	public void setMandatoryFieldValue(String mandatoryFieldValue) {
+		this.mandatoryFieldValue = mandatoryFieldValue;
+	}
+	
+	public String getCardPackID() {
+		return cardPackID;
+	}
+
+	public void setCardPackID(String cardPackID) {
+		this.cardPackID = cardPackID;
 	}
 }

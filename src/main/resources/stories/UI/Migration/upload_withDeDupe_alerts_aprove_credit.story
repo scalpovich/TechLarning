@@ -15,5 +15,12 @@ And User fills MCC Rules for credit product
 And User Primary Device fills New Program Retail Credit Card section for credit product for Mastercard
 And for Primary Device and New Client user fills Device Range section for credit product
 And user creates Application Upload Credit batch file with duplicate data and upload it on server for Individual for credit
-And Application Upload rejected due to missing Business Mandatory feild
-Then user logouts from customer portal
+And Application Upload rejected due to missing Business Mandatory field
+And user approves the credit application device for fileUpload
+And user processes close batch for new Application for FileUpload
+And user processes deviceGeneration batch for new Application for FileUpload
+And user searches for created application for fileUpload
+And credit processes pre-production batch using new Application for fileUpload in Bulk
+And All processes credit device production batch for fileUpload in Bulk
+Then For fileUpload when user search for new application on search screen for credit and validates the status as NORMAL
+And user logouts from customer portal

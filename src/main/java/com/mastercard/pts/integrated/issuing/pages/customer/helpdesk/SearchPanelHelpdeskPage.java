@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
@@ -27,6 +28,7 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Component
 public class SearchPanelHelpdeskPage extends AbstractBasePage {
 	
+	public static final String VIEW_GENERAL = "View General";
 	public static final String UPLOAD_EXPECTED_STATUS="NORMAL [0]";
 	public static final String STATUS_DEVICE_NOT_NORMAL="device status is not normal";
 	private static final Logger logger = LoggerFactory.getLogger(SearchPanelHelpdeskPage.class);
@@ -90,7 +92,10 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//tr[@class='headers']//span")
 	private MCWebElements headersTxt;
-
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[text()='Client Customer Id :']/../following-sibling::td[1]//*[@class='labeltextf']")
+	private MCWebElement clientCustomerID;
+	
 	public MCWebElement getEditBtn() {
 		return editBtn;
 	}
@@ -133,6 +138,18 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 		clickWhenClickable(searchBtn);
 		SimulatorUtilities.wait(4000);
 		return getCellTextByColumnName(Constants.TABLE_ROW_NUM, Constants.COLUMN_NAME);
+	}
+	
+	public Device getClientCustomerID(Device device, HelpDeskGeneral helpdeskgettersetter) {
+		searchNewDevice(helpdeskgettersetter.getProductType(), helpdeskgettersetter.getDeviceNumber());
+		viewFirstRecord();
+		SimulatorUtilities.wait(500);
+		runWithinPopup(VIEW_GENERAL, () -> {
+			logger.info(" Client Customer ID : {}", clientCustomerID.getText());
+			device.setMandatoryFieldValue(clientCustomerID.getText());
+			clickCloseButton();
+		});
+		return device;
 	}
 	
 	public void normalStatusCheckFileUploadInBulk(String productType,Map<String, Object>mapFileUpload) {

@@ -16,6 +16,9 @@ public class Constants {
 	public static final String Record_Cannot_Be_deleted = "Plan is attached to Device Range. Cannot delete record";
 	public static final String ADD_USER = "Add User";
 	public static final String ADD_LOYALTY_PROMOTION_MAPPING = "Add Loyalty Plan & Promotion Mapping";
+	
+	public static final String ADD_EVENT_BASED_LOYALTY_POINTS = "Add Event Based Loyalty Points";
+	
 	public static final String EDIT_PROGRAM_FRAME = "Edit Program";
 
 	public static final String EDIT_DEVICE_RANGE_FRAME = "Edit Device Range";
@@ -134,7 +137,7 @@ public class Constants {
 	public static String VIEW_TRANSACTION_TYPE_FRAME = "View Transaction Type";
 
 	public static String ADD_ADD_INSTITUTION_FRAME = "Add Institution";
-	
+
 	public static final String EDIT_INSTITUTION_FRAME = "Edit Institution";
 
 	public static String ADD_ACCOUNT_MASTER_FRAME = "Add Account Master";
@@ -348,7 +351,7 @@ public class Constants {
 	final public static String COMPARE_RETURN_OPERATION = "compare_return";
 
 	final public static String BOTH_PRIVILEGE_OPERATION = "both_privilege";
-	
+
 	final public static String BOTH = "Both";
 
 	final public static String DELETE_PRODUCTION_OPERATION = "delete_production";
@@ -443,15 +446,14 @@ public class Constants {
 	public static final String ADD_ACCOUNT_ROUTING_PLAN = "Add Account Range Routing";
 	public static final String ADD_LINK_API = "Add Link API to institution";
 	public static final String ADD_AGGREGATE_LOAD_LIMIT = "Add Aggregate Load Limits";
-	public static final String ADD_EASY_PAY_PLAN_RULE= "Add Easy Pay Plan Rule";
-	public static final String ADD_RULE= "Add Rules";
-	
+	public static final String ADD_EASY_PAY_PLAN_RULE = "Add Easy Pay Plan Rule";
+	public static final String ADD_RULE = "Add Rules";
+
 	public static final String ENV_DEMO = "demo";
 	public static final String ENV_STAGESA = "stageSA";
 
 	public static final String BLOCK_DEVICE = "Blocking the device";
 	public static final String UNBLOCK_DEVICE = "Unblocking the device";
-	
 
 	public static final String UPLOAD_PATH_CURR = "/home/dc-user/integrated/elt_bo/data/CURR_EXCHANGE_UPLOAD";
 	public static final String UPLOAD_PATH_CURR_STAGE = "/mptshome/STAGE2/integrated/elt_bo/data/CURR_EXCHANGE_UPLOAD";
@@ -461,14 +463,22 @@ public class Constants {
 	public static final String ASSIGN_SERVICE_CODE = "Assign Service Code";
 
 	public static final String ENV = "env";
-	public static final String MSR_SERVICE_CODE="101";
-	public static final String EMV_SERVICE_CODE="201";
+	public static final String MSR_SERVICE_CODE = "101";
+	public static final String EMV_SERVICE_CODE = "201";
 
-	public static final String PRIORITY_PASS_TEMPLATE ="Priority Pass ID [P]";
+	public static final String PRIORITY_PASS_TEMPLATE = "Priority Pass ID [P]";
 	public static final String DEVICE_TEMPLATE = "Device Template";
 	public static final String CARD_PACK_TEMPLATE = "Card Pack ID Template";
-	
+
 	public static final String PROGRAM = "Program";
+	public static final String REPLACE_DECLINE_MESSAGE_LOST = "Card Status is Lost with Capture Response";
+	public static final String REPLACE_DECLINE_MESSAGE_EXPIRED = "Card Status is Expired with Decline Response.";
+	public static final String REPLACE_DECLINE_MESSAGE_NOT_DELIVERED = "Device is not delivered..";
+	public static final String FRAME_STOPLIST_REQUEST = "220 - Stop list Device";
+	public static final String DEVICE_STOPLIST_REQ = "Stop list Device [220]";
+	public static final String INSTANT_REPLACE_DEVICE = "Instant Replacement Device [150]";
+	public static final String DEVICE_WITHDRAW_STOPLIST_REQ = "Withdraw Device from Stop-list [221]";
+
 	public static final String APP_REJECT_REPORT = "Application Reject Report";
 	
 	public static final String POINTS_EARNED = "pointsEarned";
@@ -481,4 +491,29 @@ public class Constants {
 	public static final String INSTITUTION_NUMBER_QUERY_END = "') from dual";
 	public static final String INSTITUTION_DATE = "INSTITUTION_DATE";
 	public static final String USER_INSTITUTION_SELECTED = "USER_INSTITUTION_SELECTED";
+	// batch processing
+	public static final String BATCH_TYPE_UPLOAD = "UPLOAD [U]";
+	public static final String BATCH_TYPE_DOWNLOAD = "DOWNLOAD [D]";
+
+	public static final String CLIENT_PHOTO_FLAT_FILE_DOWNLOAD_BATCH = "Client Photo/Flat File Download Batch [CLIENT_PHOTO_DOWNLOAD]";
+	public static final String CARDHOLDER_DUMP_BATCH = "Cardholder Dump [CARDHOLDER_DUMP]";
+
+	public static final String PRODUCT_TYPE_CREDIT = "Credit [C]";
+	public static final String EXTRACT_TYPE_FULL = "FULL [F]";
+
+	public static final String SUCCESS_STATUS = "SUCCESS [2]";
+	public static final String MCC_CODE_INVALID = "MCC_CODE_INVALID";
+	public static final String EVENT_POINTS ="EVENT_POINTS";
+	public static final String EVENT_POINTS_TO_BE_DEBITED ="EVENT_POINTS_TO_BE_DEBITED";
+	public static final String AUTO_REDEEM_MIN_AMT ="AUTO_REDEEM_MIN_AMT";
+	public static final String AUTO_REDEEM_DAY ="AUTO_REDEEM_DAY";
+	
+	public static final String QUERY_PROGRAM_DATA="INSERT into Sheet10(Product,ProgramType,ProgramCode,DevicePlan,Agency,BranchID, DeviceTechnology) VALUES('%pr','%pg','%pc','%dp','%dn','%st','%dty')";
+	public static final String QUERY_EXISTING_PROGRAM_DATA = "SELECT * from Sheet10 WHERE ProgramType like '"+System.getProperty("programType")+"%'";
+	public static final String GET_DEVICE_DETAILS = "SELECT * from Sheet10 WHERE ProgramType like '"+System.getProperty("programType")+"%' AND Status='Active' AND Sale<>'Y'";
+	public static final String GET_SOLD_DEVICE_DETAILS = "SELECT * from Sheet10 WHERE ProgramType like '"+System.getProperty("programType")+"%' AND Status='Active' AND Sale='Y'";
+	public static final String GET_EXISTING_DEVICE_DETAILS = "SELECT * from Sheet10 WHERE ProgramType like '"+System.getProperty("programType")+"%' AND Sale='Y'";
+
+	public static String TESTDATA = "TestData";
+
 }

@@ -70,6 +70,12 @@ public class RiskAnalysisPage extends AbstractBasePage {
 		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
 		clickProcessSelectedButton();
 	}
+	
+	public String processSelected() {
+		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
+		clickProcessSelectedButton();
+		return getSuccessMessage();
+	}
 
 	public List<String> allBatchNumberRetrieval() {
 		List<String> batchnumbers = new ArrayList<>();

@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.utils;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,6 +24,7 @@ import com.google.common.base.Throwables;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.GenericReport;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BatchProcessingReports;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionReports;
 
 @Component
@@ -97,6 +99,34 @@ public class PDFUtils {
 			throw Throwables.propagate(e);
 		}
 		return programWiseContent;
+	}
+	
+	public boolean isNumberPresentInContentRow(String pdfPath, BatchProcessingReports batchProcessingReports) {
+		String pageContent = "";
+		int pages = 0;
+		boolean flag = false;
+		String applicationNumber = batchProcessingReports.getApplicationNumber();
+		logger.info("Application Number:{}", applicationNumber);
+		try {
+			File file = new File(pdfPath);
+			file.getParentFile().mkdirs();
+			PdfReader pdfReader = manipulatePdf(pdfPath, batchProcessingReports.getPassword());
+			if (pdfReader != null)
+				pages = pdfReader.getNumberOfPages();
+			for (int i = 1; i <= pages; i++) {
+				pageContent = PdfTextExtractor.getTextFromPage(pdfReader, i);
+				logger.info("pageContent:{}", pageContent);
+				if (pageContent.contains(applicationNumber)) {
+					flag = true;
+				}
+
+			}
+		} catch (Exception e) {
+			logger.info("Failed to read pdf file ", e);
+
+		}
+		logger.info("Flag:{}", flag);
+		return flag;
 	}
 
 	public PdfReader manipulatePdf(String src, String username) {
@@ -190,13 +220,14 @@ public class PDFUtils {
 						map.put((i++).toString(), text);
 					}
 				}
-				pd.close();
+			pd.close();
 			}
-			document.close();
-		} catch (Exception e) {
+           document.close();
+		}catch(IOException e){
 			e.printStackTrace();
-		}
-		return map;
+			return null;
+		}	
+			return map;
 	}
 
 	

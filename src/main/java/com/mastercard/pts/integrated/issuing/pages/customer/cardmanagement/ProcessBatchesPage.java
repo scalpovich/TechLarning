@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
@@ -21,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 
 import com.google.common.base.Throwables;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
@@ -97,6 +100,15 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='privateField4']/select")
 	private MCWebElement interchangeTypeDDwn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='multiAccAdmStatus']/select")
+	private MCWebElement accountAdminStatusDDwn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='multiAccBalStatus']/select")
+	private MCWebElement accountBalanceStatusDDwn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='multiAccUnpStatus']/select")
+	private MCWebElement accountUnpaidStatusDDwn;
 
 	// Authorization dump specific locators start here
 
@@ -186,7 +198,8 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanel:inputPanel:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement binDDwn;
-	
+
+	// Parameters Added for CardHolder Dump
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class='yui-skin-sam']/..")
 	private MCWebElement businessDate;
 	
@@ -198,9 +211,36 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
 	private MCWebElement institutionDateTxt;
-
-	public final String SYSTEM_INTERNAL_PROCESSING = "SYSTEM INTERNAL PROCESSING [B]";
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='File Type']/../following-sibling::td[1]//span/select")
+	private MCWebElement fileTypeDDwn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Vendor Name']/../following-sibling::td[1]//span/select")
+	private MCWebElement vendorNameDDwn;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='processFileName']//span[@class='labeltextf']")
+	private MCWebElement processFileNameTxt;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='batchId']/span/span")
+	private MCWebElement txtBatchType;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='jobStartDttm']/span/span/span")
+	private MCWebElement txtStartDateForBatchJob;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='jobEndDttm']/span/span/span")
+	private MCWebElement txtEndDateForBatchJob;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='processFileName']/span/span")
+	private MCWebElement txtProcessFileName;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='executionMode']/span/span")
+	private MCWebElement txtExecutionMode;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='executionTime']/span/span")
+	private MCWebElement txtExecutionTime;
+	
+	public final String SYSTEM_INTERNAL_PROCESSING = "SYSTEM INTERNAL PROCESSING [B]";
+
 	private static final int NUMBER_OF_ATTEMPTS_TO_CHECK_SUCCESS_STATE=100;
 
 	private String reasonToReject = "";
@@ -212,7 +252,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	private final String successStatus = "SUCCESS [2]";
 	
 	private static final String  POST_MAINTENANCE_FEE_BATCH = "Post Maintenance Fee Batch [POST_MAINTENANCE_FEE]";
-
+	
 	public void selectBatchType(String option) {
 		selectByVisibleText(batchTypeDDwn, option);
 	}
@@ -513,7 +553,17 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	public void processAccountsDownloadBatch(ProcessBatches batch) {
 		selectAccountDumpAndCHDump(batch);
-		submitAndVerifyBatch();
+		SimulatorUtilities.wait(500);// this delay is to load data for Balance type
+		if (batch.getAccountAdminStatus() != null) {
+			WebElementUtils.selectDropDownByVisibleText(accountAdminStatusDDwn, batch.getAccountAdminStatus());
+		}
+		if (batch.getAccountBalanceStatus() != null) {
+			WebElementUtils.selectDropDownByVisibleText(accountBalanceStatusDDwn, batch.getAccountBalanceStatus());
+		}
+		if (batch.getAccountUnpaidStatus() != null) {
+			WebElementUtils.selectDropDownByVisibleText(accountUnpaidStatusDDwn, batch.getAccountUnpaidStatus());
+		}
+		submitAndVerifyBatchDetails();
 	}
 
 	public void processKYCDownloadBatch(ProcessBatches batch) {
@@ -534,6 +584,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			waitForBatchStatus();
 			batchStatus = batchStatusTxt.getText();
 			jobID = processBatchjobIDTxt.getText();
+			context.put(ContextConstants.DAT_FILE_NAME, processFileNameTxt.getText());
 			try{
 			clickCloseButton();
 			}
@@ -541,7 +592,40 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			{
 				clickCloseButton();
 			}
+			SimulatorUtilities.wait(1000);
 		});
+	}
+	
+	public void submitAndVerifyBatchDetails() {
+		clickSubmitBtn();
+		clickWhenClickable(statusBtn);
+		runWithinPopup("View Batch Details", () -> {
+			logger.info("Retrieving batch status");
+			waitForBatchStatus();
+			SimulatorUtilities.wait(5000);
+			for (String fieldValue : getBatchDetailsValidationFields()) {
+				if (!(fieldValue.contains("-"))) {
+					logger.info("{} is validated.", fieldValue);
+				}
+				else{
+					Assert.assertTrue("present field value is not correct.", false);
+				}
+			}
+			clickCloseButton();
+		});
+	}
+	
+	public List<String> getBatchDetailsValidationFields(){
+		List<String> fieldValues = new ArrayList<String>();
+		fieldValues.add(txtBatchType.getText());
+		fieldValues.add(txtStartDateForBatchJob.getText());
+		fieldValues.add(txtEndDateForBatchJob.getText());
+		fieldValues.add(txtProcessFileName.getText());
+		fieldValues.add(txtExecutionTime.getText());
+		fieldValues.add(txtExecutionMode.getText());
+		fieldValues.add(batchStatusTxt.getText());
+		fieldValues.add(processBatchjobIDTxt.getText());
+		return fieldValues;
 	}
 	
 	public void submitAndVerifyBaseIIBatch() {
@@ -748,5 +832,45 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 		submitAndVerifyBatch();
 		return batchStatus;
+	}
+	
+	public String processCarrierDownloadBatch(ProcessBatches batch) {
+		logger.info("Process Carrier Download Batch: {}", batch.getBatchName());
+		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, batch.getBatchType());
+		doSelectByVisibleText(batchNameDDwn, batch.getBatchName());
+		SimulatorUtilities.wait(5000);
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+		doSelectByVisibleText(fileTypeDDwn, batch.getFileType());
+		SimulatorUtilities.wait(5000);
+		WebElementUtils.selectDropDownByVisibleText(vendorNameDDwn, batch.getVendorName());
+		submitAndVerifyBatch();
+		return batchStatus;
+	}
+
+	
+	public void processDownloadBatch(String batchType, String batchName)
+	{
+		selectByVisibleText(batchTypeDdwn, "DOWNLOAD [D]");
+		if(batchName.equalsIgnoreCase("CLIENT_PHOTO_BATCH"))
+			selectByVisibleText(batchNameDdwn, Constants.CLIENT_PHOTO_FLAT_FILE_DOWNLOAD_BATCH);
+		else
+		{
+			if(batchName.equalsIgnoreCase("CardholderDump"))
+				selectByVisibleText(batchNameDdwn, Constants.CARDHOLDER_DUMP_BATCH);
+		}
+		SimulatorUtilities.wait(2000);
+		selectByVisibleText(productTypeDDwn, context.get(ConstantData.PRODUCT_IDENTITY));
+		selectByVisibleText(extractTypeDrpDwn, Constants.EXTRACT_TYPE_FULL);
+		WebElementUtils.pickDate(fromDateAuth, LocalDate.now().minusDays(1));
+		WebElementUtils.pickDate(toDateAuth, LocalDate.now());
+		WebElementUtils.enterText(cardHolderKycFromDateHHTxtBx, "00");
+		WebElementUtils.enterText(cardHolderKycFromDateMMTxtBx, "00");
+		WebElementUtils.enterText(cardHolderKycToDateHHTxtBx, "23");
+		WebElementUtils.enterText(cardHolderKycToDateMMTxtBx, "00");
+		clickSubmitBtn();
+		context.put(ContextConstants.JOB_ID, jobIDNumber.getText());
+		SimulatorUtilities.wait(3000);
+		
+		
 	}
 }

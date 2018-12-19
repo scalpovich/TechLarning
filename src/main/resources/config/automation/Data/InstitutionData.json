@@ -30,7 +30,10 @@
    "creditPlan":"TA5931RPHJ [101]",
    "billingCycle":"AUTOMATION [128]",
    "walletPlan":"AUTOMATION [TA6164QTOL]",
-   "loyaltyPlan" : "Automation Test [AUTO]"
+   "loyaltyPlan" : "Automation Test [AUTO]",
+   "devicePlan" : "",
+   "walletFeePlan" : "",
+   "programCode" : ""
    },
    {
    "productIdentity":"Credit",
@@ -63,8 +66,11 @@
    "transactionPlan":"AUTOMATION [T1157Z]",
    "creditPlan":"TA5931RPHJ [101]",
    "billingCycle":"AUTOMATION [128]",
-   "walletPlan": "AUTOMATION [TA1387LADE]"
-   "loyaltyPlan" : "Automation Test [AUTO]"
+   "walletPlan": "AUTOMATION [TA1387LADE]",
+   "loyaltyPlan" : "Automation Test [AUTO]",
+   "devicePlan" : "",
+   "walletFeePlan" : "",
+   "programCode" : ""
    },
    {
    "productIdentity":"Prepaid",
@@ -98,7 +104,10 @@
    "billingCycle":"AUTOMATION [128]",
    "transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
    "walletPlan": "AUTOMATION [TA6164QTOL]",
-   "loyaltyPlan" : "Automation Test [AUTO]"
+   "loyaltyPlan" : "Automation Test [AUTO]",
+   "devicePlan" : "",
+   "walletFeePlan" : "",
+   "programCode" : ""
    }
   ]
 }

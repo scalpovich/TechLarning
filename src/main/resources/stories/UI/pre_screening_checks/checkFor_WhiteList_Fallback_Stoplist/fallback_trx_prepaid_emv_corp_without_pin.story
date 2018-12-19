@@ -17,8 +17,9 @@ And User fills MCC Rules for prepaid product
 And User fills Program section for prepaid product
 And User fills Business Mandatory Fields Screen for prepaid product
 And User fills Device Range section for prepaid product
+And user creates new device of prepaid type for new client
 And user assigns service code to program
-Then user creates new device of prepaid type for new client
+Then user sign out from customer portal
 
 Scenario: prepaid emv corporate travel card device production
 Given user is logged in institution
@@ -28,7 +29,7 @@ And processes device production batch for prepaid
 And user has wallet number information for prepaid device
 And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
-And device has "normal" status
+And device has "NOT ACTIVATED CARD" status
 And user activates device through helpdesk
 And embossing file batch was generated in correct format
 Then user sign out from customer portal
