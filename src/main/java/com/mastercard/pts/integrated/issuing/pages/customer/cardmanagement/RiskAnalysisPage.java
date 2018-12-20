@@ -56,7 +56,7 @@ public class RiskAnalysisPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview")
 	private MCWebElement searchTable;
 
-	int retryLimit = 20;
+	private int retryLimit = 20;
 
 	public void riskAnalysisBatchProcess() {
 		if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER)) && --retryLimit > 0) {

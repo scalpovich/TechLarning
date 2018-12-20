@@ -159,8 +159,7 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 		context.put(CreditConstants.ALL_BATCH_NUMBERS_PREPRODUCTION, batchNumbersForPreProduction);
 	}
 	
-	public boolean verifyApplicationApplicationStatusIsReject(){
-		Device device=context.get(CreditConstants.APPLICATION);
+	public boolean verifyApplicationApplicationStatusIsReject(Device device){
 		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
 		WebElementUtils.pickDate(fromDate, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toDate, LocalDate.now());		
@@ -169,8 +168,7 @@ public class SearchApplicationDetailsPage extends SearchApplicationDetails{
 		return isElementPresent(txtRejectStatus);
 	}
 	
-	public boolean verifyApplicationApplicationStatusIsRefer(){
-		Device device=context.get(CreditConstants.APPLICATION);
+	public boolean verifyApplicationApplicationStatusIsRefer(Device device){
 		WebElementUtils.enterText(applicationNumberTxt, device.getApplicationNumber());
 		WebElementUtils.pickDate(fromDate, LocalDate.now().minusDays(1));
 		WebElementUtils.pickDate(toDate, LocalDate.now());		

@@ -36,7 +36,7 @@ public class ApplicationScoringPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview")
 	private MCWebElement searchTable;
 
-	int retryLimit = 20;
+	private int retryLimit = 20;
 	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
@@ -44,7 +44,7 @@ public class ApplicationScoringPage extends AbstractBasePage {
 	}
 
 	public void processAllApplicationScoring() {
-		if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER))&& retryLimit-- > 0) {
+		if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER))&& --retryLimit > 0) {
 			clickWhenClickable(btnApplicationScoring);
 			processAllApplicationScoring();
 		}

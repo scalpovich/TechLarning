@@ -31,7 +31,7 @@ public class ApprovalScoreWorkFlow {
 		approvalScorePage.addApproverScorePlan();
 		approvalScorePage.addMandatoryLabelsAndFields();
 		approvalScorePage.selectProgram();
-		approvalScorePage.selectAction(2);
+		approvalScorePage.selectAction(2);		//for reject action
 		approvalScorePage.enterStartRangeValue();
 		approvalScorePage.enterReducedEndRangeValue();
 		approvalScorePage.settingMandatoryValuesWithLabels();

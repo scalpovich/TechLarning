@@ -113,12 +113,7 @@ public class CloseBatchPage extends AbstractBasePage {
 		SimulatorUtilities.wait(2000);
 		clickWhenClickable(btnProcessSelected);
 		try {
-			if (btnConfirmMsg.isEnabled() && btnConfirmMsg.isVisible()) {
-				switchToIframe("Confirmation Message");
-				clickWhenClickable(noBtn);
-				SimulatorUtilities.wait(5000);
-				
-			}
+			clickNoBtnIfConfirmBoxAppeared();
 			verifyOperationStatus();
 		} catch (Exception e) {
 			e.getMessage();

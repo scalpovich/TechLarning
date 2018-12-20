@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SearchApplicationDetails;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.SearchApplicationDetailsPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
@@ -42,13 +43,13 @@ public class SearchApplicationDetailsFlows {
 		
 	}
 	
-	public boolean verifyApplicationIsRejected(){
+	public boolean verifyApplicationIsRejected(Device device){
 		searchPage = navigator.navigateToPage(SearchApplicationDetailsPage.class);
-		return searchPage.verifyApplicationApplicationStatusIsReject();
+		return searchPage.verifyApplicationApplicationStatusIsReject(device);
 	}
 	
-	public boolean verifyApplicationIsRefered(){
+	public boolean verifyApplicationIsRefered(Device device){
 		searchPage = navigator.navigateToPage(SearchApplicationDetailsPage.class);
-		return searchPage.verifyApplicationApplicationStatusIsRefer();
+		return searchPage.verifyApplicationApplicationStatusIsRefer(device);
 	}
 }

@@ -6,10 +6,16 @@ import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.SearchApplicationDetailsFlows;
 
 @Component
 public class SearchApplicationSteps {
+	
+	@Autowired
+	TestContext context;
 	
 	@Autowired
 	SearchApplicationDetailsFlows searchApplicationDetailsFlows;
@@ -25,18 +31,22 @@ public class SearchApplicationSteps {
 		searchApplicationDetailsFlows.searchApplicationDetailsForFileUpload();
 	}
 	
-	@Then("application status appeared as rejected on search application screen")
-	public void thenApplicationStatusAppearedRejected(){
-		Assert.assertTrue("Application status not appeared as rejected", searchApplicationDetailsFlows.verifyApplicationIsRejected());
-	}
-	
-	@Then("application status not appeared as rejected on search application screen")
-	public void thenApplicationStatusNotAppearedRejected(){
-		Assert.assertFalse("Application status appeared as rejected", searchApplicationDetailsFlows.verifyApplicationIsRejected());
-	}
-	
-	@Then("application status appeared as refered on search application screen")
-	public void thenApplicationStatusAppearedRefered(){
-		Assert.assertTrue("Application status not appeared as rejected", searchApplicationDetailsFlows.verifyApplicationIsRefered());
+	@Then("application status $appeared as $status on search application screen")
+	public void thenApplicationStatusAppearedRejected(String appeared, String status){
+		Device device = context.get(CreditConstants.APPLICATION);
+		
+		if ("rejected".equalsIgnoreCase(status)) {
+
+			if ("appeared".equalsIgnoreCase(appeared)) {
+				Assert.assertTrue(
+						"Application status not appeared as rejected",
+						searchApplicationDetailsFlows.verifyApplicationIsRejected(device));
+			} else {
+				Assert.assertFalse("Application status appeared as rejected",
+						searchApplicationDetailsFlows.verifyApplicationIsRejected(device));
+			}
+		} else if ("refered".equalsIgnoreCase(status)) {
+			Assert.assertTrue("Application status not appeared as rejected", searchApplicationDetailsFlows.verifyApplicationIsRefered(device));
+		}
 	}
 }
