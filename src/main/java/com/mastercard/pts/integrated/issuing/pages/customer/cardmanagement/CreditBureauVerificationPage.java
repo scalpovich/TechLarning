@@ -1,9 +1,5 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
-import java.util.List;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,8 +22,8 @@ public class CreditBureauVerificationPage extends AbstractBasePage {
 	
 	private static final String CREDIT_BUREAU_VERIFICATION_FRAME = "Edit ";
 
-	 @Autowired
-	 TestContext context;
+	@Autowired
+	TestContext context;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Process All']")
 	private MCWebElement processAllBtn;
@@ -52,33 +48,11 @@ public class CreditBureauVerificationPage extends AbstractBasePage {
 	}
 	
 	public String switchToManualApproval() {
-		clickOnManualApprovalIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
+		clickWhenClickable(manualApprovalLink);
 		switchToIframe(CREDIT_BUREAU_VERIFICATION_FRAME);
 		clickWhenClickable(okBtn);
 		SimulatorUtilities.wait(3000);
 		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
 		return getSuccessMessage();
-	}
-	
-	public void clickOnManualApprovalIfBatchAvailableinTable(MCWebElement tableHandle, String text) {
-		WebElement table = asWebElement(tableHandle);
-		List<WebElement> rowstable = table.findElements(By.tagName("tr"));
-		int rowscount = rowstable.size();
-		outerloop:
-		for (int row = 1; row < rowscount; row++) {
-			List<WebElement> columnsrow = rowstable.get(row).findElements(By.tagName("td"));
-			int columnscount = columnsrow.size();
-			for (int col = 0; col < columnscount; col++) {
-				if (columnsrow.get(col).getText().equals(text)) {
-					WebElement checkBox = columnsrow.get(columnscount - 1).findElement(By.xpath("//img[@alt='Edit Record']"));
-					if (checkBox.isEnabled() && !checkBox.isSelected()) {
-						checkBox.click();
-					}
-
-				}
-				break outerloop;
-
-			}
-		}
 	}
 }

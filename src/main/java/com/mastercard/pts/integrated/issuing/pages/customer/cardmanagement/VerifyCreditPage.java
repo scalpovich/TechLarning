@@ -92,7 +92,6 @@ TestContext context;
 		runWithinPopup("Edit Application", () ->{					
 			clickWhenClickable(verifyBtn);
 		});		
-		SimulatorUtilities.wait(10000);
 		verifyOperationStatus();
 		return getCodeFromInfoMessage("Application Number");
 	}	

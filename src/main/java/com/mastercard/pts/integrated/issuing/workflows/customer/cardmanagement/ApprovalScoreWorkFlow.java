@@ -39,9 +39,9 @@ public class ApprovalScoreWorkFlow {
 		approvalScorePage.saveButtonClick();
 		return approvalScorePage.successMessageDisplay();
 	}
-	public void userVerifiesAndEditsNewApprovalScore()
-	{
-	approvalScorePage.verifyUiOperationStatus();
+	
+	public void userVerifiesAndEditsNewApprovalScore() {
+		approvalScorePage.verifyUiOperationStatus();
 	}
 	
 	public boolean userAddsNewApprovalScore(String type) {

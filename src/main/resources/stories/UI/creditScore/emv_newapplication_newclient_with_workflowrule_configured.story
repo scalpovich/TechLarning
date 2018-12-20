@@ -6,7 +6,7 @@ I want to assert pages
 Meta:
 @StoryName credit_emv_retail
 
-Scenario: 1.0 To verify application should be 'Referred' for score range is within Auto approval range and caught in Risk
+Scenario: 1.1 To verify application should be 'Referred' for score range is within Auto approval range and caught in Risk
 Meta:
 @TC858241
 Given setting json values in excel for Credit
@@ -30,7 +30,7 @@ When user processesAll applicationScoring batch for new Application
 When user refer the credit application device
 Then user processes deviceGeneration batch for new Application
 
-Scenario: 2.0 To verify credit application is boarded successfully when WF rule is configured for Application Score with the set value within auto approval range.
+Scenario: 1.2 To verify credit application is boarded successfully when WF rule is configured for Application Score with the set value within auto approval range.
 Meta:
 @TC858242
 Given setting json values in excel for Credit
@@ -55,7 +55,7 @@ When credit processes deviceproduction batch using new Application
 When new Application processes pin generation batch for credit
 Then User search for new application on search screen for credit and validates the status as NORMAL
 
-Scenario: 3.0 To verify credit application is Rejected when Work Flow rule is configured for Application Score with the set value within auto Reject range.
+Scenario: 1.3 To verify credit application is Rejected when Work Flow rule is configured for Application Score with the set value within auto Reject range.
 Meta:
 @TC858243
 Given setting json values in excel for Credit
@@ -75,7 +75,7 @@ When user processes close batch for new Application
 When user processesAll applicationScoring batch for new Application
 Then application status appeared as rejected on search application screen
 
-Scenario: 4.0 To verify credit application is Referred when Work Flow rule is configured for Application Score with the set value within auto Referred range.
+Scenario: 1.4 To verify credit application is Referred when Work Flow rule is configured for Application Score with the set value within auto Referred range.
 Meta:
 @TC858244
 Given setting json values in excel for Credit
@@ -95,7 +95,7 @@ When user processes close batch for new Application
 When user processesAll applicationScoring batch for new Application
 Then application status appeared as refered on search application screen
 
-Scenario: 5.0 To verify credit application is Referred when Work Flow rule is configured for Application Score with the set value is falls outside the upper limit of any score setup(Refer, Reject/Approve).
+Scenario: 1.5 To verify credit application is Referred when Work Flow rule is configured for Application Score with the set value is falls outside the upper limit of any score setup(Refer, Reject/Approve).
 Meta:
 @TC858245
 Given setting json values in excel for Credit

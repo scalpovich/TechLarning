@@ -135,7 +135,7 @@ public class SearchPanelHelpdeskPage extends AbstractBasePage {
 		waitForElementVisible(this.deviceNumber);
 		enterText(this.deviceNumber, deviceNumber);
 		waitForElementVisible(searchBtn);
-		clickWhenClickable(searchBtn);
+		searchBtn.click();
 		SimulatorUtilities.wait(4000);
 		return getCellTextByColumnName(Constants.TABLE_ROW_NUM, Constants.COLUMN_NAME);
 	}

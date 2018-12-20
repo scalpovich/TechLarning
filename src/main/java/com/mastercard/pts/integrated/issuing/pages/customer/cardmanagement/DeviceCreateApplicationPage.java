@@ -301,13 +301,13 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			selectByVisibleText(openBatchDDwn, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
 			device.setBatchNumber(context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
 		}else{
-		WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
-		clickWhenClickable(generateDeviceBatchBtn);
-		waitForWicket();
+			WebElementUtils.selectDropDownByVisibleText(createOpenBatchDDwn, device.getCreateOpenBatch());
+			clickWhenClickable(generateDeviceBatchBtn);
+			waitForWicket();
 			SimulatorUtilities.wait(30000);
-		context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());		
-		device.setBatchNumber(batchNumberTxt.getText());
-		logger.info(" *********** Batch number *********** : {}",device.getBatchNumber());		
+			context.put(CreditConstants.PRIMARY_BATCH_NUMBER, batchNumberTxt.getText());		
+			device.setBatchNumber(batchNumberTxt.getText());
+			logger.info(" *********** Batch number *********** : {}",device.getBatchNumber());		
 		}
 		clickNextButton();
 	}
@@ -328,12 +328,13 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			waitForWicket(driver());
 			SimulatorUtilities.wait(10000);
 		}else{
-			selectByVisibleText(customerTypeDDwn, device.getCustomerType());          
+			selectByVisibleText(customerTypeDDwn, device.getCustomerType());
+			SimulatorUtilities.wait(8000);
 			waitForWicket(driver());
 			selectByVisibleText(programCodeDDwn, device.getProgramCode());
-			SimulatorUtilities.wait(10000);			
+			SimulatorUtilities.wait(5000);			
 		}
-		SimulatorUtilities.wait(8000);
+		SimulatorUtilities.wait(1000);
 		clickNextButton();
 		waitForWicket(driver());
 		waitForElementVisible(deviceType1DDwn);
@@ -450,7 +451,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			WebElementUtils.enterText(registeredMailIdTxt, client.getDedupeEmailId());
 		}
 		else{
-		WebElementUtils.enterText(firstNameTxt, client.getFirstName());
+			WebElementUtils.enterText(firstNameTxt, client.getFirstName());
 			WebElementUtils.enterText(lastNameTxt, client.getLastName());
 			WebElementUtils.pickDate(birthDateDPkr, client.getBirthDate());
 			WebElementUtils.enterText(registeredMailIdTxt, client.getEmailId());

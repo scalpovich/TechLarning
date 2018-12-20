@@ -26,7 +26,6 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
@@ -344,7 +343,6 @@ public abstract class AbstractBasePage extends AbstractPage {
 		clickWhenClickable(nextBtn);
 		SimulatorUtilities.wait(500);
 	}
-	
 
 	protected void clickAddNewButton() {
 		clickWhenClickable(addNewBtn);
@@ -1919,15 +1917,15 @@ public abstract class AbstractBasePage extends AbstractPage {
 			for (int col = 0; col < columnscount; col++) {
 				if (columnsrow.get(col).getText().equals(text)) {
 					List<WebElement> editAndDeleteIcon = rowstable.get(row).findElements(By.tagName("img"));
-						for (int icon = 0; icon < editAndDeleteIcon.size(); icon++) {
-							if (editAndDeleteIcon.get(icon).getAttribute("alt").contains("Delete")) {
-								editAndDeleteIcon.get(icon).click();
-								SimulatorUtilities.wait(2000);
-								Alert alert = driver().switchTo().alert();
-								alert.accept();
-								break outerloop;
-							}
+					for (int icon = 0; icon < editAndDeleteIcon.size(); icon++) {
+						if (editAndDeleteIcon.get(icon).getAttribute("alt").contains("Delete")) {
+							editAndDeleteIcon.get(icon).click();
+							SimulatorUtilities.wait(2000);
+							Alert alert = driver().switchTo().alert();
+							alert.accept();
+							break outerloop;
 						}
+					}
 				}
 			}
 		}
@@ -1941,10 +1939,8 @@ public abstract class AbstractBasePage extends AbstractPage {
 			List<WebElement> columnsrow = rowstable.get(row).findElements(By.tagName("td"));
 			int columnscount = columnsrow.size();
 			for (int col = 0; col < columnscount; col++) {
-				if (columnsrow.get(col).getText().trim().equals(text.trim())) {
-					logger.info("Matched");
+				if (columnsrow.get(col).getText().equals(text)) {
 					WebElement checkBox = columnsrow.get(columnscount - 1).findElement(By.cssSelector("input[type=checkbox]"));
-					logger.info("CheckBox Value:-{}",checkBox);
 					if (checkBox.isEnabled() && !checkBox.isSelected()) {
 						checkBox.click();
 						break;
