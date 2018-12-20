@@ -1394,6 +1394,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		creditLimit = new BigDecimal(availAccountCreditLimitLabel.getText());
 		logger.info("Credit limit noted down : {} ", creditLimit);
 		clickEndCall();
+		SimulatorUtilities.wait(8000);
 		return creditLimit;
 	}
 	
