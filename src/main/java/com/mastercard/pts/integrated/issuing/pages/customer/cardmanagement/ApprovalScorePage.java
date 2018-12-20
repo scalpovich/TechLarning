@@ -33,8 +33,10 @@ public class ApprovalScorePage extends AbstractBasePage {
     private static final String APPROVE_START_RANGE_VALUE="100";
     
     private static final String APPROVE_END_RANGE_VALUE="2000";
+    
     private static final String REDUCED_APPROVE_END_RANGE_VALUE="1000";
-	private static final Logger logger = LoggerFactory.getLogger(ApprovalScorePage.class);
+	
+    private static final Logger logger = LoggerFactory.getLogger(ApprovalScorePage.class);
     
 	@PageElement(findBy = FindBy.NAME, valueToFind = "prodCode:input:dropdowncomponent")
 	private MCWebElement programDDwn;

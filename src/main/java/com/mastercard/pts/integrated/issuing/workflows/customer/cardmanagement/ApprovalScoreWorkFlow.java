@@ -26,8 +26,7 @@ public class ApprovalScoreWorkFlow {
 		return approvalScorePage.successMessageDisplay();
 	}
 	
-	public boolean userAddsNewApprovalScoreWithLessEndRangeForAutoReject()
-	{
+	public boolean userAddsNewApprovalScoreWithLessEndRangeForAutoReject() {
 		approvalScorePage = navigator.navigateToPage(ApprovalScorePage.class);
 		approvalScorePage.addApproverScorePlan();
 		approvalScorePage.addMandatoryLabelsAndFields();

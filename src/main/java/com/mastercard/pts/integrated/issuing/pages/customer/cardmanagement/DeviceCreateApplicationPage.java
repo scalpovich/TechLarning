@@ -179,7 +179,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
   	@PageElement(findBy = FindBy.NAME, valueToFind = "view:applicationBatch.openedBatches:input:dropdowncomponent")  													  
 	private MCWebElement openBatchDDwn;
   	
-  	 @PageElement(findBy = FindBy.NAME, valueToFind = "view:existingDeviceNumber:input:inputTextField")
+  	@PageElement(findBy = FindBy.NAME, valueToFind = "view:existingDeviceNumber:input:inputTextField")
  	private MCWebElement existingDeviceNumberTxt;
  	 	
  	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Existing Client Code')]")
@@ -328,7 +328,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			waitForWicket(driver());
 			SimulatorUtilities.wait(10000);
 		}else{
-			selectByVisibleText(customerTypeDDwn, device.getCustomerType());
+			selectByVisibleText(customerTypeDDwn, device.getCustomerType()); 
 			SimulatorUtilities.wait(8000);
 			waitForWicket(driver());
 			selectByVisibleText(programCodeDDwn, device.getProgramCode());

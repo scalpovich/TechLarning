@@ -44,7 +44,6 @@ public class ApplicationScoringPage extends AbstractBasePage {
 	}
 
 	public void processAllApplicationScoring() {
-		
 		if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER))&& retryLimit-- > 0) {
 			clickWhenClickable(btnApplicationScoring);
 			processAllApplicationScoring();
