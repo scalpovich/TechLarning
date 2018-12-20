@@ -909,7 +909,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 					logger.info("Data in DAT File : {}" +line);
 					String [] temp = line.split("\\|");
 					for(int i = 0; i <temp.length; i++) {
-						fileData.put((String)fileHeader.get("field" +i), temp[i]);
+						fileData.put(fileHeader.get("field" +i), temp[i]);
 					}
 					value = fileData.get(whatToFind);
 				}

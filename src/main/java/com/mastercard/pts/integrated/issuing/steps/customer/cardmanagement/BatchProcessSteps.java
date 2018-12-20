@@ -325,18 +325,13 @@ public class BatchProcessSteps {
 				tempDirectory.toString(), ConstantData.REISSUE_TPIN_DIRECTORY,"proc");
 	}
 	
-	@Then("verify that the $dataField is present in the TPIN reissue DAT file")
-	public void isDevicePresentInDATFile(String dataField) {
-		Device device = context.get(ContextConstants.DEVICE);
-		ReissueTPINDownload reissueTPIN = ReissueTPINDownload.createWithProvider(provider);
-		assertThat("The device is not present in the file ", device.getDeviceNumber(), 
-				equalTo(batchProcessWorkflow.isValuePresentInTPINFile(batchFile, dataField, device, reissueTPIN)));
-	}
-	
-	@Then("verify that the $dataField is set to $fieldValue")
+	@Then("verify that the $dataField field is set to $fieldValue in the TPIN reissue DAT file")
 	public void verifyDataFieldInTPINFile(@Named("dataField") String dataField, 
 			@Named("fieldValue") String fieldValue) {
 		Device device = context.get(ContextConstants.DEVICE);
+		if (fieldValue.contains("device")) {
+			fieldValue = device.getDeviceNumber();
+		}
 		ReissueTPINDownload reissueTPIN = ReissueTPINDownload.createWithProvider(provider);
 		assertThat("The data field " + dataField + "does not have the expected value " + fieldValue, fieldValue, 
 				equalTo(batchProcessWorkflow.isValuePresentInTPINFile(batchFile, dataField, device, reissueTPIN)));

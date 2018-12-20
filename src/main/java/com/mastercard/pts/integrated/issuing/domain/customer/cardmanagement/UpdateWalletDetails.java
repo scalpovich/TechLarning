@@ -6,7 +6,6 @@ public class UpdateWalletDetails {
 	private String walletNumber;
 	private String adminStatus;
 	
-	
 	public static UpdateWalletDetails createWithProvider(){
 		return  new UpdateWalletDetails();
 	}
