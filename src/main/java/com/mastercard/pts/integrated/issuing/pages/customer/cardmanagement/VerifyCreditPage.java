@@ -91,7 +91,7 @@ TestContext context;
 		
 		runWithinPopup("Edit Application", () ->{					
 			clickWhenClickable(verifyBtn);
-		});
+		});		
 		
 		verifyOperationStatus();
 		return getCodeFromInfoMessage("Application Number");
