@@ -34,6 +34,6 @@ public class ApprovalScoreSteps {
 	@When("User adds Approval Score on program with less end range for auto reject")
 	@Then("User adds Approval Score on program with less end range for auto reject")
 	public void userAddsAApprovalScoreForOutsideRange() {
-		Assert.assertTrue("ApprovalScore is not added", approvalScoreWorkFlow.userAddsNewApprovalScoreWithLessEndRangeForAutoReject());
+		Assert.assertTrue("Approval Score is not added", approvalScoreWorkFlow.userAddsNewApprovalScoreWithLessEndRangeForAutoReject());
 	}
 }

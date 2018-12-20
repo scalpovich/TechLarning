@@ -317,9 +317,6 @@ public abstract class AbstractBasePage extends AbstractPage {
     @PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='No']")
 	private MCWebElement noBtn;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//h3[text()= 'Confirmation Message']/ancestor::div//iframe")
-	private MCWebElement btnConfirmMsg;
-    
     int retryCounter =0;
 	
 	@Autowired
@@ -341,6 +338,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	protected void clickProcessAllButton() {
 		clickWhenClickable(processAll);
+	}
+	
+	protected void clickNoButton(){
+		clickWhenClickable(noBtn);
 	}
 
 	protected void clickNextButton() {
@@ -2044,13 +2045,4 @@ public abstract class AbstractBasePage extends AbstractPage {
         	throw new ElementNotFoundException("Element with label " + label + " not found!");
         }       
    }
-	
-	public void clickNoBtnIfConfirmBoxAppeared(){
-		if (btnConfirmMsg.isEnabled() && btnConfirmMsg.isVisible()) {
-			switchToIframe("Confirmation Message");
-			clickWhenClickable(noBtn);
-			SimulatorUtilities.wait(5000);
-			
-		}
-	}
 }

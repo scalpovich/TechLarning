@@ -66,8 +66,6 @@ public class CloseBatchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Yes']")
 	private MCWebElement btnYes;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='No']")
-	private MCWebElement noBtn;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//h3[text()= 'Confirmation Message']/ancestor::div//iframe")
 	private MCWebElement btnConfirmMsg;
@@ -113,7 +111,12 @@ public class CloseBatchPage extends AbstractBasePage {
 		SimulatorUtilities.wait(2000);
 		clickWhenClickable(btnProcessSelected);
 		try {
-			clickNoBtnIfConfirmBoxAppeared();
+			if (btnConfirmMsg.isEnabled() && btnConfirmMsg.isVisible()) {
+				switchToIframe("Confirmation Message");
+				clickNoButton();
+				SimulatorUtilities.wait(5000);
+				
+			}
 			verifyOperationStatus();
 		} catch (Exception e) {
 			e.getMessage();
