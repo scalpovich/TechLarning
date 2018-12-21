@@ -240,12 +240,12 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	}
 	
 	public String getTransactionFee(){
-		List<String> fieldsForAssertion = new ArrayList<>();
+		StringBuilder str = new StringBuilder();
 		viewFirstRecord();
 		runWithinPopup("View Authorization", () -> {
-			fieldsForAssertion.add(getTextFromPage(fixedTransactionFee));
+			str.append(getTextFromPage(fixedTransactionFee));
 			clickCloseButton();
 		});
-		return fieldsForAssertion.get(0);
+		return new String(str);
 	}
 }
