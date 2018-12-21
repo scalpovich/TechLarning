@@ -9,6 +9,7 @@ import java.util.Objects;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -183,7 +184,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
  	 	
  	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Existing Client Code')]")
  	private MCWebElement existingClientLabel;
-  	
+ 	
   	@PageElement(findBy = FindBy.NAME, valueToFind = "view:uploadPhoto")  													  
 	private MCWebElement uploadBtn;
   	
@@ -327,7 +328,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			waitForWicket(driver());
 			SimulatorUtilities.wait(10000);
 		}else{
-			selectByVisibleText(customerTypeDDwn, device.getCustomerType());  
+			selectByVisibleText(customerTypeDDwn, device.getCustomerType()); 
 			SimulatorUtilities.wait(8000);
 			waitForWicket(driver());
 			selectByVisibleText(programCodeDDwn, device.getProgramCode());
@@ -409,10 +410,15 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		Address currentAddress = device.getCurrentAddress();
 		WebElementUtils.enterText(currentAddressLine1Txt, currentAddress.getAddressLine1());
 		WebElementUtils.selectDropDownByVisibleText(currentCountryCodeDDwn, currentAddress.getCountry());
-		WebElementUtils.enterText(currentAddressPostalCode, currentAddress.getPostalCode());		
-		SimulatorUtilities.wait(5000);		
+		WebElementUtils.enterText(currentAddressPostalCode, currentAddress.getPostalCode());
+		SimulatorUtilities.wait(5000);
+		currentAddressPostalCode.getActions().sendKeys(Keys.TAB);
+		SimulatorUtilities.wait(5000);
 		pageScrollDown();
-		clickNextButton();		
+		clickNextButton();
+		if(!isElementPresent(legalIDTxt)){
+			clickNextButton();
+		}
 	}
 
 	private void fillProfile(Device device) {

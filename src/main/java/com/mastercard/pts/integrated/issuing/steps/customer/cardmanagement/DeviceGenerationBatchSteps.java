@@ -13,6 +13,7 @@ public class DeviceGenerationBatchSteps {
 	DeviceGenerationBatchFlows deviceGenerationBatchFlows;
 
 	@When("user processes deviceGeneration batch for new Application")
+	@Then("user processes deviceGeneration batch for new Application")
 	public void closeBatchExecutionForNewApplication(){
 		deviceGenerationBatchFlows.deviceGenerationBatchExecution();
 	}

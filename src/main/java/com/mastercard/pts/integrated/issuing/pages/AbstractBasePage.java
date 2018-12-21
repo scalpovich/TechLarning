@@ -314,6 +314,9 @@ public abstract class AbstractBasePage extends AbstractPage {
     @PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
 	protected MCWebElement institutionDateTxt;
     
+    @PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='No']")
+	private MCWebElement noBtn;
+	
     int retryCounter =0;
 	
 	@Autowired
@@ -335,6 +338,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	protected void clickProcessAllButton() {
 		clickWhenClickable(processAll);
+	}
+	
+	protected void clickNoButton(){
+		clickWhenClickable(noBtn);
 	}
 
 	protected void clickNextButton() {
