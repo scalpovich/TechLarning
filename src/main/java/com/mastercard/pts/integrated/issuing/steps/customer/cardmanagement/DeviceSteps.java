@@ -448,7 +448,7 @@ public class DeviceSteps {
 		corporateClientFlow.createCorporateClient(corporateclient);
 	}
 	
-	@When("user attachs device promotion plan $promotionPlan")
+	@When("user attaches device promotion plan $promotionPlan")
 	public void userAttachDevicePromotionalPlan(String promotionPlan){
 		Device device = context.get(ContextConstants.DEVICE);
 		device.setDevicePromotionPlan(provider.getString(promotionPlan));

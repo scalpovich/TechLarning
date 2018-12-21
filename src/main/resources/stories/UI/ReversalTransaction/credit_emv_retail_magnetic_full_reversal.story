@@ -42,7 +42,7 @@ And validate auth report
 And user sign out from customer portal
 
 Scenario: 1.4 Perform Cash withdral Reversal Transaction
-Given user perform reversal transaction of type 17
+Given user performs reversal transaction of type 17
 When user is logged in institution
 Then search CWD - Full Reversal authorization and verify 000-Successful status
 And user verifies available balance after reversals transaction
@@ -64,7 +64,7 @@ And validate auth report
 And user sign out from customer portal
 
 Scenario: 1.6 Perform Purchase Reversal Transaction
-Given user perform reversal transaction of type 17
+Given user performs reversal transaction of type 17
 When user is logged in institution
 Then search Purchase Reversal authorization and verify 000-Successful status
 And user verifies available balance after reversals transaction

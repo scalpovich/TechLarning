@@ -711,20 +711,6 @@ public class TransactionSteps {
 		context.put(ContextConstants.DEVICE, device);
 	}
 	
-	@Given("user perform reversal transaction of type $type")
-	@Then("user perform reversal transaction of type $type")
-	public void reverseTransaction(String type){
-		String transaction = context.get(ConstantData.TRANSACTION_NAME);
-		transactionWorkflow.reverseTransaction(transaction,type);
-	}
-	
-	@Given("user perform partial reversal transaction of type $type with reversal amount $amount")
-	@Then("user perform partial reversal transaction of type $type with reversal amount $amount")
-	public void partialReverseTransaction(String type, int amount ){
-		String transaction = context.get(ConstantData.TRANSACTION_NAME);
-		transactionWorkflow.partialReverseTransaction(transaction, type,String.valueOf(amount*100));
-	}
-		
 	@When("user add transaction reversal with reason $reversalReason")
 	@Then("user add transaction reversal with reason $reversalReason")
 	public void addTransactionReversal(String reversalReason) {
@@ -760,5 +746,19 @@ public class TransactionSteps {
 	public void userUpdateIPMForDuplicateRecordCheck(String status) {
 		Transaction trasactiondata = Transaction.createWithProvider(provider);
 		transactionWorkflow.manipulateIPMData(status, trasactiondata);
+	}
+	
+	@Given("user performs reversal transaction of type $type")
+	@Then("user performs reversal transaction of type $type")
+	public void reverseTransaction(String type){
+		String transaction = context.get(ConstantData.TRANSACTION_NAME);
+		transactionWorkflow.reverseTransaction(transaction,type);
+	}
+	
+	@Given("user performs partial reversal transaction of type $type with reversal amount $amount")
+	@Then("user performs partial reversal transaction of type $type with reversal amount $amount")
+	public void partialReverseTransaction(String type, int amount ){
+		String transaction = context.get(ConstantData.TRANSACTION_NAME);
+		transactionWorkflow.partialReverseTransaction(transaction, type,String.valueOf(amount*100));
 	}
 }

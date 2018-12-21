@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.jbehave.core.annotations.Alias;
@@ -632,6 +633,9 @@ public class HelpDeskSteps {
 	public void thenDeviceHasStatus(String deviceStatus) {
 		String expectedStatus = DeviceStatus.fromShortName(deviceStatus);
 		Device device = context.get(ContextConstants.DEVICE);
+		if(Objects.isNull(device.getAppliedForProduct())){
+			device.setAppliedForProduct(device.getProductType());
+		}
 		String actualStatus = helpdeskWorkflow.getDeviceStatus(device);
 		assertThat(STATUS_INCORRECT_INFO_MSG, actualStatus, equalTo(expectedStatus));
 		context.put(ContextConstants.DEVICE, device);

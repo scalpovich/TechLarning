@@ -45,9 +45,7 @@ And user validates device usage for Daily Velocity Utilized and Daily Amount Uti
 And user sign out from customer portal
 
 Scenario: 1.4 Perform Reversal Transaction 
-Meta:
-TestID TC831298
-Given user perform reversal transaction of type 17
+Given user performs reversal transaction of type 17
 When user is logged in institution
 Then search Purchase Reversal authorization and verify 000-Successful status
 And user verifies available balance after reversals transaction
@@ -70,9 +68,7 @@ And user validates device usage for Daily Velocity Utilized and Daily Amount Uti
 And user sign out from customer portal
 
 Scenario: 1.6 Perform Reversal Transaction 
-Meta:
-TestID TC831258
-Given user perform partial reversal transaction of type 32 with reversal amount 10
+Given user performs partial reversal transaction of type 32 with reversal amount 10
 When user is logged in institution
 Then search CWD - Partial Reversal authorization and verify 000-Successful status
 And user verifies available balance after reversals transaction

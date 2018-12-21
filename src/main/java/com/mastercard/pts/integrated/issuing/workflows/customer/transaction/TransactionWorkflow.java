@@ -2150,15 +2150,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		wait(2000);
 		winiumClickOperation("OK");
 	}
-	public void addMID_TID_Blocking(String combination, MID_TID_Blocking details) {
-		MID_TID_BlockingPage page = navigator.navigateToPage(MID_TID_BlockingPage.class);
-		page.addBlockingMID_TID(combination, details);
-	}
-
-	public void deleteMID_TID_Blocking(String combination, MID_TID_Blocking details) {
-		MID_TID_BlockingPage page = navigator.navigateToPage(MID_TID_BlockingPage.class);
-		page.deleteRecord(combination,details);
-	}
 	
 	public Transaction setDEElementsForMIDTID (Transaction transactionData, MID_TID_Blocking midtidBlocking, String midTidCombination)
 	{
@@ -2207,10 +2198,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		return transactionData;
 	}
 	
-	
-		
-		
-		
 	public String addTransactionReversal(String device, String reversalReason, String cancelAmount) {
 		ReversalTransactionPage page = navigator.navigateToPage(ReversalTransactionPage.class);
 		page.searchTransactionForReversal(device, context.get(ConstantData.TRANSACTION_DATE));
@@ -2329,6 +2316,16 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		}
 	}
 	
+	public void addMID_TID_Blocking(String combination, MID_TID_Blocking details) {
+		MID_TID_BlockingPage page = navigator.navigateToPage(MID_TID_BlockingPage.class);
+		page.addBlockingMID_TID(combination, details);
+	}
+
+	public void deleteMID_TID_Blocking(String combination, MID_TID_Blocking details) {
+		MID_TID_BlockingPage page = navigator.navigateToPage(MID_TID_BlockingPage.class);
+		page.deleteRecord(combination,details);
+	}
+	
 	public void reverseTransaction(String transaction, String reversalType) {
 		activateMas(transaction);
 		MiscUtils.reportToConsole("******************** Reversal Transaction Started ******************");
@@ -2340,7 +2337,6 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 	
 	public void partialReverseTransaction(String transaction, String reversalType,String amount) {
-		//startWiniumDriverWithSimulator("FINSIM");
 		activateMas(transaction);
 		MiscUtils.reportToConsole("******************** Partial Reversal Transaction Started ******************");
 		clickTestPreparations(transaction);

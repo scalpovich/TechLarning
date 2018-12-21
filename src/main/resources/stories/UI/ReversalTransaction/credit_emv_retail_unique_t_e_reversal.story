@@ -23,8 +23,6 @@ Then user sign out from customer portal
 And embossing file batch was generated in correct format
 
 Scenario:1.3 Perform Unique transaction
-Meta:
-TestID TC831213
 Given connection to MAS is established
 When perform an EMV_PURCHASE_T_E_UNIQUE MAS transaction
 Then MAS test results are verified
@@ -37,9 +35,7 @@ And user verifies available Card limit for card after transaction
 And user sign out from customer portal
 
 Scenario: 1.4 Perform Unique Transactionn Reversal
-Meta:
-TestID TC831213
-Given user perform reversal transaction of type 17
+Given user performs reversal transaction of type 17
 When user is logged in institution
 Then search Purchase Reversal authorization and verify 000-Successful status
 And user verifies available balance after reversals transaction

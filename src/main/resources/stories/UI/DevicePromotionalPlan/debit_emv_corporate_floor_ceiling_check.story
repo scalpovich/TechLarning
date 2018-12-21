@@ -5,6 +5,7 @@ I want to perform transaction
 
 Meta:
 @StoryName d_emv_corp
+@DPPDebit
 
 Scenario: 1.1 Set up program for debit EMV corporate debit card
 Given setting json values in excel for Debit
@@ -30,7 +31,7 @@ And processes device production batch for debit
 And device has "NOT ACTIVATED CARD" status
 And user activates device through helpdesk
 And device has "normal" status
-And user attachs device promotion plan PROMOTION_PLAN
+And user attaches device promotion plan PROMOTION_PLAN
 And embossing file batch was generated in correct format
 And user sign out from customer portal
 

@@ -5,6 +5,7 @@ I want to perform transaction
 
 Meta:
 @StoryName prepaid_emv_retail_Limits
+@DPPPrepaid
 
 Scenario: 1.0 Set up prepaid emv corporate travel card
 Given setting json values in excel for Prepaid
@@ -29,7 +30,7 @@ And user performs adjustment transaction
 And user has current wallet balance amount information for prepaid device
 And device has "NOT ACTIVATED CARD" status
 And user activates device through helpdesk
-And user attachs device promotion plan FIXED_TX_FEE_PROMOTION_PLAN
+And user attaches device promotion plan FIXED_TX_FEE_PROMOTION_PLAN
 And device has "normal" status
 Then user sign out from customer portal
 

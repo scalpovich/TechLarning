@@ -7,8 +7,6 @@ Meta:
 @StoryName credit_emv_retail			 
 
 Scenario:1.0 creation of mastercard_individual_primary_msr Card credit device
-Meta:
-@UserCreatesNewCreditDevice
 Given setting json values in excel for Credit
 When user is logged in institution
 And for Magnetic Stripe Card User fills without pin Device Plan for credit product for Mastercard
@@ -29,15 +27,11 @@ Then user sign out from customer portal
 And embossing file batch was generated in correct format
 
 Scenario: 1.3 Perform MSR_RECURRING_PUR_TXN Authorization transaction
-Meta:
-@TestId 
 Given connection to MAS is established
 When perform an MSR_RECURRING_PUR_TXN MAS transaction
 Then MAS test results are verified
 
 Scenario: 1.4 Validate Auth in CSR
-Meta:
-@TestId 
 Given user is logged in institution
 When search Purchase authorization and verify 000-Successful status
 And user verifies available balance after transaction
@@ -47,7 +41,7 @@ Then validate auth report
 And user sign out from customer portal
 
 Scenario: 1.5 Perform Recurring Purchase Transactionn Reversal
-Given user perform reversal transaction of type 17
+Given user performs reversal transaction of type 17
 When user is logged in institution
 Then search Purchase Reversal authorization and verify 000-Successful status
 And user verifies available balance after reversals transaction

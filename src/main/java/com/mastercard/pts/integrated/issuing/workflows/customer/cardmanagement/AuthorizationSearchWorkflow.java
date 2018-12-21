@@ -234,7 +234,7 @@ public class AuthorizationSearchWorkflow {
 
 	public String getTransactionFee(){
 		String appliedTransactionFee = authorizationSearchPage.getTransactionFee();
-		logger.info("Applied Trasaction Fee on screen: {} ", appliedTransactionFee);
+		logger.info("Applied Transaction Fee on screen: {} ", appliedTransactionFee);
 		return appliedTransactionFee;
 	}
 
@@ -247,7 +247,7 @@ public class AuthorizationSearchWorkflow {
 		txnRateFee = transactionAmt * (rate / 100) + FIXED_TRANSACTION_FEE;
 		double minFee = Double.parseDouble(txnFeePlan.getMinTxnRate());
 		double maxFee = Double.parseDouble(txnFeePlan.getMaxTxnRate());
-		logger.info("Calculated Trasaction Fee: {} ", df2.format(txnRateFee));
+		logger.info("Calculated Transaction Fee: {} ", df2.format(txnRateFee));
 
 		if(txnRateFee > maxFee){
 			txnRateFee = maxFee;
