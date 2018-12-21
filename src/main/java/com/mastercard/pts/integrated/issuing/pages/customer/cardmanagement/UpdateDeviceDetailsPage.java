@@ -8,10 +8,8 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -25,9 +23,6 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class UpdateDeviceDetailsPage extends AbstractCardManagementPage {
 
 	private static final Logger logger = LoggerFactory.getLogger(UpdateDeviceDetailsPage.class);
-
-	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody img[alt='Edit Record']")
-	private MCWebElement firstRowEditLink;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "devicePromoPlanCode:input:dropdowncomponent")
 	private MCWebElement devicePlanDDwn;
@@ -46,7 +41,7 @@ public class UpdateDeviceDetailsPage extends AbstractCardManagementPage {
 		enterText(deviceNumber, device.getDeviceNumber());
 		clickSearchButton();
 		waitForRow();
-		clickWhenClickable(firstRowEditLink);
+		editFirstRecord();
 
 		runWithinPopup("Edit Device Details", () -> {
 			waitForElementVisible(devicePlanDDwn);
