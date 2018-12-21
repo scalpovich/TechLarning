@@ -42,19 +42,16 @@ WorkFlowRuleFlows workFlowRuleFlows;
 	public void addingWorkFlowRuleToProgramWithApplicationScoringCreditBureau(String fieldName, String value) {
 		Assert.assertTrue("Application Scoring & Credit Bureau is not added successfully", workFlowRuleFlows.userAddsWorkFlowRuleForApplicationScoringCreditBureau(fieldName, value));
 	}
-@When("User Adds WorkFlow Rule for fieldName1 $fieldName and fieldName2 $value on program for application score")
-@Then("User Adds WorkFlow Rule for fieldName1 $fieldName and fieldName2 $value on program for application score")
-public void addingWorkFlowRuleToProgramForApplicationScore(String fieldName,String value)
-{
-	Boolean workFlowRule=workFlowRuleFlows.userAddsNewWorkFlowRuleForApplicationScore(fieldName,value);
-	Assert.assertTrue("ApprovalScore is not added successfully", workFlowRule);
-}
-@When("User Adds WorkFlow Rule for fieldName1 $fieldName and fieldName2 $value on program for application score and risk")
-@Then("User Adds WorkFlow Rule for fieldName1 $fieldName and fieldName2 $value on program for application score and risk")
-public void addingWorkFlowRuleToProgramForApplicationScoreAndRisk(String fieldName,String value)
-{
-	Boolean workFlowRule=workFlowRuleFlows.userAddsNewWorkFlowRuleForApplicationScoreAndRisk(fieldName,value);
-	Assert.assertTrue("ApprovalScore is not added successfully", workFlowRule);
-}
+	@When("User Adds WorkFlow Rule for fieldName1 $fieldName and fieldName2 $value on program for application score")
+	@Then("User Adds WorkFlow Rule for fieldName1 $fieldName and fieldName2 $value on program for application score")
+	public void addingWorkFlowRuleToProgramForApplicationScore(String fieldName,String value) {
+		Assert.assertTrue("ApprovalScore is not added successfully", workFlowRuleFlows.userAddsNewWorkFlowRuleForApplicationScore(fieldName,value));
+	}
+	
+	@When("User Adds WorkFlow Rule for fieldName1 $fieldName and fieldName2 $value on program for application score and risk")
+	@Then("User Adds WorkFlow Rule for fieldName1 $fieldName and fieldName2 $value on program for application score and risk")
+	public void addingWorkFlowRuleToProgramForApplicationScoreAndRisk(String fieldName,String value) {
+		Assert.assertTrue("ApprovalScore is not added successfully", workFlowRuleFlows.userAddsNewWorkFlowRuleForApplicationScoreAndRisk(fieldName,value));
+	}
 }
 
