@@ -2,7 +2,6 @@ package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 
-
 public class SearchApplicationDetails extends AbstractBasePage{
 	
 	public String fromDate;	

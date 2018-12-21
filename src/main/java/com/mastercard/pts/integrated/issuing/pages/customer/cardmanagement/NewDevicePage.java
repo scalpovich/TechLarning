@@ -24,6 +24,7 @@ import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 import com.mastercard.pts.integrated.issuing.utils.ReadTestDataFromExcel;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -485,6 +486,7 @@ public class NewDevicePage extends AbstractCardManagementPage {
 		enterAddressLine3(newDevice);
 		enterAddressLine4(newDevice);
 		selectCountry(newDevice);
+		SimulatorUtilities.wait(5000);
 		enterPostalCode(newDevice);
 		clickCopyAddress();
 		clickNextButton();

@@ -1,8 +1,10 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.hamcrest.Matchers;
@@ -13,6 +15,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
@@ -166,9 +169,34 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Existing Client Code')]")
 	private MCWebElement existingClientLabel;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:isdCode:input:dropdowncomponent")
+	private MCWebElement registeredMobileNumberCodeDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:registeredMobileNumber:input:inputTextField")
+	private MCWebElement registeredMobileNumber;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:emailAlertList:checkBoxComponent")
+	private MCWebElement chkBxEmailAlertRequired;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:smsAlertList:checkBoxComponent")
+	private MCWebElement chkBxSmsAlertRequired;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "view:devicePlanPromoCode1:input:dropdowncomponent")
 	private MCWebElement promotionPlanDDwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "view:clientCustomerId:input:inputTextField")
+	private MCWebElement txtClientCustomerID;
 		
+	
+	@PageElement(findBy = FindBy.ID, valueToFind = "card_type_photo")
+	private MCWebElement photoFileInput;
+
+	@PageElement(findBy = FindBy.ID, valueToFind = "uploadPhoto")
+	private MCWebElement uploadPhotoBtn;
+
+	@Value("src/main/resources/InstitutionLogo/CreditLogo.png")
+	private  String photoFilePath;
+
 	public String getWalletsFromPage(){
 		return getTextFromPage(createdWalletList);
 	}
@@ -333,7 +361,6 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 	private void fillCustomerTypeProgramCodeAndDeviceDetails(Device device) {
 		SimulatorUtilities.wait(1000);
-		String programCodeDDwnBy = "view:programCode:input:dropdowncomponent";
 		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)
 				|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)) {
 			enterText(existingDeviceNumberTxt, context.get(CreditConstants.EXISTING_DEVICE_NUMBER));
@@ -360,7 +387,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		selectByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
 		if (Objects.nonNull(device.getPromotionPlanCode())) {
 			selectByVisibleText(promotionPlanDDwn, device.getPromotionPlanCode());
-		}
+	}
 		selectByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
 	}
 
@@ -418,7 +445,10 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 	private void fillProfile(Device device) {
 		Program program=context.get(ContextConstants.PROGRAM);
 		selectByVisibleText(branchCodeDDwn, device.getBranchCode());
-		
+		Map<String,String>map=context.get(TestContext.KEY_STORY_DATA);
+		if(map.containsKey("CLIENT_CUSTOMER_ID")){
+			WebElementUtils.enterText(txtClientCustomerID, map.get("CLIENT_CUSTOMER_ID"));
+		}
 		if(corporateClientCodeDDwn.isEnabled()){
 			selectByVisibleText(corporateClientCodeDDwn,device.getCorporateClientCode());	
 		}
@@ -447,6 +477,11 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 		}
 		
 		WebElementUtils.enterText(registeredMailIdTxt, client.getEmailId());
+		WebElementUtils.checkCheckbox(chkBxEmailAlertRequired, true);
+		WebElementUtils.checkCheckbox(chkBxSmsAlertRequired, true);
+		WebElementUtils.enterText(registeredMailIdTxt, ConstantData.EMAIL_ID);
+		WebElementUtils.selectDropDownByVisibleText(registeredMobileNumberCodeDDwn, ConstantData.COUNTRY_CODE);
+		WebElementUtils.enterText(registeredMobileNumber, ConstantData.CONTACT_NUMBER);
 		WebElementUtils.selectDropDownByVisibleText(languagePreferencesDDwn, client.getLanguagePreference());
 		WebElementUtils.selectDropDownByVisibleText(vipDDwn, device.getVip());
 
@@ -455,6 +490,14 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 			WebElementUtils.enterText(creditLimitTxt,String.valueOf(Integer.parseInt(program.getCreditLimit())+1));
 		}
 		
+		if(device.getPhotoIndicator().contains("Photo")) {
+			String filePath = new File(photoFilePath).getAbsolutePath();
+			logger.info("upload file path : {}",filePath);
+			photoFileInput.sendKeys(filePath);
+			SimulatorUtilities.wait(5000);
+			clickWhenClickable(uploadPhotoBtn);
+			SimulatorUtilities.wait(5000);
+		}
 		clickNextButton();		
 	}
 }

@@ -60,6 +60,7 @@ public class ConstantData {
 	public static final String TRANSACTION_AMOUNT_BD = "transactionAmountbd";
 	public static final String INTERNATIONAL_ALLOW_DISALLOW = "International Use Allow/Disallow [400]";
 	public static final String ECCOMERCE_ALLOW_DISALLOW= "E-commerce Activation/Deactivation [304]";
+	public static final String DEVICE_PRODUCTION_REPORT_PDF_FILE_NAME = "Device Production.pdf";
 
 	public static final String OPTION_SELECT_ONE = "Select One";
 
@@ -75,6 +76,7 @@ public class ConstantData {
 	public static final String START_RANGE_DIGITS = "0000000000";
 	public static final String END_RANGE_DIGITS = "9999999999";
 	public static final String RRN_NUMBER = "rrnumber";
+	public static final String DECLINE_MERCHANT_RISK_VALUE = "6";
 	
 	public static final String THREE_D_SECURE_NO_CVV2 = "3D_SECURE_NO_CVV2";
 	public static final String THREE_D_SECURE_TRANSACTION = "3D_SECURE_CAVV";
@@ -91,6 +93,7 @@ public class ConstantData {
 	public static final String JSON_DATA_DRIVEN_EXECUTION = "dataDrivenExecution";
 	public static final String VIRTUAL_DEVICE_TYPE = "virtual";
 	public static final String RESPONSE_CODE_DESCRIPTION = "Capture";
+	public static final String UNIVERSAL_CARDHOLDER_AUTHENTICATION_FIELD = "048.42.01.02";
 
 
 	public static final String INVALID_CVV = "123";	
@@ -149,6 +152,7 @@ public class ConstantData {
 	public static final String RETAIL_TO_LOAN_SR = "Retail Transaction to Loan [215]";
 	public static final String LOAN_PRE_CLOSURE_SR = "Loan Preclosure [242]";	
 	public static final String LOAN_PRE_CLOSURE_FEE = "Loan PreClosure Fee";
+	public static final String LOAN_CANCELLATION_FEE = "Loan Cancellation Fee";
 	
 	
 	public static final String APPLIED_ON_LOAN_AMOUNT= 	"Loan Amount [LA]";		
@@ -167,10 +171,23 @@ public class ConstantData {
 	public static final String DE_042 = "042";
 	public static final String DE_022_01 = "022.01";
 	public static final String POS_TERMINAL_VALUE = "05";
+	public static final String EMAIL_ID = "johnsnow@mastercard.com";
+	public static final String COUNTRY_CODE = "IND [+91]";
+	public static final String CONTACT_NUMBER = "7123456789";
+	public static final String LOAN_CANCELLATION_SR = "Loan Cancellation [243]";
+	public static final String PAYMENT_UPLOAD_METHOD = "paymentMethod";
+	public static final String PHOTO_CARD = "Photo [1]";
+	
+	
+	
+	public static final String TRANSACTION_DATE = "transactionDate";
+	public static final String LOYALTY_POINTS_REPORT_FILENAME = "Loyalty Points Report.pdf";
+
+	public static final String PAYMENT_UPLOAD_FILE_NAME = "PAYMENT_UPLOAD_FILE_NAME";
 	
 	private ConstantData() {
 	}
-
+	
 	public static String fromShortName(String name) {
 		return MiscUtils.getConstantStringFromClassByPefixMatch(ConstantData.class, name);
 	}

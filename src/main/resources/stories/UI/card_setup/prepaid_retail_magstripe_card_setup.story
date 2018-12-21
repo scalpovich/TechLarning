@@ -9,16 +9,18 @@ Meta:
 @StoryName S203706
 @SanityCards
 @UISanity
+@SanityTestTemp
 
-Scenario: Set up retail magnetic stripe preapid card
+Scenario:1 Set up retail magnetic stripe prepaid card
 Meta:
 @TestId TC398484
-Given user is logged in institution
+Given setting json values in excel for Prepaid
+And user is logged in institution
 And device range for program with device plan for "prepaid" "magnetic stripe" card
 When user creates new device of prepaid type for new client
-Then device has "normal" status
+Then device has "not activated" status
 
-Scenario: retail magnetic stripe preapid card device production and authorization
+Scenario:2 retail magnetic stripe preapid card device production and authorization
 Meta:
 @TestId TC398484
 Given user is logged in institution

@@ -1,12 +1,15 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -26,6 +29,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
@@ -180,6 +184,15 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
  	 	
  	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(), 'Existing Client Code')]")
  	private MCWebElement existingClientLabel;
+ 	
+  	@PageElement(findBy = FindBy.NAME, valueToFind = "view:uploadPhoto")  													  
+	private MCWebElement uploadBtn;
+  	
+  	@PageElement(findBy = FindBy.ID, valueToFind = "card_type_photo")  													  
+	private MCWebElement chooseFileBtn;
+  	
+  	private static final String PHOTO_FILE_PATH = "src//main/resources//InstitutionLogo//CreditLogo.png";
+  	
   	
 	public void selectAppliedForProduct(String product) {
 		WebElementUtils.selectDropDownByVisibleText(appliedForProdutDDwn, product);
@@ -270,7 +283,6 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		
 		device.setApplicationNumber(getCodeFromInfoMessage("Application Number"));
 		logger.info("Application Number: {}",device.getApplicationNumber());
-		
 		if (device.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE)|| device.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)
 				/*&& device.getSubApplicationType().contains(SubApplicationType.EXISTING_CLIENT)*/) {
 			context.put(ContextConstants.DEVICE_SUPPLEMENTARY_ADDON_EXISTING,device);
@@ -316,7 +328,7 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 			waitForWicket(driver());
 			SimulatorUtilities.wait(10000);
 		}else{
-			selectByVisibleText(customerTypeDDwn, device.getCustomerType());  
+			selectByVisibleText(customerTypeDDwn, device.getCustomerType()); 
 			SimulatorUtilities.wait(8000);
 			waitForWicket(driver());
 			selectByVisibleText(programCodeDDwn, device.getProgramCode());
@@ -324,8 +336,15 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		}
 		SimulatorUtilities.wait(1000);
 		clickNextButton();
+		waitForWicket(driver());
+		waitForElementVisible(deviceType1DDwn);
+		
 		selectByVisibleText(deviceType1DDwn, device.getDeviceType1());
 		WebElementUtils.selectDropDownByVisibleText(devicePlan1DDwn, device.getDevicePlan1());
+		Map<String,String> map = context.get(TestContext.KEY_STORY_DATA);
+		if(map.containsKey("PHOTO_INDICATOR")) {
+			device.setPhotoIndicator(map.get("PHOTO_INDICATOR"));
+		}
 		WebElementUtils.selectDropDownByVisibleText(photoIndicatorDDwn, device.getPhotoIndicator());
 	}
 
@@ -391,10 +410,15 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		Address currentAddress = device.getCurrentAddress();
 		WebElementUtils.enterText(currentAddressLine1Txt, currentAddress.getAddressLine1());
 		WebElementUtils.selectDropDownByVisibleText(currentCountryCodeDDwn, currentAddress.getCountry());
-		WebElementUtils.enterText(currentAddressPostalCode, currentAddress.getPostalCode());		
-		SimulatorUtilities.wait(5000);		
+		WebElementUtils.enterText(currentAddressPostalCode, currentAddress.getPostalCode());
+		SimulatorUtilities.wait(5000);
+		currentAddressPostalCode.getActions().sendKeys(Keys.TAB);
+		SimulatorUtilities.wait(5000);
 		pageScrollDown();
-		clickNextButton();		
+		clickNextButton();
+		if(!isElementPresent(legalIDTxt)){
+			clickNextButton();
+		}
 	}
 
 	private void fillProfile(Device device) {
@@ -455,6 +479,16 @@ public class DeviceCreateApplicationPage extends AbstractBasePage {
 		if (device.getAppliedForProduct().equalsIgnoreCase(ProductType.CREDIT)) {
 			WebElementUtils.enterText(creditLimitTxt,String.valueOf(Integer.parseInt(program.getCreditLimit())+1));		
 		}
+		
+		if(device.getPhotoIndicator().equals(ConstantData.PHOTO_CARD)) {
+			String filePath = new File(PHOTO_FILE_PATH).getAbsolutePath();
+			logger.info("upload file path : {}",filePath);
+			chooseFileBtn.sendKeys(filePath);
+			SimulatorUtilities.wait(5000);
+			clickWhenClickable(uploadBtn);
+			SimulatorUtilities.wait(5000);
+		} 
+		
 		clickNextButton();
 	}
 	

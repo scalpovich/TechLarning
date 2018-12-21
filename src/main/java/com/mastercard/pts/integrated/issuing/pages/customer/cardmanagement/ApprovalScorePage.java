@@ -28,11 +28,13 @@ public class ApprovalScorePage extends AbstractBasePage {
 	@Autowired
 	CreditCardPlan creditCardPlans;
     
-	private static final String ADD_APPROVER_SCORE_FRAME="Add Approval Score";
+    private static final String ADD_APPROVER_SCORE_FRAME="Add Approval Score";
     
     private static final String APPROVE_START_RANGE_VALUE="100";
     
     private static final String APPROVE_END_RANGE_VALUE="2000";
+    
+    private static final String REDUCED_APPROVE_END_RANGE_VALUE="1000";
 	
     private static final Logger logger = LoggerFactory.getLogger(ApprovalScorePage.class);
     
@@ -91,7 +93,11 @@ public class ApprovalScorePage extends AbstractBasePage {
 	public void enterEndRangeValue() {
 		WebElementUtils.enterText(endRangeValueTxt, APPROVE_END_RANGE_VALUE);
 	}
-	    
+	
+	public void enterReducedEndRangeValue() {
+		WebElementUtils.enterText(endRangeValueTxt, REDUCED_APPROVE_END_RANGE_VALUE);
+	}
+	
 	public void settingMandatoryValuesWithLabels() {
 		creditCardPlans.setMandatoryValuesWithLabels(mandatoryValuesWithLabels(mandatoryFields(), mandatoryLabels()));
 		logger.info("MandatoryLabelswithValues: {}", creditCardPlans.getMandatoryValuesWithLabels());

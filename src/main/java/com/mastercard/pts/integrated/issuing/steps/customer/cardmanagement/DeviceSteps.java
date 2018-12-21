@@ -16,6 +16,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ApplicationType;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.SubApplicationType;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CorporateClient;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
@@ -25,6 +26,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.Updat
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.CorporateClientCreationFlow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.UpdatedDeviceDetailsFlows;
@@ -52,11 +54,16 @@ public class DeviceSteps {
 	@Autowired
 	private UpdatedDeviceDetailsFlows updateDeviceWorkflow;
 
+	CorporateClientCreationFlow corporateClientFlow;
+
 	private static final String CREDIT_LIMIT_GREATER_THEN_MAXIMUM_EXP = "Entered Credit Limit is greater than Primary Card Credit Limit.";
 
 	private static final String CORPORATE_CLIENT_CODE_DEVICE2 = "CORPORATE_CLIENT_CODE_DEVICE2";
 	
 	private static final String PROMOTION_FEE_PLAN = "PROMOTION_FEE_PLAN";
+	
+	private static final String PHOTO_INDICATOR = "PHOTO_INDICATOR";
+	
 
 	@When("user creates new device of $type type for new client")
 	@Then("user creates new device of $type type for new client")
@@ -173,6 +180,11 @@ public class DeviceSteps {
 		if (storyTestData.containsKey(PROMOTION_FEE_PLAN)) {
 			device.setPromotionPlanCode(provider.getString(PROMOTION_FEE_PLAN));
 		}
+		Map<String,String>map=context.get(TestContext.KEY_STORY_DATA);
+		if(map.containsKey(PHOTO_INDICATOR)){
+			device.setPhotoIndicator(map.get(PHOTO_INDICATOR));			
+		}
+		
 		Program program = context.get(ContextConstants.PROGRAM);
 		device.setProgramCode(program.buildDescriptionAndCode());
 		
@@ -427,6 +439,13 @@ public class DeviceSteps {
 		Device device = context.get(ContextConstants.DEVICE_SUPPLEMENTARY_ADDON_EXISTING);
 		context.put(ContextConstants.DEVICE_PLAN, deviceplan);
 		context.put(ContextConstants.DEVICE, device);
+	}
+	
+	@When("User fills Corporate client $individual for $credit product")
+	public void userCreatesCorporateClient(String type, String product){
+		CorporateClient corporateclient = CorporateClient.createDataWithProvider(provider);
+		corporateclient.setProductType(ProductType.fromShortName(type));
+		corporateClientFlow.createCorporateClient(corporateclient);
 	}
 	
 	@When("user attachs device promotion plan $promotionPlan")

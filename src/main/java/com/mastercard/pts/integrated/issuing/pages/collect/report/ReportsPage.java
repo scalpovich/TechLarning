@@ -22,9 +22,12 @@ public class ReportsPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(ReportsPage.class);
 
+	@PageElement(findBy = FindBy.NAME, valueToFind = "goButton")
+	private MCWebElement goBtn;
+	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "componentPanel")
 	private MCWebElement selectReportDDwn;
-
+	
 	public void verifyUiOperationStatus() {
 		logger.info("Reports");
 		verifySearchButton("Go");
@@ -33,5 +36,8 @@ public class ReportsPage extends AbstractBasePage {
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(selectReportDDwn));
+		
+	
 	}
+	
 }

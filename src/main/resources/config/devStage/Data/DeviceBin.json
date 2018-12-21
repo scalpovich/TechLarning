@@ -9,7 +9,7 @@
 	{
 		"interchange":"MASTERCARD [02]",
 		"productType":"Debit [D]",
-		"issuerBin":"587765",
+		"issuerBin":"538816",
 		"binType":"Single Message Type [S]",
 		"remarks":"automation debit card"
 	},

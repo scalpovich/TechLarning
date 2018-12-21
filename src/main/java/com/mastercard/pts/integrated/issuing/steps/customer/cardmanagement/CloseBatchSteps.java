@@ -14,6 +14,7 @@ public class CloseBatchSteps extends AbstractBaseSteps {
 CloseBatchFlows closeBatchFlows;
 
 @When("user processes close batch for new Application")
+@Then("user processes close batch for new Application")
 public void closeBatchExecutionForNewApplication(){
 	closeBatchFlows.closeBatchExecution();
 }

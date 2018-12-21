@@ -24,6 +24,7 @@ public class DumpWorkflow {
 	private static final String KYC_DOWNLOAD = "KYC Dump[KYC_DUMP]";
 	private static final CharSequence DEBIT = "Debit";
 	private static final CharSequence PREPAID = "Prepaid";
+	private static final CharSequence CREDIT = "Credit";
 
 	public void executeDownLoadProcessBatch(ProcessBatches batch) {
 		ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
@@ -64,6 +65,8 @@ public class DumpWorkflow {
 			pFileName = fileType + "_" + institutionCode + "_PREPAID_" + "RUNNING" + "_" + DateUtils.getDateddMMyyyy();
 		else if (((String) context.get("type")).contains(DEBIT))
 			pFileName = fileType + "_" + institutionCode + "__RUNNING" + "_" + DateUtils.getDateddMMyyyy();
+		else if (((String) context.get("type")).contains(CREDIT))
+			pFileName = fileType + "_" + institutionCode + "_CREDIT_RUNNING" + "_" + DateUtils.getDateddMMyyyy();
 		return pFileName;
 	}
 
@@ -73,6 +76,8 @@ public class DumpWorkflow {
 			pFileName = fileType + institutionCode + "P" + DateUtils.getDate();
 		else if (((String) context.get("type")).contains(DEBIT))
 			pFileName = fileType + institutionCode + "D" + DateUtils.getDate();
+		else if (((String) context.get("type")).contains(CREDIT))
+			pFileName = fileType + institutionCode + "C" + DateUtils.getDate();
 		return pFileName;
 	}
 

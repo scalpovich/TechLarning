@@ -30,7 +30,11 @@
    "transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
    "creditPlan":"TA4413NYAX [102]",
    "billingCycle":"AUTOMATION [131]",
-   "walletPlan":"AUTOMATION [TA1160XDAT]"
+   "walletPlan":"AUTOMATION [TA1160XDAT]",
+   "loyaltyPlan" : "Automation Test [AUTO]",
+   "devicePlan" : "",
+   "walletFeePlan" : "",
+   "programCode" : ""
    },
    {
    "productIdentity":"Credit",
@@ -62,7 +66,11 @@
    "transactionPlan":"AUTOMATION [T6499A]",
    "creditPlan":"TA4413NYAX [102]",
    "billingCycle":"AUTOMATION [131]",
-   "walletPlan":"AUTOMATION [TA1160XDAT]"
+   "walletPlan":"AUTOMATION [TA1160XDAT]",
+   "loyaltyPlan" : "123 [123]",
+   "devicePlan" : "",
+   "walletFeePlan" : "",
+   "programCode" : ""
    },
    {
    "productIdentity":"Prepaid",
@@ -90,11 +98,15 @@
    "deviceJoiningAndMemberShipFeePlan":"AUTOMATION [TA3608VH]",
    "deviceEventBasedFeePlan":"AUTOMATION [TA1764NE]",
    "transactionLimitPlan":"AUTOMATION [TA1347LPRR]",
-   "transactionFeePlan": "Automation FIX Fee plan. [AUTOFEEP1]",
    "transactionPlan":"AUTOMATION [T8278L]",
    "creditPlan":"TA4413NYAX [102]",
    "billingCycle":"AUTOMATION [131]",
-   "walletPlan":"AUTOMATION [TA1160XDAT]"
+   "transactionFeePlan": "Automation FIX fee plan. [AUTOFEEP1]",
+   "walletPlan":"AUTOMATION [TA1160XDAT]",
+   "loyaltyPlan" : "Automation Test [AUTO]",
+   "devicePlan" : "",
+   "walletFeePlan" : "",
+   "programCode" : ""
    }
   ]
 }

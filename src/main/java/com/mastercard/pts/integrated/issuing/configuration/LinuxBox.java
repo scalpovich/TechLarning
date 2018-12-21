@@ -1,11 +1,18 @@
 package com.mastercard.pts.integrated.issuing.configuration;
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.FileUtils;
 import com.mastercard.pts.integrated.issuing.utils.LinuxUtils;
 import com.mastercard.pts.integrated.issuing.utils.LinuxUtils.RemoteConnectionDetails;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
@@ -29,6 +36,9 @@ public class LinuxBox implements RemoteConnectionDetails {
 	private String folderPath;
 
 	private String password;
+	
+	@Autowired
+	TestContext context;
 
 	public File download(String remoteSource, String localDestination) {
 		logger.info("Download {} -> {}", remoteSource, localDestination);
@@ -50,9 +60,7 @@ public class LinuxBox implements RemoteConnectionDetails {
 	}
 
 	public File downloadByLookUpForPartialFileName(String lokupForFile, String localDestination, String whatAreWeLookingFile) {
-
 		logger.info("Download {} -> {} at folder", lokupForFile, localDestination);
-
 		String fileName = null;
 		String[] temp = null;
 		try {
@@ -74,24 +82,25 @@ public class LinuxBox implements RemoteConnectionDetails {
 	}
 
 	public String ListFileOffSetAndEmbossing(String path, String lookupForFile) {
-		File folder = new File(path);
-		File[] listOfFiles = folder.listFiles();
-
+		// File folder = new File(path);
+		File[] listOfFiles = FileUtils.getLastFileName(path);
+		ArrayList<File> numberOfFileSameName = new ArrayList<>();
 		for (int i = 0; i < listOfFiles.length; i++) {
 			if (listOfFiles[i].isFile()) {
 				if (listOfFiles[i].getName().contains(lookupForFile) && !(listOfFiles[i].getName().contains("Pin")))
-					return listOfFiles[i].getName();
+					numberOfFileSameName.add(listOfFiles[i]);
 			} else if (listOfFiles[i].isDirectory()) {
 				logger.info("Directory " + listOfFiles[i].getName());
 			}
 		}
-		return null;
+		return numberOfFileSameName.get(0).getName();
 	}
-
+	
 	public File downloadFileThroughSCPByPartialFileName(String lookupForFile, String localDestination, String whatAreWeLookingFile,String childFolder) {
 		logger.info("Download {} -> {} at folder", lookupForFile, localDestination);
 		downloadFileViaScp(folderPath + "*" + whatAreWeLookingFile + "*//"+ childFolder +"//*" + lookupForFile + "*", localDestination);
 		logger.info(Paths.get(localDestination).resolve(Paths.get(localDestination + "\\" + ListFileOffSetAndEmbossing(localDestination, lookupForFile)).getFileName()).toFile().getAbsolutePath());
+		context.put(CreditConstants.CSV_FILE_NAME, Paths.get(localDestination).resolve(Paths.get(localDestination + "\\" + ListFileOffSetAndEmbossing(localDestination, lookupForFile)).getFileName()).toFile().getAbsolutePath());
 		return Paths.get(localDestination).resolve(Paths.get(localDestination + "\\" + ListFileOffSetAndEmbossing(localDestination, lookupForFile)).getFileName()).toFile();
 	}
 

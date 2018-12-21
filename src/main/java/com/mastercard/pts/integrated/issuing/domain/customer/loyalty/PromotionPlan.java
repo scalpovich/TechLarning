@@ -2,23 +2,106 @@ package com.mastercard.pts.integrated.issuing.domain.customer.loyalty;
 
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.HasCodeAndDescription;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 
 @Component
-public class PromotionPlan {
+public class PromotionPlan implements HasCodeAndDescription {
 
 	private String promotionPlanCode;
 	private String promotionDescription;
-
 	private String promotionCurrency;
 	private String promotionamountSpent;
 	private String promotionpointsEarned;
+	private String promotionIssuanceamountSpent;
+	private String promotionIssuancepointsEarned;
 	private String promotionloyaltyBatchDate;
-	private String promotionthresholdAmount;
+	private String floortransactionAmount;
+	private String mccCode;
+	private String invalidMccCode;
+	private String mcgCode;
+	private String thresholdAmount;
+	private String numberOfTransactions;
+	private String promotionloyaltyPlan;
 	private String promotionNoOfTransactions;
 	private String promotion;
+	
+	public String getPromotionIssuanceamountSpent() {
+		return promotionIssuanceamountSpent;
+	}
 
+	public void setPromotionIssuanceamountSpent(String promotionIssuanceamountSpent) {
+		this.promotionIssuanceamountSpent = promotionIssuanceamountSpent;
+	}
+
+	public String getPromotionIssuancepointsEarned() {
+		return promotionIssuancepointsEarned;
+	}
+
+	public void setPromotionIssuancepointsEarned(String promotionIssuancepointsEarned) {
+		this.promotionIssuancepointsEarned = promotionIssuancepointsEarned;
+	}	
+
+	public String getInvalidMccCode() {
+		return invalidMccCode;
+	}
+
+	public void setInvalidMccCode(String invalidMccCode) {
+		this.invalidMccCode = invalidMccCode;
+	}
+
+	public String getNumberOfTransactions() {
+		return numberOfTransactions;
+	}
+
+	public void setNumberOfTransactions(String numberOfTransactions) {
+		this.numberOfTransactions = numberOfTransactions;
+	}
+
+	public String getMcgCode() {
+		return mcgCode;
+	}
+
+	public void setMcgCode(String mcgCode) {
+		this.mcgCode = mcgCode;
+	}
+
+	public String getThresholdAmount() {
+		return thresholdAmount;
+	}
+
+	public void setThresholdAmount(String thresholdAmount) {
+		this.thresholdAmount = thresholdAmount;
+	}
+
+	public String getPromotionloyaltyPlan() {
+		return promotionloyaltyPlan;
+	}
+
+	public void setPromotionloyaltyPlan(String promotionloyaltyPlan) {
+		this.promotionloyaltyPlan = promotionloyaltyPlan;
+	}
+
+	public String getMccCode() {
+		return mccCode;
+	}
+
+	public void setMccCode(String mccCode) {
+		this.mccCode = mccCode;
+	}
+
+	public String getFloortransactionAmount() {
+		return floortransactionAmount;
+	}
+
+	public void setFloortransactionAmount(String floortransactionAmount) {
+		this.floortransactionAmount = floortransactionAmount;
+	}
+	
 	public String getPromotionPlanCode() {
 		return promotionPlanCode;
 	}
@@ -67,14 +150,6 @@ public class PromotionPlan {
 		this.promotionloyaltyBatchDate = promotionloyaltyBatchDate;
 	}
 
-	public String getPromotionthresholdAmount() {
-		return promotionthresholdAmount;
-	}
-
-	public void setPromotionthresholdAmount(String promotionthresholdAmount) {
-		this.promotionthresholdAmount = promotionthresholdAmount;
-	}
-
 	public String getPromotionNoOfTransactions() {
 		return promotionNoOfTransactions;
 	}
@@ -92,21 +167,43 @@ public class PromotionPlan {
 	}
 
 	public void promotionDataProvider() {
-		setPromotionPlanCode(MapUtils
-				.fnGetInputDataFromMap("PromotionPlanCode")
-				+ CustomUtils.randomAlphaNumeric(5).toUpperCase());
-		setPromotionDescription(MapUtils
-				.fnGetInputDataFromMap("PromotionPlanDesc"));
-		setPromotionCurrency(MapUtils
-				.fnGetInputDataFromMap("promotionCurrency"));
+		setPromotionPlanCode(
+				MapUtils.fnGetInputDataFromMap("PromotionPlanCode") + CustomUtils.randomAlphaNumeric(5).toUpperCase());
+		setPromotionDescription(MapUtils.fnGetInputDataFromMap("PromotionPlanDesc"));
+		setPromotionCurrency(MapUtils.fnGetInputDataFromMap("promotionCurrency"));
 		setPromotionamountSpent(MapUtils.fnGetInputDataFromMap("AmountSpent"));
 		setPromotionpointsEarned(MapUtils.fnGetInputDataFromMap("pointsEarned"));
-		setPromotionloyaltyBatchDate(MapUtils
-				.fnGetInputDataFromMap("LoyaltyBatchSettlementDays"));
-		setPromotionthresholdAmount(MapUtils
-				.fnGetInputDataFromMap("thresholdAmount"));
-		setPromotionNoOfTransactions(MapUtils
-				.fnGetInputDataFromMap("noOfTransactions"));
+		setPromotionloyaltyBatchDate(MapUtils.fnGetInputDataFromMap("LoyaltyBatchSettlementDays"));
+		setPromotionNoOfTransactions(MapUtils.fnGetInputDataFromMap("noOfTransactions"));
 
 	}
+
+	public static PromotionPlan createWithProvider(KeyValueProvider provider) {
+		PromotionPlan plan = new PromotionPlan();
+		plan.setPromotionPlanCode(MiscUtils.generate6CharAlphaNumeric());
+		plan.setPromotionDescription(ConstantData.GENERIC_DESCRIPTION);
+		plan.setPromotionCurrency(provider.getString("PROMOTION_CURRENCY"));
+		plan.setPromotionamountSpent(provider.getString("PROMOTION_AMOUNT_SPENT"));
+		plan.setPromotionpointsEarned(provider.getString("PROMOTION_POINTS_EARNED"));
+		plan.setPromotionIssuanceamountSpent(provider.getString("PROMOTION_ISSUANCE_AMOUNT_SPENT"));
+		plan.setPromotionIssuancepointsEarned(provider.getString("PROMOTION_ISSUANCE_POINTS_EARNED"));
+		plan.setFloortransactionAmount(provider.getString("FLOOR_TRANSACTION_AMOUNT"));
+		plan.setThresholdAmount(provider.getString("THRESHOLD_AMOUNT"));
+		plan.setNumberOfTransactions(provider.getString("NO._OF_TRANSACTIONS"));
+		plan.setMccCode(provider.getString("CODE_MCC"));
+		plan.setInvalidMccCode("MCC_CODE_INVALID");
+		plan.setMcgCode(provider.getString("MCG_CODE"));
+		return plan;
+	}
+
+	@Override
+	public String getCode() {
+		return getPromotionPlanCode();
+	}
+
+	@Override
+	public String getDescription() {
+		return getPromotionDescription();
+	}
+
 }

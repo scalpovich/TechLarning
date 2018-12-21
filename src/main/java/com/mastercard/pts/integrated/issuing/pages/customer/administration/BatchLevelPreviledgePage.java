@@ -135,8 +135,8 @@ public class BatchLevelPreviledgePage extends BatchLevelPriviledge {
 		clickWhenClickable(saveBtn);
 	}
 	
-	public void verifyClientPhotoBatchPresent(){
-		Assert.assertTrue(isElementPresent(clientPhotoDownloadRow));
+	public boolean verifyClientPhotoBatchPresent(){
+		return isElementPresent(clientPhotoDownloadRow);
 	}
 	
 	public void supplyAccessToClientPhotoBatch(){
