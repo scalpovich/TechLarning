@@ -154,7 +154,7 @@ public class CardholderServicesFlows  extends AbstractBaseFlows{
 	
 	public String deactivateInternationlTransaction(){
 		InternationalUseActivationPage page = navigator.navigateToPage(InternationalUseActivationPage.class);
-		return page.deactivateInternationlTransaction();
+		return page.deactivateInternationalTransaction();
 	}
 	
 }

@@ -421,7 +421,6 @@ public class DevicePlanPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind="view:virtualDeviceCreditLimit:input:inputTextField")	
 	private MCWebElement virtualDeviceCreditLimitTxt;
-		
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "stopListFlag:checkBoxComponent")
 	private MCWebElement stoplistFlagChkBx;
@@ -1024,6 +1023,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	public void checkCvcCvv(boolean status) {
 		ClickCheckBox(cvccCvvChkBx, status);
 	}
+	
 	public void checkPinChangeTransactionFirst(boolean status) {
 		ClickCheckBox(pinChangeTransactionFirstChbx, status);
 	}
@@ -1364,7 +1364,7 @@ public class DevicePlanPage extends AbstractBasePage {
 	private void fillPinGenerationSection(DevicePlan devicePlan) {
 		// perform below steps only when pinRequired is true which is the
 		// default state
-		if (!(DeviceType.STATIC_VIRTUAL_CARD.contains(devicePlan.getDeviceType()) || DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.contains(devicePlan.getDeviceType()))){
+		if (!(DeviceType.VIRTUAL_CARD.toLowerCase().contains(devicePlan.getDeviceType().toLowerCase()) || DeviceType.LIMITED_VALIDITY_VIRTUAL_CARD.toLowerCase().contains(devicePlan.getDeviceType().toLowerCase()))){
 			WebElementUtils.scrollDown(driver(), 0, 250);
 			pinRequiredChk.click();
 			WebElementUtils.selectDropDownByVisibleText(pinDataTransmissionDDwn, devicePlan.getPinDataTransmission());
@@ -1418,13 +1418,14 @@ public class DevicePlanPage extends AbstractBasePage {
 		if(virtualDeviceCreditLimitTxt.isEnabled()){
 			WebElementUtils.enterText(virtualDeviceCreditLimitTxt,CustomUtils.randomNumbers(3));
 		}
-	}	
+	}
 	
 	private String getStoryName(){
 		String name = System.getProperty("storyName").toString();
 		logger.info("System.getStoryName  : "+name);
 		return name;
-	}	
+	}
+	
 	public void enableStopListFlag(DevicePlan devicePlanDataObject) {
 		logger.info("Update Device Plan: {}", devicePlanDataObject.getDevicePlanCode());
 		enterValueinTextBox(devicePlanCode, devicePlanDataObject.getDevicePlanCode());

@@ -28,12 +28,12 @@ public class ReplaceDevicePage extends ServicesAbstractPage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//*[@class='sectionHead']/td/../following-sibling::tr[1]/td")
 	private MCWebElement responseLbl;
 	
-	public void selectReplaceMentOption(String optionName){
+	public void selectReplacementOption(String optionName){
 		selectByText(replacementResone, optionName);
 	}
 	
 	public String deviceReplacementRequest(CardholderServices replaceMenetOption ){
-		selectReplaceMentOption(replaceMenetOption.getReplacementReason());
+		selectReplacementOption(replaceMenetOption.getReplacementReason());
 		clickWhenClickableCHP(replacemenetSubmitBtn);
 		return getTextFromPage(responseLbl);
 	}

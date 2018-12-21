@@ -37,7 +37,7 @@ public class RequestForLimitedValidityVirtualCardPage extends AbstractBasePage {
 		verifyButton("OK");
 	}
 	
-	public String getVirtualCardRequesResponse(){
+	public String getVirtualCardRequestResponse(){
 		return getTextFromPage(responseLbl);
 	}
 	

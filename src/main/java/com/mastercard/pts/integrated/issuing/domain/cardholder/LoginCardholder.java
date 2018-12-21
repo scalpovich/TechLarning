@@ -82,13 +82,13 @@ public class LoginCardholder {
 	public String getPassWord() {
 		return passWord;
 	}
-	public void setPassWord(String passWord) {
+	public void setPassword(String passWord) {
 		this.passWord = passWord;
 	}
 	
 	public static LoginCardholder loginCardholderDataProvider(){
 		LoginCardholder loginCardHolder = new LoginCardholder();
-		loginCardHolder.setPassWord(MapUtils.fnGetInputDataFromMap("Password"));
+		loginCardHolder.setPassword(MapUtils.fnGetInputDataFromMap("Password"));
 		loginCardHolder.setUserName(MapUtils.fnGetInputDataFromMap("UserId"));
 		loginCardHolder.setNewPassword(MapUtils.fnGetInputDataFromMap("newPassword"));
 		loginCardHolder.setCardHolderTransPassword(MapUtils.fnGetInputDataFromMap("CardHolderTransPassword"));
@@ -101,7 +101,7 @@ public class LoginCardholder {
 	
 	public static LoginCardholder loginCardholderProvider(KeyValueProvider provider){
 		LoginCardholder loginCardHolder = new LoginCardholder();
-		loginCardHolder.setPassWord(provider.getString(CHP_PASSWORD));
+		loginCardHolder.setPassword(provider.getString(CHP_PASSWORD));
 		loginCardHolder.setUserName(provider.getString(CHP_USERNAME));
 		loginCardHolder.setNewPassword(provider.getString(CHP_NEW_PASSWORD));
 		loginCardHolder.setCardHolderTransPassword(provider.getString(CHP_TRANSACTION_PASSWORD));

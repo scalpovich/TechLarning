@@ -171,7 +171,6 @@ public class TransactionSearchPage extends AbstractBasePage {
 	}
 
 	public String searchTransactionWithDeviceAndGetStatus(Device device, TransactionSearch ts) {
-		int i;
 		logger.info("Select product {}", device.getProductType());
 		WebElementUtils.selectDropDownByVisibleText(productTypeSelect, device.getProductType());
 		logger.info("Search transaction for device {}", device.getDeviceNumber());
@@ -182,7 +181,6 @@ public class TransactionSearchPage extends AbstractBasePage {
 		WebElementUtils.elementToBeClickable(tranDateDDwn);
 		WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, "Transaction Date [T]");
 		clickSearchButton();
-		waitForWicket();
 		waitForWicket();
 		String xPath = String.format(".//td/span[contains(text(),'%s')]", "Wallet to Wallet Transfer(Credit))");
 		return getFinder().getWebDriver().findElement(By.xpath(xPath)).getText();

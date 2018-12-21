@@ -199,7 +199,7 @@ public class CardholderServices {
 	
 	public static CardholderServices cardholderServicesDataProvider(){
 		CardholderServices cardholderService = new CardholderServices();
-		cardholderService.setReplacementReason(MapUtils.fnGetInputDataFromMap("ReplacementResone"));
+		cardholderService.setReplacementReason(MapUtils.fnGetInputDataFromMap("ReplacementReason"));
 		cardholderService.setCardReplacementConfirmationMsg(MapUtils.fnGetInputDataFromMap("ReplaceConfirmMessage"));
 		cardholderService.setBlockCardRemark(MapUtils.fnGetInputDataFromMap("BlockCardRemark"));
 		cardholderService.setBlockConfirmationMsg(MapUtils.fnGetInputDataFromMap("BlockConfirmationMsg"));

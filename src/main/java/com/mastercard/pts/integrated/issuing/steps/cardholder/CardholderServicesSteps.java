@@ -31,7 +31,7 @@ public class CardholderServicesSteps extends AbstractBaseFlows{
 	@Then ("request for device replacement")	
 	public void replaceDeviceRequest(){
 		CardholderServices cardholderService = CardholderServices.cardholderServicesDataProvider();		
-		assertTrue("Replace device request is failed", cardholderServiceflw.selectReplacementForCard(cardholderService).contains("Activated Successfully"));
+		assertTrue("Replace device request has failed", cardholderServiceflw.selectReplacementForCard(cardholderService).contains("Activated Successfully"));
 	}
 	@Given ("replace device with $reasonType")
 	@When ("replace device with $reasonType")
@@ -39,7 +39,7 @@ public class CardholderServicesSteps extends AbstractBaseFlows{
 	public void replaceDeviceRequestWithReason(String reasonType){
 		CardholderServices cardholderService = CardholderServices.cardholderServicesDataProvider();	
 		cardholderService.setReplacementReason(reasonType);
-		assertTrue("Replace device request is failed", cardholderServiceflw.selectReplacementForCard(cardholderService).contains("Activated Successfully"));
+		assertTrue("Replace device request has failed", cardholderServiceflw.selectReplacementForCard(cardholderService).contains("Activated Successfully"));
 	}
 	
 	@Then ("service request for block card")
@@ -47,14 +47,14 @@ public class CardholderServicesSteps extends AbstractBaseFlows{
 	public void serviceRequestBlockCard(){
 		CardholderServices cardholderService = CardholderServices.cardholderServicesDataProvider();		
 		cardholderServiceflw.blockSelectedCard(cardholderService);
-		assertTrue("Block device service request is failed",cardholderServiceflw.verifyBlockCardRequestConfirmMsg().contains("Activated Successfully"));		
+		assertTrue("Block device service request has failed",cardholderServiceflw.verifyBlockCardRequestConfirmMsg().contains("Activated Successfully"));		
 	}
 	
 	@Then ("service request to block a card")
 	@When ("service request to block a card")
 	public void serviceRequestToBlockCard(){
 		CardholderServices cardholderService = CardholderServices.cardholderServicesDataProvider(provider);
-		assertTrue("Block device service request is failed",cardholderServiceflw.requestBlockCard(cardholderService).contains("Device Blocked"));		
+		assertTrue("Block device service request has failed",cardholderServiceflw.requestBlockCard(cardholderService).contains("Device Blocked"));		
 	}
 	
 	@When ("service request for unblock card")
@@ -68,12 +68,12 @@ public class CardholderServicesSteps extends AbstractBaseFlows{
 	@Then ("service request to unblock card")
 	public void serviceRequestforUnblockCard(){
 		CardholderServices cardholderService = CardholderServices.cardholderServicesDataProvider(provider);					
-		assertTrue("Card unblock service request is failed",cardholderServiceflw.unblockSelectedDevice(cardholderService).contains("Unblock Device"));
+		assertTrue("Card unblock service request has failed",cardholderServiceflw.unblockSelectedDevice(cardholderService).contains("Unblock Device"));
 	}
 	
 	@Then ("verify that card is unbloked successfully")
 	public void verifyUnblockCard(){
-		assertTrue("Card unblock service request is failed",cardholderServiceflw.verifyUnblockCardRequestConfirmMsg("Activated Successfully"));
+		assertTrue("Card unblock service request has failed",cardholderServiceflw.verifyUnblockCardRequestConfirmMsg("Activated Successfully"));
 	}
 	
 	@When ("verify selected wallet status")
@@ -84,14 +84,14 @@ public class CardholderServicesSteps extends AbstractBaseFlows{
 	@When ("service request for activate wallet")
 	public void activateSelectedWallet(){
 		CardholderServices cardholderService = CardholderServices.cardholderServicesDataProvider();		
-		assertTrue("Request to activate wallet is failed",cardholderServiceflw.activateWallet(cardholderService).contains("Request has been processed successfully"));
+		assertTrue("Request to activate wallet has failed",cardholderServiceflw.activateWallet(cardholderService).contains("Request has been processed successfully"));
 	}
 	
 	@When ("activate associated wallet for selected device")
 	@Then ("activate associated wallet for selected device")
 	public void activateWalletServiceRequest(){
 		CardholderServices cardholderService = CardholderServices.cardholderServicesDataProvider(provider);		
-		assertTrue("Request to activate wallet is failed",cardholderServiceflw.activateWallet(cardholderService).contains("Request has been processed successfully"));
+		assertTrue("Request to activate wallet has failed",cardholderServiceflw.activateWallet(cardholderService).contains("Request has been processed successfully"));
 	}
 	
 	@Then ("verify that wallet is geting activated")
@@ -112,7 +112,7 @@ public class CardholderServicesSteps extends AbstractBaseFlows{
 	public void deactivateSelectedDeviceWallet(){
 		CardholderServices cardholderService = CardholderServices.cardholderServicesDataProvider(provider);		
 		cardholderServiceflw.deactivateWallet(cardholderService);
-		assertTrue("Service request for deactivate wallet is failed", cardholderServiceflw.deactivateWallet(cardholderService).contains("Request has been processed successfully"));
+		assertTrue("Service request for deactivate wallet has failed", cardholderServiceflw.deactivateWallet(cardholderService).contains("Request has been processed successfully"));
 	}
 	
 	@When ("activate associated wallet for device")
@@ -163,7 +163,7 @@ public class CardholderServicesSteps extends AbstractBaseFlows{
 		CardholderServices cardholderService = CardholderServices.cardholderInternationalServicesDataProvider(provider);
 		cardholderService.setInternationActivationType(activationinPeriod);
 		cardholderServiceflw.activateInternationalTransaction(cardholderService);
-		assertTrue("International Use activation is failed",cardholderServiceflw.activateInternationalTransaction(cardholderService).contains("Activated Successfully"));
+		assertTrue("International Use activation has failed",cardholderServiceflw.activateInternationalTransaction(cardholderService).contains("Activated Successfully"));
 	}
 	
 	@Given ("activate international service for $activationinPeriod")
@@ -172,7 +172,7 @@ public class CardholderServicesSteps extends AbstractBaseFlows{
 	public void activateInternationalTransctionService(String activationType){		
 		CardholderServices cardholderService = CardholderServices.cardholderInternationalServicesDataProvider(provider);
 		cardholderService.setInternationActivationType(activationType);
-		assertTrue("International Use activation is failed", cardholderServiceflw.activateInternationalTransaction(cardholderService).contains("Activated Successfully"));
+		assertTrue("International Use activation has failed", cardholderServiceflw.activateInternationalTransaction(cardholderService).contains("Activated Successfully"));
 	}
 	
 	@Then ("activation of international use from $fromDate to $toDate")

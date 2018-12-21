@@ -56,7 +56,7 @@ public class InternationalUseActivationPage extends ServicesAbstractPage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//*[@class='sectionHead']/td/../following-sibling::tr[1]/td")
 	public MCWebElement responseLbl;
 		
-	public void selectActivationInPeriodRdo(){
+	public void selectActivationInPeriod(){
 		clickWhenClickableCHP(activationInPeriodRdo);
 	}
 	
@@ -76,7 +76,7 @@ public class InternationalUseActivationPage extends ServicesAbstractPage {
 		enterText(activateNHoursInpt, nHours);
 	}
 	
-	public void selectActivationLifeLongRdo(){
+	public void selectActivationLifeLong(){
 		clickWhenClickableCHP(activationForLifeLongRdo);
 	}
 	
@@ -105,16 +105,16 @@ public class InternationalUseActivationPage extends ServicesAbstractPage {
 			internationalActivSubmitBtn();
 			
 		}else if(cardholderService.getInternationActivationType().contains(CardholderServices.LIFELONG_ACTIVATION)){
-			selectActivationLifeLongRdo();
+			selectActivationLifeLong();
 			internationalActivSubmitBtn();	
 			
 		}else if(cardholderService.getInternationActivationType().contains(CardholderServices.PERIOD_ACTIVATION)){
-			selectActivationInPeriodRdo();			
+			selectActivationInPeriod();			
 		}
 		return getTextFromPage(responseLbl);
 	}
 	
-	public String deactivateInternationlTransaction(){
+	public String deactivateInternationalTransaction(){
 		WebElementUtils.selectRadioBtn(internationalDeActivation);
 		clickWhenClickable(activateInternationalUseSubmitBtn);
 		waitForLoaderToDisappear();

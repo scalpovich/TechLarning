@@ -40,7 +40,7 @@ public class CardHolderVirtualCardFlows extends AbstractBaseFlows{
 	}
 	
 	public String verifyVirtualCardRequestStatus(){
-		return virtualPrpdCardReqstPage.getVirtualCardRequesResponse();
+		return virtualPrpdCardReqstPage.getVirtualCardRequestResponse();
 	}
 	
 	public String cancelLvvcRequest(){

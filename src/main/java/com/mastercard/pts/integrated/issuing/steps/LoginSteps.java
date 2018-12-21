@@ -171,7 +171,7 @@ public class LoginSteps extends AbstractBaseFlows {
 
 		if (loginFlows.loginAsCardholderUser(userName, passWord)) {
 			loginFlows.signUpCardHolderUser(loginCardHolderProvider);
-			LoginCardholder.loginCardholderDataProvider().setPassWord("aBcd1234*");
+			LoginCardholder.loginCardholderDataProvider().setPassword("aBcd1234*");
 			loginFlows.loginAsCardholderUserAfterSignUp(userName, passWord);
 		}
 	}
