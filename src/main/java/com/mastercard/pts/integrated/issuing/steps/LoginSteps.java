@@ -234,4 +234,11 @@ public class LoginSteps extends AbstractBaseFlows {
 		Device device = context.get(ContextConstants.DEVICE);
 		loginFlows.selectDeviceForOperation(device);
 	}
+	
+	@Given ("select \"$deviceType\" for operation")
+	@When ("select \"$deviceType\" for operation")
+	@Then ("select \"$deviceType\" for operation")
+	public void selectCreatedVirtualDevice(String deviceType){
+		loginFlows.selectVirtaulDevice(deviceType);
+	}
 }

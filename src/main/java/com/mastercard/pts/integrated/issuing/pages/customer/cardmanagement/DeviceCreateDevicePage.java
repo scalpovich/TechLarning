@@ -290,7 +290,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 		verifyOperationStatus();
 
-		// scolling "PageUp" is needed here as the Menu item is not visible
+		// scrolling "PageUp" is needed here as the Menu item is not visible
 		SimulatorUtilities sm = new SimulatorUtilities();
 		sm.pressPageUp();
 

@@ -43,8 +43,8 @@ public class CardHolderVirtualCardFlows extends AbstractBaseFlows{
 		return virtualPrpdCardReqstPage.getVirtualCardRequesResponse();
 	}
 	
-	public void cancelLvvcRequest(){
+	public String cancelLvvcRequest(){
 		LimitedValidityVirtualCardCancelPage page = navigate.navigateToPage(LimitedValidityVirtualCardCancelPage.class);
-		page.cancelLvccRequest();
+		return page.cancelLvccRequest();
 	}
 } 

@@ -25,6 +25,11 @@ public class LimitedValidityVirtualCardCancelPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//table[@class='modelFormClass']/tbody/tr[3]/td")
 	private MCWebElement permissionForVirtualCardMsg;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind ="mpts.cardHolderPortal.button.submit")
+	private MCWebElement submitButton;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//*[@class='sectionHead']/td/../following-sibling::tr[1]/td")
+	private MCWebElement responseLbl;
 		
 	public boolean verifyPermissionCardholder(){
 		return isElementPresent(permissionForVirtualCardMsg);
@@ -36,8 +41,10 @@ public class LimitedValidityVirtualCardCancelPage extends AbstractBasePage {
 		verifyButton("OK");
 	}
 	
-	public void cancelLvccRequest(){
-		//TO DO
+	public String cancelLvccRequest(){
+		clickWhenClickable(submitButton);
+		waitForLoaderToDisappear();
+		return getTextFromPage(responseLbl);
 	}
 
 	@Override

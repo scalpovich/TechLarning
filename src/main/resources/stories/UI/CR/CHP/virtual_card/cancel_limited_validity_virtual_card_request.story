@@ -13,8 +13,8 @@ When User fills Device Plan for "prepaid" "emv" card with no pin
 And for Limited Validity Virtual Card [8] User fills Supplementary Device Plan for prepaid product for MASTERCARD [02]
 And fills Wallet Plan for prepaid product and program Corporate Travel Card - Multi Currency [6]
 And User Add-on Device fills Existing Program Corporate Travel Card - Multi Currency [6] section for prepaid product for MASTERCARD [02]
-And for Primary Device and New Client user fills Device Range section for credit product
-And for Add-on Device and Existing Client user fills Device Range section for credit product
+And for Primary Device and New Client user fills Device Range section for prepaid product
+And for Add-on Device and Existing Client user fills Device Range section for prepaid product
 And add menus to access card holder portal
 And prepaid device is created using new device screen for Corporate [1] and Primary Device [P] and New Client [N] and EMV Card [2]
 And processes pre-production batch for prepaid
@@ -28,5 +28,6 @@ When cardholder complete registration and login into portal
 Then service request to create Limited Validity Virtual Card [8]
 
 Scenario:3 Cancel the requested limited validity virtual card 
+Given select "Limited Validity Virtual Card" for operation
 Then cancel limited validity virtual card request
 And user logouts from cardholder portal

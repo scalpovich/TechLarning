@@ -8,12 +8,17 @@ import com.mastercard.pts.integrated.issuing.configuration.Portal;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.cardholder.LoginCardholder;
+import com.mastercard.pts.integrated.issuing.pages.cardholder.CardholderHomePage;
+import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
 @Component
 public class LoginFlows extends AbstractBaseFlows {
 
 	@Autowired
 	private TestContext context;
+	
+	@Autowired
+	private Navigator navigator;
 
 	public void loginAsAgentUser() {
 		loginAgentPage.loginAsUser();
@@ -91,5 +96,10 @@ public class LoginFlows extends AbstractBaseFlows {
 	
 	public void selectDeviceForOperation(Device device){
 		loginPage.selectWalletForDevice(device);
+	}
+	
+	public void selectVirtaulDevice(String deviceType){
+		CardholderHomePage page = navigator.navigateToPage(CardholderHomePage.class);
+		page.selectVirtaulDevice(deviceType);
 	}
 }

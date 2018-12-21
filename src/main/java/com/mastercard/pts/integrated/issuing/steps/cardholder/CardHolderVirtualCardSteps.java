@@ -42,7 +42,8 @@ public class CardHolderVirtualCardSteps extends AbstractBaseSteps{
 	@When ("cancel limited validity virtual card request")
 	@Then ("cancel limited validity virtual card request")
 	public void cancelReqstLimitedValidityVirtCard(){
-		chpVirtualCardFlow.cancelLvvcRequest();		
+		chpVirtualCardFlow.cancelLvvcRequest();	
+		Assert.assertTrue("Limited validity virtual device cancel request failed", chpVirtualCardFlow.cancelLvvcRequest().toLowerCase().contains("successfully"));
 	}
 	
 	@Then ("verify virtual prepaid card request status")
