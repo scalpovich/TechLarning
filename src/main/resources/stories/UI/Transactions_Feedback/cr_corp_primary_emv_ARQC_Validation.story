@@ -7,7 +7,6 @@ Meta:
 @CreditRegression
 @CreditWithPin
 @StoryName credit_emv_retail
-@Abhishek_Credit
 Scenario:1.1 creation of mastercard_corporate_primary_EMV Card credit device
 Meta:
 @TestId TC548377

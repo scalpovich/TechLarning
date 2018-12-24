@@ -21,7 +21,7 @@ And credit device is created using new device screen for Individual and Primary 
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pingeneration batch using new Device for Supplementary
-Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
+And device has "normal" status
 And user selects E-commerce Activation/Deactivation [304] status
 And user sign out from customer portal
 And embossing file batch was generated in correct format
