@@ -2,15 +2,15 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.helpdesk;
 
 import java.util.List;
 import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device; 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
 import com.mastercard.pts.integrated.issuing.domain.helpdesk.ChangeAddressRequest;
@@ -151,6 +151,11 @@ public class HelpDeskFlows extends AbstractBasePage {
 	public String searchForNewDevice(HelpDeskGeneral helpdeskgettersetter) {
 		generalPage = navigator.navigateToPage(GeneralPage.class);
 		return searchpanelhelpdesk.searchNewDevice(helpdeskgettersetter.getProductType(),helpdeskgettersetter.getDeviceNumber());
+	}
+	
+	public Device searchForClientCustomerIDForNewDevice(Device device, HelpDeskGeneral helpdeskgettersetter) {
+		generalPage = navigator.navigateToPage(GeneralPage.class);
+		return searchpanelhelpdesk.getClientCustomerID(device, helpdeskgettersetter);
 	}
 	
 	public String searchForNewApplication(HelpDeskGeneral helpdeskgettersetter) {		

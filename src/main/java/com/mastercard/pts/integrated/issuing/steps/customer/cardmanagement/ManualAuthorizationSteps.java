@@ -4,6 +4,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertThat;
 
 import org.jbehave.core.annotations.Composite;
+import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Auth
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.workflows.LoginWorkflow;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ManualAuthorizationWorkflow;
@@ -29,7 +31,7 @@ public class ManualAuthorizationSteps {
 
 	@Autowired
 	private KeyValueProvider provider;
-	
+
 	@Autowired
 	private ManualAuthorizationWorkflow manualAuthorizationWorkflow;
 	
@@ -37,12 +39,14 @@ public class ManualAuthorizationSteps {
 	private LoginWorkflow loginWorkflow;
 	
 	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
-	private String successMessage;
 	private String errorMessage = "";
 	private static final String INVALID_DEVICE_NO = "Invalid Device number";
-
 	
+	private String statusMessage;
+
+	@Given("user raises an authorization request only")
 	@When("user raises an authorization request only")
+	@Then("user raises an authorization request only")
 	public void whenUserRaisesAnAuthorizationRequest(){
 		AuthorizationRequest request = AuthorizationRequest.createWithProvider(provider);
 		Device device = context.get(ContextConstants.DEVICE);
@@ -51,8 +55,21 @@ public class ManualAuthorizationSteps {
 		logger.info("Transaction Date->"+loginWorkflow.getInstitutionDateLogin());
 		context.put("transaction_date",trxDate);
 		request.setCvv2(device.getCvv2Data());
-		successMessage = manualAuthorizationWorkflow.authorizeDevice(request);
+		statusMessage = manualAuthorizationWorkflow.authorizeDevice(request);
 	}
+
+	@Given("user raises an authorization request with invalid MCC")
+	@When("user raises an authorization request with invalid MCC")
+	@Then("user raises an authorization request with invalid MCC")
+	public void whenUserRaisesAnAuthorizationRequestInvalidMCC() {
+		AuthorizationRequest request = AuthorizationRequest.createWithProvider(provider);
+		Device device = context.get(ContextConstants.DEVICE);
+		request.setDeviceNumber(device.getDeviceNumber());
+		request.setMcc(provider.getString(Constants.MCC_CODE_INVALID));
+		statusMessage = manualAuthorizationWorkflow.authorizeDevice(request);
+	}
+
+
 	
 	@Then("user raises an authorization request")
 	@When("user raises an authorization request")
@@ -76,7 +93,16 @@ public class ManualAuthorizationSteps {
 	@When("status of request is \"approved\"")
 	@Then("status of request is \"approved\"")
 	public void thenStatusOfRequestIsapproved(){
-		 assertThat("Authorization is successful", successMessage, containsString("Authorization is successful"));
+		assertThat("Authorization is successful", statusMessage,
+				containsString("Authorization is successful"));
+	}
+
+	@Then("status of request is declined with reason $declineReason")
+	@When("status of request is declined with reason $declineReason")
+	public void thenVerifyDeclineStatusCode(String declineReason) {
+		assertThat("Authorization is declined ", statusMessage,
+				containsString(manualAuthorizationWorkflow
+						.getDeclineReasonMessage(declineReason)));
 	}
 }
 

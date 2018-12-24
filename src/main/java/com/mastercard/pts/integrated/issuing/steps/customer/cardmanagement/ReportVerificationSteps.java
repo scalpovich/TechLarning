@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+import java.util.List;
+
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -40,8 +42,11 @@ public class ReportVerificationSteps {
 	private DBUtility dbUtils;
 	
 	private static final Logger logger = LoggerFactory.getLogger(ReportVerificationSteps.class);
+	
+	private String txtFormNumber = "form number";
 
 	@Given("validate the $reportField in $reportName report")
+	@When("validate the $reportField in $reportName report")
 	@Then("validate the $reportField in $reportName report")
 	public void validateGenericReport(String reportFields, String reportName) {
 		Device device = context.get(ContextConstants.DEVICE);
@@ -54,11 +59,10 @@ public class ReportVerificationSteps {
 			logger.info("No Report Type is present here!!");
 		}
 		report.setDeviceNumber(device.getDeviceNumber());
+			report.setFieldToValidate("MCC",report.getHighRiskMcc());
+			report.setFieldToValidate("Country",report.getHighRiskCountry());
+			report.setFieldToValidate("Merchant",report.getHighRiskMerchant());
 		report.setUsername(context.get(UserManagementSteps.USERNAME));
-		for(String field : reportFields.split(",")){
-				report.setFieldToValidate(field, context.get(ConstantData.fromShortName(field)));
-				logger.info("value of {field} is {value}",field,context.get(ConstantData.fromShortName(field)));
-		}
 		reportVerificationWorkflow.verifyGenericReport(report);		
 	}
 	
@@ -71,7 +75,7 @@ public class ReportVerificationSteps {
 		report.setFieldToValidate("application number", device.getApplicationNumber());
 		reportVerificationWorkflow.verifyReportGenerationAppRejectReport(report);
 	}
-
+	
 	@Then("verify loyalty points in loyalty report against $promoPlan for $type device")
 	public void verifyLoyaltyReport(String promoPlan, String type) {
 		Device device = context.get(ContextConstants.DEVICE);
@@ -87,5 +91,17 @@ public class ReportVerificationSteps {
 		report.setLoyaltyPromotionPlan(promoPlan);
 		String loyaltyPoints = reportVerificationWorkflow.downloadAndVerifyLoyaltyReport(report);
 		Assert.assertEquals(context.get(Constants.AVAILABLE_LOYALTY_POINTS), Double.parseDouble(loyaltyPoints));
+	}
+	
+	@When("verify duplicate applications in application reject report for upload")
+	@Then("verify duplicate applications in application reject report for upload")
+	public void verifyFieldInApplicationRejectReportForUpload() {
+		GenericReport report = GenericReport.createWithProvider(provider);
+		report.setPassword(((String)context.get(UserManagementSteps.USERNAME)).substring(0,4)+(new DateUtils()).getDateDDMMFormat());
+		List<String> allFormNumbers = context.get(CreditConstants.ALL_FORM_NUMBERS);
+		allFormNumbers.forEach( formNumber -> {
+			report.setFieldToValidate(txtFormNumber, formNumber);
+			reportVerificationWorkflow.verifyDuplicateAppInAppRejectReport(report);
+		});
 	}
 }

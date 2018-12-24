@@ -36,13 +36,15 @@ public class ApplicationScoringPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview")
 	private MCWebElement searchTable;
 
+	private int retryLimit = 20;
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.elementToBeClickable(batchNoColumn));
 	}
 
 	public void processAllApplicationScoring() {
-		if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER))) {
+		if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER))&& --retryLimit > 0) {
 			clickWhenClickable(btnApplicationScoring);
 			processAllApplicationScoring();
 		}
@@ -52,5 +54,6 @@ public class ApplicationScoringPage extends AbstractBasePage {
 	public void clickProcessALL() {
 		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
 		clickProcessSelectedButton();
+		verifyOperationStatus();
 	}
 }

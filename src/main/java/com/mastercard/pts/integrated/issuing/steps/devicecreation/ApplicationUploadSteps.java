@@ -1,5 +1,7 @@
 package com.mastercard.pts.integrated.issuing.steps.devicecreation;
 
+import java.io.File;
+
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -26,6 +28,12 @@ import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProcessBatchesFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.SearchApplicationDetailsFlows;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ResendPinRequest;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.BatchProcessWorkflow;
 
 @Component
 public class ApplicationUploadSteps {
@@ -63,9 +71,15 @@ public class ApplicationUploadSteps {
 	private DataProvider provider;
 	
 	@Autowired
-	TestContext context;
+	private TestContext context;
 	
-	private String ExpectedRejectedTxt = "Reuter reference number is Business mandatory field.";
+	@Autowired
+	private BatchProcessWorkflow batchProcessWorkflow;
+	
+	@Autowired
+	private KeyValueProvider keyValueProvider;
+	
+	private String txtExpectedRejected = "Caught in Dedupe ./SDN matching.";
 	
 	public SearchApplicationDetails searchDomain;
 
@@ -99,13 +113,12 @@ public class ApplicationUploadSteps {
 		processBatch.setJoBID(processBatchesFlows.processUploadBatches(batchName, fileName));
 		SimulatorUtilities.wait(5000);
 		Assert.assertTrue(processBatchesFlows.verifyProcessUploadBatch(processBatch, fileName));
-		
 	}
 
-	@When("Application Upload rejected due to missing Business Mandatory feild")
+	@When("Application Upload rejected due to missing Business Mandatory field")
 	public void applicationUploadRejectedDueToMissingBMF(){
 		String rejectedDueToMissingMandatory = context.get(ContextConstants.REJECTED_FILE_UPLOAD);
-		Assert.assertEquals("Reuter reference number is Business mandatory field.",rejectedDueToMissingMandatory,ExpectedRejectedTxt);
+		Assert.assertEquals("Application not Caught in Dedupe ./SDN matching", txtExpectedRejected, rejectedDueToMissingMandatory);
 	}
 	
 	@When("user creates $application_upload_file batch file and uploads it on server for $customerType")
@@ -272,5 +285,42 @@ public class ApplicationUploadSteps {
 		PinGenerationBatch batch = new PinGenerationBatch();
 		batch.setProductType(ProductType.fromShortName(type));
 		batchProcessFlows.processPinProductionBatchAllForFileUpload(batch);
+	}
+	
+	@When("User creates UPLOAD $batchName batch")
+	@Then("User creates UPLOAD $batchName batch")
+	public void thenUserCreatesUploadPinFileAcknowledgementBatch(String batchName) {
+		ProcessBatches batch=new ProcessBatches();
+		String batchFile = context.get(ContextConstants.PIN_OFFSET_FILE);
+		batch.setBatchFileName((new File(batchFile)).getName());
+		batch.setJoBID(processBatchesFlows.processUploadBatches(batchName, batch.getFileName()));
+		SimulatorUtilities.wait(5000);
+		Assert.assertTrue(processBatchesFlows.verifyFileProcessFlowsUpload(batch, batch.getFileName()));
+	}	 
+	
+	@When("$type processes DOWNLOAD $batchName batch for $fileType File Type")
+	@Then("$type processes DOWNLOAD $batchName batch for $fileType File Type")
+	public void thenUserCreatesCarrierDownloadBatch(String type, String batchName, String fileType) {
+
+		ProcessBatches batch= ProcessBatches.getBatchDataForDownload(keyValueProvider);
+		batch.setBatchName(batchName);
+		batch.setProductType(ProductType.fromShortName(type));
+		batch.setFileType(fileType);
+		batchProcessWorkflow.processCarrierDownloadBatch(batch);
+	}	 
+	
+	@When("$type processes resend pin request batch using new Device")
+	@Then("$type processes resend pin request batch using new Device")
+	public void whenProcessesResendPinRequestBatchUsingNewDevice(String type) {
+		ResendPinRequest batch = new ResendPinRequest();
+		batch.setProductType(ProductType.fromShortName(type));
+		batch.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
+		batchProcessWorkflow.processResendPinRequestBatch(batch);
+	}
+	
+	@When("process batch for $batchType type and Batch name $batchName")
+	public void submitJobForProcessing(String batchType, String batchName)
+	{
+		processBatchesFlows.processDownloadBatches(batchType,batchName);
 	}
 }

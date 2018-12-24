@@ -16,5 +16,5 @@ And User Primary Device fills New Program Retail Travel Card - Single Currency [
 And User fills Business Mandatory Fields Screen for Prepaid product
 And for Primary Device and New Client user fills Device Range section for prepaid product
 And user creates Application Upload Prepaid batch file with duplicate data and upload it on server for Individual for prepaid
-And Application Upload rejected due to missing Business Mandatory feild
+And Application Upload rejected due to missing Business Mandatory field
 Then user logouts from customer portal

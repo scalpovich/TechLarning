@@ -7,10 +7,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ClientPhotoFlatFileDownloadBatch;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -24,15 +24,31 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class ClientPhotoFlatFileDownloadBatchPage extends AbstractBasePage {
 
 	private static final Logger logger = LoggerFactory.getLogger(ClientPhotoFlatFileDownloadBatchPage.class);
-
-	@Autowired
-	TestContext context;
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='cardNumber']")
+	private MCWebElement txtDeviceNumber;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[fld_fqn='batchNumber']")
 	private MCWebElement txtBatchNumber;
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind =  "input[fld_fqn='batchDate']" )
 	private MCWebElement batchDate;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Product Type')]//following-sibling::td[2]//select")
+	private MCWebElement productTypeDDwn;
+
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Action Code')]//following-sibling::td[2]//select")
+	private MCWebElement actionCodeDDwn;
+
+	public String processClientPhotoFlatFileDownloadBatch(ClientPhotoFlatFileDownloadBatch batch, Device device) {
+		WebElementUtils.selectDropDownByVisibleText(productTypeDDwn, batch.getProductType());
+		WebElementUtils.enterText(txtDeviceNumber, device.getDeviceNumber());
+
+		waitAndSearchForRecordToExist();
+		verifyOperationStatus();
+		String successMessage[] = getSuccessMessage().split(" ");
+		return successMessage[successMessage.length-1];		        
+	}
 	
 	public boolean isBatchDatePresent(){
 		return isElementPresent(batchDate);

@@ -60,6 +60,7 @@ import com.mastercard.testing.mtaf.bindings.element.ElementFinderProvider;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
+import com.mastercard.testing.mtaf.bindings.exception.ElementNotFoundException;
 import com.mastercard.testing.mtaf.bindings.page.AbstractPage;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
@@ -316,6 +317,9 @@ public abstract class AbstractBasePage extends AbstractPage {
     @PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
 	protected MCWebElement institutionDateTxt;
     
+    @PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='No']")
+	private MCWebElement noBtn;
+	
     int retryCounter =0;
 	
 	@Autowired
@@ -337,6 +341,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	protected void clickProcessAllButton() {
 		clickWhenClickable(processAll);
+	}
+	
+	protected void clickNoButton(){
+		clickWhenClickable(noBtn);
 	}
 
 	protected void clickNextButton() {
@@ -547,6 +555,15 @@ public abstract class AbstractBasePage extends AbstractPage {
 
 	}
 	
+	protected String verifyOperationStatusAndgetJobID() {
+		WebElement successMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_MESSAGE_LOCATOR));
+		String successMessage = successMessageLbl.getText();
+		int successMessageLength = successMessage.length();
+		int jobIdLength = 20;
+		context.put("JOB_ID",successMessage.substring(successMessageLength-jobIdLength,successMessageLength));
+		logger.info(SUCCESS_MESSAGE, successMessageLbl.getText());
+		return successMessage.substring(successMessageLength-jobIdLength,successMessageLength);
+	}
 	protected boolean waitForRow() {
 		try {
 			waitForWicket();
@@ -1989,8 +2006,51 @@ public abstract class AbstractBasePage extends AbstractPage {
 			}
 		}
 	}	
-	
+
+	protected void waitForBatchStatus(MCWebElement ele) {
+		try {
+			WebElementUtils.waitForWicket(driver());
+			for (int l = 0; l < 21; l++) {
+				while ("PENDING [0]".equalsIgnoreCase(ele.getText())
+						|| "IN PROCESS [1]".equalsIgnoreCase(ele.getText())) {
+					Thread.sleep(10000); // waiting for page auto refresh
+					clickSearchButton();
+				}
+			}
+
+		} catch (NoSuchElementException | InterruptedException e) {
+			logger.info("Failed at batch status: ", e);
+		}
+	}
 	public String getFirstRowColValueFor(int col) {
 		return firstRowColumnValues.getElements().get(col).getText();
 	}
+	
+	public void findByLabelAndEnterValueInElement(String label,String value){
+		String webElements = "*:not([style='display: none;'])>input:not(.btn_or_sbt), *:not([style='display: none;'])>select,input[type='checkbox'],.labeltextf";
+	    
+	    String webElementLabel = ".displayName";
+	    
+		MCWebElements fieldType = getFinder().findMany(FindBy.CSS,webElements);
+        List<String> fieldLabel = new ArrayList<>();
+        List<MCWebElement> labelElement = getFinder().findMany(FindBy.CSS,webElementLabel).getElements();
+        labelElement.forEach(element->fieldLabel.add(element.getText()));
+        int index = fieldLabel.indexOf(label);
+        if(index!=-1){
+        	String tagName =  fieldType.getElements().get(index).getTagName();
+        	switch(tagName){
+        	case "input" :
+        		enterValueinTextBox(fieldType.getElements().get(index),value);
+        		break;
+        	case "select" :
+        		selectByVisibleText(fieldType.getElements().get(index), value);
+        		break;
+        	default:
+        		throw new ElementNotFoundException("Element with tag "+tagName+" not found!");
+        	}
+        		
+        } else {
+        	throw new ElementNotFoundException("Element with label " + label + " not found!");
+        }       
+   }
 }

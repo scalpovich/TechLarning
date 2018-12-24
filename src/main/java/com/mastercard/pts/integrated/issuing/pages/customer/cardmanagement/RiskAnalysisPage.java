@@ -35,8 +35,8 @@ public class RiskAnalysisPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Batch No')]")
 	private MCWebElement batchNoColumn;
 	
-	@Autowired
-	TestContext context;
+   @Autowired
+   TestContext context;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	private MCWebElement saveBtn;
@@ -56,8 +56,10 @@ public class RiskAnalysisPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "table.dataview")
 	private MCWebElement searchTable;
 
+	private int retryLimit = 20;
+
 	public void riskAnalysisBatchProcess() {
-		if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER))) {
+		if (!WebElementUtils.isTextAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER)) && --retryLimit > 0) {
 			clickWhenClickable(riskAnalysisBtn);
 			riskAnalysisBatchProcess();
 		}
@@ -67,6 +69,12 @@ public class RiskAnalysisPage extends AbstractBasePage {
 	public void clickProcessALL() {
 		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
 		clickProcessSelectedButton();
+	}
+	
+	public String processSelected() {
+		clickOncheckBoxIfBatchAvailableinTable(searchTable, context.get(CreditConstants.PRIMARY_BATCH_NUMBER));
+		clickProcessSelectedButton();
+		return getSuccessMessage();
 	}
 
 	public List<String> allBatchNumberRetrieval() {

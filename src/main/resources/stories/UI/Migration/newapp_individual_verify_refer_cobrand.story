@@ -22,7 +22,7 @@ And user processes close batch for new Application
 And user processesAll riskAnalysis batch for new Application
 And user processesAll applicationScoring batch for new Application
 And user refer the credit application device
-And user processesAll creditBureauVerification batch for new Application
+And user process batch in credit bureau verification for new Application
 And user processes deviceGeneration batch for new Application
 And user searches for created application
 And credit processes pre-production batch using new Application

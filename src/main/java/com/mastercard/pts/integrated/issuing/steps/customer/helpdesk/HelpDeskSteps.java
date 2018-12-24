@@ -1,5 +1,6 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.helpdesk;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -79,6 +80,9 @@ public class HelpDeskSteps {
 	private String clientID;
 	private String loginType = "login";
 	private CardToCash cardtocash;
+	private static final String STOPLIST_NOTES = "STOPLIST_NOTES";
+	private static final String STOPLIST_REASON = "STOPLIST_REASON";
+	private static final String WITHDRAWAL_REASON = "WITHDRAWAL_REASON";
 	
 	@Autowired
 	private TestContext context;
@@ -734,6 +738,18 @@ public class HelpDeskSteps {
 		}
 	}
 	
+	@Then("User search for new device on helpdesk screen for $productType and validates the mandatory field")
+	@When("User search for new device on helpdesk screen for $productType and validates the mandatory field")
+	public void thenUserSearchForClientCustomerIDOnHelpdeskScreen(String productType) {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpDeskGetterSetter.setDeviceNumber(device.getDeviceNumber());
+		helpDeskGetterSetter.setProductType(ProductType.fromShortName(productType));
+		device = helpdeskFlows.searchForClientCustomerIDForNewDevice(device, helpDeskGetterSetter);
+		Assert.assertNotNull("Client Customer ID is Null", device.getMandatoryFieldValue());
+		context.put(CreditConstants.CLIENT_CUSTOMER_ID, device.getMandatoryFieldValue());
+		context.put(ContextConstants.DEVICE, device);
+	}
+	
 	@Then("User search for new device Supplementary on search screen for $productType and validates the status as $NORMAL")
 	@When("User search for new device Supplementary on search screen for $productType and validates the status as $NORMAL")
 	public void thenUserSearchForDeviceOnSearchScreenForSupplementary(String productType, String status) {
@@ -959,6 +975,25 @@ public class HelpDeskSteps {
 	public void compareBalanceDetails(String payment){
 		helpdeskWorkflow.compareBalanceDetailsPostPayments(payment);
 	}
+
+
+	@When("user stop lists the device")
+	public void stopListDevice() {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskGeneral.setNotes(provider.getString(STOPLIST_NOTES));
+		helpdeskGeneral.setReason(provider.getString(STOPLIST_REASON));
+		helpdeskWorkflow.raiseStoplistRequest(device, helpdeskGeneral);
+	}
+
+	@When("user withdraws the stoplisted device")
+	public void withdrawStoplistedDevice() {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskGeneral.setReason(provider.getString(WITHDRAWAL_REASON));
+		helpdeskWorkflow.withdrawStoplistDeviceFlows(helpdeskGeneral, device);
+	}
+
 	
 	@When("user verify $label value for $category category is $value")
 	public void assertionForUnpaidAndAuthFlag(String label,String category,String value){
@@ -1111,5 +1146,27 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.navigateToLoyaltyDetails(device);
 		Map<String, String> points = helpdeskWorkflow.getLoyaltyDetails();
 		return points;
+	}
+	
+	@Then("verifies Loan Cancellation request is \"declined\"")
+	public void thenLoanCancellationRequestIsDeclined() {
+		helpdeskGeneral = HelpdeskGeneral.createWithProviderWithCreditCardLimits(provider);
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		helpdeskGeneral.setServiceCode(ConstantData.LOAN_CANCELLATION_SR);
+		Device device = context.get(ContextConstants.DEVICE);
+		LoanPlan loanPlan = context.get(ContextConstants.LOAN_PLAN);
+		assertThat("Loan Cancellation request is approved",
+				helpdeskWorkflow.raiseLoanCancellationRequestToVerifyErroMessage(loanPlan, device, helpdeskGeneral),
+				containsString("Loan cancellation not allowed"));
+
+	}
+	
+	@When("user verifies $amountType after payment return")
+	@Then("user verifies $amountType after payment return")
+	public void verifyUnbilledPaymentAfterReversal(String amountType)
+	{
+		Device device = context.get(ContextConstants.DEVICE);
+		HashMap<String, String> helpdeskValues = helpdeskWorkflow.noteDownRequiredValues(device.getDeviceNumber());
+		assertThat("Invalid Unbilled amount", helpdeskValues.get(amountType), equalTo(ContextConstants.ZERO_UNBILLED_PAYMENT));
 	}
 }

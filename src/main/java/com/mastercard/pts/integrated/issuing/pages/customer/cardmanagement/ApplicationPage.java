@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceRange;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -70,6 +71,18 @@ public class ApplicationPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(fileTypeAuthReportDDwn, txtFileType);
 		SimulatorUtilities.wait(5000);
 		generateReportBtn.click();
+		return verifyReportDownloaded(reportFileName);
+	}
+	
+	public String generateApplicationRejectReportForUpload(String reportFileName) {
+		WebElementUtils.selectDropDownByVisibleText(selectReportDDwn, applicationRejectReport);
+		clicksearchButtonElement();
+		DeviceRange deviceRange = context.get(ContextConstants.DEVICE_RANGE);
+		Program program = context.get(ContextConstants.PROGRAM);
+		selectByVisibleText(productTypeAuthReportDDwn, deviceRange.getProductType().split(" ")[0]);
+		selectByVisibleText(programNameAuthReportDDwn, program.getProgramCode());
+		WebElementUtils.selectDropDownByVisibleText(fileTypeAuthReportDDwn, txtFileType);
+		clickWhenClickable(generateReportBtn);
 		return verifyReportDownloaded(reportFileName);
 	}
 	

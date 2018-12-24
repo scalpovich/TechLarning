@@ -1,6 +1,7 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import org.jbehave.core.annotations.Then;
+import org.jbehave.core.annotations.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,10 +28,10 @@ public class DeviceTrackingSteps {
 	private DeviceTrackingWorkflow deviceTrackingWorkflow;
 
 	@Then("new fields are added in device tracking screen")
+	@When("new fields are added in device tracking screen")
 	public void thenNewFieldAreAddedInDeviceTrackingScreen(){
-		
 		Device device = context.get(ContextConstants.DEVICE);
-		deviceDetailsWorkflow.findAndPutDeviceApplicationNumberInContext();
+		deviceDetailsWorkflow.findAndPutDeviceApplicationNumberInContext(device);
 		deviceTrackingWorkflow.checkForNewFieldsAdded(device);
 	}
 
