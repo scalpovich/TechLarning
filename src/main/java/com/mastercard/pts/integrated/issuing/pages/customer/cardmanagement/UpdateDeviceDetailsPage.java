@@ -24,7 +24,7 @@ public class UpdateDeviceDetailsPage extends AbstractCardManagementPage {
 	
 	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "devicePromoPlanCode:input:dropdowncomponent")
-	protected MCWebElement devicePromotionPlanDdown;
+	protected MCWebElement devicePromotionPlanDdwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	protected MCWebElement saveBtn;
@@ -47,14 +47,12 @@ public class UpdateDeviceDetailsPage extends AbstractCardManagementPage {
 	public void updateDevieWithPromotionPlan(Device device,DevicePromotionPlan promotionPlan){
 		searchDevice(device);
 		openEditDevice();
-		runWithinPopup("Edit Device Details",()->{
-			
+		runWithinPopup("Edit Device Details",()->{			
 			if(Objects.nonNull(promotionPlan.getPlanDescription())){
-				selectByVisibleText(devicePromotionPlanDdown, promotionPlan.buildDescriptionAndCode());
+				selectByVisibleText(devicePromotionPlanDdwn, promotionPlan.buildDescriptionAndCode());
 			}else{
-				selectByVisibleText(devicePromotionPlanDdown, device.getAccountNumber());
+				selectByVisibleText(devicePromotionPlanDdwn, device.getAccountNumber());
 			}
-			
 			clickWhenClickable(saveBtn);
 			verifyRecordMarkedForUpdationStatusSuccess();
 		});

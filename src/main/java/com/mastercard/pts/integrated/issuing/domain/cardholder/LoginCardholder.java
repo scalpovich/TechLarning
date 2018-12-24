@@ -18,10 +18,10 @@ public class LoginCardholder {
 	String passWord;
 	String newPassword;
 	String cardHolderTransPassword;	
-	String FirstSecurityQst;
-	String FirstSecurityAnsw;
-	String SecondSecurityQst;
-	String SecondSequrityAnsw;	
+	String firstSecurityQst;
+	String firstSecurityAnsw;
+	String secondSecurityQst;
+	String secondSequrityAnsw;	
 	
 	public String getNewPassword() {
 		return newPassword;
@@ -40,35 +40,35 @@ public class LoginCardholder {
 	}
 
 	public String getFirstSecurityQst() {
-		return FirstSecurityQst;
+		return firstSecurityQst;
 	}
 
 	public void setFirstSecurityQst(String firstSequrityQst) {
-		FirstSecurityQst = firstSequrityQst;
+		firstSecurityQst = firstSequrityQst;
 	}
 
 	public String getFirstSecurityAnsw() {
-		return FirstSecurityAnsw;
+		return firstSecurityAnsw;
 	}
 
 	public void setFirstSecurityAnsw(String firstSequrityAnsw) {
-		FirstSecurityAnsw = firstSequrityAnsw;
+		firstSecurityAnsw = firstSequrityAnsw;
 	}
 
 	public String getSecondSecurityQst() {
-		return SecondSecurityQst;
+		return secondSecurityQst;
 	}
 
 	public void setSecondSecurityQst(String secondSequrityQst) {
-		SecondSecurityQst = secondSequrityQst;
+		this.secondSecurityQst = secondSequrityQst;
 	}
 
 	public String getSecondSecurityAnsw() {
-		return SecondSequrityAnsw;
+		return secondSequrityAnsw;
 	}
 
 	public void setSecondSequrityAnsw(String secondSequrityAnsw) {
-		SecondSequrityAnsw = secondSequrityAnsw;
+		this.secondSequrityAnsw = secondSequrityAnsw;
 	}
 
 	public String getUserName() {
@@ -79,7 +79,7 @@ public class LoginCardholder {
 		this.userName = userName;
 	}
 	
-	public String getPassWord() {
+	public String getPassword() {
 		return passWord;
 	}
 	public void setPassword(String passWord) {

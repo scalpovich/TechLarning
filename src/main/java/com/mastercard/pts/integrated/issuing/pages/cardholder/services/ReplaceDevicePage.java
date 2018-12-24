@@ -29,8 +29,8 @@ public class ReplaceDevicePage extends ServicesAbstractPage {
 		selectByText(replacementResone, optionName);
 	}
 	
-	public String deviceReplacementRequest(CardholderServices replaceMenetOption ){
-		selectReplacementOption(replaceMenetOption.getReplacementReason());
+	public String deviceReplacementRequest(CardholderServices replacementOption ){
+		selectReplacementOption(replacementOption.getReplacementReason());
 		clickWhenClickableCHP(replacementSubmitBtn);
 		return getTextFromPage(responseLbl);
 	}

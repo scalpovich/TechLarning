@@ -23,7 +23,7 @@ public class CardHolderVirtualCardFlows extends AbstractBaseFlows{
 	
 	LimitedValidityVirtualCardCancelPage cancelVirtualLimitValidityCard;	
 			
-	public String sbmtRreqForVirtualPrepardCard(CardholderServices cardholderService){
+	public String sbmtReqForVirtualPrepaidCard(CardholderServices cardholderService){
 		virtualPrpdCardReqstPage = navigate.navigateToPage(RequestForLimitedValidityVirtualCardPage.class);
 		return virtualPrpdCardReqstPage.submitRequestForVirtualCard(cardholderService);
 	}

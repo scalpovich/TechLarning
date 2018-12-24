@@ -26,7 +26,7 @@ public class LimitedValidityVirtualCardCancelPage extends AbstractBasePage {
 	private MCWebElement permissionForVirtualCardMsg;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind ="mpts.cardHolderPortal.button.submit")
-	private MCWebElement submitButton;
+	private MCWebElement submitBtn;
 	
 		
 	public boolean verifyPermissionCardholder(){
@@ -40,7 +40,7 @@ public class LimitedValidityVirtualCardCancelPage extends AbstractBasePage {
 	}
 	
 	public String cancelLvccRequest(){
-		clickWhenClickable(submitButton);
+		clickWhenClickable(submitBtn);
 		waitForLoaderToDisappear();
 		return getTextFromPage(responseLbl);
 	}

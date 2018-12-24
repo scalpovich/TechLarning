@@ -61,7 +61,7 @@ public class LoginPage extends AbstractBasePage {
 	private MCWebElement signOut;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[contains(text(), 'Signout' )]")
-	private MCWebElement singOutCardHolder;
+	private MCWebElement signOutCardHolder;
 
 	@PageElement(findBy = FindBy.ID, valueToFind = "useralias")
 	private MCWebElement AgentPortalUsername;
@@ -79,7 +79,7 @@ public class LoginPage extends AbstractBasePage {
 	private MCWebElement chpSignUpUserAlias;
 
 	@PageElement(findBy = FindBy.ID, valueToFind = "newLoginPassword")
-	private MCWebElement chplNewSignUpPassword;
+	private MCWebElement chpNewSignUpPassword;
 
 	@PageElement(findBy = FindBy.ID, valueToFind = "confirmLoginPassword")
 	private MCWebElement chpSignUpPasswordConfirm;
@@ -196,8 +196,8 @@ public class LoginPage extends AbstractBasePage {
 	}
 
 	public void signUpCardHolderUser(LoginCardholder loginCardHolderProvider) {		
-		enterText(chplNewSignUpPassword, loginCardHolderProvider.getPassWord());
-		enterText(chpSignUpPasswordConfirm, loginCardHolderProvider.getPassWord());
+		enterText(chpNewSignUpPassword, loginCardHolderProvider.getPassword());
+		enterText(chpSignUpPasswordConfirm, loginCardHolderProvider.getPassword());
 		enterText(chpSignUpTranPass, loginCardHolderProvider.getCardHolderTransPassword());
 		enterText(chpSignUpTranPassConfirm, loginCardHolderProvider.getCardHolderTransPassword());
 		selectByText(chpSignUpSeqQuesOne, loginCardHolderProvider.getFirstSecurityQst());
@@ -264,7 +264,7 @@ public class LoginPage extends AbstractBasePage {
 	}
 
 	public void clickLogoutCardHolder() {
-		singOutCardHolder.click();
+		signOutCardHolder.click();
 	}
 
 	public void login(String portal, String uName, String pwd) {

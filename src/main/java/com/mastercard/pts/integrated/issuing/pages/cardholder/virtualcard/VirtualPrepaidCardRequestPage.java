@@ -74,7 +74,7 @@ public class VirtualPrepaidCardRequestPage extends AbstractBasePage {
 	private MCWebElement countryCodeTxt;
 
 	@PageElement(findBy = FindBy.ID, valueToFind = "regesteredMobileNumber")
-	private MCWebElement regesteredMobileNumberTxt;
+	private MCWebElement registeredMobileNumberTxt;
 
 	@PageElement(findBy = FindBy.ID, valueToFind = "registeredMailId")
 	private MCWebElement registeredMailIdTxt;
@@ -83,16 +83,16 @@ public class VirtualPrepaidCardRequestPage extends AbstractBasePage {
 	private MCWebElement submitVirtualCardReq;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//table[@class='modelFormClass']/tbody/tr[3]/td")
-	private MCWebElement prmissionForVirtualCardMsg;
+	private MCWebElement permissionForVirtualCardMsg;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//td[@class='SuccessMessageTxt']")
-	private MCWebElement virtualPrparidCardReqestResStatus;
+	private MCWebElement virtualPrepaidCardReqestResStatus;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//*[@class='sectionHead']/td/../following-sibling::tr[1]/td")
 	private MCWebElement responseLbl;
 	
 	public String getVirtualCardRequesResponse(){
-		return getTextFromPage(virtualPrparidCardReqestResStatus);
+		return getTextFromPage(virtualPrepaidCardReqestResStatus);
 	}
 	
 	public String submitRequestForVirtualCard(CardholderServices cardholderService){
@@ -111,7 +111,7 @@ public class VirtualPrepaidCardRequestPage extends AbstractBasePage {
 	}
 	
 	public boolean verifyPermissionCardholder(){
-		return isElementPresent(prmissionForVirtualCardMsg);
+		return isElementPresent(permissionForVirtualCardMsg);
 	}
 
 	@Override
@@ -122,6 +122,6 @@ public class VirtualPrepaidCardRequestPage extends AbstractBasePage {
 				WebElementUtils.visibilityOf(marriedTxt), WebElementUtils.visibilityOf(birthDateStrTxt), WebElementUtils.visibilityOf(address1Txt),
 				WebElementUtils.visibilityOf(address2Txt), WebElementUtils.visibilityOf(address3Txt), WebElementUtils.visibilityOf(zipCodeTxt),
 				WebElementUtils.visibilityOf(cityCodeTxt), WebElementUtils.visibilityOf(stateCodeTxt), WebElementUtils.visibilityOf(countryCodeTxt),
-				WebElementUtils.visibilityOf(regesteredMobileNumberTxt), WebElementUtils.visibilityOf(registeredMailIdTxt));
+				WebElementUtils.visibilityOf(registeredMobileNumberTxt), WebElementUtils.visibilityOf(registeredMailIdTxt));
 	}
 }

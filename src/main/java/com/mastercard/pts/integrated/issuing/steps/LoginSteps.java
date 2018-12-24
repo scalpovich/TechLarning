@@ -109,7 +109,7 @@ public class LoginSteps extends AbstractBaseFlows {
 	@When("login to cardholder portal as existing Cardholder user")
 	public void loginToCardholder() {
 		loginCardHolderProvider = LoginCardholder.loginCardholderDataProvider();
-		loginCardholder("11008818330000046","aBcd1234*"/*loginCardHolderProvider.getUserName(), loginCardHolderProvider.getPassWord()*/);
+		loginCardholder(loginCardHolderProvider.getUserName(), loginCardHolderProvider.getPassword());
 		switchToWindowCHP();		
 	}
 
@@ -166,13 +166,13 @@ public class LoginSteps extends AbstractBaseFlows {
 
 	}
 
-	@Given("User login to card holder portal with $userName and $passWord")
-	public void loginCardholder(@Named("userName") String userName, @Named("passWord") String passWord) {
+	@Given("User login to card holder portal with $userName and $password")
+	public void loginCardholder(@Named("userName") String userName, @Named("password") String password) {
 
-		if (loginFlows.loginAsCardholderUser(userName, passWord)) {
+		if (loginFlows.loginAsCardholderUser(userName, password)) {
 			loginFlows.signUpCardHolderUser(loginCardHolderProvider);
-			LoginCardholder.loginCardholderDataProvider().setPassword(passWord);
-			loginFlows.loginAsCardholderUserAfterSignUp(userName, passWord);
+			LoginCardholder.loginCardholderDataProvider().setPassword(password);
+			loginFlows.loginAsCardholderUserAfterSignUp(userName, password);
 		}
 	}
 
@@ -239,6 +239,6 @@ public class LoginSteps extends AbstractBaseFlows {
 	@When ("select \"$deviceType\" for operation")
 	@Then ("select \"$deviceType\" for operation")
 	public void selectCreatedVirtualDevice(String deviceType){
-		loginFlows.selectVirtaulDevice(deviceType);
+		loginFlows.selectVirtualDevice(deviceType);
 	}
 }

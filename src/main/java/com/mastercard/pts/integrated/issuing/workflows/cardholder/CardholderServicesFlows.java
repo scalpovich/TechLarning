@@ -45,9 +45,9 @@ public class CardholderServicesFlows  extends AbstractBaseFlows{
 		navigator.navigateToPage(ActivateDeactivateWalletPage.class);
 	}
 	
-	public String selectReplacementForCard(CardholderServices replaceMenetOption){
+	public String selectReplacementForCard(CardholderServices replacementOption){
 		ReplaceDevicePage page = navigator.navigateToPage(ReplaceDevicePage.class);
-		return page.deviceReplacementRequest(replaceMenetOption);
+		return page.deviceReplacementRequest(replacementOption);
 	}
 	
 	public void blockSelectedCard(CardholderServices cardHolderService){

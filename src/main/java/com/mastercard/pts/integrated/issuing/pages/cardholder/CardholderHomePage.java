@@ -51,8 +51,7 @@ public class CardholderHomePage extends AbstractBasePage {
 		return this;
 	}
 	
-	public void selectVirtaulDevice(String  deviceType){
-		
+	public void selectVirtualDevice(String  deviceType){
 		driver().findElement(By.xpath(String.format("//td[text()='%s']//..//*[@*='mpts_cardHolderPortal_button_select']", deviceType))).click();
 	}
 

@@ -22,21 +22,21 @@ public class CardHolderVirtualCardSteps extends AbstractBaseSteps{
 	@Then ("create virtual prepaid card request")
 	public void createVirtualPrepaidCardReq(){
 		CardholderServices cardholderService = CardholderServices.cardholderServicesDataProvider();
-		Assert.assertTrue("Virtual device creation failed",chpVirtualCardFlow.sbmtRreqForVirtualPrepardCard(cardholderService).contains("Successfully"));
+		Assert.assertTrue("Virtual device creation failed",chpVirtualCardFlow.sbmtReqForVirtualPrepaidCard(cardholderService).contains("Successfully"));
 	}
 	
 	@When ("request limited validity virtual card")
 	@Then ("request limited validity virtual card")
 	public void requestLimitedValidityVirtualCard(){
 		CardholderServices cardholderService = CardholderServices.cardholderServicesDataProvider();		
-		Assert.assertTrue("Virtual device creation failed",chpVirtualCardFlow.sbmtRreqForVirtualPrepardCard(cardholderService).contains("Successfully"));
+		Assert.assertTrue("Virtual device creation failed",chpVirtualCardFlow.sbmtReqForVirtualPrepaidCard(cardholderService).contains("Successfully"));
 	}
 	
 	@Then ("service request to create $cardType")
-	public void ServiceRequestLimitedValidityVirtualCard(String cardType){
+	public void serviceRequestLimitedValidityVirtualCard(String cardType){
 		CardholderServices cardholderService = CardholderServices.cardholderServicesDataProvider(provider);
 		cardholderService.setVirtualCardType(cardType);
-		Assert.assertTrue("Virtual device creation failed", chpVirtualCardFlow.sbmtRreqForVirtualPrepardCard(cardholderService).toLowerCase().contains("successfully"));
+		Assert.assertTrue("Virtual device creation failed", chpVirtualCardFlow.sbmtReqForVirtualPrepaidCard(cardholderService).toLowerCase().contains("successfully"));
 	}
 	
 	@When ("cancel limited validity virtual card request")

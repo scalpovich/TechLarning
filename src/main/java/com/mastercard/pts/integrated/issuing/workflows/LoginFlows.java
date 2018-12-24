@@ -1,4 +1,4 @@
-package com.mastercard.pts.integrated.issuing.workflows;
+	package com.mastercard.pts.integrated.issuing.workflows;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -49,8 +49,8 @@ public class LoginFlows extends AbstractBaseFlows {
 		device.setTransactionPassword(loginCardHolderProvider.getCardHolderTransPassword());
 		loginAsCardholderUserAfterSignUp(device.getClientCode(), device.getClientCode());
 		loginPage.signUpCardHolderUser(loginCardHolderProvider);		
-		loginAsCardholderUserAfterSignUp(device.getClientCode(),loginCardHolderProvider.getPassWord());
-		device.setNewTransPassword(loginCardHolderProvider.getPassWord());
+		loginAsCardholderUserAfterSignUp(device.getClientCode(),loginCardHolderProvider.getPassword());
+		device.setNewTransPassword(loginCardHolderProvider.getPassword());
 	}
 
 	public void signUpCardHolderPortal(Device device) {
@@ -62,27 +62,28 @@ public class LoginFlows extends AbstractBaseFlows {
 	}
 
 	public void Login(Portal portal, String userType) {
-		getFinder().getWebDriver().get(portal.getUrl());
-		/*
-		 * if (userType.equalsIgnoreCase("CustomerUser")) {
-		 * loginPage.login(Portal.getTypeCustomer(),
-		 * portal.getCustomerUserName(), portal.getCustomerUserPassword());
-		 * institutionSelectionPage.selectInstitution(); } else if
-		 * (userType.equalsIgnoreCase("CustomerAdmin")) {
-		 * loginPage.login(Portal.getTypeCustomer(),
-		 * portal.getCustomerAdminUser(), portal.getCustomerAdminPassword());
-		 * institutionSelectionPage.selectAdminInstitution(); } else if
-		 * ("BankAdmin".equalsIgnoreCase(userType)) {
-		 * loginPage.login(Portal.getTypeCustomer(),
-		 * portal.getCustomerAdminUser(), portal.getCustomerAdminPassword());
-		 * institutionSelectionPage.selectBankAdminInstitution(); }else if
-		 * (userType.equalsIgnoreCase("AgencyUser"))
-		 * loginPage.login(Portal.getTypeAgent(), portal.getAgencyUserName(),
-		 * portal.getAgencyUserPassword()); else if
-		 * (userType.equalsIgnoreCase("AgentUser"))
-		 * loginPage.login(Portal.getTypeAgent(), portal.getAgentUserName(),
-		 * portal.getAgentUserPassword());
-		 */
+		getFinder().getWebDriver().get(portal.getUrl());		
+		/*if (userType.equalsIgnoreCase("CustomerUser")) {
+			loginPage.login(Portal.getTypeCustomer(),
+					portal.getCustomerUserName(),
+					portal.getCustomerUserPassword());
+			institutionSelectionPage.selectInstitution();
+		} else if (userType.equalsIgnoreCase("CustomerAdmin")) {
+			loginPage.login(Portal.getTypeCustomer(),
+					portal.getCustomerAdminUser(),
+					portal.getCustomerAdminPassword());
+			institutionSelectionPage.selectAdminInstitution();
+		} else if ("BankAdmin".equalsIgnoreCase(userType)) {
+			loginPage.login(Portal.getTypeCustomer(),
+					portal.getCustomerAdminUser(),
+					portal.getCustomerAdminPassword());
+			institutionSelectionPage.selectBankAdminInstitution();
+		} else if (userType.equalsIgnoreCase("AgencyUser"))
+			loginPage.login(Portal.getTypeAgent(), portal.getAgencyUserName(),
+					portal.getAgencyUserPassword());
+		else if (userType.equalsIgnoreCase("AgentUser"))
+			loginPage.login(Portal.getTypeAgent(), portal.getAgentUserName(),
+					portal.getAgentUserPassword());*/		 
 	}
 
 	public void LoginWithNewUser(Portal portal) {
@@ -98,8 +99,8 @@ public class LoginFlows extends AbstractBaseFlows {
 		loginPage.selectWalletForDevice(device);
 	}
 	
-	public void selectVirtaulDevice(String deviceType){
+	public void selectVirtualDevice(String deviceType){
 		CardholderHomePage page = navigator.navigateToPage(CardholderHomePage.class);
-		page.selectVirtaulDevice(deviceType);
+		page.selectVirtualDevice(deviceType);
 	}
 }
