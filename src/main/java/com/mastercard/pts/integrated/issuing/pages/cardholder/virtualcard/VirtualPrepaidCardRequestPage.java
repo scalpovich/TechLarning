@@ -86,13 +86,13 @@ public class VirtualPrepaidCardRequestPage extends AbstractBasePage {
 	private MCWebElement permissionForVirtualCardMsg;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//td[@class='SuccessMessageTxt']")
-	private MCWebElement virtualPrepaidCardReqestResStatus;
+	private MCWebElement virtualPrepaidCardRequestResStatus;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//*[@class='sectionHead']/td/../following-sibling::tr[1]/td")
 	private MCWebElement responseLbl;
 	
 	public String getVirtualCardRequesResponse(){
-		return getTextFromPage(virtualPrepaidCardReqestResStatus);
+		return getTextFromPage(virtualPrepaidCardRequestResStatus);
 	}
 	
 	public String submitRequestForVirtualCard(CardholderServices cardholderService){

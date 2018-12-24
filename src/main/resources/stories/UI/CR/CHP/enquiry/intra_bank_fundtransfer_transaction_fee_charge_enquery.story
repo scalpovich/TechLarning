@@ -1,6 +1,6 @@
 Narrative:
 As a cardhodler
-I want to loing into cardholder portal 
+I want to login into cardholder portal 
 In order to assert Transaction Fee for Intra Client - Wallet to Wallet Transfer(Debit)
 
 Meta:

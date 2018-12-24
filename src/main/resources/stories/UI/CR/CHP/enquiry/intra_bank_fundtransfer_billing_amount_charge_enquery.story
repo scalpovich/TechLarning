@@ -1,6 +1,6 @@
 Narrative:
 As a cardhodler
-I want to loing into cardholder portal 
+I want to login into cardholder portal
 In order to assert Billing Amount for Intra Bank - Wallet to Wallet Transfer(Debit)
 
 Meta:

@@ -1,6 +1,6 @@
 Narrative:
 As a cardhodler
-I want to loing into cardholder portal
+I want to login into cardholder portal
 In order to assert cardholder services for given card
 
 Meta:

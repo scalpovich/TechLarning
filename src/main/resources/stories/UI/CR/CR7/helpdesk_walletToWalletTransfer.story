@@ -1,6 +1,6 @@
 Narrative:
 As a Cardhodler
-I want to loing into customer portal 
+I want to login into customer portal 
 In order to do the wallet to wallet fund transfer
 
 

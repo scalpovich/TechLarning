@@ -1,6 +1,6 @@
 Narrative:
 As a Cardhodler
-I want to able to loing into cardholder portal 
+I want to able to login into cardholder portal 
 In order to do transacations 
 
 

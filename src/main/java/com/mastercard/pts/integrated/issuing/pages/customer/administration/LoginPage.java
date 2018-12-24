@@ -254,7 +254,7 @@ public class LoginPage extends AbstractBasePage {
 		if (!isLoggedIn(getFinder().getWebDriver())) {
 			signin.click();
 		} else {
-			logger.error("Logout Button not found  we are not loading page and miximizing it");
+			logger.error("Logout Button not found  we are not loading page and maximizing it");
 		}
 	}
 
@@ -292,9 +292,8 @@ public class LoginPage extends AbstractBasePage {
 			} else if (portal.equalsIgnoreCase(Portal.TYPE_CUSTOMER)) {
 				signin.click();
 			}
-
 		} else {
-			logger.info("Logout Button not found  we are not loading page and miximizing it");
+			logger.info("Logout Button not found  we are not loading page and maximizing it");
 		}
 	}
 

@@ -1,6 +1,6 @@
 Narrative:
 As a Cardhodler
-I want to able to loing into customer portal 
+I want to able to login into customer portal 
 In order to do the wallet to wallet transactions
 
 Meta:
