@@ -23,10 +23,7 @@ public class ReplaceDevicePage extends ServicesAbstractPage {
 	private MCWebElement replacementResone;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind="mpts.cardHolderPortal.button.submit")
-	private MCWebElement replacemenetSubmitBtn;
-	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind="//*[@class='sectionHead']/td/../following-sibling::tr[1]/td")
-	private MCWebElement responseLbl;
+	private MCWebElement replacementSubmitBtn;
 	
 	public void selectReplacementOption(String optionName){
 		selectByText(replacementResone, optionName);
@@ -34,7 +31,7 @@ public class ReplaceDevicePage extends ServicesAbstractPage {
 	
 	public String deviceReplacementRequest(CardholderServices replaceMenetOption ){
 		selectReplacementOption(replaceMenetOption.getReplacementReason());
-		clickWhenClickableCHP(replacemenetSubmitBtn);
+		clickWhenClickableCHP(replacementSubmitBtn);
 		return getTextFromPage(responseLbl);
 	}
 	

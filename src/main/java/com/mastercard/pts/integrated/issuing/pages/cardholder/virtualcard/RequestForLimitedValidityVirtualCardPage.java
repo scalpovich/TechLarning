@@ -41,7 +41,7 @@ public class RequestForLimitedValidityVirtualCardPage extends AbstractBasePage {
 		return getTextFromPage(responseLbl);
 	}
 	
-	public String submitRequestforVirtualCrd(CardholderServices cardholderService){
+	public String submitRequestForVirtualCard(CardholderServices cardholderService){
 		clickWhenClickable(submitVirtualCardReq);
 		waitForLoaderToDisappear();
 		return getTextFromPage(responseLbl);

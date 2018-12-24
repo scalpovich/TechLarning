@@ -35,7 +35,7 @@ public class CardHolderVirtualCardSteps extends AbstractBaseSteps{
 	@Then ("service request to create $cardType")
 	public void ServiceRequestLimitedValidityVirtualCard(String cardType){
 		CardholderServices cardholderService = CardholderServices.cardholderServicesDataProvider(provider);
-		cardholderService.setVirtualCardtype(cardType);
+		cardholderService.setVirtualCardType(cardType);
 		Assert.assertTrue("Virtual device creation failed", chpVirtualCardFlow.sbmtRreqForVirtualPrepardCard(cardholderService).toLowerCase().contains("successfully"));
 	}
 	

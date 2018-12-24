@@ -186,7 +186,7 @@ public class ContextConstants {
 	
 	public static final String DEVICE_PROMOTION = "device_promotion";
 	
-	public static final String CONVERSTION_RATE = "conversationRate";
+	public static final String CONVERSTION_RATE = "conversatio_rate";
 	
 	
 	private ContextConstants() {

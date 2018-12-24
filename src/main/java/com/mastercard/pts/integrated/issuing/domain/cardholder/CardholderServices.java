@@ -51,10 +51,10 @@ public class CardholderServices {
 	public static final String HOURS_ACTIVATION = "Activation for 'n' hours";	
 	public static final String PERIOD_ACTIVATION = "Activation in Period";
 	
-	public String getVirtualCardtype() {
+	public String getVirtualCardType() {
 		return virtualCardtype;
 	}
-	public void setVirtualCardtype(String virtualCardtype) {
+	public void setVirtualCardType(String virtualCardtype) {
 		this.virtualCardtype = virtualCardtype;
 	}
 	public String getInternationalActivationHours() {
@@ -210,7 +210,7 @@ public class CardholderServices {
 		cardholderService.setWalletActivateConfirmtionMsg(MapUtils.fnGetInputDataFromMap("WalletActivateConfirmMsg"));
 		cardholderService.setWalletDeactivateConfirmMsg(MapUtils.fnGetInputDataFromMap("WalletDeactivateConfirmMsg"));
 		cardholderService.setActivationStatusForEcom(MapUtils.fnGetInputDataFromMap("eComActivationConfirmMsg"));		
-		cardholderService.setVirtualCardtype(MapUtils.fnGetInputDataFromMap("virtualCardType"));
+		cardholderService.setVirtualCardType(MapUtils.fnGetInputDataFromMap("virtualCardType"));
 		return cardholderService;
 	}
 	
@@ -233,7 +233,7 @@ public class CardholderServices {
 		cardholderService.setInternationalFromDate(provider.getString(INTERNATIONAL_ACTI_FROM_DATE));
 		cardholderService.setInternationalToDate(provider.getString(INTERNATIONAL_ACTI_TO_DATE));
 		cardholderService.setInternationalActivationHours(provider.getString(INTERNATIONAL_ACTIVATION_HOUR));
-		cardholderService.setVirtualCardtype(provider.getString(VIRTUAL_CARD_TYPE));		
+		cardholderService.setVirtualCardType(provider.getString(VIRTUAL_CARD_TYPE));		
 		return cardholderService;
 	}
 	
@@ -256,7 +256,7 @@ public class CardholderServices {
 		cardholderService.setInternationalFromDate(provider.getString(INTERNATIONAL_ACTI_FROM_DATE));
 		cardholderService.setInternationalToDate(provider.getString(INTERNATIONAL_ACTI_TO_DATE));
 		cardholderService.setInternationalActivationHours(provider.getString(INTERNATIONAL_ACTIVATION_HOUR));
-		cardholderService.setVirtualCardtype(provider.getString(VIRTUAL_CARD_TYPE));
+		cardholderService.setVirtualCardType(provider.getString(VIRTUAL_CARD_TYPE));
 		return cardholderService;
 	}
 }

@@ -53,9 +53,6 @@ public class InternationalUseActivationPage extends ServicesAbstractPage {
 	@PageElement(findBy = FindBy.ID, valueToFind ="mpts_cardHolderPortal_button_submit")
 	private MCWebElement activateInternationalUseSubmitBtn;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind="//*[@class='sectionHead']/td/../following-sibling::tr[1]/td")
-	public MCWebElement responseLbl;
-		
 	public void selectActivationInPeriod(){
 		clickWhenClickableCHP(activationInPeriodRdo);
 	}

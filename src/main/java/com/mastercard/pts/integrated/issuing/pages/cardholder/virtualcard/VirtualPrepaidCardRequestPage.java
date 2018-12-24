@@ -95,7 +95,7 @@ public class VirtualPrepaidCardRequestPage extends AbstractBasePage {
 		return getTextFromPage(virtualPrparidCardReqestResStatus);
 	}
 	
-	public String submitRequestforVirtualCrd(CardholderServices cardholderService){
+	public String submitRequestForVirtualCard(CardholderServices cardholderService){
 		clickWhenClickable(submitVirtualCardReq);
 		waitForLoaderToDisappear();
 		return getTextFromPage(responseLbl);
