@@ -20,13 +20,13 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class ReplaceDevicePage extends ServicesAbstractPage {
 	
 	@PageElement(findBy = FindBy.ID, valueToFind="reasonCode")
-	private MCWebElement replacementResone;
+	private MCWebElement replacementReason;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind="mpts.cardHolderPortal.button.submit")
 	private MCWebElement replacementSubmitBtn;
 	
 	public void selectReplacementOption(String optionName){
-		selectByText(replacementResone, optionName);
+		selectByText(replacementReason, optionName);
 	}
 	
 	public String deviceReplacementRequest(CardholderServices replacementOption ){
