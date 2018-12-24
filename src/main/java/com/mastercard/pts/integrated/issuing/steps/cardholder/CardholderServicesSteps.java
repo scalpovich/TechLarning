@@ -84,14 +84,14 @@ public class CardholderServicesSteps extends AbstractBaseFlows{
 	@When ("service request for activate wallet")
 	public void activateSelectedWallet(){
 		CardholderServices cardholderService = CardholderServices.cardholderServicesDataProvider();		
-		assertTrue("Request to activate wallet has failed",cardholderServiceflw.activateWallet(cardholderService).contains("Request has been processed successfully"));
+		assertTrue("Request to activate wallet has failed",cardholderServiceflw.activateDeactivateWallet(cardholderService).contains("Request has been processed successfully"));
 	}
 	
 	@When ("activate associated wallet for selected device")
 	@Then ("activate associated wallet for selected device")
 	public void activateWalletServiceRequest(){
 		CardholderServices cardholderService = CardholderServices.cardholderServicesDataProvider(provider);		
-		assertTrue("Request to activate wallet has failed",cardholderServiceflw.activateWallet(cardholderService).contains("Request has been processed successfully"));
+		assertTrue("Request to activate wallet has failed",cardholderServiceflw.activateDeactivateWallet(cardholderService).contains("Request has been processed successfully"));
 	}
 	
 	@Then ("verify that wallet is geting activated")
@@ -103,7 +103,7 @@ public class CardholderServicesSteps extends AbstractBaseFlows{
 	@Then ("service request for deactivate wallet")	
 	public void deactivateSelectedWallet(){
 		CardholderServices cardholderService = CardholderServices.cardholderServicesDataProvider();		
-		cardholderServiceflw.deactivateWallet(cardholderService);
+		cardholderServiceflw.activateDeactivateWallet(cardholderService);
 		assertTrue("Service request for deactivate wallet is failed",cardholderServiceflw.verifyWalletActivateDeactivateConfirmationMsg().contains("Request has been processed successfully"));
 	}
 	
@@ -111,14 +111,14 @@ public class CardholderServicesSteps extends AbstractBaseFlows{
 	@Then ("deactivate associated wallet for selected device")
 	public void deactivateSelectedDeviceWallet(){
 		CardholderServices cardholderService = CardholderServices.cardholderServicesDataProvider(provider);		
-		cardholderServiceflw.deactivateWallet(cardholderService);
-		assertTrue("Service request for deactivate wallet has failed", cardholderServiceflw.deactivateWallet(cardholderService).contains("Request has been processed successfully"));
+		cardholderServiceflw.activateDeactivateWallet(cardholderService);
+		assertTrue("Service request for deactivate wallet has failed", cardholderServiceflw.activateDeactivateWallet(cardholderService).contains("Request has been processed successfully"));
 	}
 	
 	@When ("activate associated wallet for device")
 	public void activateSelectedWalletForDevice(){
 		CardholderServices cardholderService = CardholderServices.cardholderServicesDataProvider(provider);		
-		cardholderServiceflw.activateWallet(cardholderService);
+		cardholderServiceflw.activateDeactivateWallet(cardholderService);
 	}
 	
 	

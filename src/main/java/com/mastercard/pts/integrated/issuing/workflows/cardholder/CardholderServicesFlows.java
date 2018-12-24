@@ -92,13 +92,8 @@ public class CardholderServicesFlows  extends AbstractBaseFlows{
 			return walletStatusDeactive;
 		}
 	}
-	
-	public String activateWallet(CardholderServices cardHolderService){
-		ActivateDeactivateWalletPage page = navigator.navigateToPage(ActivateDeactivateWalletPage.class);
-		return page.activateWallet(cardHolderService);
-	}
-	
-	public String deactivateWallet(CardholderServices cardHolderService){
+
+	public String activateDeactivateWallet(CardholderServices cardHolderService){
 		ActivateDeactivateWalletPage page = navigator.navigateToPage(ActivateDeactivateWalletPage.class);
 		return page.activateWallet(cardHolderService);		
 	}

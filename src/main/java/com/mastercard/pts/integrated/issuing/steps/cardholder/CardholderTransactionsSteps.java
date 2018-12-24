@@ -3,12 +3,14 @@
  */
 package com.mastercard.pts.integrated.issuing.steps.cardholder;
 
+import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.cardholder.CardHolderTransactions;
@@ -38,7 +40,9 @@ public class CardholderTransactionsSteps extends AbstractBasePage {
 	private static final String REMITTANCE_SUCCESS_MSG = "Remittance request created";
 	private static final int LENGTH_OF_WALLET_NUMBER = 19;
 
+	@Given("cardholder book the cash remittance")
 	@When("cardholder book the cash remittance")
+	@Then("cardholder book the cash remittance")
 	public void cardholderBookCashRemittance() {
 		Device device = context.get(ContextConstants.DEVICE);
 		cardhlTran = CardHolderTransactions.cardholderCashRemit(provider);
