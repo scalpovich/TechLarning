@@ -26,6 +26,6 @@ And user sign out from customer portal
 Scenario:2 User can be able to cancel the cash remittance request
 Given user is on login page of cardholder portal
 When cardholder complete registration and login into portal
-Then cardholder book the cash remittance
+And cardholder book the cash remittance
 Then cardholder cancel the cash remittance
 And user logouts from cardholder portal

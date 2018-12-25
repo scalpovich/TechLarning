@@ -45,10 +45,7 @@ public class ECommActivationPage extends ServicesAbstractPage {
 	private MCWebElement ecomActivationFrom;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//*[@name='End_Eff_Date']//..//button")
-	private MCWebElement ecomActionTo;
-	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind="//*[@class='sectionHead']/td/../following-sibling::tr[1]/td")
-	private MCWebElement responseLbl;	
+	private MCWebElement ecomActionTo;	
 	
 	public void setActivationEcomOption(){
 		clickWhenClickableCHP(activateEcomTransaction);

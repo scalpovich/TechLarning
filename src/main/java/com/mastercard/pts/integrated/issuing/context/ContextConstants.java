@@ -188,6 +188,7 @@ public class ContextConstants {
 	
 	public static final String CONVERSTION_RATE = "conversation_rate";
 	
+	public static final String CARDHOLDER_TRAN = "CARDHOLDER_TRAN";
 	
 	private ContextConstants() {
 	}

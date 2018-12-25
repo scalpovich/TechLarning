@@ -5,10 +5,14 @@ package com.mastercard.pts.integrated.issuing.workflows.cardholder;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.mastercard.pts.integrated.issuing.domain.cardholder.CardHolderEnquiry;
 import com.mastercard.pts.integrated.issuing.pages.cardholder.enquiry.EnquiryHomePage;
+import com.mastercard.pts.integrated.issuing.pages.cardholder.enquiry.ViewChargesPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.utils.DatePicker;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
@@ -108,6 +112,11 @@ public class CardHolderEnquiryWorkflow extends AbstractBaseFlows {
 			transDetails.get(0).contains(tranDetails);	
 			return true;
 		}
+	}
+	
+	public String checkFundTransferCharges(CardHolderEnquiry cardholderEnquiry){		
+		ViewChargesPage page = navigator.navigateToPage(ViewChargesPage.class);	
+		return page.checkChargesForTransactionType(cardholderEnquiry);
 	}
 }
 	
