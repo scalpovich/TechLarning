@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.AbstractPage;
@@ -34,10 +35,21 @@ public class HeaderPage extends AbstractPage{
 				WebElementUtils.visibilityOf(signOutCustomerLnk));
 	}
 
-    public void signOutCustomer(){
-    	signOutCustomerLnk.click();
-    	
-    }
+	public void signOutCustomer() {
+		boolean flag = true;
+		int counter = 0;
+		do {
+			try {
+				signOutCustomerLnk.click();
+				flag = false;
+			} catch (Exception e) {
+				SimulatorUtilities.wait(2000);
+				counter++;
+			}
+		} while (flag && counter < 10);
+
+	}
+  
     
     public void signOutCollect(){
     	signOutCollectLnk.click();
