@@ -23,9 +23,9 @@ And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pingeneration batch using new Device for Supplementary
 And device has "normal" status
-And user raises Temporary [T] credit limit change request for Individual
+And user raisess Temporary [T] credit limit change request for Individual Type
 And device has "normal" status
-Then user verifies available Temporary [T] limit
+Then user verifies available Temporary [T] limit type
 And user sign out from customer portal
 
 Scenario:1.3 Pin Generation 

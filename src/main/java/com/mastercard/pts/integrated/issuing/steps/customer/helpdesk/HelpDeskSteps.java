@@ -597,7 +597,7 @@ public class HelpDeskSteps {
 	@Given("user verifies available $type limit for card after transaction")
 	@When("user verifies available $type limit for card after transaction")
 	@Then("user verifies available $type limit for card after transaction")
-	@Alias("user verifies available $type limit")
+	@Alias("user verifies available $type limit type")
 	public void whenUserVerifyLimitThroughHelpDesk(String type) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		HashMap<String,BigDecimal> creditLimit;
@@ -990,12 +990,13 @@ public class HelpDeskSteps {
 				equalTo(value));
 	}
 	
-	@Then("user raises $limittype credit limit change request for $customerType")
-	@Given("user raises $limittype credit limit change request for $customerType")
-	@When("user raises $limittype credit limit change request for $customerType")
-	public void userRaisesCreditLimitChangeRequestThroughHelpdesk(String limitType,String customerType) {
+	
+	@Given("user raisess $limittype credit limit change request for $customerType Type")
+	@When("user raisess $limittype credit limit change request for $customerType Type")
+	@Then("user raisess $limittype credit limit change request for $customerType Type")
+	public void userRaisesCreditLimitChangeRequestThroughHelpdesk(String limittype,String customerType) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProviderWithCreditCardLimits(provider);
-		helpdeskGeneral.setLimitType(limitType);
+		helpdeskGeneral.setLimitType(limittype);
 		helpdeskGeneral.setCustomerType(customerType);
 		helpdeskWorkflow.clickCustomerCareEditLink();				
 		context.put(ContextConstants.CREDIT_LIMIT_AFTER_SR, helpdeskWorkflow.activateCreditLimitChangeRequest(helpdeskGeneral));
