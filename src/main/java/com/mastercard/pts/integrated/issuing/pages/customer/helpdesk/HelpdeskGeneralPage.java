@@ -86,6 +86,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final String DEVICE_CLOSURE_TITLE = "402 - Device Closure";
 
 	private static String ERROR_MESSAGE = "This field is required.";
+	private static final String GENERAL_ELEMENT_XPATH = "//h3[@class='w_captionText'][text()='General']";
+
 	private static final Logger logger = LoggerFactory.getLogger(HelpdeskGeneralPage.class);
 	private String activeDeviceNumber;
 	private String saleDate;
@@ -130,10 +132,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Save']")
 	private MCWebElement saveBtn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='udf4:input:inputTextField']")
 	private MCWebElement timeInHourTxt;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".feedbackPanelINFO")
 	private MCWebElement activationMessage;
 
@@ -247,130 +249,130 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Current Status and Limits']")
 	private MCWebElement currentStatusAndLimitTab;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@name='udf23:radioComponent' and @value='0']")
 	private MCWebElement eccomDeactivate;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@name='udf23:radioComponent' and @value='1']")
 	private MCWebElement eccomActivate;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Card :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement availCardCreditLimitLabel;
-	
+
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
-	
+
 	private final String RESET_PIN_RETRY_COUNTER= "109 - Reset Pin Retry Counter";
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Balance Details']")
 	private MCWebElement balanceDetailsTab;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//a[.='Current Status and Limits']")
 	private MCWebElement currentStatusLimits;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//div[@id='tab4']//table[1]//td//span[@class='labeltextr']")
-	private MCWebElements creditLimitParameter;	
-	
+	private MCWebElements creditLimitParameter;
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//div[@id='tab4']//table[1]//td//span[@class='labeltextr']/preceding::span[1]")
 	private MCWebElements creditLimitParamterLabels;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//td[contains(.,'Payment :')]/..//span[@class='labeltextr']")
 	private MCWebElements paymentComponents;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//td[contains(.,'Purchase :')]/..//span[@class='labeltextr']")
 	private MCWebElements purchaseComponents;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Card :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement cardCreditLimitLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Account :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement availAccountCreditLimitLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Account :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement accountCreditLimitLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Client :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement clientCreditLimitLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Client :']/../../following-sibling::td[1]/span/span")
-	private MCWebElement availClientCreditLimitLabel;	
-	
+	private MCWebElement availClientCreditLimitLabel;
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='PDD :']/../../following-sibling::td[1]/span/span/span")
 	private MCWebElement paymentDueDateLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='MAD :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement minimumAmountDueLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Total Outstanding :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement totalAmountDueLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Closing Balance :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement closingBalanceLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Interest :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement interestLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement loanLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Interest :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement loanInterestLabel;
-  
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Installment :']/../../following-sibling::td[3]/span/span")
 	private MCWebElement loanInstallmentOutStandingLabel;
-	
+
     @PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody a img")
 	private MCWebElement editDeviceLink;
-	
+
     @PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Wallet Number')]/../following-sibling::td/span/span")
 	private MCWebElement txtWalletNumber;
-    
+
     @PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Payment :']/../../following-sibling::td[2]/span/span")
 	private MCWebElement paymentUnbilledLbl;
-	
+
     @Autowired
 	TestContext context;
-	
+
 	private final String DEFAULT_BALANCE="0.00";
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//th[text()='New Credit Limit']/../following-sibling::tr[1]/td[4]/input")
 	private MCWebElement creditClientLimitTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//th[text()='New Credit Limit']/../following-sibling::tr[2]/td[4]/input")
 	private MCWebElement creditAccountLimitTxt;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='newCreditLimit']")
 	private MCWebElement newCreditLimitTxt;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Type :']/../following-sibling::td[1]/select")
 	private MCWebElement selectLimitTypeDdwn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Plan :']/../following-sibling::td[1]//span/select")
 	private MCWebElement selectLoanPlanDdwn;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Book Loan']")
 	private MCWebElement bookLoanBtn;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Calculate EMI']")
 	private MCWebElement calculateEMIBtn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Note :']/../following-sibling::td[1]/span/textarea")
 	private MCWebElement noteTxt;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Sanction']")
 	private MCWebElement sanctionBtn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td/span[text()='EMI :']/../following-sibling::td[1]/span/input")
 	private MCWebElement emiLbl;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td/span[text()='Processing Fee :']/../following-sibling::td[1]/span/input")
 	private MCWebElement processingFeeLbl;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td/span[text()='Moratorium Loan :']/../following-sibling::td[1]/span/input")
 	private MCWebElement moratoriumLoanLbl;
-	
+
 	@PageElement(findBy = FindBy.ID, valueToFind = "callReferenceNumber")
 	private MCWebElement callRefNumberLbl;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Authorization']")
 	private MCWebElement btnAuthorization;
 
@@ -389,36 +391,36 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Cancel Loan']")
 	private MCWebElement cancelLoanBtn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Cancellation Fee :']/../following-sibling::td/span/input")
 	private MCWebElement txtCancellationFee;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Process']")
 	private MCWebElement processBtn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Pre-Closure Fee :']/../following-sibling::td/input")
 	private MCWebElement preclosureFeeTxt;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Pre-Close Loan']")
 	private MCWebElement preCloseLoanBtn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Account Number :']/../following-sibling::td[1]//span/select")
 	private MCWebElement selectLoanAccountNumberDdwn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value = 'Loyalty']")
 	private MCWebElement loyaltyBtn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Points Earned:']/following::span/span")
 	private MCWebElement pointsEarned;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Available Loyalty Points:']/following::span/span")
 	private MCWebElement availableLoyaltyPoints;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Accumulated Reversed Points:']/following::span/span")
 	private MCWebElement accumulatedReversedPoints;
-	
+
 	private final String LOYALTY_DETAILS = "Loyalty Details";
-	
+
 	private String preclosureFee;
 	private String cancellationFee;
 	private String errorMsgOfloanCancellation;
@@ -539,7 +541,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public void enterNotes(String notes) {
 		WebElementUtils.enterText(notesTxt, notes);
 	}
-	
+
 	public void enterNote(String notes) {
 		noteTxt.sendKeys(notes);
 	}
@@ -579,6 +581,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public void clickEndCall() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(endCallBtn)).click();
+		new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(GENERAL_ELEMENT_XPATH)));
 	}
 
 	public void enterClientCreditLimit(String clientcreditlimit) {
