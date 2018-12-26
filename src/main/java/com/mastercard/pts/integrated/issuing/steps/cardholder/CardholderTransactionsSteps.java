@@ -72,7 +72,7 @@ public class CardholderTransactionsSteps extends AbstractBasePage {
 		transactionFlow.walletToWalletFundTransfer(cardhlTran);
 	}
 
-	@When("intera bank money transfer")
+	@When("intra bank money transfer")
 	public void walletToWalletTransfer() {
 		cardhlTran = CardHolderTransactions.cardHolderTransDataProvider(provider);		
 		Device device = context.get(ContextConstants.DEVICE);
