@@ -199,14 +199,14 @@ public class ReportVerificationWorkflow {
 				assertTrue("Card Number is incorrect in PDF File", v.contains(report.getDeviceNumber()));
 			}
 			if (v.contains("CVC2")) {
-				String cvv2 = records.get(PDF_KEY_CVC2);
-				String[] cvvValue = cvv2.trim().split(":");
+				//String cvv2 = records.get(PDF_KEY_CVC2);
+				String[] cvvValue = v.trim().split(":");
 				logger.info(cvvValue[1]);
 				device.setCvv2Data(cvvValue[1]);
 			}
 			if (v.contains("Expiry")) {
-				String expiryDate = records.get(PDF_KEY_EXPIRY);
-				String[] expiryValues = expiryDate.trim().split(":");
+				//String expiryDate = records.get(PDF_KEY_EXPIRY);
+				String[] expiryValues = v.trim().split(":");
 				logger.info(expiryValues[1]);
 				device.setExpirationDate(expiryValues[1]);
 			}
