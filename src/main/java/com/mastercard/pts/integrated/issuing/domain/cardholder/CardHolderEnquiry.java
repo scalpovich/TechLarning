@@ -18,7 +18,7 @@ public class CardHolderEnquiry {
 	private static String TRANSACTION_COUNT = "TRANSACTION_COUNT";	
 	private static String ENQ_FROM_DATE = "ENQ_FROM_DATE";	
 	private static String ENQ_TO_DATE = "ENQ_TO_DATE";
-	private static String TRANSCTION_CHARGE_TYPE = "TRANSCTION_CHARGE_TYPE";
+	private static String TRANSACTION_CHARGE_TYPE = "TRANSACTION_CHARGE_TYPE";
 	
 	private String transactionType;	
 	private String transactionCurrency;	

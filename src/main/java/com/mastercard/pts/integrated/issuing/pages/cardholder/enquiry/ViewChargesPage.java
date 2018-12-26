@@ -97,8 +97,8 @@ public class ViewChargesPage extends AbstractBasePage {
 								context.put(ContextConstants.CONVERSTION_RATE, values.get(index).getText());
 							}
 							
-						}if(cardholderEnquiry.getTransactionChargeType().contains("Converstion")){							
-							if(element.getText().contains("Converstion")){{
+						}if(cardholderEnquiry.getTransactionChargeType().contains("Conversion")){							
+							if(element.getText().contains("Conversion")){{
 								context.put(ContextConstants.CONVERSTION_RATE, values.get(index).getText());
 							}
 						}

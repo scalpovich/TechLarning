@@ -44,13 +44,13 @@ public class CardToCardTransferPage extends AbstractBasePage{
 	private MCWebElement confirmMessage;
 	
 	public void walletToWalletTransfer(CardHolderTransactions cardhlfTran){
-		SelectDropDownByValue(walletNumDropList, "1811301100882165363"/*cardhlfTran.getWalletFromAmountTransfer()*/);
-		WebElementUtils.enterText(amountToTransfer,"5"/*cardhlfTran.getWalletTransferAmount()*/);
+		SelectDropDownByValue(walletNumDropList,cardhlfTran.getWalletFromAmountTransfer());
+		WebElementUtils.enterText(amountToTransfer,cardhlfTran.getWalletTransferAmount());
 		//selectByVisibleTexts(transferCurrencyOption,cardhlfTran.getWalletTransferCurrency());
 		clickWhenClickable(submitBtn);		
 		waitForLoaderToDisappear();
-		WebElementUtils.enterText(transactionPassword,"aBcd1234*"/*cardhlfTran.getTransctionPassword()*/);
-		WebElementUtils.enterText(transactionRemarks,"Remark"/*cardhlfTran.getTransactionRemark()*/);
+		WebElementUtils.enterText(transactionPassword,cardhlfTran.getTransctionPassword());
+		WebElementUtils.enterText(transactionRemarks,cardhlfTran.getTransactionRemark());
 		clickWhenClickable(confirmButton);
 		waitForLoaderToDisappear();
 		Assert.assertTrue(confirmMessage.getText().contains("Your transaction is successful"/*cardhlfTran.getWalletToWalletTransSucessMsg()*/));
