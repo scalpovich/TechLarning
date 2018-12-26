@@ -314,9 +314,6 @@ public abstract class AbstractBasePage extends AbstractPage {
     @PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
 	protected MCWebElement institutionDateTxt;
     
-    @PageElement(findBy = FindBy.X_PATH, valueToFind="//*[@class='sectionHead']/td/../following-sibling::tr[1]/td")
-	public MCWebElement responseLbl;
-    
     int retryCounter =0;
 	
 	@Autowired

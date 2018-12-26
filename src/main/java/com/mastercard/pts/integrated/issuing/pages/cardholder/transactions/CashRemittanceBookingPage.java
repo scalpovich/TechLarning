@@ -111,8 +111,7 @@ public class CashRemittanceBookingPage extends AbstractBasePage {
 		enterText(transactionPasswordInpt, transactionPass);
 	}
 	
-	public boolean isCashRemittanceAllowedForAccount(){
-	
+	public boolean isCashRemittanceAllowedForAccount(){	
 		return 	isElementPresent(isCashRemittanceAllowed);
 	}
 	
