@@ -30,6 +30,7 @@ Scenario:3 To Verify that the user can stoplist device country of credit device
 Given user is logged in institution
 When user stoplists a country from stoplist country screen
 And user edits deviceplan and enables stoplist flag
+And embossing file batch was generated in correct format
 Then user sign out from customer portal
 
 Scenario:4 Transaction - MSR_PREAUTH Authorization transaction on credit device after stoplisted device country
