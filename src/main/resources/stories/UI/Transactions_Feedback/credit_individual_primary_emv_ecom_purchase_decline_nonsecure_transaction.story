@@ -18,7 +18,6 @@ And for Primary Device and New Client user fills Device Range section for credit
 And credit device is created using new device screen for Corporate and Primary Device and New Client and EMV Card
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
-And credit processes pingeneration batch using new Device for Supplementary
 And device has "normal" status
 And user notes down available Card limit for card
 And user edits All field of 3D Ecom Security for product Credit and interchange MasterCard as uncheck
