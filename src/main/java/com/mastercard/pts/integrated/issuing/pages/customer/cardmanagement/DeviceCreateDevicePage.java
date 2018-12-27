@@ -260,9 +260,8 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 		verifyOperationStatus();
 
-		// scolling "PageUp" is needed here as the Menu item is not visible
-		SimulatorUtilities sm = new SimulatorUtilities();
-		sm.pressPageUp();
+		// Scrolling "PageUp" is needed here as the Menu item is not visible
+		new SimulatorUtilities().pressPageUp();
 
 		device.setClientCode(getCodeFromInfoMessage("client"));
 		device.setWalletNumber(getCodeFromInfoMessage("wallet"));
@@ -291,7 +290,7 @@ public class DeviceCreateDevicePage extends AbstractBasePage {
 
 		verifyOperationStatus();
 
-		// scolling "PageUp" is needed here as the Menu item is not visible
+		// scrolling "PageUp" is needed here as the Menu item is not visible
 		SimulatorUtilities sm = new SimulatorUtilities();
 		sm.pressPageUp();
 

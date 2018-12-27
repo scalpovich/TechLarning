@@ -88,7 +88,7 @@ public class HelpdeskWorkflow {
 		helpDeskPage.resetPinRetryCounter(helpdeskGeneral);
 	}
 
-	public void setupDeviceCurrency(HelpdeskGeneral helpdeskGeneral) {
+	public void setupDeviceCurrency(HelpdeskGeneral helpdeskGeneral){		
 		helpDeskPage.setupDeviceCurrency(helpdeskGeneral);
 	}
 	
@@ -133,7 +133,9 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.getWalletNumber(device);
 	}
 
-	public void walletToWalletTransfer(Device device) {
+	public void walletToWalletTransfer(Device device) {		
+		searchByDeviceNumber(device);
+		clickCustomerCareEditLink();
 		helpDeskPage.walletToWalletTransfer(device);
 	}
 
