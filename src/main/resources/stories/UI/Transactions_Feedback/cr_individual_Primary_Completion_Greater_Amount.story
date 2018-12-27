@@ -6,7 +6,7 @@ I want to perform Transaction on Retails credit card and assert Completion Trans
 Meta:
 @CreditRegression
 @CreditWithPin
-@StoryName credit_emv_retail
+@StoryName credit_emv_retail 
 Scenario:1.1 creation of mastercard_retail_primary_emv Card credit device
 
 Given setting json values in excel for Credit
