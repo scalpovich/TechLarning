@@ -4,7 +4,7 @@ As an issuer
 I want to perform transactions for credit emv retail card
 
 Meta:
-@StoryName credit_emv_retail
+@StoryName credit_emv_retail_Limits
 @pinRetryLimitValidationAndResetCounter
 @pinRetryLimitValidationAndResetCounterCredit
 	 
