@@ -1,11 +1,20 @@
 package com.mastercard.pts.integrated.issuing.pages.cardholder.transactions;
 
+import java.util.Arrays;
+import java.util.Collection;
+
+import org.junit.Assert;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.domain.TransactionsNav;
+import com.mastercard.pts.integrated.issuing.domain.cardholder.CardHolderTransactions;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -54,10 +63,10 @@ public class FundTransferPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH , valueToFind="//input[@id='mpts_cardHolderPortal_button_submit']")
 	private MCWebElement submitButtonCurrecnyTranfer;
 	
-	@PageElement(findBy = FindBy.X_PATH , valueToFind="//input[@id='Transaction Password']")
+	@PageElement(findBy = FindBy.NAME , valueToFind="TxtTxnPassword")
 	private MCWebElement transactionPassword;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@id='remarks']")
+	@PageElement(findBy = FindBy.NAME, valueToFind="remarks")
 	private MCWebElement transactionRemarks;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@id='mpts_cardHolderPortal_button_confirm']")
@@ -66,17 +75,20 @@ public class FundTransferPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//li[@id='CardToCard']")	
 	private MCWebElement walletToWalletTransOption;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind="//Select[@id='toWalletNumber']")	
-	private MCWebElement walletNumDropList;
+	@PageElement(findBy = FindBy.NAME, valueToFind="toWalletNumber")	
+	private MCWebElement beneficiaryWalletNumberTxt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="toDeviceNumber")	
+	private MCWebElement beneficiaryDeviceNumberTxt;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@id='transactionAmount']")
 	private MCWebElement amountToTransfer;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@id='selectedTxnCurrency']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//*[@id='selectedTxnCurrency']")
 	private MCWebElement transferCurrencyOption;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@id='mpts_cardHolderPortal_button_submit']")
-	private MCWebElement walletTranferSubmitButton;
+	private MCWebElement submitBtn;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@value='InterBankFundTransferPopulateDetails']")
 	private MCWebElement interBankTransfer;
@@ -102,24 +114,16 @@ public class FundTransferPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//table[@class='modelFormClass']/tbody/tr[5]/td[2]")
 	private MCWebElement availBalanceToWallet;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind="//tr[@class='sectionHead'][4]/td/span")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//*[@class='sectionHead']/td/../following-sibling::tr[1]/td")
 	private MCWebElement fundTransferTransaction;
 	
 	
 	public boolean verifyFundsTransferSts(){
-		if(transactionStatusMessage.isVisible()){
-			return true;
-		}else{
-			return false;
-		}
+		return transactionStatusMessage.isVisible();
 	}
 	
 	public boolean verifyFundTransferSatus(){
-		if(fundTransferTransaction.isVisible()){
-			return true;
-		}else{
-			return false;
-		}
+		return fundTransferTransaction.isVisible();
 	}
 	
 	
@@ -200,25 +204,16 @@ public class FundTransferPage extends AbstractBasePage {
 		
 	}
 	
-	public void selectWalletNumber(String walletNum){
-		SelectDropDownByValue(walletNumDropList, walletNum);
-	}
-	
-	public void amountToTransfer(String amountToTrans){
-		amountToTransfer.sendKeys(amountToTrans);
-	}
-	
 	public void selectTransferCurrency(String currencyOpt){
 		selectByVisibleTexts(transferCurrencyOption,currencyOpt);
 	}
 	
 	public void submitWalletTransferRequest(){
-		walletTranferSubmitButton.click();
+		submitBtn.click();
 	}
 	
 	public void enterBeneficiaryWalletNumber(String walletNumber){
 		SelectDropDownByValue(beneficiaryWalletNum, walletNumber);
-
 	}
 	
 	public void enterBeneficiaryCardNumber(String cardNumber){
@@ -232,15 +227,39 @@ public class FundTransferPage extends AbstractBasePage {
 	public void selectCurrencyForIntraBankTranfer(String transferCurrancy){
 		selectByVisibleTexts(transferCurrencyOption, transferCurrancy);
 	}
-			
-	public void submitIntraBankMoneyTranferRequest(){
-			walletTranferSubmitButton.click();
+		
+	public void interBankTransfer(CardHolderTransactions  cardhlfTran){
+		enterText(beneficiaryWalletNumberTxt,cardhlfTran.getWalletToAmountTransfer());
+		enterText(beneficiaryDeviceNumberTxt,cardhlfTran.getCardNumber());
+		enterAmountToTranfer(cardhlfTran.getTransferAmount());
+		//selectCurrencyForIntraBankTranfer("INR");
+		clickWhenClickable(submitBtn);
+		waitForLoaderToDisappear();
+		enterText(transactionPassword, cardhlfTran.getTransctionPassword());
+		enterText(transactionRemarks, cardhlfTran.getTransactionRemark());
+		confirmTransaction();
+		waitForLoaderToDisappear();
+		Assert.assertTrue(checkWalletToWalletTransferStatusMessage().contains("Your transaction is successful"));
 	}
 
-	/*@Override
+	
+	public void walletToWalletTransfer(CardHolderTransactions  cardhlfTran){
+		enterBeneficiaryWalletNumber(cardhlfTran.getWalletToAmountTransfer());
+		enterBeneficiaryCardNumber(cardhlfTran.getCardNumber());
+		enterAmountToTranfer(cardhlfTran.getTransferAmount());		
+		clickWhenClickable(submitBtn);
+		waitForLoaderToDisappear();
+		enterTransactionPassword(cardhlfTran.getTransctionPassword());
+		enterTransactionRemark(cardhlfTran.getTransactionRemark());
+		confirmTransaction();
+		waitForLoaderToDisappear();
+		Assert.assertTrue(checkWalletToWalletTransferStatusMessage().contains("Your transaction is successful"));
+	}
+	
+	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(masterDetailContentTitle), WebElementUtils.visibilityOf(visaMoneyTransferRbtn),
 				WebElementUtils.visibilityOf(cardtoCardRbtn), WebElementUtils.visibilityOf(interBankFundTransferPopulateDetailsRbtn),
 				WebElementUtils.visibilityOf(masterCardMoneySendRbtn));
-	}*/
+	}
 }

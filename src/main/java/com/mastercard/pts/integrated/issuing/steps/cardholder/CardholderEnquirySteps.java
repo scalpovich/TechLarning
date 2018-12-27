@@ -14,7 +14,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.cardholder.CardHolderEnquiry;
+import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.workflows.AbstractBaseFlows;
 import com.mastercard.pts.integrated.issuing.workflows.cardholder.CardHolderEnquiryWorkflow;
 
@@ -27,7 +31,13 @@ public class CardholderEnquirySteps extends AbstractBaseFlows{
 	private CardHolderEnquiryWorkflow cardHolderEnqflow;
 	
 	private CardHolderEnquiry cardholderEnquiry;
-		
+	
+	@Autowired
+	private KeyValueProvider provider;
+	
+	@Autowired
+	private TestContext context;
+	
 	@When ("check charges for $transactionType")
 	public void checkChargesForFundTransfer(@Named("transactionType")String transactionType){		
 		cardholderEnquiry = CardHolderEnquiry.cardHolderEnquiryDataProvider();
@@ -74,5 +84,14 @@ public class CardholderEnquirySteps extends AbstractBaseFlows{
 	public void verifyTransactionDetails(){
 		Map<Integer,ArrayList<String>> transactionDetails = cardHolderEnqflow.getTransactionDetails();
 		Assert.assertTrue(cardHolderEnqflow.checkTransactionDetails(transactionDetails,"cr","500"));
+	}
+	
+	@When ("check $chargeType charge for $transactionType transaction")
+	@Then ("check $chargeType charge for $transactionType transaction")
+	public void checkChargesForTransferType(String chargeType, String transactionType){		
+		cardholderEnquiry = CardHolderEnquiry.cardHolderEnquiryDataProvider(provider);
+		cardholderEnquiry.setTransactionType(transactionType);
+		cardholderEnquiry.setTransactionChargeType(chargeType);
+		Assert.assertEquals(chargeType+" incorrect chareges for "+transactionType, cardHolderEnqflow.checkFundTransferCharges(cardholderEnquiry),context.get(ContextConstants.CONVERSTION_RATE));
 	}
 }

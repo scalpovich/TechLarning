@@ -2,7 +2,6 @@ package com.mastercard.pts.integrated.issuing.pages.cardholder.virtualcard;
 
 import java.util.Arrays;
 import java.util.Collection;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -17,8 +16,8 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 @Navigation(tabTitle = VirtualCardNav.TAB_VIRTUAL_CARD, treeMenuItems = { VirtualCardNav.L1_LIMITED_VALIDITY_VIRTUAL_CARD_CANCELLATION })
-public class VirtualCardLimitedValidityVirtualCardCancellationPage extends AbstractBasePage {
-	private static final Logger logger = LoggerFactory.getLogger(VirtualCardLimitedValidityVirtualCardCancellationPage.class);
+public class LimitedValidityVirtualCardCancelPage extends AbstractBasePage {
+	private static final Logger logger = LoggerFactory.getLogger(LimitedValidityVirtualCardCancelPage.class);
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "div .Title")
 	private MCWebElement masterDetailContentTitle;
@@ -26,8 +25,10 @@ public class VirtualCardLimitedValidityVirtualCardCancellationPage extends Abstr
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//table[@class='modelFormClass']/tbody/tr[3]/td")
 	private MCWebElement permissionForVirtualCardMsg;
 	
+	@PageElement(findBy = FindBy.NAME, valueToFind ="mpts.cardHolderPortal.button.submit")
+	private MCWebElement submitBtn;
 	
-	
+		
 	public boolean verifyPermissionCardholder(){
 		return isElementPresent(permissionForVirtualCardMsg);
 	}
@@ -36,6 +37,12 @@ public class VirtualCardLimitedValidityVirtualCardCancellationPage extends Abstr
 		logger.info("Limited Validity Virtual Card Cancellation");
 		verifyTitleCardHolderPortal("Limited Validity Virtual Card Cancellation");
 		verifyButton("OK");
+	}
+	
+	public String cancelLvccRequest(){
+		clickWhenClickable(submitBtn);
+		waitForLoaderToDisappear();
+		return getTextFromPage(responseLbl);
 	}
 
 	@Override

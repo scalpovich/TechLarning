@@ -1,15 +1,17 @@
 package com.mastercard.pts.integrated.issuing.pages.cardholder.services;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.domain.ServicesNav;
-import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
+import com.mastercard.pts.integrated.issuing.domain.cardholder.CardholderServices;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
-import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -39,34 +41,30 @@ public class ECommActivationPage extends ServicesAbstractPage {
 	@PageElement(findBy = FindBy.ID, valueToFind="mpts_cardHolderPortal_button_submit")
 	private MCWebElement ecomActivationSubmitBtn;
 	
-	@PageElement(findBy = FindBy.ID, valueToFind="Start_Eff_Date")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//*[@name='Start_Eff_Date']//..//button")
 	private MCWebElement ecomActivationFrom;
 	
-	@PageElement(findBy = FindBy.ID, valueToFind="End_Eff_Date")
-	private MCWebElement ecomActionTo;
-	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind="//td[@class='ResponseTxt']")
-	private MCWebElement activationStatus;
-	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//*[@name='End_Eff_Date']//..//button")
+	private MCWebElement ecomActionTo;	
 	
 	public void setActivationEcomOption(){
 		clickWhenClickableCHP(activateEcomTransaction);
 	}
 	
-	public void setDeActivationEcomOption(){
-		clickWhenClickableCHP(deactivateEcommTransaction);
+	public void deactivationEcomTran(){
+		WebElementUtils.selectRadioBtn(deactivateEcommTransaction);
 	}
 	
 	public void setActivationInPeriod(){
-		clickWhenClickable(activationInPeriodRdo);
+		WebElementUtils.selectRadioBtn(activationInPeriodRdo);
 	}
 	
 	public void setActivationForNHours(){
-		clickWhenClickable(activationForNHoursRdo);
+		WebElementUtils.selectRadioBtn(activationForNHoursRdo);
 	}
 	
 	public void setActivationForLifeLong(){
-		clickWhenClickable(activationLifeLongRdo);
+		WebElementUtils.selectRadioBtn(activationLifeLongRdo);
 	}
 	
 	public void setNumberOfHours(String numberOfHours){
@@ -77,20 +75,50 @@ public class ECommActivationPage extends ServicesAbstractPage {
 		clickWhenClickable(ecomActivationSubmitBtn);
 	}
 	
-	public void setActivationFromDate(String fromDate){
-		enterText(ecomActivationFrom, fromDate);
+	public void setActivationFromDate(LocalDate fromDate){
+		WebElementUtils.pickDateChp(driver(),ecomActivationFrom, fromDate);
 	}
 	
-	public void setActivationToDate(String toDate){
-		enterText(ecomActionTo,toDate);
+	public void setActivationToDate(LocalDate toDate){
+		WebElementUtils.pickDateChp(driver(),ecomActionTo, toDate);
 	}
 	
 	public String getEcomActivationResponseMsg(){
-		return getTextFromPage(activationStatus);
+		return getTextFromPage(responseLbl);
 	}
 	
 	public void verifyUiOperationStatus() {
 		verifyUiOperationStatusReusable("E-Comm Activation");
+	}
+	
+	public void setEcomActivationDurationDate(){
+		setActivationFromDate(LocalDate.now());
+		setActivationToDate(LocalDate.now().plusDays(2));
+		submitEcomActivationPlan();
+	}
+	
+	public String configureEcomActivation(CardholderServices activationPlan){
+		if(activationPlan.getActivationStatusForEcom().contains(CardholderServices.HOURS_ACTIVATION)){			
+			setActivationForNHours();			
+			setNumberOfHours(activationPlan.getEcomActivationHour());
+			submitEcomActivationPlan();
+			
+		}else if(activationPlan.getActivationStatusForEcom().contains(CardholderServices.LIFELONG_ACTIVATION)){
+			setActivationForLifeLong();
+			submitEcomActivationPlan();			
+			
+		}else if(activationPlan.getActivationStatusForEcom().contains(CardholderServices.PERIOD_ACTIVATION)){
+			setActivationInPeriod();
+			setEcomActivationDurationDate();			
+		}
+		return getTextFromPage(responseLbl);
+	}
+	
+	public String deactivateEcomTransaction(){
+		deactivationEcomTran();
+		clickWhenClickable(ecomActivationSubmitBtn);
+		waitForLoaderToDisappear();
+		return getTextFromPage(responseLbl);
 	}
 	
 	@Override

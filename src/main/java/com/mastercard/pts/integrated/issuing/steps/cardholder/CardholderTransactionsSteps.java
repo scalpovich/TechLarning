@@ -1,6 +1,3 @@
-/**
- * @author: e076168
- */
 package com.mastercard.pts.integrated.issuing.steps.cardholder;
 
 import org.jbehave.core.annotations.Then;
@@ -16,8 +13,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.workflows.cardholder.CardHolderTransactionsWorkFlows;
-
-import junit.framework.Assert;
+import static junit.framework.Assert.assertTrue;
 
 @Component
 public class CardholderTransactionsSteps extends AbstractBasePage {
@@ -34,31 +30,21 @@ public class CardholderTransactionsSteps extends AbstractBasePage {
 	private TestContext context;
 
 	private CardHolderTransactions cardhlTran;
-	private static final String REMITTANCE_ERROR_MSG = "Error while processing your request. Please retry. OK";
-	private static final String REMITTANCE_SUCCESS_MSG = "Remittance request created";
-	private static final int LENGTH_OF_WALLET_NUMBER = 19;
-
+	
 	@When("cardholder book the cash remittance")
-	public void cardholderBookCashRemittance() {
-		Device device = context.get(ContextConstants.DEVICE);
+	@Then("cardholder book the cash remittance")	
+	public void cardholderBookCashRemittance() {		
 		cardhlTran = CardHolderTransactions.cardholderCashRemit(provider);
+		Device device = context.get(ContextConstants.DEVICE);
 		cardhlTran.setTransctionPassword(device.getNewTransPassword());
-		transactionFlow.openCashRemittanceTransactionPage();
-		String actualStatus = transactionFlow.cashRemittanceBooking(cardhlTran);
-		Assert.assertTrue(REMITTANCE_ERROR_MSG, actualStatus.contains(REMITTANCE_SUCCESS_MSG));
+		assertTrue("Error while processing cash remittance request", transactionFlow.cashRemittanceBooking(cardhlTran).contains("Your transaction is successful"));
 	}
-
-	@Then("verify cash remittance request")
-	@When("verify cash remittance request")
-	public void verifyRemittanceRequestEntry() {
-		transactionFlow.openCashRemittanceTransactionPage();
-	}
-
+	
 	@When("cardholder cancel the cash remittance")
+	@Then ("cardholder cancel the cash remittance")
 	public void cancelCashRemittanceRequest() {
 		cardhlTran = CardHolderTransactions.cardholderCashRemit(provider);
-		transactionFlow.openCancelRemittanceTransactionPage();
-		transactionFlow.cancelCashRemittanceBooking(cardhlTran);
+		assertTrue("Error while cancelling remittance request", transactionFlow.cancelCashRemittanceBooking(cardhlTran).contains("Your transaction is successful"));
 	}
 
 	@When("fund transfer through MasterCard Money Send")
@@ -71,40 +57,29 @@ public class CardholderTransactionsSteps extends AbstractBasePage {
 
 	@Then("verify $transferType fund transfer stauts")
 	public void verifyFundTransferStatus() {
-		Assert.assertTrue("Fund transfer transaction is failed", transactionFlow.verifyFundTransferStatusOfTransaction());
+		assertTrue("Fund transfer transaction is failed", transactionFlow.verifyFundTransferStatusOfTransaction());
 	}
 
 	@When("check wallet to wallet transfer")
 	public void checkWalletToWalletTransfer() {
 		cardhlTran = CardHolderTransactions.cardHolderTranscationDataProvider();
-		transactionFlow.openTransactionPage();
-		transactionFlow.selectWalletToWalletOption();
-		if (transactionFlow.verifyAvailBalanceIntoWallet()) {
-			transactionFlow.walletToWalletTransfer(cardhlTran);
-		} else {
-			Assert.fail("Wallet is empty unable to perform wallet to wallet transfer transaction");
-		}
+		transactionFlow.walletToWalletFundTransfer(cardhlTran);		
 	}
 
-	@When("fund transfer through wallet to wallet transfer")
+	@When("fund transfer through wallet to wallet")
 	public void checkIntraBankFundTransfer() {
 		cardhlTran = CardHolderTransactions.cardHolderTranscationDataProvider();
-		transactionFlow.openTransactionPage();
-		transactionFlow.selectWalletToWalletOption();
-		transactionFlow.interBankMoneyTransfer(cardhlTran);
+		transactionFlow.walletToWalletFundTransfer(cardhlTran);
 	}
 
-	@When("wallet to wallet fund transfer")
+	@When("intra bank money transfer")
 	public void walletToWalletTransfer() {
-		cardhlTran = CardHolderTransactions.cardHolderTransDataProvider(provider);
-		context.put(ContextConstants.CARDHOLDER, cardhlTran);
+		cardhlTran = CardHolderTransactions.cardHolderTransDataProvider(provider);		
 		Device device = context.get(ContextConstants.DEVICE);
-		cardhlTran.setWalletToAmountTransfer(device.getNewWalletNumber().substring(LENGTH_OF_WALLET_NUMBER));
+		cardhlTran.setWalletToAmountTransfer(device.getNewWalletNumber());
 		cardhlTran.setCardNumber(device.getDeviceNumber());
-		transactionFlow.openTransactionPage();
-		transactionFlow.selectWalletToWalletOption();
-		CardHolderTransactions cardhlTran = context.get(ContextConstants.CARDHOLDER);
 		transactionFlow.interBankMoneyTransfer(cardhlTran);
+		context.put(ContextConstants.CARDHOLDER_TRAN, cardhlTran);
 	}
 
 }
