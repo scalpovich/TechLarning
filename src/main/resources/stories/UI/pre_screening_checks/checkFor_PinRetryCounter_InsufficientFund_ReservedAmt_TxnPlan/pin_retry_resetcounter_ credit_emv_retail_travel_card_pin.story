@@ -24,6 +24,7 @@ And device has "normal" status
 And user notes down available Card limit for card
 Then user sign out from customer portal
 And user sets invalid pin
+And embossing file batch was generated in correct format
 
 Scenario: Perform EMV_PURCHASE Authorization transaction with invalid pin
 Given connection to MAS is established
