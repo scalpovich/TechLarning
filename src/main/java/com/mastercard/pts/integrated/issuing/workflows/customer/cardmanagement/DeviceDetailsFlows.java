@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.DeviceDetailsPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
@@ -19,9 +20,9 @@ public class DeviceDetailsFlows {
 				.equalsIgnoreCase(lastExecutedScriptStatus));
 	}
 	
-	public void findAndPutDeviceApplicationNumberInContext() {
+	public void findAndPutDeviceApplicationNumberInContext(Device device) {
 		DeviceDetailsPage deviceDetailsPage = navigator.navigateToPage(DeviceDetailsPage.class);
-		deviceDetailsPage.retriveDeviceApplicationNumber();
+		deviceDetailsPage.retriveDeviceApplicationNumber(device);
 	}
 	
 	public void getClientCode() {

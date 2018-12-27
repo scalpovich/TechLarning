@@ -43,6 +43,10 @@ public class DumpSteps {
 	
 	@Autowired
 	private CSVDataLoader csvDataLoader;
+	
+	private static final String ACC_ADMIN_STATUS = "ACCOUNT_ADMIN_STATUS";
+	private static final String ACC_BAL_STATUS = "ACCOUNT_BALANCE_STATUS";
+	private static final String ACC_UNPAID_STATUS = "ACCOUNT_UNPAID_STATUS";
 
 	@When("$batchType download batch is executed for  $cardType user")
 	public void whenbatchtypeDownloadBatchIsExecutedForcardtypeUser(String batchType, String cardType) {
@@ -52,6 +56,9 @@ public class DumpSteps {
 		batch.setProductType(ProductType.fromShortName(cardType));
 		batch.setInterchangeType(provider.getString("INTERCHANGE_TYPE"));
 		batch.setExtractType(provider.getString("EXTRACT_TYPE"));
+		batch.setAccountAdminStatus(provider.getString(ACC_ADMIN_STATUS));
+		batch.setAccountBalanceStatus(provider.getString(ACC_BAL_STATUS));
+		batch.setAccountUnpaidStatus(provider.getString(ACC_UNPAID_STATUS));
 		context.put("type", cardType);
 		context.put("batch", batch);
 		dumpWorkflow.executeDownLoadProcessBatch(batch);

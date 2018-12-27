@@ -65,6 +65,8 @@ public class DumpWorkflow {
 			pFileName = fileType + "_" + institutionCode + "_PREPAID_" + "RUNNING" + "_" + DateUtils.getDateddMMyyyy();
 		else if (((String) context.get("type")).contains(DEBIT))
 			pFileName = fileType + "_" + institutionCode + "__RUNNING" + "_" + DateUtils.getDateddMMyyyy();
+		else if (((String) context.get("type")).contains(CREDIT))
+			pFileName = fileType + "_" + institutionCode + "_CREDIT_RUNNING" + "_" + DateUtils.getDateddMMyyyy();
 		return pFileName;
 	}
 

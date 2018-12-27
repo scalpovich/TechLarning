@@ -7,6 +7,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Properties;
 
@@ -26,16 +30,15 @@ public abstract class LinuxUtils {
 
 	private static final Logger logger = LoggerFactory.getLogger(LinuxUtils.class);
 	private static String[] cardData;
-	
 
-	public interface RemoteConnectionDetails{
-		String getUserName(); 
-		String getPassword(); 
-		String getHostName(); 
+	public interface RemoteConnectionDetails {
+		String getUserName();
+		String getPassword();
+		String getHostName();
 		int getPort();
 	}
 
-	public static void download(RemoteConnectionDetails connectiondetails, String remoteSource, String localDestination ) throws JSchException  {
+	public static void download(RemoteConnectionDetails connectiondetails, String remoteSource, String localDestination) throws JSchException {
 		logger.info("Conection Details: {}", connectiondetails);
 		JSch jsch = new JSch();
 		Session session = jsch.getSession(connectiondetails.getUserName(), 	connectiondetails.getHostName(), connectiondetails.getPort());
@@ -43,63 +46,60 @@ public abstract class LinuxUtils {
 		Properties config = new Properties();
 		config.put("StrictHostKeyChecking", "no");
 		session.setConfig(config);
-		if(!session.isConnected()) {
+		if (!session.isConnected()) {
 			session.connect();
 		}
-		//specify the location where the DAT file gets generated
+		// specify the location where the DAT file gets generated
 		if (!remoteSource.startsWith("/")) {
 			remoteSource = "/" + remoteSource;
-			MiscUtils.reportToConsole("@remoteSource "+  remoteSource);
+			MiscUtils.reportToConsole("@remoteSource " + remoteSource);
 		}
 		String command = "scp -f " + remoteSource;
 		logger.info("Linux Command  {} -> {} ", command);
 		Channel channel = session.openChannel("exec");
-		((ChannelExec)channel).setCommand(command);
+		((ChannelExec) channel).setCommand(command);
 		channel.connect();
 
 		try {
 			transferFile(remoteSource, localDestination, channel);
 		} catch (IOException e) {
 			MiscUtils.reportToConsole("download Exception :  " + e.toString());
-			logger.info(ConstantData.EXCEPTION +" {} ",  e.getMessage());
+			logger.info(ConstantData.EXCEPTION + " {} ", e.getMessage());
 			throw MiscUtils.propagate(e);
 		}
 	}
 
-	public static String getFileAbsolutePath(RemoteConnectionDetails connectiondetails, String lookUpFor) throws Exception
-	{
+	public static String getFileAbsolutePath(RemoteConnectionDetails connectiondetails, String lookUpFor) throws Exception {
 		return getFileFromLinuxBox(connectiondetails, lookUpFor);
 	}
 
-	private static String getFileFromLinuxBox (RemoteConnectionDetails connectiondetails, String lookUpFor) throws Exception
-	{
+	private static String getFileFromLinuxBox(RemoteConnectionDetails connectiondetails, String lookUpFor) throws Exception {
 		try {
 			String result = null;
-			Session session = new JSch().getSession(connectiondetails.getUserName(), connectiondetails.getHostName(), connectiondetails.getPort());    
+			Session session = new JSch().getSession(connectiondetails.getUserName(), connectiondetails.getHostName(), connectiondetails.getPort());
 			session.setPassword(connectiondetails.getPassword());
-			java.util.Properties config = new java.util.Properties(); 
+			java.util.Properties config = new java.util.Properties();
 			config.put("StrictHostKeyChecking", "no");
 			session.setConfig(config);
-			if(!session.isConnected())
+			if (!session.isConnected())
 				session.connect();
 			String cmd = "find /home/dc-user/integrated/elt_bo/data -name \"*" + lookUpFor + "*\"";
 			logger.info("command for getFileFromLinuxBox {} --> ", cmd);
-			Channel channel=session.openChannel("exec");
-			((ChannelExec)channel).setCommand(cmd);
+			Channel channel = session.openChannel("exec");
+			((ChannelExec) channel).setCommand(cmd);
 			channel.setInputStream(null);
-			((ChannelExec)channel).setErrStream(System.err);
-			InputStream in=channel.getInputStream();
+			((ChannelExec) channel).setErrStream(System.err);
+			InputStream in = channel.getInputStream();
 			channel.connect();
-			byte[] tmp=new byte[1024];
-			while(true){
-				int i=in.read(tmp, 0, 1024);
+			byte[] tmp = new byte[1024];
+			while (true) {
+				int i = in.read(tmp, 0, 1024);
 				result = new String(tmp, 0, i).trim();
 				//		   channel.disconnect();
 				//			session.disconnect();
 				return result;
 			}
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			MiscUtils.propagate(e);
 			return null;
 		}
@@ -126,7 +126,7 @@ public abstract class LinuxUtils {
 		}
 		for (int i = 1; i < buf.length; i++) {
 			in.read(buf, i - 1, 1);
-			if (buf[i-1] == (byte) 0x0a ) {
+			if (buf[i - 1] == (byte) 0x0a) {
 				break;
 			}
 		}
@@ -172,7 +172,7 @@ public abstract class LinuxUtils {
 
 	private static int checkAck(InputStream in) throws IOException {
 		int b = in.read();
-		if (b < 0) 
+		if (b < 0)
 			return b;
 
 		if (b == 1 || b == 2) {
@@ -181,77 +181,69 @@ public abstract class LinuxUtils {
 			do {
 				c = in.read();
 				stringBuilder.append((char) c);
+			} while (c != '\n');
 			}
-			while (c != '\n');
-		}
 		return b;
 	}
 
-	public static void upload(RemoteConnectionDetails connectiondetails, String localsource,
-			String remoteDir) throws InterruptedException  {
-
+	public static void upload(RemoteConnectionDetails connectiondetails, String localsource, String remoteDir) throws InterruptedException {
 		Scp scp = new Scp();
 		int portSSH = connectiondetails.getPort();
 		String serverSSH = connectiondetails.getHostName();
-		String userSSH = connectiondetails.getUserName(); 
+		String userSSH = connectiondetails.getUserName();
 		String pswdSSH = connectiondetails.getPassword();
-		scp.setPort( portSSH );
+		scp.setPort(portSSH);
 		scp.setLocalFile(localsource);
-		scp.setTodir( userSSH + ":" + pswdSSH + "@" + serverSSH + ":" + remoteDir );
-		scp.setProject( new Project() );
-		scp.setTrust( true );
+		scp.setTodir(userSSH + ":" + pswdSSH + "@" + serverSSH + ":" + remoteDir);
+		scp.setProject(new Project());
+		scp.setTrust(true);
 		scp.execute();
 		Thread.sleep(60000); // long sleep as file permission cron job runs every minute
 	}
 
-	
-	public static void downloadFileViaScp(RemoteConnectionDetails connectiondetails, String remoteDir,
-			String localsource) throws InterruptedException  {
-		
+	public static void downloadFileViaScp(RemoteConnectionDetails connectiondetails, String remoteDir, String localsource) throws InterruptedException {
 		Scp scp = new Scp();
 		String serverSSH = connectiondetails.getHostName();
-		String userSSH = connectiondetails.getUserName(); 
+		String userSSH = connectiondetails.getUserName();
 		String pswdSSH = connectiondetails.getPassword();
 		Thread.sleep(60000);
-		logger.info("localsource "+localsource+" remoteDir: "+remoteDir+" ");
-		scp.setPort( connectiondetails.getPort() );			
+		logger.info("localsource " + localsource + " remoteDir: " + remoteDir + " ");
+		scp.setPort(connectiondetails.getPort());
 		scp.setRemoteFile(userSSH + ":" + pswdSSH + "@" + serverSSH + ":" + remoteDir);
 		scp.setLocalTodir(localsource);
-		//scp.setTodir( userSSH + ":" + pswdSSH + "@" + serverSSH + ":" + remoteDir );
-		scp.setProject( new Project() );
-		scp.setTrust( true );
-		scp.execute();	
+		// scp.setTodir( userSSH + ":" + pswdSSH + "@" + serverSSH + ":" + remoteDir );
+		scp.setProject(new Project());
+		scp.setTrust(true);
+		scp.execute();
 		Thread.sleep(35000); // long sleep as file permission cron job runs every minute
 	}
-	
-	public static String[] getCardNumberAndExpiryDate(File filePath) {
+
+	public static List<String> getCardNumberAndExpiryDate(File filePath) {
 		MiscUtils.reportToConsole("*********   starting getCardNumberAndExpiryDate *******  ");
+		List<String> cardData = new ArrayList<>();
 		int lnNumber = 1;
-		try (BufferedReader br = new BufferedReader(new FileReader(filePath)))
-		{
+		// File latestFile = FileUtils.getLastFileName(filePath);
+		try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
 			String strLine;
-			while ((strLine = br.readLine()) != null)
-			{
-				if (lnNumber == 2)
-				{
-					strLine = strLine.trim().replaceAll("\\s+"," ");
+			while ((strLine = br.readLine()) != null) {
+				if (lnNumber > 1) {
+					strLine = strLine.trim().replaceAll("\\s+", " ");
 					MiscUtils.reportToConsole("*********   File Data *******  " + strLine);
 					String[] data = strLine.trim().split(" ");
-					cardData = data[0].trim().split(":");
-					break;
+					cardData.add(data[0].trim());
+					// break;
 				}
 				lnNumber++;
 			}
 		} catch (Exception e) {
 			MiscUtils.reportToConsole("getCardNumberAndExpiryDate Exception :  " + e.toString());
-			logger.info(ConstantData.EXCEPTION +" {} " +  e.getMessage());
+			logger.info(ConstantData.EXCEPTION + " {} " + e.getMessage());
 			throw MiscUtils.propagate(e);
 		}
 		return cardData;
 	}
 
-	public static Session connectSession(String user, String host, String pwd,
-			int port) throws JSchException, IOException {
+	public static Session connectSession(String user, String host, String pwd, int port) throws JSchException, IOException {
 		JSch jsch = new JSch();
 		Session session = jsch.getSession(user, host, port);
 		session.setPassword(pwd);
@@ -263,19 +255,16 @@ public abstract class LinuxUtils {
 		return session;
 	}
 
-	public static String listFilesInDirectory(Session session, String filepath,
-			String fileName) throws JSchException, IOException {
+	public static String listFilesInDirectory(Session session, String filepath, String fileName) throws JSchException, IOException {
 		ChannelExec channelExec = (ChannelExec) session.openChannel("exec");
-		channelExec
-		.setCommand("ls -t" + " " + filepath + " > " + "" + fileName);
+		channelExec.setCommand("ls -t" + " " + filepath + " > " + "" + fileName);
 		channelExec.getOutputStream();
 		channelExec.getInputStream();
 		channelExec.connect();
 		return fileName;
 	}
 
-	public static void movingToDir(Session session) throws JSchException,
-	IOException {
+	public static void movingToDir(Session session) throws JSchException, IOException {
 		ChannelExec channelExec1 = (ChannelExec) session.openChannel("exec");
 		channelExec1.setCommand("pwd > 576456.txt");
 		// channelExec.setCommand("pwd > 11121.txt");
@@ -285,8 +274,7 @@ public abstract class LinuxUtils {
 		channelExec1.connect();
 	}
 
-	public static void navigateAndGetGPGFile(Session session, String command,
-			String FileName) throws JSchException, IOException {
+	public static void navigateAndGetGPGFile(Session session, String command, String FileName) throws JSchException, IOException {
 		ChannelExec channelExec = (ChannelExec) session.openChannel("exec");
 		if (!channelExec.isClosed()) {
 			channelExec.setCommand(command + FileName);
@@ -304,11 +292,8 @@ public abstract class LinuxUtils {
 		}
 	}
 
-	public static void copyFilesfromServer(Session session, String command,
-			String fileName, String localDest) throws JSchException,
-			IOException {
+	public static void copyFilesfromServer(Session session, String command, String fileName, String localDest) throws JSchException, IOException {
 		FileOutputStream fileOutputStream = null;
-
 		String Copycommand = command + "/" + fileName;
 		Channel channel1 = session.openChannel("exec");
 		System.out.println(Copycommand);
@@ -338,7 +323,6 @@ public abstract class LinuxUtils {
 			if (buf[i] == (byte) 0x0a) {
 				break;
 			}
-			// }
 		}
 		buf[0] = 0;
 		out.write(buf, 0, 1);
@@ -362,8 +346,8 @@ public abstract class LinuxUtils {
 		out.flush();
 		fileOutputStream.close();
 		// channel1.close();
-
 	}
+	
 
 	public static String getJPEGPhotoFileName(File batchFile) {
 		String photoFileName = "";
@@ -424,5 +408,13 @@ public abstract class LinuxUtils {
 			throw MiscUtils.propagate(e);
 		}
 		return photoReferenceNumber;
+	}
+	
+	public static String getServerTime(DateTimeFormatter formatter){
+		LocalDateTime serverTime = LocalDateTime.now(ZoneId.of("GMT-6")); //CST time of Linux server. 
+		if(serverTime.getHour()>12){
+			serverTime = serverTime.minusHours(12);
+		}
+		return serverTime.format(formatter); 
 	}
 }

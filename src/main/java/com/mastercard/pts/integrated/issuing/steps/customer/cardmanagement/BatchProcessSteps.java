@@ -88,6 +88,10 @@ public class BatchProcessSteps {
 
 	private static final String INSTITUTION_CODE = "INSTITUTION_CODE";
 	
+	private static final String CARDHOLDER_DUMP = "Cardholder Dump [CARDHOLDER_DUMP]";
+	
+	private static final String EXTRACT_TYPE_FULL = "FULL [F]";
+	
 	private static final Logger logger = LoggerFactory.getLogger(BatchProcessSteps.class);
 	
 	private File batchFile;
@@ -117,6 +121,8 @@ public class BatchProcessSteps {
 	
 	@When("processes pre-production batch for $type")
 	public void whenProcessesPreproductionBatchForPrepaid(String type){
+		Device device = context.get(ContextConstants.DEVICE);
+		batchNumber = device.getBatchNumber();
 		PreProductionBatch batch = new PreProductionBatch();
 		batch.setProductType(ProductType.fromShortName(type));
 		batch.setBatchNumber(batchNumber);
@@ -250,6 +256,14 @@ public class BatchProcessSteps {
 		batchProcessWorkflow.processDownloadBatch(batch);
 	}
 	
+	@When("cardholder dump download batch is processed for $type")
+	public void whenDownloadBatchIsProcessedForCredit(String batchType, String type){
+		ProcessBatches batch =  ProcessBatches.createWithProvider(provider);
+		batch.setBatchName(CARDHOLDER_DUMP);
+		batch.setExtractType(EXTRACT_TYPE_FULL);
+		batch.setProductType(ProductType.fromShortName(type));
+		batchProcessWorkflow.processDownloadBatch(batch);
+	}
 	/**
 	 * Step Definition for Processing batches
 	 * <p>
@@ -279,6 +293,12 @@ public class BatchProcessSteps {
 		File batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(partialFileName, tempDirectory.toString(), ConstantData.VISA_BASEII_LINUX_DIRECTORY,"proc");
 		Assert.assertTrue("Transaction Data Does not match ",batchProcessWorkflow.validateVisaOutGoingFile(batchFile));
 	}
+	
+	@When("process batch for $batchType type and Batch name $batchName")
+	@Then("process batch for $batchType type and Batch name $batchName")
+	public void submitJobForProcessing(String batchType, String batchName) {
+		processBatchesFlows.processDownloadBatches(batchType, batchName);
+	}
 
 	
 	@When("verify new batch named as photo reference number is present under download batch")
@@ -290,9 +310,9 @@ public class BatchProcessSteps {
 	}
 	
 	@When("user checks for the client photo/flat file batch trace for $batchType batch")
-    public void checkBatchTraceForClientPhotoFlatFile(@Named("batchType") String batchType) {                  
-                    batchProcessWorkflow.verifyBatchTraceAvailability(context.get("JOB_ID"));    
-                    
-    }
+	@Then("user checks for the client photo/flat file batch trace for $batchType batch")
+	public void checkBatchTraceForClientPhotoFlatFile(@Named("batchType") String batchType) {						
+		batchProcessWorkflow.verifyBatchTraceAvailability(context.get(ContextConstants.JOB_ID));	
+	}
 	
 }

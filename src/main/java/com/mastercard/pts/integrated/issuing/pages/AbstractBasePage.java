@@ -60,6 +60,7 @@ import com.mastercard.testing.mtaf.bindings.element.ElementFinderProvider;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
+import com.mastercard.testing.mtaf.bindings.exception.ElementNotFoundException;
 import com.mastercard.testing.mtaf.bindings.page.AbstractPage;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
@@ -313,6 +314,12 @@ public abstract class AbstractBasePage extends AbstractPage {
     @PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
 	protected MCWebElement institutionDateTxt;
     
+    @PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='No']")
+	private MCWebElement noBtn;
+  
+  	@PageElement(findBy = FindBy.X_PATH, valueToFind="//*[@class='sectionHead']/td/../following-sibling::tr[1]/td")
+	public MCWebElement responseLbl;
+	
     int retryCounter =0;
 	
 	@Autowired
@@ -334,6 +341,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	protected void clickProcessAllButton() {
 		clickWhenClickable(processAll);
+	}
+	
+	protected void clickNoButton(){
+		clickWhenClickable(noBtn);
 	}
 
 	protected void clickNextButton() {
@@ -2009,4 +2020,32 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public String getFirstRowColValueFor(int col) {
 		return firstRowColumnValues.getElements().get(col).getText();
 	}
+	
+	public void findByLabelAndEnterValueInElement(String label,String value){
+		String webElements = "*:not([style='display: none;'])>input:not(.btn_or_sbt), *:not([style='display: none;'])>select,input[type='checkbox'],.labeltextf";
+	    
+	    String webElementLabel = ".displayName";
+	    
+		MCWebElements fieldType = getFinder().findMany(FindBy.CSS,webElements);
+        List<String> fieldLabel = new ArrayList<>();
+        List<MCWebElement> labelElement = getFinder().findMany(FindBy.CSS,webElementLabel).getElements();
+        labelElement.forEach(element->fieldLabel.add(element.getText()));
+        int index = fieldLabel.indexOf(label);
+        if(index!=-1){
+        	String tagName =  fieldType.getElements().get(index).getTagName();
+        	switch(tagName){
+        	case "input" :
+        		enterValueinTextBox(fieldType.getElements().get(index),value);
+        		break;
+        	case "select" :
+        		selectByVisibleText(fieldType.getElements().get(index), value);
+        		break;
+        	default:
+        		throw new ElementNotFoundException("Element with tag "+tagName+" not found!");
+        	}
+        		
+        } else {
+        	throw new ElementNotFoundException("Element with label " + label + " not found!");
+        }       
+   }
 }

@@ -1,6 +1,3 @@
-/**
- * @author: e076168
- */
 package com.mastercard.pts.integrated.issuing.workflows.cardholder;
 
 import org.junit.Assert;
@@ -11,6 +8,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.cardholder.CardHolderTransactions;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.cardholder.transactions.CancelRemittanceBookingPage;
+import com.mastercard.pts.integrated.issuing.pages.cardholder.transactions.CardToCardTransferPage;
 import com.mastercard.pts.integrated.issuing.pages.cardholder.transactions.CashRemittanceBookingPage;
 import com.mastercard.pts.integrated.issuing.pages.cardholder.transactions.FundTransferPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
@@ -49,8 +47,9 @@ public class CardHolderTransactionsWorkFlows extends AbstractBasePage{
 		clickContinueOnFundtransferButton();
 	}
 	
-	public void selectWalletToWalletOption(){
-		fundTransfer.selectWalletToWalletTransferOption();		
+	public void walletToWalletFundTransfer(CardHolderTransactions  cardhlTran){
+		CardToCardTransferPage page = navigator.navigateToPage(CardToCardTransferPage.class);
+		page.walletToWalletTransfer(cardhlTran);		
 	}
 	
 	public void selectIntraBankMoneyTransferOption(){
@@ -76,60 +75,32 @@ public class CardHolderTransactionsWorkFlows extends AbstractBasePage{
 		waitForLoaderToDisappear();
 	}
 	
-	public void walletToWalletTransfer(CardHolderTransactions cardhlfTran){
-		fundTransfer.selectWalletNumber(cardhlfTran.getWalletFromAmountTransfer());
-		fundTransfer.amountToTransfer(cardhlfTran.getWalletTransferAmount());
-		//fundTransfer.selectTransferCurrency(cardhlfTran.getWalletTransferCurrency());
-		fundTransfer.submitWalletTransferRequest();
-		waitForLoaderToDisappear();
-		fundTransfer.enterTransactionPassword(cardhlfTran.getTransctionPassword());
-		fundTransfer.enterTransactionRemark(cardhlfTran.getTransactionRemark());
-		fundTransfer.confirmTransaction();
-		waitForLoaderToDisappear();				
-		if(fundTransfer.verifyFundsTransferSts()){
-				Assert.assertTrue(false);
-		}else{
-				Assert.assertTrue(fundTransfer.checkWalletToWalletTransferStatusMessage().contains(cardhlfTran.getWalletToWalletTransSucessMsg()));
-		}
-	}
-	
 	public boolean verifyFundTransferStatusOfTransaction(){
-		if(fundTransfer.verifyFundTransferSatus()){
-				return true;
-		}else{
-				return false;
-		}
+		return fundTransfer.verifyFundTransferSatus();
 	}
 	
-	public void interBankMoneyTransfer(CardHolderTransactions cardhlfTran){		
-		fundTransfer.enterBeneficiaryWalletNumber(cardhlfTran.getWalletToAmountTransfer());
-		fundTransfer.enterBeneficiaryCardNumber(cardhlfTran.getCardNumber());
-		fundTransfer.enterAmountToTranfer(cardhlfTran.getTransferAmount());		
-		fundTransfer.submitIntraBankMoneyTranferRequest();
-		waitForLoaderToDisappear();
-		fundTransfer.enterTransactionPassword(cardhlfTran.getTransctionPassword());
-		fundTransfer.enterTransactionRemark(cardhlfTran.getTransactionRemark());
-		fundTransfer.confirmTransaction();
-		waitForLoaderToDisappear();
-		Assert.assertTrue(fundTransfer.checkWalletToWalletTransferStatusMessage().contains("Your transaction is successful")); 
+	public void interBankMoneyTransfer(CardHolderTransactions cardhlfTran){
+		FundTransferPage page = navigator.navigateToPage(FundTransferPage.class);
+		page.interBankTransfer(cardhlfTran);
 	}
 	
 	public boolean checkCashRemittanceAllowedOrNot(){
 		boolean isPresentElement = false;
-		if(cashRemittanceBookingPage.isCashRemittanceAllowedForAccount()){
-			isPresentElement = true;
-			return isPresentElement;
+		if(cashRemittanceBookingPage.isCashRemittanceAllowedForAccount()){			
+			return isPresentElement = true;
 		}else{
 			return isPresentElement;
 		}
 	}
 	
-	public void cancelCashRemittanceBooking(CardHolderTransactions cardhlTran){
-		cashRemittanceBookingPage.cancelRemittanceRequst(cardhlTran);
+	public String cancelCashRemittanceBooking(CardHolderTransactions cardhlTran){
+		CancelRemittanceBookingPage page = navigator.navigateToPage(CancelRemittanceBookingPage.class);
+		return page.cancelRemittanceRequst(cardhlTran);
 	}
 	
 	public String cashRemittanceBooking(CardHolderTransactions cardhlTran){
-		return cashRemittanceBookingPage.bookCashRemittance(cardhlTran);
+		CashRemittanceBookingPage page = navigator.navigateToPage(CashRemittanceBookingPage.class);
+		return page.bookCashRemittance(cardhlTran);
 	}
 	
 	public boolean verifyAvailBalanceIntoWallet(){

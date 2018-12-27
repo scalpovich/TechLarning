@@ -20,6 +20,7 @@ import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGen
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
 import com.mastercard.pts.integrated.issuing.utils.ConnectionUtils;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCash;
 
@@ -87,7 +88,7 @@ public class HelpdeskWorkflow {
 		helpDeskPage.resetPinRetryCounter(helpdeskGeneral);
 	}
 
-	public void setupDeviceCurrency(HelpdeskGeneral helpdeskGeneral) {
+	public void setupDeviceCurrency(HelpdeskGeneral helpdeskGeneral){		
 		helpDeskPage.setupDeviceCurrency(helpdeskGeneral);
 	}
 	
@@ -132,7 +133,9 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.getWalletNumber(device);
 	}
 
-	public void walletToWalletTransfer(Device device) {
+	public void walletToWalletTransfer(Device device) {		
+		searchByDeviceNumber(device);
+		clickCustomerCareEditLink();
 		helpDeskPage.walletToWalletTransfer(device);
 	}
 
@@ -275,6 +278,24 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.getDeclineCodeForTransaction(device, rrnNumber);
 		
 	}
+
+	public void raiseStoplistRequest(Device device,
+			HelpdeskGeneral helpdeskGeneral) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		helpDeskPage.searchByDeviceNumber(device);
+		helpdeskGeneral.setServiceCode(Constants.DEVICE_STOPLIST_REQ);
+		helpDeskPage.addServiceRequest(helpdeskGeneral,
+				helpDeskPage.getstoplistReasonDDwn(),
+				Constants.FRAME_STOPLIST_REQUEST, false);
+	}
+
+	public void withdrawStoplistDeviceFlows(HelpdeskGeneral general,
+			Device device) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		helpDeskPage.searchByDeviceNumber(device);
+		helpDeskPage.withdrawDeviceFromStoplist(general);
+	}
+
 	public String raiseLoanCancellationRequest(LoanPlan loanPlan, Device device, HelpdeskGeneral helpdeskGeneral) {
 		return helpDeskPage.raiseLoanCancellationRequest(helpdeskGeneral,loanPlan,device);
 		

@@ -80,6 +80,9 @@ public class HelpDeskSteps {
 	private String clientID;
 	private String loginType = "login";
 	private CardToCash cardtocash;
+	private static final String STOPLIST_NOTES = "STOPLIST_NOTES";
+	private static final String STOPLIST_REASON = "STOPLIST_REASON";
+	private static final String WITHDRAWAL_REASON = "WITHDRAWAL_REASON";
 	
 	@Autowired
 	private TestContext context;
@@ -777,6 +780,7 @@ public class HelpDeskSteps {
 		}
 	}
 
+	@When("currency setup for device")
 	@Then("currency setup for device")
 	public void searchDevice() {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
@@ -801,12 +805,9 @@ public class HelpDeskSteps {
 
 	@When("wallet to wallet transfer selected account")
 	public void walletToWalletTransfer() {
-		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
-		Device device = context.get(ContextConstants.DEVICE);
-		thenUserNavigatesToGeneralInHelpdesk();
-		helpdeskWorkflow.searchByDeviceNumber(device);
-		helpdeskWorkflow.clickCustomerCareEditLink();
-		helpdeskWorkflow.walletToWalletTransfer(device);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);		
+		thenUserNavigatesToGeneralInHelpdesk();		
+		helpdeskWorkflow.walletToWalletTransfer(context.get(ContextConstants.DEVICE));
 	}
 
 	@When("wallet to wallet transfer for general purpose account")
@@ -959,6 +960,25 @@ public class HelpDeskSteps {
 	public void compareBalanceDetails(String payment){
 		helpdeskWorkflow.compareBalanceDetailsPostPayments(payment);
 	}
+
+
+	@When("user stop lists the device")
+	public void stopListDevice() {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskGeneral.setNotes(provider.getString(STOPLIST_NOTES));
+		helpdeskGeneral.setReason(provider.getString(STOPLIST_REASON));
+		helpdeskWorkflow.raiseStoplistRequest(device, helpdeskGeneral);
+	}
+
+	@When("user withdraws the stoplisted device")
+	public void withdrawStoplistedDevice() {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskGeneral.setReason(provider.getString(WITHDRAWAL_REASON));
+		helpdeskWorkflow.withdrawStoplistDeviceFlows(helpdeskGeneral, device);
+	}
+
 	
 	@When("user verify $label value for $category category is $value")
 	public void assertionForUnpaidAndAuthFlag(String label,String category,String value){

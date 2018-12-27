@@ -2,12 +2,12 @@ package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
 import java.util.Map;
 import java.util.Objects;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 
 import com.mastercard.pts.integrated.issuing.steps.customer.transaction.TransactionSteps;
@@ -181,8 +181,8 @@ public class ProgramSetupSteps {
 	private static final Logger logger = LoggerFactory.getLogger(ProgramSetupSteps.class);
 
 	private static final String JOINING_FEE_PLAN = "JOINING_FEE_PLAN";
-	
-private static final String DEFAULT_PRESENTMENT_TIME_LIMIT = "3";
+
+	private static final String DEFAULT_PRESENTMENT_TIME_LIMIT = "3";
 	
 	private static final String MERCHANT_CODE = "5999";
 
@@ -1233,7 +1233,7 @@ private static final String DEFAULT_PRESENTMENT_TIME_LIMIT = "3";
 		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
 		program.setApplicationType(applicationType);
 		program.setSubApplicationType(subApplicationType);
-		if (program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE) || program.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)) {
+		if (program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE) || program.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) && program.getSubApplicationType().contains(ConstantData.EXISTING)) {
 			program.setDevicePlanPlan2(devicePlanSupplementary.buildDescriptionAndCode());
 		}
 		if (Objects.nonNull(dedupePlan)) {
@@ -1320,22 +1320,40 @@ private static final String DEFAULT_PRESENTMENT_TIME_LIMIT = "3";
 
 	@When("User fills Program section for $type product and program $programType")
 	public void userFillsProgramSection(String type, String programType) {
-		program = Program.createWithProvider(dataProvider, provider);
+		program = Program.createWithProvider(dataProvider, provider);		
+		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
 		program.setProduct(ProductType.fromShortName(type));
 		program.setProgramType(programType);
+		
 		if (!program.getProduct().equalsIgnoreCase(ProductType.DEBIT)) {
-			program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
-			program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
+			if (Objects.nonNull(statementMessagePlan) && Objects.nonNull(marketingMessagePlan)) {
+				program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
+				program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
+			} else {
+				program.setOtherPlanStatementMessagePlan(data.getStatementMessagePlan());
+				program.setOtherPlanMarketingMessagePlan(data.getMarketingMessagePlan());
+			}
 		}
+		
 		program.setFirstWalletPlan(walletPlan.buildDescriptionAndCode());
 		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
-
-		program.setDedupPlan(dedupePlan.buildDescriptionAndCode());
-		program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
-		program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
-		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID)) {
-			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
+				
+		if (Objects.nonNull(dedupePlan) && Objects.nonNull(documentCheckListPlan) && Objects.nonNull(mccRulePlan)) {
+			program.setDedupPlan(dedupePlan.buildDescriptionAndCode());
+			program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
+			program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
+		} else {
+			program.setDedupPlan(data.getDedupePlanCode());
+			program.setDocumentChecklistPlan(data.getDocumentCheckListPlan());
+			program.setMccRulePlan(data.getMccRulePlan());
 		}
+		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID)){
+			if (Objects.nonNull(prepaidStatementPlan)) {
+				program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
+			} else {
+				program.setPrepaidStatementPlan(data.getPrepaidStatementPlan());
+			}
+		}	
 		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
 		context.put(ContextConstants.PROGRAM, program);
 	}
@@ -1760,7 +1778,7 @@ private static final String DEFAULT_PRESENTMENT_TIME_LIMIT = "3";
 		sendToCarrier.setFileName((new File(batchFile)).getName());
 		sendToCarrierWorkflow.processSendToCarrierBatch(sendToCarrier);
 	}
-	
+
 	@When("$type processes Carrier Acknowledgement batch for $fileType File Type")
 	@Then("$type processes Carrier Acknowledgement batch for $fileType File Type")
 	public void thenProcessesCarrierAcknowledgementBatch(String type, String fileType) {
@@ -1769,7 +1787,7 @@ private static final String DEFAULT_PRESENTMENT_TIME_LIMIT = "3";
 		carrierAcknowledgement.setFileType(fileType);
 		carrierAcknowledgement.setFileName(context.get(ContextConstants.DAT_FILE_NAME));
 		carrierAcknowledgementWorkflow.processCarrierAcknowledgementBatch(carrierAcknowledgement);
-	}
+}
 
 	@When("search with device in device tracking screen and status of carrier")
 	@Then("search with device in device tracking screen and status of carrier")
