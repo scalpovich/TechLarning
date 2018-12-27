@@ -37,15 +37,14 @@ Scenario:4 Transaction - Verify that the transaction declines with appropriate r
 Given user is logged in institution
 When embossing file batch was generated in correct format
 And user raises an authorization request only
-And status of request is declined with reason EXPIRED
+And status of request is declined with reason RANGE_STOPLISTED
 And search Purchase authorization and verify 207-PICK-UP CARD status
 And assert Capture response with 27001 AuthDecline Code and Device range is stoplisted. as description
 Then user sign out from customer portal
 
-Scenario:5 To Verify that the user can withdraw stoplist credit device from stoplist screen
+Scenario:5 To Verify that the user can withdraw stoplist device range of credit device
 Given user is logged in institution
-When user withdraws a card from withdraw device screen
-And device has "normal" status
+When user withdraws a device range from withdraw device range screen
 Then user sign out from customer portal
 
 Scenario:6 Transaction - Verify that the user is able to make a successful transaction on the withdrawaing the stoplisting
