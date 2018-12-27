@@ -11,7 +11,7 @@ Meta:
 Scenario:1 creation of mastercard_Retail Credit Card credit device
 Given setting json values in excel for Credit
 When user is logged in institution
-And user saves the fees applied for First Renewal on device based event fee plan for Normal card
+And user saves the fees applied for Stoplist Withdrawal Fee on device based event fee plan for Normal card
 And for EMV Card User fills Device Plan for credit product for Mastercard
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
@@ -38,7 +38,7 @@ Then user sign out from customer portal
 
 Scenario:4 To verify that the device event fee for card renewal - credit is deducted
 Given user is logged in institution
-When verify that the device event fees for First Renewal is levied for Normal card
+When verify that the device event fees for Stoplist Withdrawal Fee is levied for Normal card
 Then user signs out from customer portal
 
 Scenario:5 Transaction - Verify that the transaction declines with appropriate response for stoplisting
