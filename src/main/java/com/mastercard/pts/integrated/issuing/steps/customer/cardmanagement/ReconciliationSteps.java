@@ -122,7 +122,7 @@ public class ReconciliationSteps {
 		reconciliationWorkFlow.processStatementExtractBatch(batch);
 	}
 	
-	@When("user processes $batchName batch for $product")
+	@When("user processes batch $batchName for $product")
 	public void processPaymentUploadBatchForCredit(String batchName, String product)
 	{
 		String fileName = context.get(ConstantData.PAYMENT_UPLOAD_FILE_NAME);
