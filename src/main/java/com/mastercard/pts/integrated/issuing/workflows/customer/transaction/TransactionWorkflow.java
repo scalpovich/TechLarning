@@ -2323,4 +2323,10 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		MID_TID_BlockingPage page = navigator.navigateToPage(MID_TID_BlockingPage.class);
 		page.deleteRecord(combination,details);
 	}
+	
+	public String verifyDeviceEventFeeApplied(Device device, String reason, TransactionSearch ts) {
+		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
+		page.searchTransactionWithDeviceFee(device, ts);
+		return page.getDeviceEventFeeFromTransactionSearch(reason);
+	}
 }

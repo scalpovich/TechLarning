@@ -518,4 +518,15 @@ public class Constants {
 	public static final String RANGE_STOPLISTED = "Device range is stoplisted..";
 	public static final String COUNTRY_STOPLISTED = "Country is stoplisted.";
 
+	public static final String CARD_FEES_STOLEN = "FEE(Stolen Device)";
+	public static final String CARD_FEES_LOST = "FEE(Lost Device )";
+	public static final String CARD_FEES_DAMAGED = "FEE(Device Damaged)";
+	public static final String CARD_FEES_COUNTERFEIT = "FEE(Counterfeit Device )";
+	public static final String CARD_FEES_EMERGENCY = "FEE(Emergency Replacement)";
+	public static final String CARD_FEES_ERRONEOUS  = "FEE(Erroneous Device)";
+	public static final String CARD_FEES_DEVICE_TECHNOLOGY_UPGRADE = "FEE(Device Technology Upgrade)";
+	public static final String CARD_FEES_EARLY_RENEWAL = "FEE(Early Renew Device)";
+	public static final String CARD_FEES_OTHERS = "FEE(Others)";
+	public static final String CARD_FEES_RENEWAL_FIRST = "FEE(Renew Device)";
+	
 }

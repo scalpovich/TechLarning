@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -15,12 +16,14 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Tran
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,6 +93,8 @@ public class TransactionSearchPage extends AbstractBasePage {
 	private String authorizationStatus;
 
 	List<String> joiningAndMembershipFees = new ArrayList();
+	
+	private String cardFees = "//table[@class='dataview']/tbody/tr//span[contains(.,'%s')]/../preceding-sibling::td[@class='rightalign']";
 	
 	public void selectFromDate(LocalDate date)
 	{
@@ -253,6 +258,61 @@ public class TransactionSearchPage extends AbstractBasePage {
 		transactionDetails.setDR_CR(getCellTextByColumnName(i, "DR / CR"));
 		transactionDetails.setReversal(getCellTextByColumnName(i, "Reversal"));		
 		return transactionDetails;			
+	}
+	
+	public void searchTransactionWithDeviceFee(Device device, TransactionSearch ts) {
+		logger.info("Select product {}", device.getProductType());
+		WebElementUtils.selectDropDownByVisibleText(productTypeSelect, device.getProductType());
+		logger.info("Search transaction for device {}", device.getDeviceNumber());
+		WebElementUtils.enterText(searchDeviceTxt, device.getDeviceNumber());
+		WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
+		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
+		waitForWicket();
+		WebElementUtils.elementToBeClickable(tranDateDDwn);
+		WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, "Transaction Date [T]");
+		clickSearchButton();
+		SimulatorUtilities.wait(6000);
+		waitForWicket();
+	}
+	
+	public String getDeviceEventFeeFromTransactionSearch(String reason) {
+		String deviceEventFee = null;
+		switch (reason) {
+		case "Stolen":
+			deviceEventFee = Element(String.format(cardFees, Constants.CARD_FEES_STOLEN)).getText();
+			break;
+		case "First Renewal":
+			deviceEventFee = Element(String.format(cardFees, Constants.CARD_FEES_RENEWAL_FIRST)).getText();
+			break;
+		case "Lost":
+			deviceEventFee = Element(String.format(cardFees, Constants.CARD_FEES_LOST)).getText();
+			break;
+		case "Damaged":
+			deviceEventFee = Element(String.format(cardFees, Constants.CARD_FEES_DAMAGED)).getText();
+			break;
+		case "Counterfeit":
+			deviceEventFee = Element(String.format(cardFees, Constants.CARD_FEES_COUNTERFEIT)).getText();
+			break;
+		case "Emergency Replace":
+			deviceEventFee = Element(String.format(cardFees, Constants.CARD_FEES_EMERGENCY)).getText();
+			break;
+		case "Erroneous Device":
+			deviceEventFee = Element(String.format(cardFees, Constants.CARD_FEES_ERRONEOUS)).getText();
+			break;
+		case "Device Technology Upgrade":
+			deviceEventFee = Element(String.format(cardFees, Constants.CARD_FEES_DEVICE_TECHNOLOGY_UPGRADE)).getText();
+			break;
+		case "Early Renewal":
+			deviceEventFee = Element(String.format(cardFees, Constants.CARD_FEES_EARLY_RENEWAL)).getText();
+			break;
+		case "Others":
+			deviceEventFee = Element(String.format(cardFees, Constants.CARD_FEES_OTHERS)).getText();
+			break;
+		default:
+			logger.info("Invalid Case Provided {}", reason);
+			break;
+		}
+		return deviceEventFee;
 	}
 
 }

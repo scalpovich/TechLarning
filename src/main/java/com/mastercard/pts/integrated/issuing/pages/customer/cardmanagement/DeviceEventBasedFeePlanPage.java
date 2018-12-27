@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.InstitutionData;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlanDetails;
@@ -21,6 +22,7 @@ import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.DatePicker;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -129,6 +131,12 @@ public class DeviceEventBasedFeePlanPage extends AbstractBasePage {
 	private MCWebElement customerTypeDeviceFeesDdwn;
 	
 	public String Calelement = "//td[4]";
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
+	private MCWebElement txtEventBasedFeePlanCodeSearch;
+	
+	public static final String DEVICE_EVENT_BASED_FEES = "//tr/child::td[@class='displayName']"
+			+ "/span[contains(text(),'%s')]//following::td/span/span";
 
 	public void verifyUiOperationStatus() {
 		logger.info("Device Event Based Fee Plan");
@@ -341,5 +349,67 @@ public class DeviceEventBasedFeePlanPage extends AbstractBasePage {
 
 		verifyRecordMarkedForUpdationStatusWarning();
 	}
+	
+	public void enterEventBasedFeePlanCode(String eventCode) {
+		WebElementUtils.enterText(txtEventBasedFeePlanCodeSearch, eventCode);
+	}
+	
+	public void searchForDeviceEventBasedFeePlan(InstitutionData jsonData){
+		enterEventBasedFeePlanCode(getPlanCode(jsonData.getDeviceEventBasedFeePlan()));
+		clicksearchButtonElement();
+	}
+	
+	public DeviceEventBasedFeePlan viewDeviceEventFeePlan(DeviceEventBasedFeePlan deviceEventBasedPlan, 
+			String reason, String cardType){
+		viewFirstRecord();
+		SimulatorUtilities.wait(500);
+		runWithinPopup(
+				"View Device Event Based Fee Plan",
+				() -> {
+					viewFirstRecord();
+					SimulatorUtilities.wait(500);
+					readDeviceEventBasedFees(deviceEventBasedPlan, reason, cardType);
+					clickCloseButton();
+				});
+		return deviceEventBasedPlan;
+	}
+	
+	public void readDeviceEventBasedFees(DeviceEventBasedFeePlan deviceEventBasedPlan, 
+			String reason, String cardType) {
+		runWithinPopup(
+				"View Device Event Based Fee Plan Details",
+				() -> {
+					saveDeviceEventBasedFees(deviceEventBasedPlan, reason, cardType);
+					clickCloseButton();
+				});
+		
+	}
 
+	public void saveDeviceEventBasedFees(DeviceEventBasedFeePlan deviceEventBasedPlan, 
+			String feeType, String cardType) {
+		List<String> fees;
+		if(feeType.contains("First") || feeType.contains("Subsequent")){
+			fees = getListOfElements(String.format(DEVICE_EVENT_BASED_FEES, feeType.replace(" Renewal", "")));
+		} else if (feeType.contains("Emergency")){
+			fees = getListOfElements(String.format(DEVICE_EVENT_BASED_FEES, feeType.replace(" Replace", "")));
+		} else if (feeType.contains("Erroneous")){
+			fees = getListOfElements(String.format(DEVICE_EVENT_BASED_FEES, feeType.replace(" Device", "")));
+		} else {
+			fees = getListOfElements(String.format(DEVICE_EVENT_BASED_FEES, feeType));
+		}
+		switch (cardType) {
+		case "Normal":
+			deviceEventBasedPlan.setNormalCardFees(fees.get(0));
+			break;
+		case "Photo":
+			deviceEventBasedPlan.setPhotoCardFees(fees.get(1));
+			break;
+		case "Picture":
+			deviceEventBasedPlan.setPictureCardFees(fees.get(2));
+			break;
+		default:
+			logger.info("The card type did not match to any of the cases - ", cardType);
+			break;
+		}
+	}
 }

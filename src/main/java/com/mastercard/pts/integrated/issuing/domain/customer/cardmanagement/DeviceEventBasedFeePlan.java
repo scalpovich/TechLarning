@@ -21,6 +21,9 @@ public class DeviceEventBasedFeePlan implements HasCodeAndDescription {
 	private String productType;
 	private String currency;
 	private String description;
+	private String normalCardFees;
+	private String photoCardFees;
+	private String pictureCardFees;
 	
 	private List<DeviceEventBasedFeePlanDetails> deviceEventBasedFeePlanDetails = new ArrayList<>();
 	
@@ -111,5 +114,29 @@ public class DeviceEventBasedFeePlan implements HasCodeAndDescription {
 	@Override
 	public String toString() {
 		return MiscUtils.toString(this);
+	}
+
+	public String getNormalCardFees() {
+		return normalCardFees;
+	}
+
+	public void setNormalCardFees(String normalCardFees) {
+		this.normalCardFees = normalCardFees;
+	}
+
+	public String getPhotoCardFees() {
+		return photoCardFees;
+	}
+
+	public void setPhotoCardFees(String photoCardFees) {
+		this.photoCardFees = photoCardFees;
+	}
+
+	public String getPictureCardFees() {
+		return pictureCardFees;
+	}
+
+	public void setPictureCardFees(String pictureCardFees) {
+		this.pictureCardFees = pictureCardFees;
 	}
 }

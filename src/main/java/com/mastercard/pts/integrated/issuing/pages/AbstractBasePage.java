@@ -2045,4 +2045,8 @@ public abstract class AbstractBasePage extends AbstractPage {
         	throw new ElementNotFoundException("Element with label " + label + " not found!");
         }       
    }
+	
+	public String getPlanCode(String descriptionAndCode){
+		return descriptionAndCode.substring(descriptionAndCode.indexOf('[')+1, descriptionAndCode.indexOf(']'));
+	}
 }

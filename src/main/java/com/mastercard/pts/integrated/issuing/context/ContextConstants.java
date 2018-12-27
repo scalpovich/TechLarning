@@ -184,6 +184,7 @@ public class ContextConstants {
 	
 	public static final String CSV_NO = "CSV_No";
 	
+	public static final String DEVICE_EVENT_BASED_FEE = "DEVICE_EVENT_BASED_FEE";
 	
 	private ContextConstants() {
 	}
