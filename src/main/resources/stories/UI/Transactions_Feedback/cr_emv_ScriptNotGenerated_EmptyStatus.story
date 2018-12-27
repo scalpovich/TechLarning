@@ -49,8 +49,8 @@ And search Purchase authorization and verify 117-Incorrect PIN status
 And assert Decline response with 46051 AuthDecline Code and Incorrect Pin. as description
 Then user sign out from customer portal
 
-Scenario:1.5 Verify DB has value in Application Unblock Column
-Then Verify APPLICATION_UNBLOCK_ICC has column value as Null
+!-- Scenario:1.5 Verify DB has value in Application Unblock Column
+!-- Then Verify APPLICATION_UNBLOCK_ICC has column value as Null
 
 Scenario:1.6 Perform EMV_PURCHASE Authorization transaction for pin retry limit check
 When perform an EMV_PURCHASE MAS transaction on the same card
@@ -75,5 +75,5 @@ And user sign out from customer portal
 And MAS simulator is closed
 And FINSim simulator is closed
 
-Scenario:1.9 Verify DB has value in Application Unblock Column
-Then Verify PIN_UNBLOCK_ICC has column value as Null
+!-- Scenario:1.9 Verify DB has value in Application Unblock Column
+!-- Then Verify PIN_UNBLOCK_ICC has column value as Null
