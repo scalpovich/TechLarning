@@ -9,23 +9,9 @@ Meta:
 Scenario:creation of mastercard_individual_primary_LVVC Card credit device
 Given setting json values in excel for Credit
 When user is logged in institution
-And User fills Dedupe Plan
-And User fills Statement Message Plan for credit product
-And User fills Marketing Message Plan for credit product
-And User fills Transaction Plan for credit product
-And User fills Transaction Limit Plan for credit product
-And User fills Document Checklist Screen for credit product
-And User fills Device Joining and Membership Fee Plan for credit product
-And User fills Device Event Based Fee Plan for credit product
 And for EMV Card [2] User fills Device Plan for credit product for Mastercard
 And for Limited Validity Virtual Card User fills Supplementary Device Plan for prepaid product for MASTERCARD [02]
-And User fills Billing Cycle
-And User fills Payment Priority
-And User fills Transaction Rule Plan
-And User fills Credit Plan
-And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
-And User fills MCC Rules for credit product
 And User Primary fills Existing Program Retail Credit Card section for credit product for mastercard
 And for Primary Device and New Client user fills Device Range section for credit product
 And for Add-on Device and Existing Client user fills Device Range section for credit product

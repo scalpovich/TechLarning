@@ -121,6 +121,8 @@ public class BatchProcessSteps {
 	
 	@When("processes pre-production batch for $type")
 	public void whenProcessesPreproductionBatchForPrepaid(String type){
+		Device device = context.get(ContextConstants.DEVICE);
+		batchNumber = device.getBatchNumber();
 		PreProductionBatch batch = new PreProductionBatch();
 		batch.setProductType(ProductType.fromShortName(type));
 		batch.setBatchNumber(batchNumber);
