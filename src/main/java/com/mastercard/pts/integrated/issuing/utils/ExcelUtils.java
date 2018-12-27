@@ -138,5 +138,20 @@ public class ExcelUtils {
 	public static void insertDataIntoExcel(String strQuery) throws FilloException {
 		insertDataIntoExcelThroughQuery(getFilePath(), strQuery);
 	}
+	
+	public static Map getRowDataFromExcelThroughQuery(String strQuery) throws FilloException {
+        Map<String, String> map = new HashMap();
+        Fillo fillo = new Fillo();
+        Connection connection = fillo.getConnection(getFilePath());
+        Recordset recordset = connection.executeQuery(strQuery);
+        while (recordset.next()) {
+              for(String str : recordset.getFieldNames()){
+                    map.put(str,recordset.getField(str));
+              }
+        }
+        recordset.close();
+        connection.close();
+        return map;
+  }
 
 }
