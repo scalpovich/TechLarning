@@ -681,6 +681,12 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return generatedMessage;
 	}
 
+	public String getFeedbackPanelInfoMessage() {
+		By by = By.cssSelector(".feedbackPanelINFO");
+		String message = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(by)).getText();
+		return message;
+	}
+
 	protected void clickWhenClickable(MCWebElement element) {
 		SimulatorUtilities.wait(4000);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();

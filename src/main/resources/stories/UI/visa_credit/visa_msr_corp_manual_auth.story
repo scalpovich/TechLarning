@@ -40,9 +40,7 @@ When user verifies available Card limit for card after transaction
 Then user sign out from customer portal
 
 Scenario:4 Run Pre-clearing and EOD-Credit
-Given user is logged in institution
 When user wait for 7 min to perform certain activity
-And user sign out from customer portal
 And user is logged in institution
 When user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
