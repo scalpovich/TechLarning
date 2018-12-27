@@ -1,4 +1,3 @@
-!-- @author: E080534
 Narrative:
 As a Customer portal user
 I want to validate temporary credit limit for corporate card
