@@ -33,23 +33,23 @@ And user edits deviceplan and enables stoplist flag
 And embossing file batch was generated in correct format
 Then user sign out from customer portal
 
-Scenario:4 Transaction - MSR_PREAUTH Authorization transaction on credit device after stoplisted device range
-Given connection to MAS is established
-When perform an MSR_PREAUTH MAS transaction
-And user is logged in institution
-Then search Pre-Auth authorization and verify 207-PICK-UP CARD status
-And assert Capture response with 27001 AuthDecline Code and Device range is stoplisted. as description
-And user sign out from customer portal
-
-Scenario:5 To Verify that the user can withdraw stoplist device range of credit device
+Scenario:4 Transaction - Verify that the transaction declines with appropriate response for stoplisting
 Given user is logged in institution
-When user withdraws a device range from withdraw device range screen
+When embossing file batch was generated in correct format
+And user raises an authorization request only
+And status of request is declined with reason EXPIRED
+And search Purchase authorization and verify 207-PICK-UP CARD status
+And assert Capture response with 27001 AuthDecline Code and Device range is stoplisted. as description
 Then user sign out from customer portal
 
-Scenario:6 Transaction - MSR_PREAUTH Authorization transaction on credit device after withdrawn device range
-Given perform an MSR_PREAUTH MAS transaction on the same card
-When MAS test results are verified
-And MAS simulator is closed
-And user is logged in institution
-Then search Pre-Auth authorization and verify 000-Successful status
-And user sign out from customer portal
+Scenario:5 To Verify that the user can withdraw stoplist credit device from stoplist screen
+Given user is logged in institution
+When user withdraws a card from withdraw device screen
+And device has "normal" status
+Then user sign out from customer portal
+
+Scenario:6 Transaction - Verify that the user is able to make a successful transaction on the withdrawaing the stoplisting
+Given user is logged in institution
+When user raises an authorization request only
+And search Purchase authorization and verify 000-Successful status
+Then user sign out from customer portal
