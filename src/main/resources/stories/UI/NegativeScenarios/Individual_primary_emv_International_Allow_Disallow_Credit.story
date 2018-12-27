@@ -7,8 +7,7 @@ Meta:
 @CreditRegression
 @StoryName credit_emv_retail
 @PreScreening
-@TestId TC548377
-@Abhishek_Credit_Negative		 
+@TestId TC548377		 
 Scenario:1.1 creation of mastercard_corporate_primary_EMV Card credit device
 Given setting json values in excel for Credit
 And user is logged in institution

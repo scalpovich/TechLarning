@@ -29,5 +29,5 @@ Meta:
 @TestId TC408235
 Given user is logged in institution
 And a new device was created
-And user raises an authorization request
+When user raises an authorization request
 Then status of request is "approved"
