@@ -19,7 +19,7 @@ And credit device is created using new device screen for Individual and Primary 
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pinProduction batch using new Device for Supplementary
-And user attachs device promotion plan PROMOTION_PLAN
+And user attaches device promotion plan PROMOTION_PLAN
 And device has "normal" status
 And user notes down available Card limit for card
 Then user sign out from customer portal
