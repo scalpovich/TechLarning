@@ -1928,14 +1928,17 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.enterText(txtnewPackID, newPackID);
 	}
 
-	public void withdrawDeviceFromStoplist(HelpdeskGeneral helpdeskGeneral) {
+	public void withdrawDeviceFromStoplist(HelpdeskGeneral helpdeskGeneral, 
+			String withWithoutFees) {
 		editFirstRecord();
 		SimulatorUtilities.wait(5000);
 		selectServiceCode(Constants.DEVICE_WITHDRAW_STOPLIST_REQ);
 		clickGoButton();
 		runWithinPopup("221 - Withdraw Device from Stop-list", () -> {
 			selectWithdrawalReason(helpdeskGeneral.getReason());
-			selectApplyFeesChkBx(false);
+			if(withWithoutFees.equalsIgnoreCase("with")) {
+				selectApplyFeesChkBx(true);
+			}
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();
 			verifyOperationStatus();
