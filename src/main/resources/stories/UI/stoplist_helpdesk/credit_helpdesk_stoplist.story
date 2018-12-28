@@ -30,18 +30,7 @@ And user edits deviceplan and enables stoplist flag
 Then device has "lost" status
 And user sign out from customer portal
 
-Scenario:3 Post maintenance batch and pre-clearing batch is run 
-Given user is logged in institution
-When post maintenance batch is run
-And user processes Pre-clearing system internal batch for Credit
-Then user sign out from customer portal
-
-Scenario:4 To verify that the device event fee for card renewal - credit is deducted
-Given user is logged in institution
-When verify that the device event fees for Stoplist Withdrawal Fee is levied for Normal card
-Then user signs out from customer portal
-
-Scenario:5 Transaction - Verify that the transaction declines with appropriate response for stoplisting
+Scenario:3 Transaction - Verify that the transaction declines with appropriate response for stoplisting
 Given user is logged in institution
 When embossing file batch was generated in correct format
 And user raises an authorization request only
@@ -50,9 +39,20 @@ And search Purchase authorization and verify 208-LOST CARD, PICK-UP status
 Then assert Capture response with 70053 AuthDecline Code and Card Status is Lost with Capture Response as description
 And user sign out from customer portal
 
-Scenario:6 Transaction - Verify that the user is able to make a successful transaction on the withdrawaing the stoplisting
+Scenario:4 Transaction - Verify that the user is able to make a successful transaction on the withdrawaing the stoplisting
 Given user is logged in institution
 When user withdraws the stoplisted device
 Then user raises an authorization request only
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
+
+Scenario:5 Post maintenance batch and pre-clearing batch is run
+Given user is logged in institution
+When post maintenance batch is run
+And user processes Pre-clearing system internal batch for Credit
+Then user sign out from customer portal
+
+Scenario:6 To verify that the device event fee for card renewal - credit is deducted
+Given user is logged in institution
+When verify that the device event fees for Stoplist Withdrawal Fee is levied for Normal card
+Then user signs out from customer portal
