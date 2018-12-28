@@ -7,7 +7,7 @@ Meta:
 @CreditRegression
 @CreditWithOutPin
 @StoryName credit_msr_retail				 
-Scenario:creation of mastercard_corporate_primary_msr Card credit device
+Scenario:1.1 creation of mastercard_corporate_primary_msr Card credit device
 Meta:
 @TestId TC565834
 Given setting json values in excel for Credit
@@ -25,7 +25,7 @@ Then User search for new device Supplementary on search screen for credit and va
 And embossing file batch was generated in correct format
 And user sign out from customer portal
 
-Scenario: Perform MMSR-CORPORATE Authorization transaction
+Scenario:1.2 Perform MMSR-CORPORATE Authorization transaction
 Given connection to MAS is established
 When perform an MMSR MAS transaction
 Then MAS test results are verified
