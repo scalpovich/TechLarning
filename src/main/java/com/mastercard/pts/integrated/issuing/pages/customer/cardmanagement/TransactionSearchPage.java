@@ -182,7 +182,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, "Transaction Date [T]");
 		clickSearchButton();
 		waitForWicket();
-		String xPath = String.format(".//td/span[contains(text(),'%s')]", "Wallet to Wallet Transfer(Credit))");
+		String xPath = String.format(".//td/span[contains(text(),'%s')]", "Wallet to Wallet Transfe");
 		return getFinder().getWebDriver().findElement(By.xpath(xPath)).getText();
 	}
 

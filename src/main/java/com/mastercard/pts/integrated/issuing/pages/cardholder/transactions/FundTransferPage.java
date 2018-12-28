@@ -232,7 +232,6 @@ public class FundTransferPage extends AbstractBasePage {
 		enterText(beneficiaryWalletNumberTxt,cardhlfTran.getWalletToAmountTransfer());
 		enterText(beneficiaryDeviceNumberTxt,cardhlfTran.getCardNumber());
 		enterAmountToTranfer(cardhlfTran.getTransferAmount());
-		//selectCurrencyForIntraBankTranfer("INR");
 		clickWhenClickable(submitBtn);
 		waitForLoaderToDisappear();
 		enterText(transactionPassword, cardhlfTran.getTransctionPassword());
@@ -256,10 +255,10 @@ public class FundTransferPage extends AbstractBasePage {
 		Assert.assertTrue(checkWalletToWalletTransferStatusMessage().contains("Your transaction is successful"));
 	}
 	
-	@Override
-	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.visibilityOf(masterDetailContentTitle), WebElementUtils.visibilityOf(visaMoneyTransferRbtn),
-				WebElementUtils.visibilityOf(cardtoCardRbtn), WebElementUtils.visibilityOf(interBankFundTransferPopulateDetailsRbtn),
-				WebElementUtils.visibilityOf(masterCardMoneySendRbtn));
-	}
+//	@Override
+//	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
+//		return Arrays.asList(WebElementUtils.visibilityOf(masterDetailContentTitle), WebElementUtils.visibilityOf(visaMoneyTransferRbtn),
+//				WebElementUtils.visibilityOf(cardtoCardRbtn), WebElementUtils.visibilityOf(interBankFundTransferPopulateDetailsRbtn),
+//				WebElementUtils.visibilityOf(masterCardMoneySendRbtn));
+//	}
 }

@@ -112,7 +112,6 @@ public class CashRemittanceBookingPage extends AbstractBasePage {
 	}
 	
 	public boolean isCashRemittanceAllowedForAccount(){
-	
 		return 	isElementPresent(isCashRemittanceAllowed);
 	}
 	

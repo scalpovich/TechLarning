@@ -85,12 +85,7 @@ public class CardHolderTransactionsWorkFlows extends AbstractBasePage{
 	}
 	
 	public boolean checkCashRemittanceAllowedOrNot(){
-		boolean isPresentElement = false;
-		if(cashRemittanceBookingPage.isCashRemittanceAllowedForAccount()){			
-			return isPresentElement = true;
-		}else{
-			return isPresentElement;
-		}
+		return cashRemittanceBookingPage.isCashRemittanceAllowedForAccount();
 	}
 	
 	public String cancelCashRemittanceBooking(CardHolderTransactions cardhlTran){

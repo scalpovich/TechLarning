@@ -503,7 +503,7 @@ public class TransactionSteps {
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		Device device = context.get(ContextConstants.DEVICE);
 		Assert.assertTrue("successfully completed the wallet to wallet fund transfer",
-				transactionWorkflow.searchTransactionWithDeviceAndGetStatus(device, ts).contains("Wallet to Wallet Transfer(Credit))"));
+				transactionWorkflow.searchTransactionWithDeviceAndGetStatus(device, ts).contains("Wallet to Wallet Transfe"));
 	}
 	
 	

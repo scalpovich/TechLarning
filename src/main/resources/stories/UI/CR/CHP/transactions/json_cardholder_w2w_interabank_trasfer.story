@@ -20,6 +20,7 @@ And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 Then device has "normal" status
 And currency setup for device
+And user performs adjustment transaction
 And user sign out from customer portal
 
 Scenario:Wallet to wallet fund transfer by cardholder
