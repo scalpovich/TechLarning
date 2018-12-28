@@ -528,5 +528,7 @@ public class Constants {
 	public static final String CARD_FEES_EARLY_RENEWAL = "FEE(Early Renew Device)";
 	public static final String CARD_FEES_OTHERS = "FEE(Others)";
 	public static final String CARD_FEES_RENEWAL_FIRST = "FEE(Renew Device)";
+	public static final String CARD_FEES_STOPLIST_WITHDRAWAL = "FEE(Stoplist Withdrawal)";
+	
 	
 }

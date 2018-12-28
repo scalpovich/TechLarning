@@ -305,6 +305,9 @@ public class TransactionSearchPage extends AbstractBasePage {
 		case "Others":
 			deviceEventFee = Element(String.format(cardFees, Constants.CARD_FEES_OTHERS)).getText();
 			break;
+		case "Stoplist Withdrawal Fee":
+			deviceEventFee = Element(String.format(cardFees, Constants.CARD_FEES_STOPLIST_WITHDRAWAL)).getText();
+			break;
 		default:
 			logger.info("Invalid Case Provided {}", reason);
 			break;
