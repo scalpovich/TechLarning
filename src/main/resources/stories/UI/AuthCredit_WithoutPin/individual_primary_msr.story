@@ -21,7 +21,7 @@ And for Primary Device and New Client user fills Device Range section for credit
 Then credit device is created using new device screen for Individual and Primary Device and New Client and Magnetic Stripe Card
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
-Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
+And device has "normal" status
 And embossing file batch was generated in correct format
 And user sign out from customer portal
 
@@ -38,7 +38,7 @@ When perform an MMSR MAS transaction on the same card
 Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
-And search MasterCard MoneySend authorization and verify 000-Successful status
+And search Money Send Person To Person authorization and verify 000-Successful status
 And user sign out from customer portal
 
 Scenario: Perform MSR_REFUND Authorization transaction
@@ -47,4 +47,25 @@ Then MAS test results are verified
 And user is logged in institution
 Then search Refund authorization and verify 000-Successful status
 Then validate auth report
+And user sign out from customer portal
+
+Scenario: Perform MSR_POS_BALANCE_INQUIRY Authorization transaction
+When perform an MSR_POS_BALANCE_INQUIRY MAS transaction on the same card
+Then MAS test results are verified
+Then user is logged in institution
+Then search Balance Inquiry authorization and verify 000-Successful status
+And user sign out from customer portal
+
+Scenario: Perform MSR_CASH_ADVANCE Authorization transaction
+When perform an MSR_CASH_ADVANCE MAS transaction on the same card
+Then MAS test results are verified
+Then user is logged in institution
+Then search Cash Advance authorization and verify 000-Successful status
+And user sign out from customer portal
+
+Scenario: Perform MSR_PURCHASE Authorization transaction
+When perform an MSR_PURCHASE MAS transaction on the same card
+Then MAS test results are verified
+And user is logged in institution
+And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal

@@ -7,9 +7,9 @@ Meta:
 @CreditRegression
 @StoryName credit_emv_retail
 @PreScreening
-@TestId TC548377	 
-Scenario:creation of mastercard_corporate_primary_EMV Card credit device
-
+@TestId TC548377
+	 
+Scenario:1.1 creation of mastercard_corporate_primary_EMV Card credit device
 Given setting json values in excel for Credit
 Given user is logged in institution
 When User fills Dedupe Plan
@@ -37,7 +37,7 @@ And credit processes pingeneration batch using new Device for Supplementary
 And device has "normal" status
 And user sign out from customer portal
 
-Scenario: Pin Generation
+Scenario:1.2 Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 Then embossing file batch was generated in correct format
@@ -45,7 +45,7 @@ And PIN is retrieved successfully with data from Pin Offset File
 And FINSim simulator is closed
 And User enters incorrect Expiry Date
 
-Scenario: Perform EMV_PURCHASE Authorization transaction
+Scenario:1.3 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 And user is logged in institution
