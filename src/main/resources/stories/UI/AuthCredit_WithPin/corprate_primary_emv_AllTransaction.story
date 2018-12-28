@@ -53,7 +53,7 @@ And user sign out from customer portal
 Scenario:1.5 Perform EMV_CASH_ADVANCE Authorization transaction
 When perform an EMV_CASH_ADVANCE MAS transaction on the same card
 Then MAS test results are verified
-Then user is logged in institution
+And user is logged in institution
 Then search Cash Advance authorization and verify 000-Successful status
 And user sign out from customer portal
 

@@ -42,7 +42,7 @@ Then user sign out from customer portal
 Scenario:1.4 Perform ECCOM Allow/DisAllow for one hour
 Given user is logged in institution
 When user allow E-commerce Activation/Deactivation [304] Transaction For One Hour
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario:1.5 Perform INT_EMV_PURCHASE Authorization transaction
 When perform an ECOMM_PURCHASE MAS transaction on the same card
