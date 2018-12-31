@@ -67,13 +67,20 @@ public class DevicePinSetPage extends AbstractBasePage{
 	private static final Logger logger = LoggerFactory.getLogger(DevicePinSetPage.class);
 	
 	public String setPinForDevice(Device device){
+		fillPinSetInfo(device);
+		setNewPin("1234");	
+		clickWhenClickable(submitBtn);
+		return lablResponse.getText();
+	}
+	
+	public void fillPinSetInfo(Device device){
 		logger.info("Device Number: {}", device.getDeviceNumber());
 		String locator = String.format("//*[@class='dataview-div']//*[@id='%s']//*[@type='submit']", device.getDeviceNumber());
 		Element(locator).click();
 		waitForLoaderToDisappear();
 		enterText(cardExpDateTxt, "1022");
 		logger.info("CVV2 or CVC2 pin: {}", device.getCvv2Data());
-		enterText(cvv2CVC2Txt,device.getCvv2Data());		
+		enterText(cvv2CVC2Txt, device.getCvv2Data());		
 		logger.info("Client DOB: {}", device.getClientDetails().getBirthDate());
 		setDate(device.getClientDetails().getBirthDate());		
 		WebElementUtils.selectDropDownByIndex(documentTypeDDwn, 1);
@@ -81,9 +88,6 @@ public class DevicePinSetPage extends AbstractBasePage{
 		enterText(documentNumberTxt, device.getLegalID());
 		clickWhenClickable(submitBtn);
 		waitForLoaderToDisappear();	
-		setNewPin("1234");
-		clickWhenClickable(submitBtn);
-		return lablResponse.getText();
 	}
 
 	public  void setNewPin(String newPin){
@@ -96,7 +100,7 @@ public class DevicePinSetPage extends AbstractBasePage{
 					Element(locator).click();
 				}
 				clickWhenClickable(pinConfirmBtn);
-				SimulatorUtilities.wait(2000);
+				SimulatorUtilities.wait(3000);
 				
 				clickWhenClickable(confirmTxt);
 				for(char pin : pinArry){

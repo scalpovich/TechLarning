@@ -75,9 +75,6 @@ public class CardholderTransactionsSteps extends AbstractBasePage {
 	@When("intra bank money transfer")
 	public void walletToWalletTransfer() {
 		cardhlTran = CardHolderTransactions.cardHolderTransDataProvider(provider);		
-		/*Device device = context.get(ContextConstants.DEVICE);
-		cardhlTran.setWalletToAmountTransfer(device.getNewWalletNumber());
-		cardhlTran.setCardNumber(device.getDeviceNumber());*/
 		transactionFlow.interBankMoneyTransfer(cardhlTran);
 		context.put(ContextConstants.CARDHOLDER_TRAN, cardhlTran);
 	}
