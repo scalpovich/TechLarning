@@ -1,11 +1,14 @@
 package com.mastercard.pts.integrated.issuing.steps.cardholder;
 
+import static junit.framework.Assert.assertTrue;
+
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.cardholder.CardHolderTransactions;
@@ -13,7 +16,6 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.workflows.cardholder.CardHolderTransactionsWorkFlows;
-import static junit.framework.Assert.assertTrue;
 
 @Component
 public class CardholderTransactionsSteps extends AbstractBasePage {
@@ -38,13 +40,14 @@ public class CardholderTransactionsSteps extends AbstractBasePage {
 		Device device = context.get(ContextConstants.DEVICE);
 		cardhlTran.setTransctionPassword(device.getNewTransPassword());
 		assertTrue("Error while processing cash remittance request", transactionFlow.cashRemittanceBooking(cardhlTran).contains("Your transaction is successful"));
+		context.put(ContextConstants.CARDHOLDER_TRAN,cardhlTran);
 	}
 	
 	@When("cardholder cancel the cash remittance")
 	@Then ("cardholder cancel the cash remittance")
 	public void cancelCashRemittanceRequest() {
-		cardhlTran = CardHolderTransactions.cardholderCashRemit(provider);
-		assertTrue("Error while cancelling remittance request", transactionFlow.cancelCashRemittanceBooking(cardhlTran).contains("Your transaction is successful"));
+		CardHolderTransactions cardhlTrans = context.get(ContextConstants.CARDHOLDER_TRAN);
+		assertTrue("Error while cancelling remittance request", transactionFlow.cancelCashRemittanceBooking(cardhlTrans).contains("Your transaction is successful"));
 	}
 
 	@When("fund transfer through MasterCard Money Send")

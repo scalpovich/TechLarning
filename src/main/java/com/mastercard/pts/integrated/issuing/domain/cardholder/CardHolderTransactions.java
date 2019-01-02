@@ -9,6 +9,7 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.MapUtils;
 
+
 @Component
 public class CardHolderTransactions {
 	
@@ -78,11 +79,11 @@ public class CardHolderTransactions {
 	private String beneficiaryRemittanceCurrency;
 	private String remittanceRefNumber;
 	
-	public String getRemittanceRefnumber() {
-		return beneficiaryID;
+	public String getRemittanceRefNumber() {
+		return remittanceRefNumber;
 	}
-	public void setRemittanceRefnumber(String remittanceRefnumber) {
-		this.remittanceRefNumber = remittanceRefnumber;
+	public void setRemittanceRefNumber(String remittanceRefNumber) {
+		this.remittanceRefNumber = remittanceRefNumber;
 	}
 		
 	public String getBeneficiaryID() {
@@ -342,13 +343,13 @@ public class CardHolderTransactions {
 	public static CardHolderTransactions cardholderCashRemit(KeyValueProvider provider){
 		CardHolderTransactions cardTranHol = new CardHolderTransactions();
 		cardTranHol.setBeneficiaryID(provider.getString(BENEFICIARY_ID));
-		cardTranHol.setBeneficiaryFirstName(provider.getString(BENEFICIARY_FIRST_NAME)+"_"+CustomUtils.randomString(4));
-		cardTranHol.setBeneficiaryMiddleName(provider.getString(BENEFICIARY_MIDDLE_NAME)+"_"+CustomUtils.randomString(4));
-		cardTranHol.setBeneficiaryLastName(provider.getString(BENEFICIARY_LAST_NAME)+"_"+CustomUtils.randomString(4));
-		cardTranHol.setBeneficiaryAddressLine1(provider.getString(BENEFICIARY_ADDRESS_LINE1)+"_"+CustomUtils.randomString(4));
-		cardTranHol.setBeneficiaryAddressLine2(provider.getString(BENEFICIARY_ADDRESS_LINE2)+"_"+CustomUtils.randomString(4));
+		cardTranHol.setBeneficiaryFirstName(provider.getString(BENEFICIARY_FIRST_NAME)+CustomUtils.randomString(4));
+		cardTranHol.setBeneficiaryMiddleName(provider.getString(BENEFICIARY_MIDDLE_NAME)+CustomUtils.randomString(4));
+		cardTranHol.setBeneficiaryLastName(provider.getString(BENEFICIARY_LAST_NAME)+CustomUtils.randomString(4));
+		cardTranHol.setBeneficiaryAddressLine1(provider.getString(BENEFICIARY_ADDRESS_LINE1)+CustomUtils.randomString(4));
+		cardTranHol.setBeneficiaryAddressLine2(provider.getString(BENEFICIARY_ADDRESS_LINE2)+CustomUtils.randomString(4));
 		cardTranHol.setBeneficiaryCountryName(provider.getString(BENEFICIARY_COUNTRY_NAME));
-		cardTranHol.setBeneficiaryAddressLine3(provider.getString(BENEFICIARY_ADDRESS_LINE3)+"_"+CustomUtils.randomString(4));
+		cardTranHol.setBeneficiaryAddressLine3(provider.getString(BENEFICIARY_ADDRESS_LINE3)+CustomUtils.randomString(4));
 		cardTranHol.setBeneficiaryStateName(provider.getString(BENEFICIARY_STATE_NAME));
 		cardTranHol.setBeneficiaryCityName(provider.getString(BENEFICIARY_CITY_NAME));
 		cardTranHol.setBeneficiaryZIPCode(provider.getString(BENEFICIARY_ZIP_CODE));
@@ -356,7 +357,7 @@ public class CardHolderTransactions {
 		cardTranHol.setBeneficiaryRemittanceAmount(provider.getString(BENEFICIARY_REMITTANCE_AMOUNT));
 		cardTranHol.setBeneficiaryMobileNumber(provider.getString(BENEFICIARY_MOBILE_NUMBER));
 		cardTranHol.setBeneficiaryRemittanceCurrency(provider.getString(BENEFICIARY_REMITTANCE_CURRENCY));		
-		cardTranHol.setTransactionRemark(provider.getString(TRANSACTION_REMARK)+"_"+CustomUtils.randomString(4));
+		cardTranHol.setTransactionRemark(provider.getString(TRANSACTION_REMARK)+CustomUtils.randomString(4));
 		return cardTranHol;
 	}
 }
