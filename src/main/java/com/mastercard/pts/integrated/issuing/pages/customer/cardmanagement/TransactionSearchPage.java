@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -314,5 +315,24 @@ public class TransactionSearchPage extends AbstractBasePage {
 		}
 		return deviceEventFee;
 	}
-
+	
+	public String getCardBasedFees(String cardType, 
+			DeviceEventBasedFeePlan deviceEventBasedPlan) {
+		String deviceEventFee = "";
+		switch (cardType) {
+		case "Normal":
+			deviceEventFee = deviceEventBasedPlan.getNormalCardFees();
+			break;
+		case "Photo":
+			deviceEventFee = deviceEventBasedPlan.getPhotoCardFees();
+			break;
+		case "Picture":
+			deviceEventFee = deviceEventBasedPlan.getPictureCardFees();
+			break;
+		default:
+			logger.info("The mentioned case is not present - ", cardType);
+			break;
+		}
+		return deviceEventFee;
+	}
 }

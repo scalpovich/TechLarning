@@ -36,14 +36,12 @@ public class DeviceEventBasedFeePlanFlows extends MenuFlows {
 		return deviceEventFeePlanCode;
 	}
 	
-	public void saveFeesForDeviceEvents(DeviceEventBasedFeePlan deviceEventBasedPlan, 
+	public DeviceEventBasedFeePlan saveFeesForDeviceEvents(DeviceEventBasedFeePlan deviceEventBasedPlan, 
 			String reason, String cardType){
 		InstitutionData jsonData = context.get(CreditConstants.JSON_VALUES);
 		DeviceEventBasedFeePlanPage deviceEventPage = navigator
 				.navigateToPage(DeviceEventBasedFeePlanPage.class);
 		deviceEventPage.searchForDeviceEventBasedFeePlan(jsonData);
-		context.put(ContextConstants.DEVICE_EVENT_BASED_FEE, 
-				deviceEventPage.viewDeviceEventFeePlan(deviceEventBasedPlan, reason, cardType));
+		return deviceEventPage.viewDeviceEventFeePlan(deviceEventBasedPlan, reason, cardType);
 	}
-
 }

@@ -54,6 +54,7 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalanceRequest;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MID_TID_Blocking;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
@@ -2324,9 +2325,11 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		page.deleteRecord(combination,details);
 	}
 	
-	public String verifyDeviceEventFeeApplied(Device device, String reason, TransactionSearch ts) {
+	public boolean verifyDeviceEventFeeApplied(Device device, String reason, 
+			TransactionSearch ts, DeviceEventBasedFeePlan deviceEventBasedPlan, String cardType) {
 		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
 		page.searchTransactionWithDeviceFee(device, ts);
-		return page.getDeviceEventFeeFromTransactionSearch(reason);
+		return page.getDeviceEventFeeFromTransactionSearch(reason).
+				equals(page.getCardBasedFees(cardType, deviceEventBasedPlan));
 	}
 }

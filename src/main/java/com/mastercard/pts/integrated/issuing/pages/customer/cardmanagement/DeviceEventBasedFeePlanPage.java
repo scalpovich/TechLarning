@@ -132,10 +132,10 @@ public class DeviceEventBasedFeePlanPage extends AbstractBasePage {
 	
 	public String Calelement = "//td[4]";
 	
-	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:1:componentList:0:componentPanel:input:inputTextField")
+	@PageElement(findBy = FindBy.CSS, valueToFind = "td#deviceEventFeePlanCode input")
 	private MCWebElement txtEventBasedFeePlanCodeSearch;
 	
-	public static final String DEVICE_EVENT_BASED_FEES = "//tr/child::td[@class='displayName']"
+	private static final String DEVICE_EVENT_BASED_FEES = "//tr/child::td[@class='displayName']"
 			+ "/span[contains(text(),'%s')]//following::td/span/span";
 
 	public void verifyUiOperationStatus() {
@@ -387,16 +387,7 @@ public class DeviceEventBasedFeePlanPage extends AbstractBasePage {
 
 	public void saveDeviceEventBasedFees(DeviceEventBasedFeePlan deviceEventBasedPlan, 
 			String feeType, String cardType) {
-		List<String> fees;
-		if(feeType.contains("First") || feeType.contains("Subsequent")){
-			fees = getListOfElements(String.format(DEVICE_EVENT_BASED_FEES, feeType.replace(" Renewal", "")));
-		} else if (feeType.contains("Emergency")){
-			fees = getListOfElements(String.format(DEVICE_EVENT_BASED_FEES, feeType.replace(" Replace", "")));
-		} else if (feeType.contains("Erroneous")){
-			fees = getListOfElements(String.format(DEVICE_EVENT_BASED_FEES, feeType.replace(" Device", "")));
-		} else {
-			fees = getListOfElements(String.format(DEVICE_EVENT_BASED_FEES, feeType));
-		}
+		List<String> fees = getFees(feeType);
 		switch (cardType) {
 		case "Normal":
 			deviceEventBasedPlan.setNormalCardFees(fees.get(0));
@@ -411,5 +402,23 @@ public class DeviceEventBasedFeePlanPage extends AbstractBasePage {
 			logger.info("The card type did not match to any of the cases - ", cardType);
 			break;
 		}
+	}
+	
+	public List<String> getFees(String feeType) {
+		List<String> fees;
+		if(feeType.contains("First") || feeType.contains("Subsequent")){
+			fees = getListOfElements(String.format(DEVICE_EVENT_BASED_FEES, feeType.replace(" Renewal", "")));
+		} else if (feeType.contains("Emergency")){
+			fees = getListOfElements(String.format(DEVICE_EVENT_BASED_FEES, feeType.replace(" Replace", "")));
+		} else if (feeType.contains("Erroneous")){
+			fees = getListOfElements(String.format(DEVICE_EVENT_BASED_FEES, feeType.replace(" Device", "")));
+		} else {
+			fees = getListOfElements(String.format(DEVICE_EVENT_BASED_FEES, feeType));
+		}
+		return fees;
+	}
+	
+	public void getCardType() {
+		
 	}
 }

@@ -753,25 +753,10 @@ public class TransactionSteps {
 	@Then("verify that the device event fees for $reason is levied for $cardType card")
 	public void verifyDeviceEventFeeLevied(@Named("cardType") String cardType, 
 			@Named("reason") String reason) {
-		String deviceEventFee = "";
 		Device device = context.get(ContextConstants.DEVICE);
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		DeviceEventBasedFeePlan deviceEventBasedPlan = context.get(ContextConstants.DEVICE_EVENT_BASED_FEE);
-		switch (cardType) {
-		case "Normal":
-			deviceEventFee = deviceEventBasedPlan.getNormalCardFees();
-			break;
-		case "Photo":
-			deviceEventFee = deviceEventBasedPlan.getPhotoCardFees();
-			break;
-		case "Picture":
-			deviceEventFee = deviceEventBasedPlan.getPictureCardFees();
-			break;
-		default:
-			logger.info("The mentioned case is not present - ", cardType);
-			break;
-		}
-		assertEquals("The device event fees are not as applied", 
-				transactionWorkflow.verifyDeviceEventFeeApplied(device, reason, ts), deviceEventFee);
+		Assert.assertTrue("The device event fees are not as applied", 
+				transactionWorkflow.verifyDeviceEventFeeApplied(device, reason, ts, deviceEventBasedPlan, cardType));
 	}
 }
