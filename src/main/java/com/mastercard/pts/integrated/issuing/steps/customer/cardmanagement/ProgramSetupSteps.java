@@ -1798,28 +1798,4 @@ public class ProgramSetupSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		programSetupWorkflow.inactiveteDeviceRange(device, status);
 	}
-	
-	
-	@Given("user get data from excel for $scenario scenario")
-	public void userGetDataFromExcelForScenario(String scenario) throws FilloException{
-		Device device = Device.createWithProvider(provider);
-		Map<String, String> map = ExcelUtils.getRowDataFromExcelThroughQuery("Select * from Sheet10 WHERE ScenarioID = 'Test'");
-		device.setDeviceNumber(map.get("DeviceNumber"));
-		device.setCvvData( map.get("CVV"));
-		device.setCvv2Data(map.get("CVV2"));
-		device.setIcvvData(map.get("ICVV"));
-		device.setPvkiData(map.get("PVKI"));
-		device.setExpirationDate(map.get("ExpiryDate"));
-		device.setPinOffset(map.get("PinOffset"));
-		device.setPinNumberForTransaction(map.get("ClearPin"));
-		context.put(ContextConstants.DEVICE, device);
-		
-		DevicePlan deviceplan = DevicePlan.createWithProvider(provider);
-		deviceplan.setServiceCode("201");
-		deviceplan.setExpiryDate(map.get("ExpiryDate"));
-		deviceplan.setIsPinLess("No");
-		context.put(ConstantData.IS_PIN_REQUIRED, "TRUE");
-		context.put(ContextConstants.DEVICE_PLAN, deviceplan);
-		
-	}
 }
