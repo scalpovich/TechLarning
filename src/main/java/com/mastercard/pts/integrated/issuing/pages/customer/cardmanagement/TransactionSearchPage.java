@@ -274,7 +274,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 	}
 	
 	public String getDeviceEventFeeFromTransactionSearch(String reason) {
-		String deviceEventFee = null;
+		String deviceEventFee = "";
 		switch (reason) {
 		case "Stolen":
 			deviceEventFee = Element(String.format(cardFees, Constants.CARD_FEES_STOLEN)).getText();
