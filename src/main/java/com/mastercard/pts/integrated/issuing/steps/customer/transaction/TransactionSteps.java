@@ -84,7 +84,7 @@ public class TransactionSteps {
 
 	@Autowired
 	private TransactionProvider transactionProvider;
-	
+
 	@Autowired
 	private DeviceUsageWorkflow deviceUsageWorkflow;
 
@@ -109,11 +109,11 @@ public class TransactionSteps {
 	private static String FAILED = "Transaction failed! ";
 
 	private static String FAIL_MESSAGE = FAILED + " -  Result : ";
-	
+
 	private static String INVALID_KEYS = "(default) - M/Chip Key Set from the related BIN range will be used";
-	
+
 	private boolean declineMerchantRiskBased=false;
-	
+
 	public boolean membershipFlag = false;
 
 	public String getTransactionAmount() {
@@ -133,11 +133,11 @@ public class TransactionSteps {
 		context.put(ConstantData.TRANSACTION_NAME, transaction);
 		if(!Objects.isNull(context.get(ConstantData.IS_PIN_REQUIRED))){
 			MiscUtils.reportToConsole("Pin Required value : " + context.get(ConstantData.IS_PIN_REQUIRED));				
-		if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
-			// ECOMM are pinless tranasactions
-			if (!transaction.toLowerCase().contains("ecom"))
-				temp = transaction + "_PIN";
-		}
+			if ("true".equalsIgnoreCase(context.get(ConstantData.IS_PIN_REQUIRED).toString())) {
+				// ECOMM are pinless tranasactions
+				if (!transaction.toLowerCase().contains("ecom"))
+					temp = transaction + "_PIN";
+			}
 		}
 		performOperationOnSamecard(false);
 		givenOptimizedTransactionIsExecuted(temp);
@@ -181,7 +181,7 @@ public class TransactionSteps {
 		Transaction transactionData = generateMasTestDataForTransaction(transaction);
 		transactionWorkflow.performOptimizedMasTransaction(transaction, transactionData, sameCard);
 	}
-	
+
 	@When("perform an $type MAS transaction with wrong keys")
 	public void performTransactionWithWrongKeys(String transaction) {
 		TransactionWorkflow.STAGE_KEYS = INVALID_KEYS;
@@ -445,11 +445,13 @@ public class TransactionSteps {
 	@Then("PIN is retrieved successfully with data from Pin Offset File")
 	public void thenPINIsRetrievedSuccessfully() {
 		Device device = context.get(ContextConstants.DEVICE);
-		Transaction transactionData = Transaction.generateFinSimPinTestData(device, finSimConfig, provider);
-		String pinNumber = transactionWorkflow.getPinNumber(transactionData);
-		logger.info("FINSim PIN Number generated : {} ", pinNumber);
-		Assert.assertTrue("INVALID PIN", !pinNumber.isEmpty());
-		device.setPinNumberForTransaction(pinNumber);
+		if(Objects.isNull(device.getPinNumberForTransaction())){
+			Transaction transactionData = Transaction.generateFinSimPinTestData(device, finSimConfig, provider);
+			String pinNumber = transactionWorkflow.getPinNumber(transactionData);
+			logger.info("FINSim PIN Number generated : {} ", pinNumber);
+			Assert.assertTrue("INVALID PIN", !pinNumber.isEmpty());
+			device.setPinNumberForTransaction(pinNumber);
+		}
 	}
 
 	@When("PIN is created for Pin Change First Transaction")
@@ -506,12 +508,12 @@ public class TransactionSteps {
 		Assert.assertTrue("successfully completed the wallet to wallet fund transfer",
 				transactionWorkflow.searchTransactionWithDeviceAndGetStatus(device, ts).contains(" Wallet to Wallet Transfer(Credit)"));
 	}
-	
-	
+
+
 	@When("search with device in transaction screen and Verify Joining and Membership Fees")
 	@Then("search with device in transaction screen and Verify Joining and Membership Fees")
 	public void verifyJoiningAndMembershipFeesOnTransactionSearch() {
-		
+
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		Device device = context.get(ContextConstants.DEVICE);
 		device.setJoiningFees(provider.getString("JOINING_FEES"));
@@ -519,11 +521,11 @@ public class TransactionSteps {
 		membershipFlag = true;
 		assertThat(transactionWorkflow.searchTransactionWithDeviceAndGetFees(device, ts, membershipFlag), Matchers.hasItems(device.getJoiningFees(), device.getMembershipFees()));
 	}
-	
+
 	@When("search with device in transaction screen and Verify Joining Fee")
 	@Then("search with device in transaction screen and Verify Joining Fee")
 	public void verifyJoiningFeeOnTransactionSearch() {
-		
+
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		Device device = context.get(ContextConstants.DEVICE);
 		device.setJoiningFees(provider.getString("JOINING_FEES"));
@@ -538,7 +540,7 @@ public class TransactionSteps {
 		lbr.setLoadRequestReferenceNumber(loadRequestReferenceNumber);
 		context.put(ContextConstants.LOAD_BALANCE_REQUEST, lbr);
 	}
-	
+
 	@When("user performs load balance request for Joining and Membership plan")
 	public void whenUserPerformsLoadBalanceRequestforJoiningandMemberShipPlan() {
 		Device device = context.get(ContextConstants.DEVICE);
@@ -656,7 +658,7 @@ public class TransactionSteps {
 		device.setPinNumberForTransaction(ConstantData.INVALID_PIN);
 		context.put(ContextConstants.DEVICE, device);
 	}
-	
+
 	@Given("set the transaction amount to $amount in program currency")
 	public void setTransactionAmountFromStep(String amount){
 		Device device = context.get(ContextConstants.DEVICE);
@@ -676,7 +678,7 @@ public class TransactionSteps {
 		this.midTidFlag = midTidFlag;
 		this.midTidCombination = midTidCombination;
 	}
-	
+
 	/***
 	 * This method is implemented to change transaction amount for transaction
 	 * @param amount : Decimal representation for amount
@@ -689,7 +691,7 @@ public class TransactionSteps {
 		device.setTransactionAmount(Integer.toString(i));
 		context.put(ContextConstants.DEVICE, device);
 	}
-	
+
 	@When("perform an $transaction MAS transaction with amount $amount")
 	public void givenGenerateTestDataForOptimizedTransactionWithDifferentAmountIsExecuted(String transaction, String amount) {
 		// Storing transaction name in context to use it at runtime
@@ -710,14 +712,14 @@ public class TransactionSteps {
 		context.put(ContextConstants.TRANSACTION_SEARCH_DETAILS, transactionSearch);
 		context.put(ContextConstants.DEVICE, device);
 	}
-	
+
 	@When("user add transaction reversal with reason $reversalReason")
 	@Then("user add transaction reversal with reason $reversalReason")
 	public void addTransactionReversal(String reversalReason) {
 		Device device = context.get(ContextConstants.DEVICE);
 		ReversalTransaction rt = ReversalTransaction.getProviderData(provider);
 		assertEquals("Record Added Successfully.", transactionWorkflow.addTransactionReversal(device.getDeviceNumber(), reversalReason, rt.getAmount()));
-	
+
 		if((provider.getString(Constants.FOR_LOYALTY) != null) && (provider.getString(Constants.FOR_LOYALTY).equalsIgnoreCase("yes"))) {
 			Double availablePoints = 0.0;
 			Double availableLP = context.get(Constants.AVAILABLE_LOYALTY_POINTS);

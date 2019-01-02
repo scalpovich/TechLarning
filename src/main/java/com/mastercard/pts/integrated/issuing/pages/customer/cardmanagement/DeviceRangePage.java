@@ -157,7 +157,7 @@ public class DeviceRangePage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "CardRangeDetailContainer:adaptiveEcommFlag:checkBoxComponent")
 	private MCWebElement adaptiveAuthChkBx;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td//span//img[@alt='Edit Record']")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody//td[1]//span//a") 
 	private MCWebElement editDevicerange;
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "searchDiv:rows:3:buttonPanel:buttonCol:searchButton")
@@ -180,12 +180,12 @@ public class DeviceRangePage extends AbstractBasePage {
 		clickWhenClickable(searchbtn);
 		waitForElementVisible(editDevicerange);
 		Scrolldown(editDevicerange);
-		clickWhenClickableDoNotWaitForWicket(editDevicerange);
+		SimulatorUtilities.wait(5000);
+		clickWhenClickable(editDevicerange);
 		CustomUtils.ThreadDotSleep(2000);
 		switchToEditDeviceRangeframe();
-
 	}
-
+	
 	public void switchToEditDeviceRangeframe() {
 		switchToIframe(Constants.EDIT_DEVICE_RANGE_FRAME);
 	}
@@ -269,7 +269,7 @@ public class DeviceRangePage extends AbstractBasePage {
 			selectByVisibleText(StatusDDwn, "Active [1]");
 		}
 	}
-
+	
 	public void selectEndPoint() {
 		if (EndpointDDwn.isEnabled()) {
 			waitForPageToLoad(driver());
@@ -496,7 +496,13 @@ public class DeviceRangePage extends AbstractBasePage {
 		logger.info("Device Range");
 		verifySearchButton("Search");
 	}
-
+	
+	public void inactivateDeviceRange(String deviceRangestatus){
+		selectByVisibleText(StatusDDwn, deviceRangestatus);
+		clickSaveButton();
+		verifyOperationStatus();
+	}
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(productTypeSearchDDwn));

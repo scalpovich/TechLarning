@@ -15,6 +15,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Cred
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardTransactionRulePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DedupePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceJoiningAndMemberShipFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
@@ -298,6 +299,12 @@ public class ProgramSetupWorkflow {
 			NetworkMembershipPage page=navigator.navigateToPage(NetworkMembershipPage.class);
 			page.editNetworkMembershipPlan(device);
 		}
+	}
+	
+	public void inactiveteDeviceRange(Device device,String deviceRangestatus){
+		DeviceRangePage page = navigator.navigateToPage(DeviceRangePage.class);
+		page.searchDeviceRangeAndEdit(device.getProgramCode());
+		page.inactivateDeviceRange(deviceRangestatus);
 		
 	}
 }

@@ -1793,6 +1793,12 @@ public class ProgramSetupSteps {
 		programSetupWorkflow.editPlan(plan,device,program);
 	}
 	
+	@When("user updates device range $status status")
+	public void userUpdatesDeviceRangeStatus(String status){
+		Device device = context.get(ContextConstants.DEVICE);
+		programSetupWorkflow.inactiveteDeviceRange(device, status);
+	}
+	
 	
 	@Given("user get data from excel for $scenario scenario")
 	public void userGetDataFromExcelForScenario(String scenario) throws FilloException{
@@ -1805,6 +1811,7 @@ public class ProgramSetupSteps {
 		device.setPvkiData(map.get("PVKI"));
 		device.setExpirationDate(map.get("ExpiryDate"));
 		device.setPinOffset(map.get("PinOffset"));
+		device.setPinNumberForTransaction(map.get("ClearPin"));
 		context.put(ContextConstants.DEVICE, device);
 		
 		DevicePlan deviceplan = DevicePlan.createWithProvider(provider);
@@ -1813,8 +1820,6 @@ public class ProgramSetupSteps {
 		deviceplan.setIsPinLess("No");
 		context.put(ConstantData.IS_PIN_REQUIRED, "TRUE");
 		context.put(ContextConstants.DEVICE_PLAN, deviceplan);
-		
-		
 		
 	}
 }

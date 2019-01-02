@@ -667,7 +667,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected void clickWhenClickable(MCWebElement element) {
-		SimulatorUtilities.wait(4000);
+		//SimulatorUtilities.wait(4000);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
         logger.info("Button clicked successfully.");
 	}
@@ -996,7 +996,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			}
 		}
 	}
-
+	
 	public void jsClick(WebElement WE) {
 		logger.info("Using java script to click the web element");
 		JavascriptExecutor jse = (JavascriptExecutor) getFinder().getWebDriver();

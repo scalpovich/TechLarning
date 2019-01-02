@@ -642,11 +642,16 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			loadIpmFile(getIpmFileName());
 			Device device = context.get(ContextConstants.DEVICE);
 			updatePanNumber(device.getDeviceNumber());
+			logger.info("Updated Pan Number");
 			updateAmountCardHolderBilling();
+			logger.info("Updated card holder Billing");
 			updateBillingCurrencyCode();
+			logger.info("Updated Billing Currency");
 			updateTransactionDate(resolveDate());
+			logger.info("Updated Transaction Date");
 			assignUniqueFileId();
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.debug("Exception occurred while editing fields :: {}", e);
 			throw MiscUtils.propagate(e);
 		}

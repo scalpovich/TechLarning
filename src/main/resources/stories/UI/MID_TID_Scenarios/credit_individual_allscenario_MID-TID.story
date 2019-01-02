@@ -10,7 +10,7 @@ Meta:
 
 Scenario: 1.1 Create EMV credit device
 Given setting json values in excel for Credit
-And user get data from excel for Test scenario
+And user get data from excel for General scenario
 And user is logged in institution
 When user creates MID TID Blocking for combination 1
 Then user sign out from customer portal
