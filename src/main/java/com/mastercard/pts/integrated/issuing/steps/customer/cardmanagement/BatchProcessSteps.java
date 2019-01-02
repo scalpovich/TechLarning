@@ -30,6 +30,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceGenerationBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequest;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ClientDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CutOverProfile;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
@@ -329,8 +330,9 @@ public class BatchProcessSteps {
 	public void verifyDataFieldInTPINFile(@Named("dataField") String dataField, 
 			@Named("fieldValue") String fieldValue) {
 		Device device = context.get(ContextConstants.DEVICE);
-		if (fieldValue.contains("device")) {
-			fieldValue = device.getDeviceNumber();
+		ClientDetails client = device.getClientDetails();
+		if (fieldValue.contains("email")) {
+			fieldValue = client.getEmailId();
 		}
 		ReissueTPINDownload reissueTPIN = ReissueTPINDownload.createWithProvider(provider);
 		assertThat("The data field " + dataField + "does not have the expected value " + fieldValue, fieldValue, 
