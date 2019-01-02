@@ -1999,4 +1999,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(3000);
 		clickEndCall();
 	}
+	
+	public void printResponseMessageLog(){
+		logger.info("service request response message : {}", verifyServiceRequestStatus());
+	}
 }

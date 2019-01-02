@@ -332,6 +332,7 @@ public class HelpdeskWorkflow {
 			helpDeskPage.pinRequest(helpdeskGeneral);
 			return false;
 		} catch (Exception e){
+			helpDeskPage.printResponseMessageLog();
 			helpDeskPage.clickEndCall();
 			return true;
 		}
