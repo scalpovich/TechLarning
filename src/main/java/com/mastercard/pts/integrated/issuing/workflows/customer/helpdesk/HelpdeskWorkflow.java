@@ -19,6 +19,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGe
 import com.mastercard.pts.integrated.issuing.pages.customer.helpdesk.HelpdeskGeneralPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
+import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
 import com.mastercard.pts.integrated.issuing.utils.ConnectionUtils;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
@@ -323,6 +324,31 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.raiseLoanCancellationRequestToVerifyErroMessage(helpdeskGeneral,loanPlan,device);
 		
 	}
+	
+	public boolean isPinRequestFailingForNonNormalDevice(HelpdeskGeneral helpdeskGeneral,Device device){
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		helpDeskPage.searchByDeviceNumber(device);
+		try{
+			helpDeskPage.pinRequest(helpdeskGeneral);
+			return false;
+		} catch (Exception e){
+			helpDeskPage.clickEndCall();
+			return true;
+		}
+	}
+	
+	public void blockDevice(HelpdeskGeneral helpdeskGeneral,Device device){
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		helpDeskPage.searchByDeviceNumber(device);
+		helpDeskPage.blockDevice(helpdeskGeneral);
+	}
+	
+	public void unBlockDevice(HelpdeskGeneral helpdeskGeneral,Device device){
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		helpDeskPage.searchByDeviceNumber(device);
+		helpDeskPage.unBlockDevice(helpdeskGeneral);
+	}
+	
 }
 
 

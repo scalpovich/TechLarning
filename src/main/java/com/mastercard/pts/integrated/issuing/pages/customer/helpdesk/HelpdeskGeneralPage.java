@@ -41,6 +41,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Loan
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Payment;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.helpdesk.HelpdeskGeneral;
+import com.mastercard.pts.integrated.issuing.domain.helpdesk.HelpDeskGeneral;
 import com.mastercard.pts.integrated.issuing.domain.restapi.DeviceDetails;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -1952,5 +1953,50 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	public void selectApplyFeesChkBx(boolean value) {
 		ClickCheckBox(chkBxApplyFees, value);
+	}
+	
+	public void pinRequest(HelpdeskGeneral helpdeskGeneral) {
+		editFirstRecord();
+		SimulatorUtilities.wait(5000);
+		selectServiceCode(Constants.DEVICE_PIN_REQUEST);
+		clickGoButton();
+		runWithinPopup("305 - Pin Request", () -> {
+			enterNotes(helpdeskGeneral.getNotes());
+			clickSaveButton();
+			verifyOperationStatus();
+			clickOKButtonPopup();
+		});
+		SimulatorUtilities.wait(3000);
+		clickEndCall();
+	}
+	
+	public void blockDevice(HelpdeskGeneral helpdeskGeneral) {
+		editFirstRecord();
+		SimulatorUtilities.wait(5000);
+		selectServiceCode(Constants.DEVICE_BLOCK_DEVICE_REQUEST);
+		clickGoButton();
+		runWithinPopup("111 - Block Device", () -> {
+			enterNotes(helpdeskGeneral.getNotes());
+			clickSaveButton();
+			verifyOperationStatus();
+			clickOKButtonPopup();
+		});
+		SimulatorUtilities.wait(3000);
+		clickEndCall();
+	}
+	
+	public void unBlockDevice(HelpdeskGeneral helpdeskGeneral) {
+		editFirstRecord();
+		SimulatorUtilities.wait(5000);
+		selectServiceCode(Constants.DEVICE_UNBLOCK_DEVICE_REQUEST);
+		clickGoButton();
+		runWithinPopup("116 - Unblock Device", () -> {
+			enterNotes(helpdeskGeneral.getNotes());
+			clickSaveButton();
+			verifyOperationStatus();
+			clickOKButtonPopup();
+		});
+		SimulatorUtilities.wait(3000);
+		clickEndCall();
 	}
 }

@@ -478,7 +478,10 @@ public class Constants {
 	public static final String DEVICE_STOPLIST_REQ = "Stop list Device [220]";
 	public static final String INSTANT_REPLACE_DEVICE = "Instant Replacement Device [150]";
 	public static final String DEVICE_WITHDRAW_STOPLIST_REQ = "Withdraw Device from Stop-list [221]";
-
+	public static final String DEVICE_PIN_REQUEST = "Pin Request  [305]";
+	public static final String DEVICE_BLOCK_DEVICE_REQUEST = "Block Device [111]";
+	public static final String DEVICE_UNBLOCK_DEVICE_REQUEST = "Unblock Device [116]";
+	
 	public static final String APP_REJECT_REPORT = "Application Reject Report";
 	
 	public static final String POINTS_EARNED = "pointsEarned";

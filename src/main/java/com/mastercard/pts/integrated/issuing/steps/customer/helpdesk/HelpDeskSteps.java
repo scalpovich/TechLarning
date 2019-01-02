@@ -83,6 +83,11 @@ public class HelpDeskSteps {
 	private static final String STOPLIST_NOTES = "STOPLIST_NOTES";
 	private static final String STOPLIST_REASON = "STOPLIST_REASON";
 	private static final String WITHDRAWAL_REASON = "WITHDRAWAL_REASON";
+	private static final String BLOCK_DEVICE_NOTE = "Blocking lost device";
+	private static final String UNBLOCK_DEVICE_NOTE = "Unblocking device as found";	
+	private static final String PIN_REQUEST_NOTE = "Requesting for new pin";
+
+	
 	
 	@Autowired
 	private TestContext context;
@@ -1154,4 +1159,30 @@ public class HelpDeskSteps {
 		HashMap<String, String> helpdeskValues = helpdeskWorkflow.noteDownRequiredValues(device.getDeviceNumber());
 		assertThat("Invalid Unbilled amount", helpdeskValues.get(amountType), equalTo(ContextConstants.ZERO_UNBILLED_PAYMENT));
 	}
+	
+	@When("user blocks the device from helpdesk screen")	
+	@Then("user blocks the device from helpdesk screen")
+	public void blockDeviceFromHelpdeskScreen(){
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskGeneral.setNotes(BLOCK_DEVICE_NOTE);
+		helpdeskWorkflow.blockDevice(helpdeskGeneral, device);
+	}
+	
+	@Given("user unblocks the device from helpdesk screen")
+	@When("user unblocks the device from helpdesk screen")	
+	@Then("user unblocks the device from helpdesk screen")
+	public void unBlockDeviceFromHelpdeskScreen(){
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskGeneral.setNotes(UNBLOCK_DEVICE_NOTE);
+		helpdeskWorkflow.unBlockDevice(helpdeskGeneral, device);
+	}
+	
+	@Then("pin request should be fail for {blocked|expired} add-on device")
+	public void thenPinrequestShouldBeFailedForAddOnDevice(){
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskGeneral.setNotes(PIN_REQUEST_NOTE);
+		assertTrue("Pin request is not getting failed for blocked or expired device", helpdeskWorkflow.isPinRequestFailingForNonNormalDevice(helpdeskGeneral, device));
+	}
+	
+	
 }
