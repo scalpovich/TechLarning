@@ -1006,7 +1006,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 			}
 		}
 	}
-	
+
 	public void jsClick(WebElement WE) {
 		logger.info("Using java script to click the web element");
 		JavascriptExecutor jse = (JavascriptExecutor) getFinder().getWebDriver();
