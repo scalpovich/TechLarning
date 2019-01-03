@@ -54,5 +54,5 @@ Then user sign out from customer portal
 
 Scenario:6 To verify that the device event fee for card renewal - credit is deducted
 Given user is logged in institution
-When verify that the device event fees for Stoplist Withdrawal Fee is levied for Normal card
+When verify that the device event fees for Stoplist Withdrawal is levied for Normal card
 Then user signs out from customer portal

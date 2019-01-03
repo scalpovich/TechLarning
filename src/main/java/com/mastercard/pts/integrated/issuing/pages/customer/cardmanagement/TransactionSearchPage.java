@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.DeviceEventBasedFee;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
@@ -97,6 +98,8 @@ public class TransactionSearchPage extends AbstractBasePage {
 	List<String> joiningAndMembershipFees = new ArrayList();
 	
 	private String cardFees = "//table[@class='dataview']/tbody/tr//span[contains(.,'%s')]/../preceding-sibling::td[@class='rightalign']";
+	
+	private String deviceFee = "";
 	
 	public void selectFromDate(LocalDate date)
 	{
@@ -273,47 +276,16 @@ public class TransactionSearchPage extends AbstractBasePage {
 		waitForWicket();
 	}
 	
-	public String getDeviceEventFeeFromTransactionSearch(String reason) {
-		String deviceEventFee = "";
-		switch (reason) {
-		case "Stolen":
-			deviceEventFee = Element(String.format(cardFees, Constants.CARD_FEES_STOLEN)).getText();
-			break;
-		case "First Renewal":
-			deviceEventFee = Element(String.format(cardFees, Constants.CARD_FEES_RENEWAL_FIRST)).getText();
-			break;
-		case "Lost":
-			deviceEventFee = Element(String.format(cardFees, Constants.CARD_FEES_LOST)).getText();
-			break;
-		case "Damaged":
-			deviceEventFee = Element(String.format(cardFees, Constants.CARD_FEES_DAMAGED)).getText();
-			break;
-		case "Counterfeit":
-			deviceEventFee = Element(String.format(cardFees, Constants.CARD_FEES_COUNTERFEIT)).getText();
-			break;
-		case "Emergency Replace":
-			deviceEventFee = Element(String.format(cardFees, Constants.CARD_FEES_EMERGENCY)).getText();
-			break;
-		case "Erroneous Device":
-			deviceEventFee = Element(String.format(cardFees, Constants.CARD_FEES_ERRONEOUS)).getText();
-			break;
-		case "Device Technology Upgrade":
-			deviceEventFee = Element(String.format(cardFees, Constants.CARD_FEES_DEVICE_TECHNOLOGY_UPGRADE)).getText();
-			break;
-		case "Early Renewal":
-			deviceEventFee = Element(String.format(cardFees, Constants.CARD_FEES_EARLY_RENEWAL)).getText();
-			break;
-		case "Others":
-			deviceEventFee = Element(String.format(cardFees, Constants.CARD_FEES_OTHERS)).getText();
-			break;
-		case "Stoplist Withdrawal Fee":
-			deviceEventFee = Element(String.format(cardFees, Constants.CARD_FEES_STOPLIST_WITHDRAWAL)).getText();
-			break;
-		default:
-			logger.info("Invalid Case Provided {}", reason);
-			break;
-		}
-		return deviceEventFee;
+	public String getDeviceEventFeeFromTransactionSearch(String reason){
+		String [] deviceFeeList = {"Stolen", "First Renewal", "Lost", "Damaged", "Counterfeit", 
+				"Emergency Replace", "Erroneous Device", "Device Technology Upgrade",
+				"Early Renewal", "Others", "Stoplist Withdrawal"};
+		Arrays.asList(deviceFeeList).forEach(option ->{
+			if(option.equalsIgnoreCase(reason)){
+				deviceFee = Element(String.format(cardFees, DeviceEventBasedFee.fromShortName(reason).replace(reason.toUpperCase()+" ", ""))).getText();
+			}
+		} );
+		return deviceFee;
 	}
 	
 	public String getCardBasedFees(String cardType, 

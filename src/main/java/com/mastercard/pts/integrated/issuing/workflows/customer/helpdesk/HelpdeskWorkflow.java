@@ -290,10 +290,10 @@ public class HelpdeskWorkflow {
 	}
 
 	public void withdrawStoplistDeviceFlows(HelpdeskGeneral general,
-			Device device, String withWithoutFees) {
+			Device device) {
 		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
 		helpDeskPage.searchByDeviceNumber(device);
-		helpDeskPage.withdrawDeviceFromStoplist(general, withWithoutFees);
+		helpDeskPage.withdrawDeviceFromStoplist(general);
 	}
 
 	public String raiseLoanCancellationRequest(LoanPlan loanPlan, Device device, HelpdeskGeneral helpdeskGeneral) {

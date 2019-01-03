@@ -417,8 +417,4 @@ public class DeviceEventBasedFeePlanPage extends AbstractBasePage {
 		}
 		return fees;
 	}
-	
-	public void getCardType() {
-		
-	}
 }
