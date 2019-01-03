@@ -30,13 +30,15 @@ Scenario:3 To Verify that the user can stoplist device country of credit device
 Given user is logged in institution
 When user stoplists a country from stoplist country screen
 And user edits deviceplan and enables stoplist flag
+And embossing file batch was generated in correct format
 Then user sign out from customer portal
 
-Scenario:4 Transaction - MSR_PREAUTH Authorization transaction on credit device after stoplisted device country
-Given connection to MAS is established
-When perform an MSR_PREAUTH MAS transaction
-And user is logged in institution
-And search Pre-Auth authorization and verify 100-Do Not Honour status
+Scenario:4 Transaction - Verify that the transaction declines with appropriate response for stoplisting
+Given user is logged in institution
+When embossing file batch was generated in correct format
+And user raises an authorization request only
+And status of request is declined with reason COUNTRY STOPLISTED
+And search Purchase authorization and verify 100-Do Not Honour status
 And assert Decline response with 27003 AuthDecline Code and Country is stoplisted. as description
 Then user sign out from customer portal
 
@@ -45,10 +47,8 @@ Given user is logged in institution
 When user withdraws a country from withdraw country screen
 Then user sign out from customer portal
 
-Scenario:6 Transaction - MSR_PREAUTH Authorization transaction on credit device after withdrawn device country
-Given perform an MSR_PREAUTH MAS transaction on the same card
-When MAS test results are verified
-And MAS simulator is closed
-And user is logged in institution
-And search Pre-Auth authorization and verify 000-Successful status
+Scenario:6 Transaction - Verify that the user is able to make a successful transaction on the withdrawaing the stoplisting
+Given user is logged in institution
+When user raises an authorization request only
+And search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal

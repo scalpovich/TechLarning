@@ -971,11 +971,14 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.raiseStoplistRequest(device, helpdeskGeneral);
 	}
 
-	@When("user withdraws the stoplisted device")
-	public void withdrawStoplistedDevice() {
+	@When("user withdraws the stoplisted device $withOrWithout fees")
+	public void withdrawStoplistedDevice(@Named("withOrWithout") String feesApplied) {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setReason(provider.getString(WITHDRAWAL_REASON));
+		if("with".equalsIgnoreCase(feesApplied)) {
+			helpdeskGeneral.setFeesApplied(true);
+		}
 		helpdeskWorkflow.withdrawStoplistDeviceFlows(helpdeskGeneral, device);
 	}
 

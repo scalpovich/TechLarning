@@ -17,6 +17,7 @@ import org.hamcrest.Matchers;
 import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Aliases;
 import org.jbehave.core.annotations.Given;
+import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.junit.Assert;
@@ -33,6 +34,7 @@ import com.mastercard.pts.integrated.issuing.domain.agent.channelmanagement.Assi
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalanceRequest;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MID_TID_Blocking;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
@@ -749,6 +751,17 @@ public class TransactionSteps {
 	public void userUpdateIPMForDuplicateRecordCheck(String status) {
 		Transaction trasactiondata = Transaction.createWithProvider(provider);
 		transactionWorkflow.manipulateIPMData(status, trasactiondata);
+	}
+	
+	@When("verify that the device event fees for $reason is levied for $cardType card")
+	@Then("verify that the device event fees for $reason is levied for $cardType card")
+	public void verifyDeviceEventFeeLevied(@Named("cardType") String cardType, 
+			@Named("reason") String reason) {
+		Device device = context.get(ContextConstants.DEVICE);
+		TransactionSearch ts = TransactionSearch.getProviderData(provider);
+		DeviceEventBasedFeePlan deviceEventBasedPlan = context.get(ContextConstants.DEVICE_EVENT_BASED_FEE);
+		Assert.assertTrue("The device event fees are not as applied", 
+				transactionWorkflow.verifyDeviceEventFeeApplied(device, reason, ts, deviceEventBasedPlan, cardType));
 	}
 	
 	@Given("user configures device")

@@ -100,6 +100,9 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	@PageElement(findBy=FindBy.X_PATH, valueToFind = "//td/span[contains(text(),'Reconcilation Status')]/following::tr[1]/td[2]/span/span")
 	private MCWebElement txtReconciliationStatus;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='modelFormClass']//span[contains(text(),'Response')]/../following-sibling::td/span/span")
+	private MCWebElement authorizationResponseLbl;
+	
 	private BigDecimal availableBalanceAfterReversal;
 	private String reconciliationStatus;
 	
@@ -181,7 +184,7 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 		clickSearchButton();
 		viewFirstRecord();
 		runWithinPopup("View Authorization", () -> {
-			fieldsForAssertion.add(authResponse.getText());
+			fieldsForAssertion.add(authorizationResponseLbl.getText());
 			fieldsForAssertion.add(authDeclineCodeLbl.getText());
 			fieldsForAssertion.add(authDeclineDescriptionLbl.getText());
 			clickCloseButton();
