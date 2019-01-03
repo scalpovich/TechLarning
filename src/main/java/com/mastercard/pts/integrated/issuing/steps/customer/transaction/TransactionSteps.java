@@ -447,13 +447,11 @@ public class TransactionSteps {
 	@Then("PIN is retrieved successfully with data from Pin Offset File")
 	public void thenPINIsRetrievedSuccessfully() {
 		Device device = context.get(ContextConstants.DEVICE);
-		if(Objects.isNull(device.getPinNumberForTransaction())){
 			Transaction transactionData = Transaction.generateFinSimPinTestData(device, finSimConfig, provider);
 			String pinNumber = transactionWorkflow.getPinNumber(transactionData);
 			logger.info("FINSim PIN Number generated : {} ", pinNumber);
 			Assert.assertTrue("INVALID PIN", !pinNumber.isEmpty());
 			device.setPinNumberForTransaction(pinNumber);
-		}
 	}
 
 	@When("PIN is created for Pin Change First Transaction")

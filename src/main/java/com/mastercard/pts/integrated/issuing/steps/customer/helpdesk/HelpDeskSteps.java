@@ -989,12 +989,12 @@ public class HelpDeskSteps {
 	}
 	
 	
-	@Given("user creates $limittype credit limit change request for $customerType Type")
-	@When("user creates $limittype credit limit change request for $customerType Type")
-	@Then("user creates $limittype credit limit change request for $customerType Type")
-	public void userRaisesCreditLimitChangeRequestThroughHelpdesk(String limittype,String customerType) {
+	@Given("user creates $limitType credit limit change request for $customerType Type")
+	@When("user creates $limitType credit limit change request for $customerType Type")
+	@Then("user creates $limitType credit limit change request for $customerType Type")
+	public void userRaisesCreditLimitChangeRequestThroughHelpdesk(String limitType,String customerType) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProviderWithCreditCardLimits(provider);
-		helpdeskGeneral.setLimitType(limittype);
+		helpdeskGeneral.setLimitType(limitType);
 		helpdeskGeneral.setCustomerType(customerType);
 		helpdeskWorkflow.clickCustomerCareEditLink();				
 		context.put(ContextConstants.CREDIT_LIMIT_AFTER_SR, helpdeskWorkflow.activateCreditLimitChangeRequest(helpdeskGeneral));
