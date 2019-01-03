@@ -37,7 +37,7 @@ Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 Then MAS test results are verified
 And user is logged in institution
-And search Capture authorization and verify 000-Successful status
+And assert Capture response with 70053 AuthDecline Code and Card Status is Lost with Capture Response as description
 And user sign out from customer portal
 
 Scenario:1.4 When User Chnage device status to Refer of Lost Status
@@ -50,6 +50,6 @@ Scenario:1.5 Perform EMV_PURCHASE Authorization transaction
 When perform an EMV_PURCHASE MAS transaction on the same card
 Then MAS test results are verified
 And user is logged in institution
-And search Refer authorization and verify 000-Successful status
+And assert Refer response with 70052 AuthDecline Code and Card Status is Lost with Refer Response as description
 And user sign out from customer portal
 Then MAS simulator is closed

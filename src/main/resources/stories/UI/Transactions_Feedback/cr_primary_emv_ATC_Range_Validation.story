@@ -52,7 +52,7 @@ Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 And user is logged in institution
 And search Purchase authorization and verify 100-Do Not Honour status
-Then assert Decline response with 100-Do Not Honour AuthDecline Code and ATC Range voilated. as description
+Then assert Decline response with 25003 AuthDecline Code and ATC Range voilated. as description
 And user sign out from customer portal
 And MAS simulator is closed
 

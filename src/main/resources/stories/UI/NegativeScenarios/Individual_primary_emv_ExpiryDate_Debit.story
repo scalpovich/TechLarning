@@ -9,7 +9,7 @@ Meta:
 @EMVWithPin
 @PreScreening
 
-Scenario: Set up program for debit emv corporate debit card
+Scenario:1.1 Set up program for debit emv corporate debit card
 Given user is logged in institution
 When device range for program with device plan for "debit" "emv" card
 Then user sign out from customer portal
@@ -21,7 +21,7 @@ And user performs adjustment transaction
 And user has current wallet balance amount information for debit device
 Then user sign out from customer portal
 
-Scenario: debit emv corporate debit card device production
+Scenario:1.2 debit emv corporate debit card device production
 Given user is logged in institution
 When a new device was created
 And processes pre-production batch for debit
@@ -30,7 +30,7 @@ And processes pin generation batch for debit
 And device has "normal" status
 And user activates device through helpdesk
 
-Scenario: Pin Generation
+Scenario:1.3 Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 And embossing file batch was generated in correct format
@@ -38,7 +38,7 @@ And PIN is retrieved successfully with data from Pin Offset File
 And FINSim simulator is closed
 And User enters incorrect Expiry Date
 
-Scenario: Perform EMV_PURCHASE Authorization transaction
+Scenario:1.4 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 And user is logged in institution

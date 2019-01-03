@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -169,7 +171,6 @@ public class TransactionSearchPage extends AbstractBasePage {
 	}
 
 	public String searchTransactionWithDeviceAndGetStatus(Device device, TransactionSearch ts) {
-		int i;
 		logger.info("Select product {}", device.getProductType());
 		WebElementUtils.selectDropDownByVisibleText(productTypeSelect, device.getProductType());
 		logger.info("Search transaction for device {}", device.getDeviceNumber());
@@ -181,11 +182,8 @@ public class TransactionSearchPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, "Transaction Date [T]");
 		clickSearchButton();
 		waitForWicket();
-		for (i = 1; i < 4; i++) {
-			if ("2".equals(getCellTextByColumnName(i, "Sequence Number")))
-				break;
-		}
-		return getCellTextByColumnName(i, "Description");
+		String xPath = String.format(".//td/span[contains(text(),'%s')]", "Wallet to Wallet Transfer(Credit))");
+		return getFinder().getWebDriver().findElement(By.xpath(xPath)).getText();
 	}
 
 	public List<String> searchTransactionWithDeviceAndGetJoiningAndMemberShipFees(Device device, TransactionSearch ts, Boolean membershipFlag) {

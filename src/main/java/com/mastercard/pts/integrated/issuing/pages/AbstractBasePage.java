@@ -319,6 +319,9 @@ public abstract class AbstractBasePage extends AbstractPage {
     
     @PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='No']")
 	private MCWebElement noBtn;
+  
+  	@PageElement(findBy = FindBy.X_PATH, valueToFind="//*[@class='sectionHead']/td/../following-sibling::tr[1]/td")
+	public MCWebElement responseLbl;
 	
     int retryCounter =0;
 	

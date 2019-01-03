@@ -7,24 +7,12 @@ Meta:
 @CreditRegression
 @CreditWithOutPin
 @StoryName credit_msr_retail			 
-Scenario:creation of mastercard_individual_primary_msr Card credit device
+Scenario:1.1 creation of mastercard_individual_primary_msr Card credit device
 Meta:
 @TestId TC550110
 Given setting json values in excel for Credit
-Given user is logged in institution
-When User fills Dedupe Plan
-And User fills Statement Message Plan for credit product
-And User fills Marketing Message Plan for credit product
-And User fills Transaction Plan for credit product
-And User fills Transaction Limit Plan for credit product
-And User fills Document Checklist Screen for credit product
-And User fills Device Joining and Membership Fee Plan for credit product
-And User fills Device Event Based Fee Plan for credit product
+When user is logged in institution
 And for Magnetic Stripe Card User fills without pin Device Plan for credit product for Mastercard
-And User fills Billing Cycle
-And User fills Payment Priority
-And User fills Transaction Rule Plan
-And User fills Credit Plan
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
 And User fills MCC Rules for credit product
@@ -36,10 +24,10 @@ And credit processes deviceproduction batch using new Device for Supplementary
 Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
 And user sign out from customer portal
 
-Scenario: emv corporate travel prepaid card authorization
+Scenario:1.2 emv corporate travel prepaid card authorization
 Meta:
 @TestId TC408235
 Given user is logged in institution
 And a new device was created
-And user raises an authorization request
+When user raises an authorization request
 Then status of request is "approved"

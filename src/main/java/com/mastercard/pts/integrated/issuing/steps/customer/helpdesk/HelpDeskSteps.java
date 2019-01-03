@@ -793,6 +793,7 @@ public class HelpDeskSteps {
 		}
 	}
 
+	@When("currency setup for device")
 	@Then("currency setup for device")
 	public void searchDevice() {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
@@ -817,12 +818,9 @@ public class HelpDeskSteps {
 
 	@When("wallet to wallet transfer selected account")
 	public void walletToWalletTransfer() {
-		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
-		Device device = context.get(ContextConstants.DEVICE);
-		thenUserNavigatesToGeneralInHelpdesk();
-		helpdeskWorkflow.searchByDeviceNumber(device);
-		helpdeskWorkflow.clickCustomerCareEditLink();
-		helpdeskWorkflow.walletToWalletTransfer(device);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);		
+		thenUserNavigatesToGeneralInHelpdesk();		
+		helpdeskWorkflow.walletToWalletTransfer(context.get(ContextConstants.DEVICE));
 	}
 
 	@When("wallet to wallet transfer for general purpose account")

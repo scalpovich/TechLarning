@@ -110,7 +110,7 @@ public class TransactionSteps {
 
 	private static String FAIL_MESSAGE = FAILED + " -  Result : ";
 	
-	private static String INVALID_KEYS = "(default) - M/Chip Key Set from the related BIN range will be used";
+	private static String INVALID_KEYS = "00999 - Example ETEC1 - 0213";
 	
 	private boolean declineMerchantRiskBased=false;
 	
@@ -184,8 +184,10 @@ public class TransactionSteps {
 	
 	@When("perform an $type MAS transaction with wrong keys")
 	public void performTransactionWithWrongKeys(String transaction) {
+		String originalValue = TransactionWorkflow.STAGE_KEYS ;
 		TransactionWorkflow.STAGE_KEYS = INVALID_KEYS;
 		givenTransactionIsExecuted(transaction);
+		TransactionWorkflow.STAGE_KEYS = originalValue;
 	}
 
 	@When("user performs generate TestData for an optimized $transaction MAS transaction")
@@ -500,11 +502,10 @@ public class TransactionSteps {
 
 	@Then("search with device in transaction screen and status for wallet to wallet transfer transaction")
 	public void thenSearchWithDeviceInTransactionScreenCheckReversalStatusAndStatusShouldBeReversal() {
-		ReversalTransaction rt = ReversalTransaction.getProviderData(provider);
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		Device device = context.get(ContextConstants.DEVICE);
 		Assert.assertTrue("successfully completed the wallet to wallet fund transfer",
-				transactionWorkflow.searchTransactionWithDeviceAndGetStatus(device, ts).contains(" Wallet to Wallet Transfer(Credit)"));
+				transactionWorkflow.searchTransactionWithDeviceAndGetStatus(device, ts).contains("Wallet to Wallet Transfer(Credit))"));
 	}
 	
 	
