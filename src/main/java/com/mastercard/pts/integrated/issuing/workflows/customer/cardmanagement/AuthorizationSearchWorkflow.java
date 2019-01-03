@@ -122,7 +122,6 @@ public class AuthorizationSearchWorkflow {
 			device.setDeviceVelocity(1);
 			device.setDeviceAmountUsage(Double.parseDouble(billingAmountValue));
 		}
-		//context.put(ContextConstants.DEVICE, device);
 		assertTrue("Latest (Row) Description and Code Action does not match on Authorization Search Screen", condition);
 		return device;
 		

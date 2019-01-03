@@ -23,7 +23,7 @@ And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pingeneration batch using new Device for Supplementary
 And device has "normal" status
-Then user raisess Permanent [P] credit limit change request for Individual Type
+Then user creates Permanent [P] credit limit change request for Individual Type
 And device has "normal" status
 And user verifies available Permanent [P] limit type
 And user sign out from customer portal

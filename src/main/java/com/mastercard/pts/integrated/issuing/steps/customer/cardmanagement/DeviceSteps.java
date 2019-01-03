@@ -256,7 +256,6 @@ public class DeviceSteps {
 	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceForGivenCustomerUsingNewApplicationWithSameBatch(String type,String existingBatch,String customerType,String applicationType,String subApplicationType,String deviceType) {
 		Device device = Device.createWithProviderForOtherDetails(provider);
 		device.setProductType(ProductType.fromShortName(type));
-		device.setProductType(ProductType.fromShortName(type));
 		device.setAppliedForProduct(ProductType.fromShortName(type));
 		device.setCustomerType(customerType);
 		device.setApplicationType(applicationType);

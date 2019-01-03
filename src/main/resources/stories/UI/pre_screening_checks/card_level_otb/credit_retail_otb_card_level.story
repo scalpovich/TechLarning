@@ -21,7 +21,7 @@ And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pinProduction batch using new Device for Supplementary
 And device has "normal" status
-Then user raisess Permanent [P] credit limit change request for Individual Type
+Then user creates Permanent [P] credit limit change request for Individual Type
 And user sign out from customer portal
 
 Scenario:1.2 Pin Generation 
