@@ -1,7 +1,7 @@
 Narrative:
 As a user
 I want to verify that pin request failed for blocked or expired add-on device
-In order to create add-on prepaid card
+In order to create add-on credit card
 
 
 Meta:
