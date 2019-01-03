@@ -80,9 +80,6 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//div[@class='tab_content']//span[contains(text(),'Billing Currency :')]/following-sibling::span//span[@class='labelselectf']")
 	private MCWebElement billingCurrency;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='modelFormClass']//span[contains(text(),'Response')]/../following-sibling::td/span/span")
-	private MCWebElement responseLbl;
-
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='modelFormClass']//span[contains(text(),'Auth Decline Description')]/../following-sibling::td/span/span")
 	private MCWebElement authDeclineDescriptionLbl;
 

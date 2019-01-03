@@ -14,6 +14,8 @@ public class TransactionsNav {
 	
 	public static final String L1_VISA_MONEY_TRANSFER = "VisaMoneyTransfer";
 	
+	public static final String L1_CARD_TO_CARD = "CardToCard";
+	
 	private TransactionsNav() {
 	}
 }

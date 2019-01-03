@@ -6,7 +6,9 @@ import java.util.Collection;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.domain.ServicesNav;
+import com.mastercard.pts.integrated.issuing.domain.cardholder.CardholderServices;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -18,24 +20,19 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 public class ReplaceDevicePage extends ServicesAbstractPage {
 	
 	@PageElement(findBy = FindBy.ID, valueToFind="reasonCode")
-	private MCWebElement replacementResone;
+	private MCWebElement replacementReason;
 	
-	@PageElement(findBy = FindBy.ID, valueToFind="mpts_cardHolderPortal_button_submit")
-	private MCWebElement replacemenetRsnSubmitBtn;
+	@PageElement(findBy = FindBy.NAME, valueToFind="mpts.cardHolderPortal.button.submit")
+	private MCWebElement replacementSubmitBtn;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind="//td[@class='SuccessMessageTxt']")
-	private MCWebElement replacementConfirmationMsg;
-	
-	public void selectReplaceMentOption(String optionName){
-		selectByText(replacementResone, optionName);
+	public void selectReplacementOption(String optionName){
+		selectByText(replacementReason, optionName);
 	}
 	
-	public void submitReplacementRequest(){
-		clickWhenClickableCHP(replacemenetRsnSubmitBtn);
-	}
-	
-	public String getReplacementRequestConfirmationMsg(){
-		return getTextFromPage(replacementConfirmationMsg);
+	public String deviceReplacementRequest(CardholderServices replacementOption ){
+		selectReplacementOption(replacementOption.getReplacementReason());
+		clickWhenClickableCHP(replacementSubmitBtn);
+		return getTextFromPage(responseLbl);
 	}
 	
 	public void verifyUiOperationStatus() {

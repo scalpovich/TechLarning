@@ -2,11 +2,13 @@ package com.mastercard.pts.integrated.issuing.pages.cardholder.services;
 
 import java.util.Arrays;
 import java.util.Collection;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.domain.ServicesNav;
-import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
+import com.mastercard.pts.integrated.issuing.domain.cardholder.CardholderServices;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
@@ -47,6 +49,13 @@ public class BlockDevicePage extends ServicesAbstractPage {
 	
 	public void confirmCardBlockRequest(){
 		clickWhenClickableCHP(confirmBlockBtn);
+	}
+	
+	
+	public String blockDeviceRequest(CardholderServices cardholderService){
+		enterCardBlockRemark(cardholderService.getBlockCardRemark());
+		confirmCardBlockRequest();
+		return getCardBlockConfirmMsg();
 	}
 	
 	@Override

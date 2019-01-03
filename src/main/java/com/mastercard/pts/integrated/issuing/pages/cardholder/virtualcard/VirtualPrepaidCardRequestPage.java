@@ -2,11 +2,14 @@ package com.mastercard.pts.integrated.issuing.pages.cardholder.virtualcard;
 
 import java.util.Arrays;
 import java.util.Collection;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import com.mastercard.pts.integrated.issuing.domain.cardholder.CardholderServices;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -71,7 +74,7 @@ public class VirtualPrepaidCardRequestPage extends AbstractBasePage {
 	private MCWebElement countryCodeTxt;
 
 	@PageElement(findBy = FindBy.ID, valueToFind = "regesteredMobileNumber")
-	private MCWebElement regesteredMobileNumberTxt;
+	private MCWebElement registeredMobileNumberTxt;
 
 	@PageElement(findBy = FindBy.ID, valueToFind = "registeredMailId")
 	private MCWebElement registeredMailIdTxt;
@@ -80,21 +83,23 @@ public class VirtualPrepaidCardRequestPage extends AbstractBasePage {
 	private MCWebElement submitVirtualCardReq;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//table[@class='modelFormClass']/tbody/tr[3]/td")
-	private MCWebElement prmissionForVirtualCardMsg;
+	private MCWebElement permissionForVirtualCardMsg;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//td[@class='SuccessMessageTxt']")
-	private MCWebElement virtualPrparidCardReqestResStatus;
+	private MCWebElement virtualPrepaidCardRequestResStatus;
 	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//*[@class='sectionHead']/td/../following-sibling::tr[1]/td")
+	private MCWebElement responseLbl;
 	
 	public String getVirtualCardRequesResponse(){
-		return getTextFromPage(virtualPrparidCardReqestResStatus);
+		return getTextFromPage(virtualPrepaidCardRequestResStatus);
 	}
 	
-	public void submitRequestforVirtualCrd(){
+	public String submitRequestForVirtualCard(CardholderServices cardholderService){
 		clickWhenClickable(submitVirtualCardReq);
 		waitForLoaderToDisappear();
-	}
-	
+		return getTextFromPage(responseLbl);
+	}	
 	
 	public void verifyUiOperationStatus() {
 		logger.info("Virtual Prepaid Card Request");
@@ -106,7 +111,7 @@ public class VirtualPrepaidCardRequestPage extends AbstractBasePage {
 	}
 	
 	public boolean verifyPermissionCardholder(){
-		return isElementPresent(prmissionForVirtualCardMsg);
+		return isElementPresent(permissionForVirtualCardMsg);
 	}
 
 	@Override
@@ -117,6 +122,6 @@ public class VirtualPrepaidCardRequestPage extends AbstractBasePage {
 				WebElementUtils.visibilityOf(marriedTxt), WebElementUtils.visibilityOf(birthDateStrTxt), WebElementUtils.visibilityOf(address1Txt),
 				WebElementUtils.visibilityOf(address2Txt), WebElementUtils.visibilityOf(address3Txt), WebElementUtils.visibilityOf(zipCodeTxt),
 				WebElementUtils.visibilityOf(cityCodeTxt), WebElementUtils.visibilityOf(stateCodeTxt), WebElementUtils.visibilityOf(countryCodeTxt),
-				WebElementUtils.visibilityOf(regesteredMobileNumberTxt), WebElementUtils.visibilityOf(registeredMailIdTxt));
+				WebElementUtils.visibilityOf(registeredMobileNumberTxt), WebElementUtils.visibilityOf(registeredMailIdTxt));
 	}
 }

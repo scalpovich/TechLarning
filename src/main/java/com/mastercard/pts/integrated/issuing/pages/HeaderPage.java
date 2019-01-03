@@ -16,48 +16,50 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 
 @Component
 public class HeaderPage extends AbstractPage{
+	
+    @PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[@title='Sign Out']")
+    private MCWebElement signOutCustomerLnk;
+    
+    @PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[contains(.,'Signout')]")
+    private MCWebElement signOutAgentLnk;
 
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[@title='Sign Out']")
-	private MCWebElement signOutCustomerLnk;
-
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[contains(.,'Signout')]")
-	private MCWebElement signOutAgentLnk;
-
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[@title='Sign Out']")
-	private MCWebElement signOutCollectLnk;
-
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[contains(.,'Signout')]")
-	private MCWebElement signOutCardholderLnk;
-
+    @PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[@title='Sign Out']")
+    private MCWebElement signOutCollectLnk;
+    
+    @PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[contains(.,'Signout')]")
+    private MCWebElement signOutCardholderLnk;
+    
 	@Override
 	protected List<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(
 				WebElementUtils.visibilityOf(signOutCustomerLnk));
 	}
 
-	public void signOutCustomer(){
-		boolean flag=true; 
+	public void signOutCustomer() {
+		boolean flag = true;
 		int counter = 0;
-		do{
-			try{
+		do {
+			try {
 				signOutCustomerLnk.click();
-				flag=false;
-			}catch(Exception e){
+				flag = false;
+			} catch (Exception e) {
 				SimulatorUtilities.wait(2000);
 				counter++;
-			}}while(flag && counter < 10);
+			}
+		} while (flag && counter < 10);
 
-		}
-
-		public void signOutCollect(){
-			signOutCollectLnk.click();
-		}
-
-		public void signOutCardholder(){
-			signOutCardholderLnk.click();
-		}
-
-		public void signOutAgent(){
-			signOutAgentLnk.click();
-		}
 	}
+  
+    
+    public void signOutCollect(){
+    	signOutCollectLnk.click();
+    }
+    
+    public void signOutCardholder(){
+    	signOutCardholderLnk.click();
+    }
+    
+    public void signOutAgent(){
+    	signOutAgentLnk.click();
+    }
+}

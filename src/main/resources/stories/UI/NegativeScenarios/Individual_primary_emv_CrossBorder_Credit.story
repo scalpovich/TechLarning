@@ -7,8 +7,8 @@ Meta:
 @CreditRegression
 @StoryName credit_emv_retail
 @TestId TC548377
-@PreScreening				 
-Scenario:creation of mastercard_corporate_primary_EMV Card credit device
+@PreScreening			 
+Scenario:1.1 creation of mastercard_corporate_primary_EMV Card credit device
 Given setting json values in excel for Credit
 Given user is logged in institution
 When User fills Dedupe Plan
@@ -34,31 +34,31 @@ And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pingeneration batch using new Device for Supplementary
 And User checks Cross Border Transaction check box on Device Plan Page
-Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
+And device has "normal" status
 And user sign out from customer portal
 
-Scenario: Pin Generation
+Scenario:1.2 Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 Then embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 And FINSim simulator is closed
 
-Scenario: Perform EMV_PURCHASE Authorization transaction
+Scenario:1.3 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 And user is logged in institution
 Then search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Perform INT_EMV_PURCHASE Authorization transaction
+Scenario:1.4 Perform INT_EMV_PURCHASE Authorization transaction
 When perform an INT_EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution
 Then search Purchase authorization and verify 102-Suspected fraud status
 Then assert Decline response with 25000 AuthDecline Code and Cross border-Fraud transaction. as description
 And user sign out from customer portal
 
-Scenario: Wait for 21 mins and Then Perform INT_Purchase Transaction
+Scenario:1.5 Wait for 21 mins and Then Perform INT_Purchase Transaction
 When user wait for one 21 mins to perform transaction
 And perform an INT_EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution

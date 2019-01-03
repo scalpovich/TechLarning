@@ -10,7 +10,7 @@ Meta:
 @TestId TC548377
 @PreScreening
 
-Scenario: Set up program for debit emv corporate debit card
+Scenario:1.1 Set up program for debit emv corporate debit card
 Given user is logged in institution
 When device range for program with device plan for "debit" "emv" card
 And user creates new device of debit type for new client
@@ -20,7 +20,7 @@ And user performs adjustment transaction
 And user has current wallet balance amount information for debit device
 And user sign out from customer portal
 
-Scenario: debit emv corporate debit card device production
+Scenario:1.2 debit emv corporate debit card device production
 Given user is logged in institution
 When a new device was created
 And processes pre-production batch for debit
@@ -30,21 +30,21 @@ And device has "normal" status
 And User checks Pin Change Transaction First check box on Device Plan Page
 And user activates device through helpdesk
 
-Scenario: Pin Generation
+Scenario:1.3 Pin Generation
 Given connection to FINSim is established
 When Pin Offset file batch was generated successfully
 And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 And FINSim simulator is closed
 
-Scenario: Perform EMV_PURCHASE Authorization transaction
+Scenario:1.4 Perform EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 And user is logged in institution
 Then assert Decline response with 46010 AuthDecline Code and Tranaction is not Pin change. as description
 And user sign out from customer portal
 
-Scenario: Credit Corporate- Pin Change Transaction
+Scenario:1.5 Credit Corporate- Pin Change Transaction
 Then connection to MDFS is established
 When user performs an optimized MDFS_EMV_PIN_CHANGE MDFS transaction
 Then MDFS test results are verified
@@ -52,7 +52,7 @@ Given user is logged in institution
 Then search Pin Change authorization and verify 000-Successful status
 And user sign out from customer portal
 
-Scenario: Perform Second EMV_PURCHASE Authorization transaction
+Scenario:1.6 Perform Second EMV_PURCHASE Authorization transaction
 Given connection to MAS is established
 When PIN is created for Pin Change First Transaction
 When perform an EMV_CASH_ADVANCE MAS transaction

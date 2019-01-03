@@ -38,8 +38,7 @@ public class DevicePinSetPage extends AbstractBasePage{
 		List<WebElement> rowsList = Elements(deviceGrid);
 		
 		for(int index =2; index <= Elements(deviceGrid).size() ; index++){
-			if(rowsList.get(index).findElement((By) deviceTableRow).getAttribute("id").equals("5206797198380018")){
-				System.out.println("Testing");
+			if(rowsList.get(index).findElement((By) deviceTableRow).getAttribute("id").equals("5206797198380018")){				
 				getDeviceId(rowsList.get(index).findElement((By) deviceTableRow));
 			}
 		}
