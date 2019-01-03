@@ -83,11 +83,6 @@ public class HelpDeskSteps {
 	private static final String STOPLIST_NOTES = "STOPLIST_NOTES";
 	private static final String STOPLIST_REASON = "STOPLIST_REASON";
 	private static final String WITHDRAWAL_REASON = "WITHDRAWAL_REASON";
-	private static final String BLOCK_DEVICE_NOTE = "Blocking lost device";
-	private static final String UNBLOCK_DEVICE_NOTE = "Unblocking device as found";	
-	private static final String PIN_REQUEST_NOTE = "Requesting for new pin";
-
-	
 	
 	@Autowired
 	private TestContext context;
