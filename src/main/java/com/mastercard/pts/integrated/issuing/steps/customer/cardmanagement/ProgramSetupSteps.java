@@ -1803,6 +1803,6 @@ public class ProgramSetupSteps {
 	@When("user updates device range $status status")
 	public void userUpdatesDeviceRangeStatus(String status){
 		Device device = context.get(ContextConstants.DEVICE);
-		programSetupWorkflow.inactiveteDeviceRange(device, status);
+		programSetupWorkflow.inactivateDeviceRange(device, status);
 	}
 }

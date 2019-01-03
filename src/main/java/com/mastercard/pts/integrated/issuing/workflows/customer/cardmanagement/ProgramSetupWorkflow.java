@@ -301,7 +301,7 @@ public class ProgramSetupWorkflow {
 		}
 	}
 	
-	public void inactiveteDeviceRange(Device device,String deviceRangestatus){
+	public void inactivateDeviceRange(Device device,String deviceRangestatus){
 		DeviceRangePage page = navigator.navigateToPage(DeviceRangePage.class);
 		page.searchDeviceRangeAndEdit(device.getProgramCode());
 		page.inactivateDeviceRange(deviceRangestatus);
