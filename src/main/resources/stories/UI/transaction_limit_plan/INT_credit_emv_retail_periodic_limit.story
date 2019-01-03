@@ -56,7 +56,7 @@ Given perform an INT_EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
 And user validates device usage for Daily Velocity Utilized and Daily Amount Utilized
-And assert Decline response with 34003 AuthDecline Code and Transaction exceeded with periodic amount configured at device plan level. as description
+And assert Decline response with 34005 AuthDecline Code and Transaction exceeded with periodic amount configured at device plan level. as description
 And device has "normal" status
 And user verifies available Card limit for card after transaction
 And user sign out from customer portal
@@ -80,7 +80,7 @@ Given perform an INT_EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 And search Purchase authorization and verify 123-Frequency Exceeded status
 And user validates device usage for Daily Velocity Utilized and Daily Amount Utilized
-And assert Decline response with 34002 AuthDecline Code and Transaction exceeded with periodic velocity configured at device plan level. as description
+And assert Decline response with 34004 AuthDecline Code and Transaction exceeded with periodic velocity configured at device plan level. as description
 And device has "normal" status
 And user verifies available Card limit for card after transaction
 And user sign out from customer portal

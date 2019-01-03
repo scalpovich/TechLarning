@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.AvailableBalance;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
@@ -56,10 +57,11 @@ public class AuthorizationSearchWorkflow {
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
 	public static final int BILL_AMOUNT_INDEX_VALUE = 3;
+	public static final int TRANSACTION_VELOCITY = 1;
 
 	private static final String USERNAME = "USERNAME";
 
-	public void verifyAuthTransactionSearch(String type, String state, Device device) {
+	public Device verifyAuthTransactionSearch(String type, String state, Device device) {
 		String varType = type;
 		// state value sent from story file is different from what appears on
 		// the screen hence setting to the correct value if it is
@@ -67,14 +69,15 @@ public class AuthorizationSearchWorkflow {
 		if ("Rvmt_Receiving".equalsIgnoreCase(varType))
 			varType = "RVMT - Receiving";
 
-		authSearchAndVerification(device, varType, state, "Code Action", "Description");
+		device = authSearchAndVerification(device, varType, state, "Code Action", "Description");
+		return device;
 	}
 
 	public void verifyTransactionAndBillingCurrency(String transactionCurrency, String billingCurrency, Device device) {
 		authSearchAndVerification(device, transactionCurrency, billingCurrency, "Transaction Currency", "Billing Currency");
 	}
 
-	private void authSearchAndVerification(Device device, String type, String state, String codeColumnName, String descriptionColumnName) {
+	private Device authSearchAndVerification(Device device, String type, String state, String codeColumnName, String descriptionColumnName) {
 		boolean condition;
         SimulatorUtilities.wait(5000);
 		AuthorizationSearchPage authSearchPage = navigator.navigateToPage(AuthorizationSearchPage.class);
@@ -117,11 +120,12 @@ public class AuthorizationSearchWorkflow {
 		 String billingAmountValue = authSearchPage.getCellTextByColumnName(1, "Billing Amount");
 		 context.put(ConstantData.BILLING_AMOUNT, billingAmountValue);
 		if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && !ConstantData.PRE_AUTH.equalsIgnoreCase(type)){
-			device.setDeviceVelocity();
+			device.setDeviceVelocity(TRANSACTION_VELOCITY);
 			device.setDeviceAmountUsage(Double.parseDouble(billingAmountValue));
 		}
-
 		assertTrue("Latest (Row) Description and Code Action does not match on Authorization Search Screen", condition);
+		return device;
+		
 	}
 	
 	public void generateReversalForTransaction(String deviceNumber)
