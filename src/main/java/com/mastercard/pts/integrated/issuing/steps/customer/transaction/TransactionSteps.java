@@ -112,7 +112,7 @@ public class TransactionSteps {
 
 	private static String FAIL_MESSAGE = FAILED + " -  Result : ";
 	
-	private static String INVALID_KEYS = "(default) - M/Chip Key Set from the related BIN range will be used";
+	private static String INVALID_KEYS = "00999 - Example ETEC1 - 0213";
 	
 	private boolean declineMerchantRiskBased=false;
 	
@@ -186,8 +186,10 @@ public class TransactionSteps {
 	
 	@When("perform an $type MAS transaction with wrong keys")
 	public void performTransactionWithWrongKeys(String transaction) {
+		String originalValue = TransactionWorkflow.STAGE_KEYS ;
 		TransactionWorkflow.STAGE_KEYS = INVALID_KEYS;
 		givenTransactionIsExecuted(transaction);
+		TransactionWorkflow.STAGE_KEYS = originalValue;
 	}
 
 	@When("user performs generate TestData for an optimized $transaction MAS transaction")

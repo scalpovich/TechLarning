@@ -7,24 +7,12 @@ Meta:
 @CreditRegression
 @CreditWithOutPin
 @StoryName credit_msr_retail				 
-Scenario:creation of mastercard_corporate_primary_msr Card credit device
+Scenario:1.1 creation of mastercard_corporate_primary_msr Card credit device
 Meta:
 @TestId TC565834
 Given setting json values in excel for Credit
 Given user is logged in institution
-When User fills Dedupe Plan
-And User fills Statement Message Plan for credit product
-And User fills Marketing Message Plan for credit product
-And User fills Transaction Plan for credit product
-And User fills Transaction Limit Plan for credit product
-And User fills Document Checklist Screen for credit product
-And User fills Device Joining and Membership Fee Plan for credit product
-And User fills Device Event Based Fee Plan for credit product
-And for Magnetic Stripe Card User fills without pin Device Plan for credit product for Mastercard
-And User fills Billing Cycle
-And User fills Payment Priority
-And User fills Transaction Rule Plan
-And User fills Credit Plan
+When for Magnetic Stripe Card User fills without pin Device Plan for credit product for Mastercard
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Corporate Credit Card
 And User fills MCC Rules for credit product
@@ -37,11 +25,11 @@ Then User search for new device Supplementary on search screen for credit and va
 And embossing file batch was generated in correct format
 And user sign out from customer portal
 
-Scenario: Perform MMSR-CORPORATE Authorization transaction
+Scenario:1.2 Perform MMSR-CORPORATE Authorization transaction
 Given connection to MAS is established
 When perform an MMSR MAS transaction
 Then MAS test results are verified
 And MAS simulator is closed
 And user is logged in institution
-And search MasterCard MoneySend authorization and verify 000-Successful status
+And search Money Send Person To Person authorization and verify 000-Successful status
 And user sign out from customer portal
