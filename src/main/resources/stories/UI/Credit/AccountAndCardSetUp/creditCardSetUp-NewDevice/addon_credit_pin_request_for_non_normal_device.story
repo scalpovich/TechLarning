@@ -22,15 +22,18 @@ And credit device is created using new device screen for Individual [0] and Prim
 And credit device is created using new device screen for Individual [0] and Add-on Device [A] and New Client [N] and EMV Card [2]
 And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
-Then User search for new device Supplementary on search screen for credit and validates the status as NORMAL
-And user blocks the device from helpdesk screen
-And pin request should be fail for blocked add-on device
+Then device has "normal" status
+And user creates service request for Block Device [111] service
+And device has "blocked" status
+And service request Pin Request  [305] should be fail for blocked add-on device
 
 Scenario: 2 To verify that pin request failed for expired add-on device 
 Meta:
 @TC858299
-Given user unblocks the device from helpdesk screen
-When user set expired date and status code in database
-Then pin request should be fail for expired add-on device
+Given device has "blocked" status
+When user creates service request for Unblock Device [116] service
+And user set expired date and status code in database
+Then device has "expired" status
+And service request Pin Request  [305] should be fail for expired add-on device
 And user sign out from customer portal
 

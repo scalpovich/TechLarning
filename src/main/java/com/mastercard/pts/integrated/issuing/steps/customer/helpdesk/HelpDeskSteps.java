@@ -632,6 +632,7 @@ public class HelpDeskSteps {
 	/*
 	 * This method gets the device status using search product type and device number
 	 */
+	@Given("device has \"$deviceStatus\" status")
 	@When("device has \"$deviceStatus\" status")
 	@Then("device has \"$deviceStatus\" status")
 	public void thenDeviceHasStatus(String deviceStatus) {
@@ -1160,28 +1161,12 @@ public class HelpDeskSteps {
 		assertThat("Invalid Unbilled amount", helpdeskValues.get(amountType), equalTo(ContextConstants.ZERO_UNBILLED_PAYMENT));
 	}
 	
-	@When("user blocks the device from helpdesk screen")	
-	@Then("user blocks the device from helpdesk screen")
-	public void blockDeviceFromHelpdeskScreen(){
-		Device device = context.get(ContextConstants.DEVICE);
-		helpdeskGeneral.setNotes(BLOCK_DEVICE_NOTE);
-		helpdeskWorkflow.blockDevice(helpdeskGeneral, device);
-	}
-	
-	@Given("user unblocks the device from helpdesk screen")
-	@When("user unblocks the device from helpdesk screen")	
-	@Then("user unblocks the device from helpdesk screen")
-	public void unBlockDeviceFromHelpdeskScreen(){
-		Device device = context.get(ContextConstants.DEVICE);
-		helpdeskGeneral.setNotes(UNBLOCK_DEVICE_NOTE);
-		helpdeskWorkflow.unBlockDevice(helpdeskGeneral, device);
-	}
-	
-	@Then("pin request should be fail for {blocked|expired} add-on device")
-	public void thenPinrequestShouldBeFailedForAddOnDevice(){
-		Device device = context.get(ContextConstants.DEVICE);
-		helpdeskGeneral.setNotes(PIN_REQUEST_NOTE);
-		assertTrue("Pin request is not getting failed for blocked or expired device", helpdeskWorkflow.isPinRequestFailingForNonNormalDevice(helpdeskGeneral, device));
+	@Then("service request $serviceCode should be fail for {blocked|expired} add-on device")
+	public void thenPinrequestShouldBeFailedForAddOnDevice(String serviceCode){
+		helpdeskGeneral.setServiceCode(serviceCode);			// Service Code e.g : Activate Device [108]
+		helpdeskGeneral.setNotes(MiscUtils.generateRandomNumberAsString(6));
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		assertTrue("Service request is not getting failed for non-normal device", helpdeskWorkflow.isRequestFailingForNonNormalDevice(helpdeskGeneral));
 	}
 	
 	

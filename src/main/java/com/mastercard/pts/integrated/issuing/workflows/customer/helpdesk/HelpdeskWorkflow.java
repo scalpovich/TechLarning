@@ -325,11 +325,9 @@ public class HelpdeskWorkflow {
 		
 	}
 	
-	public boolean isPinRequestFailingForNonNormalDevice(HelpdeskGeneral helpdeskGeneral,Device device){
-		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
-		helpDeskPage.searchByDeviceNumber(device);
+	public boolean isRequestFailingForNonNormalDevice(HelpdeskGeneral helpdeskGeneral){
 		try{
-			helpDeskPage.pinRequest(helpdeskGeneral);
+			resetPinCounter(helpdeskGeneral);
 			return false;
 		} catch (Exception e){
 			helpDeskPage.printResponseMessageLog();
@@ -337,19 +335,6 @@ public class HelpdeskWorkflow {
 			return true;
 		}
 	}
-	
-	public void blockDevice(HelpdeskGeneral helpdeskGeneral,Device device){
-		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
-		helpDeskPage.searchByDeviceNumber(device);
-		helpDeskPage.blockDevice(helpdeskGeneral);
-	}
-	
-	public void unBlockDevice(HelpdeskGeneral helpdeskGeneral,Device device){
-		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
-		helpDeskPage.searchByDeviceNumber(device);
-		helpDeskPage.unBlockDevice(helpdeskGeneral);
-	}
-	
 }
 
 

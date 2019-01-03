@@ -1422,7 +1422,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public void resetPinRetryCounter(HelpdeskGeneral helpdeskGeneral) {
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
-		runWithinPopup(RESET_PIN_RETRY_COUNTER, () -> {
+		String serviceRequestPopUpTitle = getServiceRequestPopupTitle(helpdeskGeneral.getServiceCode());
+		runWithinPopup(serviceRequestPopUpTitle, () -> {
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();
 			verifyOperationStatus();
@@ -1955,49 +1956,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		ClickCheckBox(chkBxApplyFees, value);
 	}
 	
-	public void pinRequest(HelpdeskGeneral helpdeskGeneral) {
-		editFirstRecord();
-		SimulatorUtilities.wait(5000);
-		selectServiceCode(Constants.DEVICE_PIN_REQUEST);
-		clickGoButton();
-		runWithinPopup("305 - Pin Request", () -> {
-			enterNotes(helpdeskGeneral.getNotes());
-			clickSaveButton();
-			verifyOperationStatus();
-			clickOKButtonPopup();
-		});
-		SimulatorUtilities.wait(3000);
-		clickEndCall();
-	}
-	
-	public void blockDevice(HelpdeskGeneral helpdeskGeneral) {
-		editFirstRecord();
-		SimulatorUtilities.wait(5000);
-		selectServiceCode(Constants.DEVICE_BLOCK_DEVICE_REQUEST);
-		clickGoButton();
-		runWithinPopup("111 - Block Device", () -> {
-			enterNotes(helpdeskGeneral.getNotes());
-			clickSaveButton();
-			verifyOperationStatus();
-			clickOKButtonPopup();
-		});
-		SimulatorUtilities.wait(3000);
-		clickEndCall();
-	}
-	
-	public void unBlockDevice(HelpdeskGeneral helpdeskGeneral) {
-		editFirstRecord();
-		SimulatorUtilities.wait(5000);
-		selectServiceCode(Constants.DEVICE_UNBLOCK_DEVICE_REQUEST);
-		clickGoButton();
-		runWithinPopup("116 - Unblock Device", () -> {
-			enterNotes(helpdeskGeneral.getNotes());
-			clickSaveButton();
-			verifyOperationStatus();
-			clickOKButtonPopup();
-		});
-		SimulatorUtilities.wait(3000);
-		clickEndCall();
+	private String getServiceRequestPopupTitle(String serviceCode){
+		String[] splitedArray = serviceCode.split("\\[") ;
+		return splitedArray[splitedArray.length-1].split("\\]")[0] + " - " + serviceCode.split("\\[")[0].trim();
 	}
 	
 	public void printResponseMessageLog(){
