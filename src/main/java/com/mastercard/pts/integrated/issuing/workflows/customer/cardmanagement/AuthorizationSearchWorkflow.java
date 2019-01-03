@@ -57,6 +57,7 @@ public class AuthorizationSearchWorkflow {
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
 	public static final int BILL_AMOUNT_INDEX_VALUE = 3;
+	public static final int TRANSACTION_VELOCITY = 1;
 
 	private static final String USERNAME = "USERNAME";
 
@@ -119,7 +120,7 @@ public class AuthorizationSearchWorkflow {
 		 String billingAmountValue = authSearchPage.getCellTextByColumnName(1, "Billing Amount");
 		 context.put(ConstantData.BILLING_AMOUNT, billingAmountValue);
 		if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && !ConstantData.PRE_AUTH.equalsIgnoreCase(type)){
-			device.setDeviceVelocity(1);
+			device.setDeviceVelocity(TRANSACTION_VELOCITY);
 			device.setDeviceAmountUsage(Double.parseDouble(billingAmountValue));
 		}
 		assertTrue("Latest (Row) Description and Code Action does not match on Authorization Search Screen", condition);
