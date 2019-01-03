@@ -89,6 +89,9 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	@PageElement(findBy=FindBy.X_PATH, valueToFind = "//td[contains(text(),'Available Balance')]/following-sibling::td[1]/span/span")
 	private MCWebElement availableBalanceTxt;
 	
+	@PageElement(findBy=FindBy.X_PATH, valueToFind = "//table[@class='modelFormClass']//span[contains(text(),'Authorization Response')]/../following-sibling::td[1]/span/span")
+	private MCWebElement authResponse;
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
 	private MCWebElement institutionDateTxt;
 	
@@ -178,7 +181,7 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 		clickSearchButton();
 		viewFirstRecord();
 		runWithinPopup("View Authorization", () -> {
-			fieldsForAssertion.add(responseLbl.getText());
+			fieldsForAssertion.add(authResponse.getText());
 			fieldsForAssertion.add(authDeclineCodeLbl.getText());
 			fieldsForAssertion.add(authDeclineDescriptionLbl.getText());
 			clickCloseButton();
