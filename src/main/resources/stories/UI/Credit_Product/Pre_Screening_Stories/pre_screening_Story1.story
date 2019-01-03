@@ -84,7 +84,7 @@ When User edits Program to update country whitelist plan
 Then user sign out from customer portal
 
 Scenario:1.8 Transaction
-When perform an EMV_PURCHASE MAS transaction
+When perform an EMV_PURCHASE MAS transaction on the same card
 And MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
@@ -103,7 +103,7 @@ When User edits Program to update country blacklist plan
 Then user sign out from customer portal
 
 Scenario:2.1 Perform INT_MSR_PURCHASE Authorization transaction
-When perform an INT_EMV_PURCHASE MAS transaction
+When perform an INT_EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution
 And search Purchase authorization and verify 100-Do Not Honour status
 And assert Decline response with 25002 AuthDecline Code and Country is blacklisted. as description
@@ -115,7 +115,7 @@ When User edits Wallet Plan for White Listed MCG
 Then user sign out from customer portal
 
 Scenario:2.3 Transaction for mastercard_individual_primary_emv Card credit device
-When perform an EMV_PURCHASE MAS transaction
+When perform an EMV_PURCHASE MAS transaction on the same card
 And MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
