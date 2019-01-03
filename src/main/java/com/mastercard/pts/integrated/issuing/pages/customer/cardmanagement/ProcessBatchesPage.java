@@ -53,10 +53,10 @@ import com.mastercard.testing.mtaf.bindings.page.PageElement;
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = { CardManagementNav.L1_OPERATION, CardManagementNav.L2_PROCESSING_BATCHES, CardManagementNav.L3PROCESS_BATCHES })
 public class ProcessBatchesPage extends AbstractBasePage {
-	
+
 	@Autowired
 	private TestContext context;
-	
+
 	@Autowired
 	private DBUtility dbUtils;
 
@@ -73,7 +73,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Rejected')]")
 	private MCWebElement rejectBtn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tr[@class!='headers']//td[3]/span")
 	private MCWebElement rejectDueToMandatory;
 
@@ -100,13 +100,13 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='privateField4']/select")
 	private MCWebElement interchangeTypeDDwn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='multiAccAdmStatus']/select")
 	private MCWebElement accountAdminStatusDDwn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='multiAccBalStatus']/select")
 	private MCWebElement accountBalanceStatusDDwn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@id='multiAccUnpStatus']/select")
 	private MCWebElement accountUnpaidStatusDDwn;
 
@@ -154,9 +154,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	private MCWebElement jobId;
 
 	private String batchStatus;
-	
+
 	private String jobID;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "batchType:input:dropdowncomponent")
 	private MCWebElement batchTypeDdwn;
 
@@ -192,17 +192,17 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='recRejectCnt']/span/span")
 	private MCWebElements rejectedCountTxt;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanel:inputPanel:rows:2:cols:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement methodToGenerateFileDD;
-	
+
 	@PageElement(findBy = FindBy.NAME, valueToFind = "childPanel:inputPanel:rows:2:cols:nextCol:colspanMarkup:inputField:input:dropdowncomponent")
 	private MCWebElement binDDwn;
 
 	// Parameters Added for CardHolder Dump
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[@class='yui-skin-sam']/..")
 	private MCWebElement businessDate;
-	
+
 	@PageElement( findBy = FindBy.X_PATH, valueToFind="//span[@id='jobId'] ")
 	private MCWebElement jobIDNumber;
 
@@ -211,48 +211,48 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
 	private MCWebElement institutionDateTxt;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='File Type']/../following-sibling::td[1]//span/select")
 	private MCWebElement fileTypeDDwn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Vendor Name']/../following-sibling::td[1]//span/select")
 	private MCWebElement vendorNameDDwn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='processFileName']//span[@class='labeltextf']")
 	private MCWebElement processFileNameTxt;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='batchId']/span/span")
 	private MCWebElement txtBatchType;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='jobStartDttm']/span/span/span")
 	private MCWebElement txtStartDateForBatchJob;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='jobEndDttm']/span/span/span")
 	private MCWebElement txtEndDateForBatchJob;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='processFileName']/span/span")
 	private MCWebElement txtProcessFileName;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='executionMode']/span/span")
 	private MCWebElement txtExecutionMode;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[@id='executionTime']/span/span")
 	private MCWebElement txtExecutionTime;
-	
+
 	public final String SYSTEM_INTERNAL_PROCESSING = "SYSTEM INTERNAL PROCESSING [B]";
 
 	private static final int NUMBER_OF_ATTEMPTS_TO_CHECK_SUCCESS_STATE=100;
 
 	private String reasonToReject = "";
-	
+
 	private Boolean isProcess = false;
-	
+
 	private final String failStatus = "FAILED [3]";
-	
+
 	private final String successStatus = "SUCCESS [2]";
-	
+
 	private static final String  POST_MAINTENANCE_FEE_BATCH = "Post Maintenance Fee Batch [POST_MAINTENANCE_FEE]";
-	
+
 	public void selectBatchType(String option) {
 		selectByVisibleText(batchTypeDDwn, option);
 	}
@@ -424,7 +424,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		return batchStatus;
 
 	}
-	
+
 	public String processSystemInternalProcessingBatchWithoutDateCheck(ProcessBatches batch) {
 		logger.info("Process System Internal Processing Batch: {}", batch.getBatchName());
 		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, "SYSTEM INTERNAL PROCESSING [B]");
@@ -435,7 +435,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	}
 
 	public void inputToDate(LocalDate date) {
-		WebElementUtils.pickDate(businessDate, date);
+		if(isElementPresent(businessDate)){
+			WebElementUtils.pickDate(businessDate, date);
+		}
 	}
 
 	public String processSystemInternalProcessingBatch(ProcessBatches batch) {
@@ -487,19 +489,19 @@ public class ProcessBatchesPage extends AbstractBasePage {
 
 		else if ("Loyalty-Calc".equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Loyalty Calculation [LYT_CALC]");
-		
+
 		else if("EOD-Credit".equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "End Of Day - Credit [DAILY]");
-		
+
 		else if("Statement Extract".equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Statement Extract [STATEMENT_GENERATION]"); 
-		
+
 		else if("Billing Process - Credit".equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Billing Process - Credit [BILLING]"); 
-		
+
 		else if(POST_MAINTENANCE_FEE_BATCH.equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, POST_MAINTENANCE_FEE_BATCH); 
-		
+
 		else if("Ageing".equalsIgnoreCase(batchName))
 			WebElementUtils.selectDropDownByVisibleText(batchNameDDwn, "Ageing Batch [AGEING_BATCH]");
 		else
@@ -586,7 +588,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			jobID = processBatchjobIDTxt.getText();
 			context.put(ContextConstants.DAT_FILE_NAME, processFileNameTxt.getText());
 			try{
-			clickCloseButton();
+				clickCloseButton();
 			}
 			catch(StaleElementReferenceException ex)
 			{
@@ -595,7 +597,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			SimulatorUtilities.wait(1000);
 		});
 	}
-	
+
 	public void submitAndVerifyBatchDetails() {
 		clickSubmitBtn();
 		clickWhenClickable(statusBtn);
@@ -614,7 +616,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			clickCloseButton();
 		});
 	}
-	
+
 	public List<String> getBatchDetailsValidationFields(){
 		List<String> fieldValues = new ArrayList<String>();
 		fieldValues.add(txtBatchType.getText());
@@ -627,7 +629,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		fieldValues.add(processBatchjobIDTxt.getText());
 		return fieldValues;
 	}
-	
+
 	public void submitAndVerifyBaseIIBatch() {
 		ClickButton(submitBtn);
 		ClickButton(statusBtn);
@@ -639,7 +641,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			ClickButton(closeBtn);
 		});
 	}
-	
+
 	public void getVisaOutGoingFileName() {	
 		WebElement fileNameLbl = getFinder().getWebDriver().findElement(By.xpath("//*[@id='outputFileName']//span[@class='labeltextf'] "));
 		context.put(ConstantData.VISA_OUT_GOING_FILE_NAME, fileNameLbl.getText());
@@ -688,32 +690,32 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	}
 
 	public boolean verifyFileProcessUpload(ProcessBatches processBatchesDomain, String fileName) {
-        FileCreation.filenameStatic = fileName;
-        Boolean isProcessed = true;
-        String elementXpath = String.format("//span[contains(text(),'%s')]", FileCreation.filenameStatic);
-        String statusXpath = elementXpath + "//parent::td//following-sibling::td/a";
-        SimulatorUtilities.wait(20000);
-        clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(statusXpath)));
-        
-        SimulatorUtilities.wait(5000);//this delay is for table to load data 
-        runWithinPopup("View Batch Details", () -> {
-              logger.info("Retrieving batch status");
-              waitForBatchStatus();
-              SimulatorUtilities.wait(5000);
-              batchStatus = batchStatusTxt.getText();
-              processBatchesDomain.setJoBID(processBatchjobIDTxt.getText());
-              SimulatorUtilities.wait(5000);
-              clickCloseButton();
-        });
-        SimulatorUtilities.wait(3000);//this delay is for table to load data
-        MiscUtils.reportToConsole("JobID: {}", processBatchesDomain.getJoBID());
-        context.put(CreditConstants.JOB_ID, processBatchesDomain.getJoBID());
-        waitForWicket(driver());
-        getFinder().getWebDriver().switchTo().defaultContent();
-        return isProcessed;
+		FileCreation.filenameStatic = fileName;
+		Boolean isProcessed = true;
+		String elementXpath = String.format("//span[contains(text(),'%s')]", FileCreation.filenameStatic);
+		String statusXpath = elementXpath + "//parent::td//following-sibling::td/a";
+		SimulatorUtilities.wait(20000);
+		clickWhenClickable(getFinder().getWebDriver().findElement(By.xpath(statusXpath)));
+
+		SimulatorUtilities.wait(5000);//this delay is for table to load data 
+		runWithinPopup("View Batch Details", () -> {
+			logger.info("Retrieving batch status");
+			waitForBatchStatus();
+			SimulatorUtilities.wait(5000);
+			batchStatus = batchStatusTxt.getText();
+			processBatchesDomain.setJoBID(processBatchjobIDTxt.getText());
+			SimulatorUtilities.wait(5000);
+			clickCloseButton();
+		});
+		SimulatorUtilities.wait(3000);//this delay is for table to load data
+		MiscUtils.reportToConsole("JobID: {}", processBatchesDomain.getJoBID());
+		context.put(CreditConstants.JOB_ID, processBatchesDomain.getJoBID());
+		waitForWicket(driver());
+		getFinder().getWebDriver().switchTo().defaultContent();
+		return isProcessed;
 
 	}
-	
+
 	public boolean processBatchUpload(ProcessBatches processBatchesDomain, String fileName){
 		FileCreation.filenameStatic = fileName;
 		String statusXpath = String.format("//span[contains(text(),'%s')]", FileCreation.filenameStatic) + "//parent::td//following-sibling::td/a";
@@ -749,13 +751,13 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		waitForWicket(driver());
 		return isProcess;
 	}
-	
+
 	public String visaOutgoingDownloadBatch(ProcessBatches batch) {
 		Device device=context.get(ContextConstants.DEVICE);
 		selectBatchType(batch.getBatchType());
 		selectBatchName(batch.getBatchName());
 		selectMethodToGenerateFile(batch.getMethodToGenerateFile());
-	    selectBin(device.getDeviceNumber().substring(0, 6));
+		selectBin(device.getDeviceNumber().substring(0, 6));
 		submitAndVerifyBaseIIBatch();
 		getVisaOutGoingFileName();
 		return batchStatus;
@@ -769,7 +771,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	{
 		WebElementUtils.selectDropDownByVisibleText(binDDwn, option);
 	}
-	
+
 	/**
 	 * This function is written to execute batches which has only one date field.
 	 * @param batch 
@@ -802,7 +804,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		submitAndVerifyBatch();
 		return batchStatus;
 	}
-	
+
 	private void selectBatchTypeAndName(ProcessBatches batch) {
 		logger.info("Process System Internal Processing Batch: {}", batch.getBatchName());
 		batchStatus = null;
@@ -833,7 +835,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		submitAndVerifyBatch();
 		return batchStatus;
 	}
-	
+
 	public String processCarrierDownloadBatch(ProcessBatches batch) {
 		logger.info("Process Carrier Download Batch: {}", batch.getBatchName());
 		WebElementUtils.selectDropDownByVisibleText(batchTypeDDwn, batch.getBatchType());
@@ -847,7 +849,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		return batchStatus;
 	}
 
-	
+
 	public void processDownloadBatch(String batchType, String batchName)
 	{
 		selectByVisibleText(batchTypeDdwn, "DOWNLOAD [D]");
@@ -870,7 +872,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 		clickSubmitBtn();
 		context.put(ContextConstants.JOB_ID, jobIDNumber.getText());
 		SimulatorUtilities.wait(3000);
-		
-		
+
+
 	}
 }

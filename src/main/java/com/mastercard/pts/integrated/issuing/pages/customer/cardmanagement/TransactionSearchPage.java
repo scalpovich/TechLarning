@@ -89,7 +89,7 @@ public class TransactionSearchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Reconciliation Status')]//following-sibling::td[2]/select")
 	private MCWebElement reconciliationStatusDDwn;
 	
-	private final String DUPLICATE_CURRENCY_PRESENTMENT = "Differential currency presentment";
+	private final String DUPLICATE_CURRENCY_PRESENTMENT = "Duplicate presentment";
 	private final String UNMATCH_PRESENTMENT = "Unmatched Presentment";
 	private final String RECONCILIATION_STATUS_OPTIONS = "//*[contains(text(),'Reconciliation Status')]//following-sibling::td[2]/select/option";
 	
