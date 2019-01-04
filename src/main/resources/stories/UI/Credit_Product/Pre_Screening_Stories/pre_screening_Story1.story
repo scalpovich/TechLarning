@@ -1,13 +1,15 @@
-Credit pre screening
-
 Narrative:
 In order to Various auth txn on different conditions of device
 As a user
-I want to do below Txn on credit device
--Purchase txn when country/currency is blacklist or whitelist
--Fallback Txn
--Txn On white listed MCG
--Issuer scripting when application block and unblock
+I want to perform below Txn on credit device
+-	Fallback Transaction
+-	Stoplist device
+-	Issuer Scripting on Application block
+-	Withdraw device
+-	Issuer Scripting on Application unblock
+-	TXN on White Listed Country
+-	TXN on black Listed Country
+-	TXN on White Listed MCG
 
 Meta:
 @StoryName credit_pre_screening
@@ -83,14 +85,14 @@ Given user is logged in institution
 When User edits Program to update country whitelist plan
 Then user sign out from customer portal
 
-Scenario:1.8 Transaction
+Scenario:1.8 Perform EMV_PURCHASE Authorization transaction on white listed country
 When perform an EMV_PURCHASE MAS transaction on the same card
 And MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal
 
-Scenario:1.9 Perform INT_MSR_PURCHASE Authorization transaction
+Scenario:1.9 Perform INT_MSR_PURCHASE Authorization transaction on white listed country
 When perform an INT_EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution
 And search Purchase authorization and verify 100-Do Not Honour status
@@ -102,7 +104,7 @@ Given user is logged in institution
 When User edits Program to update country blacklist plan
 Then user sign out from customer portal
 
-Scenario:2.1 Perform INT_MSR_PURCHASE Authorization transaction
+Scenario:2.1 Perform INT_MSR_PURCHASE Authorization transaction on black listed country
 When perform an INT_EMV_PURCHASE MAS transaction on the same card
 And user is logged in institution
 And search Purchase authorization and verify 100-Do Not Honour status
@@ -114,14 +116,14 @@ Given user is logged in institution
 When User edits Wallet Plan for White Listed MCG
 Then user sign out from customer portal
 
-Scenario:2.3 Transaction for mastercard_individual_primary_emv Card credit device
+Scenario:2.3 Perform EMV_PURCHASE Authorization transaction on White listed MCG
 When perform an EMV_PURCHASE MAS transaction on the same card
 And MAS test results are verified
 And user is logged in institution
 And search Purchase authorization and verify 000-Successful status
 Then user sign out from customer portal
 
-Scenario:2.4 Perform EMV_CASH_ADVANCE Authorization transaction
+Scenario:2.4 Perform EMV_CASH_ADVANCE Authorization transaction on White listed MCG
 When perform an EMV_CASH_ADVANCE MAS transaction on the same card
 And MAS simulator is closed
 And user is logged in institution
