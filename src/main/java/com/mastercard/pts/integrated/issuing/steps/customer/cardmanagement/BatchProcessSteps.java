@@ -330,12 +330,11 @@ public class BatchProcessSteps {
 	public void verifyDataFieldInTPINFile(@Named("dataField") String dataField, 
 			@Named("fieldValue") String fieldValue) {
 		Device device = context.get(ContextConstants.DEVICE);
-		ClientDetails client = device.getClientDetails();
 		if (fieldValue.contains("email")) {
-			fieldValue = client.getEmailId();
+			fieldValue = ConstantData.EMAIL_ID;
 		}
 		ReissueTPINDownload reissueTPIN = ReissueTPINDownload.createWithProvider(provider);
-		assertThat("The data field " + dataField + "does not have the expected value " + fieldValue, fieldValue, 
+		assertThat("The data field " + dataField + " does not have the expected value " + fieldValue, fieldValue, 
 				equalTo(batchProcessWorkflow.isValuePresentInTPINFile(batchFile, dataField, device, reissueTPIN)));
 	}
 }
