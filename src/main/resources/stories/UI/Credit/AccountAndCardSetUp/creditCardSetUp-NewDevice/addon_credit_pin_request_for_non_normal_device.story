@@ -1,7 +1,7 @@
 Narrative:
 As a user
 I want to verify that pin request failed for blocked or expired add-on device
-In order to create add-on credit card
+In order to verify pin reset for block and expired credit card
 
 
 Meta:
@@ -29,7 +29,7 @@ And service request Pin Request  [305] should be fail for blocked add-on device
 
 Scenario: 2 To verify that pin request failed for expired add-on device 
 Meta:
-@TC858299
+@TC858300
 Given device has "blocked" status
 When user creates service request for Unblock Device [116] service
 And user set expired date and status code in database
