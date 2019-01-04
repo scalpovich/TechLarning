@@ -1421,8 +1421,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public void resetPinRetryCounter(HelpdeskGeneral helpdeskGeneral) {
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
-		String serviceRequestPopUpTitle = getServiceRequestPopupTitle(helpdeskGeneral.getServiceCode());
-		runWithinPopup(serviceRequestPopUpTitle, () -> {
+		runWithinPopup(getServiceRequestPopupTitle(helpdeskGeneral.getServiceCode()), () -> {
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();
 			verifyOperationStatus();
@@ -1956,8 +1955,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	private String getServiceRequestPopupTitle(String serviceCode){
-		String[] splitedArray = serviceCode.split("\\[") ;
-		return splitedArray[splitedArray.length-1].split("\\]")[0] + " - " + serviceCode.split("\\[")[0].trim();
+		return serviceCode.replaceAll("[^0-9]","") + " - " + serviceCode.replaceAll("[^a-zA-Z]","");
 	}
 	
 	public void printResponseMessageLog(){

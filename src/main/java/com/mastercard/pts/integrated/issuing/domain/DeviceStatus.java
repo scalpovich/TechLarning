@@ -11,7 +11,6 @@ public class DeviceStatus {
   	public static final String NOT_ACTIVATED_CARD = "NOT ACTIVATED CARD [11]";
   	public static final String BLOCKED = "BLOCKED [14]";
   	
-	
 	private DeviceStatus() {}
 	
 	public static String fromShortName(String name) {

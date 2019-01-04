@@ -30,7 +30,6 @@ public class DatabaseSteps {
 	@Autowired
 	private DBUtility dbUtils;
 
-	public static final String EXPIRED_EXPIRY_DATE = "31-12-2018";
 	public static final String STATUS_CODE_EXPIRED = "12";
 	
 	@When("update institution date to first of next month")
@@ -94,7 +93,8 @@ public class DatabaseSteps {
 	@Then("user set expired date and status code in database")
 	public void setExpiredDateAndStatusCode(){
 		Device device = context.get(ContextConstants.DEVICE);
-		dbFlow.updateDeviceExpiryDateAndStatus(device, EXPIRED_EXPIRY_DATE, STATUS_CODE_EXPIRED);
+		String expiryDate = LocalDateTime.now().minusYears(2).format(DateTimeFormatter.ofPattern("dd-MM-yy"));
+		dbFlow.updateDeviceExpiryDateAndStatus(device, expiryDate, STATUS_CODE_EXPIRED);
 	}
 	
 }
