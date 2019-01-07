@@ -21,11 +21,13 @@ And processes device production batch for prepaid
 Then device has "normal" status
 And user performs adjustment transaction
 And currency setup for device
+And user gets attached wallet details for device
 And user sign out from customer portal
 
 Scenario:Wallet to wallet fund transfer by cardholder
 Given user is on login page of cardholder portal
-And cardholder signup with valid details
+And cardholder complete registration and login into portal
 When fund transfer through wallet to wallet
-Given user is logged in institution
+And user logouts from cardholder portal
+And user is logged in institution
 Then search with device in transaction screen and status for wallet to wallet transfer transaction

@@ -193,7 +193,8 @@ public class LoginSteps extends AbstractBaseFlows {
 		logoutFlows.logoutCorporateUser();
 
 	}
-
+	@Given("user logouts from cardholder portal")
+	@When("user logouts from cardholder portal")
 	@Then("user logouts from cardholder portal")
 	public void logutFromCardholderPortal() {
 		logoutFlows.clickLogoutCardHolder();
