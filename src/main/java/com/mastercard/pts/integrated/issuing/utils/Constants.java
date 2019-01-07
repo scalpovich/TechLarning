@@ -377,7 +377,7 @@ public class Constants {
 	public static final String APPLICATION_UPLOAD_CREDIT_FILE_PATH = "/home/dc-user/integrated/elt_bo/data/554466/INPUT";
 
 	public static final String GENERIC_DESCRIPTION = "AUTOMATION";
-	
+
 	public static final String SUCCESS_MESSAGE = "rgba(0, 128, 0, 1)";
 
 	public static final String CREDIT = "credit";
