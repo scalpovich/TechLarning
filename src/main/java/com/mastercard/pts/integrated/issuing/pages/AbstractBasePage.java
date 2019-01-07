@@ -16,6 +16,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FilenameUtils;
@@ -2062,4 +2064,14 @@ public abstract class AbstractBasePage extends AbstractPage {
         	throw new ElementNotFoundException("Element with label " + label + " not found!");
         }       
    }
+	
+	public String getPlanCode(String descriptionAndCode){
+		String planCode = "";
+		Pattern pattern = Pattern.compile("\\[(.*?)\\]");
+		Matcher match = pattern.matcher(descriptionAndCode);
+		while (match.find()) {
+	           planCode = match.group(1);
+	        }
+		return planCode;
+	}
 }

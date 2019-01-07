@@ -111,6 +111,12 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 		case "NOT DELIVERED":
 			declineMessage = Constants.REPLACE_DECLINE_MESSAGE_NOT_DELIVERED;
 			break;
+		case "RANGE STOPLISTED":
+			declineMessage = Constants.RANGE_STOPLISTED;
+			break;
+		case "COUNTRY STOPLISTED":
+			declineMessage = Constants.COUNTRY_STOPLISTED;
+			break;
 		default:
 			logger.info("Did not match to any of the cases mentioned - ",
 					declineReasonCode);

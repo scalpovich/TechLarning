@@ -63,7 +63,7 @@ Given perform an INT_EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 And search Purchase authorization and verify 121-Exceeds Amount Limit status
 And user validates device usage for Daily Velocity Utilized and Daily Amount Utilized
-And assert Decline response with 34003 AuthDecline Code and Transaction exceeded with yearly amount configured at device plan level. as description
+And assert Decline response with 34007 AuthDecline Code and Transaction exceeded with yearly amount configured at device plan level. as description
 And user validates available balance for prepaid product on helpdesk
 And user sign out from customer portal
 
@@ -85,7 +85,7 @@ Given perform an INT_EMV_PURCHASE MAS transaction on the same card
 Then user is logged in institution
 And search Purchase authorization and verify 123-Frequency Exceeded status
 And user validates device usage for Daily Velocity Utilized and Daily Amount Utilized
-And assert Decline response with 34002 AuthDecline Code and Transaction exceeded with yearly velocity configured at device plan level. as description
+And assert Decline response with 34006 AuthDecline Code and Transaction exceeded with yearly velocity configured at device plan level. as description
 And user validates available balance for prepaid product on helpdesk
 And user sign out from customer portal
 And MAS simulator is closed

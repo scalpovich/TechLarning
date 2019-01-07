@@ -1,22 +1,18 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
-import java.util.Map;
-import java.util.Objects;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
-
-import com.mastercard.pts.integrated.issuing.steps.customer.transaction.TransactionSteps;
+import java.util.Map;
+import java.util.Objects;
 
 import org.jbehave.core.annotations.Composite;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,6 +26,7 @@ import com.mastercard.pts.integrated.issuing.domain.ProgramType;
 import com.mastercard.pts.integrated.issuing.domain.SubApplicationType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ApplicationBusinessMandatoryFields;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ApplicationDocumentChecklist;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CarrierAcknowledgement;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardBillingCycle;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardCreditPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardPaymentBounceReason;
@@ -37,6 +34,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Cred
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardTransactionRulePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DedupePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlanDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceJoiningAndMemberShipFeePlan;
@@ -53,6 +51,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Mark
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PrepaidStatementPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PrepaidStatementPlanDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SendToCarrier;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.StatementMessageDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.StatementMessagePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeePlan;
@@ -66,16 +65,12 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Wall
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
-import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.MCGFlows;
-import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramSetupWorkflow;
-import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.TransactionFeeWaiverPlanFlows;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CarrierAcknowledgement;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SendToCarrier;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.CarrierAcknowledgementWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceTrackingWorkflow;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.MCGFlows;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramSetupWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.SendToCarrierWorkflow;
-import com.mastercard.pts.integrated.issuing.steps.customer.transaction.TransactionSteps;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.TransactionFeeWaiverPlanFlows;
 
 @Component
 public class ProgramSetupSteps {
@@ -1803,5 +1798,11 @@ public class ProgramSetupSteps {
 		device.setTransSetPresentmentTimeLimit(DEFAULT_PRESENTMENT_TIME_LIMIT);
 		device.setMerchantCode(MERCHANT_CODE);
 		programSetupWorkflow.editPlan(plan,device,program);
+	}
+	
+	@When("user updates device range $status status")
+	public void userUpdatesDeviceRangeStatus(String status){
+		Device device = context.get(ContextConstants.DEVICE);
+		programSetupWorkflow.inactivateDeviceRange(device, status);
 	}
 }
