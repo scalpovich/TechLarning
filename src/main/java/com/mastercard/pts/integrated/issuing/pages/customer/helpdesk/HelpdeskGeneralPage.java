@@ -1955,7 +1955,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	private String getServiceRequestPopupTitle(String serviceCode){
-		return serviceCode.replaceAll("[^0-9]","") + " - " + serviceCode.replaceAll("[^a-zA-Z\\s]","");
+		return serviceCode.replaceAll("[^0-9]","") + " - " + serviceCode.replaceAll("[^a-zA-Z\\s]","").trim();
 	}
 	
 	public void printResponseMessageLog(){
