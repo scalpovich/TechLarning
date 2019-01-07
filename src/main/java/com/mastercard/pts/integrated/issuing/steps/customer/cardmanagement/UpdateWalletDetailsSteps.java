@@ -22,7 +22,7 @@ public class UpdateWalletDetailsSteps {
 	@Autowired
 	private UpdateWalletDetailsWorkflow updateWalletDetailsWorkflow;
 
-	@When("user update the wallet admin status to $adminStatus")
+	@When("user updates the wallet admin status to $adminStatus")
 	public void updateAdminStatusSteps(@Named("adminStatus") String adminStatus){
 		Device device = context.get(ContextConstants.DEVICE);
 		UpdateWalletDetails updateWalletDetails = UpdateWalletDetails.createWithProvider();
