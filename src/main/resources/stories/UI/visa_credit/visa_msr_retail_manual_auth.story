@@ -44,7 +44,7 @@ Given user is logged in institution
 When user wait for 7 min to perform certain activity
 And user sign out from customer portal
 And user is logged in institution
-When user processes Pre-clearing system internal batch for Credit
+And user processes Pre-clearing system internal batch for Credit
 And user processes EOD-Credit system internal batch for Credit
-And user verify Unbilled amount for Purchase category
+Then user verify Unbilled amount for Purchase category
 And user sign out from customer portal

@@ -26,7 +26,7 @@ And credit processes pingeneration batch using new Device for Supplementary
 And device has "normal" status
 And user raises Permanent [P] credit limit change request for Corporate
 And device has "normal" status
-Then user verifies available Permanent [P] limit
+Then user verifies available Permanent [P] limit type
 And user sign out from customer portal
 
 Scenario:3 Perform Authorization transaction
@@ -36,5 +36,5 @@ Then status of request is "approved"
 And search Purchase authorization and verify 000-Successful status
 When user verifies available balance after transaction
 And device has "normal" status
-When user verifies available Card limit for card after transaction
+And user verifies available Card limit for card after transaction
 Then user sign out from customer portal
