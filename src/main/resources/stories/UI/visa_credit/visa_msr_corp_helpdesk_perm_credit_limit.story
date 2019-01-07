@@ -30,8 +30,8 @@ Then user verifies available Permanent [P] limit type
 And user sign out from customer portal
 
 Scenario:3 Perform Authorization transaction
-When user is logged in institution
-And user raises an authorization request
+Given user is logged in institution
+When user raises an authorization request
 Then status of request is "approved"
 And search Purchase authorization and verify 000-Successful status
 When user verifies available balance after transaction
