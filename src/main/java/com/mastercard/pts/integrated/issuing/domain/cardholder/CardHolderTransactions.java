@@ -74,7 +74,14 @@ public class CardHolderTransactions {
 	private String beneficiaryMobileNumber;
 	private String beneficiaryRemittanceAmount;
 	private String beneficiaryRemittanceCurrency;
+	private String remittanceRefNumber;
 	
+	public String getRemittanceRefnumber() {
+		return beneficiaryID;
+	}
+	public void setRemittanceRefnumber(String remittanceRefnumber) {
+		this.remittanceRefNumber = remittanceRefnumber;
+	}
 		
 	public String getBeneficiaryID() {
 		return beneficiaryID;

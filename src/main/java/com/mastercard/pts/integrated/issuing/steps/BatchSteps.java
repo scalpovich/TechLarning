@@ -69,13 +69,13 @@ public class BatchSteps {
 
 	@Autowired
 	private TestContext context;
-	
+
 	@Autowired
 	private FileCreation fileCreation;
-	
+
 	@Autowired
 	private LoadFromFileUploadWorkflow loadFromFileUploadWorkflow;
-	
+
 	@Autowired
 	DeviceDetailsFlows flow;
 
@@ -83,7 +83,7 @@ public class BatchSteps {
 
 	@Autowired
 	private ReportVerificationWorkflow reportVerificationWorkFlow;
-		
+
 	@Given("embossing file batch was generated in correct format")
 	@When("embossing file batch was generated in correct format")
 	@Then("embossing file batch was generated in correct format")
@@ -118,19 +118,19 @@ public class BatchSteps {
 					device.setCvv2Data(fileData[2].trim());
 					device.setCvvData(fileData[3].trim());
 
-				logger.info("******** setDeviceNumber " + " : " +  fileData[0] + " - "  + "   setCvv2Data " + " : " +  fileData[2] + " - "  + " setCvvData  " + " : " +  fileData[3]);
-					// ExcelUtils.insertDataIntoExcel("INSERT into Sheet10(DeviceNumber,CVV2,CVV,Status) VALUES('"+device.getDeviceNumber()+"','"+device.getCvv2Data()+"','"+device.getCvvData()+"','Active')");
+					logger.info("******** setDeviceNumber " + " : " +  fileData[0] + " - "  + "   setCvv2Data " + " : " +  fileData[2] + " - "  + " setCvvData  " + " : " +  fileData[3]);
+					ExcelUtils.insertDataIntoExcel("INSERT into Sheet10(DeviceNumber,CVV2,CVV,Status) VALUES('"+device.getDeviceNumber()+"','"+device.getCvv2Data()+"','"+device.getCvvData()+"','Active')");
 				} else {
 					device.setDeviceNumber(fileData[0].trim());
 					device.setCvv2Data(fileData[2].trim());
 					device.setCvvData(fileData[3].trim());
 					device.setIcvvData(fileData[4].trim());
 					device.setPvkiData(fileData[5].trim());
-				logger.info("******** setDeviceNumber " + " : " +  fileData[0] + " - "  + "   setCvv2Data " + " : " +  fileData[2] + " - "  + " setCvvData  " + " : " +  fileData[3] + " - "  + " setIcvvData " + " : " +  fileData[4] + "  ***** ");
-			}
+					logger.info("******** setDeviceNumber " + " : " +  fileData[0] + " - "  + "   setCvv2Data " + " : " +  fileData[2] + " - "  + " setCvvData  " + " : " +  fileData[3] + " - "  + " setIcvvData " + " : " +  fileData[4] + "  ***** ");
+				}
 				// for format of date to be passed is YYMM
 				String tempDate = fileData[1].substring(fileData[1].length() - 2) + fileData[1].substring(0, 2);
-			device.setExpirationDate(tempDate);
+				device.setExpirationDate(tempDate);
 				logger.info("Expiration Data :  {} ", tempDate);
 				ExcelUtils.insertDataIntoExcel("INSERT into Sheet10(DeviceNumber,CVV2,CVV,ICVV,PVKI,ExpiryDate,PINOFFSET,CardPackID,Status,Sale,load) VALUES('" + device.getDeviceNumber() + "','" + device.getCvv2Data() + "','" + device.getCvvData() + "','" + device.getIcvvData() + "','" + device.getPvkiData() + "','" + tempDate + "','%s','" + device.getCardPackID() + "','Active','%Sale','%Load')");
 				MiscUtils.reportToConsole("Expiration Data :  " + tempDate);
@@ -149,8 +149,8 @@ public class BatchSteps {
 		MiscUtils.reportToConsole("******** setting invalid CVV/CVV2/ICVV ***** ");
 		try {
 			Device device = context.get(ContextConstants.DEVICE);
-				device.setCvv2Data(ConstantData.INVALID_CVV2);
-				device.setCvvData(ConstantData.INVALID_CVV);
+			device.setCvv2Data(ConstantData.INVALID_CVV2);
+			device.setCvvData(ConstantData.INVALID_CVV);
 			device.setIcvvData(ConstantData.INVALID_ICVV);
 			device.setPvkiData(ConstantData.INVALID_PVKI);
 		} catch (Exception e) {
@@ -194,11 +194,12 @@ public class BatchSteps {
 					context.put(ContextConstants.DEVICE, device);
 					ExcelUtils.insertDataIntoExcel("Update Sheet10 set PinOffset='" + pinOffset + "' where DeviceNumber='" + deviceNumber + "'");
 					logger.info("Pin Offset :  {}", pinOffset);
-			}
+				}
 			}
 			scanner.close();
-			// renaming file name as sometimes the embosing file name is also
-			// same
+			context.put(ContextConstants.PIN_OFFSET_FILE, batchFile.toString());
+			// renaming file name as sometimes the embosing file name is same
+
 			MiscUtils.renamePinFile(batchFile.toString());
 			MiscUtils.reportToConsole("******** Pin Offset Completed ***** ");
 		} catch (NullPointerException | FileNotFoundException e) {
@@ -210,7 +211,7 @@ public class BatchSteps {
 			throw MiscUtils.propagate(e);
 		}
 	}
-		
+
 	@When("Pin Offset file was updated with $acknowledgementType pin acknowledgement")
 	@Then("Pin Offset file was updated with $acknowledgementType pin acknowledgement")
 	public void updatePinOffsetFileWithPinAcknowledgement(String acknowledgementType) throws IOException 
@@ -224,7 +225,7 @@ public class BatchSteps {
 		String wholeDataToAppend = "\t" + ackIndicator + StringUtils.rightPad(DateUtils.getDateddMMyyyy(), 208, "0");
 		fileCreation.updatePinOffsetFileWithAcknowledgement(batchFile, wholeDataToAppend);
 	}
-	
+
 	@When("User updates the new pin offset file with $acknowledgementType pin acknowledgement")
 	@Then("User updates the new pin offset file with $acknowledgementType pin acknowledgement")
 	public void updateTheNewPinOffsetFileWithPinAcknowledgement(String acknowledgementType) throws IOException 
@@ -240,18 +241,18 @@ public class BatchSteps {
 		MiscUtils.renamePinFile(batchFile.toString());
 		fileCreation.updatePinOffsetFileWithAcknowledgement(batchFile + "_PinFile", wholeDataToAppend);
 	}
-	
+
 	@When("User deletes existing pin offset files")
 	@Then("User deletes existing pin offset files")
 	public void deleteExistingPinOffsetFiles()
 	{
 		MiscUtils.deleteExistingFile(context.get(ContextConstants.PIN_OFFSET_FILE));
 		logger.info("Deleted File : {}" , context.get(ContextConstants.PIN_OFFSET_FILE).toString()); 
-		
+
 		MiscUtils.deleteExistingFile(context.get(ContextConstants.PIN_OFFSET_FILE)+"_PinFile");	
 		logger.info("Deleted File:{}" , (context.get(ContextConstants.PIN_OFFSET_FILE)+"_PinFile").toString()); 
 	}
-	
+
 	@When("verify photo reference number is present in embossing file")
 	@Then("photo reference number is present at given position in embossing file")
 	public void embossingFileWasGeneratedSuccessfullyForPhotoCard() {
@@ -300,7 +301,7 @@ public class BatchSteps {
 	private String getTrailerPattern() {
 		return provider.getString(" BATCH_TRAILER_PATTERN", DEFAULT_TRAILER);
 	}
-	
+
 	@When("photo image file generated in JPEG format")
 	@Then("photo image file generated in JPEG format")
 	public void thenPhotoFileGeneratedInJPEGFormat() {
@@ -322,12 +323,12 @@ public class BatchSteps {
 		}
 		Assert.assertNotNull(photoJpegFile);
 	}
-	
+
 	@When("photo flat file generated with photo reference number")
 	@Then("photo flat file generated with photo reference number")
 	public void thenFlatFileGeneratedWithPhotoReferenceNumber() {
 		Device device = context.get(ContextConstants.DEVICE);
-				
+
 		MiscUtils.reportToConsole("******** Photo Flat File Start ***** ");
 		String deviceApplicationNumber = device.getApplicationNumber();
 		String timestamp = context.get(ContextConstants.CLIENT_PHOTO_BATCH_SUCCESS_TIME);
@@ -348,7 +349,7 @@ public class BatchSteps {
 		}
 		Assert.assertTrue(isPhotoReferencePresentInFlatFile);
 	}
-	
+
 	@Given("User Downloads and Verifies PDF File for LVC Card")
 	@Then("User Downloads and Verifies PDF File for LVC Card")
 	public void pdfFileGetsDownloadedForLVCCard() {

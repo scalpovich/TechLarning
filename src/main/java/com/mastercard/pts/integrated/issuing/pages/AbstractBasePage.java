@@ -16,6 +16,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FilenameUtils;
@@ -314,6 +316,12 @@ public abstract class AbstractBasePage extends AbstractPage {
     @PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
 	protected MCWebElement institutionDateTxt;
     
+    @PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='No']")
+	private MCWebElement noBtn;
+  
+  	@PageElement(findBy = FindBy.X_PATH, valueToFind="//*[@class='sectionHead']/td/../following-sibling::tr[1]/td")
+	public MCWebElement responseLbl;
+	
     int retryCounter =0;
 	
 	@Autowired
@@ -335,6 +343,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 	
 	protected void clickProcessAllButton() {
 		clickWhenClickable(processAll);
+	}
+	
+	protected void clickNoButton(){
+		clickWhenClickable(noBtn);
 	}
 
 	protected void clickNextButton() {
@@ -2038,4 +2050,14 @@ public abstract class AbstractBasePage extends AbstractPage {
         	throw new ElementNotFoundException("Element with label " + label + " not found!");
         }       
    }
+	
+	public String getPlanCode(String descriptionAndCode){
+		String planCode = "";
+		Pattern pattern = Pattern.compile("\\[(.*?)\\]");
+		Matcher match = pattern.matcher(descriptionAndCode);
+		while (match.find()) {
+	           planCode = match.group(1);
+	        }
+		return planCode;
+	}
 }

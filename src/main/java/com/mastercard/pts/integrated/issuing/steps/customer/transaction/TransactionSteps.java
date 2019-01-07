@@ -17,6 +17,7 @@ import org.hamcrest.Matchers;
 import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Aliases;
 import org.jbehave.core.annotations.Given;
+import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.junit.Assert;
@@ -32,6 +33,7 @@ import com.mastercard.pts.integrated.issuing.domain.agent.channelmanagement.Assi
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalanceRequest;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MID_TID_Blocking;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
@@ -110,7 +112,7 @@ public class TransactionSteps {
 
 	private static String FAIL_MESSAGE = FAILED + " -  Result : ";
 	
-	private static String INVALID_KEYS = "(default) - M/Chip Key Set from the related BIN range will be used";
+	private static String INVALID_KEYS = "00999 - Example ETEC1 - 0213";
 	
 	private boolean declineMerchantRiskBased=false;
 	
@@ -184,8 +186,10 @@ public class TransactionSteps {
 	
 	@When("perform an $type MAS transaction with wrong keys")
 	public void performTransactionWithWrongKeys(String transaction) {
+		String originalValue = TransactionWorkflow.STAGE_KEYS ;
 		TransactionWorkflow.STAGE_KEYS = INVALID_KEYS;
 		givenTransactionIsExecuted(transaction);
+		TransactionWorkflow.STAGE_KEYS = originalValue;
 	}
 
 	@When("user performs generate TestData for an optimized $transaction MAS transaction")
@@ -500,11 +504,10 @@ public class TransactionSteps {
 
 	@Then("search with device in transaction screen and status for wallet to wallet transfer transaction")
 	public void thenSearchWithDeviceInTransactionScreenCheckReversalStatusAndStatusShouldBeReversal() {
-		ReversalTransaction rt = ReversalTransaction.getProviderData(provider);
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		Device device = context.get(ContextConstants.DEVICE);
 		Assert.assertTrue("successfully completed the wallet to wallet fund transfer",
-				transactionWorkflow.searchTransactionWithDeviceAndGetStatus(device, ts).contains(" Wallet to Wallet Transfer(Credit)"));
+				transactionWorkflow.searchTransactionWithDeviceAndGetStatus(device, ts).contains("Wallet to Wallet Transfer(Credit))"));
 	}
 	
 	
@@ -527,7 +530,7 @@ public class TransactionSteps {
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		Device device = context.get(ContextConstants.DEVICE);
 		device.setJoiningFees(provider.getString("JOINING_FEES"));
-		assertEquals(transactionWorkflow.searchTransactionWithDeviceAndGetFees(device, ts, membershipFlag), device.getJoiningFees());
+		assertThat(transactionWorkflow.searchTransactionWithDeviceAndGetFees(device, ts, membershipFlag), Matchers.hasItems(device.getJoiningFees()));
 	}
 
 	@When("user performs load balance request")
@@ -746,5 +749,16 @@ public class TransactionSteps {
 	public void userUpdateIPMForDuplicateRecordCheck(String status) {
 		Transaction trasactiondata = Transaction.createWithProvider(provider);
 		transactionWorkflow.manipulateIPMData(status, trasactiondata);
+	}
+	
+	@When("verify that the device event fees for $reason is levied for $cardType card")
+	@Then("verify that the device event fees for $reason is levied for $cardType card")
+	public void verifyDeviceEventFeeLevied(@Named("cardType") String cardType, 
+			@Named("reason") String reason) {
+		Device device = context.get(ContextConstants.DEVICE);
+		TransactionSearch ts = TransactionSearch.getProviderData(provider);
+		DeviceEventBasedFeePlan deviceEventBasedPlan = context.get(ContextConstants.DEVICE_EVENT_BASED_FEE);
+		Assert.assertTrue("The device event fees are not as applied", 
+				transactionWorkflow.verifyDeviceEventFeeApplied(device, reason, ts, deviceEventBasedPlan, cardType));
 	}
 }

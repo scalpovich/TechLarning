@@ -184,6 +184,13 @@ public class ContextConstants {
 	
 	public static final String CSV_NO = "CSV_No";
 	
+	public static final String DEVICE_PROMOTION = "device_promotion";
+	
+	public static final String CONVERSTION_RATE = "conversation_rate";
+	
+	public static final String CARDHOLDER_TRAN = "CARDHOLDER_TRAN";
+	
+	public static final String DEVICE_EVENT_BASED_FEE = "DEVICE_EVENT_BASED_FEE";
 	
 	private ContextConstants() {
 	}

@@ -59,6 +59,7 @@ public class HelpdeskGeneral {
 	private String customerType;
 	private String reason;
 	private String isServiceRequestAllowed;
+	private boolean isFeesApplied;
 	
 	
 	public String getCustomerType() {
@@ -287,5 +288,13 @@ public class HelpdeskGeneral {
 
 	public void setIsServiceRequestAllowed(String isServiceRequestAllowed) {
 		this.isServiceRequestAllowed = isServiceRequestAllowed;
+	}
+	
+	public boolean isFeesApplied() {
+		return isFeesApplied;
+	}
+
+	public void setFeesApplied(boolean isFeesApplied) {
+		this.isFeesApplied = isFeesApplied;
 	}
 }

@@ -46,7 +46,7 @@ And user sign out from customer portal
 
 Scenario:4 Transaction - Verify that the user is able to make a successful transaction on the withdrawaing the stoplisting
 Given user is logged in institution
-When user withdraws the stoplisted device
+When user withdraws the stoplisted device without fees
 Then user raises an authorization request only
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal

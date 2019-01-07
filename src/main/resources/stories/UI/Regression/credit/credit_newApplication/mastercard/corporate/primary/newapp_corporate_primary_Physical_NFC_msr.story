@@ -9,22 +9,8 @@ Meta:
 Scenario:creation of mastercard_individual_primary_Physical NFC Device - msr Paypass Card credit device
 Given setting json values in excel for Credit
 When user is logged in institution
-And User fills Dedupe Plan
-And User fills Statement Message Plan for credit product
-And User fills Marketing Message Plan for credit product
-And User fills Transaction Plan for credit product
-And User fills Transaction Limit Plan for credit product
-And User fills Document Checklist Screen for credit product
-And User fills Device Joining and Membership Fee Plan for credit product
-And User fills Device Event Based Fee Plan for credit product
 And for NFC Device - Mag Stripe Paypass User fills Device Plan for credit product for Mastercard
-And User fills Billing Cycle
-And User fills Payment Priority
-And User fills Transaction Rule Plan
-And User fills Credit Plan
-And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Corporate Credit Card [10]
-And User fills MCC Rules for credit product
 And User Primary fills new Program Corporate Credit Card [10] section for credit product for mastercard
 And User fills Device Range section for credit product
 And credit device is created using new Application screen for Corporate [1] and "Primary Device" and New Client and NFC Device - Mag Stripe Paypass

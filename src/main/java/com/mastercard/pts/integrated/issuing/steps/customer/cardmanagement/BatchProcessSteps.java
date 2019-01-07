@@ -1,10 +1,8 @@
 
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
-import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -30,9 +28,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceGenerationBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequest;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ClientDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CutOverProfile;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
@@ -51,6 +47,9 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.C
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoadFromFileUploadWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ReportVerificationWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProcessBatchesFlows;
+
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 /**
  * @author E071669
@@ -99,7 +98,7 @@ public class BatchProcessSteps {
 	private static final Logger logger = LoggerFactory.getLogger(BatchProcessSteps.class);
 	
 	private File batchFile;
-	
+
 	@When("user creates a bulk device production request for $type")
 	public void whenUserCreatesABulkDeviceProductionRequestForPrepaid(String type){
 		BulkDeviceRequest request = BulkDeviceRequest.createWithProvider(provider);
@@ -125,6 +124,8 @@ public class BatchProcessSteps {
 	
 	@When("processes pre-production batch for $type")
 	public void whenProcessesPreproductionBatchForPrepaid(String type){
+		Device device = context.get(ContextConstants.DEVICE);
+		batchNumber = device.getBatchNumber();
 		PreProductionBatch batch = new PreProductionBatch();
 		batch.setProductType(ProductType.fromShortName(type));
 		batch.setBatchNumber(batchNumber);

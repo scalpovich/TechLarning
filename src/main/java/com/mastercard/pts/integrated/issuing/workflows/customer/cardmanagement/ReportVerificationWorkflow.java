@@ -47,10 +47,6 @@ public class ReportVerificationWorkflow {
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
 	public static final int BILL_AMOUNT_INDEX_VALUE = 3;
-	
-	private static final int PDF_KEY_EXPIRY=17;
-			
-	private static final int PDF_KEY_CVC2=15;
 
 	public static final String APPLICATION_REJECTED_IN_DEDUPE = "Application Rejected in Dedupe.";
 		Boolean verificationStatus;
@@ -220,14 +216,12 @@ public class ReportVerificationWorkflow {
 				assertTrue("Card Number is incorrect in PDF File", v.contains(report.getDeviceNumber()));
 			}
 			if (v.contains("CVC2")) {
-				String cvv2 = records.get(PDF_KEY_CVC2);
-				String[] cvvValue = cvv2.trim().split(":");
+				String[] cvvValue = v.trim().split(":");
 				logger.info(cvvValue[1]);
 				device.setCvv2Data(cvvValue[1]);
 			}
 			if (v.contains("Expiry")) {
-				String expiryDate = records.get(PDF_KEY_EXPIRY);
-				String[] expiryValues = expiryDate.trim().split(":");
+				String[] expiryValues = v.trim().split(":");
 				logger.info(expiryValues[1]);
 				device.setExpirationDate(expiryValues[1]);
 			}

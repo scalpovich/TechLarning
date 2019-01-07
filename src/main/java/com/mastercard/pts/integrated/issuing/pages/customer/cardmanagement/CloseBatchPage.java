@@ -20,6 +20,7 @@ import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElements;
@@ -53,7 +54,7 @@ public class CloseBatchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.NAME, valueToFind = "saveAll")
 	private MCWebElement processAll;
 	
-	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']/td[1]/span")
+	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Process Selected']")
 	private MCWebElement btnProcessSelected;
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd']/td[1]")
@@ -64,6 +65,7 @@ public class CloseBatchPage extends AbstractBasePage {
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Yes']")
 	private MCWebElement btnYes;
+	
 	
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//h3[text()= 'Confirmation Message']/ancestor::div//iframe")
 	private MCWebElement btnConfirmMsg;
@@ -106,8 +108,19 @@ public class CloseBatchPage extends AbstractBasePage {
 	public void processAppropriateBatchForApplication() {
 		String checkBox = "//table[@class='dataview']//tbody/tr[@class='even' or @class='odd'][" + identifyBatchNumberToProcess() + 1 + "]/td[10]/span/input";
 		clickWhenClickable(driver().findElement(By.xpath(checkBox)));
+		SimulatorUtilities.wait(2000);
 		clickWhenClickable(btnProcessSelected);
-		verifyOperationStatus();
+		try {
+			if (btnConfirmMsg.isEnabled() && btnConfirmMsg.isVisible()) {
+				switchToIframe("Confirmation Message");
+				clickNoButton();
+				SimulatorUtilities.wait(5000);
+				
+			}
+			verifyOperationStatus();
+		} catch (Exception e) {
+			e.getMessage();
+		}
 	}
 	
 	public void processFirstBatch() {

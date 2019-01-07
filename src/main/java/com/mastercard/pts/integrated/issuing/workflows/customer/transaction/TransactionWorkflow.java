@@ -54,6 +54,7 @@ import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalanceRequest;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MID_TID_Blocking;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
@@ -642,11 +643,16 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			loadIpmFile(getIpmFileName());
 			Device device = context.get(ContextConstants.DEVICE);
 			updatePanNumber(device.getDeviceNumber());
+			logger.info("Updated Pan Number");
 			updateAmountCardHolderBilling();
+			logger.info("Updated card holder Billing");
 			updateBillingCurrencyCode();
+			logger.info("Updated Billing Currency");
 			updateTransactionDate(resolveDate());
+			logger.info("Updated Transaction Date");
 			assignUniqueFileId();
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.debug("Exception occurred while editing fields :: {}", e);
 			throw MiscUtils.propagate(e);
 		}
@@ -2322,5 +2328,13 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	public void deleteMID_TID_Blocking(String combination, MID_TID_Blocking details) {
 		MID_TID_BlockingPage page = navigator.navigateToPage(MID_TID_BlockingPage.class);
 		page.deleteRecord(combination,details);
+	}
+	
+	public boolean verifyDeviceEventFeeApplied(Device device, String reason, 
+			TransactionSearch ts, DeviceEventBasedFeePlan deviceEventBasedPlan, String cardType) {
+		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
+		page.searchTransactionWithDeviceFee(device, ts);
+		return page.getDeviceEventFeeFromTransactionSearch(reason).
+				equals(page.getCardBasedFees(cardType, deviceEventBasedPlan));
 	}
 }

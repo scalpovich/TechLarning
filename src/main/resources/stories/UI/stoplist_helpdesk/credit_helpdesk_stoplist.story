@@ -11,6 +11,7 @@ Meta:
 Scenario:1 creation of mastercard_Retail Credit Card credit device
 Given setting json values in excel for Credit
 When user is logged in institution
+And user saves the fees applied for Stoplist Withdrawal Fee on device based event fee plan for Normal card
 And for EMV Card User fills Device Plan for credit product for Mastercard
 And User fills Wallet Fee Plan for credit product
 And User fills Wallet Plan for credit product and program Retail Credit Card
@@ -40,7 +41,18 @@ And user sign out from customer portal
 
 Scenario:4 Transaction - Verify that the user is able to make a successful transaction on the withdrawaing the stoplisting
 Given user is logged in institution
-When user withdraws the stoplisted device
+When user withdraws the stoplisted device with fees
 Then user raises an authorization request only
 And search Purchase authorization and verify 000-Successful status
 And user sign out from customer portal
+
+Scenario:5 Post maintenance batch and pre-clearing batch is run
+Given user is logged in institution
+When post maintenance batch is run
+And user processes Pre-clearing system internal batch for Credit
+Then user sign out from customer portal
+
+Scenario:6 To verify that the device event fee for card renewal - credit is deducted
+Given user is logged in institution
+When verify that the device event fees for Stoplist Withdrawal is levied for Normal card
+Then user signs out from customer portal
