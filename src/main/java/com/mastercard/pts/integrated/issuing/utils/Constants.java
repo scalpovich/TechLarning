@@ -378,8 +378,6 @@ public class Constants {
 
 	public static final String GENERIC_DESCRIPTION = "AUTOMATION";
 	
-	public static final String INVALID_CVV2 = "000";
-
 	public static final String SUCCESS_MESSAGE = "rgba(0, 128, 0, 1)";
 
 	public static final String CREDIT = "credit";
