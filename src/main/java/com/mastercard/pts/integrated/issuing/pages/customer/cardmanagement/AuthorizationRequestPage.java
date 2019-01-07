@@ -50,8 +50,7 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 	private MCWebElement cvv2Txt;
 
 	private String statusMessage = null;
-	private String errorMessage = "";
-	
+
 	public String addAuthorizationRequest(AuthorizationRequest request){
 		logger.info("Authorization Request: {}", request.getDeviceNumber());
 		clickAddNewButton();
@@ -76,14 +75,15 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 	public String createInvalidAuthRequest(AuthorizationRequest request) {
 		logger.info("Invalid Authorization Request: {}", request.getDeviceNumber());
 		clickAddNewButton();
+		StringBuilder errorMessage = new StringBuilder();
 		runWithinPopup("Add Request", () -> {
 			WebElementUtils.enterText(deviceNumberTxt, request.getDeviceNumber());
-			WebElementUtils.asWebElement(deviceNumberTxt).sendKeys(Keys.TAB);		
-			errorMessage = getErrorMessage();
+			WebElementUtils.asWebElement(deviceNumberTxt).sendKeys(Keys.TAB);
+			errorMessage.append(getErrorMessage());
 			clickCancelButton();
 		});
 		
-		return errorMessage;
+		return errorMessage.toString();
 	}
 	
 	public void verifyUiOperationStatus() {
