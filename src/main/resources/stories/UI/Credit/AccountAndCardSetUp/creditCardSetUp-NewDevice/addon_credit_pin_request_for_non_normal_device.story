@@ -25,7 +25,7 @@ And credit processes deviceproduction batch using new Device for Supplementary
 Then device has "normal" status
 And user creates service request for Block Device [111] service
 And device has "blocked" status
-And service request Pin Request  [305] should be fail for blocked add-on device
+And service request Pin Request [305] should be fail for blocked add-on device
 
 Scenario: 2 To verify that pin request failed for expired add-on device 
 Meta:
@@ -34,6 +34,6 @@ Given device has "blocked" status
 When user creates service request for Unblock Device [116] service
 And user set expired date and status code in database
 Then device has "expired" status
-And service request Pin Request  [305] should be fail for expired add-on device
+And service request Pin Request [305] should be fail for expired add-on device
 And user sign out from customer portal
 
