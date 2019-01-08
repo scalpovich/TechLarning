@@ -10,8 +10,8 @@ import static org.junit.Assert.assertTrue;
 import java.awt.AWTException;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Optional;
 import java.util.Objects;
-
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.Matchers;
 import org.jbehave.core.annotations.Alias;
@@ -599,27 +599,32 @@ public class TransactionSteps {
 	@Then("$tool test results are verified for $transaction")
 	@Given("$tool test results are verified for $transaction")
 	public void thenVisaTestResultsAreReported(String tool, String transaction) {
-		String testResults = null;
+		verifyVisaTransactionResult(getVisaTestResult(transaction), Optional.empty());
+	}
+	
+	@Then("verify that response code $code is received for $transaction")
+	public void verifyVisaResponseCode(String responseCode, String transaction) {
+		verifyVisaTransactionResult(getVisaTestResult(transaction), Optional.of(responseCode));
+	}
+	
+	public String getVisaTestResult(String transaction) {
 		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseToSelect(transaction);
 		logMessage("VISA Transaction Test Case Name : ", transactionName);
+		String testResults = transactionWorkflow.verifyVisaOutput(transactionName);
+		transactionWorkflow.browserMaximize();
+		transactionWorkflow.disconnectAndCloseVts();
+		return testResults;
+	}
 
-		testResults = transactionWorkflow.verifyVisaOutput(transactionName);
-		transactionWorkflow.browserMaximize(); // maximing browser
-
-		transactionWorkflow.disconnectAndCloseVts(); // closing VTS
-
-		if (transactionWorkflow.isContains(testResults, "validations is ok")) {
-			logMessage(PASS_MESSAGE, testResults);
-			assertTrue(PASS_MESSAGE + testResults, true);
-		} else if (transactionWorkflow.isContains(testResults, "validations not ok")) {
-			logger.error(FAIL_MESSAGE, testResults);
-			assertFalse(FAIL_MESSAGE + testResults, false);
-			throw new ValidationException(FAIL_MESSAGE + testResults);
+	private void verifyVisaTransactionResult(String testResults, Optional<String> responseCode) {		
+		final String VALIDATION_OK = "validations is ok"; 
+		final String F39_RESPONSE = "F39 response is : ";
+		
+		if (!responseCode.isPresent()) {
+			assertTrue(FAIL_MESSAGE + testResults, transactionWorkflow.isContains(testResults, VALIDATION_OK));			
 		} else {
-			logger.error(FAILED, testResults);
-			assertFalse(FAILED, false);
-			throw new ValidationException(FAILED);
-		}
+			assertTrue(FAIL_MESSAGE + testResults, transactionWorkflow.isContains(testResults, F39_RESPONSE + responseCode.get()));
+		}		
 	}
 
 	private void logMessage(String message1, String message2) {

@@ -134,6 +134,19 @@ public class HelpDeskSteps {
 		helpDeskGetterSetter.setServiceCode(ServiceCode.fromShortName(serviceCode));
 		helpdeskFlows.selectServiceCode(helpDeskGetterSetter);
 	}
+	
+	@Then("user raises service request to $serviceCode")
+	public void selectServiceCodeForSearchedDevice(String serviceCode) {
+		helpdeskGeneral.setServiceCode(serviceCode);
+		helpdeskGeneral.setNotes(Constants.GENERIC_DESCRIPTION);
+		
+		if (ServiceCode.BLOCK_DEVICE.contains(serviceCode)) {
+			helpdeskWorkflow.blockDevice(helpdeskGeneral);
+		} else if (ServiceCode.DEVICE_CLOSURE.contains(serviceCode)) {
+			helpdeskWorkflow.cancelDevice(helpdeskGeneral);
+		}
+		
+	}
 
 	/**
 	 * Step Definition for activating a device through HelpDesk
