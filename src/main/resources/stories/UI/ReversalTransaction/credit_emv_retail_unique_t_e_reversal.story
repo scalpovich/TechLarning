@@ -38,7 +38,7 @@ Scenario: 1.4 Perform Unique Transactionn Reversal
 Given user performs reversal transaction of type 17
 When user is logged in institution
 Then search Purchase Reversal authorization and verify 000-Successful status
-And user verifies available balance after reversals transaction
+And user verifies available balance after reversal transaction
 And validate auth report
 And device has "normal" status
 And user verifies available Card limit for card after transaction

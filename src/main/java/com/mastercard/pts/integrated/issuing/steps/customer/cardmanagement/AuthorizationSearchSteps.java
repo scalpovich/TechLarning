@@ -189,7 +189,7 @@ public class AuthorizationSearchSteps {
 				equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
 	}
 	
-	@Then("user verifies available balance after reversals transaction")
+	@Then("user verifies available balance after reversal transaction")
 	public void userVerifyAvailableBalanceAfterReversals() {
 		BigDecimal availableBalanceBeforeTransaction = context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT);
 		AvailableBalance availBal = authorizationSearchWorkflow.getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(availableBalanceBeforeTransaction);

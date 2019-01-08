@@ -48,7 +48,7 @@ Scenario: 1.4 Perform Reversal Transaction
 Given user performs reversal transaction of type 17
 When user is logged in institution
 Then search Purchase Reversal authorization and verify 000-Successful status
-And user verifies available balance after reversals transaction
+And user verifies available balance after reversal transaction
 And validate auth report
 And device has "normal" status
 And user verifies available Card limit for card after transaction
@@ -71,7 +71,7 @@ Scenario: 1.6 Perform Reversal Transaction
 Given user performs partial reversal transaction of type 32 with reversal amount 10
 When user is logged in institution
 Then search CWD - Partial Reversal authorization and verify 000-Successful status
-And user verifies available balance after reversals transaction
+And user verifies available balance after reversal transaction
 And device has "normal" status
 And user verifies available Card limit for card after transaction
 And user validates device usage for Daily Velocity Utilized and Daily Amount Utilized

@@ -128,7 +128,7 @@ public class TransactionReportsPage extends AbstractBasePage {
 
 	public void generateTransactionAuthReport(TransactionReports transactionReports) {
 		generateAuthReport();
-		WebElementUtils.enterText(txtdeviceNumber, transactionReports.getDeviceNumber());
+		WebElementUtils.enterText(txtDeviceNumber, transactionReports.getDeviceNumber());
 		generateReportBtn.click();
 		CustomUtils.ThreadDotSleep(30000);
 	}

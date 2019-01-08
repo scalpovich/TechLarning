@@ -29,7 +29,7 @@ And embossing file batch was generated in correct format
 And PIN is retrieved successfully with data from Pin Offset File
 Then FINSim simulator is closed
 
-Scenario: Perform EMV_PURCHASE Authorization transaction 1 
+Scenario: 1.3 Perform EMV_PURCHASE Authorization transaction 1 
 Given connection to MAS is established
 When perform an EMV_PURCHASE MAS transaction
 And MAS test results are verified
@@ -39,7 +39,7 @@ And user notes down ATC counter on device usage screen
 Then user sign out from customer portal
 
 
-Scenario: Perform EMV_PURCHASE Authorization transaction 2
+Scenario: 1.4 Perform EMV_PURCHASE Authorization transaction 2
 Given perform an EMV_PURCHASE MAS transaction on the same card
 When MAS test results are verified
 And user is logged in institution
@@ -47,7 +47,7 @@ And search Purchase authorization and verify 000-Successful status
 And verify ATC counter getting updated at device usage screen
 Then user sign out from customer portal
 
-Scenario: Perform EMV_PURCHASE Authorization transaction 3
+Scenario: 1.5 Perform EMV_PURCHASE Authorization transaction 3
 Given perform an EMV_PURCHASE MAS transaction on the same card
 When MAS test results are verified
 And user is logged in institution
@@ -55,7 +55,7 @@ And search Purchase authorization and verify 000-Successful status
 And verify ATC counter getting updated at device usage screen
 Then user sign out from customer portal
 
-Scenario: Perform EMV_PURCHASE Authorization transaction 4
+Scenario: 1.6 Perform EMV_PURCHASE Authorization transaction 4
 Given perform an EMV_PURCHASE MAS transaction on the same card
 When MAS test results are verified
 And user is logged in institution
