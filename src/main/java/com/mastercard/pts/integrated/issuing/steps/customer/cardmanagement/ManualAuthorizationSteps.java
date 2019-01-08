@@ -20,6 +20,7 @@ import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ProcessBatchesPage;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.workflows.LoginWorkflow;
+import com.mastercard.pts.integrated.issuing.utils.CustomUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ManualAuthorizationWorkflow;
 
 @Component
@@ -38,6 +39,8 @@ public class ManualAuthorizationSteps {
 	private LoginWorkflow loginWorkflow;
 	
 	private static final Logger logger = LoggerFactory.getLogger(ProcessBatchesPage.class);
+	private String errorMessage = "";
+	private static final String INVALID_DEVICE_NO = "Invalid Device number";
 	
 	private String statusMessage;
 
@@ -75,12 +78,23 @@ public class ManualAuthorizationSteps {
 		
 	}
 	
+	@When("user raises an authorization request for invalid device")
+	public void raiseAuthRequestForInvalidCard() {
+		AuthorizationRequest request = new AuthorizationRequest();
+		request.setDeviceNumber(CustomUtils.randomNumbers(10));
+		errorMessage = manualAuthorizationWorkflow.createInvalidRequest(request);
+	}
+	
+	@Then("authorization should not be allowed")
+	public void verifyThatManualAuthIsNotAllowed() {
+		assertThat("Authorization is not allowed", errorMessage, containsString(INVALID_DEVICE_NO));
+	}
+	
 	@When("status of request is \"approved\"")
 	@Then("status of request is \"approved\"")
 	public void thenStatusOfRequestIsapproved(){
 		assertThat("Authorization is successful", statusMessage,
 				containsString("Authorization is successful"));
-
 	}
 
 	@Then("status of request is declined with reason $declineReason")

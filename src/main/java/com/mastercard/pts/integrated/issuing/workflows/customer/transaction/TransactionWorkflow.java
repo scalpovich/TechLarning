@@ -3,13 +3,10 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.transaction;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.awt.AWTException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.ArrayList;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
@@ -18,17 +15,14 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jbehave.web.selenium.WebDriverProvider;
-import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
@@ -67,7 +61,6 @@ import com.mastercard.pts.integrated.issuing.pages.ValidationException;
 import com.mastercard.pts.integrated.issuing.pages.agent.settlement.InitiateSettlementPage;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceApprovePage;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceRequestPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.GenerateReversalPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.MID_TID_BlockingPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReversalTransactionPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionSearchPage;
@@ -279,7 +272,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 	
 	private void captureSaveScreenShot(String methodName) {
-		//SimulatorUtilities.takeScreenShot(winiumDriver, methodName + "_" + new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
+		SimulatorUtilities.takeScreenShot(winiumDriver, methodName + "_" + new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 	}
 
 	public void performOptimizedMasTransaction(String transaction, Transaction transactionData, Boolean sameCard) {
@@ -1844,8 +1837,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			setValueInMessageEditorForTransction("F35.05", transactionName, (MiscUtils.randomNumber(2) + device.getCvvData()));	
 			setValueInMessageEditorForTransction("F52", transactionName, device.getPinNumberForTransaction());
 		}
-		else if(transaction.contains("ECOM")) {
-			setValueInMessageEditorForTransction("F126.10", transactionName, (CVV2_PREFIX_VALUE + " " + device.getCvv2Data()));	
+		else if(transaction.contains("ECOM")) {			
+			String cvv2 = device.getCvv2Data() == null ? ConstantData.INVALID_CVV2 : device.getCvv2Data();
+			setValueInMessageEditorForTransction("F126.10", transactionName, (CVV2_PREFIX_VALUE + " " + cvv2));	
 		}
 		captureSaveScreenShot(methodName);
 		executeVisaTest(transactionName);

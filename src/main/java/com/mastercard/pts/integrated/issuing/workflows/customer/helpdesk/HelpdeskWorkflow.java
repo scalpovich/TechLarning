@@ -92,6 +92,16 @@ public class HelpdeskWorkflow {
 		helpDeskPage.setupDeviceCurrency(helpdeskGeneral);
 	}
 	
+	public void blockDevice(HelpdeskGeneral helpdeskGeneral) {
+		clickCustomerCareEditLink();
+		helpDeskPage.blockDevice(helpdeskGeneral);
+	}
+	
+	public void cancelDevice(HelpdeskGeneral helpdeskGeneral) {
+		clickCustomerCareEditLink();
+		helpDeskPage.cancelDevice(helpdeskGeneral);
+	}
+	
 	public void setupInternationalAllowDisallowCheck(String status) {
 		helpDeskPage.setupInternationalAllowDisallowCheck(status);
 	}

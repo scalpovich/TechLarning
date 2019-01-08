@@ -8,6 +8,8 @@ Meta:
 @BVTest
 
 Scenario: UI verification - Customer Portal -  AccountFile, card management tab
+Meta:
+@CSR_AccountFile
 Given user is logged in institution
 When user is at the home tab
 Then AccountFile page of card management tab is rendered correctly
