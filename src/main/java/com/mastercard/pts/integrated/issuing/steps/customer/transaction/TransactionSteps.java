@@ -67,6 +67,7 @@ public class TransactionSteps {
 	private static final String IPMINCOMING = "ipm incoming";
 	private static Boolean sameCard = false;
 	private static final String ATC = "ATC" ;
+	private static final int CONVERSION_FACTOR = 100 ;
 	public boolean atcCounterFlag = false;
 
 	@Autowired
@@ -669,7 +670,7 @@ public class TransactionSteps {
 	public void setTransactionAmountFromStep(String amount){
 		Device device = context.get(ContextConstants.DEVICE);
 		if(device.getExchangeRate()==null){
-			device.setTransactionAmount(Integer.toString((Integer.parseInt(amount)*100)));
+			device.setTransactionAmount(Integer.toString((Integer.parseInt(amount)*CONVERSION_FACTOR)));
 		}
 		else{
 			Double moderatedAmount = (Double.parseDouble(amount))/(Double.parseDouble(device.getExchangeRate()));
@@ -692,7 +693,7 @@ public class TransactionSteps {
 	@When("user updates transaction amount to $amount")
 	@Given("user updates transaction amount to $amount")
 	public void userSetTransactionAmount(Double amount){
-		int i = new Double(amount * 100).intValue(); 
+		int i = new Double(amount * CONVERSION_FACTOR).intValue(); 
 		Device device = context.get(ContextConstants.DEVICE);
 		device.setTransactionAmount(Integer.toString(i));
 		context.put(ContextConstants.DEVICE, device);
@@ -756,10 +757,23 @@ public class TransactionSteps {
 		transactionWorkflow.manipulateIPMData(status, trasactiondata);
 	}
 	
+	@Given("user performs reversal transaction of type $type")
+	@Then("user performs reversal transaction of type $type")
+	public void reverseTransaction(String type){
+		String transaction = context.get(ConstantData.TRANSACTION_NAME);
+		transactionWorkflow.reverseTransaction(transaction,type);
+	}
+	
+	@Given("user performs partial reversal transaction of type $type with reversal amount $amount")
+	@Then("user performs partial reversal transaction of type $type with reversal amount $amount")
+	public void partialReverseTransaction(String type, int amount ){
+		String transaction = context.get(ConstantData.TRANSACTION_NAME);
+		transactionWorkflow.partialReverseTransaction(transaction, type,String.valueOf(amount*CONVERSION_FACTOR));
+	}
+	
 	@When("verify that the device event fees for $reason is levied for $cardType card")
 	@Then("verify that the device event fees for $reason is levied for $cardType card")
-	public void verifyDeviceEventFeeLevied(@Named("cardType") String cardType, 
-			@Named("reason") String reason) {
+	public void verifyDeviceEventFeeLevied(@Named("cardType") String cardType, @Named("reason") String reason) {
 		Device device = context.get(ContextConstants.DEVICE);
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		DeviceEventBasedFeePlan deviceEventBasedPlan = context.get(ContextConstants.DEVICE_EVENT_BASED_FEE);

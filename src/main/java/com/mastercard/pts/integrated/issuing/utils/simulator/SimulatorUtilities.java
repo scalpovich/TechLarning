@@ -153,6 +153,10 @@ public class SimulatorUtilities {
 	public void pressF9Key() {
 		robotOperation("pressF9Key", numberOfTabs);
 	}
+	
+	public void pressCtrlShiftF10Key(){
+		robotOperation("ctrlShiftF10", numberOfTabs);
+	}
 
 	public void pressEnter() {
 		robotOperation("pressEnter", numberOfTabs);
@@ -240,6 +244,14 @@ public class SimulatorUtilities {
 			robot.keyPress(KeyEvent.VK_F9);
 			robot.keyPress(KeyEvent.VK_F9);
 			break;
+		case "ctrlShiftF10":
+			robot.keyPress(KeyEvent.VK_CONTROL);
+			robot.keyPress(KeyEvent.VK_SHIFT);
+			robot.keyPress(KeyEvent.VK_F10);
+			robot.delay(100);
+			robot.keyRelease(KeyEvent.VK_CONTROL);
+			robot.keyRelease(KeyEvent.VK_SHIFT);
+			robot.keyRelease(KeyEvent.VK_F10);
 		default:
 			break;
 		}

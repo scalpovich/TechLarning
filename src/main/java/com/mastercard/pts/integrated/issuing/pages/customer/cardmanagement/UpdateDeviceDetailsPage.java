@@ -1,12 +1,12 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -16,20 +16,37 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
+
+
 @Component
 @Navigation(tabTitle = CardManagementNav.TAB_CARD_MANAGEMENT, treeMenuItems = {
 		CardManagementNav.L1_ACTIVITY, CardManagementNav.L2_DEVICE,
 		CardManagementNav.L3_UPDATE_DEVICE_DETAILS })
 public class UpdateDeviceDetailsPage extends AbstractCardManagementPage {
-	
-	
-	@PageElement(findBy = FindBy.CSS, valueToFind = "devicePromoPlanCode:input:dropdowncomponent")
+
+	private static final Logger logger = LoggerFactory.getLogger(UpdateDeviceDetailsPage.class);
+
+	@PageElement(findBy = FindBy.NAME, valueToFind = "devicePromoPlanCode:input:dropdowncomponent")
 	protected MCWebElement devicePromotionPlanDdwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
 	protected MCWebElement saveBtn;
 	
 	private String editLink = "Edit Record";
+
+	public void updateDevicePlanForDevice(Device device){
+		logger.info("Update device details for device number  {} ", device.getDeviceNumber());
+		searchDevice(device);
+		waitForRow();
+		editFirstRecord();
+		runWithinPopup("Edit Device Details", () -> {
+			waitForElementVisible(devicePromotionPlanDdwn);
+			selectByText(devicePromotionPlanDdwn, device.getDevicePromotionPlan());
+			clickSaveButton();
+		});
+		verifyRecordMarkedForUpdationStatusSuccess();
+	}
+	
 	
 	public void enterDeviceNumber(String device){
 		WebElementUtils.enterText(deviceNumber, device);
@@ -41,7 +58,7 @@ public class UpdateDeviceDetailsPage extends AbstractCardManagementPage {
 	}
 	
 	public void openEditDevice(){		
-		getFinder().getWebDriver().findElement(By.xpath(String.format("//img[@alt='%s']", editLink))).click();
+		Element(String.format("//img[@alt='%s']", editLink)).click();
 	}
 	
 	public void updateDevieWithPromotionPlan(Device device,DevicePromotionPlan promotionPlan){
@@ -65,4 +82,5 @@ public class UpdateDeviceDetailsPage extends AbstractCardManagementPage {
 				WebElementUtils.elementToBeClickable(applicationNumber),
 				WebElementUtils.elementToBeClickable(batchCreateNum));
 	}
+
 }

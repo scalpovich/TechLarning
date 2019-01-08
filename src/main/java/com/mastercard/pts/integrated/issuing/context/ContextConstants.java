@@ -160,6 +160,10 @@ public class ContextConstants {
 	
 	public static final String TRANSACTION_DATE = "TRANSACTION_DATE";
 	
+	public static final String TRANSACTION_AMT_DIFFERENCE = "TRANSACTION_AMT_DIFFERENCE";
+	
+	public static final String PARTIAL_REVERSAL_AMOUNT = "PARTIAL_REVERSAL_AMOUNT";
+
 	public static final String PAYMENT_UNBILLED = "Payment Unbilled";
 	
 	public static final String ZERO_UNBILLED_PAYMENT = "0.00";
@@ -184,9 +188,9 @@ public class ContextConstants {
 	
 	public static final String CSV_NO = "CSV_No";
 	
-	public static final String DEVICE_PROMOTION = "device_promotion";
+	public static final String DEVICE_PROMOTION = "DEVICE_PROMOTION";
 	
-	public static final String CONVERSTION_RATE = "conversation_rate";
+	public static final String CONVERSTION_RATE = "CONVERSTION_RATE";
 	
 	public static final String CARDHOLDER_TRAN = "CARDHOLDER_TRAN";
 	

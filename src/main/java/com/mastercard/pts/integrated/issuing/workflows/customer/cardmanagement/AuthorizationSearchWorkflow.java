@@ -3,7 +3,7 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -53,7 +53,7 @@ public class AuthorizationSearchWorkflow {
 
 	@Autowired
 	HelpdeskWorkflow helpDeskWorkFlow;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(AdministrationHomePage.class);
 
 	public static final int BILL_AMOUNT_INDEX_VALUE = 3;
@@ -79,7 +79,7 @@ public class AuthorizationSearchWorkflow {
 
 	private Device authSearchAndVerification(Device device, String type, String state, String codeColumnName, String descriptionColumnName) {
 		boolean condition;
-        SimulatorUtilities.wait(5000);
+		SimulatorUtilities.wait(5000);
 		AuthorizationSearchPage authSearchPage = navigator.navigateToPage(AuthorizationSearchPage.class);
 		authSearchPage.inputDeviceNumber(device.getDeviceNumber());
 		String query = Constants.INSTITUTION_NUMBER_QUERY_START + context.get(Constants.USER_INSTITUTION_SELECTED) + Constants.INSTITUTION_NUMBER_QUERY_END;
@@ -115,19 +115,30 @@ public class AuthorizationSearchWorkflow {
 		else
 			// to handle "Transaction Currency", "Billing Currency"
 			condition = actualCodeAction.contains(type) && actualDescription.contains(state);
-
-		// Device Usage Code
-		 String billingAmountValue = authSearchPage.getCellTextByColumnName(1, "Billing Amount");
-		 context.put(ConstantData.BILLING_AMOUNT, billingAmountValue);
+		
+		String billingAmountValue = authSearchPage.getCellTextByColumnName(1, "Billing Amount");
+		context.put(ConstantData.BILLING_AMOUNT, billingAmountValue);
 		if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && !ConstantData.PRE_AUTH.equalsIgnoreCase(type)){
 			device.setDeviceVelocity(TRANSACTION_VELOCITY);
-			device.setDeviceAmountUsage(Double.parseDouble(billingAmountValue));
+			device.setDeviceAmountUsage(Double.parseDouble(billingAmountValue)); 
+			
+		}else if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && actualDescription.contains("Partial Reversal")){
+			device.setDeviceAmountUsage(-Double.parseDouble(billingAmountValue));
+			context.put(ContextConstants.TRANSACTION_AMT_DIFFERENCE, new BigDecimal(billingAmountValue));
+			
+		}else if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && actualDescription.contains("Reversal")){
+			device.setDeviceVelocity(-TRANSACTION_VELOCITY);
+			device.setDeviceAmountUsage(-Double.parseDouble(billingAmountValue));
 		}
+
 		assertTrue("Latest (Row) Description and Code Action does not match on Authorization Search Screen", condition);
 		return device;
 		
+		// Device Usage Code
+
+		
 	}
-	
+
 	public void generateReversalForTransaction(String deviceNumber)
 	{
 		GenerateReversalPage page = navigator.navigateToPage(GenerateReversalPage.class);
@@ -159,7 +170,6 @@ public class AuthorizationSearchWorkflow {
 		String txnRateFeeString = Double.toString(txnRateFee);
 		myList.add(txnRateFeeString);
 		return myList;
-
 	}
 
 	public List<String> checkTransactionMaxFee(String deviceNumber) {
@@ -210,6 +220,7 @@ public class AuthorizationSearchWorkflow {
 	}
 
 	public AvailableBalance getTransactionBillingDetailsAndAvailableBalanceAfterTransaction(BigDecimal availableBalance){
+		SimulatorUtilities.wait(2000);
 		authorizationSearchPage.viewDeviceDetails();
 		AvailableBalance availBal = authorizationSearchPage.getAvailableBalance();
 		logger.info("Available balance before transaction amount = {}", availableBalance);
@@ -217,15 +228,40 @@ public class AuthorizationSearchWorkflow {
 		logger.info("Available balance after transaction amount = {}", availBal.getAvailableBal());
 		return availBal;
 	}
-	
+
 	public BigDecimal noteDownAvailableBalanceAfterReversal(String deviceNumber) {
 		AuthorizationSearchPage page = navigator.navigateToPage(AuthorizationSearchPage.class);
 		return page.viewAvailableBalanceAfterReversalTransaction(deviceNumber);
-		
+
 	}
 	public String verifyReconciliationStatus(Device device) {
 		authorizationSearchPage = navigator.navigateToPage(AuthorizationSearchPage.class);
 		return authorizationSearchPage.verifyReconciliationStatus(device.getDeviceNumber());
-		
+	}
+
+	public String getTransactionFee(){
+		String appliedTransactionFee = authorizationSearchPage.getTransactionFee();
+		logger.info("Applied Transaction Fee on screen: {} ", appliedTransactionFee);
+		return appliedTransactionFee;
+	}
+
+	public String calculateTransactionFee(TransactionFeePlan txnFeePlan) {
+		DecimalFormat df2 = new DecimalFormat("0.00");
+		double txnRateFee;
+		double FIXED_TRANSACTION_FEE = Double.parseDouble(txnFeePlan.getfixedTxnFees());
+		double transactionAmt = Double.parseDouble(context.get(ConstantData.TRANSACTION_AMOUNT));
+		double rate = Double.parseDouble(txnFeePlan.getRateTxnFee());
+		txnRateFee = transactionAmt * (rate / 100) + FIXED_TRANSACTION_FEE;
+		double minFee = Double.parseDouble(txnFeePlan.getMinTxnRate());
+		double maxFee = Double.parseDouble(txnFeePlan.getMaxTxnRate());
+		logger.info("Calculated Transaction Fee: {} ", df2.format(txnRateFee));
+
+		if(txnRateFee > maxFee){
+			txnRateFee = maxFee;
+		}else if(txnRateFee < minFee){
+			txnRateFee = minFee;
+		}
+		logger.info("Applied Trasaction Fee: {} ", df2.format(txnRateFee));
+		return df2.format(txnRateFee);
 	}
 }
