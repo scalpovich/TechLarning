@@ -339,6 +339,7 @@ public class HelpdeskWorkflow {
 			resetPinCounter(helpdeskGeneral);
 			return false;
 		} catch (Exception e){
+			e.printStackTrace();
 			helpDeskPage.printResponseMessageLog();
 			helpDeskPage.clickEndCall();
 			return true;
