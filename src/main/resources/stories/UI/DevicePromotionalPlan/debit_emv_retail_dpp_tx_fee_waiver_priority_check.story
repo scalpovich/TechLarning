@@ -32,7 +32,7 @@ And user activates device through helpdesk
 And device has "normal" status
 And user attaches device promotion plan TX_FEE_WAIVER_PROMOTION_PLAN
 And embossing file batch was generated in correct format
-And user sign out from customer portal
+Then user sign out from customer portal
 
 Scenario: 1.3 Perform EMV_PURCHASE Authorization transaction to check transaction fee get waived off
 Given connection to MAS is established

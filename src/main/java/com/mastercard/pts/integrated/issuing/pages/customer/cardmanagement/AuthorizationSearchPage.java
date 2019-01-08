@@ -246,6 +246,6 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 			str.append(getTextFromPage(fixedTransactionFee));
 			clickCloseButton();
 		});
-		return new String(str);
+		return str.toString();
 	}
 }

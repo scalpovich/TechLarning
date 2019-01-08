@@ -26,7 +26,7 @@ public class UpdateDeviceDetailsPage extends AbstractCardManagementPage {
 
 	private static final Logger logger = LoggerFactory.getLogger(UpdateDeviceDetailsPage.class);
 
-	@PageElement(findBy = FindBy.CSS, valueToFind = "devicePromoPlanCode:input:dropdowncomponent")
+	@PageElement(findBy = FindBy.NAME, valueToFind = "devicePromoPlanCode:input:dropdowncomponent")
 	protected MCWebElement devicePromotionPlanDdwn;
 	
 	@PageElement(findBy = FindBy.NAME, valueToFind = "save")

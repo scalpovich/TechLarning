@@ -76,7 +76,6 @@ public class ReconciliationWorkFlow {
 		page.generateTransactionAuthReport(transactionReports);
 		int fileCountAfterReportGeneration = waitForReportToDownLoad(fileCountBeforeReportGeneration);
 		return getReportContent(fileName,transactionReports);
-		//return (fileCountAfterReportGeneration - fileCountBeforeReportGeneration == 1) ? true : false;
 	}
 	
 	public boolean isPhotoReferenceNumberPresentInReport(String fileName,BatchProcessingReports batchProcessingReports) {

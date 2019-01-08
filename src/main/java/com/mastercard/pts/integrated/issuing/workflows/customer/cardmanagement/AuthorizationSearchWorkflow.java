@@ -249,7 +249,7 @@ public class AuthorizationSearchWorkflow {
 		DecimalFormat df2 = new DecimalFormat("0.00");
 		double txnRateFee;
 		double FIXED_TRANSACTION_FEE = Double.parseDouble(txnFeePlan.getfixedTxnFees());
-		double transactionAmt = Double.parseDouble(context.get(ConstantData.TRANSACTION_AMOUNT));//device.getTransactionAmount());
+		double transactionAmt = Double.parseDouble(context.get(ConstantData.TRANSACTION_AMOUNT));
 		double rate = Double.parseDouble(txnFeePlan.getRateTxnFee());
 		txnRateFee = transactionAmt * (rate / 100) + FIXED_TRANSACTION_FEE;
 		double minFee = Double.parseDouble(txnFeePlan.getMinTxnRate());

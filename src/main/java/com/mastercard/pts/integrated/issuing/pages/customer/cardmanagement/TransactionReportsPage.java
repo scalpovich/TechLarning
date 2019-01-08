@@ -92,7 +92,7 @@ public class TransactionReportsPage extends AbstractBasePage {
 	private MCWebElement dateTypeDDwn;
 	
 	@PageElement(findBy =FindBy.CSS, valueToFind = "span#P_Device_id>input")
-	private MCWebElement txtdeviceNumber;
+	private MCWebElement txtDeviceNumber;
 
 	public String calelement = "//td[2]";
 

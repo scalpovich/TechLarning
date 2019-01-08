@@ -1,5 +1,5 @@
 Narrative:
-In order to validate Device Promotion Plan Priority
+In order to validate Reversal functionality
 As an issuer
 I want to perform transaction
 
