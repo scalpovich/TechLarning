@@ -515,5 +515,7 @@ public class Constants {
 	public static final String GET_EXISTING_DEVICE_DETAILS = "SELECT * from Sheet10 WHERE ProgramType like '"+System.getProperty("programType")+"%' AND Sale='Y'";
 
 	public static String TESTDATA = "TestData";
+	public static final String RANGE_STOPLISTED = "Device range is stoplisted..";
+	public static final String COUNTRY_STOPLISTED = "Country is stoplisted.";
 
 }

@@ -1,4 +1,3 @@
-!-- @author: E080534
 Narrative:
 As a Customer portal user
 I want to validate temporary credit limit for corporate card
@@ -25,9 +24,9 @@ And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pingeneration batch using new Device for Supplementary
 And device has "normal" status
-And user raises Permanent [P] credit limit change request for Corporate
+Then user creates Permanent [P] credit limit change request for Corporate Type
 And device has "normal" status
-And user verifies available Permanent [P] limit
+And user verifies available Permanent [P] limit type
 Then user sign out from customer portal
 
 Scenario:1.3 Pin Generation

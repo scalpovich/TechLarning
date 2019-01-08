@@ -10,13 +10,14 @@ import static org.junit.Assert.assertTrue;
 import java.awt.AWTException;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Optional;
 import java.util.Objects;
-
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.Matchers;
 import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Aliases;
 import org.jbehave.core.annotations.Given;
+import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.junit.Assert;
@@ -32,6 +33,7 @@ import com.mastercard.pts.integrated.issuing.domain.agent.channelmanagement.Assi
 import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalanceRequest;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MID_TID_Blocking;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
@@ -597,27 +599,32 @@ public class TransactionSteps {
 	@Then("$tool test results are verified for $transaction")
 	@Given("$tool test results are verified for $transaction")
 	public void thenVisaTestResultsAreReported(String tool, String transaction) {
-		String testResults = null;
+		verifyVisaTransactionResult(getVisaTestResult(transaction), Optional.empty());
+	}
+	
+	@Then("verify that response code $code is received for $transaction")
+	public void verifyVisaResponseCode(String responseCode, String transaction) {
+		verifyVisaTransactionResult(getVisaTestResult(transaction), Optional.of(responseCode));
+	}
+	
+	public String getVisaTestResult(String transaction) {
 		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseToSelect(transaction);
 		logMessage("VISA Transaction Test Case Name : ", transactionName);
+		String testResults = transactionWorkflow.verifyVisaOutput(transactionName);
+		transactionWorkflow.browserMaximize();
+		transactionWorkflow.disconnectAndCloseVts();
+		return testResults;
+	}
 
-		testResults = transactionWorkflow.verifyVisaOutput(transactionName);
-		transactionWorkflow.browserMaximize(); // maximing browser
-
-		transactionWorkflow.disconnectAndCloseVts(); // closing VTS
-
-		if (transactionWorkflow.isContains(testResults, "validations is ok")) {
-			logMessage(PASS_MESSAGE, testResults);
-			assertTrue(PASS_MESSAGE + testResults, true);
-		} else if (transactionWorkflow.isContains(testResults, "validations not ok")) {
-			logger.error(FAIL_MESSAGE, testResults);
-			assertFalse(FAIL_MESSAGE + testResults, false);
-			throw new ValidationException(FAIL_MESSAGE + testResults);
+	private void verifyVisaTransactionResult(String testResults, Optional<String> responseCode) {		
+		final String VALIDATION_OK = "validations is ok"; 
+		final String F39_RESPONSE = "F39 response is : ";
+		
+		if (!responseCode.isPresent()) {
+			assertTrue(FAIL_MESSAGE + testResults, transactionWorkflow.isContains(testResults, VALIDATION_OK));			
 		} else {
-			logger.error(FAILED, testResults);
-			assertFalse(FAILED, false);
-			throw new ValidationException(FAILED);
-		}
+			assertTrue(FAIL_MESSAGE + testResults, transactionWorkflow.isContains(testResults, F39_RESPONSE + responseCode.get()));
+		}		
 	}
 
 	private void logMessage(String message1, String message2) {
@@ -747,5 +754,16 @@ public class TransactionSteps {
 	public void userUpdateIPMForDuplicateRecordCheck(String status) {
 		Transaction trasactiondata = Transaction.createWithProvider(provider);
 		transactionWorkflow.manipulateIPMData(status, trasactiondata);
+	}
+	
+	@When("verify that the device event fees for $reason is levied for $cardType card")
+	@Then("verify that the device event fees for $reason is levied for $cardType card")
+	public void verifyDeviceEventFeeLevied(@Named("cardType") String cardType, 
+			@Named("reason") String reason) {
+		Device device = context.get(ContextConstants.DEVICE);
+		TransactionSearch ts = TransactionSearch.getProviderData(provider);
+		DeviceEventBasedFeePlan deviceEventBasedPlan = context.get(ContextConstants.DEVICE_EVENT_BASED_FEE);
+		Assert.assertTrue("The device event fees are not as applied", 
+				transactionWorkflow.verifyDeviceEventFeeApplied(device, reason, ts, deviceEventBasedPlan, cardType));
 	}
 }

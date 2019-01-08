@@ -1,30 +1,39 @@
 package com.mastercard.pts.integrated.issuing.workflows.customer.transaction;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.awt.AWTException;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.math.BigDecimal;
-import java.net.URL;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-
+import com.mastercard.pts.integrated.issuing.annotation.Workflow;
+import com.mastercard.pts.integrated.issuing.configuration.FinSimSimulator;
+import com.mastercard.pts.integrated.issuing.configuration.LinuxBox;
+import com.mastercard.pts.integrated.issuing.configuration.MasSimulator;
+import com.mastercard.pts.integrated.issuing.configuration.MdfsSimulator;
+import com.mastercard.pts.integrated.issuing.configuration.VtsSimulator;
+import com.mastercard.pts.integrated.issuing.configuration.WhichSimulatorVersionToChoose;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
+import com.mastercard.pts.integrated.issuing.context.TestContext;
+import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalanceRequest;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MID_TID_Blocking;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
+import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ReversalTransaction;
+import com.mastercard.pts.integrated.issuing.domain.customer.transaction.Transaction;
+import com.mastercard.pts.integrated.issuing.pages.ValidationException;
+import com.mastercard.pts.integrated.issuing.pages.agent.settlement.InitiateSettlementPage;
+import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceApprovePage;
+import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceRequestPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.MID_TID_BlockingPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReversalTransactionPage;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionSearchPage;
+import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
+import com.mastercard.pts.integrated.issuing.utils.DateUtils;
+import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
+import com.mastercard.pts.integrated.issuing.utils.simulator.MasDetailsKeyValuePair;
+import com.mastercard.pts.integrated.issuing.utils.simulator.MdfsDetailsKeyValuePair;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorConstantsData;
+import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
+import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKeyValuePair;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.By;
@@ -40,43 +49,27 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-
 import winium.elements.desktop.ComboBox;
 
-import com.mastercard.pts.integrated.issuing.annotation.Workflow;
-import com.mastercard.pts.integrated.issuing.configuration.FinSimSimulator;
-import com.mastercard.pts.integrated.issuing.configuration.LinuxBox;
-import com.mastercard.pts.integrated.issuing.configuration.MasSimulator;
-import com.mastercard.pts.integrated.issuing.configuration.MdfsSimulator;
-import com.mastercard.pts.integrated.issuing.configuration.VtsSimulator;
-import com.mastercard.pts.integrated.issuing.configuration.WhichSimulatorVersionToChoose;
-import com.mastercard.pts.integrated.issuing.context.ContextConstants;
-import com.mastercard.pts.integrated.issuing.context.TestContext;
-import com.mastercard.pts.integrated.issuing.domain.agent.transactions.LoadBalanceRequest;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.MID_TID_Blocking;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
-import com.mastercard.pts.integrated.issuing.domain.customer.transaction.ReversalTransaction;
-import com.mastercard.pts.integrated.issuing.domain.customer.transaction.Transaction;
-import com.mastercard.pts.integrated.issuing.pages.ValidationException;
-import com.mastercard.pts.integrated.issuing.pages.agent.settlement.InitiateSettlementPage;
-import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceApprovePage;
-import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceRequestPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.GenerateReversalPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.MID_TID_BlockingPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReversalTransactionPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionSearchPage;
-import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
-import com.mastercard.pts.integrated.issuing.utils.ConstantData;
-import com.mastercard.pts.integrated.issuing.utils.DateUtils;
-import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
-import com.mastercard.pts.integrated.issuing.utils.simulator.MasDetailsKeyValuePair;
-import com.mastercard.pts.integrated.issuing.utils.simulator.MdfsDetailsKeyValuePair;
-import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorConstantsData;
-import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
-import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKeyValuePair;
+import java.awt.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.net.URL;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.NoSuchElementException;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @Workflow
 public class TransactionWorkflow extends SimulatorUtilities {
@@ -642,11 +635,16 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			loadIpmFile(getIpmFileName());
 			Device device = context.get(ContextConstants.DEVICE);
 			updatePanNumber(device.getDeviceNumber());
+			logger.info("Updated Pan Number");
 			updateAmountCardHolderBilling();
+			logger.info("Updated card holder Billing");
 			updateBillingCurrencyCode();
+			logger.info("Updated Billing Currency");
 			updateTransactionDate(resolveDate());
+			logger.info("Updated Transaction Date");
 			assignUniqueFileId();
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.debug("Exception occurred while editing fields :: {}", e);
 			throw MiscUtils.propagate(e);
 		}
@@ -1836,8 +1834,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			setValueInMessageEditorForTransction("F35.05", transactionName, (MiscUtils.randomNumber(2) + device.getCvvData()));	
 			setValueInMessageEditorForTransction("F52", transactionName, device.getPinNumberForTransaction());
 		}
-		else if(transaction.contains("ECOM")) {
-			setValueInMessageEditorForTransction("F126.10", transactionName, (CVV2_PREFIX_VALUE + " " + device.getCvv2Data()));	
+		else if(transaction.contains("ECOM")) {			
+			String cvv2 = device.getCvv2Data() == null ? ConstantData.INVALID_CVV2 : device.getCvv2Data();
+			setValueInMessageEditorForTransction("F126.10", transactionName, (CVV2_PREFIX_VALUE + " " + cvv2));	
 		}
 		captureSaveScreenShot(methodName);
 		executeVisaTest(transactionName);
@@ -2322,5 +2321,13 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	public void deleteMID_TID_Blocking(String combination, MID_TID_Blocking details) {
 		MID_TID_BlockingPage page = navigator.navigateToPage(MID_TID_BlockingPage.class);
 		page.deleteRecord(combination,details);
+	}
+	
+	public boolean verifyDeviceEventFeeApplied(Device device, String reason, 
+			TransactionSearch ts, DeviceEventBasedFeePlan deviceEventBasedPlan, String cardType) {
+		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);
+		page.searchTransactionWithDeviceFee(device, ts);
+		return page.getDeviceEventFeeFromTransactionSearch(reason).
+				equals(page.getCardBasedFees(cardType, deviceEventBasedPlan));
 	}
 }

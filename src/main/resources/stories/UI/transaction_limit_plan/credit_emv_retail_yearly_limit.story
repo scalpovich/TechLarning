@@ -23,6 +23,7 @@ And credit processes pre-production batch using new Device
 And credit processes deviceproduction batch using new Device for Supplementary
 And credit processes pinProduction batch using new Device for Supplementary
 And device has "normal" status
+And user notes down available Card limit for card
 Then user sign out from customer portal
 
 Scenario: 1.2 Pin Generation
