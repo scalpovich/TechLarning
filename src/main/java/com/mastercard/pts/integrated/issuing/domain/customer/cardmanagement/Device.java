@@ -123,6 +123,7 @@ public class Device {
 	private String loanAccountNumber;  	
   	private String mandatoryFieldValue;
   	private String cardPackID;
+  	private String availableBalance;
   	
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
@@ -825,5 +826,13 @@ public class Device {
 
 	public void setDeviceVelocity() {
 		deviceVelocity = 0;
+	}
+	
+	public String getAvailableBalance() {
+		return availableBalance;
+	}
+
+	public void setAvailableBalance(String availableBalance) {
+		this.availableBalance = availableBalance;
 	}
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
+import com.codoid.products.exception.FilloException;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ApplicationType;
@@ -24,6 +25,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Prog
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.utils.ExcelUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.CorporateClientCreationFlow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceWorkflow;
@@ -448,5 +450,31 @@ public class DeviceSteps {
 		corporateclient.setProductType(ProductType.fromShortName(type));
 		corporateClientFlow.createCorporateClient(corporateclient);
 	}
+	
+	@Given("user get data from excel for $scenario scenario and $productType product")
+    public void userGetDataFromExcelForScenario(String scenario, String productType) throws FilloException{
+          Device device = Device.createWithProvider(provider);
+          Map<String, String> map = ExcelUtils.getRowDataFromExcelThroughQuery("Select * from Sheet10 WHERE ScenarioID = '"+scenario+"'" + "AND ProductType = '"+productType+"'");
+          device.setAppliedForProduct(ProductType.fromShortName(productType));
+          device.setProductType(ProductType.fromShortName(productType));
+          device.setDeviceNumber(map.get("DeviceNumber"));
+          device.setCvvData( map.get("CVV"));
+          device.setCvv2Data(map.get("CVV2"));
+          device.setIcvvData(map.get("ICVV"));
+          device.setPvkiData(map.get("PVKI"));
+          device.setExpirationDate(map.get("ExpiryDate"));
+          device.setPinOffset(map.get("PinOffset"));
+          device.setPinNumberForTransaction(map.get("ClearPin"));
+          context.put(ContextConstants.DEVICE, device);
+          
+         /* DevicePlan deviceplan = DevicePlan.createWithProvider(provider);
+          deviceplan.setServiceCode("201");
+          deviceplan.setExpiryDate(map.get("ExpiryDate"));
+          deviceplan.setIsPinLess("No");
+          context.put(ConstantData.IS_PIN_REQUIRED, "TRUE");
+          context.put(ContextConstants.DEVICE_PLAN, deviceplan);*/
+          
+    }
+
 	
 }

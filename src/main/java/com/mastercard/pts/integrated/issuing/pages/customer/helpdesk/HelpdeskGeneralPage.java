@@ -437,6 +437,15 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Apply Fees :']//following::input[@type='checkbox']")
 	private MCWebElement chkBxApplyFees;
+	
+	@PageElement(findBy=FindBy.X_PATH, valueToFind="//span[contains(text(),'Program Code')]//ancestor::table//tbody//td[3]//span")
+	MCWebElement programCodeLbl;
+	
+	@PageElement(findBy=FindBy.X_PATH, valueToFind="//span[contains(text(),'Device Plan Code')]//ancestor::table//tbody//td[4]//span")
+	MCWebElement devicePlanLbl;
+	
+	@PageElement(findBy=FindBy.X_PATH, valueToFind="//span[contains(text(),'Device Type')]/..//following-sibling::td//span//span")
+	MCWebElement deviceTypeLbl;
 
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
@@ -1952,5 +1961,19 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	public void selectApplyFeesChkBx(boolean value) {
 		ClickCheckBox(chkBxApplyFees, value);
+	}
+	
+	public Device noteDownDeviceDetails(Device device){
+		editFirstRecord();
+		SimulatorUtilities.wait(3000);
+		device.setProgramCode(getTextFromPage(programCodeLbl));
+		device.setDevicePlan1(getTextFromPage(devicePlanLbl));
+		clickWhenClickable(deviceDetailsLnk);
+		SimulatorUtilities.wait(100);
+		device.setDeviceType1(getTextFromPage(deviceTypeLbl));
+		clickCurrentStatusAndLimitsTab();
+		device.setAvailableBalance(getTextFromPage(availAccountCreditLimitLabel));
+		clickEndCall();
+		return device;
 	}
 }
