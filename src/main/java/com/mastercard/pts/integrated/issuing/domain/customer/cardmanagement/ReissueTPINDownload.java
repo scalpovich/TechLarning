@@ -23,6 +23,7 @@ public class ReissueTPINDownload {
 	private String email;
 	
 	private Map<String, String> fileHeaderMap;
+	private static final int TPIN_DAT_FILE_LENGTH = 23;
 	
 	public Map<String, String> getFileHeaderMap() {
 		return fileHeaderMap;
@@ -35,7 +36,7 @@ public class ReissueTPINDownload {
 	public static ReissueTPINDownload createWithProvider(KeyValueProvider provider){
 		ReissueTPINDownload reissueTPIN = new ReissueTPINDownload();
 		Map<String, String> headerMap = new HashMap<>();
-		for(int i = 0; i < 23; i++) {
+		for(int i = 0; i < TPIN_DAT_FILE_LENGTH; i++) {
 			headerMap.put("field" +i, provider.getString("field" +i)); 
 		}
 		reissueTPIN.setFileHeaderMap(headerMap);
