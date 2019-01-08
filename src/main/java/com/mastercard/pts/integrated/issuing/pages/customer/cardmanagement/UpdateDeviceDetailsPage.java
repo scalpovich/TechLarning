@@ -26,9 +26,6 @@ public class UpdateDeviceDetailsPage extends AbstractCardManagementPage {
 
 	private static final Logger logger = LoggerFactory.getLogger(UpdateDeviceDetailsPage.class);
 
-	@PageElement(findBy = FindBy.NAME, valueToFind = "devicePromoPlanCode:input:dropdowncomponent")
-	private MCWebElement devicePlanDDwn;
-	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "devicePromoPlanCode:input:dropdowncomponent")
 	protected MCWebElement devicePromotionPlanDdwn;
 	
@@ -38,21 +35,17 @@ public class UpdateDeviceDetailsPage extends AbstractCardManagementPage {
 	private String editLink = "Edit Record";
 
 	public void updateDevicePlanForDevice(Device device){
-
 		logger.info("Update device details for device number  {} ", device.getDeviceNumber());
-		enterText(deviceNumber, device.getDeviceNumber());
-		clickSearchButton();
+		searchDevice(device);
 		waitForRow();
 		editFirstRecord();
-
 		runWithinPopup("Edit Device Details", () -> {
-			waitForElementVisible(devicePlanDDwn);
-			selectByText(devicePlanDDwn, device.getDevicePromotionPlan());
+			waitForElementVisible(devicePromotionPlanDdwn);
+			selectByText(devicePromotionPlanDdwn, device.getDevicePromotionPlan());
 			clickSaveButton();
 		});
 		verifyRecordMarkedForUpdationStatusSuccess();
 	}
-	
 	
 	
 	public void enterDeviceNumber(String device){

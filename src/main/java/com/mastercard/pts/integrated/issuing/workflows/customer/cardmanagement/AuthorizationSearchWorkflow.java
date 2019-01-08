@@ -117,15 +117,17 @@ public class AuthorizationSearchWorkflow {
 			condition = actualCodeAction.contains(type) && actualDescription.contains(state);
 		
 		String billingAmountValue = authSearchPage.getCellTextByColumnName(1, "Billing Amount");
-		 context.put(ConstantData.BILLING_AMOUNT, billingAmountValue);
+		context.put(ConstantData.BILLING_AMOUNT, billingAmountValue);
 		if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && !ConstantData.PRE_AUTH.equalsIgnoreCase(type)){
 			device.setDeviceVelocity(TRANSACTION_VELOCITY);
 			device.setDeviceAmountUsage(Double.parseDouble(billingAmountValue)); 
+			
 		}else if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && actualDescription.contains("Partial Reversal")){
 			device.setDeviceAmountUsage(-Double.parseDouble(billingAmountValue));
 			context.put(ContextConstants.TRANSACTION_AMT_DIFFERENCE, new BigDecimal(billingAmountValue));
+			
 		}else if(ConstantData.TX_SUCESSFUL_MESSAGE.equalsIgnoreCase(actualCodeAction) && actualDescription.contains("Reversal")){
-			device.setDeviceVelocity(-1);
+			device.setDeviceVelocity(-TRANSACTION_VELOCITY);
 			device.setDeviceAmountUsage(-Double.parseDouble(billingAmountValue));
 		}
 

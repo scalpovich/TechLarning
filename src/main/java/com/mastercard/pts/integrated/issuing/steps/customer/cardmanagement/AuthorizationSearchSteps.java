@@ -210,7 +210,7 @@ public class AuthorizationSearchSteps {
 		TransactionFeePlan txnFeePlan = TransactionFeePlan.getAllTransactionFee(provider);
 		String transactionFeeAppliedFromScreen = authorizationSearchWorkflow.getTransactionFee();
 		if("VARIABLE_FEE".equalsIgnoreCase(feeType)){
-			String calculatedTxnFee				   = authorizationSearchWorkflow.calculateTransactionFee(txnFeePlan);
+			String calculatedTxnFee = authorizationSearchWorkflow.calculateTransactionFee(txnFeePlan);
 			assertThat("Incorrect Transaction fee is applied on transaction ",transactionFeeAppliedFromScreen,equalTo(calculatedTxnFee));
 		}else if ("FIXED_FEE".equalsIgnoreCase(feeType)){
 			assertThat("Incorrect Transaction fee is applied on transaction ",transactionFeeAppliedFromScreen,equalTo(txnFeePlan.getfixedTxnFees()));
