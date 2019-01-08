@@ -67,7 +67,7 @@ public class TransactionSteps {
 	private static final String IPMINCOMING = "ipm incoming";
 	private static Boolean sameCard = false;
 	private static final String ATC = "ATC" ;
-	private static final int CONVERSATION_FACTOR = 100 ;
+	private static final int CONVERSION_FACTOR = 100 ;
 	public boolean atcCounterFlag = false;
 
 	@Autowired
@@ -670,7 +670,7 @@ public class TransactionSteps {
 	public void setTransactionAmountFromStep(String amount){
 		Device device = context.get(ContextConstants.DEVICE);
 		if(device.getExchangeRate()==null){
-			device.setTransactionAmount(Integer.toString((Integer.parseInt(amount)*CONVERSATION_FACTOR)));
+			device.setTransactionAmount(Integer.toString((Integer.parseInt(amount)*CONVERSION_FACTOR)));
 		}
 		else{
 			Double moderatedAmount = (Double.parseDouble(amount))/(Double.parseDouble(device.getExchangeRate()));
@@ -693,7 +693,7 @@ public class TransactionSteps {
 	@When("user updates transaction amount to $amount")
 	@Given("user updates transaction amount to $amount")
 	public void userSetTransactionAmount(Double amount){
-		int i = new Double(amount * CONVERSATION_FACTOR).intValue(); 
+		int i = new Double(amount * CONVERSION_FACTOR).intValue(); 
 		Device device = context.get(ContextConstants.DEVICE);
 		device.setTransactionAmount(Integer.toString(i));
 		context.put(ContextConstants.DEVICE, device);
@@ -768,7 +768,7 @@ public class TransactionSteps {
 	@Then("user performs partial reversal transaction of type $type with reversal amount $amount")
 	public void partialReverseTransaction(String type, int amount ){
 		String transaction = context.get(ConstantData.TRANSACTION_NAME);
-		transactionWorkflow.partialReverseTransaction(transaction, type,String.valueOf(amount*CONVERSATION_FACTOR));
+		transactionWorkflow.partialReverseTransaction(transaction, type,String.valueOf(amount*CONVERSION_FACTOR));
 	}
 	
 	@When("verify that the device event fees for $reason is levied for $cardType card")
