@@ -46,7 +46,8 @@ public class AuthorizationSearchSteps {
 	@Then("search $type authorization and verify $state status")
 	public void thenUserSearchDeviceNumerWithTodaysDate(String type, String state) {
 		Device device = context.get(ContextConstants.DEVICE);
-		authorizationSearchWorkflow.verifyAuthTransactionSearch(type, state,device);
+		device = authorizationSearchWorkflow.verifyAuthTransactionSearch(type, state,device);
+		context.put(ContextConstants.DEVICE, device);
 	}
 
 	@When("assert $response response with $code AuthDecline Code and $descriptionBrief as description")

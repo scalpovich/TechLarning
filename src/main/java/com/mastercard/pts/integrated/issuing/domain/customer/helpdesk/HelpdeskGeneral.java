@@ -58,6 +58,7 @@ public class HelpdeskGeneral {
 	private String newCreditLimit;
 	private String customerType;
 	private String reason;
+	private boolean isFeesApplied;
 	
 	
 	public String getCustomerType() {
@@ -278,5 +279,13 @@ public class HelpdeskGeneral {
 	@Override
 	public String toString() {
 		return "HelpdeskGeneral [productType=" + productType + ", cardPackId=" + cardPackId + ", serviceCode=" + serviceCode + ", notes=" + notes + ", deviceNumber=" + deviceNumber + "]";
+	}
+
+	public boolean isFeesApplied() {
+		return isFeesApplied;
+	}
+
+	public void setFeesApplied(boolean isFeesApplied) {
+		this.isFeesApplied = isFeesApplied;
 	}
 }

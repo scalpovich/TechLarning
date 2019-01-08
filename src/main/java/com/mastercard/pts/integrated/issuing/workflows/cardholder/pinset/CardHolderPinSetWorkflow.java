@@ -11,18 +11,18 @@ public class CardHolderPinSetWorkflow extends AbstractBaseFlows {
 
 		
 	@Autowired
-	Navigator navigation;
-	
+	Navigator navigation;	
 	
 	@Autowired
 	DevicePinSetPage devicePinSetpage;
 	
 	public void openPinSetPage(){
-		navigation.navigateToPage(DevicePinSetPage.class);
+		
 	}
 	
 	public void selectDeviceFromDeviceLst(String deviceFrPinSet){
-		devicePinSetpage.selectDeviceForPinSet("Device_Number");
+		DevicePinSetPage page = navigation.navigateToPage(DevicePinSetPage.class);
+		page.selectDeviceForPinSet("Device_Number");
 	}
 	
 	

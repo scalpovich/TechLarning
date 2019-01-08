@@ -64,7 +64,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final String CURRENT_AVAILABLE_BALANCE = "Current Available Balance";
 	private static final String WALLET_NUMBER = "Wallet Number";
 	private static final String REGISTERED = "registered";
-	private static final String NOT_REGISTERED = "notregistered";
+	private static final String NOT_REGISTERED = "notregistered";	
 	private static final String NOTE_WALLET_FUND_TRANSFER = "Notes for Wallet to Wallet transfer";
 	private static final String SERV_CODE_TRANSACTION_PASSWORD = "250";
 	private static final String CHANGE_REGISTERED_EMAIL_ID = "Change Registered Email Id Request";
@@ -146,6 +146,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value = 'End Call']")
 	private MCWebElement endCallBtn;
 
+	@PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody a img")
+	private MCWebElement editDeviceLink;
+	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value = 'Transactions']")
 	private MCWebElement transactionsBtn;
 
@@ -314,9 +317,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
   
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Installment :']/../../following-sibling::td[3]/span/span")
 	private MCWebElement loanInstallmentOutStandingLabel;
-	
-    @PageElement(findBy = FindBy.CSS, valueToFind = ".dataview tbody a img")
-	private MCWebElement editDeviceLink;
 	
     @PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Wallet Number')]/../following-sibling::td/span/span")
 	private MCWebElement txtWalletNumber;
@@ -685,9 +685,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 
 	public void setupDeviceCurrency(HelpdeskGeneral helpdeskGeneral) {
-		logger.info("Setup Device Currency: {}", "helpdeskGeneral.getCardPackId()");
+		logger.info("Setup Device Currency: {}", helpdeskGeneral.getDeviceNumber());
 		selectServiceCode(helpdeskGeneral.getCurrencySetupServiceCode());
-		clickGoButton();
+		clickGoButton();		
+		SimulatorUtilities.wait(5000);
 		runWithinPopup("312 - Currency Setup", () -> {
 			setupCurrency(helpdeskGeneral.getCurrencyWithPriority());
 			enterNotes(helpdeskGeneral.getNotes());
@@ -807,22 +808,23 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
-		clickFirstRowEditLink();
+		SimulatorUtilities.wait(5000);
+		editDeviceLink.click();
 		clickWalletDetailsTab();
-		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
-		int rowCount = driver().findElements(By.xpath(ROWCOUNT_REMITTANCE)).size();
+		SimulatorUtilities.wait(5000);
+		int rowCount = driver().findElements(By.xpath("//div[@class='tab_container_privileges']//table[@class='dataview']/tbody/tr")).size();
 		values = helpdeskGeneral.getCurrencyWithPriority().trim().split(",");
-		for (int i = 0; i < values.length; i++) {
-			for (int j = 1; j <= rowCount; j++) {
-				String[] data = values[i].trim().split(":");
-				String currencyName = data[0].trim();
-				if (getCellTextByColumnNameInEmbeddedTab(j, "Wallet Currency").equalsIgnoreCase(currencyName)) {
-					device.setWalletNumber2(getCellTextByColumnNameInEmbeddedTab(j, "Wallet Number"));
-					count++;
-					break;
-				}
-			}
-		}
+			for (int i = 0; i < values.length ; i++){
+				for (int j = 1; j <= rowCount; j++){
+					String[] data = values[i].trim().split(":");
+					String currencyName = data[0].trim();
+					if (getCellTextByColumnNameInEmbeddedTab(j, "Wallet Currency").equalsIgnoreCase(currencyName)){
+						device.setWalletNumber2(getCellTextByColumnNameInEmbeddedTab(j, "Wallet Number"));
+						count++;
+						break;
+					}
+				}				
+			}			
 		clickEndCall();
 		return (count == values.length) ? true : false;
 	}
@@ -878,7 +880,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(productTypeSearchDDwn, device.getAppliedForProduct());
 		WebElementUtils.enterText(deviceNumberSearchTxt, device.getDeviceNumber());
 		clickSearchButton();
-		clickFirstRowEditLink();
+		SimulatorUtilities.wait(5000);// this to wait till the table gets loaded
+		editDeviceLink.click();
 		clickWalletDetailsTab();
 		String walletNumber = getFirstRecordCellTextByColumnNameInEmbeddedTab(WALLET_NUMBER);
 		clickEndCall();
@@ -1096,7 +1099,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByValue(toDeviceDropDn, deviceToTransfer);
 	}
 
-	public void enterAmountToDebit(String amountToTransfer) {
+	public void enterAmountToTransfer(String amountToTransfer){
 		WebElementUtils.enterText(debitAmtInpt, amountToTransfer);
 	}
 
@@ -1113,12 +1116,13 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickGoButton();
 		runWithinPopup("465 - Wallet To Wallet Transfer", () -> {
 			selectWalleFromTransfer(device.getWalletNumber());
-			logger.info("Wallet from transfer the fund: {}", device.getWalletNumber());
-			selectDeviceToTransferFunds(device.getDeviceNumber());
-			logger.info("Wallet to transfer the fund: {}", device.getNewWalletNumber());
+			logger.info("Transfer funds from {} wallet", device.getWalletNumber());
+			selectDeviceToTransferFunds(device.getDeviceNumber());			
+			WebElementUtils.scrollDown(driver(), 0, 400);
+			logger.info("Transfer funds to {} wallet", device.getNewWalletNumber());
 			selectWalleToTransfer(device.getNewWalletNumber());
-			enterAmountToDebit(device.getTransactionAmount());
-			enterNoteForTransaction(NOTE_WALLET_FUND_TRANSFER);
+			enterAmountToTransfer(device.getTransactionAmount());			
+			enterNoteForTransaction(String.format("fund deposited to wallet {}", device.getNewWalletNumber()));
 			clickSaveButtonPopup();
 			clickOKButtonPopup();
 		});
@@ -1401,6 +1405,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		HashMap<String,BigDecimal> creditLimit=new HashMap<>();
 		WebElementUtils.elementToBeClickable(currentStatusAndLimitTab);
 		clickWhenClickable(currentStatusAndLimitTab);	
+		logger.info("Credit limit noted down : {} ", creditLimit);		
 		creditLimit.put(ConstantData.CLIENT_LIMIT,new BigDecimal(clientCreditLimitLabel.getText()));
 		creditLimit.put(ConstantData.AVAIL_CLIENT_LIMIT,new BigDecimal(availClientCreditLimitLabel.getText()));
 		
@@ -1409,7 +1414,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 		creditLimit.put(ConstantData.CARD_LIMIT,new BigDecimal(cardCreditLimitLabel.getText()));	
 		creditLimit.put(ConstantData.AVAIL_CARD_LIMIT,new BigDecimal(availCardCreditLimitLabel.getText()));	
-		logger.info("Credit limit noted down : {} ", creditLimit);	
 		clickEndCall();		
 		return creditLimit;
 	}
@@ -1931,7 +1935,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickGoButton();
 		runWithinPopup("221 - Withdraw Device from Stop-list", () -> {
 			selectWithdrawalReason(helpdeskGeneral.getReason());
-			selectApplyFeesChkBx(false);
+			selectApplyFeesChkBx(helpdeskGeneral.isFeesApplied());
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();
 			verifyOperationStatus();

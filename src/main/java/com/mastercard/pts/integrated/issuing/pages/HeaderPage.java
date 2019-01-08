@@ -35,19 +35,21 @@ public class HeaderPage extends AbstractPage{
 				WebElementUtils.visibilityOf(signOutCustomerLnk));
 	}
 
-	public void signOutCustomer(){
-		boolean flag=true; 
+	public void signOutCustomer() {
+		boolean flag = true;
 		int counter = 0;
-		do{
-			try{
+		do {
+			try {
 				signOutCustomerLnk.click();
-				flag=false;
-			}catch(Exception e){
+				flag = false;
+			} catch (Exception e) {
 				SimulatorUtilities.wait(2000);
 				counter++;
-			}}while(flag && counter < 10);
+			}
+		} while (flag && counter < 10);
 
-		} 
+	}
+  
     
     public void signOutCollect(){
     	signOutCollectLnk.click();

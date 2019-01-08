@@ -1,16 +1,18 @@
 package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
-
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Objects;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePromotionPlan;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
@@ -26,14 +28,14 @@ public class UpdateDeviceDetailsPage extends AbstractCardManagementPage {
 
 	@PageElement(findBy = FindBy.NAME, valueToFind = "devicePromoPlanCode:input:dropdowncomponent")
 	private MCWebElement devicePlanDDwn;
-
-	@Override
-	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(
-				WebElementUtils.elementToBeClickable(deviceNumber),
-				WebElementUtils.elementToBeClickable(applicationNumber),
-				WebElementUtils.elementToBeClickable(batchCreateNum));
-	}
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "devicePromoPlanCode:input:dropdowncomponent")
+	protected MCWebElement devicePromotionPlanDdwn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind = "save")
+	protected MCWebElement saveBtn;
+	
+	private String editLink = "Edit Record";
 
 	public void updateDevicePlanForDevice(Device device){
 
@@ -49,6 +51,43 @@ public class UpdateDeviceDetailsPage extends AbstractCardManagementPage {
 			clickSaveButton();
 		});
 		verifyRecordMarkedForUpdationStatusSuccess();
+	}
+	
+	
+	
+	public void enterDeviceNumber(String device){
+		WebElementUtils.enterText(deviceNumber, device);
+	}	
+	
+	public void searchDevice(Device device){
+		enterDeviceNumber(device.getDeviceNumber());
+		clickSearchButton();		
+	}
+	
+	public void openEditDevice(){		
+		Element(String.format("//img[@alt='%s']", editLink)).click();
+	}
+	
+	public void updateDevieWithPromotionPlan(Device device,DevicePromotionPlan promotionPlan){
+		searchDevice(device);
+		openEditDevice();
+		runWithinPopup("Edit Device Details",()->{			
+			if(Objects.nonNull(promotionPlan.getPlanDescription())){
+				selectByVisibleText(devicePromotionPlanDdwn, promotionPlan.buildDescriptionAndCode());
+			}else{
+				selectByVisibleText(devicePromotionPlanDdwn, device.getAccountNumber());
+			}
+			clickWhenClickable(saveBtn);
+			verifyRecordMarkedForUpdationStatusSuccess();
+		});
+	}
+	
+	@Override
+	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
+		return Arrays.asList(
+				WebElementUtils.elementToBeClickable(deviceNumber),
+				WebElementUtils.elementToBeClickable(applicationNumber),
+				WebElementUtils.elementToBeClickable(batchCreateNum));
 	}
 
 }

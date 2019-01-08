@@ -170,6 +170,7 @@ public class DeviceSteps {
 	@Then("$type device is created using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
 	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceForGivenCustomerUsingNewDevice(String type,String customerType,String applicationType,String subApplicationType,String deviceType) {
 		Device device = Device.createWithProviderForOtherDetails(provider);
+		device.setProductType(ProductType.fromShortName(type));
 		device.setAppliedForProduct(ProductType.fromShortName(type));
 		device.setCustomerType(customerType);
 		device.setApplicationType(applicationType);
@@ -204,6 +205,7 @@ public class DeviceSteps {
 	@Then("$type device is created with increased limit using new device screen for $customerType and $applicationType and $subApplicationType and $deviceType")
 	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceForGivenCustomerUsingNewDeviceWithLimit(String type,String customerType,String applicationType,String subApplicationType,String deviceType) {
 		Device device = Device.createWithProviderForOtherDetails(provider);
+		device.setProductType(ProductType.fromShortName(type));
 		device.setAppliedForProduct(ProductType.fromShortName(type));
 		device.setCustomerType(customerType);
 		device.setApplicationType(applicationType);
@@ -231,6 +233,7 @@ public class DeviceSteps {
 	@Then("$type device is created using new Application screen for $customerType and \"$applicationType\" and $subApplicationType and $deviceType")
 	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceForGivenCustomerUsingNewApplication(String type,String customerType,String applicationType,String subApplicationType,String deviceType) {
 		Device device = Device.createWithProviderForOtherDetails(provider);
+		device.setProductType(ProductType.fromShortName(type));
 		device.setAppliedForProduct(ProductType.fromShortName(type));
 		device.setCustomerType(customerType);
 		device.setApplicationType(applicationType);
@@ -256,6 +259,7 @@ public class DeviceSteps {
 	@Then("$type device is created with $existing batch using new Application screen for $customerType and $applicationType and $subApplicationType and $deviceType")
 	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceForGivenCustomerUsingNewApplicationWithSameBatch(String type,String existingBatch,String customerType,String applicationType,String subApplicationType,String deviceType) {
 		Device device = Device.createWithProviderForOtherDetails(provider);
+		device.setProductType(ProductType.fromShortName(type));
 		device.setAppliedForProduct(ProductType.fromShortName(type));
 		device.setCustomerType(customerType);
 		device.setApplicationType(applicationType);
@@ -282,6 +286,7 @@ public class DeviceSteps {
 	@Then("$type device is created using new device screen")
 	public void thenCreditDevicePlanAndProgramAreMadeAvailableForDeviceCreationUsingNewDevice(String type){
 		Device device = Device.createWithProviderForOtherDetails(provider);
+		device.setProductType(ProductType.fromShortName(type));
 		device.setAppliedForProduct(ProductType.fromShortName(type));
 		Program program = context.get(ContextConstants.PROGRAM);
 		device.setProgramCode(program.buildDescriptionAndCode());
@@ -301,6 +306,7 @@ public class DeviceSteps {
 	@Then("$type device is created using new device screen by data driven")
 	      public void thenCreditDevicePlanAndProgramAreMadeAvailableFroDeviceCreationUsingNewDeviceDataDriven(String type){
 		Device device = Device.createWithProviderForOtherDetails(provider);
+		device.setProductType(ProductType.fromShortName(type));
 		device.setAppliedForProduct(ProductType.fromShortName(type));		
 		sdnUncheckProgram(program.getProgramCode());
 		deviceWorkflow.createDevice(device);

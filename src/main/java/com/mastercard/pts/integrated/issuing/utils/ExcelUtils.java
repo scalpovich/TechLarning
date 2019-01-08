@@ -2,6 +2,7 @@ package com.mastercard.pts.integrated.issuing.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -26,11 +27,11 @@ public class ExcelUtils {
 
 		for (int i = 1; i < sh.getRows(); i++) {
 			String name = sh.getCell(0, i).getContents();
-			
+
 			if (name.isEmpty()) {
 				break;
 			}
-			
+
 			String value = sh.getCell(1, i).getContents();
 			map.put(name, value);
 		}
@@ -66,7 +67,7 @@ public class ExcelUtils {
 		}
 		return map;
 	}
-	
+
 	public static Map<String, String> readDataBySheetAndColumn(String excelClasspath,
 			String sheet, String columnName) {
 		try(InputStream inputStream = Thread.currentThread().getContextClassLoader()
@@ -76,7 +77,7 @@ public class ExcelUtils {
 			throw MiscUtils.propagate(e);
 		}
 	}
-	
+
 	public static Map<String, String> readDataByColumn(String excelClasspath, String columnName) {
 		try(InputStream inputStream = Thread.currentThread().getContextClassLoader()
 				.getResourceAsStream(excelClasspath)) {
@@ -85,10 +86,10 @@ public class ExcelUtils {
 			throw MiscUtils.propagate(e);
 		}
 	}
-	
+
 	private static Map<String, String> readData(InputStream inputStream, Optional<String> sheetName,
 			String transactionName)
-			throws BiffException, IOException {
+					throws BiffException, IOException {
 		Workbook workbook = null;
 		try {
 			workbook = Workbook.getWorkbook(inputStream);
@@ -100,7 +101,7 @@ public class ExcelUtils {
 			}
 		}
 	}
-	
+
 	public static String getFilePath() {
 		String filePath = System.getProperty("user.dir") + "/src/main/resources/config/" + System.getProperty("env") + "/TestData/" + Constants.TESTDATA + ".xlsx";
 		return filePath;
@@ -133,6 +134,23 @@ public class ExcelUtils {
 		connection.executeUpdate(strQuery);
 		connection.close();
 	}
+
+
+	public static Map getRowDataFromExcelThroughQuery(String strQuery) throws FilloException {
+		Map<String, String> map = new HashMap();
+		Fillo fillo = new Fillo();
+		Connection connection = fillo.getConnection(getFilePath());
+		Recordset recordset = connection.executeQuery(strQuery);
+		while (recordset.next()) {
+			for(String str : recordset.getFieldNames()){
+				map.put(str,recordset.getField(str));
+			}
+		}
+		recordset.close();
+		connection.close();
+		return map;
+	}
+
 
 	@SuppressWarnings("deprecation")
 	public static void insertDataIntoExcel(String strQuery) throws FilloException {

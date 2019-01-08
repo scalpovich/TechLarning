@@ -1,21 +1,18 @@
 package com.mastercard.pts.integrated.issuing.steps.customer.cardmanagement;
 
+import static org.junit.Assert.assertEquals;
+
+import java.io.File;
 import java.util.Map;
 import java.util.Objects;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import static org.junit.Assert.assertEquals;
-import java.io.File;
-
-import com.mastercard.pts.integrated.issuing.steps.customer.transaction.TransactionSteps;
 
 import org.jbehave.core.annotations.Composite;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +26,7 @@ import com.mastercard.pts.integrated.issuing.domain.ProgramType;
 import com.mastercard.pts.integrated.issuing.domain.SubApplicationType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ApplicationBusinessMandatoryFields;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ApplicationDocumentChecklist;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CarrierAcknowledgement;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardBillingCycle;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardCreditPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardPaymentBounceReason;
@@ -36,6 +34,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Cred
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditCardTransactionRulePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DedupePlan;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlanDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceJoiningAndMemberShipFeePlan;
@@ -52,6 +51,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Mark
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PrepaidStatementPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PrepaidStatementPlanDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SendToCarrier;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.StatementMessageDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.StatementMessagePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeePlan;
@@ -65,16 +65,12 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Wall
 import com.mastercard.pts.integrated.issuing.domain.provider.DataProvider;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
-import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.MCGFlows;
-import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramSetupWorkflow;
-import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.TransactionFeeWaiverPlanFlows;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CarrierAcknowledgement;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.SendToCarrier;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.CarrierAcknowledgementWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceTrackingWorkflow;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.MCGFlows;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramSetupWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.SendToCarrierWorkflow;
-import com.mastercard.pts.integrated.issuing.steps.customer.transaction.TransactionSteps;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.TransactionFeeWaiverPlanFlows;
 
 @Component
 public class ProgramSetupSteps {
@@ -1232,7 +1228,7 @@ public class ProgramSetupSteps {
 		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
 		program.setApplicationType(applicationType);
 		program.setSubApplicationType(subApplicationType);
-		if (program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE) || program.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE)) {
+		if (program.getApplicationType().contains(ApplicationType.SUPPLEMENTARY_DEVICE) || program.getApplicationType().contains(ApplicationType.ADD_ON_DEVICE) && program.getSubApplicationType().contains(ConstantData.EXISTING)) {
 			program.setDevicePlanPlan2(devicePlanSupplementary.buildDescriptionAndCode());
 		}
 		if (Objects.nonNull(dedupePlan)) {
@@ -1319,22 +1315,40 @@ public class ProgramSetupSteps {
 
 	@When("User fills Program section for $type product and program $programType")
 	public void userFillsProgramSection(String type, String programType) {
-		program = Program.createWithProvider(dataProvider, provider);
+		program = Program.createWithProvider(dataProvider, provider);		
+		InstitutionData data= context.get(CreditConstants.JSON_VALUES);
 		program.setProduct(ProductType.fromShortName(type));
 		program.setProgramType(programType);
+		
 		if (!program.getProduct().equalsIgnoreCase(ProductType.DEBIT)) {
-			program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
-			program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
+			if (Objects.nonNull(statementMessagePlan) && Objects.nonNull(marketingMessagePlan)) {
+				program.setOtherPlanStatementMessagePlan(statementMessagePlan.buildDescriptionAndCode());
+				program.setOtherPlanMarketingMessagePlan(marketingMessagePlan.buildDescriptionAndCode());
+			} else {
+				program.setOtherPlanStatementMessagePlan(data.getStatementMessagePlan());
+				program.setOtherPlanMarketingMessagePlan(data.getMarketingMessagePlan());
+			}
 		}
+		
 		program.setFirstWalletPlan(walletPlan.buildDescriptionAndCode());
 		program.setDevicePlanPlan1(devicePlan.buildDescriptionAndCode());
-
-		program.setDedupPlan(dedupePlan.buildDescriptionAndCode());
-		program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
-		program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
-		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID)) {
-			program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
+				
+		if (Objects.nonNull(dedupePlan) && Objects.nonNull(documentCheckListPlan) && Objects.nonNull(mccRulePlan)) {
+			program.setDedupPlan(dedupePlan.buildDescriptionAndCode());
+			program.setDocumentChecklistPlan(documentCheckListPlan.buildDescriptionAndCode());
+			program.setMccRulePlan(mccRulePlan.buildDescriptionAndCode());
+		} else {
+			program.setDedupPlan(data.getDedupePlanCode());
+			program.setDocumentChecklistPlan(data.getDocumentCheckListPlan());
+			program.setMccRulePlan(data.getMccRulePlan());
 		}
+		if (program.getProduct().equalsIgnoreCase(ProductType.PREPAID)){
+			if (Objects.nonNull(prepaidStatementPlan)) {
+				program.setPrepaidStatementPlan(prepaidStatementPlan.buildDescriptionAndCode());
+			} else {
+				program.setPrepaidStatementPlan(data.getPrepaidStatementPlan());
+			}
+		}	
 		programSetupWorkflow.createProgram(program, ProductType.fromShortName(type));
 		context.put(ContextConstants.PROGRAM, program);
 	}
@@ -1784,5 +1798,11 @@ public class ProgramSetupSteps {
 		device.setTransSetPresentmentTimeLimit(DEFAULT_PRESENTMENT_TIME_LIMIT);
 		device.setMerchantCode(MERCHANT_CODE);
 		programSetupWorkflow.editPlan(plan,device,program);
+	}
+	
+	@When("user updates device range $status status")
+	public void userUpdatesDeviceRangeStatus(String status){
+		Device device = context.get(ContextConstants.DEVICE);
+		programSetupWorkflow.inactivateDeviceRange(device, status);
 	}
 }

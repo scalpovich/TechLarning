@@ -3,10 +3,10 @@ package com.mastercard.pts.integrated.issuing.workflows.cardholder.virtualcard;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mastercard.pts.integrated.issuing.annotation.Workflow;
+import com.mastercard.pts.integrated.issuing.pages.cardholder.virtualcard.LimitedValidityVirtualCardCancelPage;
 import com.mastercard.pts.integrated.issuing.pages.cardholder.virtualcard.RequestForLimitedValidityVirtualCardPage;
 import com.mastercard.pts.integrated.issuing.pages.cardholder.virtualcard.VirtualCardDetailsPage;
 import com.mastercard.pts.integrated.issuing.pages.cardholder.virtualcard.VirtualCardHomePage;
-import com.mastercard.pts.integrated.issuing.pages.cardholder.virtualcard.VirtualCardLimitedValidityVirtualCardCancellationPage;
 import com.mastercard.pts.integrated.issuing.pages.cardholder.virtualcard.VirtualPrepaidCardRequestPage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.Navigator;
 
@@ -26,7 +26,7 @@ public class CardHolderUiVerificationVirtualCardWorkflow {
 	}
 
 	public void verifyVirtualCardLimitedValidityVirtualCardCancellationPage() {
-		VirtualCardLimitedValidityVirtualCardCancellationPage page = navigator.navigateToPage(VirtualCardLimitedValidityVirtualCardCancellationPage.class);
+		LimitedValidityVirtualCardCancelPage page = navigator.navigateToPage(LimitedValidityVirtualCardCancelPage.class);
 		page.verifyUiOperationStatus();
 	}
 

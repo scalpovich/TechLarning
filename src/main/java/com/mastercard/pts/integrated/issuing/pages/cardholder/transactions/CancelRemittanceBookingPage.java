@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages.cardholder.transactions;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.mastercard.pts.integrated.issuing.domain.TransactionsNav;
+import com.mastercard.pts.integrated.issuing.domain.cardholder.CardHolderTransactions;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -37,6 +39,18 @@ public class CancelRemittanceBookingPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="")
 	private MCWebElement confirmCashRemittanceBookingMsg;
 	
+	@PageElement(findBy = FindBy.ID, valueToFind="mpts_cardHolderPortal_button_submit")
+	private MCWebElement cashRemittanceSubmitBtn;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="txnPassword")
+	private MCWebElement transactionPassTxt;
+	
+	@PageElement(findBy = FindBy.NAME, valueToFind="remarks")
+	private MCWebElement transactionRemarkTxt;
+	
+	@PageElement(findBy = FindBy.X_PATH, valueToFind="//*[@class='sectionHead']/td/../following-sibling::tr[1]/td")
+	private MCWebElement responseLbl;
+	
 	public void clickOnOkBtn(){
 		ClickButton(cancelRemittanceOkBtn);
 	}
@@ -55,10 +69,22 @@ public class CancelRemittanceBookingPage extends AbstractBasePage {
 		return getTextFromPage(masterDetailContentTitle);
 	}
 	
-	public String checkNoDataFoundMsg(){
-		return getTextFromPage(noDataFoundMsg);
-	}
-
+		
+	public String cancelRemittanceRequst(CardHolderTransactions cardhlTran){
+		if(!responseLbl.getText().contains("No data found")){			
+			String locator = String.format("//*[@class='dataview-div']//*[@id='%s']",cardhlTran.getRemittanceRefnumber());
+			driver().findElement(By.xpath(locator)).click();
+			cashRemittanceSubmitBtn.click();
+			waitForLoaderToDisappear();
+			enterText(transactionPassTxt, cardhlTran.getTransctionPassword());
+			enterText(transactionRemarkTxt, cardhlTran.getTransactionRemark());	
+			waitForLoaderToDisappear();
+			return responseLbl.getText();
+		}else{
+			return responseLbl.getText();
+		}
+	}	
+	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
 		return Arrays.asList(WebElementUtils.visibilityOf(masterDetailContentTitle));

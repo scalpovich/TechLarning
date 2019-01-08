@@ -598,7 +598,7 @@ public class HelpDeskSteps {
 	@Given("user verifies available $type limit for card after transaction")
 	@When("user verifies available $type limit for card after transaction")
 	@Then("user verifies available $type limit for card after transaction")
-	@Alias("user verifies available $type limit")
+	@Alias("user verifies available $type limit type")
 	public void whenUserVerifyLimitThroughHelpDesk(String type) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		HashMap<String,BigDecimal> creditLimit;
@@ -783,6 +783,7 @@ public class HelpDeskSteps {
 		}
 	}
 
+	@When("currency setup for device")
 	@Then("currency setup for device")
 	public void searchDevice() {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
@@ -807,12 +808,9 @@ public class HelpDeskSteps {
 
 	@When("wallet to wallet transfer selected account")
 	public void walletToWalletTransfer() {
-		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
-		Device device = context.get(ContextConstants.DEVICE);
-		thenUserNavigatesToGeneralInHelpdesk();
-		helpdeskWorkflow.searchByDeviceNumber(device);
-		helpdeskWorkflow.clickCustomerCareEditLink();
-		helpdeskWorkflow.walletToWalletTransfer(device);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);		
+		thenUserNavigatesToGeneralInHelpdesk();		
+		helpdeskWorkflow.walletToWalletTransfer(context.get(ContextConstants.DEVICE));
 	}
 
 	@When("wallet to wallet transfer for general purpose account")
@@ -976,11 +974,14 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.raiseStoplistRequest(device, helpdeskGeneral);
 	}
 
-	@When("user withdraws the stoplisted device")
-	public void withdrawStoplistedDevice() {
+	@When("user withdraws the stoplisted device $withOrWithout fees")
+	public void withdrawStoplistedDevice(@Named("withOrWithout") String feesApplied) {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		helpdeskGeneral.setReason(provider.getString(WITHDRAWAL_REASON));
+		if("with".equalsIgnoreCase(feesApplied)) {
+			helpdeskGeneral.setFeesApplied(true);
+		}
 		helpdeskWorkflow.withdrawStoplistDeviceFlows(helpdeskGeneral, device);
 	}
 
@@ -993,9 +994,10 @@ public class HelpDeskSteps {
 				equalTo(value));
 	}
 	
-	@Then("user raises $limittype credit limit change request for $customerType")
-	@Given("user raises $limittype credit limit change request for $customerType")
-	@When("user raises $limittype credit limit change request for $customerType")
+	
+	@Given("user creates $limitType credit limit change request for $customerType Type")
+	@When("user creates $limitType credit limit change request for $customerType Type")
+	@Then("user creates $limitType credit limit change request for $customerType Type")
 	public void userRaisesCreditLimitChangeRequestThroughHelpdesk(String limitType,String customerType) {
 		helpdeskGeneral = HelpdeskGeneral.createWithProviderWithCreditCardLimits(provider);
 		helpdeskGeneral.setLimitType(limitType);

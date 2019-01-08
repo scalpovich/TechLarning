@@ -4,23 +4,29 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.mastercard.pts.integrated.issuing.domain.DeviceEventBasedFee;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceEventBasedFeePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionSearchDetails;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
+import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.SimulatorUtilities;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,13 +89,17 @@ public class TransactionSearchPage extends AbstractBasePage {
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//*[contains(text(),'Reconciliation Status')]//following-sibling::td[2]/select")
 	private MCWebElement reconciliationStatusDDwn;
 	
-	private final String DUPLICATE_CURRENCY_PRESENTMENT = "Differential currency presentment";
+	private final String DUPLICATE_CURRENCY_PRESENTMENT = "Duplicate presentment";
 	private final String UNMATCH_PRESENTMENT = "Unmatched Presentment";
 	private final String RECONCILIATION_STATUS_OPTIONS = "//*[contains(text(),'Reconciliation Status')]//following-sibling::td[2]/select/option";
 	
 	private String authorizationStatus;
 
 	List<String> joiningAndMembershipFees = new ArrayList();
+	
+	private String cardFees = "//table[@class='dataview']/tbody/tr//span[contains(.,'%s')]/../preceding-sibling::td[@class='rightalign']";
+	
+	private String deviceFee = "";
 	
 	public void selectFromDate(LocalDate date)
 	{
@@ -169,7 +179,6 @@ public class TransactionSearchPage extends AbstractBasePage {
 	}
 
 	public String searchTransactionWithDeviceAndGetStatus(Device device, TransactionSearch ts) {
-		int i;
 		logger.info("Select product {}", device.getProductType());
 		WebElementUtils.selectDropDownByVisibleText(productTypeSelect, device.getProductType());
 		logger.info("Search transaction for device {}", device.getDeviceNumber());
@@ -181,11 +190,8 @@ public class TransactionSearchPage extends AbstractBasePage {
 		WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, "Transaction Date [T]");
 		clickSearchButton();
 		waitForWicket();
-		for (i = 1; i < 4; i++) {
-			if ("2".equals(getCellTextByColumnName(i, "Sequence Number")))
-				break;
-		}
-		return getCellTextByColumnName(i, "Description");
+		String xPath = String.format(".//td/span[contains(text(),'%s')]", "Wallet to Wallet Transfer(Credit))");
+		return getFinder().getWebDriver().findElement(By.xpath(xPath)).getText();
 	}
 
 	public List<String> searchTransactionWithDeviceAndGetJoiningAndMemberShipFees(Device device, TransactionSearch ts, Boolean membershipFlag) {
@@ -254,5 +260,51 @@ public class TransactionSearchPage extends AbstractBasePage {
 		transactionDetails.setReversal(getCellTextByColumnName(i, "Reversal"));		
 		return transactionDetails;			
 	}
-
+	
+	public void searchTransactionWithDeviceFee(Device device, TransactionSearch ts) {
+		logger.info("Select product {}", device.getProductType());
+		WebElementUtils.selectDropDownByVisibleText(productTypeSelect, device.getProductType());
+		logger.info("Search transaction for device {}", device.getDeviceNumber());
+		WebElementUtils.enterText(searchDeviceTxt, device.getDeviceNumber());
+		WebElementUtils.pickDate(fromDateTxt, LocalDate.now());
+		WebElementUtils.pickDate(toDateTxt, LocalDate.now());
+		waitForWicket();
+		WebElementUtils.elementToBeClickable(tranDateDDwn);
+		WebElementUtils.selectDropDownByVisibleText(tranDateDDwn, "Transaction Date [T]");
+		clickSearchButton();
+		SimulatorUtilities.wait(6000);
+		waitForWicket();
+	}
+	
+	public String getDeviceEventFeeFromTransactionSearch(String reason){
+		String [] deviceFeeList = {"Stolen", "First Renewal", "Lost", "Damaged", "Counterfeit", 
+				"Emergency Replace", "Erroneous Device", "Device Technology Upgrade",
+				"Early Renewal", "Others", "Stoplist Withdrawal"};
+		Arrays.asList(deviceFeeList).forEach(option ->{
+			if(option.equalsIgnoreCase(reason)){
+				deviceFee = Element(String.format(cardFees, DeviceEventBasedFee.fromShortName(reason).replace(reason.toUpperCase()+" ", ""))).getText();
+			}
+		} );
+		return deviceFee;
+	}
+	
+	public String getCardBasedFees(String cardType, 
+			DeviceEventBasedFeePlan deviceEventBasedPlan) {
+		String deviceEventFee = "";
+		switch (cardType) {
+		case "Normal":
+			deviceEventFee = deviceEventBasedPlan.getNormalCardFees();
+			break;
+		case "Photo":
+			deviceEventFee = deviceEventBasedPlan.getPhotoCardFees();
+			break;
+		case "Picture":
+			deviceEventFee = deviceEventBasedPlan.getPictureCardFees();
+			break;
+		default:
+			logger.info("The mentioned case is not present - ", cardType);
+			break;
+		}
+		return deviceEventFee;
+	}
 }
