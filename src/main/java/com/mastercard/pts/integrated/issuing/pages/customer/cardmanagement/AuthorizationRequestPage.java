@@ -3,6 +3,7 @@ package com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
@@ -49,7 +50,7 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 	private MCWebElement cvv2Txt;
 
 	private String statusMessage = null;
-	
+
 	public String addAuthorizationRequest(AuthorizationRequest request){
 		logger.info("Authorization Request: {}", request.getDeviceNumber());
 		clickAddNewButton();
@@ -63,12 +64,26 @@ public class AuthorizationRequestPage extends AbstractBasePage{
 			WebElementUtils.enterText(memoTxt, request.getMemo());
 			clickSaveButton();
 			SimulatorUtilities.wait(6000);
-			statusMessage = getMessageFromFeedbackPanel();
+			statusMessage = getFeedbackPanelInfoMessage();
 			logger.info("Authorization Status: " + statusMessage);
 			clickOkButton();
 			});
 		
 		return statusMessage;
+	}
+	
+	public String createInvalidAuthRequest(AuthorizationRequest request) {
+		logger.info("Invalid Authorization Request: {}", request.getDeviceNumber());
+		clickAddNewButton();
+		StringBuilder errorMessage = new StringBuilder();
+		runWithinPopup("Add Request", () -> {
+			WebElementUtils.enterText(deviceNumberTxt, request.getDeviceNumber());
+			WebElementUtils.asWebElement(deviceNumberTxt).sendKeys(Keys.TAB);
+			errorMessage.append(getErrorMessage());
+			clickCancelButton();
+		});
+		
+		return errorMessage.toString();
 	}
 	
 	public void verifyUiOperationStatus() {

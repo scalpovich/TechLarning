@@ -10,8 +10,8 @@ import static org.junit.Assert.assertTrue;
 import java.awt.AWTException;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Optional;
 import java.util.Objects;
-
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.Matchers;
 import org.jbehave.core.annotations.Alias;
@@ -67,6 +67,7 @@ public class TransactionSteps {
 	private static final String IPMINCOMING = "ipm incoming";
 	private static Boolean sameCard = false;
 	private static final String ATC = "ATC" ;
+	private static final int CONVERSION_FACTOR = 100 ;
 	public boolean atcCounterFlag = false;
 
 	@Autowired
@@ -599,27 +600,32 @@ public class TransactionSteps {
 	@Then("$tool test results are verified for $transaction")
 	@Given("$tool test results are verified for $transaction")
 	public void thenVisaTestResultsAreReported(String tool, String transaction) {
-		String testResults = null;
+		verifyVisaTransactionResult(getVisaTestResult(transaction), Optional.empty());
+	}
+	
+	@Then("verify that response code $code is received for $transaction")
+	public void verifyVisaResponseCode(String responseCode, String transaction) {
+		verifyVisaTransactionResult(getVisaTestResult(transaction), Optional.of(responseCode));
+	}
+	
+	public String getVisaTestResult(String transaction) {
 		String transactionName = visaTestCaseNameKeyValuePair.getVisaTestCaseToSelect(transaction);
 		logMessage("VISA Transaction Test Case Name : ", transactionName);
+		String testResults = transactionWorkflow.verifyVisaOutput(transactionName);
+		transactionWorkflow.browserMaximize();
+		transactionWorkflow.disconnectAndCloseVts();
+		return testResults;
+	}
 
-		testResults = transactionWorkflow.verifyVisaOutput(transactionName);
-		transactionWorkflow.browserMaximize(); // maximing browser
-
-		transactionWorkflow.disconnectAndCloseVts(); // closing VTS
-
-		if (transactionWorkflow.isContains(testResults, "validations is ok")) {
-			logMessage(PASS_MESSAGE, testResults);
-			assertTrue(PASS_MESSAGE + testResults, true);
-		} else if (transactionWorkflow.isContains(testResults, "validations not ok")) {
-			logger.error(FAIL_MESSAGE, testResults);
-			assertFalse(FAIL_MESSAGE + testResults, false);
-			throw new ValidationException(FAIL_MESSAGE + testResults);
+	private void verifyVisaTransactionResult(String testResults, Optional<String> responseCode) {		
+		final String VALIDATION_OK = "validations is ok"; 
+		final String F39_RESPONSE = "F39 response is : ";
+		
+		if (!responseCode.isPresent()) {
+			assertTrue(FAIL_MESSAGE + testResults, transactionWorkflow.isContains(testResults, VALIDATION_OK));			
 		} else {
-			logger.error(FAILED, testResults);
-			assertFalse(FAILED, false);
-			throw new ValidationException(FAILED);
-		}
+			assertTrue(FAIL_MESSAGE + testResults, transactionWorkflow.isContains(testResults, F39_RESPONSE + responseCode.get()));
+		}		
 	}
 
 	private void logMessage(String message1, String message2) {
@@ -664,7 +670,7 @@ public class TransactionSteps {
 	public void setTransactionAmountFromStep(String amount){
 		Device device = context.get(ContextConstants.DEVICE);
 		if(device.getExchangeRate()==null){
-			device.setTransactionAmount(Integer.toString((Integer.parseInt(amount)*100)));
+			device.setTransactionAmount(Integer.toString((Integer.parseInt(amount)*CONVERSION_FACTOR)));
 		}
 		else{
 			Double moderatedAmount = (Double.parseDouble(amount))/(Double.parseDouble(device.getExchangeRate()));
@@ -687,7 +693,7 @@ public class TransactionSteps {
 	@When("user updates transaction amount to $amount")
 	@Given("user updates transaction amount to $amount")
 	public void userSetTransactionAmount(Double amount){
-		int i = new Double(amount * 100).intValue(); 
+		int i = new Double(amount * CONVERSION_FACTOR).intValue(); 
 		Device device = context.get(ContextConstants.DEVICE);
 		device.setTransactionAmount(Integer.toString(i));
 		context.put(ContextConstants.DEVICE, device);
@@ -751,10 +757,23 @@ public class TransactionSteps {
 		transactionWorkflow.manipulateIPMData(status, trasactiondata);
 	}
 	
+	@Given("user performs reversal transaction of type $type")
+	@Then("user performs reversal transaction of type $type")
+	public void reverseTransaction(String type){
+		String transaction = context.get(ConstantData.TRANSACTION_NAME);
+		transactionWorkflow.reverseTransaction(transaction,type);
+	}
+	
+	@Given("user performs partial reversal transaction of type $type with reversal amount $amount")
+	@Then("user performs partial reversal transaction of type $type with reversal amount $amount")
+	public void partialReverseTransaction(String type, int amount ){
+		String transaction = context.get(ConstantData.TRANSACTION_NAME);
+		transactionWorkflow.partialReverseTransaction(transaction, type,String.valueOf(amount*CONVERSION_FACTOR));
+	}
+	
 	@When("verify that the device event fees for $reason is levied for $cardType card")
 	@Then("verify that the device event fees for $reason is levied for $cardType card")
-	public void verifyDeviceEventFeeLevied(@Named("cardType") String cardType, 
-			@Named("reason") String reason) {
+	public void verifyDeviceEventFeeLevied(@Named("cardType") String cardType, @Named("reason") String reason) {
 		Device device = context.get(ContextConstants.DEVICE);
 		TransactionSearch ts = TransactionSearch.getProviderData(provider);
 		DeviceEventBasedFeePlan deviceEventBasedPlan = context.get(ContextConstants.DEVICE_EVENT_BASED_FEE);
