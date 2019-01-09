@@ -1427,7 +1427,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public void resetPinRetryCounter(HelpdeskGeneral helpdeskGeneral) {
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
-		runWithinPopup(RESET_PIN_RETRY_COUNTER, () -> {
+		runWithinPopup(getServiceRequestPopupTitle(helpdeskGeneral.getServiceCode()), () -> {
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();
 			verifyOperationStatus();
@@ -1985,5 +1985,13 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	public void selectApplyFeesChkBx(boolean value) {
 		ClickCheckBox(chkBxApplyFees, value);
+	}
+	
+	private String getServiceRequestPopupTitle(String serviceCode){
+		return serviceCode.replaceAll("[^0-9]","") + " - " + serviceCode.replaceAll("[^a-zA-Z\\s]","").trim();
+	}
+	
+	public void printResponseMessageLog(){
+		logger.info("service request response message : {}", verifyServiceRequestStatus());
 	}
 }

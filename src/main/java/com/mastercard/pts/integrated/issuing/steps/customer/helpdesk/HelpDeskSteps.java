@@ -641,6 +641,7 @@ public class HelpDeskSteps {
 	/*
 	 * This method gets the device status using search product type and device number
 	 */
+	@Given("device has \"$deviceStatus\" status")
 	@When("device has \"$deviceStatus\" status")
 	@Then("device has \"$deviceStatus\" status")
 	public void thenDeviceHasStatus(String deviceStatus) {
@@ -1174,4 +1175,14 @@ public class HelpDeskSteps {
 		HashMap<String, String> helpdeskValues = helpdeskWorkflow.noteDownRequiredValues(device.getDeviceNumber());
 		assertThat("Invalid Unbilled amount", helpdeskValues.get(amountType), equalTo(ContextConstants.ZERO_UNBILLED_PAYMENT));
 	}
+	
+	@Then("service request $serviceCode should be fail for {blocked|expired} add-on device")
+	public void thenPinrequestShouldBeFailedForAddOnDevice(String serviceCode){
+		helpdeskGeneral.setServiceCode(serviceCode);			// Service Code e.g : Activate Device [108]
+		helpdeskGeneral.setNotes(MiscUtils.generateRandomNumberAsString(6));
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		assertTrue("Service request is not getting failed for non-normal device", helpdeskWorkflow.isRequestFailingForNonNormalDevice(helpdeskGeneral));
+	}
+	
+	
 }

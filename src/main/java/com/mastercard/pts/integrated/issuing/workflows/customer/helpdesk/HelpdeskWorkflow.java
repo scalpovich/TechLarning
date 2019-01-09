@@ -333,6 +333,18 @@ public class HelpdeskWorkflow {
 		return helpDeskPage.raiseLoanCancellationRequestToVerifyErroMessage(helpdeskGeneral,loanPlan,device);
 		
 	}
+	
+	public boolean isRequestFailingForNonNormalDevice(HelpdeskGeneral helpdeskGeneral){
+		try{
+			resetPinCounter(helpdeskGeneral);
+			return false;
+		} catch (Exception e){
+			e.printStackTrace();
+			helpDeskPage.printResponseMessageLog();
+			helpDeskPage.clickEndCall();
+			return true;
+		}
+	}
 }
 
 

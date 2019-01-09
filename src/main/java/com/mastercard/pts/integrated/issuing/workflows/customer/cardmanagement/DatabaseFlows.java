@@ -93,4 +93,9 @@ public class DatabaseFlows {
 		String queryString = "update Lyt_Promotion_Def set LYP_EXPIRY_DTTM='" + expiryDate + "' where LYP_PROMOTION_CODE='" + promoCode + "' and bank_code='" + instiCode + "'";
 		dbUtil.executeUpdate(queryString);
 	}
+	
+	public void updateDeviceExpiryDateAndStatus(Device device,String expiryDate,String statusCode){
+		String queryString = String.format("update device set EXPIRY_DATE ='%s' , STATUS_CODE='%s' where DEVICE_NUMBER = %s ", expiryDate,statusCode,device.getDeviceNumber());
+		dbUtil.executeUpdate(queryString);
+	}
 }
