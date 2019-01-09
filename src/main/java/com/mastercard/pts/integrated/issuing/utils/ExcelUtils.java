@@ -143,7 +143,7 @@ public class ExcelUtils {
 		Recordset recordset = connection.executeQuery(strQuery);
 		while (recordset.next()) {
 			for(String str : recordset.getFieldNames()){
-				map.put(str,recordset.getField(str));
+				map.put(str,recordset.getField(str).trim());
 			}
 		}
 		recordset.close();
