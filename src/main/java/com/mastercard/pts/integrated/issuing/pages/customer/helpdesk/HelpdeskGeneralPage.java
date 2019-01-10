@@ -2001,14 +2001,14 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	public String raiseReissueTPINRequest(HelpdeskGeneral helpdeskGeneral, 
 			String frame) {
-		String errorMessage = null;
+		String errorMessage = "";
 		editFirstRecord();
 		SimulatorUtilities.wait(2000);
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		SimulatorUtilities.wait(500);
 		clickGoButton();
 		SimulatorUtilities.wait(2000);
-		if(helpdeskGeneral.getIsServiceRequestAllowed() == false
+		if(!helpdeskGeneral.getIsServiceRequestAllowed() 
 				&& errorMessagePresence()) {
 			errorMessage = getErrorMessage();
 		} else {
