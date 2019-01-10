@@ -341,6 +341,18 @@ public class HelpdeskWorkflow {
 		helpdeskGeneral.setServiceCode(Constants.REISSUE_TPIN_REQ);
 		return helpDeskPage.raiseReissueTPINRequest(helpdeskGeneral,
 				Constants.FRAME_REISSUE_TPIN);
+}
+
+	public boolean isRequestFailingForNonNormalDevice(HelpdeskGeneral helpdeskGeneral){
+		try{
+			resetPinCounter(helpdeskGeneral);
+			return false;
+		} catch (Exception e){
+			e.printStackTrace();
+			helpDeskPage.printResponseMessageLog();
+			helpDeskPage.clickEndCall();
+			return true;
+		}
 	}
 }
 

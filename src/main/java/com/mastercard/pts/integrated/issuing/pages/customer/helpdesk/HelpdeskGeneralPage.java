@@ -426,7 +426,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private String errorMsgOfloanCancellation;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'Reason')]//following::select[@class = 'mandatoryFlag selectf']")
-	private MCWebElement stoplistReasonDDwn;
+	private MCWebElement reasonDDwn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'New Device Number :')]//following::input[@type='checkbox']")
 	private MCWebElement chkBxNewDeviceNumber;
@@ -1946,7 +1946,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 
 	public MCWebElement getstoplistReasonDDwn() {
-		return stoplistReasonDDwn;
+		return reasonDDwn;
 	}
 
 	public void selectNewDeviceCheckBox(boolean value) {
@@ -1993,5 +1993,39 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	public void printResponseMessageLog(){
 		logger.info("service request response message : {}", verifyServiceRequestStatus());
+	}
+	
+	public void selectReason(String reason) {
+		WebElementUtils.selectDropDownByVisibleText(reasonDDwn,
+				reason);
+	}
+	
+	public String raiseReissueTPINRequest(HelpdeskGeneral helpdeskGeneral, 
+			String frame) {
+		String errorMessage = null;
+		editFirstRecord();
+		SimulatorUtilities.wait(2000);
+		selectServiceCode(helpdeskGeneral.getServiceCode());
+		SimulatorUtilities.wait(500);
+		clickGoButton();
+		SimulatorUtilities.wait(2000);
+		if(helpdeskGeneral.getIsServiceRequestAllowed().equalsIgnoreCase("No") 
+				&& errorMessagePresence()) {
+			errorMessage = getErrorMessage();
+		} else {
+			runWithinPopup(
+					frame,
+					() -> {
+						selectReason(helpdeskGeneral.getReason());
+						SimulatorUtilities.wait(500);
+						enterNotes(helpdeskGeneral.getNotes());
+						clickSaveButton();
+						verifyOperationStatus();
+						clickOKButtonPopup();
+					});
+			SimulatorUtilities.wait(5000);
+			clickEndCall();
+		}
+		return errorMessage;
 	}
 }
