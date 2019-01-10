@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.UpdateWalletDetails;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletDetails;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.UpdateWalletDetailsWorkflow;
 
 
@@ -25,7 +25,7 @@ public class UpdateWalletDetailsSteps {
 	@When("user updates the wallet admin status to $adminStatus")
 	public void updateAdminStatusSteps(@Named("adminStatus") String adminStatus){
 		Device device = context.get(ContextConstants.DEVICE);
-		UpdateWalletDetails updateWalletDetails = UpdateWalletDetails.createWithProvider();
+		WalletDetails updateWalletDetails = WalletDetails.createWithProvider();
 		updateWalletDetails.setWalletNumber(device.getWalletNumber());
 		updateWalletDetails.setAdminStatus(adminStatus);
 		updateWalletDetailsWorkflow.updateDeviceDetails(updateWalletDetails);

@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.UpdateWalletDetails;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.WalletDetails;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
 import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
@@ -52,16 +52,16 @@ public class UpdateWalletDetailsPage extends AbstractBasePage {
 		WebElementUtils.enterText(walletNumberTxt, walletNumber);
 	}
 	
-	public void searchWalletUsingWalletNumber(UpdateWalletDetails updateWalletDetails) {
+	public void searchWalletUsingWalletNumber(WalletDetails updateWalletDetails) {
 		enterWalletNumber(updateWalletDetails.getWalletNumber());
 		clickSearchButton();
 	}
 	
-	public void changeWalletAdminStatus(UpdateWalletDetails updateWalletDetails) {
+	public void changeWalletAdminStatus(WalletDetails updateWalletDetails) {
 		WebElementUtils.selectDropDownByVisibleText(administrativeDDwn, updateWalletDetails.getAdminStatus());
 	}
 	
-	public void updateWalletAdminStatus(UpdateWalletDetails updateWalletDetails) {
+	public void updateWalletAdminStatus(WalletDetails updateWalletDetails) {
 		editFirstRecord();
 		SimulatorUtilities.wait(1000);
 		runWithinPopup("Edit Wallet", () -> {			

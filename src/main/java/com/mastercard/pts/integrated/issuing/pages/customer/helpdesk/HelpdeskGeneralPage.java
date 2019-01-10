@@ -1945,7 +1945,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return replaceDeviceRequestReasonDDwn;
 	}
 
-	public MCWebElement getstoplistReasonDDwn() {
+	public MCWebElement getReasonDDwn() {
 		return reasonDDwn;
 	}
 
@@ -1996,8 +1996,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 	
 	public void selectReason(String reason) {
-		WebElementUtils.selectDropDownByVisibleText(reasonDDwn,
-				reason);
+		WebElementUtils.selectDropDownByVisibleText(reasonDDwn, reason);
 	}
 	
 	public String raiseReissueTPINRequest(HelpdeskGeneral helpdeskGeneral, 
@@ -2009,7 +2008,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		SimulatorUtilities.wait(500);
 		clickGoButton();
 		SimulatorUtilities.wait(2000);
-		if(helpdeskGeneral.getIsServiceRequestAllowed().equalsIgnoreCase("No") 
+		if(helpdeskGeneral.getIsServiceRequestAllowed() == false
 				&& errorMessagePresence()) {
 			errorMessage = getErrorMessage();
 		} else {

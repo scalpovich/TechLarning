@@ -1186,9 +1186,9 @@ public class HelpDeskSteps {
 		helpdeskGeneral.setNotes(Constants.REISSUE_TPIN_NOTES);
 		helpdeskGeneral.setReason(provider.getString(REISSUE_TPIN_REASON));
 		if (deviceType.contains("lvvc"))
-			helpdeskGeneral.setIsServiceRequestAllowed("No");
+			helpdeskGeneral.setIsServiceRequestAllowed(false);
 		else
-			helpdeskGeneral.setIsServiceRequestAllowed("Yes");
+			helpdeskGeneral.setIsServiceRequestAllowed(true);
 		errorMessage = helpdeskWorkflow.raiseReissueTPINRequest(device, helpdeskGeneral);
 	}
 

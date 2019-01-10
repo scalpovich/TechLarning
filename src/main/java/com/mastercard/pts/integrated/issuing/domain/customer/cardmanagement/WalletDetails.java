@@ -1,13 +1,13 @@
 package com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement;
 
 
-public class UpdateWalletDetails {
+public class WalletDetails {
 	
 	private String walletNumber;
 	private String adminStatus;
 	
-	public static UpdateWalletDetails createWithProvider(){
-		return  new UpdateWalletDetails();
+	public static WalletDetails createWithProvider(){
+		return  new WalletDetails();
 	}
 	
 	public String getWalletNumber() {
