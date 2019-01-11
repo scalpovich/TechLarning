@@ -328,6 +328,15 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
     @PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Payment :']/../../following-sibling::td[2]/span/span")
 	private MCWebElement paymentUnbilledLbl;
+    
+    @PageElement(findBy=FindBy.X_PATH, valueToFind="//span[contains(text(),'Program Code')]//ancestor::table//tbody//td[3]//span")
+	MCWebElement programCodeLbl;
+	
+	@PageElement(findBy=FindBy.X_PATH, valueToFind="//span[contains(text(),'Device Plan Code')]//ancestor::table//tbody//td[4]//span")
+	MCWebElement devicePlanLbl;
+	
+	@PageElement(findBy=FindBy.X_PATH, valueToFind="//span[contains(text(),'Device Type')]/..//following-sibling::td//span//span")
+	MCWebElement deviceTypeLbl;
 
     @Autowired
 	TestContext context;
@@ -426,7 +435,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private String errorMsgOfloanCancellation;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'Reason')]//following::select[@class = 'mandatoryFlag selectf']")
-	private MCWebElement stoplistReasonDDwn;
+	private MCWebElement reasonDDwn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'New Device Number :')]//following::input[@type='checkbox']")
 	private MCWebElement chkBxNewDeviceNumber;
@@ -442,15 +451,6 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Apply Fees :']//following::input[@type='checkbox']")
 	private MCWebElement chkBxApplyFees;
-	
-	@PageElement(findBy=FindBy.X_PATH, valueToFind="//span[contains(text(),'Program Code')]//ancestor::table//tbody//td[3]//span")
-	MCWebElement programCodeLbl;
-	
-	@PageElement(findBy=FindBy.X_PATH, valueToFind="//span[contains(text(),'Device Plan Code')]//ancestor::table//tbody//td[4]//span")
-	MCWebElement devicePlanLbl;
-	
-	@PageElement(findBy=FindBy.X_PATH, valueToFind="//span[contains(text(),'Device Type')]/..//following-sibling::td//span//span")
-	MCWebElement deviceTypeLbl;
 
 	protected String getWalletNumber() {
 		WebElement walletNumber = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(INFO_WALLET_NUMBER));
@@ -1954,8 +1954,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return replaceDeviceRequestReasonDDwn;
 	}
 
-	public MCWebElement getstoplistReasonDDwn() {
-		return stoplistReasonDDwn;
+	public MCWebElement getReasonDDwn() {
+		return reasonDDwn;
 	}
 
 	public void selectNewDeviceCheckBox(boolean value) {
@@ -2002,6 +2002,39 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	public void printResponseMessageLog(){
 		logger.info("service request response message : {}", verifyServiceRequestStatus());
+	}
+	
+	public void selectReason(String reason) {
+		WebElementUtils.selectDropDownByVisibleText(reasonDDwn, reason);
+	}
+	
+	public String raiseReissueTPINRequest(HelpdeskGeneral helpdeskGeneral, 
+			String frame) {
+		String errorMessage = "";
+		editFirstRecord();
+		SimulatorUtilities.wait(2000);
+		selectServiceCode(helpdeskGeneral.getServiceCode());
+		SimulatorUtilities.wait(500);
+		clickGoButton();
+		SimulatorUtilities.wait(2000);
+		if(!helpdeskGeneral.getIsServiceRequestAllowed() 
+				&& errorMessagePresence()) {
+			errorMessage = getErrorMessage();
+		} else {
+			runWithinPopup(
+					frame,
+					() -> {
+						selectReason(helpdeskGeneral.getReason());
+						SimulatorUtilities.wait(500);
+						enterNotes(helpdeskGeneral.getNotes());
+						clickSaveButton();
+						verifyOperationStatus();
+						clickOKButtonPopup();
+					});
+			SimulatorUtilities.wait(5000);
+			clickEndCall();
+		}
+		return errorMessage;
 	}
 	
 	public Device noteDownDeviceDetails(Device device){

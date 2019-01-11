@@ -18,6 +18,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PinGenerationBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ReissueTPINDownload;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.VisaFeeCollection;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.BatchJobHistoryPage;
@@ -50,6 +51,8 @@ public class BatchProcessWorkflow extends MenuFlows{
 	private TestContext context;
 	
 	protected  static final Logger logger = LoggerFactory.getLogger(BatchProcessWorkflow.class); 
+	
+	private ProcessBatchesPage page;
 
 	public String createBulkDeviceRequest(BulkDeviceRequest request){	
 		DeviceProductionBulkDeviceRequestPage page = navigator.navigateToPage(DeviceProductionBulkDeviceRequestPage.class);
@@ -97,7 +100,7 @@ public class BatchProcessWorkflow extends MenuFlows{
 	}
 
 	public void processDownloadBatch(ProcessBatches batch) {
-		ProcessBatchesPage page = navigator.navigateToPage(ProcessBatchesPage.class);
+		page = navigator.navigateToPage(ProcessBatchesPage.class);
 		page.processDownloadBatch(batch);
 	}
 
@@ -168,4 +171,9 @@ public class BatchProcessWorkflow extends MenuFlows{
 		ResendPINRequestPage page = navigator.navigateToPage(ResendPINRequestPage.class);
 		page.processResendPinRequestBatch(batch);
 	}
+	
+	public String isValuePresentInTPINFile(File file, String value, Device device, ReissueTPINDownload reissueTPIN) {
+		return page.isValuePresentInTPINFile(file, value, device, reissueTPIN.getFileHeaderMap());
+	}
+	
 }

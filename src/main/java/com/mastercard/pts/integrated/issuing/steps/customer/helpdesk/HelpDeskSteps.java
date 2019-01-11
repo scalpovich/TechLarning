@@ -33,7 +33,6 @@ import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCas
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
@@ -85,6 +84,7 @@ public class HelpDeskSteps {
 	private static final String STOPLIST_NOTES = "STOPLIST_NOTES";
 	private static final String STOPLIST_REASON = "STOPLIST_REASON";
 	private static final String WITHDRAWAL_REASON = "WITHDRAWAL_REASON";
+	private static final String REISSUE_TPIN_REASON = "REISSUE_TPIN_REASON";
 	
 	@Autowired
 	private TestContext context;
@@ -110,6 +110,8 @@ public class HelpDeskSteps {
 
 	@Autowired
 	DeviceCreation deviceCreation;
+	
+	private String errorMessage = null;
 
 	@When("user navigates to General in Helpdesk")
 	public void thenUserNavigatesToGeneralInHelpdesk() {
@@ -1177,6 +1179,24 @@ public class HelpDeskSteps {
 		assertThat("Invalid Unbilled amount", helpdeskValues.get(amountType), equalTo(ContextConstants.ZERO_UNBILLED_PAYMENT));
 	}
 	
+	@When("user reissues TPIN request for $deviceType")
+	public void reissueTPINServiceRequest(@Named("deviceType") String deviceType) {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskGeneral.setNotes(Constants.REISSUE_TPIN_NOTES);
+		helpdeskGeneral.setReason(provider.getString(REISSUE_TPIN_REASON));
+		if (deviceType.contains("lvvc"))
+			helpdeskGeneral.setIsServiceRequestAllowed(false);
+		else
+			helpdeskGeneral.setIsServiceRequestAllowed(true);
+		errorMessage = helpdeskWorkflow.raiseReissueTPINRequest(device, helpdeskGeneral);
+	}
+
+	@Then("verify that the reissue TPIN request is not allowed for LVVC")
+	public void verifyRequestAllowed() {
+		assertThat("The reissue TPIN request is allowed for LVVC", errorMessage, equalTo(Constants.REISSUE_TPIN_LVVC_ERROR));
+	}
+	
 	@Then("service request $serviceCode should be fail for {blocked|expired} add-on device")
 	public void thenPinrequestShouldBeFailedForAddOnDevice(String serviceCode){
 		helpdeskGeneral.setServiceCode(serviceCode);			// Service Code e.g : Activate Device [108]
@@ -1217,6 +1237,4 @@ public class HelpDeskSteps {
         Assert.assertTrue("Card has insuficient funds for transaction", new Double(device.getAvailableBalance())> txAmountFromSheet);
         context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, new BigDecimal(device.getAvailableBalance()));
 	}
-	
-	
 }

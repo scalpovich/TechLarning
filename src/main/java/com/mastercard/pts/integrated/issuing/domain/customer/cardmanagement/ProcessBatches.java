@@ -25,9 +25,8 @@ public class ProcessBatches {
 	private String accountBalanceStatus;
 	private String accountUnpaidStatus;
 	
-	private static final String BATCH_TYPE = "UPLOAD [U]";
-//	private static final String BATCH_NAME = "Transaction Upload [TRANSACTION_UPLOAD]";
-	private static final String BATCH_NAME = "Load IPM Incoming File [IPM_INCOMING]";
+	private static final String BATCH_TYPE = "BATCH_TYPE";
+	private static final String BATCH_NAME = "BATCH_NAME";
 	private static String fileName;
 
 	public static ProcessBatches createWithProvider(KeyValueProvider provider){

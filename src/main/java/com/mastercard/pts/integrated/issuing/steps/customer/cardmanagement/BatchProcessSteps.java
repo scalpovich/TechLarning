@@ -29,7 +29,6 @@ import com.mastercard.pts.integrated.issuing.domain.ProductType;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceGenerationBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.BulkDeviceRequest;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CutOverProfile;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceProductionBatch;
@@ -38,6 +37,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PinG
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.PreProductionBatch;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ProcessBatches;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.ReissueTPINDownload;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
@@ -47,6 +47,9 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.C
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.LoadFromFileUploadWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ReportVerificationWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProcessBatchesFlows;
+
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 /**
  * @author E071669
@@ -315,4 +318,24 @@ public class BatchProcessSteps {
 		batchProcessWorkflow.verifyBatchTraceAvailability(context.get(ContextConstants.JOB_ID));	
 	}
 	
+	@When("reissue TPIN dump download batch is processed for $type")
+	public void downloadReissueTPIN(String type){
+		ProcessBatches batch =  ProcessBatches.createWithProvider(provider);
+		batch.setProductType(ProductType.fromShortName(type));
+		batchProcessWorkflow.processDownloadBatch(batch);
+		batchFile = linuxBox.downloadFileThroughSCPByPartialFileName(context.get(ContextConstants.DAT_FILE_NAME), 
+				tempDirectory.toString(), ConstantData.REISSUE_TPIN_DIRECTORY,"proc");
+	}
+	
+	@Then("verify that the $dataField field is set to $fieldValue in the TPIN reissue DAT file")
+	public void verifyDataFieldInTPINFile(@Named("dataField") String dataField, 
+			@Named("fieldValue") String fieldValue) {
+		Device device = context.get(ContextConstants.DEVICE);
+		if (fieldValue.contains("email")) {
+			fieldValue = ConstantData.EMAIL_ID;
+		}
+		ReissueTPINDownload reissueTPIN = ReissueTPINDownload.createWithProvider(provider);
+		assertThat("The data field " + dataField + " does not have the expected value " + fieldValue, fieldValue, 
+				equalTo(batchProcessWorkflow.isValuePresentInTPINFile(batchFile, dataField, device, reissueTPIN)));
+	}
 }
