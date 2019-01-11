@@ -136,6 +136,19 @@ public class HelpDeskSteps {
 		helpDeskGetterSetter.setServiceCode(ServiceCode.fromShortName(serviceCode));
 		helpdeskFlows.selectServiceCode(helpDeskGetterSetter);
 	}
+	
+	@Then("user raises service request to $serviceCode")
+	public void selectServiceCodeForSearchedDevice(String serviceCode) {
+		helpdeskGeneral.setServiceCode(serviceCode);
+		helpdeskGeneral.setNotes(Constants.GENERIC_DESCRIPTION);
+		
+		if (ServiceCode.BLOCK_DEVICE.contains(serviceCode)) {
+			helpdeskWorkflow.blockDevice(helpdeskGeneral);
+		} else if (ServiceCode.DEVICE_CLOSURE.contains(serviceCode)) {
+			helpdeskWorkflow.cancelDevice(helpdeskGeneral);
+		}
+		
+	}
 
 	/**
 	 * Step Definition for activating a device through HelpDesk
@@ -629,6 +642,7 @@ public class HelpDeskSteps {
 	/*
 	 * This method gets the device status using search product type and device number
 	 */
+	@Given("device has \"$deviceStatus\" status")
 	@When("device has \"$deviceStatus\" status")
 	@Then("device has \"$deviceStatus\" status")
 	public void thenDeviceHasStatus(String deviceStatus) {
@@ -1163,6 +1177,14 @@ public class HelpDeskSteps {
 		assertThat("Invalid Unbilled amount", helpdeskValues.get(amountType), equalTo(ContextConstants.ZERO_UNBILLED_PAYMENT));
 	}
 	
+	@Then("service request $serviceCode should be fail for {blocked|expired} add-on device")
+	public void thenPinrequestShouldBeFailedForAddOnDevice(String serviceCode){
+		helpdeskGeneral.setServiceCode(serviceCode);			// Service Code e.g : Activate Device [108]
+		helpdeskGeneral.setNotes(MiscUtils.generateRandomNumberAsString(6));
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		assertTrue("Service request is not getting failed for non-normal device", helpdeskWorkflow.isRequestFailingForNonNormalDevice(helpdeskGeneral));
+	}
+	
 	@When("user verify \"$deviceStatus\" status and note down device details for without pin card")
 	public void userVerifyDeviceStatusAndNoteDownDeviceDetailsWithoutPin(String deviceStatus){
 		userVerifyDeviceStatusAndNoteDownDeviceDetails(deviceStatus);
@@ -1195,4 +1217,5 @@ public class HelpDeskSteps {
         Assert.assertTrue("Card has insuficient funds for transaction", new Double(device.getAvailableBalance())> txAmountFromSheet);
         context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, new BigDecimal(device.getAvailableBalance()));
 	}
+	
 }

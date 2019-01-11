@@ -23,6 +23,7 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.UpdateDeviceDetailsPage;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.ExcelUtils;
@@ -30,6 +31,7 @@ import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.CorporateClientCreationFlow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramFlows;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.UpdatedDeviceDetailsFlows;
 
 @Component
 public class DeviceSteps {
@@ -52,6 +54,8 @@ public class DeviceSteps {
 	Program program;
 	
 	@Autowired
+	private UpdatedDeviceDetailsFlows updateDeviceWorkflow;
+
 	CorporateClientCreationFlow corporateClientFlow;
 
 	private static final String CREDIT_LIMIT_GREATER_THEN_MAXIMUM_EXP = "Entered Credit Limit is greater than Primary Card Credit Limit.";
@@ -444,11 +448,20 @@ public class DeviceSteps {
 		context.put(ContextConstants.DEVICE_PLAN, deviceplan);
 		context.put(ContextConstants.DEVICE, device);
 	}
+	
 	@When("User fills Corporate client $individual for $credit product")
 	public void userCreatesCorporateClient(String type, String product){
 		CorporateClient corporateclient = CorporateClient.createDataWithProvider(provider);
 		corporateclient.setProductType(ProductType.fromShortName(type));
 		corporateClientFlow.createCorporateClient(corporateclient);
+	}
+	
+	@When("user attaches device promotion plan $promotionPlan")
+	public void userAttachDevicePromotionalPlan(String promotionPlan){
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setDevicePromotionPlan(provider.getString(promotionPlan));
+		updateDeviceWorkflow.updateDevicePlanForDevice(device);
+		context.put(ContextConstants.DEVICE, device);
 	}
 	
 	@Given("user get data from excel for $scenario scenario and $productType product")
@@ -466,15 +479,5 @@ public class DeviceSteps {
           device.setPinOffset(map.get("PinOffset"));
           device.setPinNumberForTransaction(map.get("ClearPin"));
           context.put(ContextConstants.DEVICE, device);
-          
-         /* DevicePlan deviceplan = DevicePlan.createWithProvider(provider);
-          deviceplan.setServiceCode("201");
-          deviceplan.setExpiryDate(map.get("ExpiryDate"));
-          deviceplan.setIsPinLess("No");
-          context.put(ConstantData.IS_PIN_REQUIRED, "TRUE");
-          context.put(ContextConstants.DEVICE_PLAN, deviceplan);*/
-          
     }
-
-	
 }

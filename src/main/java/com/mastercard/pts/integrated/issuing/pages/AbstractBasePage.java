@@ -138,7 +138,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 	private MCWebElement addNewBtn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Save']")
-	private MCWebElement saveBtn;
+	private MCWebElement saveBtn;	
+	
+	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Yes']")
+	private MCWebElement yesBtn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Add Details']")
 	private MCWebElement addDetailsBtn;
@@ -373,6 +376,10 @@ public abstract class AbstractBasePage extends AbstractPage {
 	public void clickSaveButton() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		clickWhenClickable(saveBtn);
+	}
+	
+	public void clickYesButton() {
+		clickWhenClickable(yesBtn);
 	}
 
 	public void clickSubmitButton() {
@@ -611,14 +618,15 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	protected String getErrorMessage() {
+		final String STATUS_NOT_UPDATED = "Status not updated";
 		try {
 			WebElement errorMessageLbl = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.feedbackPanelERROR")));
 			logger.info("Error message : {}", errorMessageLbl.getText());
 			return errorMessageLbl.getText();
 		} catch (TimeoutException e) {
-			logger.info("Operation Status message {}: " + "No Status is updated");
+			logger.warn("Operation Status message {}: ", STATUS_NOT_UPDATED);
 			logger.debug("Error message {}: ", e);
-			return null;
+			return STATUS_NOT_UPDATED;
 		}
 	}
 
@@ -678,8 +686,13 @@ public abstract class AbstractBasePage extends AbstractPage {
 		return generatedMessage;
 	}
 
+	public String getFeedbackPanelInfoMessage() {
+		By by = By.cssSelector(".feedbackPanelINFO");
+		String message = new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.visibilityOfElementLocated(by)).getText();
+		return message;
+	}
+
 	protected void clickWhenClickable(MCWebElement element) {
-		SimulatorUtilities.wait(4000);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(element)).click();
         logger.info("Button clicked successfully.");
 	}
