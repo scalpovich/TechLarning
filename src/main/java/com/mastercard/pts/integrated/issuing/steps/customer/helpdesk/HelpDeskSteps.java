@@ -33,6 +33,7 @@ import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCas
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
@@ -1234,7 +1235,7 @@ public class HelpDeskSteps {
         context.put(ContextConstants.DEVICE, device);
         //Available balance check
         double txAmountFromSheet = new Double(provider.getString("TRANSACTION_AMOUNT"))/100;
-        Assert.assertTrue("Card has insuficient funds for transaction", new Double(device.getAvailableBalance())> txAmountFromSheet);
+        Assert.assertTrue("Card has insufficient funds for transaction", new Double(device.getAvailableBalance())> txAmountFromSheet);
         context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, new BigDecimal(device.getAvailableBalance()));
 	}
 }

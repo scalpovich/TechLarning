@@ -464,14 +464,14 @@ public class DeviceSteps {
 		context.put(ContextConstants.DEVICE, device);
 	}
 	
-	@Given("user get data from excel for $scenario scenario and $productType product")
+	@Given("user gets data from excel for $scenario scenario and $productType product")
     public void userGetDataFromExcelForScenario(String scenario, String productType) throws FilloException{
           Device device = Device.createWithProvider(provider);
           Map<String, String> map = ExcelUtils.getRowDataFromExcelThroughQuery("Select * from Sheet10 WHERE ScenarioID = '"+scenario+"'" + "AND ProductType = '"+productType+"'");
           device.setAppliedForProduct(ProductType.fromShortName(productType));
           device.setProductType(ProductType.fromShortName(productType));
           device.setDeviceNumber(map.get("DeviceNumber"));
-          device.setCvvData( map.get("CVV"));
+          device.setCvvData(map.get("CVV"));
           device.setCvv2Data(map.get("CVV2"));
           device.setIcvvData(map.get("ICVV"));
           device.setPvkiData(map.get("PVKI"));

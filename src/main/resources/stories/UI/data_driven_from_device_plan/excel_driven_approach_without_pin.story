@@ -1,5 +1,5 @@
 Narrative:
-In order to validate surcharge amount on transaction
+In order to recurring functionality
 As an issuer
 I want to perform transaction
 
@@ -9,7 +9,7 @@ Meta:
 
 Scenario: 1.1 Create EMV credit device
 Given setting json values in excel for Credit
-And user get data from excel for GeneralMSR scenario and Credit product
+And user gets data from excel for GeneralMSR scenario and Credit product
 When user is logged in institution
 And user verify "normal" status and note down device details for without pin card
 Then user sign out from customer portal
