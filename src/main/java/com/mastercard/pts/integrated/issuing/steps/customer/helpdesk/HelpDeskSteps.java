@@ -85,7 +85,7 @@ public class HelpDeskSteps {
 	private static final String STOPLIST_NOTES = "STOPLIST_NOTES";
 	private static final String STOPLIST_REASON = "STOPLIST_REASON";
 	private static final String WITHDRAWAL_REASON = "WITHDRAWAL_REASON";
-
+	
 	@Autowired
 	private TestContext context;
 
@@ -104,7 +104,7 @@ public class HelpDeskSteps {
 	EventAndAlerts eventAndAlerts = new EventAndAlerts();
 
 	ChangeAddressRequest changeAddressRequest;
-
+	
 	@Autowired
 	HelpDeskGeneral helpDeskGetterSetter;
 
@@ -458,7 +458,7 @@ public class HelpDeskSteps {
 		/*It returns the wallet info from helpdesk
 		walletinfo[1] contains card-number and currency
 		 where walletinfo[2] contains wallet number and amount
-		 */	
+		*/	
 		logger.info("beforeLoadBalanceInformation : "+beforeLoadBalanceInformation);
 		String[] walletinfo = beforeLoadBalanceInformation.split(",");		
 		walletinfo=walletinfo[0].split(":");		
@@ -476,7 +476,7 @@ public class HelpDeskSteps {
 		device.setAppliedForProduct(ProductType.fromShortName(type));
 		assertTrue(helpdeskWorkflow.verifyBalanceDeductedCorreclty(beforeLoadBalanceInformation, helpdeskGeneral.getTransactionDetails(), helpdeskWorkflow.getWalletBalanceInformation(device)));
 	}
-
+	
 	@Then("balance in helpdesk for remittance not changed for $type device")
 	@When("balance in helpdesk for remittance not changed for $type device")
 	public void thenBalanceInHelpDeskNotChangedForRemittance(String type) {
@@ -487,7 +487,7 @@ public class HelpDeskSteps {
 		device.setAppliedForProduct(ProductType.fromShortName(type));
 		assertTrue(helpdeskWorkflow.verifyBalanceNotChanged(beforeLoadBalanceInformation, helpdeskWorkflow.getWalletBalanceInformationForRemittance(device, cardtocash)));
 	}
-
+	
 	@When("balance in helpdesk not changed for $type device")
 	@Then("balance in helpdesk not changed for $type device")
 	public void thenBalanceInHelpDeskNotChanged(String type) {
@@ -580,7 +580,7 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.allowTransactionForOneHour(status);
 	}
-
+	
 	@Given("user setup device currency through helpdesk")
 	@When("user setup device currency through helpdesk")
 	public void whenUserSetupDeviceCurrencyThroughHelpDesk() {
@@ -590,7 +590,7 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.setupDeviceCurrency(helpdeskGeneral);
 	}
-
+	
 	@Given("user notes down available $type limit for card")
 	@When("user notes down available $type limit for card")
 	@Then("user notes down available $type limit for card")
@@ -598,7 +598,7 @@ public class HelpDeskSteps {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.noteDownAvailableLimit(type));
 	}
-
+	
 	@Given("user notes down required values from helpdesk for $product")
 	@When("user notes down required values from helpdesk for $product")
 	public void whenUserNotesDownRequiredValuesThroughHelpDesk(String product) {
@@ -608,7 +608,7 @@ public class HelpDeskSteps {
 		helpdeskValues.put(ContextConstants.CREDIT_CARD_NUMBER_HEADER_IN_STATEMENT, device.getClientDetails().getFirstName().toUpperCase()+" "+device.getClientDetails().getMiddleName1().toUpperCase()+" "+device.getClientDetails().getLastName().toUpperCase());
 		context.put(ContextConstants.HELPDESK_VALUES,helpdeskValues); 		
 	}
-
+	
 	@Given("user verifies available $type limit for card after transaction")
 	@When("user verifies available $type limit for card after transaction")
 	@Then("user verifies available $type limit for card after transaction")
@@ -621,7 +621,7 @@ public class HelpDeskSteps {
 		creditLimit=helpdeskWorkflow.noteDownCreditLimit(type);
 		if(type.equalsIgnoreCase(ConstantData.TEMPORARY_LIMIT) || type.equalsIgnoreCase(ConstantData.PERMANENT_LIMIT))
 		{	for (Entry<String, BigDecimal> expectedlimit : creditLimitExpected.entrySet()) 	
-			assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT,creditLimit.get(expectedlimit.getKey()),equalTo(expectedlimit.getValue()));
+				assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT,creditLimit.get(expectedlimit.getKey()),equalTo(expectedlimit.getValue()));
 		}
 		else
 		{
@@ -735,14 +735,14 @@ public class HelpDeskSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpDeskGetterSetter.setDeviceNumber(device.getDeviceNumber());	
 		helpDeskGetterSetter.setProductType(ProductType.fromShortName(productType));
-
+		
 		if (helpdeskFlows.searchForNewDevice(helpDeskGetterSetter).contains(status)) {
 			Assert.assertTrue("status of newly created device is normal ", true);
 		} else {
 			Assert.assertTrue("status of newly created device is not normal ", false);
 		}
 	}
-
+	
 	@Then("User search for new device on helpdesk screen for $productType and validates the mandatory field")
 	@When("User search for new device on helpdesk screen for $productType and validates the mandatory field")
 	public void thenUserSearchForClientCustomerIDOnHelpdeskScreen(String productType) {
@@ -754,22 +754,22 @@ public class HelpDeskSteps {
 		context.put(CreditConstants.CLIENT_CUSTOMER_ID, device.getMandatoryFieldValue());
 		context.put(ContextConstants.DEVICE, device);
 	}
-
+	
 	@Then("User search for new device Supplementary on search screen for $productType and validates the status as $NORMAL")
 	@When("User search for new device Supplementary on search screen for $productType and validates the status as $NORMAL")
 	public void thenUserSearchForDeviceOnSearchScreenForSupplementary(String productType, String status) {
 		helpDeskGetterSetter.setProductType(ProductType.fromShortName(productType));
 		List<String>deviceNumbers=context.get(CreditConstants.SUPPLEMENTARY_DEVICE_NUMBER);
-		for(String deviceNumber:deviceNumbers){
-			helpDeskGetterSetter.setDeviceNumber(deviceNumber);
-
-			if (helpdeskFlows.searchForNewDevice(helpDeskGetterSetter).contains(status)) {
-				Assert.assertTrue("status of newly created device is normal ", true);
-			} else {
-				Assert.assertTrue("status of newly created device is not normal ", false);
-			}
-
-		}
+        for(String deviceNumber:deviceNumbers){
+        	helpDeskGetterSetter.setDeviceNumber(deviceNumber);
+        	
+        	if (helpdeskFlows.searchForNewDevice(helpDeskGetterSetter).contains(status)) {
+    			Assert.assertTrue("status of newly created device is normal ", true);
+    		} else {
+    			Assert.assertTrue("status of newly created device is not normal ", false);
+    		}
+        	
+        }
 	}
 
 	@Then("User search for new application on search screen for $productType and validates the status as $NORMAL")
@@ -777,20 +777,20 @@ public class HelpDeskSteps {
 	public void thenUserSearchForApplicationOnSearchScreen(String productType, String status) {
 		helpDeskGetterSetter.setProductType(ProductType.fromShortName(productType));
 		String actualStatus = null;
-
+		
 		if(Integer.parseInt(context.get(CreditConstants.QUANTITY_REQUESTED))>1){
-
+			
 			List<String> devices = context.get(CreditConstants.DEVICE_NUMBER);
-
+		
 			for(String ele : devices){
 				helpDeskGetterSetter.setDeviceNumber(ele);
 				actualStatus = helpdeskFlows.searchForNewApplication(helpDeskGetterSetter);
 			}
-
+			
 		}else{
 			helpDeskGetterSetter.setDeviceNumber(context.get(CreditConstants.DEVICE_NUMBER));
 		}
-
+		
 		if (helpdeskFlows.searchForNewApplication(helpDeskGetterSetter).contains(status)) {
 			Assert.assertTrue("status of newly created device is normal ", true);
 		} else {
@@ -853,14 +853,14 @@ public class HelpDeskSteps {
 			}
 		}
 	}
-
+	
 	@When("user creates service request to change the registered mobile number")
 	public void changeRegisteredMobileNumber() {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		Optional<String[]> device = helpdeskWorkflow.getDeviceTypeAndNumber(context.get(UserManagementSteps.USER_INSTITUTION_SELECTED));
 		if(device.isPresent()){
-			helpdeskGeneral.setProductType(ProductType.fromShortName(device.get()[0]));
-			helpdeskGeneral.setDeviceNumber(device.get()[1]);
+		helpdeskGeneral.setProductType(ProductType.fromShortName(device.get()[0]));
+		helpdeskGeneral.setDeviceNumber(device.get()[1]);
 		}
 		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);
 		helpdeskWorkflow.clickCustomerCareEditLink();
@@ -872,35 +872,35 @@ public class HelpDeskSteps {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		Optional<String[]> device = helpdeskWorkflow.getDeviceTypeAndNumber(context.get(UserManagementSteps.USER_INSTITUTION_SELECTED));
 		if(device.isPresent()){
-			helpdeskGeneral.setProductType(ProductType.fromShortName(device.get()[0]));
-			helpdeskGeneral.setDeviceNumber(device.get()[1]);
+		helpdeskGeneral.setProductType(ProductType.fromShortName(device.get()[0]));
+		helpdeskGeneral.setDeviceNumber(device.get()[1]);
 		}
 		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.changeRegisteredEmailID(helpdeskGeneral);
 	}
-
+	
 	@Then("user validates registered mobile number SR screen with the required fields")
 	public void registeredMobileNumberUpdateScreenValidation() {
 		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
 		Optional<String[]> device = helpdeskWorkflow.getDeviceTypeAndNumber(context.get(UserManagementSteps.USER_INSTITUTION_SELECTED));
 		if(device.isPresent()){
-			helpdeskGeneral.setProductType(ProductType.fromShortName(device.get()[0]));
-			helpdeskGeneral.setDeviceNumber(device.get()[1]);
-			helpdeskGeneral.setDefaultWalletNumber(device.get()[2]);
+		helpdeskGeneral.setProductType(ProductType.fromShortName(device.get()[0]));
+		helpdeskGeneral.setDeviceNumber(device.get()[1]);
+		helpdeskGeneral.setDefaultWalletNumber(device.get()[2]);
 		}
 		helpdeskWorkflow.searchWithDeviceNumber(helpdeskGeneral);
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.validateRequiredFields(helpdeskGeneral);
 	}
-
+	
 	@Then("For fileUpload when user search for new application on search screen for $productType and validates the status as $NORMAL")
 	@When("For fileUpload when user search for new application on search screen for $productType and validates the status as $NORMAL")
 	public void thenUserSearchForApplicationOnSearchScreenforFileUpload(String productType, String status) {
 		helpDeskGetterSetter.setProductType(ProductType.fromShortName(productType));
 		helpdeskFlows.searchForNewApplicationFileUpload(helpDeskGetterSetter);
 	}
-
+	
 	@Then("user creates service request for $serviceCode service")
 	@When("user creates service request for $serviceCode service")
 	public void whenUserResetPinRetryCounterThroughHelpDesk(String serviceCode) {
@@ -909,7 +909,7 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		helpdeskWorkflow.resetPinCounter(helpdeskGeneral);
 	}
-
+	
 	@Then("user verify $amount amount for $category category")
 	@When("user verify $amount amount for $category category")
 	public void assertionForBilling(String amount, String category){
@@ -920,7 +920,7 @@ public class HelpDeskSteps {
 		device.setAmountType(amount);
 		if (device.getCategory().equalsIgnoreCase("Fee") || device.getCategory().equalsIgnoreCase("Interest")) {
 			device = Device.createProviderForLatePaymentAndInterestOnPurchase(provider, device);
-		}
+	}
 		if (device.getCategory().equalsIgnoreCase("Fee") && device.getAmountType().equalsIgnoreCase("Unbilled")) {
 			transactionAmount = String.format("%.2f", Double.valueOf(device.getLatePaymentFee()));
 			logger.info("Unbilled Late Payment Fee->" + transactionAmount);
@@ -939,7 +939,7 @@ public class HelpDeskSteps {
 			logger.info("No of diff between Txn date and institution date ->" + noOfDays);
 			Double interest = ((Double.valueOf(device.getTransactionAmount())
 					+ Double.valueOf(context.get(ConstantData.TOTAL_FEE_OF_BILLING)) * noOfDays
-					* Double.valueOf(device.getInterestOnPurchase()))
+							* Double.valueOf(device.getInterestOnPurchase()))
 					/ 100) / DateUtils.noOfDaysInYear(context.get(ContextConstants.INSTITUTION_DATE));
 			logger.info("Interest Occured on unpaid1 ->" + interest);
 			interest = (interest * 100D) / 100D;
@@ -965,7 +965,7 @@ public class HelpDeskSteps {
 		assertThat(category + " " + amount + BILLING_INCORRECT_MASSAGE, helpdeskWorkflow.verifyBillingAmounts(device),
 				equalTo(transactionAmount));
 	}
-
+	
 	@When("user check balance details through helpdesk $payment")
 	@Then("user check balance details through helpdesk $payment")
 	public void userCheckBalanceDetailsThroughHelpdesk(String payment){
@@ -973,7 +973,7 @@ public class HelpDeskSteps {
 		context.put(ContextConstants.DEVICE,device);
 		helpdeskWorkflow.checkBalanceDetailsThroughHelpdesk(device,payment);
 	}
-
+	
 	@Then("user compare balance details $payment")
 	public void compareBalanceDetails(String payment){
 		helpdeskWorkflow.compareBalanceDetailsPostPayments(payment);
@@ -1000,7 +1000,7 @@ public class HelpDeskSteps {
 		helpdeskWorkflow.withdrawStoplistDeviceFlows(helpdeskGeneral, device);
 	}
 
-
+	
 	@When("user verify $label value for $category category is $value")
 	public void assertionForUnpaidAndAuthFlag(String label,String category,String value){
 		Device device = context.get(ContextConstants.DEVICE);
@@ -1008,8 +1008,8 @@ public class HelpDeskSteps {
 		assertThat(label + "value doesn't match ", helpdeskWorkflow.verifyUnpaidAndAuthFlag(device,label),
 				equalTo(value));
 	}
-
-
+	
+	
 	@Given("user creates $limitType credit limit change request for $customerType Type")
 	@When("user creates $limitType credit limit change request for $customerType Type")
 	@Then("user creates $limitType credit limit change request for $customerType Type")
@@ -1019,8 +1019,8 @@ public class HelpDeskSteps {
 		helpdeskGeneral.setCustomerType(customerType);
 		helpdeskWorkflow.clickCustomerCareEditLink();				
 		context.put(ContextConstants.CREDIT_LIMIT_AFTER_SR, helpdeskWorkflow.activateCreditLimitChangeRequest(helpdeskGeneral));
-	}
-
+}
+	
 	@Then("user validates available balance for prepaid product on helpdesk")
 	public void whenUserVerifyPrepaidBalanceThroughHelpDesk() {
 		Device device = context.get(ContextConstants.DEVICE);
@@ -1028,28 +1028,28 @@ public class HelpDeskSteps {
 		helpdeskGeneral.setProductType(ProductType.PREPAID);
 		assertThat(INCORRECT_BALANCE_OR_CREDIT_LIMIT, helpdeskWorkflow.getWalletBalance(device), equalTo(context.get(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT)));
 	}
-
+	
 	@When("check card balance details through helpdesk")
 	public void checkCardBalance(){
 		Device device = context.get(ContextConstants.DEVICE);
 		context.put(ContextConstants.DEVICE,device);
 		context.put("balanceBeforePayment", helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device));
-
+		
 	}
-
+	
 	@When("recheck card balance details through helpdesk after payment")
 	public void reCheckCardBalancePostPayment(){
 		Device device = context.get(ContextConstants.DEVICE);	
 		helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device);
 		context.put("balanceAfterPayment", helpdeskWorkflow.fetchCardBalanceAndCloseHelpdesk(device));	
 	}
-
+	
 	@Then("user checks successful payments")
 	public void checkSuccessfulPayments(){		
 		Payment payment = context.get(ContextConstants.PAYMENT);
 		helpdeskWorkflow.compareBalancesAfterPayment(payment);
 	}
-
+	
 	@When("user raises $serviceCode request for $customerType")
 	@Then("user raises $serviceCode request for $customerType")
 	public void userRaisesRetailToLoanChangeRequestThroughHelpdesk(String serviceCode,String customerType) {
@@ -1066,12 +1066,12 @@ public class HelpDeskSteps {
 			context.put(ConstantData.LOAN_PRE_CLOSURE_FEE,helpdeskWorkflow.raiseLoanPreClosureRequest(helpdeskGeneral,loanPlan,device));			
 		}else if(serviceCode.equalsIgnoreCase(ConstantData.LOAN_CANCELLATION_SR)){
 			context.put(ConstantData.LOAN_CANCELLATION_FEE,helpdeskWorkflow.raiseLoanCancellationRequest(loanPlan,device,helpdeskGeneral));
-
+			
 		}
-
-
+		
+		
 	}
-
+	
 	@When("user verifies no $oustandingOf after payment")
 	@Then("user verifies no $oustandingOf after payment")
 	public void userVerifiesNoOutstanding(String oustandingOf) {
@@ -1079,7 +1079,7 @@ public class HelpDeskSteps {
 		assertThat("Oustanding amount", helpDeskValues.get(oustandingOf),
 				equalTo(ContextConstants.ZERO_LOAN_INSTALLMENT_OUTSTANDING));
 	}
-
+	
 	@When("verify Decline code for Transaction $declineCode on helpdesk page for product $product")
 	@Then("verify Decline code for Transaction $declineCode on helpdesk page for product $product")
 	public void verifyDeclineCodeOnTransactiOnHelpdeskPage(String declineCode,String product){
@@ -1088,7 +1088,7 @@ public class HelpDeskSteps {
 		device.setAppliedForProduct(ProductType.fromShortName(product));
 		assertThat("Verify Decline Code for Transaction", declineCode, equalTo(helpdeskWorkflow.getDeclineCode(device, rrnNumber)));
 	}
-
+	
 	@When("user verifies loan $fee fee")
 	@Then("user verifies loan $fee fee")
 	public void userVerifiesLoanFeeCharged(String feeType){
@@ -1098,20 +1098,20 @@ public class HelpDeskSteps {
 		if (feeType.equalsIgnoreCase("preclosure")) {
 			expectedFee = String.format("%.2f",
 					Double.valueOf(loanPlan.getPreclosureFixedFeeAmount())
-					+ Double.valueOf(loanPlan.getPreclosureFeePercentOfAmount())
-					* Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT)) / 100);
+							+ Double.valueOf(loanPlan.getPreclosureFeePercentOfAmount())
+									* Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT)) / 100);
 			actualFee = context.get(ConstantData.LOAN_PRE_CLOSURE_FEE);
 		} else {
 			expectedFee = String.format("%.2f",
 					Double.valueOf(loanPlan.getCancellationFixedFeeAmount())
-					+ Double.valueOf(loanPlan.getCancellationFeePercentOfLoanAmount())
-					* Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))
-					/ 100);
+							+ Double.valueOf(loanPlan.getCancellationFeePercentOfLoanAmount())
+									* Double.valueOf(context.get(ConstantData.TRANSACTION_AMOUNT))
+							/ 100);
 			actualFee = context.get(ConstantData.LOAN_CANCELLATION_FEE);
 		}
 		assertThat("Loan "+feeType+" fee is not same", actualFee, equalTo(expectedFee));
 	}
-
+	
 	@Then("user verifies loyalty details for $type device")
 	public void verifyLoyaltyDetails(String type) {
 		Double availablePts, accumulatedPts;
@@ -1124,37 +1124,37 @@ public class HelpDeskSteps {
 			accumulatedPts = 0.0;
 		else
 			accumulatedPts = Double.parseDouble(points.get(Constants.ACCUMULATED_REVERSED_POINTS));
-
+		
 		assertEquals(context.get(Constants.AVAILABLE_LOYALTY_POINTS), availablePts);
 		assertEquals(context.get(Constants.ACCUMULATED_REVERSED_POINTS), accumulatedPts);
 	}
-
+	
 	@Then("user has loyalty points details for $type device")
 	@When("user has loyalty points details for $type device")
 	public Map<String, String> givenUserHasLoyaltyPointsDetails(String type) {
 		Double zero = 0.0;
 		Map<String, String> points = getLoyaltyDetails();
-
+		
 		if(points.get(Constants.ACCUMULATED_REVERSED_POINTS).trim().equals("-"))
 			context.put(Constants.ACCUMULATED_REVERSED_POINTS, zero);
 		else
 			context.put(Constants.ACCUMULATED_REVERSED_POINTS, Double.parseDouble(points.get(Constants.ACCUMULATED_REVERSED_POINTS)));
-
+		
 		if(points.get(Constants.AVAILABLE_LOYALTY_POINTS).trim().equals("-"))
 			context.put(Constants.AVAILABLE_LOYALTY_POINTS, zero);
 		else
 			context.put(Constants.AVAILABLE_LOYALTY_POINTS, Double.parseDouble(points.get(Constants.AVAILABLE_LOYALTY_POINTS)));
-
+			
 		return points;
 	}
-
+	
 	public Map<String, String> getLoyaltyDetails() {
 		Device device = context.get(ContextConstants.DEVICE);
 		helpdeskWorkflow.navigateToLoyaltyDetails(device);
 		Map<String, String> points = helpdeskWorkflow.getLoyaltyDetails();
 		return points;
 	}
-
+	
 	@Then("verifies Loan Cancellation request is \"declined\"")
 	public void thenLoanCancellationRequestIsDeclined() {
 		helpdeskGeneral = HelpdeskGeneral.createWithProviderWithCreditCardLimits(provider);
@@ -1167,7 +1167,7 @@ public class HelpDeskSteps {
 				containsString("Loan cancellation not allowed"));
 
 	}
-
+	
 	@When("user verifies $amountType after payment return")
 	@Then("user verifies $amountType after payment return")
 	public void verifyUnbilledPaymentAfterReversal(String amountType)
@@ -1217,5 +1217,6 @@ public class HelpDeskSteps {
         Assert.assertTrue("Card has insuficient funds for transaction", new Double(device.getAvailableBalance())> txAmountFromSheet);
         context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, new BigDecimal(device.getAvailableBalance()));
 	}
+	
 	
 }
