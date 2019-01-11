@@ -900,11 +900,9 @@ public class ProcessBatchesPage extends AbstractBasePage {
 	
 	public String isValuePresentInTPINFile(File file, String whatToFind, 
 			Device device, Map<String, String> fileHeader) {
-		String value = null;
-		Scanner scnr = null;
+		String value = "";
 		Map<String, String> fileData = new HashMap<>();
-		try {
-			scnr = new Scanner(file);
+		try (Scanner scnr = new Scanner(file)){
 			while(scnr.hasNextLine()){
 				String line = scnr.nextLine();
 				if(line.contains(device.getDeviceNumber())){
@@ -918,10 +916,7 @@ public class ProcessBatchesPage extends AbstractBasePage {
 			}
 		} catch(Exception e) {
 			 logger.error("Error in reading the line from DAT file",  e);
-		} finally {
-			if(scnr !=null)
-				scnr.close();
-		}
+		} 
 		return value;
 	}
 }
