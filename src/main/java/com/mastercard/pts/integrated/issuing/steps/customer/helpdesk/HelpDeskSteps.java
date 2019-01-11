@@ -1182,12 +1182,17 @@ public class HelpDeskSteps {
 		DevicePlan devicePlan = DevicePlan.createWithProvider(provider);
 		if(device.getDeviceType1().contains("EMV Card")){
 			devicePlan.setServiceCode(Constants.EMV_SERVICE_CODE);
+        }else if(device.getDeviceType1().contains("Magnetic Stripe Card")){
+			devicePlan.setServiceCode(Constants.MSR_SERVICE_CODE);
         }
 		devicePlan.setExpiryDate(device.getExpirationDate());
         devicePlan.setIsPinLess("No");
         context.put(ConstantData.IS_PIN_REQUIRED, "TRUE");
         context.put(ContextConstants.DEVICE_PLAN, devicePlan);
         context.put(ContextConstants.DEVICE, device);
+        //Available balance check
+        double txAmountFromSheet = new Double(provider.getString("TRANSACTION_AMOUNT"))/100;
+        Assert.assertTrue("Card has insuficient funds for transaction", new Double(device.getAvailableBalance())> txAmountFromSheet);
         context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, new BigDecimal(device.getAvailableBalance()));
 	}
 }

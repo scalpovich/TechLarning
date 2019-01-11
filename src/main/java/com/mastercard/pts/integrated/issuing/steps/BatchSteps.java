@@ -119,7 +119,7 @@ public class BatchSteps {
 					device.setCvvData(fileData[3].trim());
 
 					logger.info("******** setDeviceNumber " + " : " +  fileData[0] + " - "  + "   setCvv2Data " + " : " +  fileData[2] + " - "  + " setCvvData  " + " : " +  fileData[3]);
-					ExcelUtils.insertDataIntoExcel("INSERT into Sheet10(DeviceNumber,CVV2,CVV,Status) VALUES('"+device.getDeviceNumber()+"','"+device.getCvv2Data()+"','"+device.getCvvData()+"','Active')");
+				//	ExcelUtils.insertDataIntoExcel("INSERT into Sheet10(DeviceNumber,CVV2,CVV,Status) VALUES('"+device.getDeviceNumber()+"','"+device.getCvv2Data()+"','"+device.getCvvData()+"','Active')");
 				} else {
 					device.setDeviceNumber(fileData[0].trim());
 					device.setCvv2Data(fileData[2].trim());
