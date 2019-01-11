@@ -14,7 +14,7 @@ When user is logged in institution
 And user verify "normal" status and note down device details for without pin card
 Then user sign out from customer portal
 
-Scenario: Perform RECURRING_PUR_TXN Authorization transaction
+Scenario: 1.2 Perform RECURRING_PUR_TXN Authorization transaction
 Given connection to MAS is established
 When perform an MSR_RECURRING_PUR_TXN MAS transaction
 Then MAS test results are verified
