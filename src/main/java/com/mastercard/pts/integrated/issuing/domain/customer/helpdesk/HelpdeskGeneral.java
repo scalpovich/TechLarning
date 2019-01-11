@@ -58,6 +58,7 @@ public class HelpdeskGeneral {
 	private String newCreditLimit;
 	private String customerType;
 	private String reason;
+	private boolean isServiceRequestAllowed;
 	private boolean isFeesApplied;
 	
 	
@@ -281,6 +282,14 @@ public class HelpdeskGeneral {
 		return "HelpdeskGeneral [productType=" + productType + ", cardPackId=" + cardPackId + ", serviceCode=" + serviceCode + ", notes=" + notes + ", deviceNumber=" + deviceNumber + "]";
 	}
 
+	public boolean getIsServiceRequestAllowed() {
+		return isServiceRequestAllowed;
+	}
+
+	public void setIsServiceRequestAllowed(boolean isServiceRequestAllowed) {
+		this.isServiceRequestAllowed = isServiceRequestAllowed;
+	}
+	
 	public boolean isFeesApplied() {
 		return isFeesApplied;
 	}

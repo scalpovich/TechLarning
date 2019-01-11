@@ -295,7 +295,7 @@ public class HelpdeskWorkflow {
 		helpDeskPage.searchByDeviceNumber(device);
 		helpdeskGeneral.setServiceCode(Constants.DEVICE_STOPLIST_REQ);
 		helpDeskPage.addServiceRequest(helpdeskGeneral,
-				helpDeskPage.getstoplistReasonDDwn(),
+				helpDeskPage.getReasonDDwn(),
 				Constants.FRAME_STOPLIST_REQUEST, false);
 	}
 
@@ -334,6 +334,15 @@ public class HelpdeskWorkflow {
 		
 	}
 	
+	public String raiseReissueTPINRequest(Device device,
+			HelpdeskGeneral helpdeskGeneral) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		helpDeskPage.searchByDeviceNumber(device);
+		helpdeskGeneral.setServiceCode(Constants.REISSUE_TPIN_REQ);
+		return helpDeskPage.raiseReissueTPINRequest(helpdeskGeneral,
+				Constants.FRAME_REISSUE_TPIN);
+}
+
 	public boolean isRequestFailingForNonNormalDevice(HelpdeskGeneral helpdeskGeneral){
 		try{
 			resetPinCounter(helpdeskGeneral);
