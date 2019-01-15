@@ -59,10 +59,10 @@ public class DevicePinSetPage extends AbstractBasePage{
 	private MCWebElement pinConfirmBtn;
 	
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "ui-datepicker-year")
-	private MCWebElement yearDropDdn;
+	private MCWebElement yearDDdn;
 	
 	@PageElement(findBy = FindBy.CLASS, valueToFind = "ui-datepicker-month")
-	private MCWebElement monthDropDdn;	
+	private MCWebElement monthDDdn;	
 	
 	private static final Logger logger = LoggerFactory.getLogger(DevicePinSetPage.class);
 	
@@ -115,8 +115,8 @@ public class DevicePinSetPage extends AbstractBasePage{
 	
 	public void setDate(LocalDate date){		
 		asWebElement(birthDateDPkr).click();
-		selectByVisibleText(yearDropDdn, String.valueOf(date.getYear()));
-		SelectDropDownByValue(monthDropDdn, String.valueOf(date.getMonthValue()-1));
+		selectByVisibleText(yearDDdn, String.valueOf(date.getYear()));
+		SelectDropDownByValue(monthDDdn, String.valueOf(date.getMonthValue()-1));
 		String locator = String.format("//*[@data-handler='selectDay']/a[text()=%d]", date.getDayOfMonth());
 		driver().findElement(By.xpath(locator)).click();		
 	}

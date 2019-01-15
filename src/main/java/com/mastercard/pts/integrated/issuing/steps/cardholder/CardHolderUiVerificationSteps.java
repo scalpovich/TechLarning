@@ -12,7 +12,6 @@ import com.mastercard.pts.integrated.issuing.workflows.cardholder.services.CardH
 import com.mastercard.pts.integrated.issuing.workflows.cardholder.transactions.CardHolderUiVerificationTransactionsWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.cardholder.virtualcard.CardHolderUiVerificationVirtualCardWorkflow;
 
-
 @Component
 public class CardHolderUiVerificationSteps {
 
