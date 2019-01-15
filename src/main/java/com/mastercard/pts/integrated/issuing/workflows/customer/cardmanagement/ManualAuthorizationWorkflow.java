@@ -19,6 +19,11 @@ public class ManualAuthorizationWorkflow {
 		page = navigator.navigateToPage(AuthorizationRequestPage.class);
 		return page.addAuthorizationRequest(request);
 	}
+	
+	public String createInvalidRequest(AuthorizationRequest request) {
+		AuthorizationRequestPage page = navigator.navigateToPage(AuthorizationRequestPage.class);
+		return page.createInvalidAuthRequest(request);
+	}
 
 	public String getDeclineReasonMessage(String declineReasonCode) {
 		return page.getDeclineReasonMessage(declineReasonCode);

@@ -518,4 +518,8 @@ public class Constants {
 	public static final String RANGE_STOPLISTED = "Device range is stoplisted..";
 	public static final String COUNTRY_STOPLISTED = "Country is stoplisted.";
 
+	public static String REISSUE_TPIN_NOTES = "Reissue TPIN";
+	public static final String REISSUE_TPIN_REQ = "Reissue TPIN [216]";
+	public static final String FRAME_REISSUE_TPIN = "216 - Reissue TPIN";
+	public static final String REISSUE_TPIN_LVVC_ERROR = "Not applicable for Virtual Devices.";
 }

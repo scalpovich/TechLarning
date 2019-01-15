@@ -3,13 +3,10 @@ package com.mastercard.pts.integrated.issuing.workflows.customer.transaction;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.awt.AWTException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.ArrayList;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
@@ -18,14 +15,13 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Point;
@@ -65,7 +61,6 @@ import com.mastercard.pts.integrated.issuing.pages.ValidationException;
 import com.mastercard.pts.integrated.issuing.pages.agent.settlement.InitiateSettlementPage;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceApprovePage;
 import com.mastercard.pts.integrated.issuing.pages.agent.transactions.LoadBalanceRequestPage;
-import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.GenerateReversalPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.MID_TID_BlockingPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.ReversalTransactionPage;
 import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.TransactionSearchPage;
@@ -277,7 +272,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 	}
 	
 	private void captureSaveScreenShot(String methodName) {
-		SimulatorUtilities.takeScreenShot(winiumDriver, methodName + "_" + new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
+	//	SimulatorUtilities.takeScreenShot(winiumDriver, methodName + "_" + new SimpleDateFormat("dd-MMM-yyyy-hh.mm.ss-aaa").format(new Timestamp(System.currentTimeMillis())));
 	}
 
 	public void performOptimizedMasTransaction(String transaction, Transaction transactionData, Boolean sameCard) {
@@ -1842,8 +1837,9 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			setValueInMessageEditorForTransction("F35.05", transactionName, (MiscUtils.randomNumber(2) + device.getCvvData()));	
 			setValueInMessageEditorForTransction("F52", transactionName, device.getPinNumberForTransaction());
 		}
-		else if(transaction.contains("ECOM")) {
-			setValueInMessageEditorForTransction("F126.10", transactionName, (CVV2_PREFIX_VALUE + " " + device.getCvv2Data()));	
+		else if(transaction.contains("ECOM")) {			
+			String cvv2 = device.getCvv2Data() == null ? ConstantData.INVALID_CVV2 : device.getCvv2Data();
+			setValueInMessageEditorForTransction("F126.10", transactionName, (CVV2_PREFIX_VALUE + " " + cvv2));	
 		}
 		captureSaveScreenShot(methodName);
 		executeVisaTest(transactionName);
@@ -2319,7 +2315,7 @@ public class TransactionWorkflow extends SimulatorUtilities {
 			throw MiscUtils.propagate(e);
 		}
 	}
-
+	
 	public void addMID_TID_Blocking(String combination, MID_TID_Blocking details) {
 		MID_TID_BlockingPage page = navigator.navigateToPage(MID_TID_BlockingPage.class);
 		page.addBlockingMID_TID(combination, details);
@@ -2330,6 +2326,80 @@ public class TransactionWorkflow extends SimulatorUtilities {
 		page.deleteRecord(combination,details);
 	}
 	
+	public void reverseTransaction(String transaction, String reversalType) {
+		activateMas(transaction);
+		MiscUtils.reportToConsole("******************** Reversal Transaction Started ******************");
+		clickTestPreparations(transaction);
+		selectTestCaseFromImportedCases(transaction);
+		importLinkedTransaction();
+		addDE39ToTransactionProfile(reversalType);
+		performExecution(transaction);
+	}
+	
+	public void partialReverseTransaction(String transaction, String reversalType,String amount) {
+		activateMas(transaction);
+		MiscUtils.reportToConsole("******************** Partial Reversal Transaction Started ******************");
+		clickTestPreparations(transaction);
+		selectTestCaseFromImportedCases(transaction);
+		importLinkedTransaction();
+		addDE39ToTransactionProfile(reversalType);
+		addReversalAmount(amount);
+		performExecution(transaction);
+	}
+
+	private void addDE39ToTransactionProfile(String reversalType) {
+		winiumClickOperation("Data Elements");
+		performClickOperation("FullName");
+		pressRightArrow(2);
+		pressPageUp(5);
+		pressPageDown(2);
+		SimulatorUtilities.wait(1000);
+		performDoubleClickOperation("ResponseCode");
+		performDoubleClickOperation("default");
+		winiumClickOperation("Enter value");
+		pressTab();
+		try {
+			setText(reversalType);
+		} catch (AWTException e) {
+			logger.error(e.getMessage(), e);
+		}
+		winiumClickOperation("OK");
+	}
+
+	private void importLinkedTransaction() {
+		winiumClickOperation("Transaction Profiles");
+		SimulatorUtilities.wait(1000);
+		performClickOperationOnImages("TrxProfiles_Ref");
+		pressRightArrow();
+		performClickOperation("0400_Folder");
+		pressRightArrow(3);
+		performClickOperationOnImages("TrxProfiles_Ref");
+		performDoubleClickOperation("LinkedTransaction");
+	}
+	
+	public void addReversalAmount(String amount){
+		winiumClickOperation("Data Elements");
+		performClickOperation("FullName");
+		pressRightArrow(2);
+		pressPageUp(5);
+		pressPageDown(4);
+		SimulatorUtilities.wait(500);
+		performClickOperation("95_ReplacementAmount");
+		pressRightArrow(3);
+		pressCtrlShiftF10Key();
+		SimulatorUtilities.wait(1000);
+		performClickOperation("AddElementToRequest");
+		performDoubleClickOperation("default");
+		winiumClickOperation("Enter value");
+		pressTab();
+		try {
+			setText(StringUtils.leftPad(amount, 12, "0"));
+		} catch (AWTException e) {
+			logger.error(e.getMessage(), e);
+		}
+		winiumClickOperation("OK");
+	}
+
 	public boolean verifyDeviceEventFeeApplied(Device device, String reason, 
 			TransactionSearch ts, DeviceEventBasedFeePlan deviceEventBasedPlan, String cardType) {
 		TransactionSearchPage page = navigator.navigateToPage(TransactionSearchPage.class);

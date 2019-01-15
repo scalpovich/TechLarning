@@ -241,4 +241,14 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 		SimulatorUtilities.wait(500);
 		return reconciliationStatus;
 	}
+	
+	public String getTransactionFee(){
+		StringBuilder str = new StringBuilder();
+		viewFirstRecord();
+		runWithinPopup("View Authorization", () -> {
+			str.append(getTextFromPage(fixedTransactionFee));
+			clickCloseButton();
+		});
+		return str.toString();
+	}
 }

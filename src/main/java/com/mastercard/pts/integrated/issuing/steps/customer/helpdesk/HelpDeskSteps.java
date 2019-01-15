@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.jbehave.core.annotations.Alias;
@@ -32,6 +33,7 @@ import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCas
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
@@ -83,6 +85,7 @@ public class HelpDeskSteps {
 	private static final String STOPLIST_NOTES = "STOPLIST_NOTES";
 	private static final String STOPLIST_REASON = "STOPLIST_REASON";
 	private static final String WITHDRAWAL_REASON = "WITHDRAWAL_REASON";
+	private static final String REISSUE_TPIN_REASON = "REISSUE_TPIN_REASON";
 	
 	@Autowired
 	private TestContext context;
@@ -108,6 +111,8 @@ public class HelpDeskSteps {
 
 	@Autowired
 	DeviceCreation deviceCreation;
+	
+	private String errorMessage = null;
 
 	@When("user navigates to General in Helpdesk")
 	public void thenUserNavigatesToGeneralInHelpdesk() {
@@ -133,6 +138,19 @@ public class HelpDeskSteps {
 	public void thenUserSelectTheServiceCode(String serviceCode) {
 		helpDeskGetterSetter.setServiceCode(ServiceCode.fromShortName(serviceCode));
 		helpdeskFlows.selectServiceCode(helpDeskGetterSetter);
+	}
+	
+	@Then("user raises service request to $serviceCode")
+	public void selectServiceCodeForSearchedDevice(String serviceCode) {
+		helpdeskGeneral.setServiceCode(serviceCode);
+		helpdeskGeneral.setNotes(Constants.GENERIC_DESCRIPTION);
+		
+		if (ServiceCode.BLOCK_DEVICE.contains(serviceCode)) {
+			helpdeskWorkflow.blockDevice(helpdeskGeneral);
+		} else if (ServiceCode.DEVICE_CLOSURE.contains(serviceCode)) {
+			helpdeskWorkflow.cancelDevice(helpdeskGeneral);
+		}
+		
 	}
 
 	/**
@@ -627,12 +645,15 @@ public class HelpDeskSteps {
 	/*
 	 * This method gets the device status using search product type and device number
 	 */
+	@Given("device has \"$deviceStatus\" status")
 	@When("device has \"$deviceStatus\" status")
 	@Then("device has \"$deviceStatus\" status")
 	public void thenDeviceHasStatus(String deviceStatus) {
 		String expectedStatus = DeviceStatus.fromShortName(deviceStatus);
 		Device device = context.get(ContextConstants.DEVICE);
-		device.setAppliedForProduct(device.getProductType());
+		if(Objects.isNull(device.getAppliedForProduct())){
+			device.setAppliedForProduct(device.getProductType());
+		}
 		String actualStatus = helpdeskWorkflow.getDeviceStatus(device);
 		assertThat(STATUS_INCORRECT_INFO_MSG, actualStatus, equalTo(expectedStatus));
 		context.put(ContextConstants.DEVICE, device);
@@ -1157,5 +1178,64 @@ public class HelpDeskSteps {
 		Device device = context.get(ContextConstants.DEVICE);
 		HashMap<String, String> helpdeskValues = helpdeskWorkflow.noteDownRequiredValues(device.getDeviceNumber());
 		assertThat("Invalid Unbilled amount", helpdeskValues.get(amountType), equalTo(ContextConstants.ZERO_UNBILLED_PAYMENT));
+	}
+	
+	@When("user reissues TPIN request for $deviceType")
+	public void reissueTPINServiceRequest(@Named("deviceType") String deviceType) {
+		Device device = context.get(ContextConstants.DEVICE);
+		helpdeskGeneral = HelpdeskGeneral.createWithProvider(provider);
+		helpdeskGeneral.setNotes(Constants.REISSUE_TPIN_NOTES);
+		helpdeskGeneral.setReason(provider.getString(REISSUE_TPIN_REASON));
+		if (deviceType.contains("lvvc"))
+			helpdeskGeneral.setIsServiceRequestAllowed(false);
+		else
+			helpdeskGeneral.setIsServiceRequestAllowed(true);
+		errorMessage = helpdeskWorkflow.raiseReissueTPINRequest(device, helpdeskGeneral);
+	}
+
+	@Then("verify that the reissue TPIN request is not allowed for LVVC")
+	public void verifyRequestAllowed() {
+		assertThat("The reissue TPIN request is allowed for LVVC", errorMessage, equalTo(Constants.REISSUE_TPIN_LVVC_ERROR));
+	}
+	
+	@Then("service request $serviceCode should be fail for {blocked|expired} add-on device")
+	public void thenPinrequestShouldBeFailedForAddOnDevice(String serviceCode){
+		helpdeskGeneral.setServiceCode(serviceCode);			// Service Code e.g : Activate Device [108]
+		helpdeskGeneral.setNotes(MiscUtils.generateRandomNumberAsString(6));
+		helpdeskWorkflow.clickCustomerCareEditLink();
+		assertTrue("Service request is not getting failed for non-normal device", helpdeskWorkflow.isRequestFailingForNonNormalDevice(helpdeskGeneral));
+	}
+	
+	@When("user verifies \"$deviceStatus\" status and note down device details for without pin card")
+	public void userVerifyDeviceStatusAndNoteDownDeviceDetailsWithoutPin(String deviceStatus){
+		userVerifyDeviceStatusAndNoteDownDeviceDetails(deviceStatus);
+		context.put(ConstantData.IS_PIN_REQUIRED, "False");
+		DevicePlan devicePlan =  context.get(ContextConstants.DEVICE_PLAN);
+		devicePlan.setIsPinLess("YES");
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
+	
+	@When("user verifies \"$deviceStatus\" status and note down device details for with pin card")
+		public void userVerifyDeviceStatusAndNoteDownDeviceDetails(String deviceStatus) {
+		String expectedStatus = DeviceStatus.fromShortName(deviceStatus);
+		Device device = context.get(ContextConstants.DEVICE);
+		String actualStatus = helpdeskWorkflow.getDeviceStatus(device);
+		assertThat(STATUS_INCORRECT_INFO_MSG, actualStatus, equalTo(expectedStatus));
+		device = helpdeskWorkflow.getDeviceDetailsFromHelpdesk(device);
+		DevicePlan devicePlan = DevicePlan.createWithProvider(provider);
+		if(device.getDeviceType1().contains("EMV Card")){
+			devicePlan.setServiceCode(Constants.EMV_SERVICE_CODE);
+        }else if(device.getDeviceType1().contains("Magnetic Stripe Card")){
+			devicePlan.setServiceCode(Constants.MSR_SERVICE_CODE);
+        }
+		devicePlan.setExpiryDate(device.getExpirationDate());
+        devicePlan.setIsPinLess("No");
+        context.put(ConstantData.IS_PIN_REQUIRED, "TRUE");
+        context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+        context.put(ContextConstants.DEVICE, device);
+        //Available balance check
+        double txAmountFromSheet = new Double(provider.getString("TRANSACTION_AMOUNT"))/100;
+        Assert.assertTrue("Card has insufficient funds for transaction", new Double(device.getAvailableBalance())> txAmountFromSheet);
+        context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, new BigDecimal(device.getAvailableBalance()));
 	}
 }

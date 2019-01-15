@@ -9,8 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.codoid.products.exception.FilloException;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ApplicationType;
@@ -22,12 +24,15 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Devi
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Program;
 import com.mastercard.pts.integrated.issuing.domain.provider.KeyValueProvider;
+import com.mastercard.pts.integrated.issuing.pages.customer.cardmanagement.UpdateDeviceDetailsPage;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
+import com.mastercard.pts.integrated.issuing.utils.ExcelUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.CorporateClientCreationFlow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramFlows;
+import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.UpdatedDeviceDetailsFlows;
 
 @Component
 public class DeviceSteps {
@@ -50,6 +55,8 @@ public class DeviceSteps {
 	Program program;
 	
 	@Autowired
+	private UpdatedDeviceDetailsFlows updateDeviceWorkflow;
+
 	CorporateClientCreationFlow corporateClientFlow;
 
 	private static final String CREDIT_LIMIT_GREATER_THEN_MAXIMUM_EXP = "Entered Credit Limit is greater than Primary Card Credit Limit.";
@@ -442,6 +449,7 @@ public class DeviceSteps {
 		context.put(ContextConstants.DEVICE_PLAN, deviceplan);
 		context.put(ContextConstants.DEVICE, device);
 	}
+	
 	@When("User fills Corporate client $individual for $credit product")
 	public void userCreatesCorporateClient(String type, String product){
 		CorporateClient corporateclient = CorporateClient.createDataWithProvider(provider);
@@ -449,4 +457,29 @@ public class DeviceSteps {
 		corporateClientFlow.createCorporateClient(corporateclient);
 	}
 	
+	@When("user attaches device promotion plan $promotionPlan")
+	public void userAttachDevicePromotionalPlan(String promotionPlan){
+		Device device = context.get(ContextConstants.DEVICE);
+		device.setDevicePromotionPlan(provider.getString(promotionPlan));
+		updateDeviceWorkflow.updateDevicePlanForDevice(device);
+		context.put(ContextConstants.DEVICE, device);
+	}
+	
+	@Given("user gets data from excel for $scenario scenario and $productType product")
+    public void userGetDataFromExcelForScenario(String scenario, String productType){
+          Device device = Device.createWithProvider(provider);
+          Map<String, String> map = new LinkedHashMap<String, String>();
+          map.putAll(ExcelUtils.getCardDetailsFromExcel(scenario,productType));
+          device.setAppliedForProduct(ProductType.fromShortName(productType));
+          device.setProductType(ProductType.fromShortName(productType));
+          device.setDeviceNumber(map.get("DeviceNumber"));
+          device.setCvvData(map.get("CVV"));
+          device.setCvv2Data(map.get("CVV2"));
+          device.setIcvvData(map.get("ICVV"));
+          device.setPvkiData(map.get("PVKI"));
+          device.setExpirationDate(map.get("ExpiryDate"));
+          device.setPinOffset(map.get("PinOffset"));
+          device.setPinNumberForTransaction(map.get("ClearPin"));
+          context.put(ContextConstants.DEVICE, device);
+    }
 }

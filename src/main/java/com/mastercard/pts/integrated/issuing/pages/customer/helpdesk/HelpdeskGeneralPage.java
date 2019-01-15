@@ -81,8 +81,13 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	private static final String LOGGED_BY = "Logged By:";
 	private static final String CLOSURE_PERIOD = "Estimated Closure Period(Days:HH:MM):";
 	private static final String PRIORITY_REQUEST = "Priority Request:";
+	
+	private static final String BLOCK_DEVICE_TITLE = "111 - Block Device";
+	private static final String DEVICE_CLOSURE_TITLE = "402 - Device Closure";
 
 	private static String ERROR_MESSAGE = "This field is required.";
+	private static final String GENERAL_ELEMENT_XPATH = "//h3[@class='w_captionText'][text()='General']";
+
 	private static final Logger logger = LoggerFactory.getLogger(HelpdeskGeneralPage.class);
 	private String activeDeviceNumber;
 	private String saleDate;
@@ -127,10 +132,10 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Save']")
 	private MCWebElement saveBtn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@name='udf4:input:inputTextField']")
 	private MCWebElement timeInHourTxt;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = ".feedbackPanelINFO")
 	private MCWebElement activationMessage;
 
@@ -247,127 +252,136 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Current Status and Limits']")
 	private MCWebElement currentStatusAndLimitTab;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@name='udf23:radioComponent' and @value='0']")
 	private MCWebElement eccomDeactivate;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//input[@name='udf23:radioComponent' and @value='1']")
 	private MCWebElement eccomActivate;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Card :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement availCardCreditLimitLabel;
-	
+
 	private static final By INFO_WALLET_NUMBER = By.xpath("//li[@class='feedbackPanelINFO'][2]/span");
-	
+
 	private final String RESET_PIN_RETRY_COUNTER= "109 - Reset Pin Retry Counter";
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//a[text()='Balance Details']")
 	private MCWebElement balanceDetailsTab;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//a[.='Current Status and Limits']")
 	private MCWebElement currentStatusLimits;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//div[@id='tab4']//table[1]//td//span[@class='labeltextr']")
-	private MCWebElements creditLimitParameter;	
-	
+	private MCWebElements creditLimitParameter;
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//div[@id='tab4']//table[1]//td//span[@class='labeltextr']/preceding::span[1]")
 	private MCWebElements creditLimitParamterLabels;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//td[contains(.,'Payment :')]/..//span[@class='labeltextr']")
 	private MCWebElements paymentComponents;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind="//td[contains(.,'Purchase :')]/..//span[@class='labeltextr']")
 	private MCWebElements purchaseComponents;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Card :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement cardCreditLimitLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Account :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement availAccountCreditLimitLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Account :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement accountCreditLimitLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Client :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement clientCreditLimitLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Avail Client :']/../../following-sibling::td[1]/span/span")
-	private MCWebElement availClientCreditLimitLabel;	
-	
+	private MCWebElement availClientCreditLimitLabel;
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='PDD :']/../../following-sibling::td[1]/span/span/span")
 	private MCWebElement paymentDueDateLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='MAD :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement minimumAmountDueLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Total Outstanding :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement totalAmountDueLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Closing Balance :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement closingBalanceLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Interest :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement interestLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement loanLabel;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Interest :']/../../following-sibling::td[1]/span/span")
 	private MCWebElement loanInterestLabel;
-  
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Installment :']/../../following-sibling::td[3]/span/span")
 	private MCWebElement loanInstallmentOutStandingLabel;
 	
     @PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[contains(text(),'Wallet Number')]/../following-sibling::td/span/span")
 	private MCWebElement txtWalletNumber;
-    
+
     @PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Payment :']/../../following-sibling::td[2]/span/span")
 	private MCWebElement paymentUnbilledLbl;
+    
+    @PageElement(findBy=FindBy.X_PATH, valueToFind="//span[contains(text(),'Program Code')]//ancestor::table//tbody//td[3]//span")
+	MCWebElement programCodeLbl;
 	
+	@PageElement(findBy=FindBy.X_PATH, valueToFind="//span[contains(text(),'Device Plan Code')]//ancestor::table//tbody//td[4]//span")
+	MCWebElement devicePlanLbl;
+	
+	@PageElement(findBy=FindBy.X_PATH, valueToFind="//span[contains(text(),'Device Type')]/..//following-sibling::td//span//span")
+	MCWebElement deviceTypeLbl;
+
     @Autowired
 	TestContext context;
-	
+
 	private final String DEFAULT_BALANCE="0.00";
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//th[text()='New Credit Limit']/../following-sibling::tr[1]/td[4]/input")
 	private MCWebElement creditClientLimitTxt;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//th[text()='New Credit Limit']/../following-sibling::tr[2]/td[4]/input")
 	private MCWebElement creditAccountLimitTxt;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@fld_fqn='newCreditLimit']")
 	private MCWebElement newCreditLimitTxt;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Type :']/../following-sibling::td[1]/select")
 	private MCWebElement selectLimitTypeDdwn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Plan :']/../following-sibling::td[1]//span/select")
 	private MCWebElement selectLoanPlanDdwn;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Book Loan']")
 	private MCWebElement bookLoanBtn;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Calculate EMI']")
 	private MCWebElement calculateEMIBtn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Note :']/../following-sibling::td[1]/span/textarea")
 	private MCWebElement noteTxt;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value= 'Sanction']")
 	private MCWebElement sanctionBtn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td/span[text()='EMI :']/../following-sibling::td[1]/span/input")
 	private MCWebElement emiLbl;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td/span[text()='Processing Fee :']/../following-sibling::td[1]/span/input")
 	private MCWebElement processingFeeLbl;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td/span[text()='Moratorium Loan :']/../following-sibling::td[1]/span/input")
 	private MCWebElement moratoriumLoanLbl;
-	
+
 	@PageElement(findBy = FindBy.ID, valueToFind = "callReferenceNumber")
 	private MCWebElement callRefNumberLbl;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//input[@value='Authorization']")
 	private MCWebElement btnAuthorization;
 
@@ -386,42 +400,42 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Cancel Loan']")
 	private MCWebElement cancelLoanBtn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Cancellation Fee :']/../following-sibling::td/span/input")
 	private MCWebElement txtCancellationFee;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Process']")
 	private MCWebElement processBtn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Pre-Closure Fee :']/../following-sibling::td/input")
 	private MCWebElement preclosureFeeTxt;
-	
+
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value='Pre-Close Loan']")
 	private MCWebElement preCloseLoanBtn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Loan Account Number :']/../following-sibling::td[1]//span/select")
 	private MCWebElement selectLoanAccountNumberDdwn;
 
 	@PageElement(findBy = FindBy.CSS, valueToFind = "input[value = 'Loyalty']")
 	private MCWebElement loyaltyBtn;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Points Earned:']/following::span/span")
 	private MCWebElement pointsEarned;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Available Loyalty Points:']/following::span/span")
 	private MCWebElement availableLoyaltyPoints;
-	
+
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Accumulated Reversed Points:']/following::span/span")
 	private MCWebElement accumulatedReversedPoints;
-	
+
 	private final String LOYALTY_DETAILS = "Loyalty Details";
-	
+
 	private String preclosureFee;
 	private String cancellationFee;
 	private String errorMsgOfloanCancellation;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'Reason')]//following::select[@class = 'mandatoryFlag selectf']")
-	private MCWebElement stoplistReasonDDwn;
+	private MCWebElement reasonDDwn;
 
 	@PageElement(findBy = FindBy.X_PATH, valueToFind = "//td[contains(.,'New Device Number :')]//following::input[@type='checkbox']")
 	private MCWebElement chkBxNewDeviceNumber;
@@ -490,7 +504,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	}
 
 	public void selectServiceCode(String serviceCode) {
-		WebElementUtils.selectDropDownByVisibleText(serviceCodeDdwn, serviceCode);
+		selectByVisibleText(serviceCodeDdwn, serviceCode);
 	}
 
 	public void storeSaleDate() {
@@ -536,7 +550,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public void enterNotes(String notes) {
 		WebElementUtils.enterText(notesTxt, notes);
 	}
-	
+
 	public void enterNote(String notes) {
 		noteTxt.sendKeys(notes);
 	}
@@ -576,6 +590,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public void clickEndCall() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(endCallBtn)).click();
+		new WebDriverWait(driver(), timeoutInSec).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(GENERAL_ELEMENT_XPATH)));
 	}
 
 	public void enterClientCreditLimit(String clientcreditlimit) {
@@ -1421,7 +1436,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	public void resetPinRetryCounter(HelpdeskGeneral helpdeskGeneral) {
 		selectServiceCode(helpdeskGeneral.getServiceCode());
 		clickGoButton();
-		runWithinPopup(RESET_PIN_RETRY_COUNTER, () -> {
+		runWithinPopup(getServiceRequestPopupTitle(helpdeskGeneral.getServiceCode()), () -> {
 			enterNotes(helpdeskGeneral.getNotes());
 			clickSaveButton();
 			verifyOperationStatus();
@@ -1672,6 +1687,19 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return creditLimit;
 	}
 	
+	public void blockDevice(HelpdeskGeneral helpdeskGeneral) {
+		selectServiceCode(helpdeskGeneral.getServiceCode());
+		clickGoButton();
+		runWithinPopup(BLOCK_DEVICE_TITLE, () -> {
+			enterNotes(helpdeskGeneral.getNotes());
+			clickSaveButton();
+			verifyOperationStatus();
+			clickOKButtonPopup();
+		});
+		SimulatorUtilities.wait(3000);
+		clickEndCall();
+	}
+	
 	public List<LoanDetails>  retailTransactionToLoan(HelpdeskGeneral helpdeskGeneral,LoanPlan loanPlan,TransactionSearchDetails transactionDetails){
 		List<LoanDetails> loanDetails = new ArrayList<>();		
 		selectServiceCode(helpdeskGeneral.getServiceCode());
@@ -1687,11 +1715,9 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		clickEndCall();
 		
 		return loanDetails;
-
 	}
 	
-	public LoanDetails sanctionLoan(TransactionSearchDetails transactionDetails)
-	{		
+	public LoanDetails sanctionLoan(TransactionSearchDetails transactionDetails) {		
 		LoanDetails loanDetails= new LoanDetails();
 		runWithinPopup("Add Retail To Loan Sanction", ()->{	
 			String checkBox = String.format("//td//span[text()='%s']/../../following-sibling::td[7]",transactionDetails.getARN());
@@ -1715,6 +1741,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		
 		return loanDetails;
 	}
+
 	
 	public String raiseLoanCancellationRequest(HelpdeskGeneral helpdeskGeneral, LoanPlan loanPlan, Device device) {
 		selectServiceCode(helpdeskGeneral.getServiceCode());
@@ -1819,6 +1846,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return preclosureFee;
 	}
 
+
 	private String processLoanPreClosure() {
 		SimulatorUtilities.wait(500);
 		runWithinPopup("Process Loan Pre-Closure", ()->{	
@@ -1833,7 +1861,7 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		});	
 		return preclosureFee;
 	}
-
+	
 	public void clickLoyaltyBtn() {
 		WebElementUtils.scrollDown(driver(), 0, 250);
 		new WebDriverWait(driver(), timeoutInSec).until(WebElementUtils.elementToBeClickable(loyaltyBtn)).click();
@@ -1841,6 +1869,20 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 	
 	public void clickEditDeviceLink() {
 		editDeviceLink.click();
+	}
+	
+	public void cancelDevice(HelpdeskGeneral helpdeskGeneral) {
+		selectServiceCode(helpdeskGeneral.getServiceCode());
+		clickGoButton();
+		runWithinPopup(DEVICE_CLOSURE_TITLE, () -> {
+			enterNotes(helpdeskGeneral.getNotes());
+			clickSaveButton();
+			runWithinPopup("Confirmation Message", this::clickYesButton);
+			verifyOperationStatus();
+			clickOKButtonPopup();
+		});
+		SimulatorUtilities.wait(3000);
+		clickEndCall();
 	}
 	
 	public Map<String, String> getLoyaltyDetails() {
@@ -1912,8 +1954,8 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 		return replaceDeviceRequestReasonDDwn;
 	}
 
-	public MCWebElement getstoplistReasonDDwn() {
-		return stoplistReasonDDwn;
+	public MCWebElement getReasonDDwn() {
+		return reasonDDwn;
 	}
 
 	public void selectNewDeviceCheckBox(boolean value) {
@@ -1952,5 +1994,60 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
 	public void selectApplyFeesChkBx(boolean value) {
 		ClickCheckBox(chkBxApplyFees, value);
+	}
+	
+	private String getServiceRequestPopupTitle(String serviceCode){
+		return serviceCode.replaceAll("[^0-9]","") + " - " + serviceCode.replaceAll("[^a-zA-Z\\s]","").trim();
+	}
+	
+	public void printResponseMessageLog(){
+		logger.info("service request response message : {}", verifyServiceRequestStatus());
+	}
+	
+	public void selectReason(String reason) {
+		WebElementUtils.selectDropDownByVisibleText(reasonDDwn, reason);
+	}
+	
+	public String raiseReissueTPINRequest(HelpdeskGeneral helpdeskGeneral, 
+			String frame) {
+		String errorMessage = "";
+		editFirstRecord();
+		SimulatorUtilities.wait(2000);
+		selectServiceCode(helpdeskGeneral.getServiceCode());
+		SimulatorUtilities.wait(500);
+		clickGoButton();
+		SimulatorUtilities.wait(2000);
+		if(!helpdeskGeneral.getIsServiceRequestAllowed() 
+				&& errorMessagePresence()) {
+			errorMessage = getErrorMessage();
+		} else {
+			runWithinPopup(
+					frame,
+					() -> {
+						selectReason(helpdeskGeneral.getReason());
+						SimulatorUtilities.wait(500);
+						enterNotes(helpdeskGeneral.getNotes());
+						clickSaveButton();
+						verifyOperationStatus();
+						clickOKButtonPopup();
+					});
+			SimulatorUtilities.wait(5000);
+			clickEndCall();
+		}
+		return errorMessage;
+	}
+	
+	public Device noteDownDeviceDetails(Device device){
+		editFirstRecord();
+		SimulatorUtilities.wait(3000);
+		device.setProgramCode(getTextFromPage(programCodeLbl));
+		device.setDevicePlan1(getTextFromPage(devicePlanLbl));
+		clickWhenClickable(deviceDetailsLnk);
+		SimulatorUtilities.wait(100);
+		device.setDeviceType1(getTextFromPage(deviceTypeLbl));
+		clickCurrentStatusAndLimitsTab();
+		device.setAvailableBalance(getTextFromPage(availAccountCreditLimitLabel));
+		clickEndCall();
+		return device;
 	}
 }

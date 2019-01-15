@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -143,12 +144,31 @@ public class ExcelUtils {
 		Recordset recordset = connection.executeQuery(strQuery);
 		while (recordset.next()) {
 			for(String str : recordset.getFieldNames()){
-				map.put(str,recordset.getField(str));
+				map.put(str,recordset.getField(str).trim());
 			}
 		}
 		recordset.close();
 		connection.close();
 		return map;
+	}
+
+	public static Map<String, String> getCardDetailsFromExcel(String scenario, String productType){
+		Map<String, String> map = new LinkedHashMap<String, String>();
+		try {
+			map.putAll(ExcelUtils.getRowDataFromExcelThroughQuery("Select * from Sheet10 WHERE ScenarioID = '"+scenario+"'" + "AND ProductType = '"+productType+"'"));
+		} catch (FilloException e) {
+			MiscUtils.reportToConsole(e.getLocalizedMessage());
+		}
+		return map;
+	}
+	
+	public static void updateDevicePIN(String pinNumber,String deviceNumber){
+		try {
+			ExcelUtils.insertDataIntoExcel("Update Sheet10 set ClearPin='" + pinNumber + "' where DeviceNumber='" + deviceNumber + "'");
+		} catch (FilloException e) {
+			MiscUtils.reportToConsole(e.getLocalizedMessage());
+			e.printStackTrace();
+		}
 	}
 
 

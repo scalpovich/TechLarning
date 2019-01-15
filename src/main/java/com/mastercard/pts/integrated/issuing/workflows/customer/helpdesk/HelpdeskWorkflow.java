@@ -92,6 +92,16 @@ public class HelpdeskWorkflow {
 		helpDeskPage.setupDeviceCurrency(helpdeskGeneral);
 	}
 	
+	public void blockDevice(HelpdeskGeneral helpdeskGeneral) {
+		clickCustomerCareEditLink();
+		helpDeskPage.blockDevice(helpdeskGeneral);
+	}
+	
+	public void cancelDevice(HelpdeskGeneral helpdeskGeneral) {
+		clickCustomerCareEditLink();
+		helpDeskPage.cancelDevice(helpdeskGeneral);
+	}
+	
 	public void setupInternationalAllowDisallowCheck(String status) {
 		helpDeskPage.setupInternationalAllowDisallowCheck(status);
 	}
@@ -285,7 +295,7 @@ public class HelpdeskWorkflow {
 		helpDeskPage.searchByDeviceNumber(device);
 		helpdeskGeneral.setServiceCode(Constants.DEVICE_STOPLIST_REQ);
 		helpDeskPage.addServiceRequest(helpdeskGeneral,
-				helpDeskPage.getstoplistReasonDDwn(),
+				helpDeskPage.getReasonDDwn(),
 				Constants.FRAME_STOPLIST_REQUEST, false);
 	}
 
@@ -321,7 +331,32 @@ public class HelpdeskWorkflow {
 	public String raiseLoanCancellationRequestToVerifyErroMessage(LoanPlan loanPlan, Device device,
 			HelpdeskGeneral helpdeskGeneral) {
 		return helpDeskPage.raiseLoanCancellationRequestToVerifyErroMessage(helpdeskGeneral,loanPlan,device);
-		
+	}
+	
+	public Device getDeviceDetailsFromHelpdesk(Device device){
+		device = helpDeskPage.noteDownDeviceDetails(device);
+		return device;
+	}
+	
+	public String raiseReissueTPINRequest(Device device,
+			HelpdeskGeneral helpdeskGeneral) {
+		helpDeskPage = navigator.navigateToPage(HelpdeskGeneralPage.class);
+		helpDeskPage.searchByDeviceNumber(device);
+		helpdeskGeneral.setServiceCode(Constants.REISSUE_TPIN_REQ);
+		return helpDeskPage.raiseReissueTPINRequest(helpdeskGeneral,
+				Constants.FRAME_REISSUE_TPIN);
+}
+
+	public boolean isRequestFailingForNonNormalDevice(HelpdeskGeneral helpdeskGeneral){
+		try{
+			resetPinCounter(helpdeskGeneral);
+			return false;
+		} catch (Exception e){
+			e.printStackTrace();
+			helpDeskPage.printResponseMessageLog();
+			helpDeskPage.clickEndCall();
+			return true;
+		}
 	}
 }
 

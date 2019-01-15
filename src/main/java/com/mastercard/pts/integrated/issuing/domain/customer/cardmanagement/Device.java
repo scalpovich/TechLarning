@@ -116,6 +116,7 @@ public class Device {
 	private String interestOnPurchase;
 	private String latePaymentFee;
   	private String updatedATCValue;
+  	private String devicePromotionPlan;
   	private double deviceAmountUsage;
   	private int deviceVelocity;
   	private String dedupe;
@@ -125,7 +126,7 @@ public class Device {
 	private String loanAccountNumber;  	
   	private String mandatoryFieldValue;
   	private String cardPackID;
-  
+  	private String availableBalance;
   	
 	public  static Device createWithProvider(KeyValueProvider provider) {
 		Device device = new Device();
@@ -151,7 +152,7 @@ public class Device {
 		device.setConfirmNewTransPassword(provider.getString(CHP_NEW_PASSWORD));	
 		device.setProductType(provider.getString(PRODUCT_TYPE));
 		device.setTransactionDateType(provider.getString(DATE_TYPE));
-      	device.setLegalID(RandomStringUtils.randomAlphabetic(1).toUpperCase()+ RandomStringUtils.randomNumeric(7));	
+      	device.setLegalID(RandomStringUtils.randomAlphabetic(1).toUpperCase() + RandomStringUtils.randomNumeric(7));	
 		device.setProgramCode(provider.getString(PROGRAM_CODE));
 		device.setDevicePlan1(provider.getString(DEVICE_PLAN));     
 		device.setTransactionPassword(provider.getString(TRANSACTION_PASSWORD));		
@@ -765,10 +766,14 @@ public class Device {
 		return deviceVelocity;
 	}
 
-	public void setDeviceVelocity(int deviceUsageVelocity) {
-		deviceVelocity = deviceUsageVelocity + deviceVelocity ;
+	public String getDevicePromotionPlan() {
+		return devicePromotionPlan;
 	}
 
+	public void setDevicePromotionPlan(String devicePromotionPlan) {
+		this.devicePromotionPlan = devicePromotionPlan;
+	}
+	
 	public String getDedupe() {
 		return dedupe;
 	}
@@ -831,5 +836,16 @@ public class Device {
 
 	public void setDeviceVelocity() {
 		deviceVelocity = 0;
+	}
+	
+	public String getAvailableBalance() {
+		return availableBalance;
+	}
+
+	public void setAvailableBalance(String availableBalance) {
+		this.availableBalance = availableBalance;
+	}
+	public void setDeviceVelocity(int deviceVelocity) {
+		this.deviceVelocity = this.deviceVelocity + deviceVelocity;
 	}
 }
