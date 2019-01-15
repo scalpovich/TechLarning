@@ -176,4 +176,5 @@ public class ExcelUtils {
 	public static void insertDataIntoExcel(String strQuery) throws FilloException {
 		insertDataIntoExcelThroughQuery(getFilePath(), strQuery);
 	}
+
 }
