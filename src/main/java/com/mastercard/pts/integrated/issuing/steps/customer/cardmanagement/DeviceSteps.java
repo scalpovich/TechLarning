@@ -73,7 +73,8 @@ public class DeviceSteps {
 		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
 		device.setDeviceType1(devicePlan.getDeviceType());
-
+		sdnUncheckProgram(program.getProgramCode());
+		
 		deviceWorkflow.createDevice(device);
 		context.put(ContextConstants.DEVICE, device);
 	}
@@ -107,11 +108,10 @@ public class DeviceSteps {
 		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
 		device.setDeviceType1(devicePlan.getDeviceType());
-		
-		sdnUncheckProgram(program.getProgramCode());
-		
+
 		deviceWorkflow.createDevice(device);
 		context.put(ContextConstants.DEVICE, device);
+
 	}
 
 	@Then("$type device plan and program are made available for Device Creation")
@@ -421,6 +421,8 @@ public class DeviceSteps {
 		context.put(CreditConstants.APPLICATION, device);
 	}
 	
+	
+	
 	@When("user selects secondary card for transaction")
 	public void userSelectSecondaryCardForTrasaction(){
 		//Code for saving primary device for future use
@@ -435,11 +437,11 @@ public class DeviceSteps {
 		context.put(ContextConstants.DEVICE_PLAN, deviceplan);
 		context.put(ContextConstants.DEVICE, device);
 	}
-	
 	@When("User fills Corporate client $individual for $credit product")
 	public void userCreatesCorporateClient(String type, String product){
 		CorporateClient corporateclient = CorporateClient.createDataWithProvider(provider);
 		corporateclient.setProductType(ProductType.fromShortName(type));
 		corporateClientFlow.createCorporateClient(corporateclient);
 	}
+	
 }
