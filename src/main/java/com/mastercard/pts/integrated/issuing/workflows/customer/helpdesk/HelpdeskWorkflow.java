@@ -331,7 +331,11 @@ public class HelpdeskWorkflow {
 	public String raiseLoanCancellationRequestToVerifyErroMessage(LoanPlan loanPlan, Device device,
 			HelpdeskGeneral helpdeskGeneral) {
 		return helpDeskPage.raiseLoanCancellationRequestToVerifyErroMessage(helpdeskGeneral,loanPlan,device);
-		
+	}
+	
+	public Device getDeviceDetailsFromHelpdesk(Device device){
+		device = helpDeskPage.noteDownDeviceDetails(device);
+		return device;
 	}
 	
 	public String raiseReissueTPINRequest(Device device,

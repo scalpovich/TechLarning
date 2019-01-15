@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.Objects;
+
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.Matchers;
 import org.jbehave.core.annotations.Alias;
@@ -26,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.codoid.products.exception.FilloException;
 import com.mastercard.pts.integrated.issuing.configuration.FinSimSimulator;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
@@ -50,6 +52,7 @@ import com.mastercard.pts.integrated.issuing.pages.ValidationException;
 import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.utils.Constants;
 import com.mastercard.pts.integrated.issuing.utils.DateUtils;
+import com.mastercard.pts.integrated.issuing.utils.ExcelUtils;
 import com.mastercard.pts.integrated.issuing.utils.MiscUtils;
 import com.mastercard.pts.integrated.issuing.utils.simulator.VisaTestCaseNameKeyValuePair;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.DeviceUsageWorkflow;
@@ -448,13 +451,16 @@ public class TransactionSteps {
 
 	@When("PIN is retrieved successfully with data from Pin Offset File")
 	@Then("PIN is retrieved successfully with data from Pin Offset File")
-	public void thenPINIsRetrievedSuccessfully() {
+	public void thenPINIsRetrievedSuccessfully(){
 		Device device = context.get(ContextConstants.DEVICE);
-		Transaction transactionData = Transaction.generateFinSimPinTestData(device, finSimConfig, provider);
-		String pinNumber = transactionWorkflow.getPinNumber(transactionData);
-		logger.info("FINSim PIN Number generated : {} ", pinNumber);
-		Assert.assertTrue("INVALID PIN", !pinNumber.isEmpty());
-		device.setPinNumberForTransaction(pinNumber);
+		if(Objects.isNull(device.getPinNumberForTransaction())){
+			Transaction transactionData = Transaction.generateFinSimPinTestData(device, finSimConfig, provider);
+			String pinNumber = transactionWorkflow.getPinNumber(transactionData);
+			logger.info("FINSim PIN Number generated : {} ", pinNumber);
+			Assert.assertTrue("INVALID PIN", !pinNumber.isEmpty());
+			ExcelUtils.updateDevicePIN(pinNumber,device.getDeviceNumber());
+			device.setPinNumberForTransaction(pinNumber);
+		}
 	}
 
 	@When("PIN is created for Pin Change First Transaction")

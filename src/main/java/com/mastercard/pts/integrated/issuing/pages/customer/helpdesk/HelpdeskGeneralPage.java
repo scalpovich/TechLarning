@@ -328,6 +328,15 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 
     @PageElement(findBy = FindBy.X_PATH, valueToFind = "//span[text()='Payment :']/../../following-sibling::td[2]/span/span")
 	private MCWebElement paymentUnbilledLbl;
+    
+    @PageElement(findBy=FindBy.X_PATH, valueToFind="//span[contains(text(),'Program Code')]//ancestor::table//tbody//td[3]//span")
+	MCWebElement programCodeLbl;
+	
+	@PageElement(findBy=FindBy.X_PATH, valueToFind="//span[contains(text(),'Device Plan Code')]//ancestor::table//tbody//td[4]//span")
+	MCWebElement devicePlanLbl;
+	
+	@PageElement(findBy=FindBy.X_PATH, valueToFind="//span[contains(text(),'Device Type')]/..//following-sibling::td//span//span")
+	MCWebElement deviceTypeLbl;
 
     @Autowired
 	TestContext context;
@@ -2026,5 +2035,19 @@ public class HelpdeskGeneralPage extends AbstractBasePage {
 			clickEndCall();
 		}
 		return errorMessage;
+	}
+	
+	public Device noteDownDeviceDetails(Device device){
+		editFirstRecord();
+		SimulatorUtilities.wait(3000);
+		device.setProgramCode(getTextFromPage(programCodeLbl));
+		device.setDevicePlan1(getTextFromPage(devicePlanLbl));
+		clickWhenClickable(deviceDetailsLnk);
+		SimulatorUtilities.wait(100);
+		device.setDeviceType1(getTextFromPage(deviceTypeLbl));
+		clickCurrentStatusAndLimitsTab();
+		device.setAvailableBalance(getTextFromPage(availAccountCreditLimitLabel));
+		clickEndCall();
+		return device;
 	}
 }

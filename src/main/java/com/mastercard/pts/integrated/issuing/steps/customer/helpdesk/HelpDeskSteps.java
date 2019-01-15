@@ -33,6 +33,7 @@ import com.mastercard.pts.integrated.issuing.domain.agent.transactions.CardToCas
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.CreditConstants;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DeviceCreation;
+import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.LoanPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.NewDevice;
@@ -1203,5 +1204,38 @@ public class HelpDeskSteps {
 		helpdeskGeneral.setNotes(MiscUtils.generateRandomNumberAsString(6));
 		helpdeskWorkflow.clickCustomerCareEditLink();
 		assertTrue("Service request is not getting failed for non-normal device", helpdeskWorkflow.isRequestFailingForNonNormalDevice(helpdeskGeneral));
+	}
+	
+	@When("user verifies \"$deviceStatus\" status and note down device details for without pin card")
+	public void userVerifyDeviceStatusAndNoteDownDeviceDetailsWithoutPin(String deviceStatus){
+		userVerifyDeviceStatusAndNoteDownDeviceDetails(deviceStatus);
+		context.put(ConstantData.IS_PIN_REQUIRED, "False");
+		DevicePlan devicePlan =  context.get(ContextConstants.DEVICE_PLAN);
+		devicePlan.setIsPinLess("YES");
+		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+	}
+	
+	@When("user verifies \"$deviceStatus\" status and note down device details for with pin card")
+		public void userVerifyDeviceStatusAndNoteDownDeviceDetails(String deviceStatus) {
+		String expectedStatus = DeviceStatus.fromShortName(deviceStatus);
+		Device device = context.get(ContextConstants.DEVICE);
+		String actualStatus = helpdeskWorkflow.getDeviceStatus(device);
+		assertThat(STATUS_INCORRECT_INFO_MSG, actualStatus, equalTo(expectedStatus));
+		device = helpdeskWorkflow.getDeviceDetailsFromHelpdesk(device);
+		DevicePlan devicePlan = DevicePlan.createWithProvider(provider);
+		if(device.getDeviceType1().contains("EMV Card")){
+			devicePlan.setServiceCode(Constants.EMV_SERVICE_CODE);
+        }else if(device.getDeviceType1().contains("Magnetic Stripe Card")){
+			devicePlan.setServiceCode(Constants.MSR_SERVICE_CODE);
+        }
+		devicePlan.setExpiryDate(device.getExpirationDate());
+        devicePlan.setIsPinLess("No");
+        context.put(ConstantData.IS_PIN_REQUIRED, "TRUE");
+        context.put(ContextConstants.DEVICE_PLAN, devicePlan);
+        context.put(ContextConstants.DEVICE, device);
+        //Available balance check
+        double txAmountFromSheet = new Double(provider.getString("TRANSACTION_AMOUNT"))/100;
+        Assert.assertTrue("Card has insufficient funds for transaction", new Double(device.getAvailableBalance())> txAmountFromSheet);
+        context.put(ContextConstants.AVAILABLE_BALANCE_OR_CREDIT_LIMIT, new BigDecimal(device.getAvailableBalance()));
 	}
 }
