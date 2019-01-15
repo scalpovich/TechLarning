@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Strings;
+import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.domain.cardholder.CardHolderPinSet;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
@@ -78,7 +79,8 @@ public class DevicePinSetPage extends AbstractBasePage{
 		String locator = String.format("//*[@class='dataview-div']//*[@id='%s']//*[@type='submit']", device.getDeviceNumber());
 		Element(locator).click();
 		waitForLoaderToDisappear();
-		enterText(cardExpDateTxt, "1022");
+		//Device Plan date
+		enterText(cardExpDateTxt, device.getExpirationDate());		
 		logger.info("CVV2 or CVC2 pin: {}", device.getCvv2Data());
 		enterText(cvv2CVC2Txt, device.getCvv2Data());		
 		logger.info("Client DOB: {}", device.getClientDetails().getBirthDate());
