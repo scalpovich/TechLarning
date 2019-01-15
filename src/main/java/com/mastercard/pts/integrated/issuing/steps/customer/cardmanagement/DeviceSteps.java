@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.codoid.products.exception.FilloException;
@@ -465,9 +466,10 @@ public class DeviceSteps {
 	}
 	
 	@Given("user gets data from excel for $scenario scenario and $productType product")
-    public void userGetDataFromExcelForScenario(String scenario, String productType) throws FilloException{
+    public void userGetDataFromExcelForScenario(String scenario, String productType){
           Device device = Device.createWithProvider(provider);
-          Map<String, String> map = ExcelUtils.getRowDataFromExcelThroughQuery("Select * from Sheet10 WHERE ScenarioID = '"+scenario+"'" + "AND ProductType = '"+productType+"'");
+          Map<String, String> map = new LinkedHashMap<String, String>();
+          map.putAll(ExcelUtils.getCardDetailsFromExcel(scenario,productType));
           device.setAppliedForProduct(ProductType.fromShortName(productType));
           device.setProductType(ProductType.fromShortName(productType));
           device.setDeviceNumber(map.get("DeviceNumber"));

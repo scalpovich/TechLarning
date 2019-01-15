@@ -1206,7 +1206,7 @@ public class HelpDeskSteps {
 		assertTrue("Service request is not getting failed for non-normal device", helpdeskWorkflow.isRequestFailingForNonNormalDevice(helpdeskGeneral));
 	}
 	
-	@When("user verify \"$deviceStatus\" status and note down device details for without pin card")
+	@When("user verifies \"$deviceStatus\" status and note down device details for without pin card")
 	public void userVerifyDeviceStatusAndNoteDownDeviceDetailsWithoutPin(String deviceStatus){
 		userVerifyDeviceStatusAndNoteDownDeviceDetails(deviceStatus);
 		context.put(ConstantData.IS_PIN_REQUIRED, "False");
@@ -1215,7 +1215,7 @@ public class HelpDeskSteps {
 		context.put(ContextConstants.DEVICE_PLAN, devicePlan);
 	}
 	
-	@When("user verify \"$deviceStatus\" status and note down device details for with pin card")
+	@When("user verifies \"$deviceStatus\" status and note down device details for with pin card")
 		public void userVerifyDeviceStatusAndNoteDownDeviceDetails(String deviceStatus) {
 		String expectedStatus = DeviceStatus.fromShortName(deviceStatus);
 		Device device = context.get(ContextConstants.DEVICE);

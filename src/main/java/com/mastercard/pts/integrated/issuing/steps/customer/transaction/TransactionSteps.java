@@ -451,14 +451,14 @@ public class TransactionSteps {
 
 	@When("PIN is retrieved successfully with data from Pin Offset File")
 	@Then("PIN is retrieved successfully with data from Pin Offset File")
-	public void thenPINIsRetrievedSuccessfully() throws FilloException {
+	public void thenPINIsRetrievedSuccessfully(){
 		Device device = context.get(ContextConstants.DEVICE);
 		if(Objects.isNull(device.getPinNumberForTransaction())){
 			Transaction transactionData = Transaction.generateFinSimPinTestData(device, finSimConfig, provider);
 			String pinNumber = transactionWorkflow.getPinNumber(transactionData);
 			logger.info("FINSim PIN Number generated : {} ", pinNumber);
-			ExcelUtils.insertDataIntoExcel("Update Sheet10 set ClearPin='" + pinNumber + "' where DeviceNumber='" + device.getDeviceNumber() + "'");
 			Assert.assertTrue("INVALID PIN", !pinNumber.isEmpty());
+			ExcelUtils.updateDevicePIN(pinNumber,device.getDeviceNumber());
 			device.setPinNumberForTransaction(pinNumber);
 		}
 	}

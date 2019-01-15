@@ -12,7 +12,7 @@ Scenario: 1.1 Create EMV credit device
 Given setting json values in excel for Credit
 And user gets data from excel for General scenario and Credit product
 When user is logged in institution
-And user verify "normal" status and note down device details for with pin card
+And user verifies "normal" status and note down device details for with pin card
 Then user sign out from customer portal
 
 Scenario: 1.2 Pin Generation
