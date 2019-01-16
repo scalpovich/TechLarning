@@ -15,6 +15,7 @@ import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Device;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.DevicePlan;
 import com.mastercard.pts.integrated.issuing.steps.AbstractBaseSteps;
+import com.mastercard.pts.integrated.issuing.utils.ConstantData;
 import com.mastercard.pts.integrated.issuing.workflows.cardholder.pinset.CardHolderPinSetWorkflow;
 
 @Component
@@ -31,6 +32,7 @@ public class CardHolderPinSetSteps extends AbstractBaseSteps{
 	public void requestPinSetForDevice(){
 		Device device = context.get(ContextConstants.DEVICE);
 		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
+		device.setPinNumberForTransaction(ConstantData.DEFAULT_PIN);
 		String[] date = devicePlan.getExpiryDate().split("-");
 		String day = date[0];
 		String year = String.valueOf(date[1].toCharArray()[2])+String.valueOf(date[1].toCharArray()[3]);

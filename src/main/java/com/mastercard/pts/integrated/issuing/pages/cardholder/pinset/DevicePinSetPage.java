@@ -69,7 +69,7 @@ public class DevicePinSetPage extends AbstractBasePage{
 	
 	public String setPinForDevice(Device device){
 		fillPinSetInfo(device);
-		setNewPin("1234");	
+		setNewPin(device.getPinNumberForTransaction());	
 		clickWhenClickable(submitBtn);
 		return lablResponse.getText();
 	}
