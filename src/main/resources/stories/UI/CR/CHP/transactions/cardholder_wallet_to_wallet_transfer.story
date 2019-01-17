@@ -33,7 +33,7 @@ And currency setup for device
 
 Scenario:Wallet to wallet fund transfer by cardholder
 Given user is on login page of cardholder portal
-And cardholder signup with valid details
+And user logs out from cardholder portal
 When fund transfer through wallet to wallet
 Given user is logged in institution
 Then search with device in transaction screen and status for wallet to wallet transfer transaction

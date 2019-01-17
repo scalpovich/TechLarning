@@ -1,9 +1,8 @@
 package com.mastercard.pts.integrated.issuing.steps.cardholder;
 
-import static junit.framework.Assert.assertTrue;
-
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,10 +29,7 @@ public class CardHolderPinSetSteps extends AbstractBaseSteps{
 		Device device = context.get(ContextConstants.DEVICE);
 		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		device.setPinNumberForTransaction(ConstantData.DEFAULT_PIN);
-		String[] date = devicePlan.getValidityOnInitialMonths().split("-");
-		String day = date[0];
-		String year = String.valueOf(date[1].toCharArray()[2])+String.valueOf(date[1].toCharArray()[3]);
-		device.setExpirationDate(day.concat(year));
-		assertTrue("Error while creating PIN set request", cardHolderPinSetWorkflow.setPinRequest(device).contains("Your transaction is successful"));
+		device.setExpirationDate(devicePlan.getValidityOnInitialMonths().replace("-20", ""));
+		Assert.assertTrue("Error while creating PIN set request", cardHolderPinSetWorkflow.setPinRequest(device).contains("Your transaction is successful"));
 	}
 }

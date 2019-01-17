@@ -1,9 +1,9 @@
 package com.mastercard.pts.integrated.issuing.steps.cardholder;
 
-import static junit.framework.Assert.assertTrue;
 
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class CardholderTransactionsSteps extends AbstractBasePage {
 		cardhlTran = CardHolderTransactions.cardholderCashRemit(provider);
 		Device device = context.get(ContextConstants.DEVICE);
 		cardhlTran.setTransctionPassword(device.getNewTransPassword());
-		assertTrue("Error while processing cash remittance request", transactionFlow.cashRemittanceBooking(cardhlTran).contains("Your transaction is successful"));
+		Assert.assertTrue("Error while processing cash remittance request", transactionFlow.cashRemittanceBooking(cardhlTran).contains("Your transaction is successful"));
 		context.put(ContextConstants.CARDHOLDER_TRAN,cardhlTran);
 	}
 	
@@ -47,7 +47,7 @@ public class CardholderTransactionsSteps extends AbstractBasePage {
 	@Then ("cardholder cancel the cash remittance")
 	public void cancelCashRemittanceRequest() {
 		CardHolderTransactions cardhlTrans = context.get(ContextConstants.CARDHOLDER_TRAN);
-		assertTrue("Error while cancelling remittance request", transactionFlow.cancelCashRemittanceBooking(cardhlTrans).contains("Your transaction is successful"));
+		Assert.assertTrue("Error while cancelling remittance request", transactionFlow.cancelCashRemittanceBooking(cardhlTrans).contains("Your transaction is successful"));
 	}
 
 	@When("fund transfer through MasterCard Money Send")
@@ -60,7 +60,7 @@ public class CardholderTransactionsSteps extends AbstractBasePage {
 
 	@Then("verify $transferType fund transfer stauts")
 	public void verifyFundTransferStatus() {
-		assertTrue("Fund transfer transaction is failed", transactionFlow.verifyFundTransferStatusOfTransaction());
+		Assert.assertTrue("Fund transfer transaction is failed", transactionFlow.verifyFundTransferStatusOfTransaction());
 	}
 
 	@When("check wallet to wallet transfer")

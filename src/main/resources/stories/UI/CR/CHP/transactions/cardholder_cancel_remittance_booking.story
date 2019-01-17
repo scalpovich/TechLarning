@@ -28,4 +28,4 @@ Given user is on login page of cardholder portal
 When cardholder complete registration and login into portal
 And cardholder book the cash remittance
 Then cardholder cancel the cash remittance
-And user logouts from cardholder portal
+And user logs out from cardholder portal

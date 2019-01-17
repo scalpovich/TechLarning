@@ -26,4 +26,4 @@ Given user is on login page of cardholder portal
 When cardholder complete registration and login into portal
 And select wallet for operation
 Then PIN set request for card
-And user logouts from cardholder portal
+And user logs out from cardholder portal

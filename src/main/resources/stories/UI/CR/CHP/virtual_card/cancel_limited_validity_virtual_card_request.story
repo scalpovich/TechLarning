@@ -30,4 +30,4 @@ Then service request to create Limited Validity Virtual Card [8]
 Scenario:3 Cancel the requested limited validity virtual card 
 Given select "Limited Validity Virtual Card" for operation
 Then cancel limited validity virtual card request
-And user logouts from cardholder portal
+And user logs out from cardholder portal

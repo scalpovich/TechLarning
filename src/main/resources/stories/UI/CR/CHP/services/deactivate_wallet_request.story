@@ -26,7 +26,7 @@ Given user is on login page of cardholder portal
 When cardholder complete registration and login into portal
 And select wallet for operation
 Then deactivate associated wallet for selected device
-Then user logouts from cardholder portal
+Then user logs out from cardholder portal
 
 Scenario:3 Validate service request status
 Given user is logged in institution

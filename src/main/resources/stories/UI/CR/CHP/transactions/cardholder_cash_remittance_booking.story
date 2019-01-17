@@ -26,4 +26,4 @@ Scenario:2 To verify cardholder can book the cash remittance
 Given user is on login page of cardholder portal
 When cardholder complete registration and login into portal
 Then cardholder book the cash remittance
-And user logouts from cardholder portal
+And user logs out from cardholder portal

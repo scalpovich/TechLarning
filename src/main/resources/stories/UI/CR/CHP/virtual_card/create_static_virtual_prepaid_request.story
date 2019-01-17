@@ -26,4 +26,4 @@ Scenario:2 Service request for create virtual card
 Given user is on login page of cardholder portal
 When cardholder complete registration and login into portal
 Then service request for static virtual Card
-And user logouts from cardholder portal
+And user logs out from cardholder portal

@@ -24,7 +24,7 @@ Scenario:2 Block device from further use
 Given user is on login page of cardholder portal
 When cardholder complete registration and login into portal
 Then service request to block a card
-And user logouts from cardholder portal
+And user logs out from cardholder portal
 
 Scenario:3 To check device status on customer portal
 Given user is logged in institution

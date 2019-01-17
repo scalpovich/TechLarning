@@ -1591,6 +1591,7 @@ public abstract class AbstractBasePage extends AbstractPage {
 	}
 
 	public String getTextFromPage(MCWebElement element) {
+
 		return element.getText();
 	}
 
