@@ -106,7 +106,8 @@ public class InternationalUseActivationPage extends ServicesAbstractPage {
 			internationalActivSubmitBtn();	
 			
 		}else if(cardholderService.getInternationActivationType().contains(CardholderServices.PERIOD_ACTIVATION)){
-			selectActivationInPeriod();			
+			selectActivationInPeriod();
+			setInternationalUse(LocalDate.now().minusDays(1).toString(),LocalDate.now().toString());
 		}
 		return getTextFromPage(responseLbl);
 	}
