@@ -33,5 +33,5 @@ And user sign out from customer portal
 
 Scenario: Validate service request status
 Given user is logged in institution
-Then verify "E-commerce Activation/Deactivation [304]" service request status
+Then verify "Block Device [111]" service request status
 And user sign out from customer portal

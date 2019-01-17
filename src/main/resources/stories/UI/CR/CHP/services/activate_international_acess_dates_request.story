@@ -30,5 +30,5 @@ And user logouts from cardholder portal
 
 Scenario: Validate service request status
 Given user is logged in institution
-Then verify "E-commerce Activation/Deactivation [304]" service request status
+Then verify "International Use Allow/Disallow [400]" service request status
 And user sign out from customer portal
