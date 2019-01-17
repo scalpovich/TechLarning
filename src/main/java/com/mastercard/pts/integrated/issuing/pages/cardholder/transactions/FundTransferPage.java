@@ -17,6 +17,7 @@ import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
+import com.mastercard.pts.integrated.issuing.domain.TransactionsNav;
 
 @Component
 @Navigation(tabTitle = TransactionsNav.TAB_TRANSACTIONS ,treeMenuItems = { TransactionsNav.L1_FUND_TRANSFER})
@@ -256,8 +257,6 @@ public class FundTransferPage extends AbstractBasePage {
 	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {
-		return Arrays.asList(WebElementUtils.visibilityOf(masterDetailContentTitle), WebElementUtils.visibilityOf(visaMoneyTransferRbtn),
-				WebElementUtils.visibilityOf(cardtoCardRbtn), WebElementUtils.visibilityOf(interBankFundTransferPopulateDetailsRbtn),
-				WebElementUtils.visibilityOf(masterCardMoneySendRbtn));
+		return Arrays.asList(WebElementUtils.visibilityOf(masterDetailContentTitle));
 	}
 }
