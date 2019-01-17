@@ -11,12 +11,9 @@ import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.codoid.products.exception.FilloException;
 import com.mastercard.pts.integrated.issuing.context.ContextConstants;
 import com.mastercard.pts.integrated.issuing.context.TestContext;
 import com.mastercard.pts.integrated.issuing.domain.ApplicationType;
@@ -96,9 +93,6 @@ public class ProgramSetupSteps {
 	MCG mcg;
 
 	@Autowired
-	private TransactionFeeWaiverPlanFlows transactionFeeWaiverPlanFlows;
-	
-	@Autowired
 	private SendToCarrierWorkflow sendToCarrierWorkflow;
 
 	@Autowired
@@ -124,8 +118,6 @@ public class ProgramSetupSteps {
 	private static final String CREDIT_PLAN_FROM_CSV ="CREDIT_PLAN_FROM_CSV";
 
 	private TransactionLimitPlan transactionLimitPlan;
-
-	private TransactionFeePlan transactionFeePlan;
 
 	private WalletPlan walletPlan;
 
@@ -155,8 +147,6 @@ public class ProgramSetupSteps {
 
 	private PrepaidStatementPlan prepaidStatementPlan;
 	
-	private TransactionFeeWaiverPlan transactionFeeWaiverPlan;
-	
 	private MCGLimitPlan mcgLimitPlan;
 	
 	private static final String TRANSACTION_FEE_WAIVER_PLAN = "TRANSACTION_FEE_WAIVER_PLAN";
@@ -175,8 +165,6 @@ public class ProgramSetupSteps {
 
 	private static final String EMBOSSING_VENDOR_FOR_DEVICE2 = "EMBOSSING_VENDOR_FOR_DEVICE2";
 	
-	private static final Logger logger = LoggerFactory.getLogger(ProgramSetupSteps.class);
-
 	private static final String JOINING_FEE_PLAN = "JOINING_FEE_PLAN";
 
 	private static final String DEFAULT_PRESENTMENT_TIME_LIMIT = "3";
@@ -1801,22 +1789,6 @@ public class ProgramSetupSteps {
 		device.setMerchantCode(MERCHANT_CODE);
 		programSetupWorkflow.editPlan(plan,device,program);
 	}
-	
-	@Given("user get data from excel for $scenario scenario")
-	public void userGetDataFromExcelForScenario(String scenario) throws FilloException {
-		Device device = Device.createWithProvider(provider);
-		Map<String, String> map = ExcelUtils
-				.getRowDataFromExcelThroughQuery("Select * from Sheet10 WHERE ScenarioID = 'Test'");
-		device.setDeviceNumber(map.get("DeviceNumber"));
-		device.setCvvData(map.get("CVV"));
-		device.setCvv2Data(map.get("CVV2"));
-		device.setIcvvData(map.get("ICVV"));
-		device.setPvkiData(map.get("PVKI"));
-		device.setExpirationDate(map.get("ExpiryDate"));
-		device.setPinOffset(map.get("PinOffset"));
-		context.put(ContextConstants.DEVICE, device);
-	}
-
 	
 	@When("user updates device range $status status")
 	public void userUpdatesDeviceRangeStatus(String status){

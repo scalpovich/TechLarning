@@ -89,9 +89,6 @@ public class AuthorizationSearchPage extends AbstractBasePage {
 	@PageElement(findBy=FindBy.X_PATH, valueToFind = "//td[contains(text(),'Available Balance')]/following-sibling::td[1]/span/span")
 	private MCWebElement availableBalanceTxt;
 	
-	@PageElement(findBy=FindBy.X_PATH, valueToFind = "//table[@class='modelFormClass']//span[contains(text(),'Authorization Response')]/../following-sibling::td[1]/span/span")
-	private MCWebElement authResponse;
-	
 	@PageElement(findBy = FindBy.CSS, valueToFind = "span.time>label+label")
 	private MCWebElement institutionDateTxt;
 	
