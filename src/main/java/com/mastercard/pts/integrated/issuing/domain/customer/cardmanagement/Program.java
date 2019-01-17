@@ -56,7 +56,9 @@ public class Program implements HasCodeAndDescription {
 	private static final String CREDIT_LIMIT = "CREDIT_LIMIT";
 	private static final String MARK_UP_FEE_PLAN = "MARK_UP_FEE_PLAN";
 	private static final String PAYOUT_CURRENCY_PLAN = "PAYOUT_CURRENCY_PLAN";
-	private static final String COUNTRY_WHITE_LIST_AND_BLACK_LIST_PLAN="COUNTRY_WHITE_BLACK_LIST_PLAN";
+	private static final String COUNTRY_WHITELIST_PLAN="COUNTRY_WHITELIST_PLAN";
+	private static final String COUNTRY_BLACKLIST_PLAN="COUNTRY_BLACKLIST_PLAN";
+	private static final String COUNTRY_WHITE_LIST_AND_BLACK_LIST_PLAN="COUNTRY_WHITE_LIST_AND_BLACK_LIST_PLAN";
 	private String payoutCurrencyPlan;
 	private String walletToWalletTransferType;
 	private String refundInCurrency;
@@ -836,8 +838,14 @@ public class Program implements HasCodeAndDescription {
 		return MiscUtils.toString(this);
 	}
 
-	public void setCountryWhiteListAndBlackListPlan(KeyValueProvider provider) {
-		this.countryWhiteListAndBlackListPlan = provider.getString(COUNTRY_WHITE_LIST_AND_BLACK_LIST_PLAN);
+	public void setCountryWhiteListAndBlackListPlan(KeyValueProvider provider, String plan) {
+		if (plan.contains("whitelist")) {
+			this.countryWhiteListAndBlackListPlan = provider.getString(COUNTRY_WHITELIST_PLAN);
+		} else if (plan.contains("blacklist")) {
+			this.countryWhiteListAndBlackListPlan = provider.getString(COUNTRY_BLACKLIST_PLAN);
+		} else {
+			this.countryWhiteListAndBlackListPlan = provider.getString(COUNTRY_WHITE_LIST_AND_BLACK_LIST_PLAN);
+		}
 	}
 	public String getCountryWhiteListAndBlackListPlan() {
 		return countryWhiteListAndBlackListPlan;

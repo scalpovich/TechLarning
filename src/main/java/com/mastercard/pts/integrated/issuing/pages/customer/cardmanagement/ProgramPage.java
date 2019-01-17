@@ -886,13 +886,9 @@ public class ProgramPage extends AbstractBasePage {
 	}
 
 	private void editsProgram(Program program, String editItem) {
-		switch (editItem) {
-		case COUNTRY_WHITELIST_AND_BLACKLIST_PLAN:
-			clickWhenClickable(planTab);
-			setCountryWhiteListAndBlackListPlan(program);
-			clickSaveButton();
-			break;
-		}
+		clickWhenClickable(planTab);
+		setCountryWhiteListAndBlackListPlan(program);
+		clickSaveButton();
 	}
 
 	public void editsProgramForPlans(Program program, String editItem) {

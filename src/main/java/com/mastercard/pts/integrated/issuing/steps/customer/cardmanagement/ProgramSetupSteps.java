@@ -11,8 +11,6 @@ import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -55,7 +53,6 @@ import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.Send
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.StatementMessageDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.StatementMessagePlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeePlan;
-import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionFeeWaiverPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionLimitPlan;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionLimitPlanDetails;
 import com.mastercard.pts.integrated.issuing.domain.customer.cardmanagement.TransactionPlan;
@@ -70,7 +67,6 @@ import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.D
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.MCGFlows;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.ProgramSetupWorkflow;
 import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.SendToCarrierWorkflow;
-import com.mastercard.pts.integrated.issuing.workflows.customer.cardmanagement.TransactionFeeWaiverPlanFlows;
 
 @Component
 public class ProgramSetupSteps {
@@ -93,9 +89,6 @@ public class ProgramSetupSteps {
 	@Autowired
 	MCG mcg;
 
-	@Autowired
-	private TransactionFeeWaiverPlanFlows transactionFeeWaiverPlanFlows;
-	
 	@Autowired
 	private SendToCarrierWorkflow sendToCarrierWorkflow;
 
@@ -122,8 +115,6 @@ public class ProgramSetupSteps {
 	private static final String CREDIT_PLAN_FROM_CSV ="CREDIT_PLAN_FROM_CSV";
 
 	private TransactionLimitPlan transactionLimitPlan;
-
-	private TransactionFeePlan transactionFeePlan;
 
 	private WalletPlan walletPlan;
 
@@ -153,8 +144,6 @@ public class ProgramSetupSteps {
 
 	private PrepaidStatementPlan prepaidStatementPlan;
 	
-	private TransactionFeeWaiverPlan transactionFeeWaiverPlan;
-	
 	private MCGLimitPlan mcgLimitPlan;
 	
 	private static final String TRANSACTION_FEE_WAIVER_PLAN = "TRANSACTION_FEE_WAIVER_PLAN";
@@ -173,8 +162,6 @@ public class ProgramSetupSteps {
 
 	private static final String EMBOSSING_VENDOR_FOR_DEVICE2 = "EMBOSSING_VENDOR_FOR_DEVICE2";
 	
-	private static final Logger logger = LoggerFactory.getLogger(ProgramSetupSteps.class);
-
 	private static final String JOINING_FEE_PLAN = "JOINING_FEE_PLAN";
 
 	private static final String DEFAULT_PRESENTMENT_TIME_LIMIT = "3";
@@ -1733,7 +1720,7 @@ public class ProgramSetupSteps {
 	
 	@When("User edits Program to update $editItem")
 	public void andUserEditsProgramToUpdateCountryWhiteBlackList(String editItem) {
-		program.setCountryWhiteListAndBlackListPlan(provider);
+		program.setCountryWhiteListAndBlackListPlan(provider,editItem);
 		programSetupWorkflow.editsProgram(program,editItem);
 	}
 
