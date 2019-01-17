@@ -185,8 +185,7 @@ public class ConstantData {
 
 	public static final String PAYMENT_UPLOAD_FILE_NAME = "PAYMENT_UPLOAD_FILE_NAME";
 	public static final String REISSUE_TPIN_DIRECTORY = "TPIN";
-	
-	public static final String DEFAULT_PIN = "1234";
+
 	
 	private ConstantData() {
 	}
