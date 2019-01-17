@@ -99,7 +99,7 @@ public class DevicePinSetPage extends AbstractBasePage{
 				clickWhenClickable(newPinTxt);
 				for(char pin : pinArry){
 					String locator = String.format("//*[@*='keypad-key' and text()='%c']", pin);
-					Element(locator).click();
+					clickWhenClickable(Element(locator));
 				}
 				clickWhenClickable(pinConfirmBtn);
 				SimulatorUtilities.wait(3000);
@@ -107,7 +107,7 @@ public class DevicePinSetPage extends AbstractBasePage{
 				clickWhenClickable(confirmTxt);
 				for(char pin : pinArry){
 					String locator = String.format("//*[@*='keypad-key' and text()='%c']", pin);
-					Element(locator).click();
+					clickWhenClickable(Element(locator));
 				}
 				clickWhenClickable(pinConfirmBtn);
 				SimulatorUtilities.wait(2000);

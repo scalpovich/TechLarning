@@ -108,7 +108,9 @@ public class DeviceSteps {
 		DevicePlan devicePlan = context.get(ContextConstants.DEVICE_PLAN);
 		device.setDevicePlan1(devicePlan.buildDescriptionAndCode());
 		device.setDeviceType1(devicePlan.getDeviceType());
-
+		
+		sdnUncheckProgram(program.getProgramCode());
+		
 		deviceWorkflow.createDevice(device);
 		context.put(ContextConstants.DEVICE, device);
 
