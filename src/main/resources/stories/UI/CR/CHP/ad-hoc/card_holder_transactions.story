@@ -19,7 +19,7 @@ Given read test data for scenario
 And login to cardholder portal as existing Cardholder user
 When fund transfer through wallet to wallet
 Then verify Visa Money Transfer fund transfer stauts
-And user logouts from cardholder portal
+And user logs out from cardholder portal
 
 Scenario: To verify functionality of Visa Money Transfer(Real Time)
 Meta:
@@ -29,7 +29,7 @@ Given read test data for scenario
 And login to cardholder portal as existing Cardholder user
 When fund transfer through wallet to wallet
 Then verify Visa Money Transfer fund transfer stauts
-And user logouts from cardholder portal
+And user logs out from cardholder portal
 
 
 Scenario: To Verify functionality of wallet to wallet transfer 
@@ -40,7 +40,7 @@ Given read test data for scenario
 And login to cardholder portal as existing Cardholder user
 When fund transfer through wallet to wallet
 Then verify wallet to wallet transfer fund transfer stauts
-And user logouts from cardholder portal
+And user logs out from cardholder portal
 
 Scenario:To Verify functionality of intra bank fund transfer
 Meta:
@@ -60,7 +60,7 @@ Given read test data for scenario
 And login to cardholder portal as existing Cardholder user
 When fund transfer through MasterCard Money Send
 Then verify MasterCard Money send fund transfer stauts
-And user logouts from cardholder portal
+And user logs out from cardholder portal
 
 Scenario:To Verify cardholder can book the cash remittance
 Meta:
@@ -69,7 +69,7 @@ Meta:
 Given read test data for scenario
 And login to cardholder portal as existing Cardholder user
 When cardholder book the cash remittance
-Then user logouts from cardholder portal
+Then user logs out from cardholder portal
 
 
 Scenario: User can be able to cancel the cash remittance request 
@@ -79,4 +79,4 @@ Meta:
 Given read test data for scenario
 And login to cardholder portal as existing Cardholder user
 When cardholder cancel the cash remittance
-Then user logouts from cardholder portal
+Then user logs out from cardholder portal

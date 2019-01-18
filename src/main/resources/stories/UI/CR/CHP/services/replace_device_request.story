@@ -25,9 +25,9 @@ Scenario:2 Replace device for device technology upgrade
 Given user is on login page of cardholder portal
 When cardholder complete registration and login into portal
 Then replace device with Emergency Replacement
-And user logouts from cardholder portal
+And user logs out from cardholder portal
 
 Scenario:3 Validate service request status
 Given user is logged in institution
-Then verify "E-commerce Activation/Deactivation [304]" service request status
+Then verify "Replace / Upgrade Device Request [303]" service request status
 And user sign out from customer portal

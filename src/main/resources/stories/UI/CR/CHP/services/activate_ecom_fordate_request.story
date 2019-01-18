@@ -26,7 +26,7 @@ Given user is on login page of cardholder portal
 When cardholder complete registration and login into portal
 And deactivate ecom transaction
 Then activation of ecom transaction for Activation in Period
-And user logouts from cardholder portal
+And user logs out from cardholder portal
 
 Scenario:3 Validate service request status
 Given user is logged in institution

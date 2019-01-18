@@ -44,9 +44,8 @@ public class CardToCardTransferPage extends AbstractBasePage{
 	private MCWebElement confirmMessage;
 	
 	public void walletToWalletTransfer(CardHolderTransactions cardhlfTran){
-		SelectDropDownByValue(walletNumDropList,cardhlfTran.getWalletFromAmountTransfer());
+		SelectDropDownByValue(walletNumDropList,cardhlfTran.getWalletToAmountTransfer());
 		WebElementUtils.enterText(amountToTransfer,cardhlfTran.getWalletTransferAmount());
-		//selectByVisibleTexts(transferCurrencyOption,cardhlfTran.getWalletTransferCurrency());
 		clickWhenClickable(submitBtn);		
 		waitForLoaderToDisappear();
 		WebElementUtils.enterText(transactionPassword,cardhlfTran.getTransctionPassword());

@@ -3,14 +3,12 @@ package com.mastercard.pts.integrated.issuing.pages.cardholder.transactions;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.TransactionsNav;
 import com.mastercard.pts.integrated.issuing.domain.cardholder.CardHolderTransactions;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -18,6 +16,7 @@ import com.mastercard.pts.integrated.issuing.utils.WebElementUtils;
 import com.mastercard.testing.mtaf.bindings.element.ElementsBase.FindBy;
 import com.mastercard.testing.mtaf.bindings.element.MCWebElement;
 import com.mastercard.testing.mtaf.bindings.page.PageElement;
+import com.mastercard.pts.integrated.issuing.pages.cardholder.transactions.TransactionsNav;
 
 @Component
 @Navigation(tabTitle = TransactionsNav.TAB_TRANSACTIONS, treeMenuItems = { TransactionsNav.L1_CANCEL_REMITTANCE_BOOKING })
@@ -69,21 +68,17 @@ public class CancelRemittanceBookingPage extends AbstractBasePage {
 		return getTextFromPage(masterDetailContentTitle);
 	}
 	
-		
 	public String cancelRemittanceRequst(CardHolderTransactions cardhlTran){
-		if(!responseLbl.getText().contains("No data found")){			
-			String locator = String.format("//*[@class='dataview-div']//*[@id='%s']",cardhlTran.getRemittanceRefnumber());
-			driver().findElement(By.xpath(locator)).click();
-			cashRemittanceSubmitBtn.click();
-			waitForLoaderToDisappear();
-			enterText(transactionPassTxt, cardhlTran.getTransctionPassword());
-			enterText(transactionRemarkTxt, cardhlTran.getTransactionRemark());	
-			waitForLoaderToDisappear();
-			return responseLbl.getText();
-		}else{
-			return responseLbl.getText();
-		}
-	}	
+		String element = String.format("//tr[@id='%s']", cardhlTran.getRemittanceRefNumber());
+		Element(element).click();
+		ClickButton(cashRemittanceSubmitBtn);
+		waitForPageToLoad(driver());
+		enterText(transactionPassTxt, cardhlTran.getTransctionPassword());
+		enterText(transactionRemarkTxt,cardhlTran.getTransactionRemark());
+		ClickButton(cashRemittanceSubmitBtn);
+		waitForLoaderToDisappear();
+		return getTextFromPage(responseLbl);
+	}
 	
 	@Override
 	protected Collection<ExpectedCondition<WebElement>> isLoadedConditions() {

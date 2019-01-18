@@ -20,13 +20,14 @@ And processes pre-production batch for prepaid
 And processes device production batch for prepaid
 Then device has "normal" status
 And currency setup for device
+And user performs adjustment transaction
 And user sign out from customer portal
 
 Scenario:Wallet to wallet fund transfer by cardholder
 Given user is on login page of cardholder portal
 And cardholder complete registration and login into portal
 When intra bank money transfer
-Then user logouts from cardholder portal
+Then user logs out from cardholder portal
 And user is logged in institution
 Then search with device in transaction screen and status for wallet to wallet transfer transaction
 And user sign out from customer portal

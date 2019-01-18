@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.mastercard.pts.integrated.issuing.domain.TransactionsNav;
 import com.mastercard.pts.integrated.issuing.domain.cardholder.CardHolderTransactions;
 import com.mastercard.pts.integrated.issuing.pages.AbstractBasePage;
 import com.mastercard.pts.integrated.issuing.pages.navigation.annotation.Navigation;
@@ -112,7 +111,6 @@ public class CashRemittanceBookingPage extends AbstractBasePage {
 	}
 	
 	public boolean isCashRemittanceAllowedForAccount(){
-	
 		return 	isElementPresent(isCashRemittanceAllowed);
 	}
 	
@@ -194,13 +192,15 @@ public class CashRemittanceBookingPage extends AbstractBasePage {
 	}
 	
 	public String submitRemittanceRequst(CardHolderTransactions cardhlTran){
-		ClickButton(cashRemittanceSubmitBtn);
-		waitForWicket();
+		waitForLoaderToDisappear();
 		logger.info("Transaction password for remittance request is {}",cardhlTran.getTransctionPassword());
 		enterTransactionPassword(cardhlTran.getTransctionPassword());
 		enterTransactionRemarks(cardhlTran.getTransactionRemark());
 		clickWhenClickable(submitTransaction);
-		return getTextFromPage(transactionConfirmMsg);
+		waitForLoaderToDisappear();
+		String confirmMsg = getTextFromPage(responseLbl);
+		cardhlTran.setRemittanceRefNumber(confirmMsg.replaceAll("[^0-9]", ""));
+		return confirmMsg;
 	}
 	
 	
@@ -218,11 +218,18 @@ public class CashRemittanceBookingPage extends AbstractBasePage {
 		enterBeneficiaryEmailAddress(cardhlTran.getBeneficiaryEmailAddress());
 		enterBeneficiaryMobileNumber(cardhlTran.getBeneficiaryMobileNumber());
 		enterRemittanceAmount(cardhlTran.getBeneficiaryRemittanceAmount());
+		ClickButton(cashRemittanceSubmitBtn);
 		return submitRemittanceRequst(cardhlTran);
 	}
 	
-	public void cancelRemittanceRequst(CardHolderTransactions cardhlTran){
-		
+	public String cancelRemittanceRequst(CardHolderTransactions cardhlTran){
+		String element = String.format("//tr[@id='%s']", cardhlTran.getRemittanceRefNumber());
+		Element(element).click();
+		ClickButton(cashRemittanceSubmitBtn);
+		waitForPageToLoad(driver());
+		enterText(transactionPasswordInpt, cardhlTran.getTransctionPassword());
+		enterText(transactionRemarkInpt,cardhlTran.getTransactionRemark());
+		return getTextFromPage(responseLbl);
 	}
 
 }

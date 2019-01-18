@@ -27,9 +27,9 @@ When cardholder complete registration and login into portal
 And select wallet for operation
 And deactivate associated wallet for selected device
 Then activate associated wallet for selected device
-And user logouts from cardholder portal
+And user logs out from cardholder portal
 
 Scenario: Validate service request status
 Given user is logged in institution
-Then verify "E-commerce Activation/Deactivation [304]" service request status
+Then verify "Activate/Deactivate Wallet [313]" service request status
 And user sign out from customer portal

@@ -25,4 +25,4 @@ Scenario:2 To verify charges for fund transfer
 Given user is on login page of cardholder portal
 When cardholder complete registration and login into portal
 Then check Transaction Fee charge for Intra Client - Wallet to Wallet Transfer(Debit) transaction
-And user logouts from cardholder portal
+And user logs out from cardholder portal
